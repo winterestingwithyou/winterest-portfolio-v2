@@ -1,0 +1,34 @@
+{
+  "projectName": "winterest-portfolio-v2",
+  "mode": "file-router",
+  "typescript": true,
+  "packageManager": "bun",
+  "includeExamples": true,
+  "tailwind": true,
+  "addOnOptions": {
+    "drizzle": {
+      "database": "sqlite"
+    }
+  },
+  "envVarValues": {},
+  "git": false,
+  "install": true,
+  "routerOnly": false,
+  "version": 1,
+  "framework": "react",
+  "chosenAddOns": [
+    "eslint",
+    "cloudflare",
+    "drizzle",
+    "shadcn",
+    "table",
+    "better-auth",
+    "tanstack-query",
+    "form",
+    "paraglide",
+    "t3env",
+    "store",
+    "db",
+    "resume"
+  ]
+}
