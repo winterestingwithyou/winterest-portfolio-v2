@@ -38,7 +38,7 @@ function LoginPage() {
 
     const formData = new FormData(event.currentTarget)
     const payload = {
-      name: String(formData.get('name') ?? 'M. Adam Yudistira'),
+      name: String(formData.get('name') ?? 'Winterest'),
       email: String(formData.get('email') ?? ''),
       password: String(formData.get('password') ?? ''),
       callbackURL: redirectTo ?? '/dashboard',
@@ -135,7 +135,7 @@ function LoginPage() {
               label="Name"
               name="name"
               autoComplete="name"
-              defaultValue="M. Adam Yudistira"
+              defaultValue="Winterest"
             />
           ) : null}
           <Field label="Email" name="email" autoComplete="email" type="email" />

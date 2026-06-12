@@ -21,8 +21,8 @@ function WritingPage() {
       <Container>
         <SectionHeader
           eyebrow="Writing"
-          title="Technical notes, devlogs, and decisions as the platform grows."
-          description="Writing starts as structured seed entries. Later, the CMS can own drafts, published posts, tags, and cover metadata."
+          title="Notes on what I build, learn, and decide."
+          description="Writing is the slower side of Winterest: architecture notes, devlogs, retrospectives, and practical lessons from the work."
         />
 
         <div className="grid gap-5">

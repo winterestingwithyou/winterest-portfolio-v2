@@ -35,13 +35,13 @@ function HomePage() {
       <section className="px-4 pb-16 pt-14 sm:pb-24 sm:pt-20">
         <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
-            <p className="eyebrow mb-5">Cloudflare + Bun inspired portfolio</p>
+            <p className="eyebrow mb-5">Winterest / fullstack web developer</p>
             <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-tight text-[var(--brand-ink)] sm:text-6xl lg:text-7xl">
-              Winterest, a personal platform for edge-first web work.
+              Fullstack web work, project notes, and experiments from Indonesia.
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--brand-muted)]">
-              {siteProfile.intro} This space will grow from a polished public
-              portfolio into a CMS dashboard, writing hub, and developer lab.
+              {siteProfile.intro} This is my personal space for showing what I
+              build, what I am learning, and how I think through web systems.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -85,8 +85,8 @@ function HomePage() {
         <Container>
           <SectionHeader
             eyebrow="Featured projects"
-            title="The public portfolio comes first, then the CMS grows behind it."
-            description="These are early content anchors for the platform. The same shape can later move into D1-backed CMS records without changing the public story."
+            title="Selected work, written as small case studies."
+            description="Projects here focus on the problem, the decisions, the stack, and what I want to improve next."
           />
           <div className="grid gap-5 lg:grid-cols-2">
             {highlightedProjects.map((project) => (
@@ -133,8 +133,8 @@ function HomePage() {
         <Container>
           <SectionHeader
             eyebrow="Developer lab"
-            title="A workbench for experiments before they become polished projects."
-            description="The lab keeps Cloudflare notes, TanStack prototypes, AI experiments, and small UI tools visible instead of buried in scratch files."
+            title="A place for experiments that are too useful to hide."
+            description="The lab collects prototypes, technical notes, and small ideas while they are still being shaped."
           />
           <div className="grid gap-4 md:grid-cols-3">
             {labEntries.map((entry) => (
@@ -160,8 +160,8 @@ function HomePage() {
       <section className="px-4 py-14">
         <Container>
           <SectionHeader
-            eyebrow="Build principles"
-            title="A portfolio that can become real product infrastructure."
+            eyebrow="Principles"
+            title="How I like to approach web work."
           />
           <div className="grid gap-5 md:grid-cols-3">
             {principles.map((principle, index) => {
@@ -189,8 +189,8 @@ function HomePage() {
         <Container className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <SectionHeader
             eyebrow="Stack"
-            title="Modern fullstack tools, chosen for edge compatibility."
-            description="The stack stays close to the current project: TanStack Start, Bun, Cloudflare, Drizzle, Better Auth, Tailwind, and small composable UI primitives."
+            title="Tools I reach for when the project needs to stay fast and maintainable."
+            description="The stack leans modern, typed, and edge-friendly, but the goal is still practical delivery over tool collecting."
           />
           <div className="grid gap-4 sm:grid-cols-2">
             {stackGroups.map((group) => (
@@ -226,7 +226,8 @@ function HomePage() {
                 bun run build
               </p>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">
-                Ready for practical projects, writing, and careful CMS growth.
+                Open to practical web systems, thoughtful interfaces, and useful
+                experiments.
               </h2>
             </div>
             <a

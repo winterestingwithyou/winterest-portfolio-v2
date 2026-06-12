@@ -16,20 +16,20 @@ function AboutPage() {
           <div>
             <p className="eyebrow mb-4">About</p>
             <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-[var(--brand-ink)] sm:text-5xl">
-              Building a personal platform, not just another resume page.
+              A closer look at Winterest, the developer behind this space.
             </h1>
           </div>
           <div className="surface-card p-6 sm:p-8">
             <p className="text-lg leading-8 text-[var(--brand-muted)]">
-              I am {siteProfile.name}, also building as {siteProfile.handle}.
-              Winterest is where my portfolio, project notes, experiments, and
-              CMS tooling will meet in one Cloudflare-first web platform.
+              I build online as {siteProfile.name}. I enjoy turning ideas into
+              practical web systems: interfaces that feel calm, backend flows
+              that stay understandable, and tools that make future work easier.
             </p>
             <p className="mt-5 text-base leading-8 text-[var(--brand-muted)]">
-              The current focus is replacing starter content with a credible
-              public shell. After that, the project can grow toward D1 content,
-              dashboard workflows, Better Auth, RBAC, and optional visual polish
-              without losing the foundation.
+              Winterest is my public home for that process. It gathers project
+              case studies, technical notes, experiments, and a little visual
+              personality so the site can show both the finished work and the
+              thinking behind it.
             </p>
           </div>
         </section>
@@ -40,8 +40,8 @@ function AboutPage() {
 
         <section className="mt-16">
           <SectionHeader
-            eyebrow="Roadmap"
-            title="A gradual path from portfolio to developer platform."
+            eyebrow="Journey"
+            title="What this space is becoming."
           />
           <div className="grid gap-4">
             {timeline.map((item) => (
@@ -68,7 +68,7 @@ function AboutPage() {
         <section className="mt-16">
           <SectionHeader
             eyebrow="Principles"
-            title="The project should feel technical, personal, and useful."
+            title="The values I want this work to carry."
           />
           <div className="grid gap-5 md:grid-cols-3">
             {principles.map((principle) => (

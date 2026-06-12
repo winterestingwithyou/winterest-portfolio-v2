@@ -19,7 +19,7 @@ function ResumePage() {
         <SectionHeader
           eyebrow="Resume"
           title={siteProfile.name}
-          description={`${siteProfile.role} focused on practical fullstack systems, edge-friendly architecture, and personal developer tooling.`}
+          description={`${siteProfile.role} focused on practical web systems, calm interfaces, and maintainable fullstack workflows.`}
         />
 
         <div className="surface-card p-6 print:border print:bg-white print:shadow-none sm:p-8">
@@ -44,7 +44,7 @@ function ResumePage() {
 
           <section className="grid gap-8 border-b border-[var(--brand-line)] py-8 md:grid-cols-[12rem_1fr]">
             <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
-              Platform Work
+              Selected Work
             </h2>
             <div className="grid gap-6">
               {featuredProjects.map((project) => (
@@ -65,7 +65,7 @@ function ResumePage() {
 
           <section className="grid gap-8 border-b border-[var(--brand-line)] py-8 md:grid-cols-[12rem_1fr]">
             <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
-              Roadmap
+              Current Direction
             </h2>
             <div className="grid gap-5">
               {timeline.map((item) => (

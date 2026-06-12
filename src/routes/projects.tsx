@@ -15,8 +15,8 @@ function ProjectsPage() {
       <Container>
         <SectionHeader
           eyebrow="Projects"
-          title="Case studies and build logs for the Winterest platform."
-          description="The first project entries are local seed content. They establish the content model before database-backed publishing arrives."
+          title="Projects with context, not just screenshots."
+          description="This page collects the work I want people to understand: the problem, the decisions, the stack, and the tradeoffs behind each build."
         />
 
         <div className="grid gap-5">
@@ -74,7 +74,7 @@ function ProjectsPage() {
               git remote
             </p>
             <h2 className="mt-3 text-2xl font-semibold text-white">
-              Follow the source while the platform evolves.
+              Follow the source behind Winterest and the experiments around it.
             </h2>
           </div>
           <a

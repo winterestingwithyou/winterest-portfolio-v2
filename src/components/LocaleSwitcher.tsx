@@ -4,6 +4,11 @@
 import { getLocale, locales, setLocale } from '#/paraglide/runtime'
 import { m } from '#/paraglide/messages'
 
+const localeNames: Record<string, string> = {
+  en: 'English',
+  id: 'Indonesia',
+}
+
 export default function ParaglideLocaleSwitcher() {
   const currentLocale = getLocale()
 
@@ -17,8 +22,10 @@ export default function ParaglideLocaleSwitcher() {
       }}
       aria-label={m.language_label()}
     >
-      <span style={{ opacity: 0.85 }}>
-        {m.current_locale({ locale: currentLocale })}
+      <span className="sr-only">
+        {m.current_locale({
+          locale: localeNames[currentLocale] ?? currentLocale.toUpperCase(),
+        })}
       </span>
       <div style={{ display: 'flex', gap: '0.25rem' }}>
         {locales.map((locale) => (
@@ -26,6 +33,7 @@ export default function ParaglideLocaleSwitcher() {
             key={locale}
             onClick={() => setLocale(locale)}
             aria-pressed={locale === currentLocale}
+            aria-label={localeNames[locale] ?? locale.toUpperCase()}
             style={{
               cursor: 'pointer',
               padding: '0.35rem 0.75rem',

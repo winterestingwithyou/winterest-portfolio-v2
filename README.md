@@ -1,6 +1,6 @@
 # Winterest Portfolio v2
 
-Personal portfolio platform for **M. Adam Yudistira / winterestingwithyou**.
+Personal portfolio platform for **Winterest**.
 
 This project is evolving from a TanStack Start resume starter into a polished public portfolio, CMS dashboard, and developer lab with a Cloudflare + Bun inspired aesthetic.
 

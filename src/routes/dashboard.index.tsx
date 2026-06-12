@@ -10,14 +10,14 @@ export const Route = createFileRoute('/dashboard/')({
 })
 
 function DashboardHome() {
-  const publishedCount = featuredProjects.filter(
-    (project) => project.status === 'Building',
+  const activeCount = featuredProjects.filter(
+    (project) => project.featured,
   ).length
 
   return (
     <DashboardShell
       title="Overview"
-      description="Project CMS foundation for the Winterest platform."
+      description="Private workspace for Winterest content and publishing."
       actions={
         <Link
           to="/dashboard/projects"
@@ -52,8 +52,8 @@ function DashboardHome() {
             Publishing state
           </h2>
           <p className="mt-2 text-sm leading-7 text-[var(--brand-muted)]">
-            {publishedCount} project entries are ready to become D1 seed rows
-            once migrations are applied.
+            {activeCount} featured project entries are ready to review before
+            publishing.
           </p>
         </div>
         <div className="grid gap-0 divide-y divide-[var(--brand-line)]">

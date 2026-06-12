@@ -25,7 +25,7 @@ describe('content validation', () => {
       title: 'Tiny demo',
       summary: 'A small lab demo with useful links.',
       demoUrl: 'https://winterest.tech/lab/tiny-demo',
-      repoUrl: 'https://github.com/winterestingwithyou/winterest-portfolio-v2',
+      repoUrl: 'https://github.com/winterest/winterest-portfolio-v2',
     })
 
     expect(input.demoUrl).toBe('https://winterest.tech/lab/tiny-demo')

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "home_page": "Beranda",
+  "about_page": "Tentang",
+  "example_message": "Selamat datang di Winterest.",
+  "language_label": "Bahasa",
+  "current_locale": "Bahasa aktif: {locale}",
+  "learn_router": "Baca catatan Winterest"
+}

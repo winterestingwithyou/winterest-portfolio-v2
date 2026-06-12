@@ -12,9 +12,9 @@ export default function Footer() {
         <div>
           <p className="eyebrow mb-3">Winterest Portfolio v2</p>
           <p className="m-0 max-w-2xl text-sm leading-7">
-            Cloudflare-powered portfolio, CMS roadmap, and developer lab for{' '}
-            {siteProfile.name}. Built Bun-first and kept ready for edge
-            deployment.
+            Personal portfolio, writing space, and developer lab for{' '}
+            {siteProfile.name}. Built with a warm Cloudflare + Bun inspired
+            visual language.
           </p>
           <p className="mt-5 text-xs">
             &copy; {year} {siteProfile.handle}. All rights reserved.

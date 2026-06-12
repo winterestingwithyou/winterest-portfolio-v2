@@ -14,13 +14,13 @@ describe('auth roles', () => {
     expect(
       toDashboardUser({
         id: 'user_1',
-        name: 'Adam',
+        name: 'Winterest',
         email: 'adam@example.com',
         role: 'owner',
       }),
     ).toEqual({
       id: 'user_1',
-      name: 'Adam',
+      name: 'Winterest',
       email: 'adam@example.com',
       role: 'owner',
     })

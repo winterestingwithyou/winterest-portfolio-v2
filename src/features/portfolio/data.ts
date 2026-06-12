@@ -1,145 +1,145 @@
 export const siteProfile = {
-  name: 'M. Adam Yudistira',
-  handle: 'winterestingwithyou',
+  name: 'Winterest',
+  handle: 'winterest',
   domain: 'winterest.tech',
   role: 'Fullstack web developer',
   location: 'Indonesia',
   intro:
-    'I build practical web systems, developer tools, and experiments around modern fullstack architecture.',
+    'I build practical fullstack web systems, thoughtful interfaces, and small experiments around modern developer workflows.',
   longIntro:
-    'Winterest is my long-term portfolio platform: a Cloudflare-powered home for projects, writing, lab experiments, and the CMS that will eventually manage it all.',
-  githubUrl: 'https://github.com/winterestingwithyou',
-  repoUrl: 'https://github.com/winterestingwithyou/winterest-portfolio-v2',
+    'I work around modern web architecture, edge-friendly apps, and developer tooling. Winterest is my public home for case studies, notes, experiments, and the systems I keep improving over time.',
+  githubUrl: 'https://github.com/winterest',
+  repoUrl: 'https://github.com/winterest/winterest-portfolio-v2',
   contactEmail: 'hello@winterest.tech',
 }
 
 export const portfolioStats = [
-  { label: 'Core stack', value: 'TanStack + Bun' },
-  { label: 'Deploy target', value: 'Cloudflare Workers' },
-  { label: 'Next system', value: 'CMS + RBAC' },
+  { label: 'Focus', value: 'Fullstack web' },
+  { label: 'Style', value: 'Practical + polished' },
+  { label: 'Base', value: 'Indonesia' },
 ]
 
 export const principles = [
   {
-    title: 'Edge-first by default',
+    title: 'Build useful systems',
     description:
-      'Prefer small server functions, Web APIs, and Cloudflare-compatible patterns so the site can stay fast and portable.',
+      'I like web work that solves real problems first: clear flows, readable code, and features that are easy to maintain after the first release.',
   },
   {
-    title: 'Useful before flashy',
+    title: 'Keep the interface calm',
     description:
-      'The portfolio should work as a real publishing and CMS platform before heavier 3D or animation layers arrive.',
+      'A good interface should feel focused and fast. Visual polish matters, but it should support the content instead of stealing the room.',
   },
   {
-    title: 'Playful, still professional',
+    title: 'Stay curious in public',
     description:
-      'Cloudflare orange, Bun energy, crisp UI, and a developer-lab feeling without turning the site into a generic template.',
+      'This site is also a place to document experiments, decisions, and lessons while I keep learning across the modern web stack.',
   },
 ]
 
 export const featuredProjects = [
   {
     slug: 'winterest-portfolio-platform',
-    title: 'Winterest Portfolio Platform',
+    title: 'Winterest Portfolio v2',
     summary:
-      'A TanStack Start portfolio evolving into a CMS dashboard, writing hub, and developer lab.',
-    category: 'Personal platform',
+      'My personal portfolio rebuilt as a long-term home for projects, writing, experiments, and a private CMS.',
+    category: 'Portfolio',
     status: 'Building',
-    phase: 'Phase 1-3',
+    phase: 'Public site + CMS',
     year: '2026',
-    scope: 'Public portfolio, D1 CMS foundation, dashboard shell',
+    scope: 'Public portfolio, content model, dashboard foundation',
     featured: true,
     stack: ['TanStack Start', 'React 19', 'Bun', 'Cloudflare', 'Tailwind CSS'],
     problem:
-      'The starter resume template needed to become a long-term personal platform instead of a static profile page.',
-    goal: 'Create a polished public portfolio foundation that can later read from D1-backed CMS content.',
-    role: 'Product design, frontend architecture, Cloudflare deployment direction, and CMS planning.',
+      'A plain resume page was not enough to show how I think, build, write, and experiment as a developer.',
+    goal: 'Create a portfolio that feels personal on the outside and can grow into a reliable publishing workflow behind the scenes.',
+    role: 'Product direction, interface design, frontend architecture, Cloudflare deployment planning, and CMS implementation.',
     architecture: [
-      'File-based TanStack Router routes for the public shell.',
-      'Local seed content for early portfolio pages before the CMS is ready.',
-      'Cloudflare-compatible constraints kept in mind for future server logic.',
+      'TanStack Start routes split between public pages, dashboard routes, and small API endpoints.',
+      'Local seed content keeps the public site readable while D1-backed content becomes mature.',
+      'Cloudflare-compatible server code keeps the deployment target edge-friendly.',
     ],
     highlights: [
-      'Custom Cloudflare + Bun inspired visual system.',
-      'Public pages for projects, writing, lab, stack, contact, and resume.',
-      'Clear phase path toward dashboard, Better Auth, RBAC, and D1.',
+      'Custom Cloudflare + Bun inspired visual direction.',
+      'Public pages for projects, about, writing, lab, stack, contact, and resume.',
+      'Private dashboard foundation with content management, auth, and D1 in mind.',
     ],
     decisions: [
-      'Keep public content readable from local seed data while D1 is introduced.',
+      'Keep public content readable from local seed data while database publishing stabilizes.',
       'Use feature folders for domain data and dashboard components.',
-      'Avoid runtime Node SQLite and prepare D1 access through Cloudflare bindings.',
+      'Use Cloudflare D1 through bindings instead of relying on Node-only database access.',
     ],
     metrics: [
       { label: 'Public routes', value: '10+' },
-      { label: 'CMS tables', value: '3' },
+      { label: 'CMS areas', value: '3' },
       { label: 'Runtime target', value: 'Workers' },
     ],
     nextSteps: [
-      'Replace seed project reads with published D1 records.',
-      'Add Better Auth owner bootstrap and dashboard route guards.',
-      'Seed real project screenshots and richer media metadata.',
+      'Replace more seed copy with real finished case studies.',
+      'Add stronger content rendering for writing and lab notes.',
+      'Add richer media, screenshots, and project outcomes.',
     ],
     result:
-      'The project now has a portfolio identity and public content model to build from without rushing database work.',
+      'Winterest now has a clearer identity: a personal developer site first, with room to grow into a serious publishing system.',
   },
   {
     slug: 'edge-cms-blueprint',
-    title: 'Edge CMS Blueprint',
+    title: 'Edge CMS Dashboard',
     summary:
-      'A planned dashboard for managing projects, writing, lab entries, media, users, and roles.',
+      'A private dashboard for managing portfolio projects, writing notes, lab entries, media metadata, and publishing status.',
     category: 'CMS',
-    status: 'Planned',
-    phase: 'Phase 3',
+    status: 'Building',
+    phase: 'Dashboard',
     year: '2026',
-    scope: 'Projects CRUD, D1 schema, dashboard workflows',
+    scope: 'Projects CRUD, content lists, D1 schema, dashboard workflows',
     featured: true,
     stack: ['Drizzle ORM', 'Cloudflare D1', 'Better Auth', 'TanStack Table'],
     problem:
-      'Portfolio content should be editable from a secure dashboard instead of being hardcoded forever.',
-    goal: 'Build a small, owner-first CMS with draft and published states.',
+      'Updating a portfolio only through code makes small edits feel heavier than they should be.',
+    goal: 'Build a small owner-first CMS where projects and notes can move from draft to published without exposing private content.',
     role: 'Schema planning, dashboard UX, role model, and mutation design.',
     architecture: [
-      'D1 tables for projects first, then writing, lab, skills, media, and settings.',
+      'D1 tables for projects, writing, lab entries, media metadata, users, and sessions.',
       'Better Auth sessions with owner/editor roles.',
-      'Dashboard table and form workflows built with TanStack tools.',
+      'Dashboard list and form workflows designed for repeated content editing.',
     ],
     highlights: [
-      'Simple role model before granular permissions.',
+      'Simple owner/editor model before granular permissions.',
       'Published-only public data loaders.',
       'Server-side validation with Zod for CMS mutations.',
     ],
     decisions: [
-      'Start with projects before expanding to writing, lab, media, and settings.',
+      'Start with projects, then expand the same pattern to writing, lab, and media.',
       'Keep status and visibility explicit so draft/private content cannot leak.',
       'Use small API handlers around D1 until auth and server functions settle.',
     ],
     metrics: [
       { label: 'First model', value: 'Projects' },
       { label: 'Relations', value: 'Tech stack' },
-      { label: 'Guard status', value: 'Next' },
+      { label: 'Guard status', value: 'Owner' },
     ],
     nextSteps: [
-      'Wire dashboard forms to D1 create, update, and delete endpoints.',
-      'Add published-only public loaders for project index and case studies.',
-      'Layer owner/editor checks before exposing mutations broadly.',
+      'Polish empty states, delete confirmations, and form guidance.',
+      'Add media picker support for cover images.',
+      'Improve preview and markdown rendering before publishing longer writing.',
     ],
     result:
-      'The blueprint keeps CMS work practical and avoids over-engineering before the public portfolio is stable.',
+      'The dashboard gives this portfolio a maintainable editing flow without turning it into a bloated admin product.',
   },
   {
     slug: 'developer-lab-experiments',
-    title: 'Developer Lab Experiments',
+    title: 'Developer Lab',
     summary:
-      'A playful space for small UI demos, Cloudflare notes, AI experiments, and TanStack prototypes.',
+      'A lightweight space for small UI demos, Cloudflare notes, AI experiments, and TanStack prototypes.',
     category: 'Lab',
     status: 'Building',
-    phase: 'Phase 2',
+    phase: 'Experiments',
     year: '2026',
     scope: 'Experiment index, lab detail pages, future demo embeds',
     featured: false,
     stack: ['React', 'TanStack Query', 'Workers', 'AI tooling'],
     problem:
-      'Small experiments usually disappear into branches, notes, or private scratch files.',
+      'Small experiments often disappear into branches, notes, or private scratch files before they can teach anything useful.',
     goal: 'Give experiments a lightweight home that can grow into polished demos over time.',
     role: 'Frontend prototypes, content model planning, and interaction design.',
     architecture: [
@@ -149,7 +149,7 @@ export const featuredProjects = [
     ],
     highlights: [
       'Dedicated lab route for experiments.',
-      'Room for Cloudflare, TanStack, AI, and UI entries.',
+      'Room for Cloudflare, TanStack, AI, and interface experiments.',
       'Design language can be more playful than the dashboard.',
     ],
     decisions: [
@@ -164,11 +164,11 @@ export const featuredProjects = [
     ],
     nextSteps: [
       'Add small embedded demos for TanStack and Cloudflare experiments.',
-      'Move lab entries into D1 after project CRUD is stable.',
+      'Move lab entries into D1 once the editing experience feels good.',
       'Add screenshots or generated static visuals for each experiment.',
     ],
     result:
-      'The lab gives the portfolio a living-workbench layer beyond polished case studies.',
+      'The lab gives my portfolio a living-workbench layer beyond polished case studies.',
   },
 ] as const
 
@@ -177,7 +177,7 @@ export const labEntries = [
     slug: 'worker-notes',
     title: 'Worker Notes',
     summary:
-      'Small Cloudflare Worker patterns for routes, caching, bindings, and edge-friendly server functions.',
+      'Small notes on Worker routes, bindings, caching, and server code that stays friendly to the edge runtime.',
     status: 'Drafting',
     tags: ['Cloudflare', 'Workers', 'Edge'],
   },
@@ -185,7 +185,7 @@ export const labEntries = [
     slug: 'tanstack-playground',
     title: 'TanStack Playground',
     summary:
-      'Router, Query, Form, Table, Store, and DB experiments collected into focused mini demos.',
+      'Focused experiments with Router, Query, Form, Table, Store, and DB patterns I want to reuse well.',
     status: 'Building',
     tags: ['TanStack', 'React', 'TypeScript'],
   },
@@ -193,7 +193,7 @@ export const labEntries = [
     slug: 'bun-tooling-notes',
     title: 'Bun Tooling Notes',
     summary:
-      'Practical notes around Bun scripts, fast local workflows, and keeping the project Bun-first.',
+      'Practical notes around Bun scripts, fast local workflows, and keeping this workspace pleasant to maintain.',
     status: 'Queued',
     tags: ['Bun', 'Tooling', 'DX'],
   },
@@ -202,17 +202,17 @@ export const labEntries = [
 export const writingEntries = [
   {
     slug: 'edge-first-portfolio-stack',
-    title: 'Choosing an edge-first portfolio stack',
+    title: 'Choosing my edge-first portfolio stack',
     summary:
-      'Why TanStack Start, Bun, Cloudflare Workers, D1, and Drizzle make sense for a personal developer platform.',
+      'Why TanStack Start, Bun, Cloudflare Workers, D1, and Drizzle fit the kind of portfolio I want to maintain.',
     status: 'Outline',
     tags: ['Architecture', 'Cloudflare', 'TanStack'],
   },
   {
     slug: 'solo-cms-roadmap',
-    title: 'A practical solo CMS roadmap',
+    title: 'A practical content workflow for one developer',
     summary:
-      'A staged path from local seed content to projects CRUD, auth, RBAC, writing, media, and dashboard polish.',
+      'A staged path from local seed content to dashboard CRUD, auth, writing, media, and content polish.',
     status: 'Outline',
     tags: ['CMS', 'Product', 'Planning'],
   },
@@ -220,7 +220,7 @@ export const writingEntries = [
     slug: 'calm-dashboard-design',
     title: 'Designing a calm dashboard',
     summary:
-      'Notes on making admin tools dense, readable, and useful without importing marketing-page energy.',
+      'Notes on making admin screens dense, readable, and useful without bringing marketing-page energy into the workspace.',
     status: 'Idea',
     tags: ['Design', 'Dashboard', 'UX'],
   },
@@ -230,13 +230,13 @@ export const stackGroups = [
   {
     title: 'Runtime and Edge',
     description:
-      'Fast local iteration with a deployment target that keeps server code small.',
+      'Tools I use to keep local iteration fast while keeping deployment close to the edge.',
     items: ['Bun', 'Cloudflare Workers', 'Wrangler', 'Vite'],
   },
   {
     title: 'Fullstack UI',
     description:
-      'Type-safe routes, server state, forms, tables, and local state in one ecosystem.',
+      'A practical React stack for routing, server state, forms, tables, and shared UI state.',
     items: [
       'TanStack Start',
       'TanStack Router',
@@ -249,13 +249,13 @@ export const stackGroups = [
   {
     title: 'Data and Auth',
     description:
-      'A D1-backed CMS foundation with explicit schema and cookie-based auth.',
+      'The boring-but-important layer for content, sessions, validation, and secure dashboard work.',
     items: ['Drizzle ORM', 'Cloudflare D1', 'Better Auth', 'Zod', 'T3Env'],
   },
   {
     title: 'Design System',
     description:
-      'Composable primitives with a warm Cloudflare + Bun visual language.',
+      'Composable UI primitives shaped into a warm orange, dark-mode-friendly Winterest visual language.',
     items: ['Tailwind CSS v4', 'Radix UI', 'shadcn/ui style', 'lucide-react'],
   },
 ] as const
@@ -263,21 +263,21 @@ export const stackGroups = [
 export const timeline = [
   {
     period: 'Now',
-    title: 'Portfolio platform foundation',
+    title: 'Personal portfolio foundation',
     description:
-      'Replacing the starter resume shell with a public portfolio, project pages, writing, lab, and stack views.',
+      'Shaping the site around who I am, what I build, and how people can explore my projects, notes, and experiments.',
   },
   {
     period: 'Next',
-    title: 'CMS dashboard and projects model',
+    title: 'Content workflow and dashboard',
     description:
-      'Adding Drizzle schema, D1-backed project content, dashboard list views, and create/edit flows.',
+      'Turning project, writing, and lab content into an owner-managed workflow with drafts, published entries, and cleaner editing screens.',
   },
   {
     period: 'Later',
-    title: 'Auth, RBAC, writing, media, and character layer',
+    title: 'Richer writing, media, and visual identity',
     description:
-      'Better Auth owner bootstrap, editor roles, publishing workflow, media metadata, and optional lightweight visuals.',
+      'Improving long-form content, media handling, language support, and lightweight character visuals without making the site feel heavy.',
   },
 ] as const
 

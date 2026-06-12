@@ -3,7 +3,7 @@ import { Cloud, Code2, Cpu, Sparkles } from 'lucide-react'
 const signalItems = [
   { label: 'Workers', value: 'edge-ready', icon: Cloud },
   { label: 'Bun', value: 'fast loops', icon: Sparkles },
-  { label: 'CMS', value: 'D1-backed', icon: Cpu },
+  { label: 'Notes', value: 'devlogs', icon: Cpu },
 ] as const
 
 export function HeroVisual() {
@@ -20,7 +20,7 @@ export function HeroVisual() {
       </div>
 
       <figcaption className="sr-only" id="hero-visual-title">
-        Original Winterest mascot for the Cloudflare and Bun inspired portfolio.
+        Original Winterest mascot for a Cloudflare and Bun inspired portfolio.
       </figcaption>
 
       <div className="hero-visual__terminal" aria-hidden="true">
@@ -37,7 +37,7 @@ export function HeroVisual() {
             <span className="text-orange-300">runtime</span>: workers
           </span>
           <span>
-            <span className="text-orange-300">cms</span>: d1 + drizzle
+            <span className="text-orange-300">notes</span>: projects + lab
           </span>
           <span>
             <span className="text-orange-300">mood</span>: playful, precise
@@ -63,7 +63,7 @@ export function HeroVisual() {
 
       <div className="hero-visual__badge" aria-hidden="true">
         <Code2 className="size-4" />
-        Edge lab
+        Web lab
       </div>
     </figure>
   )

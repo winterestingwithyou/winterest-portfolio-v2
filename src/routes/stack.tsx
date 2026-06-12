@@ -15,8 +15,8 @@ function StackPage() {
       <Container>
         <SectionHeader
           eyebrow="Stack"
-          title="The tools behind the portfolio and future CMS."
-          description="The stack stays practical: fast local development, Cloudflare-compatible runtime choices, and enough structure for long-term solo iteration."
+          title="The tools I use to build Winterest and related work."
+          description="This page is not a trophy shelf. It is a map of the tools I trust for fast iteration, maintainable interfaces, content workflows, and edge-friendly deployment."
         />
 
         <div className="grid gap-5 md:grid-cols-2">

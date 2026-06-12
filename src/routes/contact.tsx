@@ -14,8 +14,8 @@ function ContactPage() {
       <Container className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
         <SectionHeader
           eyebrow="Contact"
-          title="Let us talk about practical web systems and edge-first ideas."
-          description="GitHub is the best public channel while the portfolio platform grows. The email action uses the domain direction for now."
+          title="Want to talk about web systems, projects, or experiments?"
+          description="GitHub is the best public channel for now. Email is available for direct messages, project conversations, or anything that needs a little more context."
         />
 
         <div className="grid gap-5">
@@ -26,8 +26,8 @@ function ContactPage() {
                 contact --mode practical
               </p>
               <h2 className="mt-4 text-2xl font-semibold tracking-tight text-white">
-                Best fit: portfolio systems, Cloudflare workflows, and useful
-                web experiments.
+                Best fit: fullstack web projects, Cloudflare workflows,
+                portfolio systems, and useful developer experiments.
               </h2>
             </div>
             <div className="contact-signal__status" aria-hidden="true">

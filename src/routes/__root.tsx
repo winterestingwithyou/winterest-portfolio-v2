@@ -41,21 +41,21 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Winterest | M. Adam Yudistira',
+        title: 'Winterest | Fullstack Web Developer',
       },
       {
         name: 'description',
         content:
-          'Cloudflare-powered portfolio, CMS roadmap, and developer lab for M. Adam Yudistira / winterestingwithyou.',
+          'Personal portfolio, writing space, and developer lab for Winterest.',
       },
       {
         property: 'og:title',
-        content: 'Winterest | M. Adam Yudistira',
+        content: 'Winterest | Fullstack Web Developer',
       },
       {
         property: 'og:description',
         content:
-          'A personal developer platform for projects, writing, lab experiments, and edge-first web architecture.',
+          'Projects, notes, experiments, and practical fullstack web work from Indonesia.',
       },
     ],
     links: [

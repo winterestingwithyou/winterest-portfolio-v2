@@ -20,8 +20,8 @@ function LabPage() {
       <Container>
         <SectionHeader
           eyebrow="Lab"
-          title="Small experiments, notes, and tools before they become case studies."
-          description="The lab can be playful, but it still follows the same performance and accessibility standards as the public portfolio."
+          title="Small experiments, rough notes, and useful sparks."
+          description="The lab is where I keep prototypes and learning notes before they are polished enough to become full projects or articles."
         />
 
         <div className="grid gap-5 md:grid-cols-3">
