@@ -8,7 +8,7 @@ This project is evolving from a TanStack Start resume starter into a polished pu
 
 - Public portfolio pages for projects, writing, lab experiments, stack, contact, and resume.
 - CMS dashboard for projects first, then writing, lab, skills, media, users, roles, and settings.
-- Cloudflare Workers-compatible deployment with D1 planned for CMS data.
+- Cloudflare Workers-compatible deployment with D1 for CMS data.
 - Better Auth and simple owner/editor RBAC planned after the public shell and CMS foundation.
 - Optional character or 3D visual layer only after the core product is stable.
 
@@ -23,7 +23,7 @@ This project is evolving from a TanStack Start resume starter into a polished pu
 - Cloudflare Vite plugin and Wrangler
 - Tailwind CSS v4
 - Radix/shadcn-style UI primitives
-- Drizzle ORM and Cloudflare D1 later
+- Drizzle ORM and Cloudflare D1
 - Better Auth later
 - Paraglide/Inlang
 - T3Env
@@ -77,9 +77,31 @@ bun run db:studio
 
 `bun run db:generate` should only be used for intentional schema-file work.
 
+## Database
+
+Cloudflare D1 is configured in `wrangler.jsonc`:
+
+- Binding: `DB`
+- Database name: `winterest-portfolio`
+
+The first Drizzle schema covers the project CMS foundation:
+
+- `projects`
+- `technologies`
+- `project_technologies`
+
+Generate migration files after intentional schema edits:
+
+```bash
+bun run db:generate -- --name initial_portfolio_cms
+```
+
+The owner applies migrations to D1.
+
 ## Current Phase
 
-Phase 1 is focused on replacing the starter resume identity with a custom public shell:
+The public portfolio shell is in place, and the project is moving into the CMS
+foundation phase:
 
 - `/`
 - `/about`
@@ -92,8 +114,14 @@ Phase 1 is focused on replacing the starter resume identity with a custom public
 - `/stack`
 - `/contact`
 - `/resume`
+- `/dashboard`
+- `/dashboard/projects`
+- `/dashboard/projects/new`
+- `/dashboard/projects/$id`
 
-The early content is local seed data in `src/features/portfolio/data.ts`. Later phases can move projects, writing, and lab entries into D1-backed CMS tables.
+The early public content is still local seed data in `src/features/portfolio/data.ts`.
+The dashboard routes are ready for D1-backed mutations and Better Auth guards in
+the next phase.
 
 ## Deployment
 
