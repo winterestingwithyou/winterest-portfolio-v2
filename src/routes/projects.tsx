@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowRight, Github } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { SignalPreview } from '#/components/visual/SignalPreview'
 import { featuredProjects, siteProfile } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/projects')({
@@ -22,7 +23,7 @@ function ProjectsPage() {
           {featuredProjects.map((project) => (
             <article
               key={project.slug}
-              className="surface-card grid gap-6 p-6 lg:grid-cols-[1fr_auto] lg:items-center"
+              className="surface-card grid gap-6 p-6 lg:grid-cols-[1fr_18rem_auto] lg:items-center"
             >
               <div>
                 <div className="mb-4 flex flex-wrap items-center gap-2">
@@ -50,6 +51,11 @@ function ProjectsPage() {
                   ))}
                 </div>
               </div>
+              <SignalPreview
+                eyebrow={project.category}
+                title={project.phase}
+                items={project.stack}
+              />
               <Link
                 to="/projects/$slug"
                 params={{ slug: project.slug }}

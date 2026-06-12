@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { FlaskConical } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { SignalPreview } from '#/components/visual/SignalPreview'
 import { getPublishedLabEntries } from '#/features/content/public-loaders'
 import { labEntries } from '#/features/portfolio/data'
 
@@ -33,6 +34,15 @@ function LabPage() {
             >
               <div className="mb-5 grid size-11 place-items-center rounded-lg bg-[var(--brand-orange-soft)] text-[var(--brand-orange-deep)]">
                 <FlaskConical aria-hidden="true" className="size-5" />
+              </div>
+              <div className="mb-5">
+                <SignalPreview
+                  eyebrow="Experiment"
+                  title={entry.status}
+                  items={entry.tags}
+                  variant="lab"
+                  compact
+                />
               </div>
               <p className="mb-3 text-xs font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
                 {entry.status}

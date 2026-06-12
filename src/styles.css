@@ -445,6 +445,136 @@
     padding: 0.9rem;
   }
 
+  .signal-preview {
+    position: relative;
+    min-height: 13.5rem;
+    overflow: hidden;
+    border: 1px solid var(--brand-line);
+    border-radius: 0.75rem;
+    background:
+      radial-gradient(
+        circle at 76% 16%,
+        color-mix(in srgb, var(--brand-orange) 26%, transparent),
+        transparent 28%
+      ),
+      linear-gradient(
+        145deg,
+        color-mix(in srgb, var(--brand-dark) 92%, transparent),
+        color-mix(in srgb, var(--brand-dark) 70%, var(--brand-orange) 30%)
+      );
+    color: #fff7ec;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .signal-preview--compact {
+    min-height: 10rem;
+  }
+
+  .signal-preview__chrome {
+    display: flex;
+    gap: 0.35rem;
+    padding: 0.75rem 0.85rem 0;
+  }
+
+  .signal-preview__chrome span {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: #ffb76a;
+    opacity: 0.9;
+  }
+
+  .signal-preview__header {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1rem 0;
+  }
+
+  .signal-preview__header p,
+  .signal-preview__header strong {
+    margin: 0;
+  }
+
+  .signal-preview__header p {
+    color: #ffd9ae;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .signal-preview__header strong {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.95rem;
+    line-height: 1.25;
+  }
+
+  .signal-preview__lines {
+    display: grid;
+    gap: 0.55rem;
+    padding: 1.1rem 1rem 0;
+  }
+
+  .signal-preview__lines span {
+    height: 0.45rem;
+    border-radius: 999px;
+    background: rgba(255, 247, 236, 0.2);
+  }
+
+  .signal-preview__lines span:nth-child(1) {
+    width: 82%;
+  }
+
+  .signal-preview__lines span:nth-child(2) {
+    width: 58%;
+    background: rgba(255, 150, 56, 0.45);
+  }
+
+  .signal-preview__lines span:nth-child(3) {
+    width: 72%;
+  }
+
+  .signal-preview__chips {
+    position: absolute;
+    inset: auto 1rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .signal-preview__chips span {
+    border: 1px solid rgba(255, 183, 106, 0.32);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.28rem 0.5rem;
+    color: #ffe5c6;
+    font-size: 0.65rem;
+    font-weight: 800;
+  }
+
+  .signal-preview__orbit {
+    position: absolute;
+    right: -1.25rem;
+    bottom: 2.4rem;
+    display: grid;
+    place-items: center;
+    width: 5.5rem;
+    height: 5.5rem;
+    border: 1px solid rgba(255, 183, 106, 0.28);
+    border-radius: 999px;
+    color: #ffb76a;
+    opacity: 0.72;
+  }
+
+  .signal-preview__orbit svg:last-child {
+    position: absolute;
+    left: 0.6rem;
+    top: 1rem;
+  }
+
   @media (min-width: 900px) {
     .character-spotlight {
       grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
