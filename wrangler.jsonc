@@ -17,6 +17,7 @@
       "binding": "DB",
       "database_name": "winterest-portfolio",
       "database_id": "7ff292bd-6969-4fce-9644-22a4bba8805e",
+      "migrations_dir": "drizzle",
     },
   ],
   /**

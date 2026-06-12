@@ -83,6 +83,7 @@ Cloudflare D1 is configured in `wrangler.jsonc`:
 
 - Binding: `DB`
 - Database name: `winterest-portfolio`
+- Migrations directory: `drizzle`
 
 The first Drizzle schema covers the project CMS foundation:
 
@@ -96,7 +97,24 @@ Generate migration files after intentional schema edits:
 bun run db:generate -- --name initial_portfolio_cms
 ```
 
-The owner applies migrations to D1.
+Runtime database access uses the Cloudflare D1 binding directly:
+
+```ts
+import { drizzle } from 'drizzle-orm/d1'
+
+const db = drizzle(env.DB)
+```
+
+Drizzle Kit remote commands use the Cloudflare D1 HTTP driver. Owner-run
+migration/push/pull commands need these local environment variables:
+
+```bash
+CLOUDFLARE_ACCOUNT_ID=
+CLOUDFLARE_D1_DATABASE_ID=7ff292bd-6969-4fce-9644-22a4bba8805e
+CLOUDFLARE_D1_API_TOKEN=
+```
+
+`DATABASE_URL` is not used for the Cloudflare D1 runtime.
 
 ## Current Phase
 

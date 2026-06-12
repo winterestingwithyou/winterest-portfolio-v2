@@ -45,6 +45,9 @@ export const featuredProjects = [
       'A TanStack Start portfolio evolving into a CMS dashboard, writing hub, and developer lab.',
     category: 'Personal platform',
     status: 'Building',
+    phase: 'Phase 1-3',
+    year: '2026',
+    scope: 'Public portfolio, D1 CMS foundation, dashboard shell',
     featured: true,
     stack: ['TanStack Start', 'React 19', 'Bun', 'Cloudflare', 'Tailwind CSS'],
     problem:
@@ -61,6 +64,21 @@ export const featuredProjects = [
       'Public pages for projects, writing, lab, stack, contact, and resume.',
       'Clear phase path toward dashboard, Better Auth, RBAC, and D1.',
     ],
+    decisions: [
+      'Keep public content readable from local seed data while D1 is introduced.',
+      'Use feature folders for domain data and dashboard components.',
+      'Avoid runtime Node SQLite and prepare D1 access through Cloudflare bindings.',
+    ],
+    metrics: [
+      { label: 'Public routes', value: '10+' },
+      { label: 'CMS tables', value: '3' },
+      { label: 'Runtime target', value: 'Workers' },
+    ],
+    nextSteps: [
+      'Replace seed project reads with published D1 records.',
+      'Add Better Auth owner bootstrap and dashboard route guards.',
+      'Seed real project screenshots and richer media metadata.',
+    ],
     result:
       'The project now has a portfolio identity and public content model to build from without rushing database work.',
   },
@@ -71,6 +89,9 @@ export const featuredProjects = [
       'A planned dashboard for managing projects, writing, lab entries, media, users, and roles.',
     category: 'CMS',
     status: 'Planned',
+    phase: 'Phase 3',
+    year: '2026',
+    scope: 'Projects CRUD, D1 schema, dashboard workflows',
     featured: true,
     stack: ['Drizzle ORM', 'Cloudflare D1', 'Better Auth', 'TanStack Table'],
     problem:
@@ -87,6 +108,21 @@ export const featuredProjects = [
       'Published-only public data loaders.',
       'Server-side validation with Zod for CMS mutations.',
     ],
+    decisions: [
+      'Start with projects before expanding to writing, lab, media, and settings.',
+      'Keep status and visibility explicit so draft/private content cannot leak.',
+      'Use small API handlers around D1 until auth and server functions settle.',
+    ],
+    metrics: [
+      { label: 'First model', value: 'Projects' },
+      { label: 'Relations', value: 'Tech stack' },
+      { label: 'Guard status', value: 'Next' },
+    ],
+    nextSteps: [
+      'Wire dashboard forms to D1 create, update, and delete endpoints.',
+      'Add published-only public loaders for project index and case studies.',
+      'Layer owner/editor checks before exposing mutations broadly.',
+    ],
     result:
       'The blueprint keeps CMS work practical and avoids over-engineering before the public portfolio is stable.',
   },
@@ -97,6 +133,9 @@ export const featuredProjects = [
       'A playful space for small UI demos, Cloudflare notes, AI experiments, and TanStack prototypes.',
     category: 'Lab',
     status: 'Building',
+    phase: 'Phase 2',
+    year: '2026',
+    scope: 'Experiment index, lab detail pages, future demo embeds',
     featured: false,
     stack: ['React', 'TanStack Query', 'Workers', 'AI tooling'],
     problem:
@@ -112,6 +151,21 @@ export const featuredProjects = [
       'Dedicated lab route for experiments.',
       'Room for Cloudflare, TanStack, AI, and UI entries.',
       'Design language can be more playful than the dashboard.',
+    ],
+    decisions: [
+      'Keep lab entries lighter than project case studies.',
+      'Make future demos linkable without loading heavy code on every page.',
+      'Use reduced-motion friendly visual polish before any 3D layer.',
+    ],
+    metrics: [
+      { label: 'Entry types', value: 'Notes + demos' },
+      { label: 'Visual weight', value: 'Light' },
+      { label: 'CMS phase', value: 'Later' },
+    ],
+    nextSteps: [
+      'Add small embedded demos for TanStack and Cloudflare experiments.',
+      'Move lab entries into D1 after project CRUD is stable.',
+      'Add screenshots or generated static visuals for each experiment.',
     ],
     result:
       'The lab gives the portfolio a living-workbench layer beyond polished case studies.',

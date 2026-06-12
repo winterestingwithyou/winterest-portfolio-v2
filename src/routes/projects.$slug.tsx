@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowLeft } from 'lucide-react'
+import { ArrowLeft, CalendarDays, Layers3, Rocket } from 'lucide-react'
+import type { ReactNode } from 'react'
 
 import { Container } from '#/components/marketing/section'
 import { getProjectBySlug } from '#/features/portfolio/data'
@@ -56,9 +57,31 @@ function ProjectDetailPage() {
           </div>
 
           <aside className="surface-card p-5">
-            <p className="text-sm font-bold text-[var(--brand-orange-deep)]">
-              {project.status}
-            </p>
+            <div className="grid gap-4">
+              <MetaItem
+                icon={<Rocket aria-hidden="true" className="size-4" />}
+                label="Status"
+                value={project.status}
+              />
+              <MetaItem
+                icon={<Layers3 aria-hidden="true" className="size-4" />}
+                label="Phase"
+                value={project.phase}
+              />
+              <MetaItem
+                icon={<CalendarDays aria-hidden="true" className="size-4" />}
+                label="Year"
+                value={project.year}
+              />
+            </div>
+            <div className="mt-5 border-t border-[var(--brand-line)] pt-5">
+              <p className="text-xs font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
+                Scope
+              </p>
+              <p className="mt-2 text-sm leading-7 text-[var(--brand-muted)]">
+                {project.scope}
+              </p>
+            </div>
             <div className="mt-4 flex flex-wrap gap-2">
               {project.stack.map((item) => (
                 <span
@@ -72,6 +95,19 @@ function ProjectDetailPage() {
           </aside>
         </section>
 
+        <section className="mt-12 grid gap-4 md:grid-cols-3">
+          {project.metrics.map((metric) => (
+            <article key={metric.label} className="surface-card p-5">
+              <p className="text-sm font-semibold text-[var(--brand-muted)]">
+                {metric.label}
+              </p>
+              <p className="mt-2 text-3xl font-semibold text-[var(--brand-ink)]">
+                {metric.value}
+              </p>
+            </article>
+          ))}
+        </section>
+
         <section className="mt-12 grid gap-5 lg:grid-cols-3">
           <InfoBlock title="Problem" text={project.problem} />
           <InfoBlock title="Goal" text={project.goal} />
@@ -81,6 +117,8 @@ function ProjectDetailPage() {
         <section className="mt-12 grid gap-5 lg:grid-cols-2">
           <ListBlock title="Architecture" items={project.architecture} />
           <ListBlock title="Highlights" items={project.highlights} />
+          <ListBlock title="Key Decisions" items={project.decisions} />
+          <ListBlock title="Next Steps" items={project.nextSteps} />
         </section>
 
         <section className="mt-12 surface-card p-6 sm:p-8">
@@ -91,6 +129,32 @@ function ProjectDetailPage() {
         </section>
       </Container>
     </main>
+  )
+}
+
+function MetaItem({
+  icon,
+  label,
+  value,
+}: {
+  icon: ReactNode
+  label: string
+  value: string
+}) {
+  return (
+    <div className="flex gap-3">
+      <div className="mt-0.5 grid size-8 shrink-0 place-items-center rounded-lg bg-[var(--brand-orange-soft)] text-[var(--brand-orange-deep)]">
+        {icon}
+      </div>
+      <div>
+        <p className="text-xs font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
+          {label}
+        </p>
+        <p className="mt-1 text-sm font-semibold text-[var(--brand-ink)]">
+          {value}
+        </p>
+      </div>
+    </div>
   )
 }
 
