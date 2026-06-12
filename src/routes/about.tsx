@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { CharacterSpotlight } from '#/components/visual/CharacterSpotlight'
 import { principles, siteProfile, timeline } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/about')({
@@ -32,6 +33,10 @@ function AboutPage() {
             </p>
           </div>
         </section>
+
+        <div className="mt-16">
+          <CharacterSpotlight />
+        </div>
 
         <section className="mt-16">
           <SectionHeader
