@@ -4,7 +4,7 @@ type SignalPreviewProps = {
   title: string
   eyebrow: string
   items: readonly string[]
-  variant?: 'project' | 'lab'
+  variant?: 'project' | 'lab' | 'writing' | 'stack'
   compact?: boolean
 }
 
@@ -15,7 +15,8 @@ export function SignalPreview({
   variant = 'project',
   compact = false,
 }: SignalPreviewProps) {
-  const Icon = variant === 'lab' ? FlaskConical : Rocket
+  const Icon =
+    variant === 'lab' ? FlaskConical : variant === 'writing' ? Code2 : Rocket
 
   return (
     <div

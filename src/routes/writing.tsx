@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { BookOpen } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { SignalPreview } from '#/components/visual/SignalPreview'
 import { getPublishedWritingEntries } from '#/features/content/public-loaders'
 import { writingEntries } from '#/features/portfolio/data'
 
@@ -30,7 +31,7 @@ function WritingPage() {
               key={entry.slug}
               to="/writing/$slug"
               params={{ slug: entry.slug }}
-              className="surface-card grid gap-5 p-6 text-[var(--brand-ink)] no-underline transition hover:-translate-y-1 hover:border-[var(--brand-orange)] md:grid-cols-[3rem_1fr]"
+              className="surface-card grid gap-5 p-6 text-[var(--brand-ink)] no-underline transition hover:-translate-y-1 hover:border-[var(--brand-orange)] lg:grid-cols-[3rem_1fr_16rem] lg:items-center"
             >
               <div className="grid size-11 place-items-center rounded-lg bg-[var(--brand-orange-soft)] text-[var(--brand-orange-deep)]">
                 <BookOpen aria-hidden="true" className="size-5" />
@@ -54,6 +55,13 @@ function WritingPage() {
                   ))}
                 </div>
               </div>
+              <SignalPreview
+                eyebrow="Devlog"
+                title={entry.status}
+                items={entry.tags}
+                variant="writing"
+                compact
+              />
             </Link>
           ))}
         </div>

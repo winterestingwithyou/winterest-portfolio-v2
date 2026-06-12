@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Github, Mail, Send } from 'lucide-react'
+import { Github, Mail, Send, Terminal } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { siteProfile } from '#/features/portfolio/data'
@@ -19,6 +19,23 @@ function ContactPage() {
         />
 
         <div className="grid gap-5">
+          <div className="contact-signal">
+            <div>
+              <p className="m-0 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wide text-orange-200">
+                <Terminal aria-hidden="true" className="size-4" />
+                contact --mode practical
+              </p>
+              <h2 className="mt-4 text-2xl font-semibold tracking-tight text-white">
+                Best fit: portfolio systems, Cloudflare workflows, and useful
+                web experiments.
+              </h2>
+            </div>
+            <div className="contact-signal__status" aria-hidden="true">
+              <span />
+              Async friendly
+            </div>
+          </div>
+
           <div className="surface-card p-6">
             <h2 className="text-2xl font-semibold text-[var(--brand-ink)]">
               Direct channels
