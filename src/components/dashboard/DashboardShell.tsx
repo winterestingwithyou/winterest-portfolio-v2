@@ -16,8 +16,8 @@ import { siteProfile } from '#/features/portfolio/data'
 const dashboardNav = [
   { to: '/dashboard', label: 'Overview', icon: LayoutDashboard },
   { to: '/dashboard/projects', label: 'Projects', icon: FolderKanban },
-  { to: '/writing', label: 'Writing', icon: PenLine },
-  { to: '/lab', label: 'Lab', icon: TestTube2 },
+  { to: '/dashboard/writing', label: 'Writing', icon: PenLine },
+  { to: '/dashboard/lab', label: 'Lab', icon: TestTube2 },
   { to: '/dashboard/media', label: 'Media', icon: Image },
   { to: '/dashboard/users', label: 'Users', icon: Users },
   { to: '/dashboard/settings', label: 'Settings', icon: Settings },
@@ -51,7 +51,6 @@ export function DashboardShell({
             {dashboardNav.map((item) => {
               const Icon = item.icon
               const isInternalPlaceholder =
-                item.to === '/dashboard/media' ||
                 item.to === '/dashboard/users' ||
                 item.to === '/dashboard/settings'
 

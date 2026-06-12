@@ -2,13 +2,19 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { BookOpen } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { getPublishedWritingEntries } from '#/features/content/public-loaders'
 import { writingEntries } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/writing')({
+  loader: () => getPublishedWritingEntries(),
   component: WritingPage,
 })
 
 function WritingPage() {
+  const publishedEntries = Route.useLoaderData()
+  const entries =
+    publishedEntries.length > 0 ? publishedEntries : writingEntries
+
   return (
     <main className="px-4 py-14 sm:py-20">
       <Container>
@@ -19,7 +25,7 @@ function WritingPage() {
         />
 
         <div className="grid gap-5">
-          {writingEntries.map((entry) => (
+          {entries.map((entry) => (
             <Link
               key={entry.slug}
               to="/writing/$slug"

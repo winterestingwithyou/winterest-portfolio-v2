@@ -2,15 +2,18 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeft, BookOpen } from 'lucide-react'
 
 import { Container } from '#/components/marketing/section'
+import { getPublishedWritingEntry } from '#/features/content/public-loaders'
 import { getWritingEntryBySlug } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/writing/$slug')({
+  loader: ({ params }) => getPublishedWritingEntry({ data: params.slug }),
   component: WritingDetailPage,
 })
 
 function WritingDetailPage() {
   const { slug } = Route.useParams()
-  const entry = getWritingEntryBySlug(slug)
+  const publishedEntry = Route.useLoaderData()
+  const entry = publishedEntry ?? getWritingEntryBySlug(slug)
 
   if (!entry) {
     return (
@@ -65,6 +68,11 @@ function WritingDetailPage() {
               </span>
             ))}
           </div>
+          {'content' in entry && entry.content ? (
+            <div className="mt-8 border-t border-[var(--brand-line)] pt-6 text-sm leading-8 text-[var(--brand-muted)] whitespace-pre-wrap">
+              {entry.content}
+            </div>
+          ) : null}
         </article>
       </Container>
     </main>

@@ -2,15 +2,18 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeft, FlaskConical } from 'lucide-react'
 
 import { Container } from '#/components/marketing/section'
+import { getPublishedLabEntry } from '#/features/content/public-loaders'
 import { getLabEntryBySlug } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/lab/$slug')({
+  loader: ({ params }) => getPublishedLabEntry({ data: params.slug }),
   component: LabDetailPage,
 })
 
 function LabDetailPage() {
   const { slug } = Route.useParams()
-  const entry = getLabEntryBySlug(slug)
+  const publishedEntry = Route.useLoaderData()
+  const entry = publishedEntry ?? getLabEntryBySlug(slug)
 
   if (!entry) {
     return (
@@ -65,6 +68,11 @@ function LabDetailPage() {
               </span>
             ))}
           </div>
+          {'content' in entry && entry.content ? (
+            <div className="mt-8 border-t border-[var(--brand-line)] pt-6 text-sm leading-8 text-[var(--brand-muted)] whitespace-pre-wrap">
+              {entry.content}
+            </div>
+          ) : null}
         </section>
       </Container>
     </main>

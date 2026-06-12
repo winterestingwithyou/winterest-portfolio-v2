@@ -170,6 +170,81 @@ export const projects = sqliteTable(
   ],
 )
 
+export const writing = sqliteTable(
+  'writing',
+  {
+    id: text('id').primaryKey(),
+    slug: text('slug').notNull(),
+    title: text('title').notNull(),
+    summary: text('summary').notNull(),
+    content: text('content'),
+    status: text('status', { enum: contentStatuses })
+      .notNull()
+      .default('draft'),
+    visibility: text('visibility', { enum: contentVisibilities })
+      .notNull()
+      .default('public'),
+    coverImage: text('cover_image'),
+    tags: text('tags').notNull().default('[]'),
+    publishedAt: integer('published_at', { mode: 'timestamp' }),
+    ...timestamps,
+  },
+  (table) => [
+    uniqueIndex('writing_slug_unique').on(table.slug),
+    index('writing_status_idx').on(table.status),
+    index('writing_visibility_idx').on(table.visibility),
+    index('writing_published_at_idx').on(table.publishedAt),
+  ],
+)
+
+export const labEntries = sqliteTable(
+  'lab_entries',
+  {
+    id: text('id').primaryKey(),
+    slug: text('slug').notNull(),
+    title: text('title').notNull(),
+    summary: text('summary').notNull(),
+    content: text('content'),
+    status: text('status', { enum: contentStatuses })
+      .notNull()
+      .default('draft'),
+    visibility: text('visibility', { enum: contentVisibilities })
+      .notNull()
+      .default('public'),
+    demoUrl: text('demo_url'),
+    repoUrl: text('repo_url'),
+    coverImage: text('cover_image'),
+    tags: text('tags').notNull().default('[]'),
+    publishedAt: integer('published_at', { mode: 'timestamp' }),
+    ...timestamps,
+  },
+  (table) => [
+    uniqueIndex('lab_entries_slug_unique').on(table.slug),
+    index('lab_entries_status_idx').on(table.status),
+    index('lab_entries_visibility_idx').on(table.visibility),
+    index('lab_entries_published_at_idx').on(table.publishedAt),
+  ],
+)
+
+export const media = sqliteTable(
+  'media',
+  {
+    id: text('id').primaryKey(),
+    filename: text('filename').notNull(),
+    url: text('url').notNull(),
+    mimeType: text('mime_type').notNull(),
+    size: integer('size').notNull().default(0),
+    width: integer('width'),
+    height: integer('height'),
+    alt: text('alt'),
+    ...timestamps,
+  },
+  (table) => [
+    index('media_filename_idx').on(table.filename),
+    index('media_mime_type_idx').on(table.mimeType),
+  ],
+)
+
 export const technologies = sqliteTable(
   'technologies',
   {

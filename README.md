@@ -91,12 +91,18 @@ The first Drizzle schema covers the project CMS foundation:
 - `technologies`
 - `project_technologies`
 - Better Auth tables: `user`, `session`, `account`, `verification`
+- Phase 5 content tables: `writing`, `lab_entries`, `media`
 
 Generate migration files after intentional schema edits:
 
 ```bash
 bun run db:generate -- --name initial_portfolio_cms
 ```
+
+Current generated migration files:
+
+- `drizzle/0001_add_auth_rbac.sql`
+- `drizzle/0002_add_writing_lab_media.sql`
 
 Runtime database access uses the Cloudflare D1 binding directly:
 
@@ -155,10 +161,19 @@ The public portfolio shell and project CMS foundation are in place:
 - `/dashboard/projects`
 - `/dashboard/projects/new`
 - `/dashboard/projects/$id`
+- `/dashboard/writing`
+- `/dashboard/writing/new`
+- `/dashboard/writing/$id`
+- `/dashboard/lab`
+- `/dashboard/lab/new`
+- `/dashboard/lab/$id`
+- `/dashboard/media`
 
 The early public content is still local seed data in
-`src/features/portfolio/data.ts`. Dashboard project CRUD uses D1 through API
-routes and requires a Better Auth dashboard session.
+`src/features/portfolio/data.ts`, but public writing and lab routes now try to
+load published D1 records first and fall back to seeds when migrations are not
+applied yet. Dashboard project, writing, and lab CRUD use D1 through API routes
+and require a Better Auth dashboard session.
 
 ## Deployment
 

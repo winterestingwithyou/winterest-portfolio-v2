@@ -2,13 +2,18 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { FlaskConical } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { getPublishedLabEntries } from '#/features/content/public-loaders'
 import { labEntries } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/lab')({
+  loader: () => getPublishedLabEntries(),
   component: LabPage,
 })
 
 function LabPage() {
+  const publishedEntries = Route.useLoaderData()
+  const entries = publishedEntries.length > 0 ? publishedEntries : labEntries
+
   return (
     <main className="px-4 py-14 sm:py-20">
       <Container>
@@ -19,7 +24,7 @@ function LabPage() {
         />
 
         <div className="grid gap-5 md:grid-cols-3">
-          {labEntries.map((entry) => (
+          {entries.map((entry) => (
             <Link
               key={entry.slug}
               to="/lab/$slug"
