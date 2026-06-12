@@ -3,14 +3,21 @@ import { env } from 'cloudflare:workers'
 import { ZodError } from 'zod'
 
 import { getDb } from '#/db'
+import { requireDashboardUser } from '#/features/auth/session'
 import { createProject, listProjects } from '#/features/projects/queries'
 import { projectInputSchema } from '#/features/projects/validation'
 
 export const Route = createFileRoute('/api/projects')({
   server: {
     handlers: {
-      GET: async () => {
+      GET: async ({ request }) => {
         try {
+          const user = await requireDashboardUser(request)
+
+          if (user instanceof Response) {
+            return user
+          }
+
           const db = getDb(env.DB)
           const projects = await listProjects(db)
 
@@ -21,6 +28,12 @@ export const Route = createFileRoute('/api/projects')({
       },
       POST: async ({ request }) => {
         try {
+          const user = await requireDashboardUser(request)
+
+          if (user instanceof Response) {
+            return user
+          }
+
           const payload = await request.json()
           const input = projectInputSchema.parse(payload)
           const db = getDb(env.DB)

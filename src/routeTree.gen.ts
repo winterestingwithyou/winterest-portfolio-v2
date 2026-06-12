@@ -13,6 +13,7 @@ import { Route as WritingRouteImport } from './routes/writing'
 import { Route as StackRouteImport } from './routes/stack'
 import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as LabRouteImport } from './routes/lab'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -46,6 +47,11 @@ const ResumeRoute = ResumeRouteImport.update({
 const ProjectsRoute = ProjectsRouteImport.update({
   id: '/projects',
   path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LabRoute = LabRouteImport.update({
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/lab': typeof LabRouteWithChildren
+  '/login': typeof LoginRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/stack': typeof StackRoute
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/lab': typeof LabRouteWithChildren
+  '/login': typeof LoginRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/stack': typeof StackRoute
@@ -166,6 +174,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
   '/lab': typeof LabRouteWithChildren
+  '/login': typeof LoginRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/stack': typeof StackRoute
@@ -188,6 +197,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dashboard'
     | '/lab'
+    | '/login'
     | '/projects'
     | '/resume'
     | '/stack'
@@ -208,6 +218,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dashboard'
     | '/lab'
+    | '/login'
     | '/projects'
     | '/resume'
     | '/stack'
@@ -228,6 +239,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/dashboard'
     | '/lab'
+    | '/login'
     | '/projects'
     | '/resume'
     | '/stack'
@@ -249,6 +261,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRouteWithChildren
   LabRoute: typeof LabRouteWithChildren
+  LoginRoute: typeof LoginRoute
   ProjectsRoute: typeof ProjectsRouteWithChildren
   ResumeRoute: typeof ResumeRoute
   StackRoute: typeof StackRoute
@@ -285,6 +298,13 @@ declare module '@tanstack/react-router' {
       path: '/projects'
       fullPath: '/projects'
       preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/lab': {
@@ -464,6 +484,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRouteWithChildren,
   LabRoute: LabRouteWithChildren,
+  LoginRoute: LoginRoute,
   ProjectsRoute: ProjectsRouteWithChildren,
   ResumeRoute: ResumeRoute,
   StackRoute: StackRoute,

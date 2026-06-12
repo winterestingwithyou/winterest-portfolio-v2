@@ -9,7 +9,7 @@ This project is evolving from a TanStack Start resume starter into a polished pu
 - Public portfolio pages for projects, writing, lab experiments, stack, contact, and resume.
 - CMS dashboard for projects first, then writing, lab, skills, media, users, roles, and settings.
 - Cloudflare Workers-compatible deployment with D1 for CMS data.
-- Better Auth and simple owner/editor RBAC planned after the public shell and CMS foundation.
+- Better Auth with simple owner/editor RBAC for private dashboard access.
 - Optional character or 3D visual layer only after the core product is stable.
 
 ## Stack
@@ -24,7 +24,7 @@ This project is evolving from a TanStack Start resume starter into a polished pu
 - Tailwind CSS v4
 - Radix/shadcn-style UI primitives
 - Drizzle ORM and Cloudflare D1
-- Better Auth later
+- Better Auth
 - Paraglide/Inlang
 - T3Env
 - Vitest, Testing Library, ESLint, Prettier
@@ -90,6 +90,7 @@ The first Drizzle schema covers the project CMS foundation:
 - `projects`
 - `technologies`
 - `project_technologies`
+- Better Auth tables: `user`, `session`, `account`, `verification`
 
 Generate migration files after intentional schema edits:
 
@@ -116,10 +117,28 @@ CLOUDFLARE_D1_API_TOKEN=
 
 `DATABASE_URL` is not used for the Cloudflare D1 runtime.
 
+## Authentication
+
+Better Auth is configured against the Cloudflare D1 `DB` binding with a
+Cloudflare-friendly PBKDF2 Web Crypto password hasher.
+
+Required local/runtime variables:
+
+```bash
+BETTER_AUTH_URL=http://localhost:3000
+BETTER_AUTH_SECRET=
+```
+
+Generate and store `BETTER_AUTH_SECRET` locally or as a Worker secret. Do not
+commit real secrets.
+
+The first successful signup at `/login` bootstraps the first user as `owner`.
+After an owner exists, public signup is blocked until a user-management flow is
+added.
+
 ## Current Phase
 
-The public portfolio shell is in place, and the project is moving into the CMS
-foundation phase:
+The public portfolio shell and project CMS foundation are in place:
 
 - `/`
 - `/about`
@@ -137,9 +156,9 @@ foundation phase:
 - `/dashboard/projects/new`
 - `/dashboard/projects/$id`
 
-The early public content is still local seed data in `src/features/portfolio/data.ts`.
-The dashboard routes are ready for D1-backed mutations and Better Auth guards in
-the next phase.
+The early public content is still local seed data in
+`src/features/portfolio/data.ts`. Dashboard project CRUD uses D1 through API
+routes and requires a Better Auth dashboard session.
 
 ## Deployment
 

@@ -1,11 +1,24 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link, redirect } from '@tanstack/react-router'
 import { ArrowRight, Database, FileText, ShieldCheck } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import { getDashboardSession } from '#/features/auth/server-functions'
 import { featuredProjects } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/dashboard')({
+  beforeLoad: async ({ location }) => {
+    const user = await getDashboardSession()
+
+    if (!user) {
+      throw redirect({
+        to: '/login',
+        search: {
+          redirectTo: location.href,
+        },
+      })
+    }
+  },
   component: DashboardHome,
 })
 
@@ -42,7 +55,7 @@ function DashboardHome() {
         <MetricCard
           icon={<ShieldCheck aria-hidden="true" className="size-5" />}
           label="Owner guard"
-          value="Next"
+          value="Active"
         />
       </div>
 

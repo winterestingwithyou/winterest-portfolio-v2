@@ -3,6 +3,7 @@ import { env } from 'cloudflare:workers'
 import { ZodError } from 'zod'
 
 import { getDb } from '#/db'
+import { requireDashboardUser } from '#/features/auth/session'
 import {
   deleteProject,
   getProjectByIdOrSlug,
@@ -13,8 +14,14 @@ import { projectInputSchema } from '#/features/projects/validation'
 export const Route = createFileRoute('/api/projects/$id')({
   server: {
     handlers: {
-      GET: async ({ params }) => {
+      GET: async ({ request, params }) => {
         try {
+          const user = await requireDashboardUser(request)
+
+          if (user instanceof Response) {
+            return user
+          }
+
           const db = getDb(env.DB)
           const project = await getProjectByIdOrSlug(db, params.id)
 
@@ -29,6 +36,12 @@ export const Route = createFileRoute('/api/projects/$id')({
       },
       PATCH: async ({ request, params }) => {
         try {
+          const user = await requireDashboardUser(request)
+
+          if (user instanceof Response) {
+            return user
+          }
+
           const payload = await request.json()
           const input = projectInputSchema.parse(payload)
           const db = getDb(env.DB)
@@ -43,8 +56,14 @@ export const Route = createFileRoute('/api/projects/$id')({
           return handleApiError(error)
         }
       },
-      DELETE: async ({ params }) => {
+      DELETE: async ({ request, params }) => {
         try {
+          const user = await requireDashboardUser(request)
+
+          if (user instanceof Response) {
+            return user
+          }
+
           const db = getDb(env.DB)
           const deleted = await deleteProject(db, params.id)
 
