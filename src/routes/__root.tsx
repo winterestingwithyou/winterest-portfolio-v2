@@ -10,8 +10,6 @@ import Header from '../components/Header'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
-import StoreDevtools from '../lib/demo-store-devtools'
-
 import { getLocale } from '#/paraglide/runtime'
 
 import appCss from '../styles.css?url'
@@ -43,7 +41,21 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'TanStack Start Starter',
+        title: 'Winterest | M. Adam Yudistira',
+      },
+      {
+        name: 'description',
+        content:
+          'Cloudflare-powered portfolio, CMS roadmap, and developer lab for M. Adam Yudistira / winterestingwithyou.',
+      },
+      {
+        property: 'og:title',
+        content: 'Winterest | M. Adam Yudistira',
+      },
+      {
+        property: 'og:description',
+        content:
+          'A personal developer platform for projects, writing, lab experiments, and edge-first web architecture.',
       },
     ],
     links: [
@@ -63,7 +75,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
-      <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(79,184,178,0.24)]">
+      <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(244,129,32,0.22)]">
         <Header />
         {children}
         <Footer />
@@ -77,7 +89,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
               render: <TanStackRouterDevtoolsPanel />,
             },
             TanStackQueryDevtools,
-            StoreDevtools,
           ]}
         />
         <Scripts />

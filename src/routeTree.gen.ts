@@ -9,21 +9,49 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WritingRouteImport } from './routes/writing'
+import { Route as StackRouteImport } from './routes/stack'
+import { Route as ResumeRouteImport } from './routes/resume'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as LabRouteImport } from './routes/lab'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
-import { Route as DemoTableRouteImport } from './routes/demo/table'
-import { Route as DemoStoreRouteImport } from './routes/demo/store'
-import { Route as DemoI18nRouteImport } from './routes/demo.i18n'
-import { Route as DemoDrizzleRouteImport } from './routes/demo/drizzle'
-import { Route as DemoDbChatApiRouteImport } from './routes/demo/db-chat-api'
-import { Route as DemoDbChatRouteImport } from './routes/demo/db-chat'
-import { Route as DemoBetterAuthRouteImport } from './routes/demo/better-auth'
-import { Route as ApiResumeChatRouteImport } from './routes/api.resume-chat'
-import { Route as DemoFormSimpleRouteImport } from './routes/demo/form.simple'
-import { Route as DemoFormAddressRouteImport } from './routes/demo/form.address'
+import { Route as WritingSlugRouteImport } from './routes/writing.$slug'
+import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
+import { Route as LabSlugRouteImport } from './routes/lab.$slug'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
+const WritingRoute = WritingRouteImport.update({
+  id: '/writing',
+  path: '/writing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StackRoute = StackRouteImport.update({
+  id: '/stack',
+  path: '/stack',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResumeRoute = ResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabRoute = LabRouteImport.update({
+  id: '/lab',
+  path: '/lab',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -34,60 +62,20 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
-  id: '/demo/tanstack-query',
-  path: '/demo/tanstack-query',
-  getParentRoute: () => rootRouteImport,
+const WritingSlugRoute = WritingSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => WritingRoute,
 } as any)
-const DemoTableRoute = DemoTableRouteImport.update({
-  id: '/demo/table',
-  path: '/demo/table',
-  getParentRoute: () => rootRouteImport,
+const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ProjectsRoute,
 } as any)
-const DemoStoreRoute = DemoStoreRouteImport.update({
-  id: '/demo/store',
-  path: '/demo/store',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoI18nRoute = DemoI18nRouteImport.update({
-  id: '/demo/i18n',
-  path: '/demo/i18n',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoDrizzleRoute = DemoDrizzleRouteImport.update({
-  id: '/demo/drizzle',
-  path: '/demo/drizzle',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoDbChatApiRoute = DemoDbChatApiRouteImport.update({
-  id: '/demo/db-chat-api',
-  path: '/demo/db-chat-api',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoDbChatRoute = DemoDbChatRouteImport.update({
-  id: '/demo/db-chat',
-  path: '/demo/db-chat',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoBetterAuthRoute = DemoBetterAuthRouteImport.update({
-  id: '/demo/better-auth',
-  path: '/demo/better-auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiResumeChatRoute = ApiResumeChatRouteImport.update({
-  id: '/api/resume-chat',
-  path: '/api/resume-chat',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoFormSimpleRoute = DemoFormSimpleRouteImport.update({
-  id: '/demo/form/simple',
-  path: '/demo/form/simple',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DemoFormAddressRoute = DemoFormAddressRouteImport.update({
-  id: '/demo/form/address',
-  path: '/demo/form/address',
-  getParentRoute: () => rootRouteImport,
+const LabSlugRoute = LabSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => LabRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
@@ -98,122 +86,147 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/api/resume-chat': typeof ApiResumeChatRoute
-  '/demo/better-auth': typeof DemoBetterAuthRoute
-  '/demo/db-chat': typeof DemoDbChatRoute
-  '/demo/db-chat-api': typeof DemoDbChatApiRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
-  '/demo/i18n': typeof DemoI18nRoute
-  '/demo/store': typeof DemoStoreRoute
-  '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/contact': typeof ContactRoute
+  '/lab': typeof LabRouteWithChildren
+  '/projects': typeof ProjectsRouteWithChildren
+  '/resume': typeof ResumeRoute
+  '/stack': typeof StackRoute
+  '/writing': typeof WritingRouteWithChildren
+  '/lab/$slug': typeof LabSlugRoute
+  '/projects/$slug': typeof ProjectsSlugRoute
+  '/writing/$slug': typeof WritingSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/form/address': typeof DemoFormAddressRoute
-  '/demo/form/simple': typeof DemoFormSimpleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/api/resume-chat': typeof ApiResumeChatRoute
-  '/demo/better-auth': typeof DemoBetterAuthRoute
-  '/demo/db-chat': typeof DemoDbChatRoute
-  '/demo/db-chat-api': typeof DemoDbChatApiRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
-  '/demo/i18n': typeof DemoI18nRoute
-  '/demo/store': typeof DemoStoreRoute
-  '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/contact': typeof ContactRoute
+  '/lab': typeof LabRouteWithChildren
+  '/projects': typeof ProjectsRouteWithChildren
+  '/resume': typeof ResumeRoute
+  '/stack': typeof StackRoute
+  '/writing': typeof WritingRouteWithChildren
+  '/lab/$slug': typeof LabSlugRoute
+  '/projects/$slug': typeof ProjectsSlugRoute
+  '/writing/$slug': typeof WritingSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/form/address': typeof DemoFormAddressRoute
-  '/demo/form/simple': typeof DemoFormSimpleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/api/resume-chat': typeof ApiResumeChatRoute
-  '/demo/better-auth': typeof DemoBetterAuthRoute
-  '/demo/db-chat': typeof DemoDbChatRoute
-  '/demo/db-chat-api': typeof DemoDbChatApiRoute
-  '/demo/drizzle': typeof DemoDrizzleRoute
-  '/demo/i18n': typeof DemoI18nRoute
-  '/demo/store': typeof DemoStoreRoute
-  '/demo/table': typeof DemoTableRoute
-  '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/contact': typeof ContactRoute
+  '/lab': typeof LabRouteWithChildren
+  '/projects': typeof ProjectsRouteWithChildren
+  '/resume': typeof ResumeRoute
+  '/stack': typeof StackRoute
+  '/writing': typeof WritingRouteWithChildren
+  '/lab/$slug': typeof LabSlugRoute
+  '/projects/$slug': typeof ProjectsSlugRoute
+  '/writing/$slug': typeof WritingSlugRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/demo/form/address': typeof DemoFormAddressRoute
-  '/demo/form/simple': typeof DemoFormSimpleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
-    | '/api/resume-chat'
-    | '/demo/better-auth'
-    | '/demo/db-chat'
-    | '/demo/db-chat-api'
-    | '/demo/drizzle'
-    | '/demo/i18n'
-    | '/demo/store'
-    | '/demo/table'
-    | '/demo/tanstack-query'
+    | '/contact'
+    | '/lab'
+    | '/projects'
+    | '/resume'
+    | '/stack'
+    | '/writing'
+    | '/lab/$slug'
+    | '/projects/$slug'
+    | '/writing/$slug'
     | '/api/auth/$'
-    | '/demo/form/address'
-    | '/demo/form/simple'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/api/resume-chat'
-    | '/demo/better-auth'
-    | '/demo/db-chat'
-    | '/demo/db-chat-api'
-    | '/demo/drizzle'
-    | '/demo/i18n'
-    | '/demo/store'
-    | '/demo/table'
-    | '/demo/tanstack-query'
+    | '/contact'
+    | '/lab'
+    | '/projects'
+    | '/resume'
+    | '/stack'
+    | '/writing'
+    | '/lab/$slug'
+    | '/projects/$slug'
+    | '/writing/$slug'
     | '/api/auth/$'
-    | '/demo/form/address'
-    | '/demo/form/simple'
   id:
     | '__root__'
     | '/'
     | '/about'
-    | '/api/resume-chat'
-    | '/demo/better-auth'
-    | '/demo/db-chat'
-    | '/demo/db-chat-api'
-    | '/demo/drizzle'
-    | '/demo/i18n'
-    | '/demo/store'
-    | '/demo/table'
-    | '/demo/tanstack-query'
+    | '/contact'
+    | '/lab'
+    | '/projects'
+    | '/resume'
+    | '/stack'
+    | '/writing'
+    | '/lab/$slug'
+    | '/projects/$slug'
+    | '/writing/$slug'
     | '/api/auth/$'
-    | '/demo/form/address'
-    | '/demo/form/simple'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  ApiResumeChatRoute: typeof ApiResumeChatRoute
-  DemoBetterAuthRoute: typeof DemoBetterAuthRoute
-  DemoDbChatRoute: typeof DemoDbChatRoute
-  DemoDbChatApiRoute: typeof DemoDbChatApiRoute
-  DemoDrizzleRoute: typeof DemoDrizzleRoute
-  DemoI18nRoute: typeof DemoI18nRoute
-  DemoStoreRoute: typeof DemoStoreRoute
-  DemoTableRoute: typeof DemoTableRoute
-  DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
+  ContactRoute: typeof ContactRoute
+  LabRoute: typeof LabRouteWithChildren
+  ProjectsRoute: typeof ProjectsRouteWithChildren
+  ResumeRoute: typeof ResumeRoute
+  StackRoute: typeof StackRoute
+  WritingRoute: typeof WritingRouteWithChildren
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
-  DemoFormAddressRoute: typeof DemoFormAddressRoute
-  DemoFormSimpleRoute: typeof DemoFormSimpleRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/writing': {
+      id: '/writing'
+      path: '/writing'
+      fullPath: '/writing'
+      preLoaderRoute: typeof WritingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/stack': {
+      id: '/stack'
+      path: '/stack'
+      fullPath: '/stack'
+      preLoaderRoute: typeof StackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resume': {
+      id: '/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof ResumeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lab': {
+      id: '/lab'
+      path: '/lab'
+      fullPath: '/lab'
+      preLoaderRoute: typeof LabRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -228,82 +241,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/demo/tanstack-query': {
-      id: '/demo/tanstack-query'
-      path: '/demo/tanstack-query'
-      fullPath: '/demo/tanstack-query'
-      preLoaderRoute: typeof DemoTanstackQueryRouteImport
-      parentRoute: typeof rootRouteImport
+    '/writing/$slug': {
+      id: '/writing/$slug'
+      path: '/$slug'
+      fullPath: '/writing/$slug'
+      preLoaderRoute: typeof WritingSlugRouteImport
+      parentRoute: typeof WritingRoute
     }
-    '/demo/table': {
-      id: '/demo/table'
-      path: '/demo/table'
-      fullPath: '/demo/table'
-      preLoaderRoute: typeof DemoTableRouteImport
-      parentRoute: typeof rootRouteImport
+    '/projects/$slug': {
+      id: '/projects/$slug'
+      path: '/$slug'
+      fullPath: '/projects/$slug'
+      preLoaderRoute: typeof ProjectsSlugRouteImport
+      parentRoute: typeof ProjectsRoute
     }
-    '/demo/store': {
-      id: '/demo/store'
-      path: '/demo/store'
-      fullPath: '/demo/store'
-      preLoaderRoute: typeof DemoStoreRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/i18n': {
-      id: '/demo/i18n'
-      path: '/demo/i18n'
-      fullPath: '/demo/i18n'
-      preLoaderRoute: typeof DemoI18nRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/drizzle': {
-      id: '/demo/drizzle'
-      path: '/demo/drizzle'
-      fullPath: '/demo/drizzle'
-      preLoaderRoute: typeof DemoDrizzleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/db-chat-api': {
-      id: '/demo/db-chat-api'
-      path: '/demo/db-chat-api'
-      fullPath: '/demo/db-chat-api'
-      preLoaderRoute: typeof DemoDbChatApiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/db-chat': {
-      id: '/demo/db-chat'
-      path: '/demo/db-chat'
-      fullPath: '/demo/db-chat'
-      preLoaderRoute: typeof DemoDbChatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/better-auth': {
-      id: '/demo/better-auth'
-      path: '/demo/better-auth'
-      fullPath: '/demo/better-auth'
-      preLoaderRoute: typeof DemoBetterAuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/resume-chat': {
-      id: '/api/resume-chat'
-      path: '/api/resume-chat'
-      fullPath: '/api/resume-chat'
-      preLoaderRoute: typeof ApiResumeChatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/form/simple': {
-      id: '/demo/form/simple'
-      path: '/demo/form/simple'
-      fullPath: '/demo/form/simple'
-      preLoaderRoute: typeof DemoFormSimpleRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/demo/form/address': {
-      id: '/demo/form/address'
-      path: '/demo/form/address'
-      fullPath: '/demo/form/address'
-      preLoaderRoute: typeof DemoFormAddressRouteImport
-      parentRoute: typeof rootRouteImport
+    '/lab/$slug': {
+      id: '/lab/$slug'
+      path: '/$slug'
+      fullPath: '/lab/$slug'
+      preLoaderRoute: typeof LabSlugRouteImport
+      parentRoute: typeof LabRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -315,22 +272,59 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LabRouteChildren {
+  LabSlugRoute: typeof LabSlugRoute
+}
+
+const LabRouteChildren: LabRouteChildren = {
+  LabSlugRoute: LabSlugRoute,
+}
+
+const LabRouteWithChildren = LabRoute._addFileChildren(LabRouteChildren)
+
+interface ProjectsRouteChildren {
+  ProjectsSlugRoute: typeof ProjectsSlugRoute
+}
+
+const ProjectsRouteChildren: ProjectsRouteChildren = {
+  ProjectsSlugRoute: ProjectsSlugRoute,
+}
+
+const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
+  ProjectsRouteChildren,
+)
+
+interface WritingRouteChildren {
+  WritingSlugRoute: typeof WritingSlugRoute
+}
+
+const WritingRouteChildren: WritingRouteChildren = {
+  WritingSlugRoute: WritingSlugRoute,
+}
+
+const WritingRouteWithChildren =
+  WritingRoute._addFileChildren(WritingRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  ApiResumeChatRoute: ApiResumeChatRoute,
-  DemoBetterAuthRoute: DemoBetterAuthRoute,
-  DemoDbChatRoute: DemoDbChatRoute,
-  DemoDbChatApiRoute: DemoDbChatApiRoute,
-  DemoDrizzleRoute: DemoDrizzleRoute,
-  DemoI18nRoute: DemoI18nRoute,
-  DemoStoreRoute: DemoStoreRoute,
-  DemoTableRoute: DemoTableRoute,
-  DemoTanstackQueryRoute: DemoTanstackQueryRoute,
+  ContactRoute: ContactRoute,
+  LabRoute: LabRouteWithChildren,
+  ProjectsRoute: ProjectsRouteWithChildren,
+  ResumeRoute: ResumeRoute,
+  StackRoute: StackRoute,
+  WritingRoute: WritingRouteWithChildren,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
-  DemoFormAddressRoute: DemoFormAddressRoute,
-  DemoFormSimpleRoute: DemoFormSimpleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

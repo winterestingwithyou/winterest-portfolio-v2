@@ -1,6 +1,12 @@
 {
-  "include": ["**/*.ts", "**/*.tsx", "eslint.config.js", "prettier.config.js", "vite.config.js"],
-  
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "eslint.config.js",
+    "prettier.config.js",
+    "vite.config.js"
+  ],
+
   "compilerOptions": {
     "target": "ES2022",
     "jsx": "react-jsx",
@@ -10,11 +16,7 @@
       "@/*": ["./src/*"]
     },
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "types": [
-        "./worker-configuration.d.ts",
-        "node",
-        "vite/client"
-    ],
+    "types": ["./worker-configuration.d.ts", "node", "vite/client"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",

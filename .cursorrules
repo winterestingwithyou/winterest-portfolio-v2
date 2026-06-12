@@ -1,7 +1,9 @@
-# shadcn instructions
+# Project rules
 
-Use the latest version of Shadcn to install new components, like this command to add a button component:
+Follow `AGENTS.md` as the source of truth for this repository.
 
-```bash
-pnpm dlx shadcn@latest add button
-```
+- Use Bun by default.
+- Keep the app Cloudflare Workers compatible.
+- Do not run development server or database migration commands unless the user explicitly asks in the same turn.
+- Prefer the existing TanStack Start, Tailwind, Radix/shadcn-style, Drizzle, Better Auth, and Cloudflare direction.
+- Do not use pnpm or npm unless the user explicitly asks.
