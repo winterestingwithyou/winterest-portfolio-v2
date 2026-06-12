@@ -11,6 +11,7 @@ import {
 } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { HeroVisual } from '#/components/visual/HeroVisual'
 import {
   featuredProjects,
   labEntries,
@@ -76,7 +77,7 @@ function HomePage() {
             </div>
           </div>
 
-          <HeroPanel />
+          <HeroVisual />
         </Container>
       </section>
 
@@ -239,47 +240,5 @@ function HomePage() {
         </Container>
       </section>
     </main>
-  )
-}
-
-function HeroPanel() {
-  return (
-    <div className="surface-card relative overflow-hidden p-5 sm:p-6">
-      <div className="rounded-lg border border-[var(--brand-line)] bg-[var(--brand-dark)] p-4 text-white shadow-2xl">
-        <div className="mb-4 flex items-center gap-2">
-          <span className="size-3 rounded-full bg-[#ff5f56]" />
-          <span className="size-3 rounded-full bg-[#ffbd2e]" />
-          <span className="size-3 rounded-full bg-[#27c93f]" />
-          <span className="ml-2 font-mono text-xs text-orange-100">
-            winterest.config.ts
-          </span>
-        </div>
-        <pre className="overflow-x-auto text-sm leading-7 text-orange-50">
-          <code>{`export const platform = {
-  owner: '${siteProfile.handle}',
-  runtime: 'Cloudflare Workers',
-  packageManager: 'Bun',
-  next: ['CMS', 'auth', 'lab'],
-}`}</code>
-        </pre>
-      </div>
-
-      <div className="mt-5 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] p-4">
-          <p className="eyebrow">Public shell</p>
-          <p className="mt-3 text-sm leading-7 text-[var(--brand-muted)]">
-            Homepage, projects, writing, lab, stack, contact, and resume routes
-            are the first stable layer.
-          </p>
-        </div>
-        <div className="rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] p-4">
-          <p className="eyebrow">Later</p>
-          <p className="mt-3 text-sm leading-7 text-[var(--brand-muted)]">
-            D1 content, dashboard CRUD, Better Auth, RBAC, media metadata, and
-            optional character visuals.
-          </p>
-        </div>
-      </div>
-    </div>
   )
 }

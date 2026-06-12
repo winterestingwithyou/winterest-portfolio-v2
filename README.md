@@ -144,7 +144,8 @@ added.
 
 ## Current Phase
 
-The public portfolio shell and project CMS foundation are in place:
+The public portfolio shell, project CMS foundation, and first visual layer are
+in place:
 
 - `/`
 - `/about`
@@ -174,6 +175,9 @@ The early public content is still local seed data in
 load published D1 records first and fall back to seeds when migrations are not
 applied yet. Dashboard project, writing, and lab CRUD use D1 through API routes
 and require a Better Auth dashboard session.
+
+The first static mascot asset lives at
+`public/assets/characters/winterest-mascot.png` and is used by the homepage hero.
 
 ## Deployment
 
