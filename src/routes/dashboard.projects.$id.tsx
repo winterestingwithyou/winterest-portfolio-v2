@@ -8,6 +8,7 @@ import { ProjectEditorForm } from '#/features/dashboard/ProjectEditorForm'
 
 type ProjectRecord = {
   id: string
+  locale: 'en' | 'id'
   slug: string
   title: string
   summary: string

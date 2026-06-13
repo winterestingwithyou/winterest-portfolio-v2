@@ -19,12 +19,14 @@ import {
   getPublicCopy,
   siteProfile,
 } from '#/features/portfolio/data'
+import { getLocale } from '#/paraglide/runtime'
 
 export const Route = createFileRoute('/')({
   loader: async () => {
+    const locale = getLocale()
     const [projects, labEntries] = await Promise.all([
-      getPublishedProjects(),
-      getPublishedLabEntries(),
+      getPublishedProjects({ data: { locale } }),
+      getPublishedLabEntries({ data: { locale } }),
     ])
 
     return { projects, labEntries }

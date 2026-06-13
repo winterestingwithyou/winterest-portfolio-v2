@@ -7,6 +7,7 @@ import { getDashboardCopy } from './copy'
 
 type ProjectFormInitial = {
   id?: string
+  locale?: 'en' | 'id' | null
   slug?: string | null
   title?: string | null
   summary?: string | null
@@ -29,6 +30,7 @@ type ProjectEditorFormProps = {
 
 const statusOptions = ['draft', 'published', 'archived'] as const
 const visibilityOptions = ['public', 'private'] as const
+const localeOptions = ['en', 'id'] as const
 
 export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
   const copy = getDashboardCopy()
@@ -58,6 +60,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
 
     const formData = new FormData(event.currentTarget)
     const payload = {
+      locale: String(formData.get('locale') ?? 'en'),
       slug: String(formData.get('slug') ?? ''),
       title: String(formData.get('title') ?? ''),
       summary: String(formData.get('summary') ?? ''),
@@ -143,6 +146,12 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
           defaultValue={project?.slug ?? ''}
         />
       </div>
+      <Select
+        label={copy.form.language}
+        name="locale"
+        defaultValue={project?.locale ?? 'en'}
+        options={localeOptions}
+      />
       <Field
         label={copy.form.summary}
         name="summary"

@@ -7,6 +7,7 @@ import { getDashboardCopy } from '#/features/dashboard/copy'
 
 type ProjectRow = {
   id: string
+  locale: 'en' | 'id'
   slug: string
   title: string
   summary: string
@@ -138,6 +139,9 @@ function DashboardProjects() {
                     {copy.common.status}
                   </th>
                   <th scope="col" className="px-5 py-3 font-bold">
+                    {copy.common.language}
+                  </th>
+                  <th scope="col" className="px-5 py-3 font-bold">
                     {copy.common.visibility}
                   </th>
                   <th scope="col" className="px-5 py-3 font-bold">
@@ -164,6 +168,9 @@ function DashboardProjects() {
                     </td>
                     <td className="px-5 py-4 align-top">
                       <StatusBadge value={project.status} />
+                    </td>
+                    <td className="px-5 py-4 align-top text-[var(--brand-muted)]">
+                      {project.locale.toUpperCase()}
                     </td>
                     <td className="px-5 py-4 align-top text-[var(--brand-muted)]">
                       {project.visibility}

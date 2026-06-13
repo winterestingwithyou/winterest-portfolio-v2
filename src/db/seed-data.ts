@@ -1,7 +1,8 @@
-import type { TechnologyCategory } from './schema'
+import type { ContentLocale, TechnologyCategory } from './schema'
 
 export type PortfolioProjectSeed = {
   id: string
+  locale: ContentLocale
   slug: string
   title: string
   summary: string
@@ -18,6 +19,7 @@ export type PortfolioProjectSeed = {
 
 export type PortfolioContentSeed = {
   id: string
+  locale: ContentLocale
   slug: string
   title: string
   summary: string
@@ -105,6 +107,7 @@ export const technologySeeds = [
 export const projectSeeds = [
   {
     id: 'project-winterest-portfolio-platform',
+    locale: 'en',
     slug: 'winterest-portfolio-platform',
     title: 'Winterest Portfolio v2',
     summary:
@@ -129,6 +132,7 @@ export const projectSeeds = [
   },
   {
     id: 'project-edge-cms-dashboard',
+    locale: 'en',
     slug: 'edge-cms-dashboard',
     title: 'Edge CMS Dashboard',
     summary:
@@ -150,6 +154,7 @@ export const projectSeeds = [
   },
   {
     id: 'project-developer-lab',
+    locale: 'en',
     slug: 'developer-lab',
     title: 'Developer Lab',
     summary:
@@ -163,11 +168,75 @@ export const projectSeeds = [
     publishedAt: new Date('2026-02-15T00:00:00.000Z'),
     technologies: ['react', 'tanstack-start', 'cloudflare-workers', 'bun'],
   },
+  {
+    id: 'project-winterest-portfolio-platform-id',
+    locale: 'id',
+    slug: 'winterest-portfolio-platform',
+    title: 'Winterest Portfolio v2',
+    summary:
+      'Portfolio pribadi Winterest yang dibangun sebagai rumah jangka panjang untuk project, tulisan, eksperimen, dan CMS privat.',
+    description:
+      'Platform developer personal untuk Winterest: portfolio publik di depan, workflow konten praktis di belakang.',
+    content:
+      'Project ini mengubah portfolio menjadi ruang yang bisa terus tumbuh. Sisi publik berfokus pada karya, catatan, eksperimen, dan jalur kontak. Sisi privat menjaga konten tetap mudah diedit lewat CMS kecil sehingga update tidak selalu harus dimulai dari kode.\n\nTujuan saat ini sederhana: membuat situs terasa personal, menjaga kontennya jujur, dan memastikan setiap bagian ditenagai oleh record published dari database.',
+    category: 'Portfolio',
+    featured: true,
+    repoUrl: 'https://github.com/winterest/winterest-portfolio-v2',
+    publishedAt: new Date('2026-02-01T00:00:00.000Z'),
+    technologies: [
+      'tanstack-start',
+      'react',
+      'bun',
+      'cloudflare-workers',
+      'cloudflare-d1',
+      'drizzle-orm',
+      'tailwind-css',
+    ],
+  },
+  {
+    id: 'project-edge-cms-dashboard-id',
+    locale: 'id',
+    slug: 'edge-cms-dashboard',
+    title: 'Dashboard CMS Edge',
+    summary:
+      'Dashboard privat untuk mengelola project portfolio, catatan writing, entry lab, metadata media, dan status publish.',
+    description:
+      'Dashboard owner-first yang menjaga publishing portfolio tetap kecil, fokus, dan mudah dirawat.',
+    content:
+      'Dashboard ini ada supaya cerita project, draft tulisan, dan catatan lab bisa bergerak dari ide kasar ke halaman publik tanpa membocorkan pekerjaan privat. Fokusnya adalah form yang jelas, list yang mudah dipindai, dan status publishing yang sederhana.\n\nVersi pertama berfokus pada project, writing, lab entries, dan metadata media. Manajemen user dan role bisa tumbuh setelah workflow editing utama terasa solid.',
+    category: 'CMS',
+    featured: true,
+    publishedAt: new Date('2026-02-08T00:00:00.000Z'),
+    technologies: [
+      'cloudflare-d1',
+      'drizzle-orm',
+      'better-auth',
+      'tanstack-start',
+      'tailwind-css',
+    ],
+  },
+  {
+    id: 'project-developer-lab-id',
+    locale: 'id',
+    slug: 'developer-lab',
+    title: 'Developer Lab',
+    summary:
+      'Ruang ringan untuk demo UI kecil, catatan Cloudflare, eksperimen AI, dan prototype TanStack.',
+    description:
+      'Workbench publik untuk eksperimen yang tetap berguna dikunjungi ulang sebelum menjadi case study penuh.',
+    content:
+      'Eksperimen kecil sering hilang di scratch file. Lab menjaga potongan itu tetap bisa dibuka lagi: demo kecil, catatan, prototype, dan ide yang mungkin tumbuh menjadi project nyata.\n\nEntry lab tetap lebih ringan dari case study, tapi tetap perlu konteks yang cukup untuk menjelaskan apa yang dites, apa yang berhasil, dan apa langkah berikutnya.',
+    category: 'Lab',
+    featured: false,
+    publishedAt: new Date('2026-02-15T00:00:00.000Z'),
+    technologies: ['react', 'tanstack-start', 'cloudflare-workers', 'bun'],
+  },
 ] satisfies PortfolioProjectSeed[]
 
 export const writingSeeds = [
   {
     id: 'writing-edge-first-portfolio-stack',
+    locale: 'en',
     slug: 'edge-first-portfolio-stack',
     title: 'Choosing my edge-first portfolio stack',
     summary:
@@ -179,6 +248,7 @@ export const writingSeeds = [
   },
   {
     id: 'writing-solo-cms-roadmap',
+    locale: 'en',
     slug: 'solo-cms-roadmap',
     title: 'A practical content workflow for one developer',
     summary:
@@ -188,11 +258,36 @@ export const writingSeeds = [
     tags: ['CMS', 'Workflow', 'Planning'],
     publishedAt: new Date('2026-02-22T00:00:00.000Z'),
   },
+  {
+    id: 'writing-edge-first-portfolio-stack-id',
+    locale: 'id',
+    slug: 'edge-first-portfolio-stack',
+    title: 'Memilih stack edge-first untuk portfolio Winterest',
+    summary:
+      'Kenapa portfolio ini memakai tooling lokal yang cepat, framework React fullstack, dan target deploy yang ramah edge.',
+    content:
+      'Portfolio cukup kecil untuk dibuat sederhana, tapi cukup penting untuk punya fondasi yang serius. Aku ingin Winterest mudah diperbarui, cepat dibuka, dan fleksibel untuk project, tulisan, eksperimen, dan CMS.\n\nStack-nya dipilih mengikuti bentuk itu: iterasi lokal yang produktif, alur konten yang typed, halaman publik yang mudah di-cache, dan dashboard privat yang tetap praktis.',
+    tags: ['Arsitektur', 'Portfolio', 'Edge'],
+    publishedAt: new Date('2026-02-20T00:00:00.000Z'),
+  },
+  {
+    id: 'writing-solo-cms-roadmap-id',
+    locale: 'id',
+    slug: 'solo-cms-roadmap',
+    title: 'Workflow konten praktis untuk satu developer',
+    summary:
+      'Jalur bertahap dari seed content ke cerita project, tulisan, entry lab, media, dan publishing polish yang dikelola CMS.',
+    content:
+      'Untuk portfolio solo, CMS seharusnya mengurangi friksi, bukan menjadi produk tambahan yang harus dirawat. Jalur yang berguna dimulai dari beberapa model yang jelas, dashboard yang terlindungi, dan workflow draft/published yang tidak membocorkan konten belum selesai.\n\nSetelah itu, media, editing yang lebih kaya, lokalisasi, dan manajemen user bisa ditambahkan bertahap.',
+    tags: ['CMS', 'Workflow', 'Planning'],
+    publishedAt: new Date('2026-02-22T00:00:00.000Z'),
+  },
 ] satisfies PortfolioContentSeed[]
 
 export const labSeeds = [
   {
     id: 'lab-worker-notes',
+    locale: 'en',
     slug: 'worker-notes',
     title: 'Worker Notes',
     summary:
@@ -204,6 +299,7 @@ export const labSeeds = [
   },
   {
     id: 'lab-tanstack-playground',
+    locale: 'en',
     slug: 'tanstack-playground',
     title: 'TanStack Playground',
     summary:
@@ -215,12 +311,49 @@ export const labSeeds = [
   },
   {
     id: 'lab-bun-tooling-notes',
+    locale: 'en',
     slug: 'bun-tooling-notes',
     title: 'Bun Tooling Notes',
     summary:
       'Practical notes around Bun scripts, fast local workflows, and keeping this workspace pleasant to maintain.',
     content:
       'A small collection of workflow notes for keeping the project comfortable to work on: scripts, checks, formatting, and the everyday edges of a Bun-first repository.',
+    tags: ['Bun', 'Tooling', 'DX'],
+    publishedAt: new Date('2026-02-27T00:00:00.000Z'),
+  },
+  {
+    id: 'lab-worker-notes-id',
+    locale: 'id',
+    slug: 'worker-notes',
+    title: 'Catatan Worker',
+    summary:
+      'Catatan kecil tentang route Worker, binding, caching, dan kode server yang tetap ramah untuk edge runtime.',
+    content:
+      'Notebook berjalan untuk detail Cloudflare Worker yang mudah terlupa: di mana binding tersedia, kode mana yang harus tetap server-only, dan bagaimana menjaga handler request tetap kecil.',
+    tags: ['Cloudflare', 'Workers', 'Edge'],
+    publishedAt: new Date('2026-02-25T00:00:00.000Z'),
+  },
+  {
+    id: 'lab-tanstack-playground-id',
+    locale: 'id',
+    slug: 'tanstack-playground',
+    title: 'TanStack Playground',
+    summary:
+      'Eksperimen fokus dengan pola Router, Query, Form, Table, Store, dan DB yang ingin kupakai ulang dengan baik.',
+    content:
+      'Tempat untuk menguji pola TanStack sebelum menjadi bagian dari workflow utama portfolio. Tujuannya menjaga route data, form, table, dan shared state tetap membosankan dalam arti terbaik.',
+    tags: ['TanStack', 'React', 'TypeScript'],
+    publishedAt: new Date('2026-02-26T00:00:00.000Z'),
+  },
+  {
+    id: 'lab-bun-tooling-notes-id',
+    locale: 'id',
+    slug: 'bun-tooling-notes',
+    title: 'Catatan Tooling Bun',
+    summary:
+      'Catatan praktis tentang script Bun, workflow lokal yang cepat, dan menjaga workspace ini tetap nyaman dirawat.',
+    content:
+      'Kumpulan catatan workflow kecil untuk menjaga project tetap nyaman dikerjakan: script, check, formatting, dan sisi sehari-hari dari repository Bun-first.',
     tags: ['Bun', 'Tooling', 'DX'],
     publishedAt: new Date('2026-02-27T00:00:00.000Z'),
   },

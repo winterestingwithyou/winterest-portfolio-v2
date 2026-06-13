@@ -4,9 +4,13 @@ import { ArrowLeft, BookOpen } from 'lucide-react'
 import { Container } from '#/components/marketing/section'
 import { getPublishedWritingEntry } from '#/features/content/public-loaders'
 import { getPublicCopy } from '#/features/portfolio/data'
+import { getLocale } from '#/paraglide/runtime'
 
 export const Route = createFileRoute('/writing/$slug')({
-  loader: ({ params }) => getPublishedWritingEntry({ data: params.slug }),
+  loader: ({ params }) =>
+    getPublishedWritingEntry({
+      data: { slug: params.slug, locale: getLocale() },
+    }),
   component: WritingDetailPage,
 })
 

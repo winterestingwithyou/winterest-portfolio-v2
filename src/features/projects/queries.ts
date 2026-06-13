@@ -2,6 +2,7 @@ import { and, desc, eq, inArray, or } from 'drizzle-orm'
 
 import type { Database } from '#/db'
 import { projects, projectTechnologies, technologies } from '#/db/schema'
+import type { ContentLocale } from '#/db/schema'
 
 import type { ProjectInput } from './validation'
 
@@ -9,6 +10,7 @@ export type ProjectRecord = typeof projects.$inferSelect
 
 export type PublicProjectRecord = {
   id: string
+  locale: ContentLocale
   slug: string
   title: string
   summary: string
@@ -33,6 +35,7 @@ export function toPublicProjectRecord(
 ): PublicProjectRecord {
   return {
     id: record.id,
+    locale: record.locale,
     slug: record.slug,
     title: record.title,
     summary: record.summary,
@@ -67,14 +70,29 @@ export async function listPublishedProjects(db: Database) {
     .all()
 }
 
-export async function listPublishedPublicProjects(db: Database) {
-  const records = await listPublishedProjects(db)
+export async function listPublishedPublicProjects(
+  db: Database,
+  locale: ContentLocale,
+) {
+  const records = await db
+    .select()
+    .from(projects)
+    .where(
+      and(
+        eq(projects.status, 'published'),
+        eq(projects.visibility, 'public'),
+        inArray(projects.locale, getLocaleFallbacks(locale)),
+      ),
+    )
+    .orderBy(desc(projects.publishedAt), desc(projects.updatedAt))
+    .all()
+  const localizedRecords = pickLocalizedRecords(records, locale)
   const technologyMap = await listProjectTechnologyNames(
     db,
-    records.map((project) => project.id),
+    localizedRecords.map((project) => project.id),
   )
 
-  return records.map((project) =>
+  return localizedRecords.map((project) =>
     toPublicProjectRecord(project, technologyMap.get(project.id)),
   )
 }
@@ -82,18 +100,13 @@ export async function listPublishedPublicProjects(db: Database) {
 export async function getPublishedPublicProjectBySlug(
   db: Database,
   slug: string,
+  locale: ContentLocale,
 ) {
-  const project = await db
-    .select()
-    .from(projects)
-    .where(
-      and(
-        eq(projects.slug, slug),
-        eq(projects.status, 'published'),
-        eq(projects.visibility, 'public'),
-      ),
-    )
-    .get()
+  const project =
+    (await getPublishedProjectBySlugAndLocale(db, slug, locale)) ??
+    (locale === 'en'
+      ? null
+      : await getPublishedProjectBySlugAndLocale(db, slug, 'en'))
 
   if (!project) {
     return null
@@ -101,6 +114,25 @@ export async function getPublishedPublicProjectBySlug(
 
   const technologyMap = await listProjectTechnologyNames(db, [project.id])
   return toPublicProjectRecord(project, technologyMap.get(project.id))
+}
+
+async function getPublishedProjectBySlugAndLocale(
+  db: Database,
+  slug: string,
+  locale: ContentLocale,
+) {
+  return db
+    .select()
+    .from(projects)
+    .where(
+      and(
+        eq(projects.slug, slug),
+        eq(projects.locale, locale),
+        eq(projects.status, 'published'),
+        eq(projects.visibility, 'public'),
+      ),
+    )
+    .get()
 }
 
 async function listProjectTechnologyNames(
@@ -130,6 +162,26 @@ async function listProjectTechnologyNames(
     map.set(row.projectId, existing)
     return map
   }, new Map<string, string[]>())
+}
+
+function getLocaleFallbacks(locale: ContentLocale): ContentLocale[] {
+  return locale === 'en' ? ['en'] : [locale, 'en']
+}
+
+function pickLocalizedRecords(
+  records: readonly ProjectRecord[],
+  locale: ContentLocale,
+) {
+  const bySlug = new Map<string, ProjectRecord>()
+
+  for (const record of records) {
+    const existing = bySlug.get(record.slug)
+    if (!existing || (existing.locale !== locale && record.locale === locale)) {
+      bySlug.set(record.slug, record)
+    }
+  }
+
+  return [...bySlug.values()]
 }
 
 export async function getProjectByIdOrSlug(db: Database, idOrSlug: string) {

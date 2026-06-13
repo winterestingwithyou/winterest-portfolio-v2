@@ -11,9 +11,11 @@ import type { ReactNode } from 'react'
 import { Container } from '#/components/marketing/section'
 import { getPublishedProject } from '#/features/projects/public-loaders'
 import { getPublicCopy } from '#/features/portfolio/data'
+import { getLocale } from '#/paraglide/runtime'
 
 export const Route = createFileRoute('/projects/$slug')({
-  loader: ({ params }) => getPublishedProject({ data: params.slug }),
+  loader: ({ params }) =>
+    getPublishedProject({ data: { slug: params.slug, locale: getLocale() } }),
   component: ProjectDetailPage,
 })
 

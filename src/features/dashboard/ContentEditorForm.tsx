@@ -9,6 +9,7 @@ type ContentKind = 'writing' | 'lab'
 
 type ContentFormInitial = {
   id?: string
+  locale?: 'en' | 'id' | null
   slug?: string | null
   title?: string | null
   summary?: string | null
@@ -29,6 +30,7 @@ type ContentEditorFormProps = {
 
 const statusOptions = ['draft', 'published', 'archived'] as const
 const visibilityOptions = ['public', 'private'] as const
+const localeOptions = ['en', 'id'] as const
 
 export function ContentEditorForm({
   kind,
@@ -69,6 +71,7 @@ export function ContentEditorForm({
 
     const formData = new FormData(event.currentTarget)
     const payload = {
+      locale: String(formData.get('locale') ?? 'en'),
       slug: String(formData.get('slug') ?? ''),
       title: String(formData.get('title') ?? ''),
       summary: String(formData.get('summary') ?? ''),
@@ -149,6 +152,12 @@ export function ContentEditorForm({
           defaultValue={entry?.slug ?? ''}
         />
       </div>
+      <Select
+        label={copy.form.language}
+        name="locale"
+        defaultValue={entry?.locale ?? 'en'}
+        options={localeOptions}
+      />
       <Field
         label={copy.form.summary}
         name="summary"
@@ -266,6 +275,7 @@ export function ContentEditorForm({
 }
 
 function withoutLabFields(payload: {
+  locale: string
   slug: string
   title: string
   summary: string

@@ -5,9 +5,10 @@ import { Container, SectionHeader } from '#/components/marketing/section'
 import { SignalPreview } from '#/components/visual/SignalPreview'
 import { getPublishedProjects } from '#/features/projects/public-loaders'
 import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
+import { getLocale } from '#/paraglide/runtime'
 
 export const Route = createFileRoute('/projects/')({
-  loader: () => getPublishedProjects(),
+  loader: () => getPublishedProjects({ data: { locale: getLocale() } }),
   component: ProjectsPage,
 })
 

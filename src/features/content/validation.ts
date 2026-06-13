@@ -1,6 +1,10 @@
 import { z } from 'zod'
 
-import { contentStatuses, contentVisibilities } from '#/db/schema'
+import {
+  contentLocales,
+  contentStatuses,
+  contentVisibilities,
+} from '#/db/schema'
 
 const emptyToUndefined = (value: unknown) => {
   if (typeof value === 'string' && value.trim() === '') {
@@ -29,6 +33,7 @@ const tagsSchema = z.preprocess(
 )
 
 export const contentBaseInputSchema = z.object({
+  locale: z.enum(contentLocales).default('en'),
   slug: z
     .string()
     .trim()

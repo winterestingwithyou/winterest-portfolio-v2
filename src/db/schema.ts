@@ -14,6 +14,9 @@ export type ContentStatus = (typeof contentStatuses)[number]
 export const contentVisibilities = ['public', 'private'] as const
 export type ContentVisibility = (typeof contentVisibilities)[number]
 
+export const contentLocales = ['en', 'id'] as const
+export type ContentLocale = (typeof contentLocales)[number]
+
 export const userRoles = ['owner', 'admin', 'editor', 'viewer'] as const
 export type UserRole = (typeof userRoles)[number]
 
@@ -139,6 +142,7 @@ export const projects = sqliteTable(
   'projects',
   {
     id: text('id').primaryKey(),
+    locale: text('locale', { enum: contentLocales }).notNull().default('en'),
     slug: text('slug').notNull(),
     title: text('title').notNull(),
     summary: text('summary').notNull(),
@@ -162,7 +166,8 @@ export const projects = sqliteTable(
     ...timestamps,
   },
   (table) => [
-    uniqueIndex('projects_slug_unique').on(table.slug),
+    uniqueIndex('projects_slug_locale_unique').on(table.slug, table.locale),
+    index('projects_locale_idx').on(table.locale),
     index('projects_status_idx').on(table.status),
     index('projects_visibility_idx').on(table.visibility),
     index('projects_featured_idx').on(table.featured),
@@ -174,6 +179,7 @@ export const writing = sqliteTable(
   'writing',
   {
     id: text('id').primaryKey(),
+    locale: text('locale', { enum: contentLocales }).notNull().default('en'),
     slug: text('slug').notNull(),
     title: text('title').notNull(),
     summary: text('summary').notNull(),
@@ -190,7 +196,8 @@ export const writing = sqliteTable(
     ...timestamps,
   },
   (table) => [
-    uniqueIndex('writing_slug_unique').on(table.slug),
+    uniqueIndex('writing_slug_locale_unique').on(table.slug, table.locale),
+    index('writing_locale_idx').on(table.locale),
     index('writing_status_idx').on(table.status),
     index('writing_visibility_idx').on(table.visibility),
     index('writing_published_at_idx').on(table.publishedAt),
@@ -201,6 +208,7 @@ export const labEntries = sqliteTable(
   'lab_entries',
   {
     id: text('id').primaryKey(),
+    locale: text('locale', { enum: contentLocales }).notNull().default('en'),
     slug: text('slug').notNull(),
     title: text('title').notNull(),
     summary: text('summary').notNull(),
@@ -219,7 +227,8 @@ export const labEntries = sqliteTable(
     ...timestamps,
   },
   (table) => [
-    uniqueIndex('lab_entries_slug_unique').on(table.slug),
+    uniqueIndex('lab_entries_slug_locale_unique').on(table.slug, table.locale),
+    index('lab_entries_locale_idx').on(table.locale),
     index('lab_entries_status_idx').on(table.status),
     index('lab_entries_visibility_idx').on(table.visibility),
     index('lab_entries_published_at_idx').on(table.publishedAt),

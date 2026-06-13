@@ -8,6 +8,7 @@ type ContentKind = 'writing' | 'lab'
 
 type ContentRow = {
   id: string
+  locale: 'en' | 'id'
   slug: string
   title: string
   summary: string
@@ -143,6 +144,9 @@ export function ContentList({ kind }: ContentListProps) {
                     {copy.common.status}
                   </th>
                   <th scope="col" className="px-5 py-3 font-bold">
+                    {copy.common.language}
+                  </th>
+                  <th scope="col" className="px-5 py-3 font-bold">
                     {copy.common.tags}
                   </th>
                   <th scope="col" className="px-5 py-3 text-right font-bold">
@@ -168,6 +172,9 @@ export function ContentList({ kind }: ContentListProps) {
                       <span className="rounded-full bg-[var(--brand-orange-soft)] px-3 py-1 text-xs font-bold text-[var(--brand-orange-deep)]">
                         {entry.status}
                       </span>
+                    </td>
+                    <td className="px-5 py-4 align-top text-[var(--brand-muted)]">
+                      {entry.locale.toUpperCase()}
                     </td>
                     <td className="px-5 py-4 align-top">
                       <div className="flex max-w-xs flex-wrap gap-1.5">

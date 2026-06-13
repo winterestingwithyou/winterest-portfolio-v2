@@ -5,9 +5,10 @@ import { Container, SectionHeader } from '#/components/marketing/section'
 import { SignalPreview } from '#/components/visual/SignalPreview'
 import { getPublishedWritingEntries } from '#/features/content/public-loaders'
 import { getPublicCopy } from '#/features/portfolio/data'
+import { getLocale } from '#/paraglide/runtime'
 
 export const Route = createFileRoute('/writing/')({
-  loader: () => getPublishedWritingEntries(),
+  loader: () => getPublishedWritingEntries({ data: { locale: getLocale() } }),
   component: WritingPage,
 })
 

@@ -8,6 +8,7 @@ import { ContentEditorForm } from '#/features/dashboard/ContentEditorForm'
 
 type ContentRecord = {
   id: string
+  locale: 'en' | 'id'
   slug: string
   title: string
   summary: string

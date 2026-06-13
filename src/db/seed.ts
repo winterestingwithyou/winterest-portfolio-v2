@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 
 import type { Database } from './index'
 import {
@@ -77,6 +77,7 @@ async function upsertProject(
     .insert(projects)
     .values({
       id: seed.id,
+      locale: seed.locale,
       slug: seed.slug,
       title: seed.title,
       summary: seed.summary,
@@ -96,8 +97,9 @@ async function upsertProject(
       updatedAt: now,
     })
     .onConflictDoUpdate({
-      target: projects.slug,
+      target: [projects.slug, projects.locale],
       set: {
+        locale: seed.locale,
         title: seed.title,
         summary: seed.summary,
         description: seed.description,
@@ -118,7 +120,7 @@ async function upsertProject(
   const project = await db
     .select({ id: projects.id })
     .from(projects)
-    .where(eq(projects.slug, seed.slug))
+    .where(and(eq(projects.slug, seed.slug), eq(projects.locale, seed.locale)))
     .get()
 
   if (!project) {
@@ -160,6 +162,7 @@ async function upsertWriting(
     .insert(writing)
     .values({
       id: seed.id,
+      locale: seed.locale,
       slug: seed.slug,
       title: seed.title,
       summary: seed.summary,
@@ -172,8 +175,9 @@ async function upsertWriting(
       updatedAt: now,
     })
     .onConflictDoUpdate({
-      target: writing.slug,
+      target: [writing.slug, writing.locale],
       set: {
+        locale: seed.locale,
         title: seed.title,
         summary: seed.summary,
         content: seed.content,
@@ -196,6 +200,7 @@ async function upsertLabEntry(
     .insert(labEntries)
     .values({
       id: seed.id,
+      locale: seed.locale,
       slug: seed.slug,
       title: seed.title,
       summary: seed.summary,
@@ -210,8 +215,9 @@ async function upsertLabEntry(
       updatedAt: now,
     })
     .onConflictDoUpdate({
-      target: labEntries.slug,
+      target: [labEntries.slug, labEntries.locale],
       set: {
+        locale: seed.locale,
         title: seed.title,
         summary: seed.summary,
         content: seed.content,

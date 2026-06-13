@@ -4,9 +4,13 @@ import { ArrowLeft, FlaskConical } from 'lucide-react'
 import { Container } from '#/components/marketing/section'
 import { getPublishedLabEntry } from '#/features/content/public-loaders'
 import { getPublicCopy } from '#/features/portfolio/data'
+import { getLocale } from '#/paraglide/runtime'
 
 export const Route = createFileRoute('/lab/$slug')({
-  loader: ({ params }) => getPublishedLabEntry({ data: params.slug }),
+  loader: ({ params }) =>
+    getPublishedLabEntry({
+      data: { slug: params.slug, locale: getLocale() },
+    }),
   component: LabDetailPage,
 })
 

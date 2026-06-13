@@ -2,6 +2,7 @@ import { and, desc, eq, or } from 'drizzle-orm'
 
 import type { Database } from '#/db'
 import { labEntries, writing } from '#/db/schema'
+import type { ContentLocale } from '#/db/schema'
 
 import type { LabEntryInput, WritingInput } from './validation'
 
@@ -10,11 +11,13 @@ export type LabEntryRecord = typeof labEntries.$inferSelect
 
 export type PublicContentRecord = {
   id: string
+  locale: ContentLocale
   slug: string
   title: string
   summary: string
   content?: string | null
   status: string
+  visibility: string
   tags: string[]
   coverImage?: string | null
   demoUrl?: string | null
@@ -52,11 +55,13 @@ export function toPublicWritingRecord(
 ): PublicContentRecord {
   return {
     id: record.id,
+    locale: record.locale,
     slug: record.slug,
     title: record.title,
     summary: record.summary,
     content: record.content,
     status: record.status,
+    visibility: record.visibility,
     tags: parseTags(record.tags),
     coverImage: record.coverImage,
   }
@@ -65,11 +70,13 @@ export function toPublicWritingRecord(
 export function toPublicLabRecord(record: LabEntryRecord): PublicContentRecord {
   return {
     id: record.id,
+    locale: record.locale,
     slug: record.slug,
     title: record.title,
     summary: record.summary,
     content: record.content,
     status: record.status,
+    visibility: record.visibility,
     tags: parseTags(record.tags),
     coverImage: record.coverImage,
     demoUrl: record.demoUrl,
@@ -81,15 +88,24 @@ export async function listWriting(db: Database) {
   return db.select().from(writing).orderBy(desc(writing.updatedAt)).all()
 }
 
-export async function listPublishedWriting(db: Database) {
-  return db
+export async function listPublishedWriting(
+  db: Database,
+  locale: ContentLocale,
+) {
+  const records = await db
     .select()
     .from(writing)
     .where(
-      and(eq(writing.status, 'published'), eq(writing.visibility, 'public')),
+      and(
+        eq(writing.status, 'published'),
+        eq(writing.visibility, 'public'),
+        or(eq(writing.locale, locale), eq(writing.locale, 'en')),
+      ),
     )
     .orderBy(desc(writing.publishedAt), desc(writing.updatedAt))
     .all()
+
+  return pickLocalizedRecords(records, locale)
 }
 
 export async function getWritingByIdOrSlug(db: Database, idOrSlug: string) {
@@ -97,6 +113,38 @@ export async function getWritingByIdOrSlug(db: Database, idOrSlug: string) {
     .select()
     .from(writing)
     .where(or(eq(writing.id, idOrSlug), eq(writing.slug, idOrSlug)))
+    .get()
+}
+
+export async function getPublishedWritingBySlug(
+  db: Database,
+  slug: string,
+  locale: ContentLocale,
+) {
+  return (
+    (await getPublishedWritingBySlugAndLocale(db, slug, locale)) ??
+    (locale === 'en'
+      ? null
+      : await getPublishedWritingBySlugAndLocale(db, slug, 'en'))
+  )
+}
+
+async function getPublishedWritingBySlugAndLocale(
+  db: Database,
+  slug: string,
+  locale: ContentLocale,
+) {
+  return db
+    .select()
+    .from(writing)
+    .where(
+      and(
+        eq(writing.slug, slug),
+        eq(writing.locale, locale),
+        eq(writing.status, 'published'),
+        eq(writing.visibility, 'public'),
+      ),
+    )
     .get()
 }
 
@@ -169,18 +217,24 @@ export async function listLabEntries(db: Database) {
   return db.select().from(labEntries).orderBy(desc(labEntries.updatedAt)).all()
 }
 
-export async function listPublishedLabEntries(db: Database) {
-  return db
+export async function listPublishedLabEntries(
+  db: Database,
+  locale: ContentLocale,
+) {
+  const records = await db
     .select()
     .from(labEntries)
     .where(
       and(
         eq(labEntries.status, 'published'),
         eq(labEntries.visibility, 'public'),
+        or(eq(labEntries.locale, locale), eq(labEntries.locale, 'en')),
       ),
     )
     .orderBy(desc(labEntries.publishedAt), desc(labEntries.updatedAt))
     .all()
+
+  return pickLocalizedRecords(records, locale)
 }
 
 export async function getLabEntryByIdOrSlug(db: Database, idOrSlug: string) {
@@ -188,6 +242,38 @@ export async function getLabEntryByIdOrSlug(db: Database, idOrSlug: string) {
     .select()
     .from(labEntries)
     .where(or(eq(labEntries.id, idOrSlug), eq(labEntries.slug, idOrSlug)))
+    .get()
+}
+
+export async function getPublishedLabEntryBySlug(
+  db: Database,
+  slug: string,
+  locale: ContentLocale,
+) {
+  return (
+    (await getPublishedLabEntryBySlugAndLocale(db, slug, locale)) ??
+    (locale === 'en'
+      ? null
+      : await getPublishedLabEntryBySlugAndLocale(db, slug, 'en'))
+  )
+}
+
+async function getPublishedLabEntryBySlugAndLocale(
+  db: Database,
+  slug: string,
+  locale: ContentLocale,
+) {
+  return db
+    .select()
+    .from(labEntries)
+    .where(
+      and(
+        eq(labEntries.slug, slug),
+        eq(labEntries.locale, locale),
+        eq(labEntries.status, 'published'),
+        eq(labEntries.visibility, 'public'),
+      ),
+    )
     .get()
 }
 
@@ -266,4 +352,19 @@ function resolvePublishedAt(
   }
 
   return existingPublishedAt ?? now
+}
+
+function pickLocalizedRecords<
+  T extends { slug: string; locale: ContentLocale },
+>(records: readonly T[], locale: ContentLocale) {
+  const bySlug = new Map<string, T>()
+
+  for (const record of records) {
+    const existing = bySlug.get(record.slug)
+    if (!existing || (existing.locale !== locale && record.locale === locale)) {
+      bySlug.set(record.slug, record)
+    }
+  }
+
+  return [...bySlug.values()]
 }
