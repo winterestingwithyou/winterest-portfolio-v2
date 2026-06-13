@@ -11,6 +11,7 @@ import ThemeToggle from './ThemeToggle'
 
 export default function Header() {
   const copy = getPublicCopy()
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   })
@@ -26,9 +27,28 @@ export default function Header() {
     (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
   )
 
+  useEffect(() => {
+    setMobileNavOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    if (!mobileNavOpen) {
+      return
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setMobileNavOpen(false)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [mobileNavOpen])
+
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--brand-line)] bg-[var(--header-bg)] px-4 backdrop-blur-xl">
-      <nav className="page-wrap flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:py-4">
+      <nav className="page-wrap flex items-center gap-x-3 gap-y-2 py-3 sm:py-4">
         <Link
           to="/"
           activeOptions={{ exact: true }}
@@ -42,7 +62,7 @@ export default function Header() {
           <span className="brand-name">Winterest</span>
         </Link>
 
-        <div className="order-3 flex w-full items-center overflow-x-auto pb-1 sm:order-none sm:w-auto sm:overflow-visible sm:pb-0">
+        <div className="hidden items-center md:flex">
           <GooeyNav
             items={[...navItems]}
             initialActiveIndex={activeNavIndex}
@@ -74,8 +94,68 @@ export default function Header() {
           <DashboardLink />
           <ParaglideLocaleSwitcher />
           <ThemeToggle />
+          <button
+            type="button"
+            className="mobile-menu-button md:hidden"
+            aria-expanded={mobileNavOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMobileNavOpen((isOpen) => !isOpen)}
+          >
+            <span className="sr-only">
+              {mobileNavOpen ? 'Close navigation' : 'Open navigation'}
+            </span>
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </button>
         </div>
       </nav>
+      <div
+        id="mobile-navigation"
+        className={`mobile-nav-panel page-wrap md:hidden ${
+          mobileNavOpen ? 'is-open' : ''
+        }`}
+        aria-hidden={!mobileNavOpen}
+      >
+        <div className="mobile-nav-surface">
+          {navItems.map((item) => {
+            const isActive =
+              pathname === item.href || pathname.startsWith(`${item.href}/`)
+
+            return (
+              <Link
+                key={item.href}
+                to={item.href}
+                className={`mobile-nav-link ${isActive ? 'is-active' : ''}`}
+                tabIndex={mobileNavOpen ? 0 : -1}
+                onClick={() => setMobileNavOpen(false)}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
+          <div className="mobile-nav-actions">
+            <a
+              href={siteProfile.githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mobile-nav-action"
+              tabIndex={mobileNavOpen ? 0 : -1}
+            >
+              <Github aria-hidden="true" className="size-4" />
+              GitHub
+            </a>
+            <a
+              href={`mailto:${siteProfile.contactEmail}`}
+              className="mobile-nav-action"
+              tabIndex={mobileNavOpen ? 0 : -1}
+            >
+              <Mail aria-hidden="true" className="size-4" />
+              Email
+            </a>
+          </div>
+        </div>
+      </div>
     </header>
   )
 }
