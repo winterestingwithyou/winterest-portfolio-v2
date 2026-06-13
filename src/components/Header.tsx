@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { Cloud, Github, LayoutDashboard, Mail } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
 import { authClient } from '#/lib/auth-client'
@@ -9,7 +10,6 @@ import ThemeToggle from './ThemeToggle'
 
 export default function Header() {
   const copy = getPublicCopy()
-  const { data: session } = authClient.useSession()
   const navItems = [
     { to: '/about', label: copy.nav.about },
     { to: '/projects', label: copy.nav.projects },
@@ -64,16 +64,40 @@ export default function Header() {
             <span className="sr-only">Email Winterest</span>
             <Mail aria-hidden="true" className="size-4" />
           </a>
-          {session ? (
-            <Link to="/dashboard" className="icon-link">
-              <span className="sr-only">Dashboard</span>
-              <LayoutDashboard aria-hidden="true" className="size-4" />
-            </Link>
-          ) : null}
+          <DashboardLink />
           <ParaglideLocaleSwitcher />
           <ThemeToggle />
         </div>
       </nav>
     </header>
+  )
+}
+
+function DashboardLink() {
+  const [hasSession, setHasSession] = useState(false)
+
+  useEffect(() => {
+    let isMounted = true
+
+    void authClient.getSession().then((result) => {
+      if (isMounted) {
+        setHasSession(Boolean(result.data?.user))
+      }
+    })
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
+  if (!hasSession) {
+    return null
+  }
+
+  return (
+    <Link to="/dashboard" className="icon-link">
+      <span className="sr-only">Dashboard</span>
+      <LayoutDashboard aria-hidden="true" className="size-4" />
+    </Link>
   )
 }

@@ -1,9 +1,10 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import {
   FolderKanban,
   Home,
   Image,
   LayoutDashboard,
+  LogOut,
   PenLine,
   Settings,
   TestTube2,
@@ -12,6 +13,7 @@ import {
 import type { ReactNode } from 'react'
 
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { authClient } from '#/lib/auth-client'
 
 type DashboardShellProps = {
   title: string
@@ -27,6 +29,7 @@ export function DashboardShell({
   children,
 }: DashboardShellProps) {
   const copy = getDashboardCopy()
+  const navigate = useNavigate()
   const dashboardNav = [
     {
       to: '/dashboard',
@@ -113,9 +116,19 @@ export function DashboardShell({
                 </p>
               ) : null}
             </div>
-            {actions ? (
-              <div className="flex flex-wrap gap-2">{actions}</div>
-            ) : null}
+            <div className="flex flex-wrap gap-2">
+              {actions}
+              <button
+                type="button"
+                onClick={() => {
+                  void authClient.signOut().then(() => navigate({ to: '/' }))
+                }}
+                className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] transition hover:-translate-y-0.5 hover:border-[var(--brand-orange)]"
+              >
+                <LogOut aria-hidden="true" className="size-4" />
+                {copy.shell.logout}
+              </button>
+            </div>
           </header>
 
           {children}

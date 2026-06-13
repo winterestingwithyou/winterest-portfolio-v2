@@ -15,6 +15,7 @@ export const dashboardCopy = {
         settings: 'Settings',
       },
       soon: 'Soon',
+      logout: 'Log out',
     },
     overview: {
       title: 'Overview',
@@ -154,6 +155,7 @@ export const dashboardCopy = {
         settings: 'Pengaturan',
       },
       soon: 'Nanti',
+      logout: 'Keluar',
     },
     overview: {
       title: 'Ringkasan',
