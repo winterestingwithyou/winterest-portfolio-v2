@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { Cloud, Github, LayoutDashboard, Mail } from 'lucide-react'
+import { Cloud, Github, LayoutDashboard, Mail, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
@@ -25,13 +25,14 @@ export default function Header() {
         <Link
           to="/"
           activeOptions={{ exact: true }}
-          className="inline-flex items-center gap-2 rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-1.5 text-sm font-semibold text-[var(--brand-ink)] no-underline shadow-[0_10px_28px_rgba(244,129,32,0.12)] transition hover:-translate-y-0.5 hover:border-[var(--brand-orange)] sm:px-4"
+          className="brand-lockup"
           activeProps={{ className: 'is-active-brand' }}
         >
-          <span className="grid size-7 place-items-center rounded-full bg-[var(--brand-orange)] text-white">
+          <span className="brand-mark">
             <Cloud aria-hidden="true" className="size-4" />
+            <Sparkles aria-hidden="true" className="brand-spark size-3" />
           </span>
-          <span>{siteProfile.domain}</span>
+          <span className="brand-name">Winterest</span>
         </Link>
 
         <div className="order-3 flex w-full flex-wrap items-center gap-x-2 gap-y-2 pb-1 text-sm font-semibold sm:order-none sm:w-auto sm:flex-nowrap sm:pb-0">

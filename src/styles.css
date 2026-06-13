@@ -209,6 +209,93 @@
     text-transform: uppercase;
   }
 
+  .brand-lockup {
+    position: relative;
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+    gap: 0.65rem;
+    overflow: hidden;
+    border: 1px solid
+      color-mix(in srgb, var(--brand-orange) 34%, var(--brand-line));
+    border-radius: 999px;
+    background:
+      linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--surface-strong) 88%, white),
+        color-mix(in srgb, var(--brand-orange-soft) 52%, transparent)
+      ),
+      var(--surface-strong);
+    padding: 0.3rem 0.9rem 0.3rem 0.35rem;
+    color: var(--brand-ink);
+    text-decoration: none;
+    box-shadow:
+      0 14px 34px rgba(244, 129, 32, 0.14),
+      inset 0 1px 0 color-mix(in srgb, white 70%, transparent);
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+  }
+
+  .brand-lockup::after {
+    position: absolute;
+    inset: 0.2rem;
+    border-radius: inherit;
+    background: linear-gradient(
+      110deg,
+      transparent 8%,
+      color-mix(in srgb, white 32%, transparent) 38%,
+      transparent 62%
+    );
+    content: '';
+    opacity: 0.42;
+    pointer-events: none;
+  }
+
+  .brand-lockup:hover,
+  .brand-lockup.is-active-brand {
+    border-color: color-mix(in srgb, var(--brand-orange) 74%, white);
+    box-shadow:
+      0 16px 44px var(--brand-glow),
+      inset 0 1px 0 color-mix(in srgb, white 78%, transparent);
+  }
+
+  .brand-mark {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, white 42%, transparent);
+    border-radius: 999px;
+    background:
+      radial-gradient(circle at 32% 24%, #ffd7a4 0 20%, transparent 22%),
+      linear-gradient(145deg, #ff9d3e, var(--brand-orange) 58%, #c7520c);
+    color: white;
+    box-shadow:
+      0 10px 24px rgba(244, 129, 32, 0.34),
+      inset 0 1px 0 rgba(255, 255, 255, 0.36);
+  }
+
+  .brand-spark {
+    position: absolute;
+    right: -0.18rem;
+    top: -0.12rem;
+    color: #fff6da;
+    filter: drop-shadow(0 2px 5px rgba(116, 49, 4, 0.28));
+  }
+
+  .brand-name {
+    position: relative;
+    z-index: 1;
+    color: var(--brand-ink);
+    font-size: 0.95rem;
+    font-weight: 850;
+    letter-spacing: 0;
+  }
+
   .nav-link,
   .footer-link {
     display: inline-flex;
