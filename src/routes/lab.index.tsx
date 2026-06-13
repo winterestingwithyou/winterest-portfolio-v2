@@ -4,7 +4,7 @@ import { FlaskConical } from 'lucide-react'
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { SignalPreview } from '#/components/visual/SignalPreview'
 import { getPublishedLabEntries } from '#/features/content/public-loaders'
-import { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
+import { getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/lab/')({
   loader: () => getPublishedLabEntries(),
@@ -13,9 +13,7 @@ export const Route = createFileRoute('/lab/')({
 
 function LabPage() {
   const copy = getPublicCopy()
-  const { labEntries } = getPortfolioContent()
-  const publishedEntries = Route.useLoaderData()
-  const entries = publishedEntries.length > 0 ? publishedEntries : labEntries
+  const entries = Route.useLoaderData()
 
   return (
     <main className="px-4 py-14 sm:py-20">
@@ -27,6 +25,16 @@ function LabPage() {
         />
 
         <div className="grid gap-5 md:grid-cols-3">
+          {entries.length === 0 ? (
+            <div className="surface-card p-6 md:col-span-3">
+              <h2 className="text-2xl font-semibold text-[var(--brand-ink)]">
+                {copy.lab.emptyTitle}
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
+                {copy.lab.emptyDescription}
+              </p>
+            </div>
+          ) : null}
           {entries.map((entry) => (
             <Link
               key={entry.slug}

@@ -49,9 +49,11 @@ async function derivePasswordKey(
   salt: Uint8Array,
   iterations: number,
 ): Promise<Uint8Array> {
+  const passwordBytes = toArrayBufferBytes(encoder.encode(password))
+  const saltBytes = toArrayBufferBytes(salt)
   const baseKey = await crypto.subtle.importKey(
     'raw',
-    encoder.encode(password),
+    passwordBytes,
     'PBKDF2',
     false,
     ['deriveBits'],
@@ -60,7 +62,7 @@ async function derivePasswordKey(
     {
       name: 'PBKDF2',
       hash: HASH_ALGORITHM,
-      salt,
+      salt: saltBytes,
       iterations,
     },
     baseKey,
@@ -68,6 +70,12 @@ async function derivePasswordKey(
   )
 
   return new Uint8Array(bits)
+}
+
+function toArrayBufferBytes(bytes: Uint8Array): Uint8Array<ArrayBuffer> {
+  const copy = new Uint8Array(bytes.byteLength)
+  copy.set(bytes)
+  return copy
 }
 
 function timingSafeEqual(actual: Uint8Array, expected: Uint8Array): boolean {

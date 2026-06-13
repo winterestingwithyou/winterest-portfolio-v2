@@ -1,18 +1,25 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { ArrowLeft, CalendarDays, Layers3, Rocket } from 'lucide-react'
+import {
+  ArrowLeft,
+  CalendarDays,
+  ExternalLink,
+  Layers3,
+  Rocket,
+} from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { Container } from '#/components/marketing/section'
-import { getProjectBySlug, getPublicCopy } from '#/features/portfolio/data'
+import { getPublishedProject } from '#/features/projects/public-loaders'
+import { getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/projects/$slug')({
+  loader: ({ params }) => getPublishedProject({ data: params.slug }),
   component: ProjectDetailPage,
 })
 
 function ProjectDetailPage() {
   const copy = getPublicCopy()
-  const { slug } = Route.useParams()
-  const project = getProjectBySlug(slug)
+  const project = Route.useLoaderData()
 
   if (!project) {
     return (
@@ -66,86 +73,89 @@ function ProjectDetailPage() {
               />
               <MetaItem
                 icon={<Layers3 aria-hidden="true" className="size-4" />}
-                label={copy.projectDetail.phase}
-                value={project.phase}
+                label={copy.projectDetail.category}
+                value={project.category}
               />
               <MetaItem
                 icon={<CalendarDays aria-hidden="true" className="size-4" />}
                 label={copy.projectDetail.year}
-                value={project.year}
+                value={formatProjectDate(project.publishedAt)}
               />
             </div>
-            <div className="mt-5 border-t border-[var(--brand-line)] pt-5">
-              <p className="text-xs font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
-                {copy.projectDetail.scope}
-              </p>
-              <p className="mt-2 text-sm leading-7 text-[var(--brand-muted)]">
-                {project.scope}
-              </p>
-            </div>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {project.stack.map((item) => (
-                <span
-                  key={item}
-                  className="rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-1 text-xs font-semibold text-[var(--brand-muted)]"
-                >
-                  {item}
-                </span>
-              ))}
-            </div>
+            {project.description ? (
+              <div className="mt-5 border-t border-[var(--brand-line)] pt-5">
+                <p className="text-xs font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
+                  {copy.projectDetail.scope}
+                </p>
+                <p className="mt-2 text-sm leading-7 text-[var(--brand-muted)]">
+                  {project.description}
+                </p>
+              </div>
+            ) : null}
+            {project.technologies.length > 0 ? (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {project.technologies.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-1 text-xs font-semibold text-[var(--brand-muted)]"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+            {project.repoUrl || project.demoUrl || project.caseStudyUrl ? (
+              <div className="mt-5 grid gap-2 border-t border-[var(--brand-line)] pt-5">
+                <ProjectLink href={project.demoUrl} label="Live demo" />
+                <ProjectLink href={project.repoUrl} label="Repository" />
+                <ProjectLink href={project.caseStudyUrl} label="Case study" />
+              </div>
+            ) : null}
           </aside>
         </section>
 
-        <section className="mt-12 grid gap-4 md:grid-cols-3">
-          {project.metrics.map((metric) => (
-            <article key={metric.label} className="surface-card p-5">
-              <p className="text-sm font-semibold text-[var(--brand-muted)]">
-                {metric.label}
-              </p>
-              <p className="mt-2 text-3xl font-semibold text-[var(--brand-ink)]">
-                {metric.value}
-              </p>
-            </article>
-          ))}
-        </section>
-
-        <section className="mt-12 grid gap-5 lg:grid-cols-3">
-          <InfoBlock
-            title={copy.projectDetail.problem}
-            text={project.problem}
-          />
-          <InfoBlock title={copy.projectDetail.goal} text={project.goal} />
-          <InfoBlock title={copy.projectDetail.role} text={project.role} />
-        </section>
-
-        <section className="mt-12 grid gap-5 lg:grid-cols-2">
-          <ListBlock
-            title={copy.projectDetail.architecture}
-            items={project.architecture}
-          />
-          <ListBlock
-            title={copy.projectDetail.highlights}
-            items={project.highlights}
-          />
-          <ListBlock
-            title={copy.projectDetail.decisions}
-            items={project.decisions}
-          />
-          <ListBlock
-            title={copy.projectDetail.nextSteps}
-            items={project.nextSteps}
-          />
-        </section>
-
-        <section className="mt-12 surface-card p-6 sm:p-8">
-          <p className="eyebrow mb-3">{copy.projectDetail.result}</p>
-          <p className="m-0 max-w-3xl text-lg leading-8 text-[var(--brand-muted)]">
-            {project.result}
-          </p>
-        </section>
+        {project.content ? (
+          <section className="mt-12 surface-card p-6 sm:p-8">
+            <p className="eyebrow mb-3">{copy.projectDetail.result}</p>
+            <div className="max-w-3xl whitespace-pre-wrap text-sm leading-8 text-[var(--brand-muted)]">
+              {project.content}
+            </div>
+          </section>
+        ) : null}
       </Container>
     </main>
   )
+}
+
+function ProjectLink({ href, label }: { href?: string | null; label: string }) {
+  if (!href) {
+    return null
+  }
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="inline-flex min-h-10 items-center justify-between gap-3 rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 text-sm font-bold text-[var(--brand-ink)] no-underline transition hover:border-[var(--brand-orange)]"
+    >
+      {label}
+      <ExternalLink aria-hidden="true" className="size-4" />
+    </a>
+  )
+}
+
+function formatProjectDate(date?: Date | string | null) {
+  if (!date) {
+    return 'Published'
+  }
+
+  const value = date instanceof Date ? date : new Date(date)
+  if (Number.isNaN(value.getTime())) {
+    return 'Published'
+  }
+
+  return new Intl.DateTimeFormat('en', { year: 'numeric' }).format(value)
 }
 
 function MetaItem({
@@ -171,33 +181,5 @@ function MetaItem({
         </p>
       </div>
     </div>
-  )
-}
-
-function InfoBlock({ title, text }: { title: string; text: string }) {
-  return (
-    <article className="surface-card p-6">
-      <h2 className="text-xl font-semibold text-[var(--brand-ink)]">{title}</h2>
-      <p className="mt-3 text-sm leading-7 text-[var(--brand-muted)]">{text}</p>
-    </article>
-  )
-}
-
-function ListBlock({
-  title,
-  items,
-}: {
-  title: string
-  items: readonly string[]
-}) {
-  return (
-    <article className="surface-card p-6">
-      <h2 className="text-xl font-semibold text-[var(--brand-ink)]">{title}</h2>
-      <ul className="mt-4 space-y-3 pl-5 text-sm leading-7 text-[var(--brand-muted)]">
-        {items.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
-    </article>
   )
 }

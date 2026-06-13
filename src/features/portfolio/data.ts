@@ -39,195 +39,6 @@ export const principles = [
   },
 ]
 
-export const featuredProjects = [
-  {
-    slug: 'winterest-portfolio-platform',
-    title: 'Winterest Portfolio v2',
-    summary:
-      'My personal portfolio rebuilt as a long-term home for projects, writing, experiments, and a private CMS.',
-    category: 'Portfolio',
-    status: 'Building',
-    phase: 'Public site + CMS',
-    year: '2026',
-    scope: 'Public portfolio, content model, dashboard foundation',
-    featured: true,
-    stack: ['TanStack Start', 'React 19', 'Bun', 'Cloudflare', 'Tailwind CSS'],
-    problem:
-      'A plain resume page was not enough to show how I think, build, write, and experiment as a developer.',
-    goal: 'Create a portfolio that feels personal on the outside and can grow into a reliable publishing workflow behind the scenes.',
-    role: 'Product direction, interface design, frontend architecture, Cloudflare deployment planning, and CMS implementation.',
-    architecture: [
-      'TanStack Start routes split between public pages, dashboard routes, and small API endpoints.',
-      'Local seed content keeps the public site readable while D1-backed content becomes mature.',
-      'Cloudflare-compatible server code keeps the deployment target edge-friendly.',
-    ],
-    highlights: [
-      'Custom Cloudflare + Bun inspired visual direction.',
-      'Public pages for projects, about, writing, lab, stack, contact, and resume.',
-      'Private dashboard foundation with content management, auth, and D1 in mind.',
-    ],
-    decisions: [
-      'Keep public content readable from local seed data while database publishing stabilizes.',
-      'Use feature folders for domain data and dashboard components.',
-      'Use Cloudflare D1 through bindings instead of relying on Node-only database access.',
-    ],
-    metrics: [
-      { label: 'Public routes', value: '10+' },
-      { label: 'CMS areas', value: '3' },
-      { label: 'Runtime target', value: 'Workers' },
-    ],
-    nextSteps: [
-      'Replace more seed copy with real finished case studies.',
-      'Add stronger content rendering for writing and lab notes.',
-      'Add richer media, screenshots, and project outcomes.',
-    ],
-    result:
-      'Winterest now has a clearer identity: a personal developer site first, with room to grow into a serious publishing system.',
-  },
-  {
-    slug: 'edge-cms-blueprint',
-    title: 'Edge CMS Dashboard',
-    summary:
-      'A private dashboard for managing portfolio projects, writing notes, lab entries, media metadata, and publishing status.',
-    category: 'CMS',
-    status: 'Building',
-    phase: 'Dashboard',
-    year: '2026',
-    scope: 'Projects CRUD, content lists, D1 schema, dashboard workflows',
-    featured: true,
-    stack: ['Drizzle ORM', 'Cloudflare D1', 'Better Auth', 'TanStack Table'],
-    problem:
-      'Updating a portfolio only through code makes small edits feel heavier than they should be.',
-    goal: 'Build a small owner-first CMS where projects and notes can move from draft to published without exposing private content.',
-    role: 'Schema planning, dashboard UX, role model, and mutation design.',
-    architecture: [
-      'D1 tables for projects, writing, lab entries, media metadata, users, and sessions.',
-      'Better Auth sessions with owner/editor roles.',
-      'Dashboard list and form workflows designed for repeated content editing.',
-    ],
-    highlights: [
-      'Simple owner/editor model before granular permissions.',
-      'Published-only public data loaders.',
-      'Server-side validation with Zod for CMS mutations.',
-    ],
-    decisions: [
-      'Start with projects, then expand the same pattern to writing, lab, and media.',
-      'Keep status and visibility explicit so draft/private content cannot leak.',
-      'Use small API handlers around D1 until auth and server functions settle.',
-    ],
-    metrics: [
-      { label: 'First model', value: 'Projects' },
-      { label: 'Relations', value: 'Tech stack' },
-      { label: 'Guard status', value: 'Owner' },
-    ],
-    nextSteps: [
-      'Polish empty states, delete confirmations, and form guidance.',
-      'Add media picker support for cover images.',
-      'Improve preview and markdown rendering before publishing longer writing.',
-    ],
-    result:
-      'The dashboard gives this portfolio a maintainable editing flow without turning it into a bloated admin product.',
-  },
-  {
-    slug: 'developer-lab-experiments',
-    title: 'Developer Lab',
-    summary:
-      'A lightweight space for small UI demos, Cloudflare notes, AI experiments, and TanStack prototypes.',
-    category: 'Lab',
-    status: 'Building',
-    phase: 'Experiments',
-    year: '2026',
-    scope: 'Experiment index, lab detail pages, future demo embeds',
-    featured: false,
-    stack: ['React', 'TanStack Query', 'Workers', 'AI tooling'],
-    problem:
-      'Small experiments often disappear into branches, notes, or private scratch files before they can teach anything useful.',
-    goal: 'Give experiments a lightweight home that can grow into polished demos over time.',
-    role: 'Frontend prototypes, content model planning, and interaction design.',
-    architecture: [
-      'Lab entries start as local seed data.',
-      'Each entry can later map to a CMS record with demo and repo links.',
-      'Visual effects remain optional and reduced-motion friendly.',
-    ],
-    highlights: [
-      'Dedicated lab route for experiments.',
-      'Room for Cloudflare, TanStack, AI, and interface experiments.',
-      'Design language can be more playful than the dashboard.',
-    ],
-    decisions: [
-      'Keep lab entries lighter than project case studies.',
-      'Make future demos linkable without loading heavy code on every page.',
-      'Use reduced-motion friendly visual polish before any 3D layer.',
-    ],
-    metrics: [
-      { label: 'Entry types', value: 'Notes + demos' },
-      { label: 'Visual weight', value: 'Light' },
-      { label: 'CMS phase', value: 'Later' },
-    ],
-    nextSteps: [
-      'Add small embedded demos for TanStack and Cloudflare experiments.',
-      'Move lab entries into D1 once the editing experience feels good.',
-      'Add screenshots or generated static visuals for each experiment.',
-    ],
-    result:
-      'The lab gives my portfolio a living-workbench layer beyond polished case studies.',
-  },
-] as const
-
-export const labEntries = [
-  {
-    slug: 'worker-notes',
-    title: 'Worker Notes',
-    summary:
-      'Small notes on Worker routes, bindings, caching, and server code that stays friendly to the edge runtime.',
-    status: 'Drafting',
-    tags: ['Cloudflare', 'Workers', 'Edge'],
-  },
-  {
-    slug: 'tanstack-playground',
-    title: 'TanStack Playground',
-    summary:
-      'Focused experiments with Router, Query, Form, Table, Store, and DB patterns I want to reuse well.',
-    status: 'Building',
-    tags: ['TanStack', 'React', 'TypeScript'],
-  },
-  {
-    slug: 'bun-tooling-notes',
-    title: 'Bun Tooling Notes',
-    summary:
-      'Practical notes around Bun scripts, fast local workflows, and keeping this workspace pleasant to maintain.',
-    status: 'Queued',
-    tags: ['Bun', 'Tooling', 'DX'],
-  },
-] as const
-
-export const writingEntries = [
-  {
-    slug: 'edge-first-portfolio-stack',
-    title: 'Choosing my edge-first portfolio stack',
-    summary:
-      'Why TanStack Start, Bun, Cloudflare Workers, D1, and Drizzle fit the kind of portfolio I want to maintain.',
-    status: 'Outline',
-    tags: ['Architecture', 'Cloudflare', 'TanStack'],
-  },
-  {
-    slug: 'solo-cms-roadmap',
-    title: 'A practical content workflow for one developer',
-    summary:
-      'A staged path from local seed content to dashboard CRUD, auth, writing, media, and content polish.',
-    status: 'Outline',
-    tags: ['CMS', 'Product', 'Planning'],
-  },
-  {
-    slug: 'calm-dashboard-design',
-    title: 'Designing a calm dashboard',
-    summary:
-      'Notes on making admin screens dense, readable, and useful without bringing marketing-page energy into the workspace.',
-    status: 'Idea',
-    tags: ['Design', 'Dashboard', 'UX'],
-  },
-] as const
-
 export const stackGroups = [
   {
     title: 'Runtime and Edge',
@@ -304,179 +115,6 @@ const idPrinciples = [
     title: 'Tetap penasaran secara terbuka',
     description:
       'Situs ini juga menjadi tempat untuk mencatat eksperimen, keputusan, dan pelajaran selama aku terus belajar di stack web modern.',
-  },
-] as const
-
-const idFeaturedProjects = [
-  {
-    ...featuredProjects[0],
-    summary:
-      'Portfolio pribadiku yang dibangun ulang sebagai rumah jangka panjang untuk project, tulisan, eksperimen, dan CMS privat.',
-    category: 'Portfolio',
-    status: 'Dibangun',
-    phase: 'Situs publik + CMS',
-    scope: 'Portfolio publik, model konten, fondasi dashboard',
-    problem:
-      'Halaman resume biasa belum cukup untuk menunjukkan cara Winterest berpikir, membangun, menulis, dan bereksperimen sebagai developer.',
-    goal: 'Membuat portfolio yang terasa personal di sisi publik dan bisa tumbuh menjadi workflow publishing yang rapi di belakang layar.',
-    role: 'Arah produk, desain interface, arsitektur frontend, rencana deploy Cloudflare, dan implementasi CMS.',
-    architecture: [
-      'Route TanStack Start dipisah untuk halaman publik, dashboard, dan API kecil.',
-      'Seed content lokal menjaga situs tetap terbaca saat konten D1 dibuat lebih matang.',
-      'Kode server dijaga kompatibel dengan Cloudflare agar target deploy tetap edge-friendly.',
-    ],
-    highlights: [
-      'Arah visual yang terinspirasi Cloudflare + Bun.',
-      'Halaman publik untuk projects, about, writing, lab, stack, contact, dan resume.',
-      'Fondasi dashboard privat untuk content management, auth, dan D1.',
-    ],
-    decisions: [
-      'Jaga konten publik tetap bisa dibaca dari seed lokal sambil workflow database distabilkan.',
-      'Gunakan feature folder untuk data domain dan komponen dashboard.',
-      'Gunakan Cloudflare D1 lewat binding, bukan akses database yang hanya cocok di Node.',
-    ],
-    metrics: [
-      { label: 'Route publik', value: '10+' },
-      { label: 'Area CMS', value: '3' },
-      { label: 'Target runtime', value: 'Workers' },
-    ],
-    nextSteps: [
-      'Ganti lebih banyak seed copy dengan case study project yang benar-benar selesai.',
-      'Perkuat rendering konten untuk writing dan lab notes.',
-      'Tambah media, screenshot, dan outcome project yang lebih kaya.',
-    ],
-    result:
-      'Winterest sekarang punya identitas yang lebih jelas: situs developer personal dulu, dengan ruang untuk tumbuh menjadi sistem publishing yang serius.',
-  },
-  {
-    ...featuredProjects[1],
-    title: 'Dashboard CMS Edge',
-    summary:
-      'Dashboard privat untuk mengelola project portfolio, catatan writing, lab entries, metadata media, dan status publish.',
-    category: 'CMS',
-    status: 'Dibangun',
-    phase: 'Dashboard',
-    scope: 'CRUD project, daftar konten, schema D1, workflow dashboard',
-    problem:
-      'Mengubah portfolio hanya lewat kode membuat edit kecil terasa lebih berat dari seharusnya.',
-    goal: 'Membangun CMS kecil yang owner-first, tempat project dan catatan bisa bergerak dari draft ke published tanpa membocorkan konten privat.',
-    role: 'Perencanaan schema, UX dashboard, model role, dan desain mutation.',
-    architecture: [
-      'Tabel D1 untuk projects, writing, lab entries, metadata media, users, dan sessions.',
-      'Session Better Auth dengan role owner/editor.',
-      'Workflow list dan form dashboard dirancang untuk editing konten berulang.',
-    ],
-    highlights: [
-      'Model owner/editor sederhana sebelum permission granular.',
-      'Public loader hanya membaca konten published.',
-      'Validasi server-side dengan Zod untuk mutation CMS.',
-    ],
-    decisions: [
-      'Mulai dari projects, lalu perluas pola yang sama ke writing, lab, dan media.',
-      'Buat status dan visibility eksplisit agar draft/private content tidak bocor.',
-      'Gunakan API handler kecil di sekitar D1 sambil auth dan server functions dimatangkan.',
-    ],
-    metrics: [
-      { label: 'Model awal', value: 'Projects' },
-      { label: 'Relasi', value: 'Tech stack' },
-      { label: 'Guard', value: 'Owner' },
-    ],
-    nextSteps: [
-      'Poles empty state, konfirmasi delete, dan panduan form.',
-      'Tambah media picker untuk cover image.',
-      'Perbaiki preview dan markdown rendering sebelum tulisan panjang dipublish.',
-    ],
-    result:
-      'Dashboard memberi portfolio ini workflow editing yang lebih mudah dirawat tanpa berubah menjadi admin product yang berlebihan.',
-  },
-  {
-    ...featuredProjects[2],
-    title: 'Developer Lab',
-    summary:
-      'Ruang ringan untuk UI demo kecil, catatan Cloudflare, eksperimen AI, dan prototype TanStack.',
-    category: 'Lab',
-    status: 'Dibangun',
-    phase: 'Eksperimen',
-    scope: 'Index eksperimen, halaman detail lab, embed demo di masa depan',
-    problem:
-      'Eksperimen kecil sering hilang di branch, catatan, atau file scratch privat sebelum bisa memberi pelajaran yang berguna.',
-    goal: 'Memberi eksperimen rumah yang ringan dan bisa tumbuh menjadi demo yang lebih rapi seiring waktu.',
-    role: 'Prototype frontend, perencanaan model konten, dan desain interaksi.',
-    architecture: [
-      'Lab entries dimulai dari seed data lokal.',
-      'Setiap entry nantinya bisa dipetakan ke record CMS dengan link demo dan repo.',
-      'Efek visual tetap opsional dan ramah reduced-motion.',
-    ],
-    highlights: [
-      'Route lab khusus untuk eksperimen.',
-      'Ruang untuk eksperimen Cloudflare, TanStack, AI, dan interface.',
-      'Bahasa visual bisa lebih playful daripada dashboard.',
-    ],
-    decisions: [
-      'Jaga lab entries lebih ringan daripada project case study.',
-      'Buat demo masa depan bisa dilink tanpa memuat kode berat di semua halaman.',
-      'Gunakan visual polish yang ramah reduced-motion sebelum layer 3D apa pun.',
-    ],
-    metrics: [
-      { label: 'Tipe entry', value: 'Notes + demo' },
-      { label: 'Bobot visual', value: 'Ringan' },
-      { label: 'Fase CMS', value: 'Nanti' },
-    ],
-    nextSteps: [
-      'Tambah demo kecil untuk eksperimen TanStack dan Cloudflare.',
-      'Pindahkan lab entries ke D1 setelah pengalaman editing terasa enak.',
-      'Tambah screenshot atau visual statis untuk tiap eksperimen.',
-    ],
-    result:
-      'Lab memberi portfolio Winterest lapisan workbench yang hidup di luar case study yang sudah dipoles.',
-  },
-] as const
-
-const idLabEntries = [
-  {
-    ...labEntries[0],
-    title: 'Catatan Worker',
-    summary:
-      'Catatan kecil tentang route Worker, binding, caching, dan kode server yang tetap ramah untuk edge runtime.',
-    status: 'Draft',
-  },
-  {
-    ...labEntries[1],
-    title: 'TanStack Playground',
-    summary:
-      'Eksperimen fokus dengan pola Router, Query, Form, Table, Store, dan DB yang ingin kupakai ulang dengan baik.',
-    status: 'Dibangun',
-  },
-  {
-    ...labEntries[2],
-    title: 'Catatan Tooling Bun',
-    summary:
-      'Catatan praktis tentang script Bun, workflow lokal yang cepat, dan menjaga workspace ini tetap nyaman dirawat.',
-    status: 'Antri',
-  },
-] as const
-
-const idWritingEntries = [
-  {
-    ...writingEntries[0],
-    title: 'Memilih stack edge-first untuk portfolio Winterest',
-    summary:
-      'Kenapa TanStack Start, Bun, Cloudflare Workers, D1, dan Drizzle cocok untuk portfolio yang ingin kurawat jangka panjang.',
-    status: 'Outline',
-  },
-  {
-    ...writingEntries[1],
-    title: 'Workflow konten praktis untuk satu developer',
-    summary:
-      'Jalur bertahap dari seed content lokal ke CRUD dashboard, auth, writing, media, dan content polish.',
-    status: 'Outline',
-  },
-  {
-    ...writingEntries[2],
-    title: 'Mendesain dashboard yang tenang',
-    summary:
-      'Catatan tentang membuat layar admin padat, mudah dibaca, dan berguna tanpa membawa energi marketing page ke workspace.',
-    status: 'Ide',
   },
 ] as const
 
@@ -589,6 +227,9 @@ export const publicCopy = {
       description:
         'This page collects the work I want people to understand: the problem, the decisions, the stack, and the tradeoffs behind each build.',
       open: 'Open',
+      emptyTitle: 'No published projects yet.',
+      emptyDescription:
+        'I am still preparing the project stories for this page. Check back soon for more detailed work notes.',
       remote: 'git remote',
       sourceTitle:
         'Follow the source behind Winterest and the experiments around it.',
@@ -600,6 +241,9 @@ export const publicCopy = {
       description:
         'The lab is where I keep prototypes and learning notes before they are polished enough to become full projects or articles.',
       experiment: 'Experiment',
+      emptyTitle: 'No published lab entries yet.',
+      emptyDescription:
+        'The lab is still being prepared. Soon it will collect small experiments, rough notes, and useful prototypes.',
       back: 'Back to lab',
       notFound: 'Lab entry not found',
       notFoundTitle: 'This experiment is not published yet.',
@@ -610,6 +254,9 @@ export const publicCopy = {
       description:
         'Writing is the slower side of Winterest: architecture notes, devlogs, retrospectives, and practical lessons from the work.',
       devlog: 'Devlog',
+      emptyTitle: 'No published writing yet.',
+      emptyDescription:
+        'I am still shaping the first notes for this section. Articles and devlogs will appear here when they are ready to read.',
       back: 'Back to writing',
       notFound: 'Writing not found',
       notFoundTitle: 'This article is not published yet.',
@@ -665,7 +312,7 @@ export const publicCopy = {
       back: 'Back to projects',
       projects: 'Projects',
       status: 'Status',
-      phase: 'Phase',
+      category: 'Category',
       year: 'Year',
       scope: 'Scope',
       problem: 'Problem',
@@ -762,6 +409,9 @@ export const publicCopy = {
       description:
         'Halaman ini mengumpulkan karya yang ingin kupahami bersama orang lain: masalah, keputusan, stack, dan tradeoff di balik tiap build.',
       open: 'Buka',
+      emptyTitle: 'Belum ada project yang dipublish.',
+      emptyDescription:
+        'Aku masih menyiapkan cerita project untuk halaman ini. Nanti akan ada catatan kerja yang lebih lengkap di sini.',
       remote: 'git remote',
       sourceTitle:
         'Ikuti source di balik Winterest dan eksperimen di sekitarnya.',
@@ -773,6 +423,9 @@ export const publicCopy = {
       description:
         'Lab adalah tempatku menyimpan prototype dan catatan belajar sebelum cukup rapi untuk menjadi project penuh atau artikel.',
       experiment: 'Eksperimen',
+      emptyTitle: 'Belum ada entry lab yang dipublish.',
+      emptyDescription:
+        'Lab-nya sedang disiapkan. Nanti bagian ini akan berisi eksperimen kecil, catatan kasar, dan prototype yang berguna.',
       back: 'Kembali ke lab',
       notFound: 'Lab entry tidak ditemukan',
       notFoundTitle: 'Eksperimen ini belum dipublish.',
@@ -783,6 +436,9 @@ export const publicCopy = {
       description:
         'Writing adalah sisi Winterest yang lebih pelan: catatan arsitektur, devlog, retrospektif, dan pelajaran praktis dari pekerjaan.',
       devlog: 'Devlog',
+      emptyTitle: 'Belum ada tulisan yang dipublish.',
+      emptyDescription:
+        'Aku masih merapikan catatan pertama untuk bagian ini. Artikel dan devlog akan muncul saat sudah enak dibaca.',
       back: 'Kembali ke tulisan',
       notFound: 'Tulisan tidak ditemukan',
       notFoundTitle: 'Artikel ini belum dipublish.',
@@ -838,7 +494,7 @@ export const publicCopy = {
       back: 'Kembali ke project',
       projects: 'Project',
       status: 'Status',
-      phase: 'Fase',
+      category: 'Kategori',
       year: 'Tahun',
       scope: 'Scope',
       problem: 'Masalah',
@@ -889,9 +545,6 @@ export function getPortfolioContent() {
     return {
       portfolioStats: idPortfolioStats,
       principles: idPrinciples,
-      featuredProjects: idFeaturedProjects,
-      labEntries: idLabEntries,
-      writingEntries: idWritingEntries,
       stackGroups: idStackGroups,
       timeline: idTimeline,
     }
@@ -900,26 +553,7 @@ export function getPortfolioContent() {
   return {
     portfolioStats,
     principles,
-    featuredProjects,
-    labEntries,
-    writingEntries,
     stackGroups,
     timeline,
   }
-}
-
-export function getProjectBySlug(slug: string) {
-  return getPortfolioContent().featuredProjects.find(
-    (project) => project.slug === slug,
-  )
-}
-
-export function getLabEntryBySlug(slug: string) {
-  return getPortfolioContent().labEntries.find((entry) => entry.slug === slug)
-}
-
-export function getWritingEntryBySlug(slug: string) {
-  return getPortfolioContent().writingEntries.find(
-    (entry) => entry.slug === slug,
-  )
 }

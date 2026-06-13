@@ -3,7 +3,7 @@ import { ArrowLeft, FlaskConical } from 'lucide-react'
 
 import { Container } from '#/components/marketing/section'
 import { getPublishedLabEntry } from '#/features/content/public-loaders'
-import { getLabEntryBySlug, getPublicCopy } from '#/features/portfolio/data'
+import { getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/lab/$slug')({
   loader: ({ params }) => getPublishedLabEntry({ data: params.slug }),
@@ -12,9 +12,7 @@ export const Route = createFileRoute('/lab/$slug')({
 
 function LabDetailPage() {
   const copy = getPublicCopy()
-  const { slug } = Route.useParams()
-  const publishedEntry = Route.useLoaderData()
-  const entry = publishedEntry ?? getLabEntryBySlug(slug)
+  const entry = Route.useLoaderData()
 
   if (!entry) {
     return (

@@ -12,6 +12,8 @@ import {
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { HeroVisual } from '#/components/visual/HeroVisual'
+import { getPublishedLabEntries } from '#/features/content/public-loaders'
+import { getPublishedProjects } from '#/features/projects/public-loaders'
 import {
   getPortfolioContent,
   getPublicCopy,
@@ -19,21 +21,25 @@ import {
 } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/')({
+  loader: async () => {
+    const [projects, labEntries] = await Promise.all([
+      getPublishedProjects(),
+      getPublishedLabEntries(),
+    ])
+
+    return { projects, labEntries }
+  },
   component: HomePage,
 })
 
 function HomePage() {
   const copy = getPublicCopy()
-  const {
-    featuredProjects,
-    labEntries,
-    portfolioStats,
-    principles,
-    stackGroups,
-  } = getPortfolioContent()
-  const highlightedProjects = featuredProjects.filter(
-    (project) => project.featured,
-  )
+  const { projects, labEntries } = Route.useLoaderData()
+  const { portfolioStats, principles, stackGroups } = getPortfolioContent()
+  const highlightedProjects = projects
+    .filter((project) => project.featured)
+    .slice(0, 2)
+  const highlightedLabEntries = labEntries.slice(0, 3)
 
   return (
     <main>
@@ -93,6 +99,16 @@ function HomePage() {
             description={copy.home.featuredDescription}
           />
           <div className="grid gap-5 lg:grid-cols-2">
+            {highlightedProjects.length === 0 ? (
+              <div className="surface-card p-6 lg:col-span-2">
+                <h3 className="text-2xl font-semibold text-[var(--brand-ink)]">
+                  {copy.projects.emptyTitle}
+                </h3>
+                <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
+                  {copy.projects.emptyDescription}
+                </p>
+              </div>
+            ) : null}
             {highlightedProjects.map((project) => (
               <article key={project.slug} className="surface-card p-6">
                 <div className="flex flex-wrap items-center gap-2">
@@ -110,7 +126,7 @@ function HomePage() {
                   {project.summary}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
-                  {project.stack.slice(0, 4).map((item) => (
+                  {project.technologies.slice(0, 4).map((item) => (
                     <span
                       key={item}
                       className="rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-1 text-xs font-semibold text-[var(--brand-muted)]"
@@ -141,7 +157,17 @@ function HomePage() {
             description={copy.home.labDescription}
           />
           <div className="grid gap-4 md:grid-cols-3">
-            {labEntries.map((entry) => (
+            {highlightedLabEntries.length === 0 ? (
+              <div className="surface-card p-6 md:col-span-3">
+                <h3 className="text-2xl font-semibold text-[var(--brand-ink)]">
+                  {copy.lab.emptyTitle}
+                </h3>
+                <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
+                  {copy.lab.emptyDescription}
+                </p>
+              </div>
+            ) : null}
+            {highlightedLabEntries.map((entry) => (
               <Link
                 key={entry.slug}
                 to="/lab/$slug"

@@ -3,19 +3,17 @@ import { ArrowRight, Github } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { SignalPreview } from '#/components/visual/SignalPreview'
-import {
-  getPortfolioContent,
-  getPublicCopy,
-  siteProfile,
-} from '#/features/portfolio/data'
+import { getPublishedProjects } from '#/features/projects/public-loaders'
+import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/projects/')({
+  loader: () => getPublishedProjects(),
   component: ProjectsPage,
 })
 
 function ProjectsPage() {
   const copy = getPublicCopy()
-  const { featuredProjects } = getPortfolioContent()
+  const projects = Route.useLoaderData()
 
   return (
     <main className="px-4 py-14 sm:py-20">
@@ -27,7 +25,17 @@ function ProjectsPage() {
         />
 
         <div className="grid gap-5">
-          {featuredProjects.map((project) => (
+          {projects.length === 0 ? (
+            <div className="surface-card p-6">
+              <h2 className="text-2xl font-semibold text-[var(--brand-ink)]">
+                {copy.projects.emptyTitle}
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
+                {copy.projects.emptyDescription}
+              </p>
+            </div>
+          ) : null}
+          {projects.map((project) => (
             <article
               key={project.slug}
               className="surface-card grid gap-6 p-6 lg:grid-cols-[1fr_18rem_auto] lg:items-center"
@@ -48,7 +56,7 @@ function ProjectsPage() {
                   {project.summary}
                 </p>
                 <div className="mt-5 flex flex-wrap gap-2">
-                  {project.stack.map((item) => (
+                  {project.technologies.map((item) => (
                     <span
                       key={item}
                       className="rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-1 text-xs font-semibold text-[var(--brand-muted)]"
@@ -60,8 +68,8 @@ function ProjectsPage() {
               </div>
               <SignalPreview
                 eyebrow={project.category}
-                title={project.phase}
-                items={project.stack}
+                title={project.status}
+                items={project.technologies}
               />
               <Link
                 to="/projects/$slug"

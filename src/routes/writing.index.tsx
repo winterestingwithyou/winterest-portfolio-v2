@@ -4,7 +4,7 @@ import { BookOpen } from 'lucide-react'
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { SignalPreview } from '#/components/visual/SignalPreview'
 import { getPublishedWritingEntries } from '#/features/content/public-loaders'
-import { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
+import { getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/writing/')({
   loader: () => getPublishedWritingEntries(),
@@ -13,10 +13,7 @@ export const Route = createFileRoute('/writing/')({
 
 function WritingPage() {
   const copy = getPublicCopy()
-  const { writingEntries } = getPortfolioContent()
-  const publishedEntries = Route.useLoaderData()
-  const entries =
-    publishedEntries.length > 0 ? publishedEntries : writingEntries
+  const entries = Route.useLoaderData()
 
   return (
     <main className="px-4 py-14 sm:py-20">
@@ -28,6 +25,16 @@ function WritingPage() {
         />
 
         <div className="grid gap-5">
+          {entries.length === 0 ? (
+            <div className="surface-card p-6">
+              <h2 className="text-2xl font-semibold text-[var(--brand-ink)]">
+                {copy.writing.emptyTitle}
+              </h2>
+              <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
+                {copy.writing.emptyDescription}
+              </p>
+            </div>
+          ) : null}
           {entries.map((entry) => (
             <Link
               key={entry.slug}

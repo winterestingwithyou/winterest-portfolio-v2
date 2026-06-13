@@ -97,19 +97,19 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   getParentRoute: () => DashboardRoute,
 } as any)
 const WritingSlugRoute = WritingSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => WritingRoute,
+  id: '/writing/$slug',
+  path: '/writing/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => ProjectsRoute,
+  id: '/projects/$slug',
+  path: '/projects/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const LabSlugRoute = LabSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => LabRoute,
+  id: '/lab/$slug',
+  path: '/lab/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardMediaRoute = DashboardMediaRouteImport.update({
   id: '/media',
@@ -408,6 +408,9 @@ export interface RootRouteChildren {
   ApiLabRoute: typeof ApiLabRouteWithChildren
   ApiProjectsRoute: typeof ApiProjectsRouteWithChildren
   ApiWritingRoute: typeof ApiWritingRouteWithChildren
+  LabSlugRoute: typeof LabSlugRoute
+  ProjectsSlugRoute: typeof ProjectsSlugRoute
+  WritingSlugRoute: typeof WritingSlugRoute
   LabIndexRoute: typeof LabIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   WritingIndexRoute: typeof WritingIndexRoute
@@ -495,24 +498,24 @@ declare module '@tanstack/react-router' {
     }
     '/writing/$slug': {
       id: '/writing/$slug'
-      path: '/$slug'
+      path: '/writing/$slug'
       fullPath: '/writing/$slug'
       preLoaderRoute: typeof WritingSlugRouteImport
-      parentRoute: typeof WritingRoute
+      parentRoute: typeof rootRouteImport
     }
     '/projects/$slug': {
       id: '/projects/$slug'
-      path: '/$slug'
+      path: '/projects/$slug'
       fullPath: '/projects/$slug'
       preLoaderRoute: typeof ProjectsSlugRouteImport
-      parentRoute: typeof ProjectsRoute
+      parentRoute: typeof rootRouteImport
     }
     '/lab/$slug': {
       id: '/lab/$slug'
-      path: '/$slug'
+      path: '/lab/$slug'
       fullPath: '/lab/$slug'
       preLoaderRoute: typeof LabSlugRouteImport
-      parentRoute: typeof LabRoute
+      parentRoute: typeof rootRouteImport
     }
     '/dashboard/media': {
       id: '/dashboard/media'
@@ -714,6 +717,9 @@ const rootRouteChildren: RootRouteChildren = {
   ApiLabRoute: ApiLabRouteWithChildren,
   ApiProjectsRoute: ApiProjectsRouteWithChildren,
   ApiWritingRoute: ApiWritingRouteWithChildren,
+  LabSlugRoute: LabSlugRoute,
+  ProjectsSlugRoute: ProjectsSlugRoute,
+  WritingSlugRoute: WritingSlugRoute,
   LabIndexRoute: LabIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   WritingIndexRoute: WritingIndexRoute,

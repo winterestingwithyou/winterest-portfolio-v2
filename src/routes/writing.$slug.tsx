@@ -3,7 +3,7 @@ import { ArrowLeft, BookOpen } from 'lucide-react'
 
 import { Container } from '#/components/marketing/section'
 import { getPublishedWritingEntry } from '#/features/content/public-loaders'
-import { getPublicCopy, getWritingEntryBySlug } from '#/features/portfolio/data'
+import { getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/writing/$slug')({
   loader: ({ params }) => getPublishedWritingEntry({ data: params.slug }),
@@ -12,9 +12,7 @@ export const Route = createFileRoute('/writing/$slug')({
 
 function WritingDetailPage() {
   const copy = getPublicCopy()
-  const { slug } = Route.useParams()
-  const publishedEntry = Route.useLoaderData()
-  const entry = publishedEntry ?? getWritingEntryBySlug(slug)
+  const entry = Route.useLoaderData()
 
   if (!entry) {
     return (

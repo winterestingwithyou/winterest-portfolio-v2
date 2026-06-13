@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { getPublishedProjects } from '#/features/projects/public-loaders'
 import {
   getPortfolioContent,
   getPublicCopy,
@@ -8,12 +9,14 @@ import {
 } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/resume')({
+  loader: () => getPublishedProjects(),
   component: ResumePage,
 })
 
 function ResumePage() {
   const copy = getPublicCopy()
-  const { featuredProjects, stackGroups, timeline } = getPortfolioContent()
+  const projects = Route.useLoaderData()
+  const { stackGroups, timeline } = getPortfolioContent()
 
   return (
     <main className="px-4 py-14 print:bg-white sm:py-20">
@@ -49,7 +52,12 @@ function ResumePage() {
               {copy.resume.selectedWork}
             </h2>
             <div className="grid gap-6">
-              {featuredProjects.map((project) => (
+              {projects.length === 0 ? (
+                <p className="text-sm leading-7 text-[var(--brand-muted)]">
+                  {copy.projects.emptyDescription}
+                </p>
+              ) : null}
+              {projects.map((project) => (
                 <article key={project.slug}>
                   <h3 className="text-xl font-semibold text-[var(--brand-ink)]">
                     {project.title}
@@ -58,7 +66,7 @@ function ResumePage() {
                     {project.summary}
                   </p>
                   <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-[var(--brand-orange-deep)]">
-                    {project.stack.join(' | ')}
+                    {project.technologies.join(' | ')}
                   </p>
                 </article>
               ))}

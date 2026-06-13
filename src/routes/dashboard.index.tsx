@@ -4,50 +4,24 @@ import type { ReactNode } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/DashboardShell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
-import { getPortfolioContent } from '#/features/portfolio/data'
+import { getDashboardSummary } from '#/features/dashboard/loaders'
 
 export const Route = createFileRoute('/dashboard/')({
+  loader: () => getDashboardSummary(),
   component: DashboardHome,
 })
 
 function DashboardHome() {
   const copy = getDashboardCopy()
-  const { featuredProjects, labEntries, writingEntries } = getPortfolioContent()
-  const activeCount = featuredProjects.filter(
-    (project) => project.featured,
-  ).length
-  const totalItems =
-    featuredProjects.length + writingEntries.length + labEntries.length
-  const draftCount = [
-    ...featuredProjects,
-    ...writingEntries,
-    ...labEntries,
-  ].filter(
-    (item) =>
-      item.status.toLowerCase().includes('draft') ||
-      item.status.toLowerCase().includes('outline') ||
-      item.status.toLowerCase().includes('idea') ||
-      item.status.toLowerCase().includes('antri') ||
-      item.status.toLowerCase().includes('ide'),
-  ).length
-  const publishedReady = totalItems - draftCount
-  const contentMix = [
-    {
-      label: copy.shell.nav.projects,
-      value: featuredProjects.length,
-      width: `${Math.max((featuredProjects.length / totalItems) * 100, 8)}%`,
-    },
-    {
-      label: copy.shell.nav.writing,
-      value: writingEntries.length,
-      width: `${Math.max((writingEntries.length / totalItems) * 100, 8)}%`,
-    },
-    {
-      label: copy.shell.nav.lab,
-      value: labEntries.length,
-      width: `${Math.max((labEntries.length / totalItems) * 100, 8)}%`,
-    },
-  ]
+  const summary = Route.useLoaderData()
+  const contentMix = summary.contentMix.map((item) => ({
+    label: copy.shell.nav[item.key],
+    value: item.value,
+    width:
+      summary.totalItems > 0
+        ? `${Math.max((item.value / summary.totalItems) * 100, 8)}%`
+        : '0%',
+  }))
 
   return (
     <DashboardShell
@@ -67,22 +41,22 @@ function DashboardHome() {
         <MetricCard
           icon={<BookOpen aria-hidden="true" className="size-5" />}
           label={copy.overview.metrics.total}
-          value={totalItems.toString()}
+          value={summary.totalItems.toString()}
         />
         <MetricCard
           icon={<Star aria-hidden="true" className="size-5" />}
           label={copy.overview.metrics.featured}
-          value={activeCount.toString()}
+          value={summary.featuredCount.toString()}
         />
         <MetricCard
           icon={<FlaskConical aria-hidden="true" className="size-5" />}
           label={copy.overview.metrics.drafts}
-          value={draftCount.toString()}
+          value={summary.draftCount.toString()}
         />
         <MetricCard
           icon={<Image aria-hidden="true" className="size-5" />}
           label={copy.overview.metrics.published}
-          value={publishedReady.toString()}
+          value={summary.publishedCount.toString()}
         />
       </div>
 
@@ -148,11 +122,16 @@ function DashboardHome() {
           </p>
         </div>
         <div className="grid gap-0 divide-y divide-[var(--brand-line)]">
-          {featuredProjects.map((project) => (
+          {summary.recentProjects.length === 0 ? (
+            <div className="p-5 text-sm leading-7 text-[var(--brand-muted)]">
+              {copy.projects.emptyDescription}
+            </div>
+          ) : null}
+          {summary.recentProjects.map((project) => (
             <Link
-              key={project.slug}
+              key={project.id}
               to="/dashboard/projects/$id"
-              params={{ id: project.slug }}
+              params={{ id: project.id }}
               className="grid gap-2 p-5 text-[var(--brand-ink)] no-underline transition hover:bg-[var(--brand-orange-soft)] md:grid-cols-[1fr_auto] md:items-center"
             >
               <div>
