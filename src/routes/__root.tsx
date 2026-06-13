@@ -73,6 +73,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     select: (state) => state.location.pathname,
   })
   const isDashboard = pathname.startsWith('/dashboard')
+  const isAuth = pathname.startsWith('/login')
+  const usesAppChrome = !isDashboard && !isAuth
 
   return (
     <html lang={getLocale()} suppressHydrationWarning>
@@ -81,9 +83,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(244,129,32,0.22)]">
-        {isDashboard ? null : <Header />}
+        {usesAppChrome ? <Header /> : null}
         {children}
-        {isDashboard ? null : <Footer />}
+        {usesAppChrome ? <Footer /> : null}
         <TanStackDevtools
           config={{
             position: 'bottom-right',
