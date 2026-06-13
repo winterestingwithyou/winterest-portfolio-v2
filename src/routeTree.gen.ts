@@ -9,27 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as WritingRouteImport } from './routes/writing'
 import { Route as StackRouteImport } from './routes/stack'
 import { Route as ResumeRouteImport } from './routes/resume'
-import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as LabRouteImport } from './routes/lab'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as WritingIndexRouteImport } from './routes/writing.index'
+import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
+import { Route as LabIndexRouteImport } from './routes/lab.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as WritingSlugRouteImport } from './routes/writing.$slug'
 import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
 import { Route as LabSlugRouteImport } from './routes/lab.$slug'
-import { Route as DashboardWritingRouteImport } from './routes/dashboard.writing'
-import { Route as DashboardProjectsRouteImport } from './routes/dashboard.projects'
 import { Route as DashboardMediaRouteImport } from './routes/dashboard.media'
-import { Route as DashboardLabRouteImport } from './routes/dashboard.lab'
 import { Route as ApiWritingRouteImport } from './routes/api.writing'
 import { Route as ApiProjectsRouteImport } from './routes/api.projects'
 import { Route as ApiLabRouteImport } from './routes/api.lab'
+import { Route as DashboardWritingIndexRouteImport } from './routes/dashboard.writing.index'
+import { Route as DashboardProjectsIndexRouteImport } from './routes/dashboard.projects.index'
+import { Route as DashboardLabIndexRouteImport } from './routes/dashboard.lab.index'
 import { Route as DashboardWritingNewRouteImport } from './routes/dashboard.writing.new'
 import { Route as DashboardWritingIdRouteImport } from './routes/dashboard.writing.$id'
 import { Route as DashboardProjectsNewRouteImport } from './routes/dashboard.projects.new'
@@ -41,11 +41,6 @@ import { Route as ApiProjectsIdRouteImport } from './routes/api.projects.$id'
 import { Route as ApiLabIdRouteImport } from './routes/api.lab.$id'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
-const WritingRoute = WritingRouteImport.update({
-  id: '/writing',
-  path: '/writing',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const StackRoute = StackRouteImport.update({
   id: '/stack',
   path: '/stack',
@@ -56,19 +51,9 @@ const ResumeRoute = ResumeRouteImport.update({
   path: '/resume',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectsRoute = ProjectsRouteImport.update({
-  id: '/projects',
-  path: '/projects',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LabRoute = LabRouteImport.update({
-  id: '/lab',
-  path: '/lab',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -91,6 +76,21 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WritingIndexRoute = WritingIndexRouteImport.update({
+  id: '/writing/',
+  path: '/writing/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LabIndexRoute = LabIndexRouteImport.update({
+  id: '/lab/',
+  path: '/lab/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardIndexRoute = DashboardIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -111,24 +111,9 @@ const LabSlugRoute = LabSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => LabRoute,
 } as any)
-const DashboardWritingRoute = DashboardWritingRouteImport.update({
-  id: '/writing',
-  path: '/writing',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardProjectsRoute = DashboardProjectsRouteImport.update({
-  id: '/projects',
-  path: '/projects',
-  getParentRoute: () => DashboardRoute,
-} as any)
 const DashboardMediaRoute = DashboardMediaRouteImport.update({
   id: '/media',
   path: '/media',
-  getParentRoute: () => DashboardRoute,
-} as any)
-const DashboardLabRoute = DashboardLabRouteImport.update({
-  id: '/lab',
-  path: '/lab',
   getParentRoute: () => DashboardRoute,
 } as any)
 const ApiWritingRoute = ApiWritingRouteImport.update({
@@ -146,35 +131,50 @@ const ApiLabRoute = ApiLabRouteImport.update({
   path: '/api/lab',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardWritingIndexRoute = DashboardWritingIndexRouteImport.update({
+  id: '/writing/',
+  path: '/writing/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardProjectsIndexRoute = DashboardProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardLabIndexRoute = DashboardLabIndexRouteImport.update({
+  id: '/lab/',
+  path: '/lab/',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardWritingNewRoute = DashboardWritingNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => DashboardWritingRoute,
+  id: '/writing/new',
+  path: '/writing/new',
+  getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardWritingIdRoute = DashboardWritingIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => DashboardWritingRoute,
+  id: '/writing/$id',
+  path: '/writing/$id',
+  getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardProjectsNewRoute = DashboardProjectsNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => DashboardProjectsRoute,
+  id: '/projects/new',
+  path: '/projects/new',
+  getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardProjectsIdRoute = DashboardProjectsIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => DashboardProjectsRoute,
+  id: '/projects/$id',
+  path: '/projects/$id',
+  getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardLabNewRoute = DashboardLabNewRouteImport.update({
-  id: '/new',
-  path: '/new',
-  getParentRoute: () => DashboardLabRoute,
+  id: '/lab/new',
+  path: '/lab/new',
+  getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardLabIdRoute = DashboardLabIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => DashboardLabRoute,
+  id: '/lab/$id',
+  path: '/lab/$id',
+  getParentRoute: () => DashboardRoute,
 } as any)
 const ApiWritingIdRoute = ApiWritingIdRouteImport.update({
   id: '/$id',
@@ -202,23 +202,20 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
-  '/lab': typeof LabRouteWithChildren
   '/login': typeof LoginRoute
-  '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/stack': typeof StackRoute
-  '/writing': typeof WritingRouteWithChildren
   '/api/lab': typeof ApiLabRouteWithChildren
   '/api/projects': typeof ApiProjectsRouteWithChildren
   '/api/writing': typeof ApiWritingRouteWithChildren
-  '/dashboard/lab': typeof DashboardLabRouteWithChildren
   '/dashboard/media': typeof DashboardMediaRoute
-  '/dashboard/projects': typeof DashboardProjectsRouteWithChildren
-  '/dashboard/writing': typeof DashboardWritingRouteWithChildren
   '/lab/$slug': typeof LabSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/writing/$slug': typeof WritingSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/lab/': typeof LabIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
+  '/writing/': typeof WritingIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/lab/$id': typeof ApiLabIdRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
@@ -229,28 +226,28 @@ export interface FileRoutesByFullPath {
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/writing/$id': typeof DashboardWritingIdRoute
   '/dashboard/writing/new': typeof DashboardWritingNewRoute
+  '/dashboard/lab/': typeof DashboardLabIndexRoute
+  '/dashboard/projects/': typeof DashboardProjectsIndexRoute
+  '/dashboard/writing/': typeof DashboardWritingIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
-  '/lab': typeof LabRouteWithChildren
   '/login': typeof LoginRoute
-  '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/stack': typeof StackRoute
-  '/writing': typeof WritingRouteWithChildren
   '/api/lab': typeof ApiLabRouteWithChildren
   '/api/projects': typeof ApiProjectsRouteWithChildren
   '/api/writing': typeof ApiWritingRouteWithChildren
-  '/dashboard/lab': typeof DashboardLabRouteWithChildren
   '/dashboard/media': typeof DashboardMediaRoute
-  '/dashboard/projects': typeof DashboardProjectsRouteWithChildren
-  '/dashboard/writing': typeof DashboardWritingRouteWithChildren
   '/lab/$slug': typeof LabSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/writing/$slug': typeof WritingSlugRoute
   '/dashboard': typeof DashboardIndexRoute
+  '/lab': typeof LabIndexRoute
+  '/projects': typeof ProjectsIndexRoute
+  '/writing': typeof WritingIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/lab/$id': typeof ApiLabIdRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
@@ -261,6 +258,9 @@ export interface FileRoutesByTo {
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/writing/$id': typeof DashboardWritingIdRoute
   '/dashboard/writing/new': typeof DashboardWritingNewRoute
+  '/dashboard/lab': typeof DashboardLabIndexRoute
+  '/dashboard/projects': typeof DashboardProjectsIndexRoute
+  '/dashboard/writing': typeof DashboardWritingIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -268,23 +268,20 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/dashboard': typeof DashboardRouteWithChildren
-  '/lab': typeof LabRouteWithChildren
   '/login': typeof LoginRoute
-  '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/stack': typeof StackRoute
-  '/writing': typeof WritingRouteWithChildren
   '/api/lab': typeof ApiLabRouteWithChildren
   '/api/projects': typeof ApiProjectsRouteWithChildren
   '/api/writing': typeof ApiWritingRouteWithChildren
-  '/dashboard/lab': typeof DashboardLabRouteWithChildren
   '/dashboard/media': typeof DashboardMediaRoute
-  '/dashboard/projects': typeof DashboardProjectsRouteWithChildren
-  '/dashboard/writing': typeof DashboardWritingRouteWithChildren
   '/lab/$slug': typeof LabSlugRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/writing/$slug': typeof WritingSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
+  '/lab/': typeof LabIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
+  '/writing/': typeof WritingIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/lab/$id': typeof ApiLabIdRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
@@ -295,6 +292,9 @@ export interface FileRoutesById {
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/writing/$id': typeof DashboardWritingIdRoute
   '/dashboard/writing/new': typeof DashboardWritingNewRoute
+  '/dashboard/lab/': typeof DashboardLabIndexRoute
+  '/dashboard/projects/': typeof DashboardProjectsIndexRoute
+  '/dashboard/writing/': typeof DashboardWritingIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -303,23 +303,20 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/dashboard'
-    | '/lab'
     | '/login'
-    | '/projects'
     | '/resume'
     | '/stack'
-    | '/writing'
     | '/api/lab'
     | '/api/projects'
     | '/api/writing'
-    | '/dashboard/lab'
     | '/dashboard/media'
-    | '/dashboard/projects'
-    | '/dashboard/writing'
     | '/lab/$slug'
     | '/projects/$slug'
     | '/writing/$slug'
     | '/dashboard/'
+    | '/lab/'
+    | '/projects/'
+    | '/writing/'
     | '/api/auth/$'
     | '/api/lab/$id'
     | '/api/projects/$id'
@@ -330,28 +327,28 @@ export interface FileRouteTypes {
     | '/dashboard/projects/new'
     | '/dashboard/writing/$id'
     | '/dashboard/writing/new'
+    | '/dashboard/lab/'
+    | '/dashboard/projects/'
+    | '/dashboard/writing/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/contact'
-    | '/lab'
     | '/login'
-    | '/projects'
     | '/resume'
     | '/stack'
-    | '/writing'
     | '/api/lab'
     | '/api/projects'
     | '/api/writing'
-    | '/dashboard/lab'
     | '/dashboard/media'
-    | '/dashboard/projects'
-    | '/dashboard/writing'
     | '/lab/$slug'
     | '/projects/$slug'
     | '/writing/$slug'
     | '/dashboard'
+    | '/lab'
+    | '/projects'
+    | '/writing'
     | '/api/auth/$'
     | '/api/lab/$id'
     | '/api/projects/$id'
@@ -362,29 +359,29 @@ export interface FileRouteTypes {
     | '/dashboard/projects/new'
     | '/dashboard/writing/$id'
     | '/dashboard/writing/new'
+    | '/dashboard/lab'
+    | '/dashboard/projects'
+    | '/dashboard/writing'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/contact'
     | '/dashboard'
-    | '/lab'
     | '/login'
-    | '/projects'
     | '/resume'
     | '/stack'
-    | '/writing'
     | '/api/lab'
     | '/api/projects'
     | '/api/writing'
-    | '/dashboard/lab'
     | '/dashboard/media'
-    | '/dashboard/projects'
-    | '/dashboard/writing'
     | '/lab/$slug'
     | '/projects/$slug'
     | '/writing/$slug'
     | '/dashboard/'
+    | '/lab/'
+    | '/projects/'
+    | '/writing/'
     | '/api/auth/$'
     | '/api/lab/$id'
     | '/api/projects/$id'
@@ -395,6 +392,9 @@ export interface FileRouteTypes {
     | '/dashboard/projects/new'
     | '/dashboard/writing/$id'
     | '/dashboard/writing/new'
+    | '/dashboard/lab/'
+    | '/dashboard/projects/'
+    | '/dashboard/writing/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -402,27 +402,20 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
   DashboardRoute: typeof DashboardRouteWithChildren
-  LabRoute: typeof LabRouteWithChildren
   LoginRoute: typeof LoginRoute
-  ProjectsRoute: typeof ProjectsRouteWithChildren
   ResumeRoute: typeof ResumeRoute
   StackRoute: typeof StackRoute
-  WritingRoute: typeof WritingRouteWithChildren
   ApiLabRoute: typeof ApiLabRouteWithChildren
   ApiProjectsRoute: typeof ApiProjectsRouteWithChildren
   ApiWritingRoute: typeof ApiWritingRouteWithChildren
+  LabIndexRoute: typeof LabIndexRoute
+  ProjectsIndexRoute: typeof ProjectsIndexRoute
+  WritingIndexRoute: typeof WritingIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/writing': {
-      id: '/writing'
-      path: '/writing'
-      fullPath: '/writing'
-      preLoaderRoute: typeof WritingRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/stack': {
       id: '/stack'
       path: '/stack'
@@ -437,25 +430,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResumeRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/projects': {
-      id: '/projects'
-      path: '/projects'
-      fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/lab': {
-      id: '/lab'
-      path: '/lab'
-      fullPath: '/lab'
-      preLoaderRoute: typeof LabRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -486,6 +465,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/writing/': {
+      id: '/writing/'
+      path: '/writing'
+      fullPath: '/writing/'
+      preLoaderRoute: typeof WritingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects/': {
+      id: '/projects/'
+      path: '/projects'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof ProjectsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lab/': {
+      id: '/lab/'
+      path: '/lab'
+      fullPath: '/lab/'
+      preLoaderRoute: typeof LabIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard/': {
       id: '/dashboard/'
       path: '/'
@@ -514,32 +514,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LabSlugRouteImport
       parentRoute: typeof LabRoute
     }
-    '/dashboard/writing': {
-      id: '/dashboard/writing'
-      path: '/writing'
-      fullPath: '/dashboard/writing'
-      preLoaderRoute: typeof DashboardWritingRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/projects': {
-      id: '/dashboard/projects'
-      path: '/projects'
-      fullPath: '/dashboard/projects'
-      preLoaderRoute: typeof DashboardProjectsRouteImport
-      parentRoute: typeof DashboardRoute
-    }
     '/dashboard/media': {
       id: '/dashboard/media'
       path: '/media'
       fullPath: '/dashboard/media'
       preLoaderRoute: typeof DashboardMediaRouteImport
-      parentRoute: typeof DashboardRoute
-    }
-    '/dashboard/lab': {
-      id: '/dashboard/lab'
-      path: '/lab'
-      fullPath: '/dashboard/lab'
-      preLoaderRoute: typeof DashboardLabRouteImport
       parentRoute: typeof DashboardRoute
     }
     '/api/writing': {
@@ -563,47 +542,68 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiLabRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/writing/': {
+      id: '/dashboard/writing/'
+      path: '/writing'
+      fullPath: '/dashboard/writing/'
+      preLoaderRoute: typeof DashboardWritingIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/projects/': {
+      id: '/dashboard/projects/'
+      path: '/projects'
+      fullPath: '/dashboard/projects/'
+      preLoaderRoute: typeof DashboardProjectsIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/lab/': {
+      id: '/dashboard/lab/'
+      path: '/lab'
+      fullPath: '/dashboard/lab/'
+      preLoaderRoute: typeof DashboardLabIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/writing/new': {
       id: '/dashboard/writing/new'
-      path: '/new'
+      path: '/writing/new'
       fullPath: '/dashboard/writing/new'
       preLoaderRoute: typeof DashboardWritingNewRouteImport
-      parentRoute: typeof DashboardWritingRoute
+      parentRoute: typeof DashboardRoute
     }
     '/dashboard/writing/$id': {
       id: '/dashboard/writing/$id'
-      path: '/$id'
+      path: '/writing/$id'
       fullPath: '/dashboard/writing/$id'
       preLoaderRoute: typeof DashboardWritingIdRouteImport
-      parentRoute: typeof DashboardWritingRoute
+      parentRoute: typeof DashboardRoute
     }
     '/dashboard/projects/new': {
       id: '/dashboard/projects/new'
-      path: '/new'
+      path: '/projects/new'
       fullPath: '/dashboard/projects/new'
       preLoaderRoute: typeof DashboardProjectsNewRouteImport
-      parentRoute: typeof DashboardProjectsRoute
+      parentRoute: typeof DashboardRoute
     }
     '/dashboard/projects/$id': {
       id: '/dashboard/projects/$id'
-      path: '/$id'
+      path: '/projects/$id'
       fullPath: '/dashboard/projects/$id'
       preLoaderRoute: typeof DashboardProjectsIdRouteImport
-      parentRoute: typeof DashboardProjectsRoute
+      parentRoute: typeof DashboardRoute
     }
     '/dashboard/lab/new': {
       id: '/dashboard/lab/new'
-      path: '/new'
+      path: '/lab/new'
       fullPath: '/dashboard/lab/new'
       preLoaderRoute: typeof DashboardLabNewRouteImport
-      parentRoute: typeof DashboardLabRoute
+      parentRoute: typeof DashboardRoute
     }
     '/dashboard/lab/$id': {
       id: '/dashboard/lab/$id'
-      path: '/$id'
+      path: '/lab/$id'
       fullPath: '/dashboard/lab/$id'
       preLoaderRoute: typeof DashboardLabIdRouteImport
-      parentRoute: typeof DashboardLabRoute
+      parentRoute: typeof DashboardRoute
     }
     '/api/writing/$id': {
       id: '/api/writing/$id'
@@ -636,98 +636,37 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface DashboardLabRouteChildren {
+interface DashboardRouteChildren {
+  DashboardMediaRoute: typeof DashboardMediaRoute
+  DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardLabIdRoute: typeof DashboardLabIdRoute
   DashboardLabNewRoute: typeof DashboardLabNewRoute
-}
-
-const DashboardLabRouteChildren: DashboardLabRouteChildren = {
-  DashboardLabIdRoute: DashboardLabIdRoute,
-  DashboardLabNewRoute: DashboardLabNewRoute,
-}
-
-const DashboardLabRouteWithChildren = DashboardLabRoute._addFileChildren(
-  DashboardLabRouteChildren,
-)
-
-interface DashboardProjectsRouteChildren {
   DashboardProjectsIdRoute: typeof DashboardProjectsIdRoute
   DashboardProjectsNewRoute: typeof DashboardProjectsNewRoute
-}
-
-const DashboardProjectsRouteChildren: DashboardProjectsRouteChildren = {
-  DashboardProjectsIdRoute: DashboardProjectsIdRoute,
-  DashboardProjectsNewRoute: DashboardProjectsNewRoute,
-}
-
-const DashboardProjectsRouteWithChildren =
-  DashboardProjectsRoute._addFileChildren(DashboardProjectsRouteChildren)
-
-interface DashboardWritingRouteChildren {
   DashboardWritingIdRoute: typeof DashboardWritingIdRoute
   DashboardWritingNewRoute: typeof DashboardWritingNewRoute
-}
-
-const DashboardWritingRouteChildren: DashboardWritingRouteChildren = {
-  DashboardWritingIdRoute: DashboardWritingIdRoute,
-  DashboardWritingNewRoute: DashboardWritingNewRoute,
-}
-
-const DashboardWritingRouteWithChildren =
-  DashboardWritingRoute._addFileChildren(DashboardWritingRouteChildren)
-
-interface DashboardRouteChildren {
-  DashboardLabRoute: typeof DashboardLabRouteWithChildren
-  DashboardMediaRoute: typeof DashboardMediaRoute
-  DashboardProjectsRoute: typeof DashboardProjectsRouteWithChildren
-  DashboardWritingRoute: typeof DashboardWritingRouteWithChildren
-  DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardLabIndexRoute: typeof DashboardLabIndexRoute
+  DashboardProjectsIndexRoute: typeof DashboardProjectsIndexRoute
+  DashboardWritingIndexRoute: typeof DashboardWritingIndexRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
-  DashboardLabRoute: DashboardLabRouteWithChildren,
   DashboardMediaRoute: DashboardMediaRoute,
-  DashboardProjectsRoute: DashboardProjectsRouteWithChildren,
-  DashboardWritingRoute: DashboardWritingRouteWithChildren,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardLabIdRoute: DashboardLabIdRoute,
+  DashboardLabNewRoute: DashboardLabNewRoute,
+  DashboardProjectsIdRoute: DashboardProjectsIdRoute,
+  DashboardProjectsNewRoute: DashboardProjectsNewRoute,
+  DashboardWritingIdRoute: DashboardWritingIdRoute,
+  DashboardWritingNewRoute: DashboardWritingNewRoute,
+  DashboardLabIndexRoute: DashboardLabIndexRoute,
+  DashboardProjectsIndexRoute: DashboardProjectsIndexRoute,
+  DashboardWritingIndexRoute: DashboardWritingIndexRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
   DashboardRouteChildren,
 )
-
-interface LabRouteChildren {
-  LabSlugRoute: typeof LabSlugRoute
-}
-
-const LabRouteChildren: LabRouteChildren = {
-  LabSlugRoute: LabSlugRoute,
-}
-
-const LabRouteWithChildren = LabRoute._addFileChildren(LabRouteChildren)
-
-interface ProjectsRouteChildren {
-  ProjectsSlugRoute: typeof ProjectsSlugRoute
-}
-
-const ProjectsRouteChildren: ProjectsRouteChildren = {
-  ProjectsSlugRoute: ProjectsSlugRoute,
-}
-
-const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
-  ProjectsRouteChildren,
-)
-
-interface WritingRouteChildren {
-  WritingSlugRoute: typeof WritingSlugRoute
-}
-
-const WritingRouteChildren: WritingRouteChildren = {
-  WritingSlugRoute: WritingSlugRoute,
-}
-
-const WritingRouteWithChildren =
-  WritingRoute._addFileChildren(WritingRouteChildren)
 
 interface ApiLabRouteChildren {
   ApiLabIdRoute: typeof ApiLabIdRoute
@@ -769,15 +708,15 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
   DashboardRoute: DashboardRouteWithChildren,
-  LabRoute: LabRouteWithChildren,
   LoginRoute: LoginRoute,
-  ProjectsRoute: ProjectsRouteWithChildren,
   ResumeRoute: ResumeRoute,
   StackRoute: StackRoute,
-  WritingRoute: WritingRouteWithChildren,
   ApiLabRoute: ApiLabRouteWithChildren,
   ApiProjectsRoute: ApiProjectsRouteWithChildren,
   ApiWritingRoute: ApiWritingRouteWithChildren,
+  LabIndexRoute: LabIndexRoute,
+  ProjectsIndexRoute: ProjectsIndexRoute,
+  WritingIndexRoute: WritingIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

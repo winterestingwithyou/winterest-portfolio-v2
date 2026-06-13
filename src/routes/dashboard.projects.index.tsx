@@ -16,7 +16,7 @@ type ProjectRow = {
   updatedAt?: string
 }
 
-export const Route = createFileRoute('/dashboard/projects')({
+export const Route = createFileRoute('/dashboard/projects/')({
   component: DashboardProjects,
 })
 

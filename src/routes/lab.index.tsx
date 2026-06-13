@@ -6,7 +6,7 @@ import { SignalPreview } from '#/components/visual/SignalPreview'
 import { getPublishedLabEntries } from '#/features/content/public-loaders'
 import { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
 
-export const Route = createFileRoute('/lab')({
+export const Route = createFileRoute('/lab/')({
   loader: () => getPublishedLabEntries(),
   component: LabPage,
 })

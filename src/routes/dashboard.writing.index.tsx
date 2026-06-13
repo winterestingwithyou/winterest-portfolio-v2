@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { DashboardShell } from '#/components/dashboard/DashboardShell'
 import { ContentList } from '#/features/dashboard/ContentList'
 
-export const Route = createFileRoute('/dashboard/writing')({
+export const Route = createFileRoute('/dashboard/writing/')({
   component: DashboardWriting,
 })
 

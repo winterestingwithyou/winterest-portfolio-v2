@@ -6,7 +6,7 @@ import { SignalPreview } from '#/components/visual/SignalPreview'
 import { getPublishedWritingEntries } from '#/features/content/public-loaders'
 import { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
 
-export const Route = createFileRoute('/writing')({
+export const Route = createFileRoute('/writing/')({
   loader: () => getPublishedWritingEntries(),
   component: WritingPage,
 })

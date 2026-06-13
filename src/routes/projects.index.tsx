@@ -9,7 +9,7 @@ import {
   siteProfile,
 } from '#/features/portfolio/data'
 
-export const Route = createFileRoute('/projects')({
+export const Route = createFileRoute('/projects/')({
   component: ProjectsPage,
 })
 
