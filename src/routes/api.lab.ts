@@ -4,11 +4,7 @@ import { env } from 'cloudflare:workers'
 import { getDb } from '#/db'
 import { requireDashboardUser } from '#/features/auth/session'
 import { handleContentApiError, json } from '#/features/content/api'
-import {
-  createLabEntry,
-  listLabEntries,
-  toPublicLabRecord,
-} from '#/features/content/queries'
+import { createLabEntry, listLabEntries } from '#/features/content/queries'
 import { labEntryInputSchema } from '#/features/content/validation'
 
 export const Route = createFileRoute('/api/lab')({
@@ -23,7 +19,7 @@ export const Route = createFileRoute('/api/lab')({
           }
 
           const records = await listLabEntries(getDb(env.DB))
-          return json({ data: records.map(toPublicLabRecord) })
+          return json({ data: records })
         } catch (error) {
           return handleContentApiError(error, 'Lab')
         }
@@ -40,7 +36,7 @@ export const Route = createFileRoute('/api/lab')({
           const input = labEntryInputSchema.parse(payload)
           const record = await createLabEntry(getDb(env.DB), input)
 
-          return json({ data: toPublicLabRecord(record) }, { status: 201 })
+          return json({ data: record }, { status: 201 })
         } catch (error) {
           return handleContentApiError(error, 'Lab')
         }

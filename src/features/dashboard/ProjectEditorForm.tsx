@@ -7,7 +7,6 @@ import { getDashboardCopy } from './copy'
 
 type ProjectFormInitial = {
   id?: string
-  locale?: 'en' | 'id' | null
   slug?: string | null
   title?: string | null
   summary?: string | null
@@ -21,6 +20,25 @@ type ProjectFormInitial = {
   repoUrl?: string | null
   demoUrl?: string | null
   caseStudyUrl?: string | null
+  translations?: Partial<Record<LocaleOption, ProjectTranslationInitial>>
+}
+
+type LocaleOption = 'en' | 'id'
+
+type ProjectTranslationInitial = {
+  title?: string | null
+  summary?: string | null
+  description?: string | null
+  content?: string | null
+  category?: string | null
+}
+
+type ProjectTranslationFormValue = {
+  title: string
+  summary: string
+  description: string
+  content: string
+  category: string
 }
 
 type ProjectEditorFormProps = {
@@ -30,7 +48,10 @@ type ProjectEditorFormProps = {
 
 const statusOptions = ['draft', 'published', 'archived'] as const
 const visibilityOptions = ['public', 'private'] as const
-const localeOptions = ['en', 'id'] as const
+const localeOptions = [
+  { value: 'en', label: 'English' },
+  { value: 'id', label: 'Indonesia' },
+] as const
 
 export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
   const copy = getDashboardCopy()
@@ -60,20 +81,26 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
 
     const formData = new FormData(event.currentTarget)
     const payload = {
-      locale: String(formData.get('locale') ?? 'en'),
       slug: String(formData.get('slug') ?? ''),
-      title: String(formData.get('title') ?? ''),
-      summary: String(formData.get('summary') ?? ''),
-      description: String(formData.get('description') ?? ''),
-      content: String(formData.get('content') ?? ''),
       status: String(formData.get('status') ?? 'draft'),
       visibility: String(formData.get('visibility') ?? 'public'),
       featured,
-      category: String(formData.get('category') ?? 'Project'),
       coverImage: String(formData.get('coverImage') ?? ''),
       repoUrl: String(formData.get('repoUrl') ?? ''),
       demoUrl: String(formData.get('demoUrl') ?? ''),
       caseStudyUrl: String(formData.get('caseStudyUrl') ?? ''),
+      translations: Object.fromEntries(
+        localeOptions.map(({ value }) => [
+          value,
+          {
+            title: String(formData.get(`${value}.title`) ?? ''),
+            summary: String(formData.get(`${value}.summary`) ?? ''),
+            description: String(formData.get(`${value}.description`) ?? ''),
+            content: String(formData.get(`${value}.content`) ?? ''),
+            category: String(formData.get(`${value}.category`) ?? 'Project'),
+          },
+        ]),
+      ),
     }
 
     try {
@@ -136,37 +163,9 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
     <form onSubmit={handleSubmit} className="surface-card grid gap-5 p-5">
       <div className="grid gap-5 md:grid-cols-2">
         <Field
-          label={copy.form.title}
-          name="title"
-          defaultValue={project?.title ?? ''}
-        />
-        <Field
           label={copy.form.slug}
           name="slug"
           defaultValue={project?.slug ?? ''}
-        />
-      </div>
-      <Select
-        label={copy.form.language}
-        name="locale"
-        defaultValue={project?.locale ?? 'en'}
-        options={localeOptions}
-      />
-      <Field
-        label={copy.form.summary}
-        name="summary"
-        defaultValue={project?.summary ?? ''}
-      />
-      <Field
-        label={copy.form.description}
-        name="description"
-        defaultValue={project?.description ?? ''}
-      />
-      <div className="grid gap-5 md:grid-cols-3">
-        <Field
-          label={copy.form.category}
-          name="category"
-          defaultValue={project?.category ?? 'Project'}
         />
         <Select
           label={copy.form.status}
@@ -174,6 +173,8 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
           defaultValue={project?.status ?? 'draft'}
           options={statusOptions}
         />
+      </div>
+      <div className="grid gap-5 md:grid-cols-2">
         <Select
           label={copy.form.visibility}
           name="visibility"
@@ -212,21 +213,57 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         />
         {copy.form.featured}
       </label>
-      <div>
-        <label
-          htmlFor="content"
-          className="text-sm font-bold text-[var(--brand-ink)]"
-        >
-          {copy.form.content}
-        </label>
-        <textarea
-          id="content"
-          name="content"
-          rows={10}
-          defaultValue={project?.content ?? ''}
-          className="mt-2 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-3 text-sm leading-7 text-[var(--brand-ink)]"
-        />
-      </div>
+      {localeOptions.map(({ value, label }) => {
+        const translation = getTranslation(project, value)
+
+        return (
+          <section
+            key={value}
+            className="grid gap-5 rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] p-4"
+          >
+            <h2 className="text-lg font-semibold text-[var(--brand-ink)]">
+              {label}
+            </h2>
+            <div className="grid gap-5 md:grid-cols-2">
+              <Field
+                label={copy.form.title}
+                name={`${value}.title`}
+                defaultValue={translation.title}
+              />
+              <Field
+                label={copy.form.category}
+                name={`${value}.category`}
+                defaultValue={translation.category}
+              />
+            </div>
+            <Field
+              label={copy.form.summary}
+              name={`${value}.summary`}
+              defaultValue={translation.summary}
+            />
+            <Field
+              label={copy.form.description}
+              name={`${value}.description`}
+              defaultValue={translation.description}
+            />
+            <div>
+              <label
+                htmlFor={`${value}.content`}
+                className="text-sm font-bold text-[var(--brand-ink)]"
+              >
+                {copy.form.content}
+              </label>
+              <textarea
+                id={`${value}.content`}
+                name={`${value}.content`}
+                rows={10}
+                defaultValue={translation.content}
+                className="mt-2 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-3 text-sm leading-7 text-[var(--brand-ink)]"
+              />
+            </div>
+          </section>
+        )
+      })}
 
       {error ? (
         <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm font-semibold text-red-700 dark:text-red-200">
@@ -272,6 +309,29 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
       </div>
     </form>
   )
+}
+
+function getTranslation(
+  project: ProjectFormInitial | undefined,
+  locale: LocaleOption,
+): ProjectTranslationFormValue {
+  const translation = project?.translations?.[locale]
+
+  return {
+    title: translation?.title ?? (locale === 'en' ? project?.title : '') ?? '',
+    summary:
+      translation?.summary ?? (locale === 'en' ? project?.summary : '') ?? '',
+    description:
+      translation?.description ??
+      (locale === 'en' ? project?.description : '') ??
+      '',
+    content:
+      translation?.content ?? (locale === 'en' ? project?.content : '') ?? '',
+    category:
+      translation?.category ??
+      (locale === 'en' ? project?.category : 'Project') ??
+      'Project',
+  }
 }
 
 function Field({

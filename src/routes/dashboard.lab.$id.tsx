@@ -8,7 +8,6 @@ import { ContentEditorForm } from '#/features/dashboard/ContentEditorForm'
 
 type ContentRecord = {
   id: string
-  locale: 'en' | 'id'
   slug: string
   title: string
   summary: string
@@ -19,6 +18,18 @@ type ContentRecord = {
   tags: string[]
   demoUrl?: string | null
   repoUrl?: string | null
+  translations: Partial<
+    Record<
+      'en' | 'id',
+      {
+        title?: string | null
+        summary?: string | null
+        content?: string | null
+        tags?: string[] | null
+      }
+    >
+  >
+  availableLocales: Array<'en' | 'id'>
 }
 
 export const Route = createFileRoute('/dashboard/lab/$id')({

@@ -8,12 +8,12 @@ type ContentKind = 'writing' | 'lab'
 
 type ContentRow = {
   id: string
-  locale: 'en' | 'id'
   slug: string
   title: string
   summary: string
   status: 'draft' | 'published' | 'archived'
   tags: string[]
+  availableLocales: Array<'en' | 'id'>
 }
 
 type ContentListProps = {
@@ -174,7 +174,7 @@ export function ContentList({ kind }: ContentListProps) {
                       </span>
                     </td>
                     <td className="px-5 py-4 align-top text-[var(--brand-muted)]">
-                      {entry.locale.toUpperCase()}
+                      {formatLocales(entry.availableLocales)}
                     </td>
                     <td className="px-5 py-4 align-top">
                       <div className="flex max-w-xs flex-wrap gap-1.5">
@@ -234,4 +234,10 @@ export function ContentList({ kind }: ContentListProps) {
       </section>
     </>
   )
+}
+
+function formatLocales(locales: readonly ('en' | 'id')[]) {
+  return locales.length > 0
+    ? locales.map((locale) => locale.toUpperCase()).join(', ')
+    : '-'
 }

@@ -14,8 +14,10 @@ export const getPublishedWritingEntries = createServerFn({
       const db = await getContentDb()
       const { listPublishedWriting, toPublicWritingRecord } =
         await import('./queries')
-      const records = await listPublishedWriting(db, data.locale)
-      return records.map(toPublicWritingRecord)
+      const entries = await listPublishedWriting(db, data.locale)
+      return entries.map(({ record, translation }) =>
+        toPublicWritingRecord(record, translation),
+      )
     } catch (error) {
       if (isMissingTableError(error)) {
         return []
@@ -35,13 +37,13 @@ export const getPublishedWritingEntry = createServerFn({ method: 'GET' })
       const db = await getContentDb()
       const { getPublishedWritingBySlug, toPublicWritingRecord } =
         await import('./queries')
-      const record = await getPublishedWritingBySlug(db, data.slug, data.locale)
+      const entry = await getPublishedWritingBySlug(db, data.slug, data.locale)
 
-      if (!record) {
+      if (!entry) {
         return null
       }
 
-      return toPublicWritingRecord(record)
+      return toPublicWritingRecord(entry.record, entry.translation)
     } catch (error) {
       if (isMissingTableError(error)) {
         return null
@@ -60,8 +62,10 @@ export const getPublishedLabEntries = createServerFn({ method: 'GET' })
       const db = await getContentDb()
       const { listPublishedLabEntries, toPublicLabRecord } =
         await import('./queries')
-      const records = await listPublishedLabEntries(db, data.locale)
-      return records.map(toPublicLabRecord)
+      const entries = await listPublishedLabEntries(db, data.locale)
+      return entries.map(({ record, translation }) =>
+        toPublicLabRecord(record, translation),
+      )
     } catch (error) {
       if (isMissingTableError(error)) {
         return []
@@ -81,17 +85,13 @@ export const getPublishedLabEntry = createServerFn({ method: 'GET' })
       const db = await getContentDb()
       const { getPublishedLabEntryBySlug, toPublicLabRecord } =
         await import('./queries')
-      const record = await getPublishedLabEntryBySlug(
-        db,
-        data.slug,
-        data.locale,
-      )
+      const entry = await getPublishedLabEntryBySlug(db, data.slug, data.locale)
 
-      if (!record) {
+      if (!entry) {
         return null
       }
 
-      return toPublicLabRecord(record)
+      return toPublicLabRecord(entry.record, entry.translation)
     } catch (error) {
       if (isMissingTableError(error)) {
         return null

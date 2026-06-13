@@ -7,7 +7,6 @@ import { getDashboardCopy } from '#/features/dashboard/copy'
 
 type ProjectRow = {
   id: string
-  locale: 'en' | 'id'
   slug: string
   title: string
   summary: string
@@ -15,6 +14,7 @@ type ProjectRow = {
   visibility: 'public' | 'private'
   featured: boolean
   category: string
+  availableLocales: Array<'en' | 'id'>
   updatedAt?: string
 }
 
@@ -170,7 +170,7 @@ function DashboardProjects() {
                       <StatusBadge value={project.status} />
                     </td>
                     <td className="px-5 py-4 align-top text-[var(--brand-muted)]">
-                      {project.locale.toUpperCase()}
+                      {formatLocales(project.availableLocales)}
                     </td>
                     <td className="px-5 py-4 align-top text-[var(--brand-muted)]">
                       {project.visibility}
@@ -219,4 +219,10 @@ function StatusBadge({ value }: { value: ProjectRow['status'] }) {
       {value}
     </span>
   )
+}
+
+function formatLocales(locales: readonly ('en' | 'id')[]) {
+  return locales.length > 0
+    ? locales.map((locale) => locale.toUpperCase()).join(', ')
+    : '-'
 }

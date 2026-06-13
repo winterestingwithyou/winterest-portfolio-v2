@@ -6,8 +6,7 @@ import { requireDashboardUser } from '#/features/auth/session'
 import { handleContentApiError, json } from '#/features/content/api'
 import {
   deleteLabEntry,
-  getLabEntryByIdOrSlug,
-  toPublicLabRecord,
+  getDashboardLabEntryByIdOrSlug,
   updateLabEntry,
 } from '#/features/content/queries'
 import { labEntryInputSchema } from '#/features/content/validation'
@@ -23,13 +22,16 @@ export const Route = createFileRoute('/api/lab/$id')({
             return user
           }
 
-          const record = await getLabEntryByIdOrSlug(getDb(env.DB), params.id)
+          const record = await getDashboardLabEntryByIdOrSlug(
+            getDb(env.DB),
+            params.id,
+          )
 
           if (!record) {
             return json({ error: 'Lab entry not found.' }, { status: 404 })
           }
 
-          return json({ data: toPublicLabRecord(record) })
+          return json({ data: record })
         } catch (error) {
           return handleContentApiError(error, 'Lab')
         }
@@ -50,7 +52,7 @@ export const Route = createFileRoute('/api/lab/$id')({
             return json({ error: 'Lab entry not found.' }, { status: 404 })
           }
 
-          return json({ data: toPublicLabRecord(record) })
+          return json({ data: record })
         } catch (error) {
           return handleContentApiError(error, 'Lab')
         }

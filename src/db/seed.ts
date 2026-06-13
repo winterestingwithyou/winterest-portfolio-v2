@@ -1,12 +1,16 @@
-import { and, eq } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 
 import type { Database } from './index'
 import {
+  contentLocales,
   labEntries,
+  labEntryTranslations,
   projectTechnologies,
   projects,
+  projectTranslations,
   technologies,
   writing,
+  writingTranslations,
 } from './schema'
 import {
   labSeeds,
@@ -73,20 +77,21 @@ async function upsertProject(
   seed: PortfolioProjectSeed,
   now: Date,
 ) {
+  const english = seed.translations.en
+
   await db
     .insert(projects)
     .values({
       id: seed.id,
-      locale: seed.locale,
       slug: seed.slug,
-      title: seed.title,
-      summary: seed.summary,
-      description: seed.description,
-      content: seed.content,
+      title: english.title,
+      summary: english.summary,
+      description: english.description,
+      content: english.content,
       status: 'published',
       visibility: 'public',
       featured: seed.featured,
-      category: seed.category,
+      category: english.category,
       coverImage: null,
       repoUrl: seed.repoUrl ?? null,
       demoUrl: seed.demoUrl ?? null,
@@ -97,17 +102,16 @@ async function upsertProject(
       updatedAt: now,
     })
     .onConflictDoUpdate({
-      target: [projects.slug, projects.locale],
+      target: projects.slug,
       set: {
-        locale: seed.locale,
-        title: seed.title,
-        summary: seed.summary,
-        description: seed.description,
-        content: seed.content,
+        title: english.title,
+        summary: english.summary,
+        description: english.description,
+        content: english.content,
         status: 'published',
         visibility: 'public',
         featured: seed.featured,
-        category: seed.category,
+        category: english.category,
         repoUrl: seed.repoUrl ?? null,
         demoUrl: seed.demoUrl ?? null,
         caseStudyUrl: seed.caseStudyUrl ?? null,
@@ -120,7 +124,7 @@ async function upsertProject(
   const project = await db
     .select({ id: projects.id })
     .from(projects)
-    .where(and(eq(projects.slug, seed.slug), eq(projects.locale, seed.locale)))
+    .where(eq(projects.slug, seed.slug))
     .get()
 
   if (!project) {
@@ -151,6 +155,34 @@ async function upsertProject(
   if (relations.length > 0) {
     await db.insert(projectTechnologies).values(relations).run()
   }
+
+  for (const locale of contentLocales) {
+    const translation = seed.translations[locale]
+    await db
+      .insert(projectTranslations)
+      .values({
+        projectId: project.id,
+        locale,
+        title: translation.title,
+        summary: translation.summary,
+        description: translation.description,
+        content: translation.content,
+        category: translation.category,
+        updatedAt: now,
+      })
+      .onConflictDoUpdate({
+        target: [projectTranslations.projectId, projectTranslations.locale],
+        set: {
+          title: translation.title,
+          summary: translation.summary,
+          description: translation.description,
+          content: translation.content,
+          category: translation.category,
+          updatedAt: now,
+        },
+      })
+      .run()
+  }
 }
 
 async function upsertWriting(
@@ -158,37 +190,73 @@ async function upsertWriting(
   seed: PortfolioContentSeed,
   now: Date,
 ) {
+  const english = seed.translations.en
+
   await db
     .insert(writing)
     .values({
       id: seed.id,
-      locale: seed.locale,
       slug: seed.slug,
-      title: seed.title,
-      summary: seed.summary,
-      content: seed.content,
+      title: english.title,
+      summary: english.summary,
+      content: english.content,
       status: 'published',
       visibility: 'public',
       coverImage: null,
-      tags: serializeTags(seed.tags),
+      tags: serializeTags(english.tags),
       publishedAt: seed.publishedAt,
       updatedAt: now,
     })
     .onConflictDoUpdate({
-      target: [writing.slug, writing.locale],
+      target: writing.slug,
       set: {
-        locale: seed.locale,
-        title: seed.title,
-        summary: seed.summary,
-        content: seed.content,
+        title: english.title,
+        summary: english.summary,
+        content: english.content,
         status: 'published',
         visibility: 'public',
-        tags: serializeTags(seed.tags),
+        tags: serializeTags(english.tags),
         publishedAt: seed.publishedAt,
         updatedAt: now,
       },
     })
     .run()
+
+  const writingEntry = await db
+    .select({ id: writing.id })
+    .from(writing)
+    .where(eq(writing.slug, seed.slug))
+    .get()
+
+  if (!writingEntry) {
+    throw new Error(`Writing seed "${seed.slug}" could not be loaded.`)
+  }
+
+  for (const locale of contentLocales) {
+    const translation = seed.translations[locale]
+    await db
+      .insert(writingTranslations)
+      .values({
+        writingId: writingEntry.id,
+        locale,
+        title: translation.title,
+        summary: translation.summary,
+        content: translation.content,
+        tags: serializeTags(translation.tags),
+        updatedAt: now,
+      })
+      .onConflictDoUpdate({
+        target: [writingTranslations.writingId, writingTranslations.locale],
+        set: {
+          title: translation.title,
+          summary: translation.summary,
+          content: translation.content,
+          tags: serializeTags(translation.tags),
+          updatedAt: now,
+        },
+      })
+      .run()
+  }
 }
 
 async function upsertLabEntry(
@@ -196,37 +264,73 @@ async function upsertLabEntry(
   seed: PortfolioContentSeed,
   now: Date,
 ) {
+  const english = seed.translations.en
+
   await db
     .insert(labEntries)
     .values({
       id: seed.id,
-      locale: seed.locale,
       slug: seed.slug,
-      title: seed.title,
-      summary: seed.summary,
-      content: seed.content,
+      title: english.title,
+      summary: english.summary,
+      content: english.content,
       status: 'published',
       visibility: 'public',
       demoUrl: null,
       repoUrl: null,
       coverImage: null,
-      tags: serializeTags(seed.tags),
+      tags: serializeTags(english.tags),
       publishedAt: seed.publishedAt,
       updatedAt: now,
     })
     .onConflictDoUpdate({
-      target: [labEntries.slug, labEntries.locale],
+      target: labEntries.slug,
       set: {
-        locale: seed.locale,
-        title: seed.title,
-        summary: seed.summary,
-        content: seed.content,
+        title: english.title,
+        summary: english.summary,
+        content: english.content,
         status: 'published',
         visibility: 'public',
-        tags: serializeTags(seed.tags),
+        tags: serializeTags(english.tags),
         publishedAt: seed.publishedAt,
         updatedAt: now,
       },
     })
     .run()
+
+  const labEntry = await db
+    .select({ id: labEntries.id })
+    .from(labEntries)
+    .where(eq(labEntries.slug, seed.slug))
+    .get()
+
+  if (!labEntry) {
+    throw new Error(`Lab seed "${seed.slug}" could not be loaded.`)
+  }
+
+  for (const locale of contentLocales) {
+    const translation = seed.translations[locale]
+    await db
+      .insert(labEntryTranslations)
+      .values({
+        labEntryId: labEntry.id,
+        locale,
+        title: translation.title,
+        summary: translation.summary,
+        content: translation.content,
+        tags: serializeTags(translation.tags),
+        updatedAt: now,
+      })
+      .onConflictDoUpdate({
+        target: [labEntryTranslations.labEntryId, labEntryTranslations.locale],
+        set: {
+          title: translation.title,
+          summary: translation.summary,
+          content: translation.content,
+          tags: serializeTags(translation.tags),
+          updatedAt: now,
+        },
+      })
+      .run()
+  }
 }

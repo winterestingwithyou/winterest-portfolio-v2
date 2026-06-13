@@ -6,7 +6,7 @@ import { getDb } from '#/db'
 import { requireDashboardUser } from '#/features/auth/session'
 import {
   deleteProject,
-  getProjectByIdOrSlug,
+  getDashboardProjectByIdOrSlug,
   updateProject,
 } from '#/features/projects/queries'
 import { projectInputSchema } from '#/features/projects/validation'
@@ -23,7 +23,7 @@ export const Route = createFileRoute('/api/projects/$id')({
           }
 
           const db = getDb(env.DB)
-          const project = await getProjectByIdOrSlug(db, params.id)
+          const project = await getDashboardProjectByIdOrSlug(db, params.id)
 
           if (!project) {
             return json({ error: 'Project not found.' }, { status: 404 })

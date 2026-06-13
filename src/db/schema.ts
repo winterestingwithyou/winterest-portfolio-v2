@@ -142,7 +142,6 @@ export const projects = sqliteTable(
   'projects',
   {
     id: text('id').primaryKey(),
-    locale: text('locale', { enum: contentLocales }).notNull().default('en'),
     slug: text('slug').notNull(),
     title: text('title').notNull(),
     summary: text('summary').notNull(),
@@ -166,8 +165,7 @@ export const projects = sqliteTable(
     ...timestamps,
   },
   (table) => [
-    uniqueIndex('projects_slug_locale_unique').on(table.slug, table.locale),
-    index('projects_locale_idx').on(table.locale),
+    uniqueIndex('projects_slug_unique').on(table.slug),
     index('projects_status_idx').on(table.status),
     index('projects_visibility_idx').on(table.visibility),
     index('projects_featured_idx').on(table.featured),
@@ -175,11 +173,33 @@ export const projects = sqliteTable(
   ],
 )
 
+export const projectTranslations = sqliteTable(
+  'project_translations',
+  {
+    projectId: text('project_id')
+      .notNull()
+      .references(() => projects.id, { onDelete: 'cascade' }),
+    locale: text('locale', { enum: contentLocales }).notNull(),
+    title: text('title').notNull(),
+    summary: text('summary').notNull(),
+    description: text('description'),
+    content: text('content'),
+    category: text('category').notNull().default('Project'),
+    ...timestamps,
+  },
+  (table) => [
+    primaryKey({
+      columns: [table.projectId, table.locale],
+      name: 'project_translations_pk',
+    }),
+    index('project_translations_locale_idx').on(table.locale),
+  ],
+)
+
 export const writing = sqliteTable(
   'writing',
   {
     id: text('id').primaryKey(),
-    locale: text('locale', { enum: contentLocales }).notNull().default('en'),
     slug: text('slug').notNull(),
     title: text('title').notNull(),
     summary: text('summary').notNull(),
@@ -196,11 +216,32 @@ export const writing = sqliteTable(
     ...timestamps,
   },
   (table) => [
-    uniqueIndex('writing_slug_locale_unique').on(table.slug, table.locale),
-    index('writing_locale_idx').on(table.locale),
+    uniqueIndex('writing_slug_unique').on(table.slug),
     index('writing_status_idx').on(table.status),
     index('writing_visibility_idx').on(table.visibility),
     index('writing_published_at_idx').on(table.publishedAt),
+  ],
+)
+
+export const writingTranslations = sqliteTable(
+  'writing_translations',
+  {
+    writingId: text('writing_id')
+      .notNull()
+      .references(() => writing.id, { onDelete: 'cascade' }),
+    locale: text('locale', { enum: contentLocales }).notNull(),
+    title: text('title').notNull(),
+    summary: text('summary').notNull(),
+    content: text('content'),
+    tags: text('tags').notNull().default('[]'),
+    ...timestamps,
+  },
+  (table) => [
+    primaryKey({
+      columns: [table.writingId, table.locale],
+      name: 'writing_translations_pk',
+    }),
+    index('writing_translations_locale_idx').on(table.locale),
   ],
 )
 
@@ -208,7 +249,6 @@ export const labEntries = sqliteTable(
   'lab_entries',
   {
     id: text('id').primaryKey(),
-    locale: text('locale', { enum: contentLocales }).notNull().default('en'),
     slug: text('slug').notNull(),
     title: text('title').notNull(),
     summary: text('summary').notNull(),
@@ -227,11 +267,32 @@ export const labEntries = sqliteTable(
     ...timestamps,
   },
   (table) => [
-    uniqueIndex('lab_entries_slug_locale_unique').on(table.slug, table.locale),
-    index('lab_entries_locale_idx').on(table.locale),
+    uniqueIndex('lab_entries_slug_unique').on(table.slug),
     index('lab_entries_status_idx').on(table.status),
     index('lab_entries_visibility_idx').on(table.visibility),
     index('lab_entries_published_at_idx').on(table.publishedAt),
+  ],
+)
+
+export const labEntryTranslations = sqliteTable(
+  'lab_entry_translations',
+  {
+    labEntryId: text('lab_entry_id')
+      .notNull()
+      .references(() => labEntries.id, { onDelete: 'cascade' }),
+    locale: text('locale', { enum: contentLocales }).notNull(),
+    title: text('title').notNull(),
+    summary: text('summary').notNull(),
+    content: text('content'),
+    tags: text('tags').notNull().default('[]'),
+    ...timestamps,
+  },
+  (table) => [
+    primaryKey({
+      columns: [table.labEntryId, table.locale],
+      name: 'lab_entry_translations_pk',
+    }),
+    index('lab_entry_translations_locale_idx').on(table.locale),
   ],
 )
 
@@ -297,7 +358,46 @@ export const projectTechnologies = sqliteTable(
 
 export const projectsRelations = relations(projects, ({ many }) => ({
   projectTechnologies: many(projectTechnologies),
+  translations: many(projectTranslations),
 }))
+
+export const projectTranslationsRelations = relations(
+  projectTranslations,
+  ({ one }) => ({
+    project: one(projects, {
+      fields: [projectTranslations.projectId],
+      references: [projects.id],
+    }),
+  }),
+)
+
+export const writingRelations = relations(writing, ({ many }) => ({
+  translations: many(writingTranslations),
+}))
+
+export const writingTranslationsRelations = relations(
+  writingTranslations,
+  ({ one }) => ({
+    writing: one(writing, {
+      fields: [writingTranslations.writingId],
+      references: [writing.id],
+    }),
+  }),
+)
+
+export const labEntriesRelations = relations(labEntries, ({ many }) => ({
+  translations: many(labEntryTranslations),
+}))
+
+export const labEntryTranslationsRelations = relations(
+  labEntryTranslations,
+  ({ one }) => ({
+    labEntry: one(labEntries, {
+      fields: [labEntryTranslations.labEntryId],
+      references: [labEntries.id],
+    }),
+  }),
+)
 
 export const technologiesRelations = relations(technologies, ({ many }) => ({
   projectTechnologies: many(projectTechnologies),

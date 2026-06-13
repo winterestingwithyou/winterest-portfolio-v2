@@ -1,10 +1,6 @@
 import { z } from 'zod'
 
-import {
-  contentLocales,
-  contentStatuses,
-  contentVisibilities,
-} from '#/db/schema'
+import { contentStatuses, contentVisibilities } from '#/db/schema'
 
 const emptyToUndefined = (value: unknown) => {
   if (typeof value === 'string' && value.trim() === '') {
@@ -32,21 +28,27 @@ const tagsSchema = z.preprocess(
   z.array(z.string().trim().min(1).max(40)).max(12).default([]),
 )
 
+const contentTranslationSchema = z.object({
+  title: z.string().trim().min(2).max(180),
+  summary: z.string().trim().min(8).max(320),
+  content: z.preprocess(emptyToUndefined, z.string().trim().optional()),
+  tags: tagsSchema,
+})
+
 export const contentBaseInputSchema = z.object({
-  locale: z.enum(contentLocales).default('en'),
   slug: z
     .string()
     .trim()
     .min(2)
     .max(96)
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use a URL-safe slug.'),
-  title: z.string().trim().min(2).max(180),
-  summary: z.string().trim().min(8).max(320),
-  content: z.preprocess(emptyToUndefined, z.string().trim().optional()),
   status: z.enum(contentStatuses).default('draft'),
   visibility: z.enum(contentVisibilities).default('public'),
   coverImage: z.preprocess(emptyToUndefined, z.string().url().optional()),
-  tags: tagsSchema,
+  translations: z.object({
+    en: contentTranslationSchema,
+    id: contentTranslationSchema,
+  }),
 })
 
 export const writingInputSchema = contentBaseInputSchema

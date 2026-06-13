@@ -8,7 +8,6 @@ import { ProjectEditorForm } from '#/features/dashboard/ProjectEditorForm'
 
 type ProjectRecord = {
   id: string
-  locale: 'en' | 'id'
   slug: string
   title: string
   summary: string
@@ -22,6 +21,19 @@ type ProjectRecord = {
   repoUrl?: string | null
   demoUrl?: string | null
   caseStudyUrl?: string | null
+  translations: Partial<
+    Record<
+      'en' | 'id',
+      {
+        title?: string | null
+        summary?: string | null
+        description?: string | null
+        content?: string | null
+        category?: string | null
+      }
+    >
+  >
+  availableLocales: Array<'en' | 'id'>
 }
 
 export const Route = createFileRoute('/dashboard/projects/$id')({

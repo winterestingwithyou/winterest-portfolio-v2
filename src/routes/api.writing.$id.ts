@@ -6,8 +6,7 @@ import { requireDashboardUser } from '#/features/auth/session'
 import { handleContentApiError, json } from '#/features/content/api'
 import {
   deleteWriting,
-  getWritingByIdOrSlug,
-  toPublicWritingRecord,
+  getDashboardWritingByIdOrSlug,
   updateWriting,
 } from '#/features/content/queries'
 import { writingInputSchema } from '#/features/content/validation'
@@ -23,13 +22,16 @@ export const Route = createFileRoute('/api/writing/$id')({
             return user
           }
 
-          const record = await getWritingByIdOrSlug(getDb(env.DB), params.id)
+          const record = await getDashboardWritingByIdOrSlug(
+            getDb(env.DB),
+            params.id,
+          )
 
           if (!record) {
             return json({ error: 'Writing entry not found.' }, { status: 404 })
           }
 
-          return json({ data: toPublicWritingRecord(record) })
+          return json({ data: record })
         } catch (error) {
           return handleContentApiError(error, 'Writing')
         }
@@ -50,7 +52,7 @@ export const Route = createFileRoute('/api/writing/$id')({
             return json({ error: 'Writing entry not found.' }, { status: 404 })
           }
 
-          return json({ data: toPublicWritingRecord(record) })
+          return json({ data: record })
         } catch (error) {
           return handleContentApiError(error, 'Writing')
         }

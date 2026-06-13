@@ -6,10 +6,24 @@ import { useMemo, useState } from 'react'
 import { getDashboardCopy } from './copy'
 
 type ContentKind = 'writing' | 'lab'
+type LocaleOption = 'en' | 'id'
+
+type ContentTranslationInitial = {
+  title?: string | null
+  summary?: string | null
+  content?: string | null
+  tags?: string[] | null
+}
+
+type ContentTranslationFormValue = {
+  title: string
+  summary: string
+  content: string
+  tags: string[]
+}
 
 type ContentFormInitial = {
   id?: string
-  locale?: 'en' | 'id' | null
   slug?: string | null
   title?: string | null
   summary?: string | null
@@ -20,6 +34,7 @@ type ContentFormInitial = {
   tags?: string[] | null
   demoUrl?: string | null
   repoUrl?: string | null
+  translations?: Partial<Record<LocaleOption, ContentTranslationInitial>>
 }
 
 type ContentEditorFormProps = {
@@ -30,7 +45,10 @@ type ContentEditorFormProps = {
 
 const statusOptions = ['draft', 'published', 'archived'] as const
 const visibilityOptions = ['public', 'private'] as const
-const localeOptions = ['en', 'id'] as const
+const localeOptions = [
+  { value: 'en', label: 'English' },
+  { value: 'id', label: 'Indonesia' },
+] as const
 
 export function ContentEditorForm({
   kind,
@@ -71,17 +89,23 @@ export function ContentEditorForm({
 
     const formData = new FormData(event.currentTarget)
     const payload = {
-      locale: String(formData.get('locale') ?? 'en'),
       slug: String(formData.get('slug') ?? ''),
-      title: String(formData.get('title') ?? ''),
-      summary: String(formData.get('summary') ?? ''),
-      content: String(formData.get('content') ?? ''),
       status: String(formData.get('status') ?? 'draft'),
       visibility: String(formData.get('visibility') ?? 'public'),
       coverImage: String(formData.get('coverImage') ?? ''),
-      tags: String(formData.get('tags') ?? ''),
       demoUrl: String(formData.get('demoUrl') ?? ''),
       repoUrl: String(formData.get('repoUrl') ?? ''),
+      translations: Object.fromEntries(
+        localeOptions.map(({ value }) => [
+          value,
+          {
+            title: String(formData.get(`${value}.title`) ?? ''),
+            summary: String(formData.get(`${value}.summary`) ?? ''),
+            content: String(formData.get(`${value}.content`) ?? ''),
+            tags: String(formData.get(`${value}.tags`) ?? ''),
+          },
+        ]),
+      ),
     }
 
     try {
@@ -142,34 +166,18 @@ export function ContentEditorForm({
     <form onSubmit={handleSubmit} className="surface-card grid gap-5 p-5">
       <div className="grid gap-5 md:grid-cols-2">
         <Field
-          label={copy.form.title}
-          name="title"
-          defaultValue={entry?.title ?? ''}
-        />
-        <Field
           label={copy.form.slug}
           name="slug"
           defaultValue={entry?.slug ?? ''}
         />
-      </div>
-      <Select
-        label={copy.form.language}
-        name="locale"
-        defaultValue={entry?.locale ?? 'en'}
-        options={localeOptions}
-      />
-      <Field
-        label={copy.form.summary}
-        name="summary"
-        defaultValue={entry?.summary ?? ''}
-      />
-      <div className="grid gap-5 md:grid-cols-2">
         <Select
           label={copy.form.status}
           name="status"
           defaultValue={entry?.status ?? 'draft'}
           options={statusOptions}
         />
+      </div>
+      <div className="grid gap-5 md:grid-cols-2">
         <Select
           label={copy.form.visibility}
           name="visibility"
@@ -182,11 +190,6 @@ export function ContentEditorForm({
           label={copy.form.coverImageUrl}
           name="coverImage"
           defaultValue={entry?.coverImage ?? ''}
-        />
-        <Field
-          label={copy.form.tags}
-          name="tags"
-          defaultValue={(entry?.tags ?? []).join(', ')}
         />
         {kind === 'lab' ? (
           <>
@@ -203,21 +206,53 @@ export function ContentEditorForm({
           </>
         ) : null}
       </div>
-      <div>
-        <label
-          htmlFor="content"
-          className="text-sm font-bold text-[var(--brand-ink)]"
-        >
-          {copy.form.content}
-        </label>
-        <textarea
-          id="content"
-          name="content"
-          rows={12}
-          defaultValue={entry?.content ?? ''}
-          className="mt-2 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-3 text-sm leading-7 text-[var(--brand-ink)]"
-        />
-      </div>
+
+      {localeOptions.map(({ value, label }) => {
+        const translation = getTranslation(entry, value)
+
+        return (
+          <section
+            key={value}
+            className="grid gap-5 rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] p-4"
+          >
+            <h2 className="text-lg font-semibold text-[var(--brand-ink)]">
+              {label}
+            </h2>
+            <div className="grid gap-5 md:grid-cols-2">
+              <Field
+                label={copy.form.title}
+                name={`${value}.title`}
+                defaultValue={translation.title}
+              />
+              <Field
+                label={copy.form.tags}
+                name={`${value}.tags`}
+                defaultValue={translation.tags.join(', ')}
+              />
+            </div>
+            <Field
+              label={copy.form.summary}
+              name={`${value}.summary`}
+              defaultValue={translation.summary}
+            />
+            <div>
+              <label
+                htmlFor={`${value}.content`}
+                className="text-sm font-bold text-[var(--brand-ink)]"
+              >
+                {copy.form.content}
+              </label>
+              <textarea
+                id={`${value}.content`}
+                name={`${value}.content`}
+                rows={12}
+                defaultValue={translation.content}
+                className="mt-2 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-3 text-sm leading-7 text-[var(--brand-ink)]"
+              />
+            </div>
+          </section>
+        )
+      })}
 
       {error ? (
         <p className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm font-semibold text-red-700 dark:text-red-200">
@@ -275,20 +310,40 @@ export function ContentEditorForm({
 }
 
 function withoutLabFields(payload: {
-  locale: string
   slug: string
-  title: string
-  summary: string
-  content: string
   status: string
   visibility: string
   coverImage: string
-  tags: string
   demoUrl: string
   repoUrl: string
+  translations: Record<
+    string,
+    {
+      title: string
+      summary: string
+      content: string
+      tags: string
+    }
+  >
 }) {
   const { demoUrl: _demoUrl, repoUrl: _repoUrl, ...writingPayload } = payload
   return writingPayload
+}
+
+function getTranslation(
+  entry: ContentFormInitial | undefined,
+  locale: LocaleOption,
+): ContentTranslationFormValue {
+  const translation = entry?.translations?.[locale]
+
+  return {
+    title: translation?.title ?? (locale === 'en' ? entry?.title : '') ?? '',
+    summary:
+      translation?.summary ?? (locale === 'en' ? entry?.summary : '') ?? '',
+    content:
+      translation?.content ?? (locale === 'en' ? entry?.content : '') ?? '',
+    tags: translation?.tags ?? (locale === 'en' ? entry?.tags : []) ?? [],
+  }
 }
 
 function Field({

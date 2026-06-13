@@ -4,11 +4,7 @@ import { env } from 'cloudflare:workers'
 import { getDb } from '#/db'
 import { requireDashboardUser } from '#/features/auth/session'
 import { handleContentApiError, json } from '#/features/content/api'
-import {
-  createWriting,
-  listWriting,
-  toPublicWritingRecord,
-} from '#/features/content/queries'
+import { createWriting, listWriting } from '#/features/content/queries'
 import { writingInputSchema } from '#/features/content/validation'
 
 export const Route = createFileRoute('/api/writing')({
@@ -23,7 +19,7 @@ export const Route = createFileRoute('/api/writing')({
           }
 
           const records = await listWriting(getDb(env.DB))
-          return json({ data: records.map(toPublicWritingRecord) })
+          return json({ data: records })
         } catch (error) {
           return handleContentApiError(error, 'Writing')
         }
@@ -40,7 +36,7 @@ export const Route = createFileRoute('/api/writing')({
           const input = writingInputSchema.parse(payload)
           const record = await createWriting(getDb(env.DB), input)
 
-          return json({ data: toPublicWritingRecord(record) }, { status: 201 })
+          return json({ data: record }, { status: 201 })
         } catch (error) {
           return handleContentApiError(error, 'Writing')
         }
