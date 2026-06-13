@@ -3,6 +3,7 @@ import { Edit3, Plus, RefreshCw, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import { getDashboardCopy } from '#/features/dashboard/copy'
 
 type ProjectRow = {
   id: string
@@ -21,6 +22,7 @@ export const Route = createFileRoute('/dashboard/projects/')({
 })
 
 function DashboardProjects() {
+  const copy = getDashboardCopy()
   const [projects, setProjects] = useState<ProjectRow[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -37,39 +39,44 @@ function DashboardProjects() {
       } = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.error ?? 'Failed to load projects.')
+        throw new Error(result.error ?? copy.projects.loadError)
       }
 
       setProjects(result.data ?? [])
     } catch (caught) {
       setError(
-        caught instanceof Error ? caught.message : 'Failed to load projects.',
+        caught instanceof Error ? caught.message : copy.projects.loadError,
       )
     } finally {
       setIsLoading(false)
     }
-  }, [])
+  }, [copy.projects.loadError])
 
-  const deleteProject = useCallback(async (project: ProjectRow) => {
-    setError(null)
+  const deleteProject = useCallback(
+    async (project: ProjectRow) => {
+      setError(null)
 
-    try {
-      const response = await fetch(`/api/projects/${project.id}`, {
-        method: 'DELETE',
-      })
-      const result: { error?: string } = await response.json()
+      try {
+        const response = await fetch(`/api/projects/${project.id}`, {
+          method: 'DELETE',
+        })
+        const result: { error?: string } = await response.json()
 
-      if (!response.ok) {
-        throw new Error(result.error ?? 'Failed to delete project.')
+        if (!response.ok) {
+          throw new Error(result.error ?? copy.projects.deleteError)
+        }
+
+        setProjects((current) =>
+          current.filter((item) => item.id !== project.id),
+        )
+      } catch (caught) {
+        setError(
+          caught instanceof Error ? caught.message : copy.projects.deleteError,
+        )
       }
-
-      setProjects((current) => current.filter((item) => item.id !== project.id))
-    } catch (caught) {
-      setError(
-        caught instanceof Error ? caught.message : 'Failed to delete project.',
-      )
-    }
-  }, [])
+    },
+    [copy.projects.deleteError],
+  )
 
   useEffect(() => {
     void loadProjects()
@@ -77,8 +84,8 @@ function DashboardProjects() {
 
   return (
     <DashboardShell
-      title="Projects"
-      description="D1-backed project records for the public portfolio and CMS dashboard."
+      title={copy.projects.title}
+      description={copy.projects.description}
       actions={
         <>
           <button
@@ -87,14 +94,14 @@ function DashboardProjects() {
             className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] transition hover:-translate-y-0.5 hover:border-[var(--brand-orange)]"
           >
             <RefreshCw aria-hidden="true" className="size-4" />
-            Refresh
+            {copy.common.refresh}
           </button>
           <Link
             to="/dashboard/projects/new"
             className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[var(--brand-orange)] px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
           >
             <Plus aria-hidden="true" className="size-4" />
-            New project
+            {copy.projects.new}
           </Link>
         </>
       }
@@ -108,16 +115,15 @@ function DashboardProjects() {
       <section className="surface-card overflow-hidden">
         {isLoading ? (
           <div className="p-6 text-sm font-semibold text-[var(--brand-muted)]">
-            Loading projects...
+            {copy.projects.loading}
           </div>
         ) : projects.length === 0 ? (
           <div className="p-6">
             <h2 className="text-xl font-semibold text-[var(--brand-ink)]">
-              No D1 projects yet.
+              {copy.projects.emptyTitle}
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
-              Apply the generated D1 migration, then create your first project
-              draft from the dashboard.
+              {copy.projects.emptyDescription}
             </p>
           </div>
         ) : (
@@ -126,19 +132,19 @@ function DashboardProjects() {
               <thead className="border-b border-[var(--brand-line)] bg-[var(--brand-orange-soft)] text-[var(--brand-orange-deep)]">
                 <tr>
                   <th scope="col" className="px-5 py-3 font-bold">
-                    Project
+                    {copy.projects.project}
                   </th>
                   <th scope="col" className="px-5 py-3 font-bold">
-                    Status
+                    {copy.common.status}
                   </th>
                   <th scope="col" className="px-5 py-3 font-bold">
-                    Visibility
+                    {copy.common.visibility}
                   </th>
                   <th scope="col" className="px-5 py-3 font-bold">
-                    Category
+                    {copy.common.category}
                   </th>
                   <th scope="col" className="px-5 py-3 text-right font-bold">
-                    Actions
+                    {copy.common.actions}
                   </th>
                 </tr>
               </thead>
@@ -172,7 +178,9 @@ function DashboardProjects() {
                           params={{ id: project.id }}
                           className="inline-grid size-9 place-items-center rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] text-[var(--brand-ink)] transition hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange-deep)]"
                         >
-                          <span className="sr-only">Edit {project.title}</span>
+                          <span className="sr-only">
+                            {copy.common.edit} {project.title}
+                          </span>
                           <Edit3 aria-hidden="true" className="size-4" />
                         </Link>
                         <button
@@ -181,7 +189,7 @@ function DashboardProjects() {
                           className="inline-grid size-9 place-items-center rounded-full border border-red-500/30 bg-red-500/10 text-red-700 transition hover:-translate-y-0.5 dark:text-red-200"
                         >
                           <span className="sr-only">
-                            Delete {project.title}
+                            {copy.common.delete} {project.title}
                           </span>
                           <Trash2 aria-hidden="true" className="size-4" />
                         </button>

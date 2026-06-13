@@ -3,6 +3,8 @@ import { Save, Trash2 } from 'lucide-react'
 import type { FormEvent } from 'react'
 import { useMemo, useState } from 'react'
 
+import { getDashboardCopy } from './copy'
+
 type ProjectFormInitial = {
   id?: string
   slug?: string | null
@@ -29,6 +31,7 @@ const statusOptions = ['draft', 'published', 'archived'] as const
 const visibilityOptions = ['public', 'private'] as const
 
 export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
+  const copy = getDashboardCopy()
   const navigate = useNavigate()
   const [isPending, setIsPending] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
@@ -81,14 +84,16 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
       const result: { error?: string } = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.error ?? 'Project save failed.')
+        throw new Error(result.error ?? copy.projects.saveError)
       }
 
-      setMessage(mode === 'create' ? 'Draft created.' : 'Changes saved.')
+      setMessage(
+        mode === 'create' ? copy.common.draftCreated : copy.common.changesSaved,
+      )
       await navigate({ to: '/dashboard/projects' })
     } catch (caught) {
       setError(
-        caught instanceof Error ? caught.message : 'Project save failed.',
+        caught instanceof Error ? caught.message : copy.projects.saveError,
       )
     } finally {
       setIsPending(false)
@@ -109,13 +114,15 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
       const result: { error?: string } = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.error ?? 'Project delete failed.')
+        throw new Error(result.error ?? copy.projects.deleteSaveError)
       }
 
       await navigate({ to: '/dashboard/projects' })
     } catch (caught) {
       setError(
-        caught instanceof Error ? caught.message : 'Project delete failed.',
+        caught instanceof Error
+          ? caught.message
+          : copy.projects.deleteSaveError,
       )
     } finally {
       setIsPending(false)
@@ -125,33 +132,41 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
   return (
     <form onSubmit={handleSubmit} className="surface-card grid gap-5 p-5">
       <div className="grid gap-5 md:grid-cols-2">
-        <Field label="Title" name="title" defaultValue={project?.title ?? ''} />
-        <Field label="Slug" name="slug" defaultValue={project?.slug ?? ''} />
+        <Field
+          label={copy.form.title}
+          name="title"
+          defaultValue={project?.title ?? ''}
+        />
+        <Field
+          label={copy.form.slug}
+          name="slug"
+          defaultValue={project?.slug ?? ''}
+        />
       </div>
       <Field
-        label="Summary"
+        label={copy.form.summary}
         name="summary"
         defaultValue={project?.summary ?? ''}
       />
       <Field
-        label="Description"
+        label={copy.form.description}
         name="description"
         defaultValue={project?.description ?? ''}
       />
       <div className="grid gap-5 md:grid-cols-3">
         <Field
-          label="Category"
+          label={copy.form.category}
           name="category"
           defaultValue={project?.category ?? 'Project'}
         />
         <Select
-          label="Status"
+          label={copy.form.status}
           name="status"
           defaultValue={project?.status ?? 'draft'}
           options={statusOptions}
         />
         <Select
-          label="Visibility"
+          label={copy.form.visibility}
           name="visibility"
           defaultValue={project?.visibility ?? 'public'}
           options={visibilityOptions}
@@ -159,22 +174,22 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
       </div>
       <div className="grid gap-5 md:grid-cols-2">
         <Field
-          label="Repository URL"
+          label={copy.form.repositoryUrl}
           name="repoUrl"
           defaultValue={project?.repoUrl ?? ''}
         />
         <Field
-          label="Demo URL"
+          label={copy.form.demoUrl}
           name="demoUrl"
           defaultValue={project?.demoUrl ?? ''}
         />
         <Field
-          label="Case study URL"
+          label={copy.form.caseStudyUrl}
           name="caseStudyUrl"
           defaultValue={project?.caseStudyUrl ?? ''}
         />
         <Field
-          label="Cover image URL"
+          label={copy.form.coverImageUrl}
           name="coverImage"
           defaultValue={project?.coverImage ?? ''}
         />
@@ -186,14 +201,14 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
           onChange={(event) => setFeatured(event.target.checked)}
           className="size-4 accent-[var(--brand-orange)]"
         />
-        Featured project
+        {copy.form.featured}
       </label>
       <div>
         <label
           htmlFor="content"
           className="text-sm font-bold text-[var(--brand-ink)]"
         >
-          Content
+          {copy.form.content}
         </label>
         <textarea
           id="content"
@@ -223,10 +238,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         >
           <Save aria-hidden="true" className="size-4" />
           {isPending
-            ? 'Saving...'
+            ? copy.common.saving
             : mode === 'create'
-              ? 'Create draft'
-              : 'Save changes'}
+              ? copy.common.createDraft
+              : copy.common.saveChanges}
         </button>
         {mode === 'edit' ? (
           <button
@@ -236,14 +251,14 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
             className="inline-flex min-h-10 items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 text-sm font-bold text-red-700 transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 dark:text-red-200"
           >
             <Trash2 aria-hidden="true" className="size-4" />
-            Delete
+            {copy.common.delete}
           </button>
         ) : null}
         <Link
           to="/dashboard/projects"
           className="inline-flex min-h-10 items-center rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] no-underline transition hover:border-[var(--brand-orange)]"
         >
-          Back
+          {copy.common.back}
         </Link>
       </div>
     </form>

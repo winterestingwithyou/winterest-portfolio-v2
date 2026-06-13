@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import { getDashboardCopy } from '#/features/dashboard/copy'
 import { ContentList } from '#/features/dashboard/ContentList'
 
 export const Route = createFileRoute('/dashboard/writing/')({
@@ -8,10 +9,12 @@ export const Route = createFileRoute('/dashboard/writing/')({
 })
 
 function DashboardWriting() {
+  const copy = getDashboardCopy()
+
   return (
     <DashboardShell
-      title="Writing"
-      description="D1-backed articles, devlogs, and technical notes with draft and published states."
+      title={copy.writing.title}
+      description={copy.writing.description}
     >
       <ContentList kind="writing" />
     </DashboardShell>

@@ -3,6 +3,7 @@ import { RefreshCw } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import { getDashboardCopy } from '#/features/dashboard/copy'
 import { ContentEditorForm } from '#/features/dashboard/ContentEditorForm'
 
 type ContentRecord = {
@@ -24,6 +25,7 @@ export const Route = createFileRoute('/dashboard/lab/$id')({
 })
 
 function DashboardLabEdit() {
+  const copy = getDashboardCopy()
   const { id } = Route.useParams()
   const [entry, setEntry] = useState<ContentRecord | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -41,18 +43,16 @@ function DashboardLabEdit() {
       } = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.error ?? 'Failed to load lab entry.')
+        throw new Error(result.error ?? copy.lab.notFound)
       }
 
       setEntry(result.data ?? null)
     } catch (caught) {
-      setError(
-        caught instanceof Error ? caught.message : 'Failed to load lab entry.',
-      )
+      setError(caught instanceof Error ? caught.message : copy.lab.notFound)
     } finally {
       setIsLoading(false)
     }
-  }, [id])
+  }, [copy.lab.notFound, id])
 
   useEffect(() => {
     void loadEntry()
@@ -60,8 +60,8 @@ function DashboardLabEdit() {
 
   return (
     <DashboardShell
-      title={entry?.title ?? 'Edit Lab Entry'}
-      description="Edit a D1-backed lab record."
+      title={entry?.title ?? copy.lab.editTitle}
+      description={copy.lab.editDescription}
       actions={
         <button
           type="button"
@@ -69,13 +69,13 @@ function DashboardLabEdit() {
           className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] transition hover:-translate-y-0.5 hover:border-[var(--brand-orange)]"
         >
           <RefreshCw aria-hidden="true" className="size-4" />
-          Refresh
+          {copy.common.refresh}
         </button>
       }
     >
       {isLoading ? (
         <div className="surface-card p-6 text-sm font-semibold text-[var(--brand-muted)]">
-          Loading lab entry...
+          {copy.lab.loadingEntry}
         </div>
       ) : error ? (
         <div className="surface-card p-6 text-sm font-semibold text-red-700 dark:text-red-200">

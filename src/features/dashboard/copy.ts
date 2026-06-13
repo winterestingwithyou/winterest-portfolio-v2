@@ -1,0 +1,286 @@
+import { getLocale } from '#/paraglide/runtime'
+
+export const dashboardCopy = {
+  en: {
+    shell: {
+      eyebrow: 'Winterest CMS',
+      backToSite: 'Back to site',
+      nav: {
+        overview: 'Overview',
+        projects: 'Projects',
+        writing: 'Writing',
+        lab: 'Lab',
+        media: 'Media',
+        users: 'Users',
+        settings: 'Settings',
+      },
+      soon: 'Soon',
+    },
+    overview: {
+      title: 'Overview',
+      description:
+        'A private workspace for keeping Winterest content clear, current, and ready to publish.',
+      action: 'Manage projects',
+      metrics: {
+        total: 'Content items',
+        featured: 'Featured work',
+        drafts: 'Draft queue',
+        published: 'Public-ready',
+      },
+      chartTitle: 'Content mix',
+      chartDescription:
+        'A quick read of how the portfolio is balanced across projects, writing, and experiments.',
+      activityTitle: 'Recent focus',
+      activityDescription:
+        'Use this view to spot what needs writing, polishing, or publishing next.',
+      quickTitle: 'Quick actions',
+      quickDescription:
+        'Jump into the places that keep the public portfolio moving.',
+      projects: 'Review projects',
+      writing: 'Draft writing',
+      lab: 'Capture lab notes',
+      media: 'Organize media',
+      states: {
+        published: 'Published',
+        draft: 'Draft',
+        building: 'In progress',
+      },
+    },
+    common: {
+      refresh: 'Refresh',
+      actions: 'Actions',
+      status: 'Status',
+      visibility: 'Visibility',
+      category: 'Category',
+      tags: 'Tags',
+      entry: 'Entry',
+      edit: 'Edit',
+      delete: 'Delete',
+      back: 'Back',
+      loading: 'Loading content...',
+      saveError: 'Save failed.',
+      deleteError: 'Delete failed.',
+      loadError: 'Failed to load content.',
+      emptyTitle: 'No entries yet.',
+      draftCreated: 'Draft created.',
+      changesSaved: 'Changes saved.',
+      saving: 'Saving...',
+      createDraft: 'Create draft',
+      saveChanges: 'Save changes',
+    },
+    projects: {
+      title: 'Projects',
+      description:
+        'Manage the work shown in the portfolio: case studies, highlights, and publishing status.',
+      new: 'New project',
+      project: 'Project',
+      loading: 'Loading projects...',
+      emptyTitle: 'No projects yet.',
+      emptyDescription:
+        'Create the first draft when you are ready to shape a new portfolio entry.',
+      loadError: 'Failed to load projects.',
+      deleteError: 'Failed to delete project.',
+      saveError: 'Project save failed.',
+      deleteSaveError: 'Project delete failed.',
+      newTitle: 'New project',
+      newDescription:
+        'Create a draft project and refine it before it appears on the public site.',
+      editTitle: 'Edit project',
+      editDescription:
+        'Update the story, links, and publishing state for this portfolio entry.',
+      loadingEntry: 'Loading project...',
+      notFound: 'Project not found.',
+    },
+    writing: {
+      title: 'Writing',
+      description:
+        'Manage articles, devlogs, notes, and longer thoughts before they go public.',
+      new: 'New article',
+      newTitle: 'New writing',
+      newDescription: 'Start a draft for notes, devlogs, or essays.',
+      editTitle: 'Edit writing',
+      editDescription: 'Update this writing draft and its publishing state.',
+      loadingEntry: 'Loading writing...',
+      notFound: 'Writing not found.',
+    },
+    lab: {
+      title: 'Lab',
+      description:
+        'Manage experiments, small demos, rough notes, and ideas that may become larger work.',
+      new: 'New lab entry',
+      newTitle: 'New lab entry',
+      newDescription: 'Capture an experiment while the idea is still fresh.',
+      editTitle: 'Edit lab entry',
+      editDescription: 'Update this experiment and its publishing state.',
+      loadingEntry: 'Loading lab entry...',
+      notFound: 'Lab entry not found.',
+    },
+    media: {
+      title: 'Media',
+      description:
+        'Track images and assets used across the portfolio while upload handling is being prepared.',
+      emptyTitle: 'No media items yet.',
+      emptyDescription:
+        'Media metadata will live here when uploads and cover images are ready.',
+    },
+    form: {
+      title: 'Title',
+      slug: 'Slug',
+      summary: 'Summary',
+      description: 'Description',
+      category: 'Category',
+      status: 'Status',
+      visibility: 'Visibility',
+      repositoryUrl: 'Repository URL',
+      demoUrl: 'Demo URL',
+      caseStudyUrl: 'Case study URL',
+      coverImageUrl: 'Cover image URL',
+      featured: 'Featured project',
+      content: 'Content',
+      tags: 'Tags',
+    },
+  },
+  id: {
+    shell: {
+      eyebrow: 'CMS Winterest',
+      backToSite: 'Kembali ke situs',
+      nav: {
+        overview: 'Ringkasan',
+        projects: 'Project',
+        writing: 'Tulisan',
+        lab: 'Lab',
+        media: 'Media',
+        users: 'Pengguna',
+        settings: 'Pengaturan',
+      },
+      soon: 'Nanti',
+    },
+    overview: {
+      title: 'Ringkasan',
+      description:
+        'Workspace privat untuk menjaga konten Winterest tetap jelas, terbaru, dan siap dipublish.',
+      action: 'Kelola project',
+      metrics: {
+        total: 'Total konten',
+        featured: 'Karya pilihan',
+        drafts: 'Antrian draft',
+        published: 'Siap publik',
+      },
+      chartTitle: 'Komposisi konten',
+      chartDescription:
+        'Gambaran cepat tentang keseimbangan portfolio antara project, tulisan, dan eksperimen.',
+      activityTitle: 'Fokus terbaru',
+      activityDescription:
+        'Gunakan tampilan ini untuk melihat apa yang perlu ditulis, dipoles, atau dipublish berikutnya.',
+      quickTitle: 'Aksi cepat',
+      quickDescription:
+        'Masuk ke area yang menjaga portfolio publik tetap bergerak.',
+      projects: 'Review project',
+      writing: 'Tulis draft',
+      lab: 'Catat lab',
+      media: 'Rapikan media',
+      states: {
+        published: 'Published',
+        draft: 'Draft',
+        building: 'Dikerjakan',
+      },
+    },
+    common: {
+      refresh: 'Refresh',
+      actions: 'Aksi',
+      status: 'Status',
+      visibility: 'Visibilitas',
+      category: 'Kategori',
+      tags: 'Tag',
+      entry: 'Entry',
+      edit: 'Edit',
+      delete: 'Hapus',
+      back: 'Kembali',
+      loading: 'Memuat konten...',
+      saveError: 'Gagal menyimpan.',
+      deleteError: 'Gagal menghapus.',
+      loadError: 'Gagal memuat konten.',
+      emptyTitle: 'Belum ada entry.',
+      draftCreated: 'Draft dibuat.',
+      changesSaved: 'Perubahan disimpan.',
+      saving: 'Menyimpan...',
+      createDraft: 'Buat draft',
+      saveChanges: 'Simpan perubahan',
+    },
+    projects: {
+      title: 'Project',
+      description:
+        'Kelola karya yang tampil di portfolio: case study, highlight, dan status publish.',
+      new: 'Project baru',
+      project: 'Project',
+      loading: 'Memuat project...',
+      emptyTitle: 'Belum ada project.',
+      emptyDescription:
+        'Buat draft pertama saat kamu siap membentuk entry portfolio baru.',
+      loadError: 'Gagal memuat project.',
+      deleteError: 'Gagal menghapus project.',
+      saveError: 'Gagal menyimpan project.',
+      deleteSaveError: 'Gagal menghapus project.',
+      newTitle: 'Project baru',
+      newDescription:
+        'Buat draft project dan poles sebelum tampil di situs publik.',
+      editTitle: 'Edit project',
+      editDescription:
+        'Perbarui cerita, link, dan status publish untuk entry portfolio ini.',
+      loadingEntry: 'Memuat project...',
+      notFound: 'Project tidak ditemukan.',
+    },
+    writing: {
+      title: 'Tulisan',
+      description:
+        'Kelola artikel, devlog, catatan, dan pemikiran panjang sebelum tampil publik.',
+      new: 'Tulisan baru',
+      newTitle: 'Tulisan baru',
+      newDescription: 'Mulai draft untuk catatan, devlog, atau esai.',
+      editTitle: 'Edit tulisan',
+      editDescription: 'Perbarui draft tulisan dan status publish-nya.',
+      loadingEntry: 'Memuat tulisan...',
+      notFound: 'Tulisan tidak ditemukan.',
+    },
+    lab: {
+      title: 'Lab',
+      description:
+        'Kelola eksperimen, demo kecil, catatan kasar, dan ide yang mungkin tumbuh menjadi karya lebih besar.',
+      new: 'Entry lab baru',
+      newTitle: 'Entry lab baru',
+      newDescription: 'Catat eksperimen saat idenya masih segar.',
+      editTitle: 'Edit entry lab',
+      editDescription: 'Perbarui eksperimen dan status publish-nya.',
+      loadingEntry: 'Memuat entry lab...',
+      notFound: 'Entry lab tidak ditemukan.',
+    },
+    media: {
+      title: 'Media',
+      description:
+        'Pantau gambar dan aset yang dipakai di portfolio sambil upload handling disiapkan.',
+      emptyTitle: 'Belum ada media.',
+      emptyDescription:
+        'Metadata media akan tampil di sini saat upload dan cover image sudah siap.',
+    },
+    form: {
+      title: 'Judul',
+      slug: 'Slug',
+      summary: 'Ringkasan',
+      description: 'Deskripsi',
+      category: 'Kategori',
+      status: 'Status',
+      visibility: 'Visibilitas',
+      repositoryUrl: 'URL repository',
+      demoUrl: 'URL demo',
+      caseStudyUrl: 'URL case study',
+      coverImageUrl: 'URL cover image',
+      featured: 'Project pilihan',
+      content: 'Konten',
+      tags: 'Tag',
+    },
+  },
+} as const
+
+export function getDashboardCopy() {
+  return dashboardCopy[getLocale() === 'id' ? 'id' : 'en']
+}

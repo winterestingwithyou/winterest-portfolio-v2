@@ -3,6 +3,8 @@ import { Save, Trash2 } from 'lucide-react'
 import type { FormEvent } from 'react'
 import { useMemo, useState } from 'react'
 
+import { getDashboardCopy } from './copy'
+
 type ContentKind = 'writing' | 'lab'
 
 type ContentFormInitial = {
@@ -33,6 +35,7 @@ export function ContentEditorForm({
   mode,
   entry,
 }: ContentEditorFormProps) {
+  const copy = getDashboardCopy()
   const navigate = useNavigate()
   const [isPending, setIsPending] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
@@ -91,15 +94,15 @@ export function ContentEditorForm({
       const result: { error?: string } = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.error ?? 'Content save failed.')
+        throw new Error(result.error ?? copy.common.saveError)
       }
 
-      setMessage(mode === 'create' ? 'Draft created.' : 'Changes saved.')
+      setMessage(
+        mode === 'create' ? copy.common.draftCreated : copy.common.changesSaved,
+      )
       await navigateBack()
     } catch (caught) {
-      setError(
-        caught instanceof Error ? caught.message : 'Content save failed.',
-      )
+      setError(caught instanceof Error ? caught.message : copy.common.saveError)
     } finally {
       setIsPending(false)
     }
@@ -119,13 +122,13 @@ export function ContentEditorForm({
       const result: { error?: string } = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.error ?? 'Content delete failed.')
+        throw new Error(result.error ?? copy.common.deleteError)
       }
 
       await navigateBack()
     } catch (caught) {
       setError(
-        caught instanceof Error ? caught.message : 'Content delete failed.',
+        caught instanceof Error ? caught.message : copy.common.deleteError,
       )
     } finally {
       setIsPending(false)
@@ -135,23 +138,31 @@ export function ContentEditorForm({
   return (
     <form onSubmit={handleSubmit} className="surface-card grid gap-5 p-5">
       <div className="grid gap-5 md:grid-cols-2">
-        <Field label="Title" name="title" defaultValue={entry?.title ?? ''} />
-        <Field label="Slug" name="slug" defaultValue={entry?.slug ?? ''} />
+        <Field
+          label={copy.form.title}
+          name="title"
+          defaultValue={entry?.title ?? ''}
+        />
+        <Field
+          label={copy.form.slug}
+          name="slug"
+          defaultValue={entry?.slug ?? ''}
+        />
       </div>
       <Field
-        label="Summary"
+        label={copy.form.summary}
         name="summary"
         defaultValue={entry?.summary ?? ''}
       />
       <div className="grid gap-5 md:grid-cols-2">
         <Select
-          label="Status"
+          label={copy.form.status}
           name="status"
           defaultValue={entry?.status ?? 'draft'}
           options={statusOptions}
         />
         <Select
-          label="Visibility"
+          label={copy.form.visibility}
           name="visibility"
           defaultValue={entry?.visibility ?? 'public'}
           options={visibilityOptions}
@@ -159,24 +170,24 @@ export function ContentEditorForm({
       </div>
       <div className="grid gap-5 md:grid-cols-2">
         <Field
-          label="Cover image URL"
+          label={copy.form.coverImageUrl}
           name="coverImage"
           defaultValue={entry?.coverImage ?? ''}
         />
         <Field
-          label="Tags"
+          label={copy.form.tags}
           name="tags"
           defaultValue={(entry?.tags ?? []).join(', ')}
         />
         {kind === 'lab' ? (
           <>
             <Field
-              label="Demo URL"
+              label={copy.form.demoUrl}
               name="demoUrl"
               defaultValue={entry?.demoUrl ?? ''}
             />
             <Field
-              label="Repository URL"
+              label={copy.form.repositoryUrl}
               name="repoUrl"
               defaultValue={entry?.repoUrl ?? ''}
             />
@@ -188,7 +199,7 @@ export function ContentEditorForm({
           htmlFor="content"
           className="text-sm font-bold text-[var(--brand-ink)]"
         >
-          Content
+          {copy.form.content}
         </label>
         <textarea
           id="content"
@@ -218,10 +229,10 @@ export function ContentEditorForm({
         >
           <Save aria-hidden="true" className="size-4" />
           {isPending
-            ? 'Saving...'
+            ? copy.common.saving
             : mode === 'create'
-              ? 'Create draft'
-              : 'Save changes'}
+              ? copy.common.createDraft
+              : copy.common.saveChanges}
         </button>
         {mode === 'edit' ? (
           <button
@@ -231,7 +242,7 @@ export function ContentEditorForm({
             className="inline-flex min-h-10 items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-4 text-sm font-bold text-red-700 transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60 dark:text-red-200"
           >
             <Trash2 aria-hidden="true" className="size-4" />
-            Delete
+            {copy.common.delete}
           </button>
         ) : null}
         {kind === 'writing' ? (
@@ -239,14 +250,14 @@ export function ContentEditorForm({
             to="/dashboard/writing"
             className="inline-flex min-h-10 items-center rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] no-underline transition hover:border-[var(--brand-orange)]"
           >
-            Back
+            {copy.common.back}
           </Link>
         ) : (
           <Link
             to="/dashboard/lab"
             className="inline-flex min-h-10 items-center rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] no-underline transition hover:border-[var(--brand-orange)]"
           >
-            Back
+            {copy.common.back}
           </Link>
         )}
       </div>

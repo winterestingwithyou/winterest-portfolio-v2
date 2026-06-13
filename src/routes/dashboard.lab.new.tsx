@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import { getDashboardCopy } from '#/features/dashboard/copy'
 import { ContentEditorForm } from '#/features/dashboard/ContentEditorForm'
 
 export const Route = createFileRoute('/dashboard/lab/new')({
@@ -8,10 +9,12 @@ export const Route = createFileRoute('/dashboard/lab/new')({
 })
 
 function DashboardLabNew() {
+  const copy = getDashboardCopy()
+
   return (
     <DashboardShell
-      title="New Lab Entry"
-      description="Create a lab draft for experiments, notes, and mini demos."
+      title={copy.lab.newTitle}
+      description={copy.lab.newDescription}
     >
       <ContentEditorForm kind="lab" mode="create" />
     </DashboardShell>

@@ -11,17 +11,7 @@ import {
 } from 'lucide-react'
 import type { ReactNode } from 'react'
 
-import { siteProfile } from '#/features/portfolio/data'
-
-const dashboardNav = [
-  { to: '/dashboard', label: 'Overview', icon: LayoutDashboard },
-  { to: '/dashboard/projects', label: 'Projects', icon: FolderKanban },
-  { to: '/dashboard/writing', label: 'Writing', icon: PenLine },
-  { to: '/dashboard/lab', label: 'Lab', icon: TestTube2 },
-  { to: '/dashboard/media', label: 'Media', icon: Image },
-  { to: '/dashboard/users', label: 'Users', icon: Users },
-  { to: '/dashboard/settings', label: 'Settings', icon: Settings },
-] as const
+import { getDashboardCopy } from '#/features/dashboard/copy'
 
 type DashboardShellProps = {
   title: string
@@ -36,8 +26,31 @@ export function DashboardShell({
   actions,
   children,
 }: DashboardShellProps) {
+  const copy = getDashboardCopy()
+  const dashboardNav = [
+    {
+      to: '/dashboard',
+      label: copy.shell.nav.overview,
+      icon: LayoutDashboard,
+    },
+    {
+      to: '/dashboard/projects',
+      label: copy.shell.nav.projects,
+      icon: FolderKanban,
+    },
+    { to: '/dashboard/writing', label: copy.shell.nav.writing, icon: PenLine },
+    { to: '/dashboard/lab', label: copy.shell.nav.lab, icon: TestTube2 },
+    { to: '/dashboard/media', label: copy.shell.nav.media, icon: Image },
+    { to: '/dashboard/users', label: copy.shell.nav.users, icon: Users },
+    {
+      to: '/dashboard/settings',
+      label: copy.shell.nav.settings,
+      icon: Settings,
+    },
+  ] as const
+
   return (
-    <main className="px-4 py-6">
+    <main className="min-h-screen bg-[var(--brand-bg)] px-4 py-6">
       <div className="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[16rem_1fr]">
         <aside className="surface-card h-fit p-3 lg:sticky lg:top-24">
           <Link
@@ -45,7 +58,7 @@ export function DashboardShell({
             className="mb-3 flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-bold text-[var(--brand-ink)] no-underline transition hover:bg-[var(--brand-orange-soft)]"
           >
             <Home aria-hidden="true" className="size-4" />
-            {siteProfile.domain}
+            {copy.shell.backToSite}
           </Link>
           <nav className="grid gap-1">
             {dashboardNav.map((item) => {
@@ -62,6 +75,9 @@ export function DashboardShell({
                   >
                     <Icon aria-hidden="true" className="size-4" />
                     {item.label}
+                    <span className="ml-auto text-[0.65rem] uppercase tracking-wide">
+                      {copy.shell.soon}
+                    </span>
                   </span>
                 )
               }
@@ -87,7 +103,7 @@ export function DashboardShell({
         <section className="min-w-0">
           <header className="mb-6 flex flex-col gap-4 rounded-xl border border-[var(--brand-line)] bg-[var(--surface-strong)] p-5 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="eyebrow mb-2">CMS Dashboard</p>
+              <p className="eyebrow mb-2">{copy.shell.eyebrow}</p>
               <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-ink)]">
                 {title}
               </h1>

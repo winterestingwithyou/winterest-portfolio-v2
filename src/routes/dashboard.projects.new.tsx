@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import { getDashboardCopy } from '#/features/dashboard/copy'
 import { ProjectEditorForm } from '#/features/dashboard/ProjectEditorForm'
 
 export const Route = createFileRoute('/dashboard/projects/new')({
@@ -8,10 +9,12 @@ export const Route = createFileRoute('/dashboard/projects/new')({
 })
 
 function DashboardProjectNew() {
+  const copy = getDashboardCopy()
+
   return (
     <DashboardShell
-      title="New Project"
-      description="Create flow shell for the D1-backed project CMS."
+      title={copy.projects.newTitle}
+      description={copy.projects.newDescription}
     >
       <ProjectEditorForm mode="create" />
     </DashboardShell>

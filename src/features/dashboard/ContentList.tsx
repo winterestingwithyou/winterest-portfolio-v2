@@ -2,6 +2,8 @@ import { Link } from '@tanstack/react-router'
 import { Edit3, Plus, RefreshCw, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
+import { getDashboardCopy } from './copy'
+
 type ContentKind = 'writing' | 'lab'
 
 type ContentRow = {
@@ -18,6 +20,7 @@ type ContentListProps = {
 }
 
 export function ContentList({ kind }: ContentListProps) {
+  const copy = getDashboardCopy()
   const [entries, setEntries] = useState<ContentRow[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -37,18 +40,16 @@ export function ContentList({ kind }: ContentListProps) {
       } = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.error ?? 'Failed to load content.')
+        throw new Error(result.error ?? copy.common.loadError)
       }
 
       setEntries(result.data ?? [])
     } catch (caught) {
-      setError(
-        caught instanceof Error ? caught.message : 'Failed to load content.',
-      )
+      setError(caught instanceof Error ? caught.message : copy.common.loadError)
     } finally {
       setIsLoading(false)
     }
-  }, [endpoint])
+  }, [copy.common.loadError, endpoint])
 
   const deleteEntry = useCallback(
     async (entry: ContentRow) => {
@@ -61,19 +62,17 @@ export function ContentList({ kind }: ContentListProps) {
         const result: { error?: string } = await response.json()
 
         if (!response.ok) {
-          throw new Error(result.error ?? 'Failed to delete content.')
+          throw new Error(result.error ?? copy.common.deleteError)
         }
 
         setEntries((current) => current.filter((item) => item.id !== entry.id))
       } catch (caught) {
         setError(
-          caught instanceof Error
-            ? caught.message
-            : 'Failed to delete content.',
+          caught instanceof Error ? caught.message : copy.common.deleteError,
         )
       }
     },
-    [endpoint],
+    [copy.common.deleteError, endpoint],
   )
 
   useEffect(() => {
@@ -89,7 +88,7 @@ export function ContentList({ kind }: ContentListProps) {
           className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] transition hover:-translate-y-0.5 hover:border-[var(--brand-orange)]"
         >
           <RefreshCw aria-hidden="true" className="size-4" />
-          Refresh
+          {copy.common.refresh}
         </button>
         {kind === 'writing' ? (
           <Link
@@ -97,7 +96,7 @@ export function ContentList({ kind }: ContentListProps) {
             className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[var(--brand-orange)] px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
           >
             <Plus aria-hidden="true" className="size-4" />
-            New article
+            {copy.writing.new}
           </Link>
         ) : (
           <Link
@@ -105,7 +104,7 @@ export function ContentList({ kind }: ContentListProps) {
             className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[var(--brand-orange)] px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
           >
             <Plus aria-hidden="true" className="size-4" />
-            New lab entry
+            {copy.lab.new}
           </Link>
         )}
       </div>
@@ -119,16 +118,17 @@ export function ContentList({ kind }: ContentListProps) {
       <section className="surface-card overflow-hidden">
         {isLoading ? (
           <div className="p-6 text-sm font-semibold text-[var(--brand-muted)]">
-            Loading content...
+            {copy.common.loading}
           </div>
         ) : entries.length === 0 ? (
           <div className="p-6">
             <h2 className="text-xl font-semibold text-[var(--brand-ink)]">
-              No entries yet.
+              {copy.common.emptyTitle}
             </h2>
             <p className="mt-2 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
-              Apply the generated D1 migration, then create the first draft from
-              this dashboard.
+              {kind === 'writing'
+                ? copy.writing.newDescription
+                : copy.lab.newDescription}
             </p>
           </div>
         ) : (
@@ -137,16 +137,16 @@ export function ContentList({ kind }: ContentListProps) {
               <thead className="border-b border-[var(--brand-line)] bg-[var(--brand-orange-soft)] text-[var(--brand-orange-deep)]">
                 <tr>
                   <th scope="col" className="px-5 py-3 font-bold">
-                    Entry
+                    {copy.common.entry}
                   </th>
                   <th scope="col" className="px-5 py-3 font-bold">
-                    Status
+                    {copy.common.status}
                   </th>
                   <th scope="col" className="px-5 py-3 font-bold">
-                    Tags
+                    {copy.common.tags}
                   </th>
                   <th scope="col" className="px-5 py-3 text-right font-bold">
-                    Actions
+                    {copy.common.actions}
                   </th>
                 </tr>
               </thead>
@@ -189,7 +189,9 @@ export function ContentList({ kind }: ContentListProps) {
                             params={{ id: entry.id }}
                             className="inline-grid size-9 place-items-center rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] text-[var(--brand-ink)] transition hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange-deep)]"
                           >
-                            <span className="sr-only">Edit {entry.title}</span>
+                            <span className="sr-only">
+                              {copy.common.edit} {entry.title}
+                            </span>
                             <Edit3 aria-hidden="true" className="size-4" />
                           </Link>
                         ) : (
@@ -198,7 +200,9 @@ export function ContentList({ kind }: ContentListProps) {
                             params={{ id: entry.id }}
                             className="inline-grid size-9 place-items-center rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] text-[var(--brand-ink)] transition hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange-deep)]"
                           >
-                            <span className="sr-only">Edit {entry.title}</span>
+                            <span className="sr-only">
+                              {copy.common.edit} {entry.title}
+                            </span>
                             <Edit3 aria-hidden="true" className="size-4" />
                           </Link>
                         )}
@@ -207,7 +211,9 @@ export function ContentList({ kind }: ContentListProps) {
                           onClick={() => void deleteEntry(entry)}
                           className="inline-grid size-9 place-items-center rounded-full border border-red-500/30 bg-red-500/10 text-red-700 transition hover:-translate-y-0.5 dark:text-red-200"
                         >
-                          <span className="sr-only">Delete {entry.title}</span>
+                          <span className="sr-only">
+                            {copy.common.delete} {entry.title}
+                          </span>
                           <Trash2 aria-hidden="true" className="size-4" />
                         </button>
                       </div>
