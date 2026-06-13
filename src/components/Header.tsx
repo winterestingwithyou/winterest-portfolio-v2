@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import { Cloud, Github, LayoutDashboard, Mail, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
@@ -6,18 +6,25 @@ import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
 import { authClient } from '#/lib/auth-client'
 
 import ParaglideLocaleSwitcher from './LocaleSwitcher.tsx'
+import GooeyNav from './react-bits/gooey-nav/GooeyNav'
 import ThemeToggle from './ThemeToggle'
 
 export default function Header() {
   const copy = getPublicCopy()
+  const pathname = useRouterState({
+    select: (state) => state.location.pathname,
+  })
   const navItems = [
-    { to: '/about', label: copy.nav.about },
-    { to: '/projects', label: copy.nav.projects },
-    { to: '/lab', label: copy.nav.lab },
-    { to: '/writing', label: copy.nav.writing },
-    { to: '/stack', label: copy.nav.stack },
-    { to: '/contact', label: copy.nav.contact },
+    { href: '/about', label: copy.nav.about },
+    { href: '/projects', label: copy.nav.projects },
+    { href: '/lab', label: copy.nav.lab },
+    { href: '/writing', label: copy.nav.writing },
+    { href: '/stack', label: copy.nav.stack },
+    { href: '/contact', label: copy.nav.contact },
   ] as const
+  const activeNavIndex = navItems.findIndex(
+    (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
+  )
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--brand-line)] bg-[var(--header-bg)] px-4 backdrop-blur-xl">
@@ -35,17 +42,16 @@ export default function Header() {
           <span className="brand-name">Winterest</span>
         </Link>
 
-        <div className="order-3 flex w-full flex-wrap items-center gap-x-2 gap-y-2 pb-1 text-sm font-semibold sm:order-none sm:w-auto sm:flex-nowrap sm:pb-0">
-          {navItems.map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              className="nav-link"
-              activeProps={{ className: 'nav-link is-active' }}
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div className="order-3 flex w-full items-center overflow-x-auto pb-1 sm:order-none sm:w-auto sm:overflow-visible sm:pb-0">
+          <GooeyNav
+            items={[...navItems]}
+            initialActiveIndex={activeNavIndex}
+            particleCount={20}
+            particleDistances={[34, 8]}
+            particleR={200}
+            timeVariance={300}
+            colors={[1, 1, 1, 2, 1, 2]}
+          />
         </div>
 
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
