@@ -13,12 +13,9 @@ import {
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { HeroVisual } from '#/components/visual/HeroVisual'
 import {
-  featuredProjects,
-  labEntries,
-  portfolioStats,
-  principles,
+  getPortfolioContent,
+  getPublicCopy,
   siteProfile,
-  stackGroups,
 } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/')({
@@ -26,6 +23,14 @@ export const Route = createFileRoute('/')({
 })
 
 function HomePage() {
+  const copy = getPublicCopy()
+  const {
+    featuredProjects,
+    labEntries,
+    portfolioStats,
+    principles,
+    stackGroups,
+  } = getPortfolioContent()
   const highlightedProjects = featuredProjects.filter(
     (project) => project.featured,
   )
@@ -35,13 +40,12 @@ function HomePage() {
       <section className="px-4 pb-16 pt-14 sm:pb-24 sm:pt-20">
         <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
-            <p className="eyebrow mb-5">Winterest / fullstack web developer</p>
+            <p className="eyebrow mb-5">{copy.home.eyebrow}</p>
             <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-tight text-[var(--brand-ink)] sm:text-6xl lg:text-7xl">
-              Fullstack web work, project notes, and experiments from Indonesia.
+              {copy.home.title}
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--brand-muted)]">
-              {siteProfile.intro} This is my personal space for showing what I
-              build, what I am learning, and how I think through web systems.
+              {copy.home.intro}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -49,7 +53,7 @@ function HomePage() {
                 to="/projects"
                 className="inline-flex min-h-11 items-center gap-2 rounded-full bg-[var(--brand-orange)] px-5 text-sm font-bold text-white no-underline shadow-[0_18px_48px_var(--brand-glow)] transition hover:-translate-y-0.5"
               >
-                View projects
+                {copy.home.viewProjects}
                 <ArrowRight aria-hidden="true" className="size-4" />
               </Link>
               <a
@@ -84,9 +88,9 @@ function HomePage() {
       <section className="px-4 py-14">
         <Container>
           <SectionHeader
-            eyebrow="Featured projects"
-            title="Selected work, written as small case studies."
-            description="Projects here focus on the problem, the decisions, the stack, and what I want to improve next."
+            eyebrow={copy.home.featuredEyebrow}
+            title={copy.home.featuredTitle}
+            description={copy.home.featuredDescription}
           />
           <div className="grid gap-5 lg:grid-cols-2">
             {highlightedProjects.map((project) => (
@@ -120,7 +124,7 @@ function HomePage() {
                   params={{ slug: project.slug }}
                   className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-orange-deep)] no-underline"
                 >
-                  Read case study
+                  {copy.home.readCaseStudy}
                   <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </article>
@@ -132,9 +136,9 @@ function HomePage() {
       <section className="px-4 py-14">
         <Container>
           <SectionHeader
-            eyebrow="Developer lab"
-            title="A place for experiments that are too useful to hide."
-            description="The lab collects prototypes, technical notes, and small ideas while they are still being shaped."
+            eyebrow={copy.home.labEyebrow}
+            title={copy.home.labTitle}
+            description={copy.home.labDescription}
           />
           <div className="grid gap-4 md:grid-cols-3">
             {labEntries.map((entry) => (
@@ -160,8 +164,8 @@ function HomePage() {
       <section className="px-4 py-14">
         <Container>
           <SectionHeader
-            eyebrow="Principles"
-            title="How I like to approach web work."
+            eyebrow={copy.home.principlesEyebrow}
+            title={copy.home.principlesTitle}
           />
           <div className="grid gap-5 md:grid-cols-3">
             {principles.map((principle, index) => {
@@ -189,8 +193,8 @@ function HomePage() {
         <Container className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
           <SectionHeader
             eyebrow="Stack"
-            title="Tools I reach for when the project needs to stay fast and maintainable."
-            description="The stack leans modern, typed, and edge-friendly, but the goal is still practical delivery over tool collecting."
+            title={copy.home.stackTitle}
+            description={copy.home.stackDescription}
           />
           <div className="grid gap-4 sm:grid-cols-2">
             {stackGroups.map((group) => (
@@ -226,8 +230,7 @@ function HomePage() {
                 bun run build
               </p>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">
-                Open to practical web systems, thoughtful interfaces, and useful
-                experiments.
+                {copy.home.ctaTitle}
               </h2>
             </div>
             <a
@@ -235,7 +238,7 @@ function HomePage() {
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-bold text-[var(--brand-dark)] no-underline transition hover:-translate-y-0.5"
             >
               <Mail aria-hidden="true" className="size-4" />
-              Contact
+              {copy.home.contact}
             </a>
           </div>
         </Container>

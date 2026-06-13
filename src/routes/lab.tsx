@@ -4,7 +4,7 @@ import { FlaskConical } from 'lucide-react'
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { SignalPreview } from '#/components/visual/SignalPreview'
 import { getPublishedLabEntries } from '#/features/content/public-loaders'
-import { labEntries } from '#/features/portfolio/data'
+import { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/lab')({
   loader: () => getPublishedLabEntries(),
@@ -12,6 +12,8 @@ export const Route = createFileRoute('/lab')({
 })
 
 function LabPage() {
+  const copy = getPublicCopy()
+  const { labEntries } = getPortfolioContent()
   const publishedEntries = Route.useLoaderData()
   const entries = publishedEntries.length > 0 ? publishedEntries : labEntries
 
@@ -19,9 +21,9 @@ function LabPage() {
     <main className="px-4 py-14 sm:py-20">
       <Container>
         <SectionHeader
-          eyebrow="Lab"
-          title="Small experiments, rough notes, and useful sparks."
-          description="The lab is where I keep prototypes and learning notes before they are polished enough to become full projects or articles."
+          eyebrow={copy.lab.eyebrow}
+          title={copy.lab.title}
+          description={copy.lab.description}
         />
 
         <div className="grid gap-5 md:grid-cols-3">
@@ -37,7 +39,7 @@ function LabPage() {
               </div>
               <div className="mb-5">
                 <SignalPreview
-                  eyebrow="Experiment"
+                  eyebrow={copy.lab.experiment}
                   title={entry.status}
                   items={entry.tags}
                   variant="lab"

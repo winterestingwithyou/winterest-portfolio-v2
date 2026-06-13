@@ -2,10 +2,9 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import {
-  featuredProjects,
+  getPortfolioContent,
+  getPublicCopy,
   siteProfile,
-  stackGroups,
-  timeline,
 } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/resume')({
@@ -13,13 +12,16 @@ export const Route = createFileRoute('/resume')({
 })
 
 function ResumePage() {
+  const copy = getPublicCopy()
+  const { featuredProjects, stackGroups, timeline } = getPortfolioContent()
+
   return (
     <main className="px-4 py-14 print:bg-white sm:py-20">
       <Container>
         <SectionHeader
-          eyebrow="Resume"
+          eyebrow={copy.resume.eyebrow}
           title={siteProfile.name}
-          description={`${siteProfile.role} focused on practical web systems, calm interfaces, and maintainable fullstack workflows.`}
+          description={copy.resume.description}
         />
 
         <div className="surface-card p-6 print:border print:bg-white print:shadow-none sm:p-8">
@@ -32,7 +34,7 @@ function ResumePage() {
                 {siteProfile.handle} | {siteProfile.domain}
               </p>
               <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--brand-muted)]">
-                {siteProfile.longIntro}
+                {copy.resume.longIntro}
               </p>
             </div>
             <div className="text-sm leading-7 text-[var(--brand-muted)] md:text-right">
@@ -44,7 +46,7 @@ function ResumePage() {
 
           <section className="grid gap-8 border-b border-[var(--brand-line)] py-8 md:grid-cols-[12rem_1fr]">
             <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
-              Selected Work
+              {copy.resume.selectedWork}
             </h2>
             <div className="grid gap-6">
               {featuredProjects.map((project) => (
@@ -65,7 +67,7 @@ function ResumePage() {
 
           <section className="grid gap-8 border-b border-[var(--brand-line)] py-8 md:grid-cols-[12rem_1fr]">
             <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
-              Current Direction
+              {copy.resume.direction}
             </h2>
             <div className="grid gap-5">
               {timeline.map((item) => (
@@ -86,7 +88,7 @@ function ResumePage() {
 
           <section className="grid gap-8 pt-8 md:grid-cols-[12rem_1fr]">
             <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
-              Stack
+              {copy.resume.stack}
             </h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {stackGroups.map((group) => (

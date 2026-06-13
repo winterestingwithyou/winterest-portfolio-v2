@@ -3,7 +3,7 @@ import { ArrowLeft, FlaskConical } from 'lucide-react'
 
 import { Container } from '#/components/marketing/section'
 import { getPublishedLabEntry } from '#/features/content/public-loaders'
-import { getLabEntryBySlug } from '#/features/portfolio/data'
+import { getLabEntryBySlug, getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/lab/$slug')({
   loader: ({ params }) => getPublishedLabEntry({ data: params.slug }),
@@ -11,6 +11,7 @@ export const Route = createFileRoute('/lab/$slug')({
 })
 
 function LabDetailPage() {
+  const copy = getPublicCopy()
   const { slug } = Route.useParams()
   const publishedEntry = Route.useLoaderData()
   const entry = publishedEntry ?? getLabEntryBySlug(slug)
@@ -20,15 +21,15 @@ function LabDetailPage() {
       <main className="px-4 py-20">
         <Container>
           <div className="surface-card max-w-2xl p-8">
-            <p className="eyebrow mb-3">Lab entry not found</p>
+            <p className="eyebrow mb-3">{copy.lab.notFound}</p>
             <h1 className="text-3xl font-semibold text-[var(--brand-ink)]">
-              This experiment is not published yet.
+              {copy.lab.notFoundTitle}
             </h1>
             <Link
               to="/lab"
               className="mt-6 inline-flex text-sm font-bold text-[var(--brand-orange-deep)] no-underline"
             >
-              Back to lab
+              {copy.lab.back}
             </Link>
           </div>
         </Container>
@@ -44,7 +45,7 @@ function LabDetailPage() {
           className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-orange-deep)] no-underline"
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
-          Lab
+          {copy.lab.eyebrow}
         </Link>
 
         <section className="surface-card p-6 sm:p-8">

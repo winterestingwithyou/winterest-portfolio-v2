@@ -1,21 +1,22 @@
 import { Link } from '@tanstack/react-router'
 import { Cloud, Github, Mail } from 'lucide-react'
 
-import { siteProfile } from '#/features/portfolio/data'
+import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
 
 import ParaglideLocaleSwitcher from './LocaleSwitcher.tsx'
 import ThemeToggle from './ThemeToggle'
 
-const navItems = [
-  { to: '/about', label: 'About' },
-  { to: '/projects', label: 'Projects' },
-  { to: '/lab', label: 'Lab' },
-  { to: '/writing', label: 'Writing' },
-  { to: '/stack', label: 'Stack' },
-  { to: '/contact', label: 'Contact' },
-] as const
-
 export default function Header() {
+  const copy = getPublicCopy()
+  const navItems = [
+    { to: '/about', label: copy.nav.about },
+    { to: '/projects', label: copy.nav.projects },
+    { to: '/lab', label: copy.nav.lab },
+    { to: '/writing', label: copy.nav.writing },
+    { to: '/stack', label: copy.nav.stack },
+    { to: '/contact', label: copy.nav.contact },
+  ] as const
+
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--brand-line)] bg-[var(--header-bg)] px-4 backdrop-blur-xl">
       <nav className="page-wrap flex flex-wrap items-center gap-x-3 gap-y-2 py-3 sm:py-4">

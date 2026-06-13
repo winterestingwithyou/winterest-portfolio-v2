@@ -4,7 +4,7 @@ import { BookOpen } from 'lucide-react'
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { SignalPreview } from '#/components/visual/SignalPreview'
 import { getPublishedWritingEntries } from '#/features/content/public-loaders'
-import { writingEntries } from '#/features/portfolio/data'
+import { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/writing')({
   loader: () => getPublishedWritingEntries(),
@@ -12,6 +12,8 @@ export const Route = createFileRoute('/writing')({
 })
 
 function WritingPage() {
+  const copy = getPublicCopy()
+  const { writingEntries } = getPortfolioContent()
   const publishedEntries = Route.useLoaderData()
   const entries =
     publishedEntries.length > 0 ? publishedEntries : writingEntries
@@ -20,9 +22,9 @@ function WritingPage() {
     <main className="px-4 py-14 sm:py-20">
       <Container>
         <SectionHeader
-          eyebrow="Writing"
-          title="Notes on what I build, learn, and decide."
-          description="Writing is the slower side of Winterest: architecture notes, devlogs, retrospectives, and practical lessons from the work."
+          eyebrow={copy.writing.eyebrow}
+          title={copy.writing.title}
+          description={copy.writing.description}
         />
 
         <div className="grid gap-5">
@@ -56,7 +58,7 @@ function WritingPage() {
                 </div>
               </div>
               <SignalPreview
-                eyebrow="Devlog"
+                eyebrow={copy.writing.devlog}
                 title={entry.status}
                 items={entry.tags}
                 variant="writing"

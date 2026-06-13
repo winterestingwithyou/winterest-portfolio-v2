@@ -2,20 +2,22 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Github, Mail, Send, Terminal } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
-import { siteProfile } from '#/features/portfolio/data'
+import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/contact')({
   component: ContactPage,
 })
 
 function ContactPage() {
+  const copy = getPublicCopy()
+
   return (
     <main className="px-4 py-14 sm:py-20">
       <Container className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
         <SectionHeader
-          eyebrow="Contact"
-          title="Want to talk about web systems, projects, or experiments?"
-          description="GitHub is the best public channel for now. Email is available for direct messages, project conversations, or anything that needs a little more context."
+          eyebrow={copy.contact.eyebrow}
+          title={copy.contact.title}
+          description={copy.contact.description}
         />
 
         <div className="grid gap-5">
@@ -26,19 +28,18 @@ function ContactPage() {
                 contact --mode practical
               </p>
               <h2 className="mt-4 text-2xl font-semibold tracking-tight text-white">
-                Best fit: fullstack web projects, Cloudflare workflows,
-                portfolio systems, and useful developer experiments.
+                {copy.contact.signalTitle}
               </h2>
             </div>
             <div className="contact-signal__status" aria-hidden="true">
               <span />
-              Async friendly
+              {copy.contact.async}
             </div>
           </div>
 
           <div className="surface-card p-6">
             <h2 className="text-2xl font-semibold text-[var(--brand-ink)]">
-              Direct channels
+              {copy.contact.channels}
             </h2>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               <a
@@ -71,7 +72,7 @@ function ContactPage() {
                 htmlFor="name"
                 className="text-sm font-bold text-[var(--brand-ink)]"
               >
-                Name
+                {copy.contact.name}
               </label>
               <input
                 id="name"
@@ -85,7 +86,7 @@ function ContactPage() {
                 htmlFor="email"
                 className="text-sm font-bold text-[var(--brand-ink)]"
               >
-                Email
+                {copy.contact.email}
               </label>
               <input
                 id="email"
@@ -100,7 +101,7 @@ function ContactPage() {
                 htmlFor="message"
                 className="text-sm font-bold text-[var(--brand-ink)]"
               >
-                Message
+                {copy.contact.message}
               </label>
               <textarea
                 id="message"
@@ -114,7 +115,7 @@ function ContactPage() {
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[var(--brand-orange)] px-5 text-sm font-bold text-white transition hover:-translate-y-0.5"
             >
               <Send aria-hidden="true" className="size-4" />
-              Draft email
+              {copy.contact.draft}
             </button>
           </form>
         </div>

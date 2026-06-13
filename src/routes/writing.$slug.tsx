@@ -3,7 +3,7 @@ import { ArrowLeft, BookOpen } from 'lucide-react'
 
 import { Container } from '#/components/marketing/section'
 import { getPublishedWritingEntry } from '#/features/content/public-loaders'
-import { getWritingEntryBySlug } from '#/features/portfolio/data'
+import { getPublicCopy, getWritingEntryBySlug } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/writing/$slug')({
   loader: ({ params }) => getPublishedWritingEntry({ data: params.slug }),
@@ -11,6 +11,7 @@ export const Route = createFileRoute('/writing/$slug')({
 })
 
 function WritingDetailPage() {
+  const copy = getPublicCopy()
   const { slug } = Route.useParams()
   const publishedEntry = Route.useLoaderData()
   const entry = publishedEntry ?? getWritingEntryBySlug(slug)
@@ -20,15 +21,15 @@ function WritingDetailPage() {
       <main className="px-4 py-20">
         <Container>
           <div className="surface-card max-w-2xl p-8">
-            <p className="eyebrow mb-3">Writing not found</p>
+            <p className="eyebrow mb-3">{copy.writing.notFound}</p>
             <h1 className="text-3xl font-semibold text-[var(--brand-ink)]">
-              This article is not published yet.
+              {copy.writing.notFoundTitle}
             </h1>
             <Link
               to="/writing"
               className="mt-6 inline-flex text-sm font-bold text-[var(--brand-orange-deep)] no-underline"
             >
-              Back to writing
+              {copy.writing.back}
             </Link>
           </div>
         </Container>
@@ -44,7 +45,7 @@ function WritingDetailPage() {
           className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-orange-deep)] no-underline"
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
-          Writing
+          {copy.writing.eyebrow}
         </Link>
 
         <article className="surface-card p-6 sm:p-8">

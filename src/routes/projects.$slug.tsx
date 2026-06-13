@@ -3,13 +3,14 @@ import { ArrowLeft, CalendarDays, Layers3, Rocket } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { Container } from '#/components/marketing/section'
-import { getProjectBySlug } from '#/features/portfolio/data'
+import { getProjectBySlug, getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/projects/$slug')({
   component: ProjectDetailPage,
 })
 
 function ProjectDetailPage() {
+  const copy = getPublicCopy()
   const { slug } = Route.useParams()
   const project = getProjectBySlug(slug)
 
@@ -18,15 +19,15 @@ function ProjectDetailPage() {
       <main className="px-4 py-20">
         <Container>
           <div className="surface-card max-w-2xl p-8">
-            <p className="eyebrow mb-3">Project not found</p>
+            <p className="eyebrow mb-3">{copy.projectDetail.notFound}</p>
             <h1 className="text-3xl font-semibold text-[var(--brand-ink)]">
-              This case study does not exist yet.
+              {copy.projectDetail.notFoundTitle}
             </h1>
             <Link
               to="/projects"
               className="mt-6 inline-flex text-sm font-bold text-[var(--brand-orange-deep)] no-underline"
             >
-              Back to projects
+              {copy.projectDetail.back}
             </Link>
           </div>
         </Container>
@@ -42,7 +43,7 @@ function ProjectDetailPage() {
           className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-[var(--brand-orange-deep)] no-underline"
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
-          Projects
+          {copy.projectDetail.projects}
         </Link>
 
         <section className="grid gap-8 lg:grid-cols-[1fr_18rem] lg:items-start">
@@ -60,23 +61,23 @@ function ProjectDetailPage() {
             <div className="grid gap-4">
               <MetaItem
                 icon={<Rocket aria-hidden="true" className="size-4" />}
-                label="Status"
+                label={copy.projectDetail.status}
                 value={project.status}
               />
               <MetaItem
                 icon={<Layers3 aria-hidden="true" className="size-4" />}
-                label="Phase"
+                label={copy.projectDetail.phase}
                 value={project.phase}
               />
               <MetaItem
                 icon={<CalendarDays aria-hidden="true" className="size-4" />}
-                label="Year"
+                label={copy.projectDetail.year}
                 value={project.year}
               />
             </div>
             <div className="mt-5 border-t border-[var(--brand-line)] pt-5">
               <p className="text-xs font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
-                Scope
+                {copy.projectDetail.scope}
               </p>
               <p className="mt-2 text-sm leading-7 text-[var(--brand-muted)]">
                 {project.scope}
@@ -109,20 +110,35 @@ function ProjectDetailPage() {
         </section>
 
         <section className="mt-12 grid gap-5 lg:grid-cols-3">
-          <InfoBlock title="Problem" text={project.problem} />
-          <InfoBlock title="Goal" text={project.goal} />
-          <InfoBlock title="Role" text={project.role} />
+          <InfoBlock
+            title={copy.projectDetail.problem}
+            text={project.problem}
+          />
+          <InfoBlock title={copy.projectDetail.goal} text={project.goal} />
+          <InfoBlock title={copy.projectDetail.role} text={project.role} />
         </section>
 
         <section className="mt-12 grid gap-5 lg:grid-cols-2">
-          <ListBlock title="Architecture" items={project.architecture} />
-          <ListBlock title="Highlights" items={project.highlights} />
-          <ListBlock title="Key Decisions" items={project.decisions} />
-          <ListBlock title="Next Steps" items={project.nextSteps} />
+          <ListBlock
+            title={copy.projectDetail.architecture}
+            items={project.architecture}
+          />
+          <ListBlock
+            title={copy.projectDetail.highlights}
+            items={project.highlights}
+          />
+          <ListBlock
+            title={copy.projectDetail.decisions}
+            items={project.decisions}
+          />
+          <ListBlock
+            title={copy.projectDetail.nextSteps}
+            items={project.nextSteps}
+          />
         </section>
 
         <section className="mt-12 surface-card p-6 sm:p-8">
-          <p className="eyebrow mb-3">Result</p>
+          <p className="eyebrow mb-3">{copy.projectDetail.result}</p>
           <p className="m-0 max-w-3xl text-lg leading-8 text-[var(--brand-muted)]">
             {project.result}
           </p>

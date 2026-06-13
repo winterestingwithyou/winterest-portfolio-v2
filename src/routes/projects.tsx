@@ -3,20 +3,27 @@ import { ArrowRight, Github } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { SignalPreview } from '#/components/visual/SignalPreview'
-import { featuredProjects, siteProfile } from '#/features/portfolio/data'
+import {
+  getPortfolioContent,
+  getPublicCopy,
+  siteProfile,
+} from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/projects')({
   component: ProjectsPage,
 })
 
 function ProjectsPage() {
+  const copy = getPublicCopy()
+  const { featuredProjects } = getPortfolioContent()
+
   return (
     <main className="px-4 py-14 sm:py-20">
       <Container>
         <SectionHeader
-          eyebrow="Projects"
-          title="Projects with context, not just screenshots."
-          description="This page collects the work I want people to understand: the problem, the decisions, the stack, and the tradeoffs behind each build."
+          eyebrow={copy.projects.eyebrow}
+          title={copy.projects.title}
+          description={copy.projects.description}
         />
 
         <div className="grid gap-5">
@@ -61,7 +68,7 @@ function ProjectsPage() {
                 params={{ slug: project.slug }}
                 className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-[var(--brand-orange)] px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
               >
-                Open
+                {copy.projects.open}
                 <ArrowRight aria-hidden="true" className="size-4" />
               </Link>
             </article>
@@ -71,10 +78,10 @@ function ProjectsPage() {
         <section className="mt-10 command-strip grid gap-4 p-6 sm:grid-cols-[1fr_auto] sm:items-center">
           <div>
             <p className="m-0 font-mono text-xs uppercase tracking-wide text-orange-200">
-              git remote
+              {copy.projects.remote}
             </p>
             <h2 className="mt-3 text-2xl font-semibold text-white">
-              Follow the source behind Winterest and the experiments around it.
+              {copy.projects.sourceTitle}
             </h2>
           </div>
           <a
@@ -84,7 +91,7 @@ function ProjectsPage() {
             className="inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-white px-4 text-sm font-bold text-[var(--brand-dark)] no-underline transition hover:-translate-y-0.5"
           >
             <Github aria-hidden="true" className="size-4" />
-            Repository
+            {copy.projects.repository}
           </a>
         </section>
       </Container>

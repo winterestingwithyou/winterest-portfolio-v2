@@ -2,34 +2,32 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { CharacterSpotlight } from '#/components/visual/CharacterSpotlight'
-import { principles, siteProfile, timeline } from '#/features/portfolio/data'
+import { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/about')({
   component: AboutPage,
 })
 
 function AboutPage() {
+  const copy = getPublicCopy()
+  const { principles, timeline } = getPortfolioContent()
+
   return (
     <main className="px-4 py-14 sm:py-20">
       <Container>
         <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
           <div>
-            <p className="eyebrow mb-4">About</p>
+            <p className="eyebrow mb-4">{copy.about.eyebrow}</p>
             <h1 className="max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-[var(--brand-ink)] sm:text-5xl">
-              A closer look at Winterest, the developer behind this space.
+              {copy.about.title}
             </h1>
           </div>
           <div className="surface-card p-6 sm:p-8">
             <p className="text-lg leading-8 text-[var(--brand-muted)]">
-              I build online as {siteProfile.name}. I enjoy turning ideas into
-              practical web systems: interfaces that feel calm, backend flows
-              that stay understandable, and tools that make future work easier.
+              {copy.about.intro}
             </p>
             <p className="mt-5 text-base leading-8 text-[var(--brand-muted)]">
-              Winterest is my public home for that process. It gathers project
-              case studies, technical notes, experiments, and a little visual
-              personality so the site can show both the finished work and the
-              thinking behind it.
+              {copy.about.body}
             </p>
           </div>
         </section>
@@ -40,8 +38,8 @@ function AboutPage() {
 
         <section className="mt-16">
           <SectionHeader
-            eyebrow="Journey"
-            title="What this space is becoming."
+            eyebrow={copy.about.journeyEyebrow}
+            title={copy.about.journeyTitle}
           />
           <div className="grid gap-4">
             {timeline.map((item) => (
@@ -67,8 +65,8 @@ function AboutPage() {
 
         <section className="mt-16">
           <SectionHeader
-            eyebrow="Principles"
-            title="The values I want this work to carry."
+            eyebrow={copy.home.principlesEyebrow}
+            title={copy.about.principlesTitle}
           />
           <div className="grid gap-5 md:grid-cols-3">
             {principles.map((principle) => (

@@ -3,20 +3,23 @@ import { Boxes, Cloud, Database, Palette } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { SignalPreview } from '#/components/visual/SignalPreview'
-import { stackGroups } from '#/features/portfolio/data'
+import { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/stack')({
   component: StackPage,
 })
 
 function StackPage() {
+  const copy = getPublicCopy()
+  const { stackGroups } = getPortfolioContent()
+
   return (
     <main className="px-4 py-14 sm:py-20">
       <Container>
         <SectionHeader
-          eyebrow="Stack"
-          title="The tools I use to build Winterest and related work."
-          description="This page is not a trophy shelf. It is a map of the tools I trust for fast iteration, maintainable interfaces, content workflows, and edge-friendly deployment."
+          eyebrow={copy.stack.eyebrow}
+          title={copy.stack.title}
+          description={copy.stack.description}
         />
 
         <div className="grid gap-5 md:grid-cols-2">
@@ -57,7 +60,7 @@ function StackPage() {
                   </div>
                 </div>
                 <SignalPreview
-                  eyebrow="Stack node"
+                  eyebrow={copy.stack.stackNode}
                   title={group.title}
                   items={group.items}
                   variant="stack"

@@ -11,6 +11,7 @@ import Header from '../components/Header'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import { getLocale } from '#/paraglide/runtime'
+import { getPublicCopy } from '#/features/portfolio/data'
 
 import appCss from '../styles.css?url'
 
@@ -41,21 +42,19 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'Winterest | Fullstack Web Developer',
+        title: getPublicCopy().meta.title,
       },
       {
         name: 'description',
-        content:
-          'Personal portfolio, writing space, and developer lab for Winterest.',
+        content: getPublicCopy().meta.description,
       },
       {
         property: 'og:title',
-        content: 'Winterest | Fullstack Web Developer',
+        content: getPublicCopy().meta.title,
       },
       {
         property: 'og:description',
-        content:
-          'Projects, notes, experiments, and practical fullstack web work from Indonesia.',
+        content: getPublicCopy().meta.ogDescription,
       },
     ],
     links: [

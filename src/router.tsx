@@ -10,6 +10,7 @@ import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query
 import TanstackQueryProvider, {
   getContext,
 } from './integrations/tanstack-query/root-provider'
+import { getPublicCopy } from './features/portfolio/data'
 
 export function getRouter() {
   const context = getContext()
@@ -29,23 +30,24 @@ export function getRouter() {
 }
 
 function NotFoundPage() {
+  const copy = getPublicCopy()
+
   return (
     <main className="px-4 py-20">
       <div className="page-wrap">
         <section className="surface-card max-w-2xl p-8">
-          <p className="eyebrow mb-3">Not found</p>
+          <p className="eyebrow mb-3">{copy.notFound.eyebrow}</p>
           <h1 className="text-3xl font-semibold text-[var(--brand-ink)]">
-            This Winterest page does not exist yet.
+            {copy.notFound.title}
           </h1>
           <p className="mt-3 text-sm leading-7 text-[var(--brand-muted)]">
-            The link may be old, mistyped, or still waiting to become a real
-            route.
+            {copy.notFound.description}
           </p>
           <Link
             to="/"
             className="mt-6 inline-flex min-h-10 items-center rounded-full bg-[var(--brand-orange)] px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
           >
-            Back home
+            {copy.notFound.home}
           </Link>
         </section>
       </div>
