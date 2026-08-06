@@ -52,8 +52,11 @@ function HomePage() {
             <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-tight text-[var(--brand-ink)] sm:text-6xl lg:text-7xl">
               {copy.home.title}
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--brand-muted)]">
+            <p className="mt-6 max-w-xl text-lg leading-8 text-[var(--brand-ink)]">
               {copy.home.intro}
+            </p>
+            <p className="mt-3 max-w-xl text-base leading-7 text-[var(--brand-muted)]">
+              {copy.home.introSuffix}
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">

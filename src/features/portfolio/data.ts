@@ -2,40 +2,42 @@ import { getLocale } from '#/paraglide/runtime'
 
 export const siteProfile = {
   name: 'Winterest',
+  fullName: 'M. Adam Yudistira',
   handle: 'winterest',
   domain: 'winterest.tech',
-  role: 'Fullstack web developer',
+  role: 'CS Student & Fullstack Developer',
+  university: 'Universitas Sriwijaya',
   location: 'Indonesia',
   intro:
-    'I build practical fullstack web systems, thoughtful interfaces, and small experiments around modern developer workflows.',
+    "I'm Adam — a CS student from Sriwijaya who builds web apps, open source tools, and occasional side projects. Online, I go by Winterest.",
   longIntro:
-    'I work around modern web architecture, edge-friendly apps, and developer tooling. Winterest is my public home for case studies, notes, experiments, and the systems I keep improving over time.',
-  githubUrl: 'https://github.com/winterest',
-  repoUrl: 'https://github.com/winterest/winterest-portfolio-v2',
+    'I study Computer Science at Universitas Sriwijaya and spend most of my free time building things for the web. This site is my public home for projects, experiments, devlogs, and the work I want people to actually see.',
+  githubUrl: 'https://github.com/winterestingwithyou',
+  repoUrl: 'https://github.com/winterestingwithyou/winterest-portfolio-v2',
   contactEmail: 'hello@winterest.tech',
 }
 
 export const portfolioStats = [
-  { label: 'Focus', value: 'Fullstack web' },
-  { label: 'Style', value: 'Practical + polished' },
-  { label: 'Base', value: 'Indonesia' },
+  { label: 'University', value: 'Universitas Sriwijaya' },
+  { label: 'Currently building', value: 'Finance app + this site' },
+  { label: 'Also into', value: 'Open source · Design · Games' },
 ]
 
 export const principles = [
   {
-    title: 'Build useful systems',
+    title: 'Ship working things first',
     description:
-      'I like web work that solves real problems first: clear flows, readable code, and features that are easy to maintain after the first release.',
+      "I'd rather have something live and imperfect than perfect and sitting in a branch. You learn more from real usage than from planning.",
   },
   {
-    title: 'Keep the interface calm',
+    title: 'Design is part of the work',
     description:
-      'A good interface should feel focused and fast. Visual polish matters, but it should support the content instead of stealing the room.',
+      'I care about how things look and feel — not just aesthetics, but clarity. A good UI communicates without needing a manual.',
   },
   {
-    title: 'Stay curious in public',
+    title: 'Learn and document in the open',
     description:
-      'This site is also a place to document experiments, decisions, and lessons while I keep learning across the modern web stack.',
+      "This site is partly a learning log. I write about what I build, what breaks, and what I'd do differently — mostly for future me.",
   },
 ]
 
@@ -95,26 +97,26 @@ export const timeline = [
 ] as const
 
 const idPortfolioStats = [
-  { label: 'Fokus', value: 'Web fullstack' },
-  { label: 'Gaya', value: 'Praktis + rapi' },
-  { label: 'Basis', value: 'Indonesia' },
+  { label: 'Universitas', value: 'Universitas Sriwijaya' },
+  { label: 'Lagi dibangun', value: 'Finance app + situs ini' },
+  { label: 'Juga suka', value: 'Open source · Desain · Game' },
 ] as const
 
 const idPrinciples = [
   {
-    title: 'Bangun sistem yang berguna',
+    title: 'Ship yang jalan dulu',
     description:
-      'Aku suka pekerjaan web yang menyelesaikan masalah nyata dulu: alur yang jelas, kode yang mudah dibaca, dan fitur yang tetap enak dirawat setelah rilis pertama.',
+      'Lebih baik sesuatu yang live dan belum sempurna daripada sempurna tapi stuck di branch. Dari pemakaian nyata, belajar lebih banyak.',
   },
   {
-    title: 'Jaga interface tetap tenang',
+    title: 'Desain adalah bagian dari pekerjaan',
     description:
-      'Interface yang baik harus terasa fokus dan cepat. Visual polish tetap penting, tapi tugasnya mendukung konten, bukan mengambil semua perhatian.',
+      'Aku peduli tampilan dan cara kerja sesuatu — bukan sekadar estetika, tapi kejelasan. UI yang bagus tidak butuh manual.',
   },
   {
-    title: 'Tetap penasaran secara terbuka',
+    title: 'Belajar dan catat secara terbuka',
     description:
-      'Situs ini juga menjadi tempat untuk mencatat eksperimen, keputusan, dan pelajaran selama aku terus belajar di stack web modern.',
+      'Situs ini sebagian adalah learning log. Aku tulis apa yang kubangun, apa yang rusak, dan apa yang bakal kulakukan lebih baik — mostly buat aku sendiri di masa depan.',
   },
 ] as const
 
@@ -184,32 +186,29 @@ export const publicCopy = {
         'Projects, notes, experiments, and practical fullstack web work from Indonesia.',
     },
     home: {
-      eyebrow: 'Winterest / fullstack web developer',
-      title:
-        'Fullstack web work, project notes, and experiments from Indonesia.',
+      eyebrow: 'M. Adam Yudistira — Winterest',
+      title: 'Computer Science student at Universitas Sriwijaya.',
       intro:
-        'I build practical fullstack web systems, thoughtful interfaces, and small experiments around modern developer workflows. This is my personal space for showing what I build, what I am learning, and how I think through web systems.',
-      introSuffix:
-        'This is my personal space for showing what I build, what I am learning, and how I think through web systems.',
-      viewProjects: 'View projects',
+        "I'm Adam. I build web apps, open source tools, and side projects. Into design and gaming too.",
+      introSuffix: 'Projects, experiments, and notes — all on this site.',
+      viewProjects: 'See my work',
       featuredEyebrow: 'Featured projects',
-      featuredTitle: 'Selected work, written as small case studies.',
+      featuredTitle: 'Things I built and wrote about.',
       featuredDescription:
-        'Projects here focus on the problem, the decisions, the stack, and what I want to improve next.',
-      readCaseStudy: 'Read case study',
-      labEyebrow: 'Developer lab',
-      labTitle: 'A place for experiments that are too useful to hide.',
+        'Each project has a writeup — what the problem was, the decisions I made, and what I would do differently.',
+      readCaseStudy: 'Read writeup',
+      labEyebrow: 'Dev lab',
+      labTitle: 'Small experiments and ideas still mid-flight.',
       labDescription:
-        'The lab collects prototypes, technical notes, and small ideas while they are still being shaped.',
-      principlesEyebrow: 'Principles',
-      principlesTitle: 'How I like to approach web work.',
-      stackTitle:
-        'Tools I reach for when the project needs to stay fast and maintainable.',
+        'Prototypes and explorations that are too interesting to leave sitting in a branch.',
+      principlesEyebrow: 'How I work',
+      principlesTitle: 'A few things that shape how I build.',
+      stackTitle: 'Tools I actually use.',
       stackDescription:
-        'The stack leans modern, typed, and edge-friendly, but the goal is still practical delivery over tool collecting.',
+        'My current go-to stack — chosen because they are fast to iterate with, pleasant to maintain, and edge-friendly enough for serious deployment.',
       ctaTitle:
-        'Open to practical web systems, thoughtful interfaces, and useful experiments.',
-      contact: 'Contact',
+        'Open to collaborations, side projects, and good conversations about web stuff.',
+      contact: 'Say hi',
     },
     about: {
       eyebrow: 'About',
@@ -365,33 +364,28 @@ export const publicCopy = {
         'Project, catatan, eksperimen, dan karya web fullstack praktis dari Indonesia.',
     },
     home: {
-      eyebrow: 'Winterest / fullstack web developer',
-      title:
-        'Karya web fullstack, catatan project, dan eksperimen dari Indonesia.',
-      intro:
-        'Aku membangun sistem web fullstack yang praktis, interface yang thoughtful, dan eksperimen kecil di sekitar workflow developer modern. Ini ruang personalku untuk menunjukkan apa yang kubangun, apa yang sedang kupelajari, dan bagaimana aku memikirkan sistem web.',
-      introSuffix:
-        'Ini ruang personalku untuk menunjukkan apa yang kubangun, apa yang sedang kupelajari, dan bagaimana aku memikirkan sistem web.',
-      viewProjects: 'Lihat project',
+      eyebrow: 'M. Adam Yudistira — Winterest',
+      title: 'Mahasiswa Ilmu Komputer Universitas Sriwijaya.',
+      intro: 'Halo, aku Adam. Bangun web app, tools open source, dan side project. Suka desain sama gaming juga.',
+      introSuffix: 'Project, eksperimen, dan catatan — semuanya ada di sini.',
+      viewProjects: 'Lihat karyaku',
       featuredEyebrow: 'Project pilihan',
-      featuredTitle: 'Karya terpilih yang ditulis seperti case study kecil.',
+      featuredTitle: 'Hal yang kubangun dan tulis.',
       featuredDescription:
-        'Project di sini fokus pada masalah, keputusan, stack, dan hal yang ingin kuperbaiki berikutnya.',
-      readCaseStudy: 'Baca case study',
-      labEyebrow: 'Developer lab',
-      labTitle:
-        'Tempat untuk eksperimen yang terlalu berguna untuk disembunyikan.',
+        'Setiap project ada tulisannya — masalahnya apa, keputusan yang kuambil, dan apa yang akan kulakukan berbeda.',
+      readCaseStudy: 'Baca tulisannya',
+      labEyebrow: 'Dev lab',
+      labTitle: 'Eksperimen kecil dan ide yang masih berjalan.',
       labDescription:
-        'Lab mengumpulkan prototype, catatan teknis, dan ide kecil saat bentuknya masih berkembang.',
-      principlesEyebrow: 'Prinsip',
-      principlesTitle: 'Cara Winterest mendekati pekerjaan web.',
-      stackTitle:
-        'Tools yang kupakai saat project perlu tetap cepat dan mudah dirawat.',
+        'Prototype dan eksplorasi yang terlalu menarik untuk dibiarkan mentah di branch.',
+      principlesEyebrow: 'Cara kerjaku',
+      principlesTitle: 'Beberapa hal yang membentuk cara aku membangun.',
+      stackTitle: 'Tools yang beneran aku pakai.',
       stackDescription:
-        'Stack ini modern, typed, dan edge-friendly, tapi tujuannya tetap delivery yang praktis, bukan sekadar mengoleksi tools.',
+        'Stack utamaku sekarang — dipilih karena enak buat iterasi cepat, nyaman dirawat, dan cukup serius buat deployment yang proper.',
       ctaTitle:
-        'Terbuka untuk sistem web praktis, interface yang thoughtful, dan eksperimen yang berguna.',
-      contact: 'Kontak',
+        'Terbuka untuk kolaborasi, side project, dan obrolan seru soal web.',
+      contact: 'Sapa aku',
     },
     about: {
       eyebrow: 'Tentang',
