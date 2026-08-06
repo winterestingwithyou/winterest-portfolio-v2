@@ -3,27 +3,13 @@ import { eq } from 'drizzle-orm'
 import type { Database } from './index'
 import {
   contentLocales,
-  labEntries,
-  labEntryTranslations,
   projectTechnologies,
   projects,
   projectTranslations,
   technologies,
-  writing,
-  writingTranslations,
 } from './schema'
-import {
-  labSeeds,
-  projectSeeds,
-  technologySeeds,
-  writingSeeds,
-} from './seed-data'
-import type {
-  PortfolioContentSeed,
-  PortfolioProjectSeed,
-  TechnologySeed,
-} from './seed-data'
-import { serializeTags } from '#/features/content/queries'
+import { projectSeeds, technologySeeds } from './seed-data'
+import type { PortfolioProjectSeed, TechnologySeed } from './seed-data'
 
 export async function seedPortfolioData(db: Database) {
   const now = new Date()
@@ -34,14 +20,6 @@ export async function seedPortfolioData(db: Database) {
 
   for (const project of projectSeeds) {
     await upsertProject(db, project, now)
-  }
-
-  for (const entry of writingSeeds) {
-    await upsertWriting(db, entry, now)
-  }
-
-  for (const entry of labSeeds) {
-    await upsertLabEntry(db, entry, now)
   }
 }
 
@@ -178,156 +156,6 @@ async function upsertProject(
           description: translation.description,
           content: translation.content,
           category: translation.category,
-          updatedAt: now,
-        },
-      })
-      .run()
-  }
-}
-
-async function upsertWriting(
-  db: Database,
-  seed: PortfolioContentSeed,
-  now: Date,
-) {
-  const english = seed.translations.en
-
-  await db
-    .insert(writing)
-    .values({
-      id: seed.id,
-      slug: seed.slug,
-      title: english.title,
-      summary: english.summary,
-      content: english.content,
-      status: 'published',
-      visibility: 'public',
-      coverImage: null,
-      tags: serializeTags(english.tags),
-      publishedAt: seed.publishedAt,
-      updatedAt: now,
-    })
-    .onConflictDoUpdate({
-      target: writing.slug,
-      set: {
-        title: english.title,
-        summary: english.summary,
-        content: english.content,
-        status: 'published',
-        visibility: 'public',
-        tags: serializeTags(english.tags),
-        publishedAt: seed.publishedAt,
-        updatedAt: now,
-      },
-    })
-    .run()
-
-  const writingEntry = await db
-    .select({ id: writing.id })
-    .from(writing)
-    .where(eq(writing.slug, seed.slug))
-    .get()
-
-  if (!writingEntry) {
-    throw new Error(`Writing seed "${seed.slug}" could not be loaded.`)
-  }
-
-  for (const locale of contentLocales) {
-    const translation = seed.translations[locale]
-    await db
-      .insert(writingTranslations)
-      .values({
-        writingId: writingEntry.id,
-        locale,
-        title: translation.title,
-        summary: translation.summary,
-        content: translation.content,
-        tags: serializeTags(translation.tags),
-        updatedAt: now,
-      })
-      .onConflictDoUpdate({
-        target: [writingTranslations.writingId, writingTranslations.locale],
-        set: {
-          title: translation.title,
-          summary: translation.summary,
-          content: translation.content,
-          tags: serializeTags(translation.tags),
-          updatedAt: now,
-        },
-      })
-      .run()
-  }
-}
-
-async function upsertLabEntry(
-  db: Database,
-  seed: PortfolioContentSeed,
-  now: Date,
-) {
-  const english = seed.translations.en
-
-  await db
-    .insert(labEntries)
-    .values({
-      id: seed.id,
-      slug: seed.slug,
-      title: english.title,
-      summary: english.summary,
-      content: english.content,
-      status: 'published',
-      visibility: 'public',
-      demoUrl: null,
-      repoUrl: null,
-      coverImage: null,
-      tags: serializeTags(english.tags),
-      publishedAt: seed.publishedAt,
-      updatedAt: now,
-    })
-    .onConflictDoUpdate({
-      target: labEntries.slug,
-      set: {
-        title: english.title,
-        summary: english.summary,
-        content: english.content,
-        status: 'published',
-        visibility: 'public',
-        tags: serializeTags(english.tags),
-        publishedAt: seed.publishedAt,
-        updatedAt: now,
-      },
-    })
-    .run()
-
-  const labEntry = await db
-    .select({ id: labEntries.id })
-    .from(labEntries)
-    .where(eq(labEntries.slug, seed.slug))
-    .get()
-
-  if (!labEntry) {
-    throw new Error(`Lab seed "${seed.slug}" could not be loaded.`)
-  }
-
-  for (const locale of contentLocales) {
-    const translation = seed.translations[locale]
-    await db
-      .insert(labEntryTranslations)
-      .values({
-        labEntryId: labEntry.id,
-        locale,
-        title: translation.title,
-        summary: translation.summary,
-        content: translation.content,
-        tags: serializeTags(translation.tags),
-        updatedAt: now,
-      })
-      .onConflictDoUpdate({
-        target: [labEntryTranslations.labEntryId, labEntryTranslations.locale],
-        set: {
-          title: translation.title,
-          summary: translation.summary,
-          content: translation.content,
-          tags: serializeTags(translation.tags),
           updatedAt: now,
         },
       })

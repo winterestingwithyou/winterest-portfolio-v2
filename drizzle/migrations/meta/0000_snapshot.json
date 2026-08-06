@@ -104,17 +104,12 @@
       "indexes": {
         "account_user_id_idx": {
           "name": "account_user_id_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         },
         "account_provider_account_idx": {
           "name": "account_provider_account_idx",
-          "columns": [
-            "provider_id",
-            "account_id"
-          ],
+          "columns": ["provider_id", "account_id"],
           "isUnique": false
         }
       },
@@ -123,12 +118,8 @@
           "name": "account_user_id_user_id_fk",
           "tableFrom": "account",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -217,16 +208,12 @@
       "indexes": {
         "media_filename_idx": {
           "name": "media_filename_idx",
-          "columns": [
-            "filename"
-          ],
+          "columns": ["filename"],
           "isUnique": false
         },
         "media_mime_type_idx": {
           "name": "media_mime_type_idx",
-          "columns": [
-            "mime_type"
-          ],
+          "columns": ["mime_type"],
           "isUnique": false
         }
       },
@@ -256,16 +243,12 @@
       "indexes": {
         "project_technologies_project_id_idx": {
           "name": "project_technologies_project_id_idx",
-          "columns": [
-            "project_id"
-          ],
+          "columns": ["project_id"],
           "isUnique": false
         },
         "project_technologies_technology_id_idx": {
           "name": "project_technologies_technology_id_idx",
-          "columns": [
-            "technology_id"
-          ],
+          "columns": ["technology_id"],
           "isUnique": false
         }
       },
@@ -274,12 +257,8 @@
           "name": "project_technologies_project_id_projects_id_fk",
           "tableFrom": "project_technologies",
           "tableTo": "projects",
-          "columnsFrom": [
-            "project_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -287,22 +266,15 @@
           "name": "project_technologies_technology_id_technologies_id_fk",
           "tableFrom": "project_technologies",
           "tableTo": "technologies",
-          "columnsFrom": [
-            "technology_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["technology_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "project_technologies_pk": {
-          "columns": [
-            "project_id",
-            "technology_id"
-          ],
+          "columns": ["project_id", "technology_id"],
           "name": "project_technologies_pk"
         }
       },
@@ -382,9 +354,7 @@
       "indexes": {
         "project_translations_locale_idx": {
           "name": "project_translations_locale_idx",
-          "columns": [
-            "locale"
-          ],
+          "columns": ["locale"],
           "isUnique": false
         }
       },
@@ -393,22 +363,15 @@
           "name": "project_translations_project_id_projects_id_fk",
           "tableFrom": "project_translations",
           "tableTo": "projects",
-          "columnsFrom": [
-            "project_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "project_translations_pk": {
-          "columns": [
-            "project_id",
-            "locale"
-          ],
+          "columns": ["project_id", "locale"],
           "name": "project_translations_pk"
         }
       },
@@ -561,37 +524,27 @@
       "indexes": {
         "projects_slug_unique": {
           "name": "projects_slug_unique",
-          "columns": [
-            "slug"
-          ],
+          "columns": ["slug"],
           "isUnique": true
         },
         "projects_status_idx": {
           "name": "projects_status_idx",
-          "columns": [
-            "status"
-          ],
+          "columns": ["status"],
           "isUnique": false
         },
         "projects_visibility_idx": {
           "name": "projects_visibility_idx",
-          "columns": [
-            "visibility"
-          ],
+          "columns": ["visibility"],
           "isUnique": false
         },
         "projects_featured_idx": {
           "name": "projects_featured_idx",
-          "columns": [
-            "featured"
-          ],
+          "columns": ["featured"],
           "isUnique": false
         },
         "projects_published_at_idx": {
           "name": "projects_published_at_idx",
-          "columns": [
-            "published_at"
-          ],
+          "columns": ["published_at"],
           "isUnique": false
         }
       },
@@ -665,16 +618,12 @@
       "indexes": {
         "session_token_unique": {
           "name": "session_token_unique",
-          "columns": [
-            "token"
-          ],
+          "columns": ["token"],
           "isUnique": true
         },
         "session_user_id_idx": {
           "name": "session_user_id_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         }
       },
@@ -683,12 +632,8 @@
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -777,16 +722,12 @@
       "indexes": {
         "technologies_slug_unique": {
           "name": "technologies_slug_unique",
-          "columns": [
-            "slug"
-          ],
+          "columns": ["slug"],
           "isUnique": true
         },
         "technologies_category_idx": {
           "name": "technologies_category_idx",
-          "columns": [
-            "category"
-          ],
+          "columns": ["category"],
           "isUnique": false
         }
       },
@@ -862,16 +803,12 @@
       "indexes": {
         "user_email_unique": {
           "name": "user_email_unique",
-          "columns": [
-            "email"
-          ],
+          "columns": ["email"],
           "isUnique": true
         },
         "user_role_idx": {
           "name": "user_role_idx",
-          "columns": [
-            "role"
-          ],
+          "columns": ["role"],
           "isUnique": false
         }
       },
@@ -931,9 +868,7 @@
       "indexes": {
         "verification_identifier_idx": {
           "name": "verification_identifier_idx",
-          "columns": [
-            "identifier"
-          ],
+          "columns": ["identifier"],
           "isUnique": false
         }
       },
