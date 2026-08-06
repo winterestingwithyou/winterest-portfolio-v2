@@ -3,7 +3,7 @@ import { Cloud, Code2, Cpu, Sparkles } from 'lucide-react'
 const signalItems = [
   { label: 'Workers', value: 'edge-ready', icon: Cloud },
   { label: 'Bun', value: 'fast loops', icon: Sparkles },
-  { label: 'Notes', value: 'devlogs', icon: Cpu },
+  { label: 'Design', value: 'clean ui', icon: Cpu },
 ] as const
 
 export function HeroVisual() {
@@ -29,7 +29,7 @@ export function HeroVisual() {
           <span className="size-2 rounded-full bg-[#ffbd2e]" />
           <span className="size-2 rounded-full bg-[#27c93f]" />
           <span className="ml-2 font-mono text-[0.65rem] text-orange-100">
-            winterest/lab
+            winterest/dev
           </span>
         </div>
         <div className="grid gap-1.5 font-mono text-[0.72rem] leading-5 text-orange-50">
@@ -37,7 +37,7 @@ export function HeroVisual() {
             <span className="text-orange-300">runtime</span>: workers
           </span>
           <span>
-            <span className="text-orange-300">notes</span>: projects + lab
+            <span className="text-orange-300">stack</span>: fullstack web
           </span>
           <span>
             <span className="text-orange-300">mood</span>: playful, precise
@@ -63,7 +63,7 @@ export function HeroVisual() {
 
       <div className="hero-visual__badge" aria-hidden="true">
         <Code2 className="size-4" />
-        Web lab
+        Fullstack
       </div>
     </figure>
   )

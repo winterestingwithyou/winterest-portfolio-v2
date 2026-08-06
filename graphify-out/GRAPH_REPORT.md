@@ -1,43 +1,43 @@
 # Graph Report - winterest-portfolio-v2  (2026-08-06)
 
 ## Corpus Check
-- 119 files · ~194,049 words
+- 98 files · ~185,963 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2571 nodes · 3210 edges · 232 communities (46 shown, 186 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 30 edges (avg confidence: 0.52)
+- 2426 nodes · 2811 edges · 232 communities (46 shown, 186 thin omitted)
+- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 19 edges (avg confidence: 0.53)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `73b20549`
+- Built from commit: `d7120d0f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - worker-configuration.d.ts
-- getPublicCopy
+- data.ts
 - cn
 - routeTree.gen.ts
 - devDependencies
 - ServiceWorkerGlobalScope
 - Event
-- content/queries.ts
-- projects/queries.ts
+- Header.tsx
+- queries.ts
 - scripts
 - schema.ts
-- getDashboardCopy
+- ProjectEditorForm.tsx
 - compilerOptions
-- db/index.ts
+- api.projects.$id.ts
 - seed.ts
 - Console
 - components.json
 - TransformStream
 - URL
 - AGENTS.md
-- section.tsx
+- session.ts
 - URLSearchParams
-- password.ts
+- auth.ts
 - DurableObjectStorage
 - Element
 - Headers
@@ -87,7 +87,7 @@
 - ReadableByteStreamController
 - ReadableStreamDefaultReader
 - TextDecoder
-- projects.index.tsx
+- projects.$slug.tsx
 - AiGateway
 - Comment
 - ForwardableEmailMessage
@@ -154,7 +154,7 @@
 - WorkflowStep
 - WritableStreamDefaultController
 - dependencies
-- class-variance-authority
+- loaders.ts
 - @cloudflare/vite-plugin
 - clsx
 - drizzle-kit
@@ -177,7 +177,7 @@
 - @tailwindcss/vite
 - @tanstack/ai
 - @tanstack/ai-anthropic
-- seed-cli.ts
+- better-auth
 - @tanstack/ai-gemini
 - @tanstack/ai-ollama
 - @tanstack/ai-openai
@@ -241,28 +241,28 @@
 - @tanstack/react-store
 
 ## God Nodes (most connected - your core abstractions)
-1. `Database` - 38 edges
-2. `cn()` - 34 edges
-3. `getPublicCopy()` - 33 edges
-4. `FileRoutesByPath` - 33 edges
-5. `getDashboardCopy()` - 31 edges
-6. `scripts` - 26 edges
-7. `Event` - 25 edges
-8. `Console` - 21 edges
-9. `compilerOptions` - 18 edges
-10. `URLSearchParams` - 16 edges
+1. `cn()` - 34 edges
+2. `scripts` - 26 edges
+3. `getPublicCopy()` - 25 edges
+4. `Event` - 25 edges
+5. `Console` - 21 edges
+6. `Database` - 19 edges
+7. `FileRoutesByPath` - 19 edges
+8. `compilerOptions` - 18 edges
+9. `URLSearchParams` - 16 edges
+10. `getDashboardCopy()` - 15 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `listPublishedProjects()` --references--> `Database`  [EXTRACTED]
-  src/features/projects/queries.ts → src/db/index.ts
-- `LabPage()` --calls--> `getPublicCopy()`  [EXTRACTED]
-  src/routes/lab.index.tsx → src/features/portfolio/data.ts
-- `LabDetailPage()` --calls--> `getPublicCopy()`  [EXTRACTED]
-  src/routes/lab.$slug.tsx → src/features/portfolio/data.ts
-- `ProjectsPage()` --calls--> `getPublicCopy()`  [EXTRACTED]
-  src/routes/projects.index.tsx → src/features/portfolio/data.ts
-- `WritingPage()` --calls--> `getPublicCopy()`  [EXTRACTED]
-  src/routes/writing.index.tsx → src/features/portfolio/data.ts
+- `Footer()` --calls--> `getPublicCopy()`  [EXTRACTED]
+  src/components/Footer.tsx → src/features/portfolio/data.ts
+- `Header()` --calls--> `getPublicCopy()`  [EXTRACTED]
+  src/components/Header.tsx → src/features/portfolio/data.ts
+- `Container()` --calls--> `cn()`  [EXTRACTED]
+  src/components/marketing/section.tsx → src/lib/utils.ts
+- `SectionHeader()` --calls--> `cn()`  [EXTRACTED]
+  src/components/marketing/section.tsx → src/lib/utils.ts
+- `Card()` --calls--> `cn()`  [EXTRACTED]
+  src/components/ui/card.tsx → src/lib/utils.ts
 
 ## Import Cycles
 - None detected.
@@ -273,17 +273,17 @@
 Cohesion: 0.00
 Nodes (834): RFC-2253, RFC-3339, RFC-5246, RFC-9440, AgentMemoryGetSummaryOptions, AgentMemoryGetSummaryResponse, AgentMemoryIncomingMemory, AgentMemoryIngestOptions (+826 more)
 
-### Community 1 - "getPublicCopy"
-Cohesion: 0.09
-Nodes (29): Footer(), Header(), SectionHeader(), CharacterSpotlight(), noteIcons, HeroVisual(), signalItems, getPortfolioContent() (+21 more)
+### Community 1 - "data.ts"
+Cohesion: 0.11
+Nodes (30): Container(), ContainerProps, SectionHeader(), SectionHeaderProps, CharacterSpotlight(), noteIcons, HeroVisual(), signalItems (+22 more)
 
 ### Community 2 - "cn"
-Cohesion: 0.05
-Nodes (42): localeNames, ParaglideLocaleSwitcher(), GooeyNav(), GooeyNavItem, GooeyNavProps, applyThemeMode(), getInitialMode(), ThemeMode (+34 more)
+Cohesion: 0.06
+Nodes (38): localeNames, ParaglideLocaleSwitcher(), applyThemeMode(), getInitialMode(), ThemeMode, ThemeToggle(), Badge(), badgeVariants (+30 more)
 
 ### Community 3 - "routeTree.gen.ts"
-Cohesion: 0.04
-Nodes (66): Route, Route, Route, Route, Route, Route, Route, Route (+58 more)
+Cohesion: 0.06
+Nodes (42): Route, Route, Route, Route, Route, Route, Route, Route (+34 more)
 
 ### Community 4 - "devDependencies"
 Cohesion: 0.04
@@ -297,37 +297,37 @@ Nodes (7): AbortSignal, EventSource, EventTarget, MessagePort, ServiceWorkerGlob
 Cohesion: 0.04
 Nodes (12): CloseEvent, CustomEvent, EmailEvent, ErrorEvent, Event, ExtendableEvent, FetchEvent, MessageEvent (+4 more)
 
-### Community 7 - "content/queries.ts"
-Cohesion: 0.12
-Nodes (43): Database, labEntryTranslations, seedPortfolioData(), upsertLabEntry(), upsertProject(), upsertTechnology(), upsertWriting(), ContentTranslationValue (+35 more)
+### Community 7 - "Header.tsx"
+Cohesion: 0.17
+Nodes (7): Footer(), Header(), GooeyNav(), GooeyNavItem, GooeyNavProps, authClient, MyRouterContext
 
-### Community 8 - "projects/queries.ts"
-Cohesion: 0.10
-Nodes (32): contentStatuses, contentVisibilities, projects, projectTechnologies, projectTranslations, technologies, createProject(), DashboardProjectRecord (+24 more)
+### Community 8 - "queries.ts"
+Cohesion: 0.21
+Nodes (22): Database, createProject(), DashboardProjectRecord, deleteProject(), getDashboardProjectByIdOrSlug(), getProjectByIdOrSlug(), getPublishedProjectBySlug(), getPublishedPublicProjectBySlug() (+14 more)
 
 ### Community 9 - "scripts"
 Cohesion: 0.06
 Nodes (35): imports, name, pnpm, onlyBuiltDependencies, private, scripts, build, cf-typegen (+27 more)
 
 ### Community 10 - "schema.ts"
-Cohesion: 0.07
-Nodes (30): account, accountRelations, ContentStatus, ContentVisibility, labEntriesRelations, labEntryTranslationsRelations, media, projectsRelations (+22 more)
+Cohesion: 0.09
+Nodes (19): account, accountRelations, ContentLocale, contentLocales, ContentVisibility, media, projectsRelations, projectTechnologiesRelations (+11 more)
 
-### Community 11 - "getDashboardCopy"
-Cohesion: 0.06
-Nodes (47): DashboardShell(), DashboardShellProps, ContentEditorForm(), ContentEditorFormProps, ContentFormInitial, ContentKind, ContentTranslationFormValue, ContentTranslationInitial (+39 more)
+### Community 11 - "ProjectEditorForm.tsx"
+Cohesion: 0.10
+Nodes (24): DashboardShell(), DashboardShellProps, dashboardCopy, getDashboardCopy(), getTranslation(), LocaleOption, localeOptions, ProjectEditorForm() (+16 more)
 
 ### Community 12 - "compilerOptions"
 Cohesion: 0.06
 Nodes (30): DOM, DOM.Iterable, ES2022, eslint.config.js, node, prettier.config.js, **/*.ts, **/*.tsx (+22 more)
 
-### Community 13 - "db/index.ts"
-Cohesion: 0.16
-Nodes (18): getDb(), canAccessDashboard(), canManageContent(), getDashboardUserFromRequest(), requireDashboardUser(), handleContentApiError(), json(), contentBaseInputSchema (+10 more)
+### Community 13 - "api.projects.$id.ts"
+Cohesion: 0.17
+Nodes (12): getDb(), contentStatuses, contentVisibilities, getDashboardDb(), getProjectDb(), ProjectInput, projectInputSchema, projectTranslationSchema (+4 more)
 
 ### Community 14 - "seed.ts"
-Cohesion: 0.24
-Nodes (11): labEntries, TechnologyCategory, writing, writingTranslations, labSeeds, PortfolioContentSeed, PortfolioProjectSeed, projectSeeds (+3 more)
+Cohesion: 0.15
+Nodes (20): projects, projectTechnologies, TechnologyCategory, D1QueryResponse, findLocalD1Database(), readEnv(), seedLocal(), seedRemote() (+12 more)
 
 ### Community 16 - "components.json"
 Cohesion: 0.10
@@ -341,13 +341,13 @@ Nodes (7): CompressionStream, DecompressionStream, FixedLengthStream, IdentityTr
 Cohesion: 0.05
 Nodes (41): 3D and Character Direction, Accessibility, Agent Behavior, Animation Rules, Authentication Direction, Better Auth Implementation Rules, Cloudflare Runtime Rules, CMS Dashboard Direction (+33 more)
 
-### Community 20 - "section.tsx"
-Cohesion: 0.11
-Nodes (20): Container(), ContainerProps, SectionHeaderProps, SignalPreview(), SignalPreviewProps, getContentDb(), getPublishedLabEntries, getPublishedLabEntry (+12 more)
+### Community 20 - "session.ts"
+Cohesion: 0.33
+Nodes (9): UserRole, userRoles, canAccessDashboard(), canManageContent(), DashboardUser, isUserRole(), toDashboardUser(), getDashboardUserFromRequest() (+1 more)
 
-### Community 22 - "password.ts"
-Cohesion: 0.38
-Nodes (8): base64UrlDecode(), base64UrlEncode(), derivePasswordKey(), encoder, hashPassword(), timingSafeEqual(), toArrayBufferBytes(), verifyPassword()
+### Community 22 - "auth.ts"
+Cohesion: 0.24
+Nodes (11): auth, db, base64UrlDecode(), base64UrlEncode(), derivePasswordKey(), encoder, hashPassword(), timingSafeEqual() (+3 more)
 
 ### Community 28 - "Body"
 Cohesion: 0.15
@@ -385,9 +385,9 @@ Nodes (7): background_color, display, icons, name, short_name, start_url, theme_
 Cohesion: 0.12
 Nodes (16): Current Progress Compared To `AGENTS.md`, Current User Preferences Learned, Database/Migrations Notes, Hard Rules For The Next Agent, Internationalization State, Phase 1: Clean Starter And Public Shell, Phase 2: Portfolio Content, Phase 3: Database And CMS Foundation (+8 more)
 
-### Community 72 - "projects.index.tsx"
-Cohesion: 0.14
-Nodes (10): ContentLocale, contentLocales, getProjectDb(), getPublishedProject, getPublishedProjects, ProjectsPage(), Route, formatProjectDate() (+2 more)
+### Community 72 - "projects.$slug.tsx"
+Cohesion: 0.33
+Nodes (4): getPublishedProject, formatProjectDate(), ProjectDetailPage(), Route
 
 ### Community 89 - "db-collections/index.ts"
 Cohesion: 0.50
@@ -399,7 +399,11 @@ Nodes (3): BasicImageTransformations, RequestInitCfPropertiesImage, RequestInitC
 
 ### Community 138 - "dependencies"
 Cohesion: 0.15
-Nodes (13): better-auth, dependencies, better-auth, radix-ui, @radix-ui/react-slot, @t3-oss/env-core, tailwind-merge, @tanstack/ai-client (+5 more)
+Nodes (13): class-variance-authority, dependencies, class-variance-authority, radix-ui, @radix-ui/react-slot, @t3-oss/env-core, tailwind-merge, @tanstack/ai-client (+5 more)
+
+### Community 139 - "loaders.ts"
+Cohesion: 0.29
+Nodes (5): ContentStatus, DashboardSummary, DashboardSummaryItem, emptySummary, getDashboardSummary
 
 ### Community 147 - "Content Model Direction"
 Cohesion: 0.18
@@ -417,29 +421,25 @@ Nodes (9): Authentication, Current Phase, Database, Deployment, Development, Dir
 Cohesion: 0.29
 Nodes (7): Development Phases, Phase 1: Clean Starter and Build Public Shell, Phase 2: Portfolio Content, Phase 3: Database and CMS Foundation, Phase 4: Auth and RBAC, Phase 5: Writing, Lab, Media, Phase 6: Visual Polish and 3D
 
-### Community 162 - "seed-cli.ts"
-Cohesion: 0.47
-Nodes (5): D1QueryResponse, findLocalD1Database(), readEnv(), seedLocal(), seedRemote()
-
 ## Knowledge Gaps
-- **1240 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+1235 more)
+- **1194 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+1189 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **186 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `better-sqlite3` connect `scripts` to `seed-cli.ts`?**
-  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+- **Why does `Headers` connect `Headers` to `worker-configuration.d.ts`?**
+  _High betweenness centrality (0.025) - this node is a cross-community bridge._
+- **Why does `better-sqlite3` connect `scripts` to `seed.ts`?**
+  _High betweenness centrality (0.021) - this node is a cross-community bridge._
 - **What connects `$schema`, `style`, `rsc` to the rest of the system?**
-  _1240 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1194 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `worker-configuration.d.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.002386634844868735 - nodes in this community are weakly interconnected._
-- **Should `getPublicCopy` be split into smaller, more focused modules?**
-  _Cohesion score 0.09358974358974359 - nodes in this community are weakly interconnected._
+- **Should `data.ts` be split into smaller, more focused modules?**
+  _Cohesion score 0.11341463414634147 - nodes in this community are weakly interconnected._
 - **Should `cn` be split into smaller, more focused modules?**
-  _Cohesion score 0.05407925407925408 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.062310949788263764 - nodes in this community are weakly interconnected._
 - **Should `routeTree.gen.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.03793691389599318 - nodes in this community are weakly interconnected._
-- **Should `devDependencies` be split into smaller, more focused modules?**
-  _Cohesion score 0.04081632653061224 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.0595959595959596 - nodes in this community are weakly interconnected._

@@ -173,17 +173,15 @@ export const publicCopy = {
     nav: {
       about: 'About',
       projects: 'Projects',
-      lab: 'Lab',
-      writing: 'Writing',
       stack: 'Stack',
       contact: 'Contact',
     },
     meta: {
       title: 'Winterest | Fullstack Web Developer',
       description:
-        'Personal portfolio, writing space, and developer lab for Winterest.',
+        'Personal portfolio platform for Winterest (M. Adam Yudistira).',
       ogDescription:
-        'Projects, notes, experiments, and practical fullstack web work from Indonesia.',
+        'Projects, experiments, and practical fullstack web work from Indonesia.',
     },
     home: {
       eyebrow: 'M. Adam Yudistira — Winterest',
@@ -197,10 +195,6 @@ export const publicCopy = {
       featuredDescription:
         'Each project has a writeup — what the problem was, the decisions I made, and what I would do differently.',
       readCaseStudy: 'Read writeup',
-      labEyebrow: 'Dev lab',
-      labTitle: 'Small experiments and ideas still mid-flight.',
-      labDescription:
-        'Prototypes and explorations that are too interesting to leave sitting in a branch.',
       principlesEyebrow: 'How I work',
       principlesTitle: 'A few things that shape how I build.',
       stackTitle: 'Tools I actually use.',
@@ -233,32 +227,6 @@ export const publicCopy = {
       sourceTitle:
         'Follow the source behind Winterest and the experiments around it.',
       repository: 'Repository',
-    },
-    lab: {
-      eyebrow: 'Lab',
-      title: 'Small experiments, rough notes, and useful sparks.',
-      description:
-        'The lab is where I keep prototypes and learning notes before they are polished enough to become full projects or articles.',
-      experiment: 'Experiment',
-      emptyTitle: 'No published lab entries yet.',
-      emptyDescription:
-        'The lab is still being prepared. Soon it will collect small experiments, rough notes, and useful prototypes.',
-      back: 'Back to lab',
-      notFound: 'Lab entry not found',
-      notFoundTitle: 'This experiment is not published yet.',
-    },
-    writing: {
-      eyebrow: 'Writing',
-      title: 'Notes on what I build, learn, and decide.',
-      description:
-        'Writing is the slower side of Winterest: architecture notes, devlogs, retrospectives, and practical lessons from the work.',
-      devlog: 'Devlog',
-      emptyTitle: 'No published writing yet.',
-      emptyDescription:
-        'I am still shaping the first notes for this section. Articles and devlogs will appear here when they are ready to read.',
-      back: 'Back to writing',
-      notFound: 'Writing not found',
-      notFoundTitle: 'This article is not published yet.',
     },
     stack: {
       eyebrow: 'Stack',
@@ -294,7 +262,7 @@ export const publicCopy = {
     footer: {
       eyebrow: 'Winterest Portfolio',
       description:
-        'Personal portfolio, writing space, and developer lab for Winterest. Built with a warm Cloudflare + Bun inspired visual language.',
+        'Personal portfolio platform for Winterest (M. Adam Yudistira). Built with a warm Cloudflare + Bun inspired visual language.',
       rights: 'All rights reserved.',
       email: 'Email Winterest',
     },
@@ -351,22 +319,21 @@ export const publicCopy = {
     nav: {
       about: 'Tentang',
       projects: 'Project',
-      lab: 'Lab',
-      writing: 'Tulisan',
       stack: 'Stack',
       contact: 'Kontak',
     },
     meta: {
       title: 'Winterest | Fullstack Web Developer',
       description:
-        'Portfolio personal, ruang tulisan, dan developer lab milik Winterest.',
+        'Platform portfolio personal milik Winterest (M. Adam Yudistira).',
       ogDescription:
-        'Project, catatan, eksperimen, dan karya web fullstack praktis dari Indonesia.',
+        'Project, eksperimen, dan karya web fullstack praktis dari Indonesia.',
     },
     home: {
       eyebrow: 'M. Adam Yudistira — Winterest',
       title: 'Mahasiswa Ilmu Komputer Universitas Sriwijaya.',
-      intro: 'Halo, aku Adam. Bangun web app, tools open source, dan side project. Suka desain sama gaming juga.',
+      intro:
+        'Halo, aku Adam. Bangun web app, tools open source, dan side project. Suka desain sama gaming juga.',
       introSuffix: 'Project, eksperimen, dan catatan — semuanya ada di sini.',
       viewProjects: 'Lihat karyaku',
       featuredEyebrow: 'Project pilihan',
@@ -374,10 +341,6 @@ export const publicCopy = {
       featuredDescription:
         'Setiap project ada tulisannya — masalahnya apa, keputusan yang kuambil, dan apa yang akan kulakukan berbeda.',
       readCaseStudy: 'Baca tulisannya',
-      labEyebrow: 'Dev lab',
-      labTitle: 'Eksperimen kecil dan ide yang masih berjalan.',
-      labDescription:
-        'Prototype dan eksplorasi yang terlalu menarik untuk dibiarkan mentah di branch.',
       principlesEyebrow: 'Cara kerjaku',
       principlesTitle: 'Beberapa hal yang membentuk cara aku membangun.',
       stackTitle: 'Tools yang beneran aku pakai.',
@@ -410,32 +373,6 @@ export const publicCopy = {
       sourceTitle:
         'Ikuti source di balik Winterest dan eksperimen di sekitarnya.',
       repository: 'Repository',
-    },
-    lab: {
-      eyebrow: 'Lab',
-      title: 'Eksperimen kecil, catatan kasar, dan percikan ide berguna.',
-      description:
-        'Lab adalah tempatku menyimpan prototype dan catatan belajar sebelum cukup rapi untuk menjadi project penuh atau artikel.',
-      experiment: 'Eksperimen',
-      emptyTitle: 'Belum ada entry lab yang dipublish.',
-      emptyDescription:
-        'Lab-nya sedang disiapkan. Nanti bagian ini akan berisi eksperimen kecil, catatan kasar, dan prototype yang berguna.',
-      back: 'Kembali ke lab',
-      notFound: 'Lab entry tidak ditemukan',
-      notFoundTitle: 'Eksperimen ini belum dipublish.',
-    },
-    writing: {
-      eyebrow: 'Tulisan',
-      title: 'Catatan tentang apa yang kubangun, kupelajari, dan kuputuskan.',
-      description:
-        'Writing adalah sisi Winterest yang lebih pelan: catatan arsitektur, devlog, retrospektif, dan pelajaran praktis dari pekerjaan.',
-      devlog: 'Devlog',
-      emptyTitle: 'Belum ada tulisan yang dipublish.',
-      emptyDescription:
-        'Aku masih merapikan catatan pertama untuk bagian ini. Artikel dan devlog akan muncul saat sudah enak dibaca.',
-      back: 'Kembali ke tulisan',
-      notFound: 'Tulisan tidak ditemukan',
-      notFoundTitle: 'Artikel ini belum dipublish.',
     },
     stack: {
       eyebrow: 'Stack',
@@ -471,7 +408,7 @@ export const publicCopy = {
     footer: {
       eyebrow: 'Winterest Portfolio',
       description:
-        'Portfolio personal, ruang tulisan, dan developer lab milik Winterest. Dibangun dengan bahasa visual hangat yang terinspirasi Cloudflare + Bun.',
+        'Platform portfolio personal milik Winterest (M. Adam Yudistira). Dibangun dengan bahasa visual hangat yang terinspirasi Cloudflare + Bun.',
       rights: 'Semua hak dilindungi.',
       email: 'Email Winterest',
     },

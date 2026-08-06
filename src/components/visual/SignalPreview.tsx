@@ -1,10 +1,10 @@
-import { Cloud, Code2, FlaskConical, Rocket } from 'lucide-react'
+import { Cloud, Code2, Rocket } from 'lucide-react'
 
 type SignalPreviewProps = {
   title: string
   eyebrow: string
   items: readonly string[]
-  variant?: 'project' | 'lab' | 'writing' | 'stack'
+  variant?: 'project' | 'stack'
   compact?: boolean
 }
 
@@ -15,8 +15,7 @@ export function SignalPreview({
   variant = 'project',
   compact = false,
 }: SignalPreviewProps) {
-  const Icon =
-    variant === 'lab' ? FlaskConical : variant === 'writing' ? Code2 : Rocket
+  const Icon = variant === 'stack' ? Code2 : Rocket
 
   return (
     <div

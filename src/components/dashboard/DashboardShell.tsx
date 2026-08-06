@@ -5,9 +5,7 @@ import {
   Image,
   LayoutDashboard,
   LogOut,
-  PenLine,
   Settings,
-  TestTube2,
   Users,
 } from 'lucide-react'
 import type { ReactNode } from 'react'
@@ -41,8 +39,6 @@ export function DashboardShell({
       label: copy.shell.nav.projects,
       icon: FolderKanban,
     },
-    { to: '/dashboard/writing', label: copy.shell.nav.writing, icon: PenLine },
-    { to: '/dashboard/lab', label: copy.shell.nav.lab, icon: TestTube2 },
     { to: '/dashboard/media', label: copy.shell.nav.media, icon: Image },
     { to: '/dashboard/users', label: copy.shell.nav.users, icon: Users },
     {

@@ -25,11 +25,8 @@ export default function Footer() {
             <Link to="/projects" className="footer-link">
               {copy.nav.projects}
             </Link>
-            <Link to="/writing" className="footer-link">
-              {copy.nav.writing}
-            </Link>
-            <Link to="/lab" className="footer-link">
-              {copy.nav.lab}
+            <Link to="/about" className="footer-link">
+              {copy.nav.about}
             </Link>
             <Link to="/contact" className="footer-link">
               {copy.nav.contact}

@@ -18,8 +18,6 @@ export default function Header() {
   const navItems = [
     { href: '/about', label: copy.nav.about },
     { href: '/projects', label: copy.nav.projects },
-    { href: '/lab', label: copy.nav.lab },
-    { href: '/writing', label: copy.nav.writing },
     { href: '/stack', label: copy.nav.stack },
     { href: '/contact', label: copy.nav.contact },
   ] as const

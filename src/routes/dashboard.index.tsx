@@ -102,11 +102,6 @@ function DashboardHome() {
               to="/dashboard/projects"
               label={copy.overview.projects}
             />
-            <QuickAction
-              to="/dashboard/writing/new"
-              label={copy.overview.writing}
-            />
-            <QuickAction to="/dashboard/lab/new" label={copy.overview.lab} />
             <QuickAction to="/dashboard/media" label={copy.overview.media} />
           </div>
         </section>

@@ -7,12 +7,10 @@ import {
   Rocket,
   Sparkles,
   Terminal,
-  Zap,
 } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { HeroVisual } from '#/components/visual/HeroVisual'
-import { getPublishedLabEntries } from '#/features/content/public-loaders'
 import { getPublishedProjects } from '#/features/projects/public-loaders'
 import {
   getPortfolioContent,
@@ -24,24 +22,20 @@ import { getLocale } from '#/paraglide/runtime'
 export const Route = createFileRoute('/')({
   loader: async () => {
     const locale = getLocale()
-    const [projects, labEntries] = await Promise.all([
-      getPublishedProjects({ data: { locale } }),
-      getPublishedLabEntries({ data: { locale } }),
-    ])
+    const projects = await getPublishedProjects({ data: { locale } })
 
-    return { projects, labEntries }
+    return { projects }
   },
   component: HomePage,
 })
 
 function HomePage() {
   const copy = getPublicCopy()
-  const { projects, labEntries } = Route.useLoaderData()
+  const { projects } = Route.useLoaderData()
   const { portfolioStats, principles, stackGroups } = getPortfolioContent()
   const highlightedProjects = projects
     .filter((project) => project.featured)
     .slice(0, 2)
-  const highlightedLabEntries = labEntries.slice(0, 3)
 
   return (
     <main>
@@ -149,44 +143,6 @@ function HomePage() {
                   <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </article>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <section className="px-4 py-14">
-        <Container>
-          <SectionHeader
-            eyebrow={copy.home.labEyebrow}
-            title={copy.home.labTitle}
-            description={copy.home.labDescription}
-          />
-          <div className="grid gap-4 md:grid-cols-3">
-            {highlightedLabEntries.length === 0 ? (
-              <div className="surface-card p-6 md:col-span-3">
-                <h3 className="text-2xl font-semibold text-[var(--brand-ink)]">
-                  {copy.lab.emptyTitle}
-                </h3>
-                <p className="mt-3 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
-                  {copy.lab.emptyDescription}
-                </p>
-              </div>
-            ) : null}
-            {highlightedLabEntries.map((entry) => (
-              <Link
-                key={entry.slug}
-                to="/lab/$slug"
-                params={{ slug: entry.slug }}
-                className="surface-card block p-5 text-[var(--brand-ink)] no-underline transition hover:-translate-y-1 hover:border-[var(--brand-orange)]"
-              >
-                <div className="mb-5 grid size-10 place-items-center rounded-lg bg-[var(--brand-orange-soft)] text-[var(--brand-orange-deep)]">
-                  <Zap aria-hidden="true" className="size-5" />
-                </div>
-                <h3 className="text-lg font-semibold">{entry.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-[var(--brand-muted)]">
-                  {entry.summary}
-                </p>
-              </Link>
             ))}
           </div>
         </Container>

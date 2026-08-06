@@ -18,7 +18,7 @@ export type DashboardSummary = {
   draftCount: number
   publishedCount: number
   contentMix: Array<{
-    key: 'projects' | 'writing' | 'lab'
+    key: 'projects'
     value: number
   }>
   recentProjects: DashboardSummaryItem[]
@@ -29,11 +29,7 @@ const emptySummary: DashboardSummary = {
   featuredCount: 0,
   draftCount: 0,
   publishedCount: 0,
-  contentMix: [
-    { key: 'projects', value: 0 },
-    { key: 'writing', value: 0 },
-    { key: 'lab', value: 0 },
-  ],
+  contentMix: [{ key: 'projects', value: 0 }],
   recentProjects: [],
 }
 
@@ -49,33 +45,17 @@ export const getDashboardSummary = createServerFn({ method: 'GET' }).handler(
 
     try {
       const db = await getDashboardDb()
-      const [{ listProjects }, { listWriting, listLabEntries }] =
-        await Promise.all([
-          import('#/features/projects/queries'),
-          import('#/features/content/queries'),
-        ])
-      const [projects, writing, labEntries] = await Promise.all([
-        listProjects(db),
-        listWriting(db),
-        listLabEntries(db),
-      ])
-      const allStatuses = [
-        ...projects.map((project) => project.status),
-        ...writing.map((entry) => entry.status),
-        ...labEntries.map((entry) => entry.status),
-      ]
+      const { listProjects } = await import('#/features/projects/queries')
+      const projects = await listProjects(db)
+      const allStatuses = projects.map((project) => project.status)
 
       return {
-        totalItems: projects.length + writing.length + labEntries.length,
+        totalItems: projects.length,
         featuredCount: projects.filter((project) => project.featured).length,
         draftCount: allStatuses.filter((status) => status === 'draft').length,
         publishedCount: allStatuses.filter((status) => status === 'published')
           .length,
-        contentMix: [
-          { key: 'projects' as const, value: projects.length },
-          { key: 'writing' as const, value: writing.length },
-          { key: 'lab' as const, value: labEntries.length },
-        ],
+        contentMix: [{ key: 'projects' as const, value: projects.length }],
         recentProjects: projects.slice(0, 5).map((project) => ({
           id: project.id,
           slug: project.slug,
