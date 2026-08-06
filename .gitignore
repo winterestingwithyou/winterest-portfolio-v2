@@ -20,4 +20,5 @@ todos.json
 
 ## Graphifyy
 graphify-out/cost.json        
-graphify-out/cache/      
+graphify-out/cache/   
+.graphify_root   
