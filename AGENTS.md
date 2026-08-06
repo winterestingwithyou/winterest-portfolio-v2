@@ -2,9 +2,12 @@
 
 ## Project Identity
 
-This repository is `winterest-portfolio-v2`, a personal portfolio website built with TanStack Start and deployed to Cloudflare.
+This repository is `winterest-portfolio-v2`, the **primary personal portfolio platform** for **M. Adam Yudistira / Winterest**, built with TanStack Start and deployed to Cloudflare Workers.
 
-The project should evolve from the initialized resume starter into a polished personal portfolio, CMS dashboard, and developer lab with a Cloudflare + Bun inspired aesthetic.
+CRITICAL POSITIONING & REPLACEMENT ROLE:
+
+- This project is **NOT** a secondary or companion portfolio. This is the **MAIN PRIMARY PORTFOLIO** designed to completely replace all previous portfolios.
+- Treat it as the flagship personal developer platform, CMS dashboard, and developer lab for Winterest.
 
 The desired vibe is:
 
@@ -16,16 +19,23 @@ The desired vibe is:
 - fast, accessible, responsive, and edge-friendly
 - suitable for long-term semi-vibe-code development
 
-The portfolio belongs to **M. Adam Yudistira / winterestingwithyou**.
+The portfolio belongs to **M. Adam Yudistira / Winterest**.
 
 Primary identity:
 
-- GitHub username: `winterestingwithyou`
+- Public Brand / Nickname: `Winterest`
 - Domain direction: `winterest.tech`
-- Project/repo name: `winterest-portfolio-v2`
+- GitHub username: `winterestingwithyou`
+- Project / repo name: `winterest-portfolio-v2` (internal repository name only)
 - Design theme: `Cloudflare + Bun`
 - Main color direction: orange, white, black/dark gray, warm neutrals
 - Tone: playful, clean, technical, personal, polished
+
+### Strict UI Branding & Web Output Rule
+
+- **DO NOT** display `"winterestingwithyou"`, `"winterest portfolio v2"`, `"Winterest Portfolio v2"`, `"winterest-portfolio-v2"`, or internal versioning phrases anywhere in the rendered web UI or web output code (`.tsx`, `.html`, metadata titles, headers, footers, seed data UI copy, etc.).
+- Internal repo identifiers like `winterest-portfolio-v2` are ONLY allowed in documentation (`.md` files), git history, and system configurations (`package.json`, `wrangler.jsonc`, etc.).
+- On the web UI, the site must be presented strictly as **Winterest** (or **Winterest Portfolio**), the official primary portfolio.
 
 ## Core Goal
 

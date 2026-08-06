@@ -293,7 +293,7 @@ export const publicCopy = {
       stack: 'Stack',
     },
     footer: {
-      eyebrow: 'Winterest Portfolio v2',
+      eyebrow: 'Winterest Portfolio',
       description:
         'Personal portfolio, writing space, and developer lab for Winterest. Built with a warm Cloudflare + Bun inspired visual language.',
       rights: 'All rights reserved.',
@@ -475,7 +475,7 @@ export const publicCopy = {
       stack: 'Stack',
     },
     footer: {
-      eyebrow: 'Winterest Portfolio v2',
+      eyebrow: 'Winterest Portfolio',
       description:
         'Portfolio personal, ruang tulisan, dan developer lab milik Winterest. Dibangun dengan bahasa visual hangat yang terinspirasi Cloudflare + Bun.',
       rights: 'Semua hak dilindungi.',

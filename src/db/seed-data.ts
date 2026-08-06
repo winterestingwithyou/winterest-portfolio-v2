@@ -130,7 +130,7 @@ export const projectSeeds = [
     ],
     translations: {
       en: {
-        title: 'Winterest Portfolio v2',
+        title: 'Winterest Portfolio Platform',
         summary:
           'My personal portfolio rebuilt as a long-term home for projects, writing, experiments, and a private CMS.',
         description:
@@ -140,7 +140,7 @@ export const projectSeeds = [
         category: 'Portfolio',
       },
       id: {
-        title: 'Winterest Portfolio v2',
+        title: 'Winterest Portfolio Platform',
         summary:
           'Portfolio pribadi Winterest yang dibangun sebagai rumah jangka panjang untuk project, tulisan, eksperimen, dan CMS privat.',
         description:

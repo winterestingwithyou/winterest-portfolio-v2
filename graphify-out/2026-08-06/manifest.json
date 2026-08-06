@@ -210,9 +210,9 @@
     "semantic_hash": "cc51fff7dc7dd732aaf4e211cb75a0d6"
   },
   "src/db/seed-data.ts": {
-    "mtime": 1786029838.8974164,
-    "ast_hash": "764c9331d4959398aa8b412561efd620",
-    "semantic_hash": ""
+    "mtime": 1781345420.0280457,
+    "ast_hash": "593a95630d8bd71aa12f15b84f7e41b6",
+    "semantic_hash": "593a95630d8bd71aa12f15b84f7e41b6"
   },
   "src/db/seed.ts": {
     "mtime": 1781345520.2912862,
@@ -295,9 +295,9 @@
     "semantic_hash": "a76f9165969ab9187991b1b4c3bbf44a"
   },
   "src/features/portfolio/data.ts": {
-    "mtime": 1786029831.1020246,
-    "ast_hash": "5b6e681c2205aadf96b89a371e969b7b",
-    "semantic_hash": ""
+    "mtime": 1781327870.0313156,
+    "ast_hash": "ef4d9dbddba1d16f7bcbcee518c46803",
+    "semantic_hash": "ef4d9dbddba1d16f7bcbcee518c46803"
   },
   "src/features/projects/public-loaders.ts": {
     "mtime": 1781329680.5084248,
@@ -543,85 +543,5 @@
     "mtime": 1781268569.997534,
     "ast_hash": "1a1ebcdb251b85f8064b001480227658",
     "semantic_hash": "1a1ebcdb251b85f8064b001480227658"
-  },
-  ".agents/rules/graphify.md": {
-    "mtime": 1786029958.8869154,
-    "ast_hash": "52ab4665f0ffed45d29883e2bdcbfa05",
-    "semantic_hash": ""
-  },
-  ".agents/workflows/graphify.md": {
-    "mtime": 1786027367.5968401,
-    "ast_hash": "6d73634a678cf1e1c71930adf80bd1f0",
-    "semantic_hash": ""
-  },
-  "AGENTS.md": {
-    "mtime": 1786029961.4579475,
-    "ast_hash": "51fc48ef6134a37108e1a151cd80dd1c",
-    "semantic_hash": ""
-  },
-  "HANDOVER.md": {
-    "mtime": 1786029855.8686285,
-    "ast_hash": "c6fe623f37da6e39d08018f0a09085af",
-    "semantic_hash": ""
-  },
-  "README.md": {
-    "mtime": 1781288343.9469602,
-    "ast_hash": "88b70bcdb232654799cf052ee8aa5bc6",
-    "semantic_hash": ""
-  },
-  "content/education/code-school.md": {
-    "mtime": 1781264416.516726,
-    "ast_hash": "dfb1d74e39e8ae950251a3f0e5ec3651",
-    "semantic_hash": ""
-  },
-  "content/jobs/freelance.md": {
-    "mtime": 1781264416.5997272,
-    "ast_hash": "33c58f50d180290947677c633ce6107d",
-    "semantic_hash": ""
-  },
-  "content/jobs/initech-junior.md": {
-    "mtime": 1781264416.6867282,
-    "ast_hash": "6392e6f72bddb17c745d77ce05c4120c",
-    "semantic_hash": ""
-  },
-  "content/jobs/initech-lead.md": {
-    "mtime": 1781264416.7887297,
-    "ast_hash": "01f99ff806a995aec72f5dfd3c9c883e",
-    "semantic_hash": ""
-  },
-  "content/jobs/initrode-senior.md": {
-    "mtime": 1781264416.9527318,
-    "ast_hash": "d8e99b5ac16e745150f2e58caa6aac3e",
-    "semantic_hash": ""
-  },
-  "public/robots.txt": {
-    "mtime": 1781163344.8684268,
-    "ast_hash": "fa1ded1ed7c11438a9b0385b1e112850",
-    "semantic_hash": ""
-  },
-  "public/assets/characters/winterest-mascot.png": {
-    "mtime": 1781284917.827604,
-    "ast_hash": "0eb317b30e27b2a23281807f5664e829",
-    "semantic_hash": ""
-  },
-  "public/drizzle.svg": {
-    "mtime": 1781163345.5314353,
-    "ast_hash": "1a67952e8e4e4afe70f6043b924ba090",
-    "semantic_hash": ""
-  },
-  "public/headshot-on-white.jpg": {
-    "mtime": 1781163346.5104477,
-    "ast_hash": "c54ed49724439e6e058133ac67f5df13",
-    "semantic_hash": ""
-  },
-  "public/logo192.png": {
-    "mtime": 1781163344.8624268,
-    "ast_hash": "33dbdd0177549353eeeb785d02c294af",
-    "semantic_hash": ""
-  },
-  "public/logo512.png": {
-    "mtime": 1781163344.8664267,
-    "ast_hash": "917515db74ea8d1aee6a246cfbcc0b45",
-    "semantic_hash": ""
   }
 }

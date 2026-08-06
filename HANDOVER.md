@@ -4,21 +4,22 @@ Last updated: 2026-06-13
 
 ## Project Identity
 
-This repo is `winterest-portfolio-v2`, a personal portfolio platform for **Winterest**.
+This repository (`winterest-portfolio-v2`) is the **MAIN PRIMARY PERSONAL PORTFOLIO PLATFORM** for **Winterest**, designed to replace all previous portfolios.
 
 Direction from `AGENTS.md`:
 
-- Personal portfolio, not a generic resume template.
+- Primary personal portfolio platform, NOT a companion/secondary portfolio.
 - Cloudflare + Bun inspired aesthetic.
 - Orange, white, black/dark gray, warm neutrals.
 - Public portfolio + CMS dashboard + auth/RBAC + database-backed content.
 - Cloudflare-first TanStack Start app with D1/Drizzle.
 - Bilingual UI: `en` and `id`.
 
-Important naming preference from the user:
+Important naming & UI rules:
 
-- Use **Winterest** as the public nickname/brand.
-- Do not use `winterestingwithyou` as public brand copy unless specifically needed for GitHub/reference context.
+- Use **Winterest** (or **Winterest Portfolio**) as the public brand.
+- **DO NOT** display `"winterest portfolio v2"`, `"Winterest Portfolio v2"`, `"winterest-portfolio-v2"`, or `"winterestingwithyou"` in rendered web code (`.tsx`, `.html`, UI copy, metadata titles, etc.).
+- Repo name `winterest-portfolio-v2` is ONLY allowed in `.md` docs, git, and system configs.
 
 ## Hard Rules For The Next Agent
 
