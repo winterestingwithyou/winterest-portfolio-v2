@@ -5,3 +5,5 @@ dist
 .content-collections
 src/paraglide
 worker-configuration.d.ts
+graphify-out
+

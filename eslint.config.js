@@ -3,6 +3,19 @@
 import { tanstackConfig } from '@tanstack/eslint-config'
 
 export default [
+  {
+    ignores: [
+      'eslint.config.js',
+      'prettier.config.js',
+      'dist/**',
+      '.content-collections/**',
+      'src/paraglide/**',
+      'worker-configuration.d.ts',
+      'graphify-out/**',
+      '.tanstack/**',
+      '.wrangler/**',
+    ],
+  },
   ...tanstackConfig,
   {
     rules: {
@@ -13,15 +26,5 @@ export default [
       '@typescript-eslint/require-await': 'off',
       'pnpm/json-enforce-catalog': 'off',
     },
-  },
-  {
-    ignores: [
-      'eslint.config.js',
-      'prettier.config.js',
-      'dist/**',
-      '.content-collections/generated/**',
-      'src/paraglide/**',
-      'worker-configuration.d.ts',
-    ],
   },
 ]
