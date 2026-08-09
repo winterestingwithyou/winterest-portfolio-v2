@@ -5,8 +5,9 @@ export type PortfolioProjectSeed = {
   slug: string
   featured: boolean
   repoUrl?: string
+  repoVisibility?: 'public' | 'private'
   demoUrl?: string
-  caseStudyUrl?: string
+  productionUrl?: string
   publishedAt: Date
   technologies: string[]
   translations: Record<
@@ -15,7 +16,6 @@ export type PortfolioProjectSeed = {
       title: string
       summary: string
       description: string
-      content: string
       category: string
     }
   >
@@ -103,6 +103,7 @@ export const projectSeeds = [
     slug: 'winterest-portfolio-platform',
     featured: true,
     repoUrl: 'https://github.com/winterest/winterest-portfolio-v2',
+    repoVisibility: 'public',
     publishedAt: new Date('2026-02-01T00:00:00.000Z'),
     technologies: [
       'tanstack-start',
@@ -119,9 +120,7 @@ export const projectSeeds = [
         summary:
           'My personal portfolio built as a long-term home for projects, case studies, and a private CMS.',
         description:
-          'A personal developer platform for Winterest: public portfolio outside, practical content workflow inside.',
-        content:
-          'This project turns the portfolio into a place that can keep growing. The public side focuses on work and contact paths. The private side keeps content editable through a small CMS so updates do not have to start from code every time.\n\nThe current goal is simple: make the site feel personal, keep the content honest, and let each section be powered by published records from the database.',
+          'A personal developer platform for Winterest: public portfolio outside, practical content workflow inside. This project turns the portfolio into a place that can keep growing. The public side focuses on work and contact paths. The private side keeps content editable through a small CMS so updates do not have to start from code every time.\n\nThe current goal is simple: make the site feel personal, keep the content honest, and let each section be powered by published records from the database.',
         category: 'Portfolio',
       },
       id: {
@@ -129,9 +128,7 @@ export const projectSeeds = [
         summary:
           'Portfolio pribadi Winterest yang dibangun sebagai rumah jangka panjang untuk project, case study, dan CMS privat.',
         description:
-          'Platform developer personal untuk Winterest: portfolio publik di depan, workflow konten praktis di belakang.',
-        content:
-          'Project ini mengubah portfolio menjadi ruang yang bisa terus tumbuh. Sisi publik berfokus pada karya dan jalur kontak. Sisi privat menjaga konten tetap mudah diedit lewat CMS kecil sehingga update tidak selalu harus dimulai dari kode.\n\nTujuan saat ini sederhana: membuat situs terasa personal, menjaga kontennya jujur, dan memastikan setiap bagian ditenagai oleh record published dari database.',
+          'Platform developer personal untuk Winterest: portfolio publik di depan, workflow konten praktis di belakang. Project ini mengubah portfolio menjadi ruang yang bisa terus tumbuh. Sisi publik berfokus pada karya dan jalur kontak. Sisi privat menjaga konten tetap mudah diedit lewat CMS kecil sehingga update tidak selalu harus dimulai dari kode.\n\nTujuan saat ini sederhana: membuat situs terasa personal, menjaga kontennya jujur, dan memastikan setiap bagian ditenagai oleh record published dari database.',
         category: 'Portfolio',
       },
     },
@@ -140,6 +137,7 @@ export const projectSeeds = [
     id: 'project-edge-cms-dashboard',
     slug: 'edge-cms-dashboard',
     featured: true,
+    repoVisibility: 'private',
     publishedAt: new Date('2026-02-08T00:00:00.000Z'),
     technologies: [
       'cloudflare-d1',
@@ -154,9 +152,7 @@ export const projectSeeds = [
         summary:
           'A private dashboard for managing portfolio projects, media metadata, and publishing status.',
         description:
-          'An owner-first dashboard that keeps portfolio publishing small, focused, and maintainable.',
-        content:
-          'The dashboard exists so project stories can move from rough idea to public page without exposing private work. It favors clear forms, predictable lists, and simple publishing states over decorative admin screens.\n\nThe first version focuses on projects and media metadata. User and role management can grow after the core editing workflow feels solid.',
+          'An owner-first dashboard that keeps portfolio publishing small, focused, and maintainable. The dashboard exists so project stories can move from rough idea to public page without exposing private work. It favors clear forms, predictable lists, and simple publishing states over decorative admin screens.\n\nThe first version focuses on projects and media metadata. User and role management can grow after the core editing workflow feels solid.',
         category: 'CMS',
       },
       id: {
@@ -164,9 +160,7 @@ export const projectSeeds = [
         summary:
           'Dashboard privat untuk mengelola project portfolio, metadata media, dan status publish.',
         description:
-          'Dashboard owner-first yang menjaga publishing portfolio tetap kecil, fokus, dan mudah dirawat.',
-        content:
-          'Dashboard ini ada supaya cerita project bisa bergerak dari ide kasar ke halaman publik tanpa membocorkan pekerjaan privat. Fokusnya adalah form yang jelas, list yang mudah dipindai, dan status publishing yang sederhana.\n\nVersi pertama berfokus pada project dan metadata media. Manajemen user dan role bisa tumbuh setelah workflow editing utama terasa solid.',
+          'Dashboard owner-first yang menjaga publishing portfolio tetap kecil, fokus, dan mudah dirawat. Dashboard ini ada supaya cerita project bisa bergerak dari ide kasar ke halaman publik tanpa membocorkan pekerjaan privat. Fokusnya adalah form yang jelas, list yang mudah dipindai, dan status publishing yang sederhana.\n\nVersi pertama berfokus pada project dan metadata media. Manajemen user dan role bisa tumbuh setelah workflow editing utama terasa solid.',
         category: 'CMS',
       },
     },

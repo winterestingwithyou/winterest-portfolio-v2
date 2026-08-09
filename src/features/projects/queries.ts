@@ -19,13 +19,13 @@ export type ProjectTranslationValue = {
   title: string
   summary: string
   description?: string | null
-  content?: string | null
   category: string
 }
 
 export type DashboardProjectRecord = ProjectRecord & {
   translations: Record<ContentLocale, ProjectTranslationValue>
   availableLocales: ContentLocale[]
+  technologyIds: string[]
 }
 
 export type PublicProjectRecord = {
@@ -34,14 +34,14 @@ export type PublicProjectRecord = {
   title: string
   summary: string
   description?: string | null
-  content?: string | null
   status: string
   category: string
   featured: boolean
   coverImage?: string | null
   repoUrl?: string | null
+  repoVisibility: string
   demoUrl?: string | null
-  caseStudyUrl?: string | null
+  productionUrl?: string | null
   startedAt?: Date | null
   completedAt?: Date | null
   publishedAt?: Date | null
@@ -59,14 +59,14 @@ export function toPublicProjectRecord(
     title: translation.title,
     summary: translation.summary,
     description: translation.description,
-    content: translation.content,
     status: record.status,
     category: translation.category,
     featured: record.featured,
     coverImage: record.coverImage,
     repoUrl: record.repoUrl,
+    repoVisibility: record.repoVisibility,
     demoUrl: record.demoUrl,
-    caseStudyUrl: record.caseStudyUrl,
+    productionUrl: record.productionUrl,
     startedAt: record.startedAt,
     completedAt: record.completedAt,
     publishedAt: record.publishedAt,
@@ -84,9 +84,17 @@ export async function listProjects(db: Database) {
     db,
     records.map((record) => record.id),
   )
+  const technologyIdsMap = await listProjectTechnologyIds(
+    db,
+    records.map((record) => record.id),
+  )
 
   return records.map((record) =>
-    toDashboardProjectRecord(record, translations.get(record.id)),
+    toDashboardProjectRecord(
+      record,
+      translations.get(record.id),
+      technologyIdsMap.get(record.id) ?? [],
+    ),
   )
 }
 
@@ -202,6 +210,31 @@ async function listProjectTranslations(
   }, new Map<string, ProjectTranslationRecord[]>())
 }
 
+async function listProjectTechnologyIds(
+  db: Database,
+  projectIds: readonly string[],
+) {
+  if (projectIds.length === 0) {
+    return new Map<string, string[]>()
+  }
+
+  const rows = await db
+    .select({
+      projectId: projectTechnologies.projectId,
+      technologyId: projectTechnologies.technologyId,
+    })
+    .from(projectTechnologies)
+    .where(inArray(projectTechnologies.projectId, [...projectIds]))
+    .all()
+
+  return rows.reduce((map, row) => {
+    const existing = map.get(row.projectId) ?? []
+    existing.push(row.technologyId)
+    map.set(row.projectId, existing)
+    return map
+  }, new Map<string, string[]>())
+}
+
 async function listProjectTechnologyNames(
   db: Database,
   projectIds: readonly string[],
@@ -249,13 +282,23 @@ export async function getDashboardProjectByIdOrSlug(
   }
 
   const translations = await listProjectTranslations(db, [project.id])
-  return toDashboardProjectRecord(project, translations.get(project.id))
+  const technologyIdsMap = await listProjectTechnologyIds(db, [project.id])
+
+  return toDashboardProjectRecord(
+    project,
+    translations.get(project.id),
+    technologyIdsMap.get(project.id) ?? [],
+  )
 }
 
 export async function createProject(db: Database, input: ProjectInput) {
   const now = new Date()
   const id = crypto.randomUUID()
-  const publishedAt = input.status === 'published' ? now : null
+  const publishedAt = input.publishedAt
+    ? input.publishedAt
+    : input.status === 'published'
+      ? now
+      : null
   const english = input.translations.en
 
   await db
@@ -266,15 +309,17 @@ export async function createProject(db: Database, input: ProjectInput) {
       title: english.title,
       summary: english.summary,
       description: english.description,
-      content: english.content,
       status: input.status,
       visibility: input.visibility,
+      repoVisibility: input.repoVisibility,
       featured: input.featured,
       category: english.category,
       coverImage: input.coverImage,
       repoUrl: input.repoUrl,
       demoUrl: input.demoUrl,
-      caseStudyUrl: input.caseStudyUrl,
+      productionUrl: input.productionUrl,
+      startedAt: input.startedAt ?? null,
+      completedAt: input.completedAt ?? null,
       publishedAt,
       createdAt: now,
       updatedAt: now,
@@ -282,6 +327,7 @@ export async function createProject(db: Database, input: ProjectInput) {
     .run()
 
   await upsertProjectTranslations(db, id, input.translations, now)
+  await updateProjectTechnologies(db, id, input.technologyIds)
 
   const project = await getDashboardProjectByIdOrSlug(db, id)
   if (!project) {
@@ -303,8 +349,9 @@ export async function updateProject(
 
   const now = new Date()
   const english = input.translations.en
-  const publishedAt =
-    input.status === 'published' && !existing.publishedAt
+  const publishedAt = input.publishedAt
+    ? input.publishedAt
+    : input.status === 'published' && !existing.publishedAt
       ? now
       : input.status === 'published'
         ? existing.publishedAt
@@ -317,15 +364,17 @@ export async function updateProject(
       title: english.title,
       summary: english.summary,
       description: english.description,
-      content: english.content,
       status: input.status,
       visibility: input.visibility,
+      repoVisibility: input.repoVisibility,
       featured: input.featured,
       category: english.category,
       coverImage: input.coverImage,
       repoUrl: input.repoUrl,
       demoUrl: input.demoUrl,
-      caseStudyUrl: input.caseStudyUrl,
+      productionUrl: input.productionUrl,
+      startedAt: input.startedAt ?? existing.startedAt,
+      completedAt: input.completedAt ?? existing.completedAt,
       publishedAt,
       updatedAt: now,
     })
@@ -333,8 +382,32 @@ export async function updateProject(
     .run()
 
   await upsertProjectTranslations(db, existing.id, input.translations, now)
+  await updateProjectTechnologies(db, existing.id, input.technologyIds)
 
   return getDashboardProjectByIdOrSlug(db, existing.id)
+}
+
+async function updateProjectTechnologies(
+  db: Database,
+  projectId: string,
+  technologyIds: readonly string[],
+) {
+  await db
+    .delete(projectTechnologies)
+    .where(eq(projectTechnologies.projectId, projectId))
+    .run()
+
+  if (technologyIds.length > 0) {
+    await db
+      .insert(projectTechnologies)
+      .values(
+        technologyIds.map((technologyId) => ({
+          projectId,
+          technologyId,
+        })),
+      )
+      .run()
+  }
 }
 
 export async function deleteProject(db: Database, idOrSlug: string) {
@@ -361,6 +434,7 @@ function pickTranslation(
 function toDashboardProjectRecord(
   record: ProjectRecord,
   translations: readonly ProjectTranslationRecord[] = [],
+  technologyIds: readonly string[] = [],
 ): DashboardProjectRecord {
   const translationMap = new Map(
     translations.map((translation) => [translation.locale, translation]),
@@ -368,6 +442,7 @@ function toDashboardProjectRecord(
 
   return {
     ...record,
+    technologyIds: [...technologyIds],
     translations: Object.fromEntries(
       contentLocales.map((locale) => {
         const translation = translationMap.get(locale)
@@ -377,7 +452,6 @@ function toDashboardProjectRecord(
             title: translation?.title ?? '',
             summary: translation?.summary ?? '',
             description: translation?.description ?? '',
-            content: translation?.content ?? '',
             category: translation?.category ?? 'Project',
           },
         ]
@@ -403,7 +477,6 @@ async function upsertProjectTranslations(
         title: translation.title,
         summary: translation.summary,
         description: translation.description,
-        content: translation.content,
         category: translation.category,
         createdAt: now,
         updatedAt: now,
@@ -414,7 +487,6 @@ async function upsertProjectTranslations(
           title: translation.title,
           summary: translation.summary,
           description: translation.description,
-          content: translation.content,
           category: translation.category,
           updatedAt: now,
         },

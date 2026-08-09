@@ -216,9 +216,9 @@ export const publicCopy = {
     },
     projects: {
       eyebrow: 'Projects',
-      title: 'Projects with context, not just screenshots.',
+      title: 'Projects',
       description:
-        'This page collects the work I want people to understand: the problem, the decisions, the stack, and the tradeoffs behind each build.',
+        'A collection of projects built to solve real problems, academic tasks, and technical explorations.',
       open: 'Open',
       emptyTitle: 'No published projects yet.',
       emptyDescription:
@@ -362,9 +362,9 @@ export const publicCopy = {
     },
     projects: {
       eyebrow: 'Project',
-      title: 'Project dengan konteks, bukan cuma screenshot.',
+      title: 'Daftar Project',
       description:
-        'Halaman ini mengumpulkan karya yang ingin kupahami bersama orang lain: masalah, keputusan, stack, dan tradeoff di balik tiap build.',
+        'Project yang dibuat berdasarkan masalah, tugas, dan eksplorasi teknologi yang pernah kutemui.',
       open: 'Buka',
       emptyTitle: 'Belum ada project yang dipublish.',
       emptyDescription:

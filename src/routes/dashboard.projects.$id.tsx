@@ -12,15 +12,19 @@ type ProjectRecord = {
   title: string
   summary: string
   description?: string | null
-  content?: string | null
   status: 'draft' | 'published' | 'archived'
   visibility: 'public' | 'private'
+  repoVisibility: 'public' | 'private'
   featured: boolean
   category: string
   coverImage?: string | null
   repoUrl?: string | null
   demoUrl?: string | null
-  caseStudyUrl?: string | null
+  productionUrl?: string | null
+  startedAt?: string | null
+  completedAt?: string | null
+  publishedAt?: string | null
+  technologyIds?: string[] | null
   translations: Partial<
     Record<
       'en' | 'id',
@@ -28,7 +32,6 @@ type ProjectRecord = {
         title?: string | null
         summary?: string | null
         description?: string | null
-        content?: string | null
         category?: string | null
       }
     >
@@ -84,7 +87,7 @@ function DashboardProjectEdit() {
         <button
           type="button"
           onClick={loadProject}
-          className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] transition hover:-translate-y-0.5 hover:border-[var(--brand-orange)]"
+          className="inline-flex min-h-10 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
         >
           <RefreshCw aria-hidden="true" className="size-4" />
           {copy.common.refresh}
@@ -92,17 +95,17 @@ function DashboardProjectEdit() {
       }
     >
       {isLoading ? (
-        <div className="surface-card p-6 text-sm font-semibold text-[var(--brand-muted)]">
+        <div className="surface-card p-6 text-sm font-semibold text-(--brand-muted)">
           {copy.projects.loadingEntry}
         </div>
       ) : error || !project ? (
         <div className="surface-card max-w-2xl p-6">
-          <p className="text-sm leading-7 text-[var(--brand-muted)]">
+          <p className="text-sm leading-7 text-(--brand-muted)">
             {error ?? 'This project record is not available.'}
           </p>
           <Link
             to="/dashboard/projects"
-            className="mt-5 inline-flex min-h-10 items-center rounded-full bg-[var(--brand-orange)] px-4 text-sm font-bold text-white no-underline"
+            className="mt-5 inline-flex min-h-10 items-center rounded-full bg-(--brand-orange) px-4 text-sm font-bold text-white no-underline"
           >
             {copy.common.back}
           </Link>

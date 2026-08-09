@@ -3,6 +3,7 @@ import { Save, Trash2 } from 'lucide-react'
 import type { FormEvent } from 'react'
 import { useMemo, useState } from 'react'
 
+import { useTechnologies } from '#/features/technologies/hooks'
 import { getDashboardCopy } from './copy'
 
 type ProjectFormInitial = {
@@ -11,15 +12,19 @@ type ProjectFormInitial = {
   title?: string | null
   summary?: string | null
   description?: string | null
-  content?: string | null
   status?: 'draft' | 'published' | 'archived' | null
   visibility?: 'public' | 'private' | null
+  repoVisibility?: 'public' | 'private' | null
   featured?: boolean | null
   category?: string | null
   coverImage?: string | null
   repoUrl?: string | null
   demoUrl?: string | null
-  caseStudyUrl?: string | null
+  productionUrl?: string | null
+  startedAt?: Date | string | null
+  completedAt?: Date | string | null
+  publishedAt?: Date | string | null
+  technologyIds?: string[] | null
   translations?: Partial<Record<LocaleOption, ProjectTranslationInitial>>
 }
 
@@ -29,7 +34,6 @@ type ProjectTranslationInitial = {
   title?: string | null
   summary?: string | null
   description?: string | null
-  content?: string | null
   category?: string | null
 }
 
@@ -37,7 +41,6 @@ type ProjectTranslationFormValue = {
   title: string
   summary: string
   description: string
-  content: string
   category: string
 }
 
@@ -60,6 +63,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [featured, setFeatured] = useState(Boolean(project?.featured))
+  const { data: availableTechnologies = [] } = useTechnologies()
+  const [selectedTechIds, setSelectedTechIds] = useState<string[]>(
+    project?.technologyIds ?? [],
+  )
 
   const endpoint = useMemo(() => {
     if (mode === 'edit' && project?.id) {
@@ -73,6 +80,14 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
     return '/api/projects'
   }, [mode, project?.id, project?.slug])
 
+  function toggleTech(id: string) {
+    setSelectedTechIds((current) =>
+      current.includes(id)
+        ? current.filter((item) => item !== id)
+        : [...current, id],
+    )
+  }
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setIsPending(true)
@@ -84,11 +99,22 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
       slug: String(formData.get('slug') ?? ''),
       status: String(formData.get('status') ?? 'draft'),
       visibility: String(formData.get('visibility') ?? 'public'),
+      repoVisibility: String(formData.get('repoVisibility') ?? 'public'),
       featured,
       coverImage: String(formData.get('coverImage') ?? ''),
       repoUrl: String(formData.get('repoUrl') ?? ''),
       demoUrl: String(formData.get('demoUrl') ?? ''),
-      caseStudyUrl: String(formData.get('caseStudyUrl') ?? ''),
+      productionUrl: String(formData.get('productionUrl') ?? ''),
+      startedAt: formData.get('startedAt')
+        ? String(formData.get('startedAt'))
+        : undefined,
+      completedAt: formData.get('completedAt')
+        ? String(formData.get('completedAt'))
+        : undefined,
+      publishedAt: formData.get('publishedAt')
+        ? String(formData.get('publishedAt'))
+        : undefined,
+      technologyIds: selectedTechIds,
       translations: Object.fromEntries(
         localeOptions.map(({ value }) => [
           value,
@@ -96,7 +122,6 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
             title: String(formData.get(`${value}.title`) ?? ''),
             summary: String(formData.get(`${value}.summary`) ?? ''),
             description: String(formData.get(`${value}.description`) ?? ''),
-            content: String(formData.get(`${value}.content`) ?? ''),
             category: String(formData.get(`${value}.category`) ?? 'Project'),
           },
         ]),
@@ -161,7 +186,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="surface-card grid gap-5 p-5">
-      <div className="grid gap-5 md:grid-cols-2">
+      <div className="grid gap-5 md:grid-cols-3">
         <Field
           label={copy.form.slug}
           name="slug"
@@ -173,16 +198,29 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
           defaultValue={project?.status ?? 'draft'}
           options={statusOptions}
         />
-      </div>
-      <div className="grid gap-5 md:grid-cols-2">
         <Select
-          label={copy.form.visibility}
+          label="Visibilitas Project"
           name="visibility"
           defaultValue={project?.visibility ?? 'public'}
           options={visibilityOptions}
         />
       </div>
+
       <div className="grid gap-5 md:grid-cols-2">
+        <Select
+          label="Visibilitas Repository"
+          name="repoVisibility"
+          defaultValue={project?.repoVisibility ?? 'public'}
+          options={visibilityOptions}
+        />
+        <Field
+          label={copy.form.coverImageUrl}
+          name="coverImage"
+          defaultValue={project?.coverImage ?? ''}
+        />
+      </div>
+
+      <div className="grid gap-5 md:grid-cols-3">
         <Field
           label={copy.form.repositoryUrl}
           name="repoUrl"
@@ -194,16 +232,30 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
           defaultValue={project?.demoUrl ?? ''}
         />
         <Field
-          label={copy.form.caseStudyUrl}
-          name="caseStudyUrl"
-          defaultValue={project?.caseStudyUrl ?? ''}
-        />
-        <Field
-          label={copy.form.coverImageUrl}
-          name="coverImage"
-          defaultValue={project?.coverImage ?? ''}
+          label="URL Production / Live Site"
+          name="productionUrl"
+          defaultValue={project?.productionUrl ?? ''}
         />
       </div>
+
+      <div className="grid gap-5 md:grid-cols-3">
+        <DateField
+          label="Tanggal Mulai (Started At)"
+          name="startedAt"
+          defaultValue={formatDateForInput(project?.startedAt)}
+        />
+        <DateField
+          label="Tanggal Selesai (Completed At)"
+          name="completedAt"
+          defaultValue={formatDateForInput(project?.completedAt)}
+        />
+        <DateField
+          label="Tanggal Publish (Published At)"
+          name="publishedAt"
+          defaultValue={formatDateForInput(project?.publishedAt)}
+        />
+      </div>
+
       <label className="flex items-center gap-3 rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] p-3 text-sm font-bold text-[var(--brand-ink)]">
         <input
           type="checkbox"
@@ -213,6 +265,34 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         />
         {copy.form.featured}
       </label>
+
+      {availableTechnologies.length > 0 ? (
+        <div className="rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] p-4">
+          <h2 className="mb-3 text-sm font-bold text-[var(--brand-ink)]">
+            Teknologi Terkait
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {availableTechnologies.map((tech) => {
+              const isSelected = selectedTechIds.includes(tech.id)
+              return (
+                <button
+                  key={tech.id}
+                  type="button"
+                  onClick={() => toggleTech(tech.id)}
+                  className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition ${
+                    isSelected
+                      ? 'bg-[var(--brand-orange)] text-white'
+                      : 'border border-[var(--brand-line)] bg-[var(--surface-card)] text-[var(--brand-muted)] hover:border-[var(--brand-orange)]'
+                  }`}
+                >
+                  {tech.name}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      ) : null}
+
       {localeOptions.map(({ value, label }) => {
         const translation = getTranslation(project, value)
 
@@ -241,23 +321,18 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               name={`${value}.summary`}
               defaultValue={translation.summary}
             />
-            <Field
-              label={copy.form.description}
-              name={`${value}.description`}
-              defaultValue={translation.description}
-            />
             <div>
               <label
-                htmlFor={`${value}.content`}
+                htmlFor={`${value}.description`}
                 className="text-sm font-bold text-[var(--brand-ink)]"
               >
-                {copy.form.content}
+                {copy.form.description}
               </label>
               <textarea
-                id={`${value}.content`}
-                name={`${value}.content`}
-                rows={10}
-                defaultValue={translation.content}
+                id={`${value}.description`}
+                name={`${value}.description`}
+                rows={6}
+                defaultValue={translation.description}
                 className="mt-2 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-3 text-sm leading-7 text-[var(--brand-ink)]"
               />
             </div>
@@ -325,13 +400,18 @@ function getTranslation(
       translation?.description ??
       (locale === 'en' ? project?.description : '') ??
       '',
-    content:
-      translation?.content ?? (locale === 'en' ? project?.content : '') ?? '',
     category:
       translation?.category ??
       (locale === 'en' ? project?.category : 'Project') ??
       'Project',
   }
+}
+
+function formatDateForInput(date?: Date | string | null): string {
+  if (!date) return ''
+  const d = new Date(date)
+  if (isNaN(d.getTime())) return ''
+  return d.toISOString().split('T')[0]
 }
 
 function Field({
@@ -352,6 +432,34 @@ function Field({
         {label}
       </label>
       <input
+        id={name}
+        name={name}
+        defaultValue={defaultValue}
+        className="mt-2 min-h-11 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 text-sm text-[var(--brand-ink)]"
+      />
+    </div>
+  )
+}
+
+function DateField({
+  label,
+  name,
+  defaultValue,
+}: {
+  label: string
+  name: string
+  defaultValue: string
+}) {
+  return (
+    <div>
+      <label
+        htmlFor={name}
+        className="text-sm font-bold text-[var(--brand-ink)]"
+      >
+        {label}
+      </label>
+      <input
+        type="date"
         id={name}
         name={name}
         defaultValue={defaultValue}

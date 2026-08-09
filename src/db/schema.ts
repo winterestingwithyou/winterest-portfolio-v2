@@ -146,11 +146,13 @@ export const projects = sqliteTable(
     title: text('title').notNull(),
     summary: text('summary').notNull(),
     description: text('description'),
-    content: text('content'),
     status: text('status', { enum: contentStatuses })
       .notNull()
       .default('draft'),
     visibility: text('visibility', { enum: contentVisibilities })
+      .notNull()
+      .default('public'),
+    repoVisibility: text('repo_visibility', { enum: contentVisibilities })
       .notNull()
       .default('public'),
     featured: integer('featured', { mode: 'boolean' }).notNull().default(false),
@@ -158,7 +160,7 @@ export const projects = sqliteTable(
     coverImage: text('cover_image'),
     repoUrl: text('repo_url'),
     demoUrl: text('demo_url'),
-    caseStudyUrl: text('case_study_url'),
+    productionUrl: text('production_url'),
     startedAt: integer('started_at', { mode: 'timestamp' }),
     completedAt: integer('completed_at', { mode: 'timestamp' }),
     publishedAt: integer('published_at', { mode: 'timestamp' }),
@@ -183,7 +185,6 @@ export const projectTranslations = sqliteTable(
     title: text('title').notNull(),
     summary: text('summary').notNull(),
     description: text('description'),
-    content: text('content'),
     category: text('category').notNull().default('Project'),
     ...timestamps,
   },

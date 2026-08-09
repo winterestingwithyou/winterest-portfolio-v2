@@ -8,6 +8,13 @@
       "when": 1786034370747,
       "tag": "0000_init_db",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1786281366951,
+      "tag": "0001_add_repovisbility_and_production_url_on_projects",
+      "breakpoints": true
     }
   ]
 }

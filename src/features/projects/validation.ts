@@ -15,9 +15,8 @@ const projectTranslationSchema = z.object({
   summary: z.string().trim().min(8).max(280),
   description: z.preprocess(
     emptyToUndefined,
-    z.string().trim().max(1200).optional(),
+    z.string().trim().max(3000).optional(),
   ),
-  content: z.preprocess(emptyToUndefined, z.string().trim().optional()),
   category: z.string().trim().min(2).max(80).default('Project'),
 })
 
@@ -30,11 +29,16 @@ export const projectInputSchema = z.object({
     .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use a URL-safe slug.'),
   status: z.enum(contentStatuses).default('draft'),
   visibility: z.enum(contentVisibilities).default('public'),
+  repoVisibility: z.enum(contentVisibilities).default('public'),
   featured: z.boolean().default(false),
   coverImage: z.preprocess(emptyToUndefined, z.string().url().optional()),
   repoUrl: z.preprocess(emptyToUndefined, z.string().url().optional()),
   demoUrl: z.preprocess(emptyToUndefined, z.string().url().optional()),
-  caseStudyUrl: z.preprocess(emptyToUndefined, z.string().url().optional()),
+  productionUrl: z.preprocess(emptyToUndefined, z.string().url().optional()),
+  startedAt: z.preprocess(emptyToUndefined, z.coerce.date().optional()),
+  completedAt: z.preprocess(emptyToUndefined, z.coerce.date().optional()),
+  publishedAt: z.preprocess(emptyToUndefined, z.coerce.date().optional()),
+  technologyIds: z.array(z.string()).default([]),
   translations: z.object({
     en: projectTranslationSchema,
     id: projectTranslationSchema,
