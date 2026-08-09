@@ -1,8 +1,22 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
 import { Edit3, Plus, RefreshCw, Trash2 } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '#/components/ui/table'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 
 type ProjectRow = {
@@ -17,6 +31,8 @@ type ProjectRow = {
   availableLocales: Array<'en' | 'id'>
   updatedAt?: string
 }
+
+const columnHelper = createColumnHelper<ProjectRow>()
 
 export const Route = createFileRoute('/dashboard/projects/')({
   component: DashboardProjects,
@@ -83,6 +99,96 @@ function DashboardProjects() {
     void loadProjects()
   }, [loadProjects])
 
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor('title', {
+        header: copy.projects.project,
+        cell: (info) => {
+          const project = info.row.original
+          return (
+            <div>
+              <p className="font-semibold text-[var(--brand-ink)]">
+                {project.title}
+              </p>
+              <p className="mt-1 max-w-lg text-xs leading-relaxed text-[var(--brand-muted)]">
+                {project.summary}
+              </p>
+              <p className="mt-2 font-mono text-xs text-[var(--brand-muted)]">
+                /projects/{project.slug}
+              </p>
+            </div>
+          )
+        },
+      }),
+      columnHelper.accessor('status', {
+        header: copy.common.status,
+        cell: (info) => <StatusBadge value={info.getValue()} />,
+      }),
+      columnHelper.accessor('availableLocales', {
+        header: copy.common.language,
+        cell: (info) => (
+          <span className="text-[var(--brand-muted)]">
+            {formatLocales(info.getValue())}
+          </span>
+        ),
+      }),
+      columnHelper.accessor('visibility', {
+        header: copy.common.visibility,
+        cell: (info) => (
+          <span className="text-[var(--brand-muted)] capitalize">
+            {info.getValue()}
+          </span>
+        ),
+      }),
+      columnHelper.accessor('category', {
+        header: copy.common.category,
+        cell: (info) => (
+          <span className="text-[var(--brand-muted)]">{info.getValue()}</span>
+        ),
+      }),
+      columnHelper.display({
+        id: 'actions',
+        header: () => (
+          <div className="text-right font-bold">{copy.common.actions}</div>
+        ),
+        cell: (info) => {
+          const project = info.row.original
+          return (
+            <div className="flex justify-end gap-2">
+              <Link
+                to="/dashboard/projects/$id"
+                params={{ id: project.id }}
+                className="inline-grid size-9 place-items-center rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] text-[var(--brand-ink)] transition hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange-deep)]"
+              >
+                <span className="sr-only">
+                  {copy.common.edit} {project.title}
+                </span>
+                <Edit3 aria-hidden="true" className="size-4" />
+              </Link>
+              <button
+                type="button"
+                onClick={() => void deleteProject(project)}
+                className="inline-grid size-9 place-items-center rounded-full border border-red-500/30 bg-red-500/10 text-red-700 transition hover:-translate-y-0.5 dark:text-red-200"
+              >
+                <span className="sr-only">
+                  {copy.common.delete} {project.title}
+                </span>
+                <Trash2 aria-hidden="true" className="size-4" />
+              </button>
+            </div>
+          )
+        },
+      }),
+    ],
+    [copy, deleteProject],
+  )
+
+  const table = useReactTable({
+    data: projects,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+  })
+
   return (
     <DashboardShell
       title={copy.projects.title}
@@ -128,85 +234,41 @@ function DashboardProjects() {
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full min-w-[56rem] border-collapse text-left text-sm">
-              <thead className="border-b border-[var(--brand-line)] bg-[var(--brand-orange-soft)] text-[var(--brand-orange-deep)]">
-                <tr>
-                  <th scope="col" className="px-5 py-3 font-bold">
-                    {copy.projects.project}
-                  </th>
-                  <th scope="col" className="px-5 py-3 font-bold">
-                    {copy.common.status}
-                  </th>
-                  <th scope="col" className="px-5 py-3 font-bold">
-                    {copy.common.language}
-                  </th>
-                  <th scope="col" className="px-5 py-3 font-bold">
-                    {copy.common.visibility}
-                  </th>
-                  <th scope="col" className="px-5 py-3 font-bold">
-                    {copy.common.category}
-                  </th>
-                  <th scope="col" className="px-5 py-3 text-right font-bold">
-                    {copy.common.actions}
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[var(--brand-line)]">
-                {projects.map((project) => (
-                  <tr key={project.id}>
-                    <td className="px-5 py-4 align-top">
-                      <p className="font-semibold text-[var(--brand-ink)]">
-                        {project.title}
-                      </p>
-                      <p className="mt-1 max-w-lg text-[var(--brand-muted)]">
-                        {project.summary}
-                      </p>
-                      <p className="mt-2 font-mono text-xs text-[var(--brand-muted)]">
-                        /projects/{project.slug}
-                      </p>
-                    </td>
-                    <td className="px-5 py-4 align-top">
-                      <StatusBadge value={project.status} />
-                    </td>
-                    <td className="px-5 py-4 align-top text-[var(--brand-muted)]">
-                      {formatLocales(project.availableLocales)}
-                    </td>
-                    <td className="px-5 py-4 align-top text-[var(--brand-muted)]">
-                      {project.visibility}
-                    </td>
-                    <td className="px-5 py-4 align-top text-[var(--brand-muted)]">
-                      {project.category}
-                    </td>
-                    <td className="px-5 py-4 text-right align-top">
-                      <div className="inline-flex gap-2">
-                        <Link
-                          to="/dashboard/projects/$id"
-                          params={{ id: project.id }}
-                          className="inline-grid size-9 place-items-center rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] text-[var(--brand-ink)] transition hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange-deep)]"
-                        >
-                          <span className="sr-only">
-                            {copy.common.edit} {project.title}
-                          </span>
-                          <Edit3 aria-hidden="true" className="size-4" />
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => void deleteProject(project)}
-                          className="inline-grid size-9 place-items-center rounded-full border border-red-500/30 bg-red-500/10 text-red-700 transition hover:-translate-y-0.5 dark:text-red-200"
-                        >
-                          <span className="sr-only">
-                            {copy.common.delete} {project.title}
-                          </span>
-                          <Trash2 aria-hidden="true" className="size-4" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <Table>
+            <TableHeader className="bg-[var(--brand-orange-soft)]">
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead
+                      key={header.id}
+                      className="px-5 py-3 font-bold text-[var(--brand-orange-deep)]"
+                    >
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
+                    </TableHead>
+                  ))}
+                </TableRow>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="px-5 py-4 align-top">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         )}
       </section>
     </DashboardShell>
