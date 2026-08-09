@@ -1,7 +1,7 @@
 # Graph Report - winterest-portfolio-v2  (2026-08-09)
 
 ## Corpus Check
-- 99 files · ~185,020 words
+- 99 files · ~185,041 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7a19f42c`
+- Built from commit: `847dcd5c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -241,7 +241,7 @@
 - @tanstack/react-store
 - class-variance-authority
 - ProjectCard.tsx
-- @cloudflare/vite-plugin
+- @tanstack/ai-gemini
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 43 edges
@@ -402,7 +402,7 @@ Nodes (3): BasicImageTransformations, RequestInitCfPropertiesImage, RequestInitC
 
 ### Community 138 - "dependencies"
 Cohesion: 0.15
-Nodes (13): dependencies, radix-ui, @radix-ui/react-slot, @t3-oss/env-core, tailwind-merge, @tanstack/ai-client, @tanstack/ai-gemini, radix-ui (+5 more)
+Nodes (13): @cloudflare/vite-plugin, dependencies, @cloudflare/vite-plugin, radix-ui, @radix-ui/react-slot, @t3-oss/env-core, tailwind-merge, @tanstack/ai-client (+5 more)
 
 ### Community 140 - "loaders.ts"
 Cohesion: 0.25

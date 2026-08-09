@@ -8,7 +8,7 @@ export default function Footer() {
   const copy = getPublicCopy()
 
   return (
-    <footer className="mt-20 border-t border-[var(--brand-line)] px-4 pb-14 pt-10 text-[var(--brand-muted)]">
+    <footer className="mt-20 border-t border-(--brand-line) px-4 pb-14 pt-10 text-(--brand-muted)">
       <div className="page-wrap grid gap-8 md:grid-cols-[1.3fr_0.7fr] md:items-start">
         <div>
           <p className="eyebrow mb-3">{copy.footer.eyebrow}</p>

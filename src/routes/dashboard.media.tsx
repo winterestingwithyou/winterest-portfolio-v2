@@ -17,13 +17,13 @@ function DashboardMedia() {
       description={copy.media.description}
     >
       <section className="surface-card p-6">
-        <div className="grid size-11 place-items-center rounded-lg bg-[var(--brand-orange-soft)] text-[var(--brand-orange-deep)]">
+        <div className="grid size-11 place-items-center rounded-lg bg-(--brand-orange-soft) text-(--brand-orange-deep)">
           <Image aria-hidden="true" className="size-5" />
         </div>
-        <h2 className="mt-5 text-xl font-semibold text-[var(--brand-ink)]">
+        <h2 className="mt-5 text-xl font-semibold text-(--brand-ink)">
           {copy.media.emptyTitle}
         </h2>
-        <p className="mt-2 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
+        <p className="mt-2 max-w-2xl text-sm leading-7 text-(--brand-muted)">
           {copy.media.emptyDescription}
         </p>
       </section>

@@ -472,6 +472,10 @@ brand.glow         orange glow
 
 Do not hardcode random orange values everywhere. Define reusable tokens/classes.
 
+Tailwind CSS v4 class syntax rule:
+
+- Prefer Tailwind CSS v4 simplified variable syntax over legacy syntax: use `text-(--brand-ink)`, `bg-(--brand-orange-soft)`, `border-(--brand-line)`, `shadow-(--brand-orange-soft)` instead of `text-[var(--brand-ink)]`, `bg-[var(--brand-orange-soft)]`, `border-[var(--brand-line)]`, `shadow-[var(--brand-orange-soft)]`.
+
 Design quality target:
 
 - modern SaaS landing page polish

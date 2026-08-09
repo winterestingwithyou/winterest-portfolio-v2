@@ -107,13 +107,13 @@ function DashboardProjects() {
           const project = info.row.original
           return (
             <div>
-              <p className="font-semibold text-[var(--brand-ink)]">
+              <p className="font-semibold text-(--brand-ink)">
                 {project.title}
               </p>
-              <p className="mt-1 max-w-lg text-xs leading-relaxed text-[var(--brand-muted)]">
+              <p className="mt-1 max-w-lg text-xs leading-relaxed text-(--brand-muted)">
                 {project.summary}
               </p>
-              <p className="mt-2 font-mono text-xs text-[var(--brand-muted)]">
+              <p className="mt-2 font-mono text-xs text-(--brand-muted)">
                 /projects/{project.slug}
               </p>
             </div>
@@ -127,7 +127,7 @@ function DashboardProjects() {
       columnHelper.accessor('availableLocales', {
         header: copy.common.language,
         cell: (info) => (
-          <span className="text-[var(--brand-muted)]">
+          <span className="text-(--brand-muted)">
             {formatLocales(info.getValue())}
           </span>
         ),
@@ -135,7 +135,7 @@ function DashboardProjects() {
       columnHelper.accessor('visibility', {
         header: copy.common.visibility,
         cell: (info) => (
-          <span className="text-[var(--brand-muted)] capitalize">
+          <span className="text-(--brand-muted) capitalize">
             {info.getValue()}
           </span>
         ),
@@ -143,7 +143,7 @@ function DashboardProjects() {
       columnHelper.accessor('category', {
         header: copy.common.category,
         cell: (info) => (
-          <span className="text-[var(--brand-muted)]">{info.getValue()}</span>
+          <span className="text-(--brand-muted)">{info.getValue()}</span>
         ),
       }),
       columnHelper.display({
@@ -158,7 +158,7 @@ function DashboardProjects() {
               <Link
                 to="/dashboard/projects/$id"
                 params={{ id: project.id }}
-                className="inline-grid size-9 place-items-center rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] text-[var(--brand-ink)] transition hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange-deep)]"
+                className="inline-grid size-9 place-items-center rounded-full border border-(--brand-line) bg-(--surface-strong) text-(--brand-ink) transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
               >
                 <span className="sr-only">
                   {copy.common.edit} {project.title}
@@ -198,14 +198,14 @@ function DashboardProjects() {
           <button
             type="button"
             onClick={loadProjects}
-            className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] transition hover:-translate-y-0.5 hover:border-[var(--brand-orange)]"
+            className="inline-flex min-h-10 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
           >
             <RefreshCw aria-hidden="true" className="size-4" />
             {copy.common.refresh}
           </button>
           <Link
             to="/dashboard/projects/new"
-            className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[var(--brand-orange)] px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
+            className="inline-flex min-h-10 items-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
           >
             <Plus aria-hidden="true" className="size-4" />
             {copy.projects.new}
@@ -221,27 +221,27 @@ function DashboardProjects() {
 
       <section className="surface-card overflow-hidden">
         {isLoading ? (
-          <div className="p-6 text-sm font-semibold text-[var(--brand-muted)]">
+          <div className="p-6 text-sm font-semibold text-(--brand-muted)">
             {copy.projects.loading}
           </div>
         ) : projects.length === 0 ? (
           <div className="p-6">
-            <h2 className="text-xl font-semibold text-[var(--brand-ink)]">
+            <h2 className="text-xl font-semibold text-(--brand-ink)">
               {copy.projects.emptyTitle}
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-(--brand-muted)">
               {copy.projects.emptyDescription}
             </p>
           </div>
         ) : (
           <Table>
-            <TableHeader className="bg-[var(--brand-orange-soft)]">
+            <TableHeader className="bg-(--brand-orange-soft)">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <TableHead
                       key={header.id}
-                      className="px-5 py-3 font-bold text-[var(--brand-orange-deep)]"
+                      className="px-5 py-3 font-bold text-(--brand-orange-deep)"
                     >
                       {header.isPlaceholder
                         ? null
@@ -277,7 +277,7 @@ function DashboardProjects() {
 
 function StatusBadge({ value }: { value: ProjectRow['status'] }) {
   return (
-    <span className="rounded-full bg-[var(--brand-orange-soft)] px-3 py-1 text-xs font-bold text-[var(--brand-orange-deep)]">
+    <span className="rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-bold text-(--brand-orange-deep)">
       {value}
     </span>
   )

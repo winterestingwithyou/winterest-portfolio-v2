@@ -45,7 +45,7 @@ export default function Header() {
   }, [mobileNavOpen])
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[var(--brand-line)] bg-[var(--header-bg)] px-4 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-(--brand-line) bg-(--header-bg) px-4 backdrop-blur-xl">
       <nav className="page-wrap flex items-center gap-x-3 gap-y-2 py-3 sm:py-4">
         <Link
           to="/"

@@ -256,19 +256,19 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         />
       </div>
 
-      <label className="flex items-center gap-3 rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] p-3 text-sm font-bold text-[var(--brand-ink)]">
+      <label className="flex items-center gap-3 rounded-lg border border-(--brand-line) bg-(--surface-strong) p-3 text-sm font-bold text-(--brand-ink)">
         <input
           type="checkbox"
           checked={featured}
           onChange={(event) => setFeatured(event.target.checked)}
-          className="size-4 accent-[var(--brand-orange)]"
+          className="size-4 accent-(--brand-orange)"
         />
         {copy.form.featured}
       </label>
 
       {availableTechnologies.length > 0 ? (
-        <div className="rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] p-4">
-          <h2 className="mb-3 text-sm font-bold text-[var(--brand-ink)]">
+        <div className="rounded-lg border border-(--brand-line) bg-(--surface-strong) p-4">
+          <h2 className="mb-3 text-sm font-bold text-(--brand-ink)">
             Teknologi Terkait
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -281,8 +281,8 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                   onClick={() => toggleTech(tech.id)}
                   className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold transition ${
                     isSelected
-                      ? 'bg-[var(--brand-orange)] text-white'
-                      : 'border border-[var(--brand-line)] bg-[var(--surface-card)] text-[var(--brand-muted)] hover:border-[var(--brand-orange)]'
+                      ? 'bg-(--brand-orange) text-white'
+                      : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-muted) hover:border-(--brand-orange)'
                   }`}
                 >
                   {tech.name}
@@ -299,9 +299,9 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         return (
           <section
             key={value}
-            className="grid gap-5 rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] p-4"
+            className="grid gap-5 rounded-lg border border-(--brand-line) bg-(--surface-strong) p-4"
           >
-            <h2 className="text-lg font-semibold text-[var(--brand-ink)]">
+            <h2 className="text-lg font-semibold text-(--brand-ink)">
               {label}
             </h2>
             <div className="grid gap-5 md:grid-cols-2">
@@ -324,7 +324,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
             <div>
               <label
                 htmlFor={`${value}.description`}
-                className="text-sm font-bold text-[var(--brand-ink)]"
+                className="text-sm font-bold text-(--brand-ink)"
               >
                 {copy.form.description}
               </label>
@@ -333,7 +333,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 name={`${value}.description`}
                 rows={6}
                 defaultValue={translation.description}
-                className="mt-2 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-3 text-sm leading-7 text-[var(--brand-ink)]"
+                className="mt-2 w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 py-3 text-sm leading-7 text-(--brand-ink)"
               />
             </div>
           </section>
@@ -351,11 +351,11 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         </p>
       ) : null}
 
-      <div className="flex flex-wrap gap-2 border-t border-[var(--brand-line)] pt-5">
+      <div className="flex flex-wrap gap-2 border-t border-(--brand-line) pt-5">
         <button
           type="submit"
           disabled={isPending}
-          className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[var(--brand-orange)] px-4 text-sm font-bold text-white transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex min-h-10 items-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold text-white transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
         >
           <Save aria-hidden="true" className="size-4" />
           {isPending
@@ -377,7 +377,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         ) : null}
         <Link
           to="/dashboard/projects"
-          className="inline-flex min-h-10 items-center rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] no-underline transition hover:border-[var(--brand-orange)]"
+          className="inline-flex min-h-10 items-center rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange)"
         >
           {copy.common.back}
         </Link>
@@ -425,17 +425,14 @@ function Field({
 }) {
   return (
     <div>
-      <label
-        htmlFor={name}
-        className="text-sm font-bold text-[var(--brand-ink)]"
-      >
+      <label htmlFor={name} className="text-sm font-bold text-(--brand-ink)">
         {label}
       </label>
       <input
         id={name}
         name={name}
         defaultValue={defaultValue}
-        className="mt-2 min-h-11 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 text-sm text-[var(--brand-ink)]"
+        className="mt-2 min-h-11 w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 text-sm text-(--brand-ink)"
       />
     </div>
   )
@@ -452,10 +449,7 @@ function DateField({
 }) {
   return (
     <div>
-      <label
-        htmlFor={name}
-        className="text-sm font-bold text-[var(--brand-ink)]"
-      >
+      <label htmlFor={name} className="text-sm font-bold text-(--brand-ink)">
         {label}
       </label>
       <input
@@ -463,7 +457,7 @@ function DateField({
         id={name}
         name={name}
         defaultValue={defaultValue}
-        className="mt-2 min-h-11 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 text-sm text-[var(--brand-ink)]"
+        className="mt-2 min-h-11 w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 text-sm text-(--brand-ink)"
       />
     </div>
   )
@@ -482,17 +476,14 @@ function Select({
 }) {
   return (
     <div>
-      <label
-        htmlFor={name}
-        className="text-sm font-bold text-[var(--brand-ink)]"
-      >
+      <label htmlFor={name} className="text-sm font-bold text-(--brand-ink)">
         {label}
       </label>
       <select
         id={name}
         name={name}
         defaultValue={defaultValue}
-        className="mt-2 min-h-11 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 text-sm text-[var(--brand-ink)]"
+        className="mt-2 min-h-11 w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 text-sm text-(--brand-ink)"
       >
         {options.map((option) => (
           <option key={option} value={option}>

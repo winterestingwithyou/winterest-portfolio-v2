@@ -29,44 +29,44 @@ function ResumePage() {
         />
 
         <div className="surface-card p-6 print:border print:bg-white print:shadow-none sm:p-8">
-          <section className="grid gap-6 border-b border-[var(--brand-line)] pb-8 md:grid-cols-[1fr_auto] md:items-start">
+          <section className="grid gap-6 border-b border-(--brand-line) pb-8 md:grid-cols-[1fr_auto] md:items-start">
             <div>
-              <h1 className="text-3xl font-semibold text-[var(--brand-ink)]">
+              <h1 className="text-3xl font-semibold text-(--brand-ink)">
                 {siteProfile.name}
               </h1>
-              <p className="mt-2 text-sm font-semibold text-[var(--brand-orange-deep)]">
+              <p className="mt-2 text-sm font-semibold text-(--brand-orange-deep)">
                 {siteProfile.handle} | {siteProfile.domain}
               </p>
-              <p className="mt-4 max-w-3xl text-sm leading-7 text-[var(--brand-muted)]">
+              <p className="mt-4 max-w-3xl text-sm leading-7 text-(--brand-muted)">
                 {copy.resume.longIntro}
               </p>
             </div>
-            <div className="text-sm leading-7 text-[var(--brand-muted)] md:text-right">
+            <div className="text-sm leading-7 text-(--brand-muted) md:text-right">
               <p>{siteProfile.location}</p>
               <p>{siteProfile.contactEmail}</p>
               <p>{siteProfile.githubUrl}</p>
             </div>
           </section>
 
-          <section className="grid gap-8 border-b border-[var(--brand-line)] py-8 md:grid-cols-[12rem_1fr]">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
+          <section className="grid gap-8 border-b border-(--brand-line) py-8 md:grid-cols-[12rem_1fr]">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-(--brand-orange-deep)">
               {copy.resume.selectedWork}
             </h2>
             <div className="grid gap-6">
               {projects.length === 0 ? (
-                <p className="text-sm leading-7 text-[var(--brand-muted)]">
+                <p className="text-sm leading-7 text-(--brand-muted)">
                   {copy.projects.emptyDescription}
                 </p>
               ) : null}
               {projects.map((project) => (
                 <article key={project.slug}>
-                  <h3 className="text-xl font-semibold text-[var(--brand-ink)]">
+                  <h3 className="text-xl font-semibold text-(--brand-ink)">
                     {project.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-7 text-[var(--brand-muted)]">
+                  <p className="mt-2 text-sm leading-7 text-(--brand-muted)">
                     {project.summary}
                   </p>
-                  <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-[var(--brand-orange-deep)]">
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-(--brand-orange-deep)">
                     {project.technologies.join(' | ')}
                   </p>
                 </article>
@@ -74,20 +74,20 @@ function ResumePage() {
             </div>
           </section>
 
-          <section className="grid gap-8 border-b border-[var(--brand-line)] py-8 md:grid-cols-[12rem_1fr]">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
+          <section className="grid gap-8 border-b border-(--brand-line) py-8 md:grid-cols-[12rem_1fr]">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-(--brand-orange-deep)">
               {copy.resume.direction}
             </h2>
             <div className="grid gap-5">
               {timeline.map((item) => (
                 <article key={item.title}>
-                  <p className="text-xs font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
+                  <p className="text-xs font-bold uppercase tracking-wide text-(--brand-orange-deep)">
                     {item.period}
                   </p>
-                  <h3 className="mt-1 text-lg font-semibold text-[var(--brand-ink)]">
+                  <h3 className="mt-1 text-lg font-semibold text-(--brand-ink)">
                     {item.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-7 text-[var(--brand-muted)]">
+                  <p className="mt-2 text-sm leading-7 text-(--brand-muted)">
                     {item.description}
                   </p>
                 </article>
@@ -96,16 +96,16 @@ function ResumePage() {
           </section>
 
           <section className="grid gap-8 pt-8 md:grid-cols-[12rem_1fr]">
-            <h2 className="text-sm font-bold uppercase tracking-wide text-[var(--brand-orange-deep)]">
+            <h2 className="text-sm font-bold uppercase tracking-wide text-(--brand-orange-deep)">
               {copy.resume.stack}
             </h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {stackGroups.map((group) => (
                 <article key={group.title}>
-                  <h3 className="font-semibold text-[var(--brand-ink)]">
+                  <h3 className="font-semibold text-(--brand-ink)">
                     {group.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-7 text-[var(--brand-muted)]">
+                  <p className="mt-2 text-sm leading-7 text-(--brand-muted)">
                     {group.items.join(', ')}
                   </p>
                 </article>

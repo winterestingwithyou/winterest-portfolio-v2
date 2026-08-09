@@ -217,7 +217,7 @@ function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_10%_12%,color-mix(in_srgb,var(--brand-orange)_24%,transparent),transparent_28rem),radial-gradient(circle_at_86%_78%,color-mix(in_srgb,var(--brand-orange-deep)_20%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-cream)_92%,white),color-mix(in_srgb,var(--brand-orange-soft)_42%,var(--brand-cream)))] text-[var(--brand-ink)] dark:bg-[radial-gradient(circle_at_12%_14%,color-mix(in_srgb,var(--brand-orange)_22%,transparent),transparent_28rem),radial-gradient(circle_at_84%_76%,color-mix(in_srgb,var(--brand-orange-deep)_28%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-dark)_96%,black),color-mix(in_srgb,#24170d_72%,var(--brand-dark)))]">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_10%_12%,color-mix(in_srgb,var(--brand-orange)_24%,transparent),transparent_28rem),radial-gradient(circle_at_86%_78%,color-mix(in_srgb,var(--brand-orange-deep)_20%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-cream)_92%,white),color-mix(in_srgb,var(--brand-orange-soft)_42%,var(--brand-cream)))] text-(--brand-ink) dark:bg-[radial-gradient(circle_at_12%_14%,color-mix(in_srgb,var(--brand-orange)_22%,transparent),transparent_28rem),radial-gradient(circle_at_84%_76%,color-mix(in_srgb,var(--brand-orange-deep)_28%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-dark)_96%,black),color-mix(in_srgb,#24170d_72%,var(--brand-dark)))]">
       <div className="mx-auto min-h-screen w-full max-w-[74rem] px-3 py-3 sm:px-6 sm:py-6 lg:px-8">
         <header
           className="flex items-start justify-between gap-4 sm:items-center"
@@ -225,7 +225,7 @@ function LoginPage() {
         >
           <a
             href="/"
-            className="inline-flex min-h-9 items-center gap-2 rounded-full border border-[var(--brand-line)] bg-[color-mix(in_srgb,var(--surface-strong)_88%,transparent)] px-3 text-xs font-extrabold text-[var(--brand-ink)] no-underline shadow-[0_14px_36px_rgba(42,26,10,0.08)] transition hover:-translate-y-px hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange-deep)] sm:min-h-10 sm:text-sm"
+            className="inline-flex min-h-9 items-center gap-2 rounded-full border border-(--brand-line) bg-[color-mix(in_srgb,var(--surface-strong)_88%,transparent)] px-3 text-xs font-extrabold text-(--brand-ink) no-underline shadow-[0_14px_36px_rgba(42,26,10,0.08)] transition hover:-translate-y-px hover:border-(--brand-orange) hover:text-(--brand-orange-deep) sm:min-h-10 sm:text-sm"
           >
             <ArrowLeft aria-hidden="true" className="size-4" />
             {copy.backHome}
@@ -238,7 +238,7 @@ function LoginPage() {
 
         <section className="grid min-h-[calc(100vh-5rem)] items-center gap-8 py-9 sm:py-12 lg:grid-cols-[minmax(0,1.12fr)_minmax(22rem,0.88fr)] lg:gap-16 lg:py-20">
           <div className="grid gap-4">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[color-mix(in_srgb,var(--brand-orange)_38%,transparent)] bg-[color-mix(in_srgb,var(--surface-strong)_72%,transparent)] py-1 pr-3 pl-1 text-sm font-black text-[var(--brand-ink)] shadow-[0_18px_44px_var(--brand-glow)]">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[color-mix(in_srgb,var(--brand-orange)_38%,transparent)] bg-[color-mix(in_srgb,var(--surface-strong)_72%,transparent)] py-1 pr-3 pl-1 text-sm font-black text-(--brand-ink) shadow-[0_18px_44px_var(--brand-glow)]">
               <span className="brand-mark">
                 <Cloud aria-hidden="true" className="size-4" />
                 <Sparkles aria-hidden="true" className="brand-spark size-3" />
@@ -246,23 +246,23 @@ function LoginPage() {
               <span>Winterest</span>
             </div>
             <p className="eyebrow">{copy.eyebrow}</p>
-            <h1 className="max-w-2xl text-[clamp(2rem,9vw,3rem)] leading-[1] font-black text-[var(--brand-ink)] sm:text-[clamp(2.2rem,5vw,4rem)]">
+            <h1 className="max-w-2xl text-[clamp(2rem,9vw,3rem)] leading-[1] font-black text-(--brand-ink) sm:text-[clamp(2.2rem,5vw,4rem)]">
               {copy.title}
             </h1>
-            <p className="max-w-xl text-base leading-8 text-[var(--brand-muted)] sm:text-lg">
+            <p className="max-w-xl text-base leading-8 text-(--brand-muted) sm:text-lg">
               {copy.description}
             </p>
 
             <div className="grid max-w-xl gap-3 rounded-2xl border border-[color-mix(in_srgb,var(--brand-orange)_28%,transparent)] bg-[color-mix(in_srgb,var(--surface-strong)_72%,transparent)] p-4 shadow-[0_18px_52px_rgba(42,26,10,0.08)] sm:grid-cols-[auto_1fr]">
               <ShieldCheck
                 aria-hidden="true"
-                className="mt-0.5 size-5 text-[var(--brand-orange-deep)]"
+                className="mt-0.5 size-5 text-(--brand-orange-deep)"
               />
               <div>
-                <strong className="block text-sm text-[var(--brand-ink)]">
+                <strong className="block text-sm text-(--brand-ink)">
                   {copy.noteTitle}
                 </strong>
-                <span className="mt-1 block text-sm leading-7 text-[var(--brand-muted)]">
+                <span className="mt-1 block text-sm leading-7 text-(--brand-muted)">
                   {copy.note}
                 </span>
               </div>
@@ -272,7 +272,7 @@ function LoginPage() {
               {copy.highlights.map((highlight) => (
                 <span
                   key={highlight}
-                  className="rounded-full border border-[color-mix(in_srgb,var(--brand-orange)_30%,transparent)] bg-[color-mix(in_srgb,var(--surface-strong)_64%,transparent)] px-3 py-1.5 text-xs font-extrabold text-[var(--brand-muted)]"
+                  className="rounded-full border border-[color-mix(in_srgb,var(--brand-orange)_30%,transparent)] bg-[color-mix(in_srgb,var(--surface-strong)_64%,transparent)] px-3 py-1.5 text-xs font-extrabold text-(--brand-muted)"
                 >
                   {highlight}
                 </span>
@@ -285,7 +285,7 @@ function LoginPage() {
             className="grid gap-4 rounded-[1.25rem] border border-[color-mix(in_srgb,var(--brand-orange)_28%,var(--brand-line))] bg-[linear-gradient(145deg,color-mix(in_srgb,var(--surface-strong)_96%,transparent),color-mix(in_srgb,var(--brand-orange-soft)_28%,transparent)),var(--surface-strong)] p-4 shadow-[0_28px_80px_rgba(42,26,10,0.16),inset_0_1px_0_color-mix(in_srgb,white_42%,transparent)] sm:p-5"
           >
             <div
-              className="grid grid-cols-2 gap-1 rounded-full border border-[var(--brand-line)] bg-[color-mix(in_srgb,var(--brand-dark)_5%,var(--surface-strong))] p-1"
+              className="grid grid-cols-2 gap-1 rounded-full border border-(--brand-line) bg-[color-mix(in_srgb,var(--brand-dark)_5%,var(--surface-strong))] p-1"
               aria-label="Authentication mode"
             >
               <button
@@ -349,7 +349,7 @@ function LoginPage() {
             <button
               type="submit"
               disabled={isPending}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[var(--brand-orange)] px-5 text-sm font-black text-white shadow-[0_18px_44px_var(--brand-glow)] transition hover:-translate-y-px hover:shadow-[0_22px_54px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-black text-white shadow-[0_18px_44px_var(--brand-glow)] transition hover:-translate-y-px hover:shadow-[0_22px_54px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
             >
               <KeyRound aria-hidden="true" className="size-4" />
               {isPending ? copy.submit.pending : copy.submit[mode]}
@@ -365,8 +365,8 @@ function getModeButtonClass(isActive: boolean) {
   return cn(
     'inline-flex min-h-10 items-center justify-center gap-2 rounded-full text-sm font-extrabold transition',
     isActive
-      ? 'bg-[var(--brand-orange)] text-white shadow-[0_12px_32px_var(--brand-glow)]'
-      : 'text-[var(--brand-muted)] hover:text-[var(--brand-ink)]',
+      ? 'bg-(--brand-orange) text-white shadow-[0_12px_32px_var(--brand-glow)]'
+      : 'text-(--brand-muted) hover:text-(--brand-ink)',
   )
 }
 
@@ -389,7 +389,7 @@ function Field({
     <div className="grid gap-2">
       <label
         htmlFor={name}
-        className="text-sm font-extrabold text-[var(--brand-ink)]"
+        className="text-sm font-extrabold text-(--brand-ink)"
       >
         {label}
       </label>
@@ -401,7 +401,7 @@ function Field({
         defaultValue={defaultValue}
         placeholder={placeholder}
         required
-        className="min-h-12 w-full rounded-[0.9rem] border border-[var(--brand-line)] bg-[color-mix(in_srgb,var(--surface-strong)_86%,transparent)] px-3.5 text-sm font-semibold text-[var(--brand-ink)] outline-none transition placeholder:text-[color-mix(in_srgb,var(--brand-muted)_72%,transparent)] focus:border-[var(--brand-orange)] focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--brand-orange)_16%,transparent)]"
+        className="min-h-12 w-full rounded-[0.9rem] border border-(--brand-line) bg-[color-mix(in_srgb,var(--surface-strong)_86%,transparent)] px-3.5 text-sm font-semibold text-(--brand-ink) outline-none transition placeholder:text-[color-mix(in_srgb,var(--brand-muted)_72%,transparent)] focus:border-(--brand-orange) focus:shadow-[0_0_0_3px_color-mix(in_srgb,var(--brand-orange)_16%,transparent)]"
       />
     </div>
   )

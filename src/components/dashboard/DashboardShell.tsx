@@ -49,12 +49,12 @@ export function DashboardShell({
   ] as const
 
   return (
-    <main className="min-h-screen bg-[var(--brand-bg)] px-4 py-6">
+    <main className="min-h-screen bg-(--brand-bg) px-4 py-6">
       <div className="mx-auto grid w-full max-w-7xl gap-6 lg:grid-cols-[16rem_1fr]">
         <aside className="surface-card h-fit p-3 lg:sticky lg:top-24">
           <Link
             to="/"
-            className="mb-3 flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-bold text-[var(--brand-ink)] no-underline transition hover:bg-[var(--brand-orange-soft)]"
+            className="mb-3 flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-bold text-(--brand-ink) no-underline transition hover:bg-(--brand-orange-soft)"
           >
             <Home aria-hidden="true" className="size-4" />
             {copy.shell.backToSite}
@@ -70,7 +70,7 @@ export function DashboardShell({
                 return (
                   <span
                     key={item.to}
-                    className="flex min-h-10 cursor-not-allowed items-center gap-3 rounded-lg px-3 text-sm font-semibold text-[var(--brand-muted)] opacity-60"
+                    className="flex min-h-10 cursor-not-allowed items-center gap-3 rounded-lg px-3 text-sm font-semibold text-(--brand-muted) opacity-60"
                   >
                     <Icon aria-hidden="true" className="size-4" />
                     {item.label}
@@ -85,10 +85,9 @@ export function DashboardShell({
                 <Link
                   key={item.to}
                   to={item.to}
-                  className="flex min-h-10 items-center gap-3 rounded-lg px-3 text-sm font-semibold text-[var(--brand-muted)] no-underline transition hover:bg-[var(--brand-orange-soft)] hover:text-[var(--brand-ink)]"
+                  className="flex min-h-10 items-center gap-3 rounded-lg px-3 text-sm font-semibold text-(--brand-muted) no-underline transition hover:bg-(--brand-orange-soft) hover:text-(--brand-ink)"
                   activeProps={{
-                    className:
-                      'bg-[var(--brand-orange-soft)] text-[var(--brand-ink)]',
+                    className: 'bg-(--brand-orange-soft) text-(--brand-ink)',
                   }}
                 >
                   <Icon aria-hidden="true" className="size-4" />
@@ -100,14 +99,14 @@ export function DashboardShell({
         </aside>
 
         <section className="min-w-0">
-          <header className="mb-6 flex flex-col gap-4 rounded-xl border border-[var(--brand-line)] bg-[var(--surface-strong)] p-5 sm:flex-row sm:items-start sm:justify-between">
+          <header className="mb-6 flex flex-col gap-4 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-5 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <p className="eyebrow mb-2">{copy.shell.eyebrow}</p>
-              <h1 className="text-3xl font-semibold tracking-tight text-[var(--brand-ink)]">
+              <h1 className="text-3xl font-semibold tracking-tight text-(--brand-ink)">
                 {title}
               </h1>
               {description ? (
-                <p className="mt-2 max-w-2xl text-sm leading-7 text-[var(--brand-muted)]">
+                <p className="mt-2 max-w-2xl text-sm leading-7 text-(--brand-muted)">
                   {description}
                 </p>
               ) : null}
@@ -119,7 +118,7 @@ export function DashboardShell({
                 onClick={() => {
                   void authClient.signOut().then(() => navigate({ to: '/' }))
                 }}
-                className="inline-flex min-h-10 items-center gap-2 rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] transition hover:-translate-y-0.5 hover:border-[var(--brand-orange)]"
+                className="inline-flex min-h-10 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
               >
                 <LogOut aria-hidden="true" className="size-4" />
                 {copy.shell.logout}

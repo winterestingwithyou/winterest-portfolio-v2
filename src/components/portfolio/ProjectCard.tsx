@@ -17,10 +17,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
     Boolean(project.repoUrl && project.repoUrl.trim() !== '')
 
   return (
-    <article className="group surface-card flex flex-col justify-between overflow-hidden rounded-2xl border border-[var(--brand-line)] bg-[var(--surface-card)] transition duration-300 hover:-translate-y-1 hover:border-[var(--brand-orange)] hover:shadow-lg hover:shadow-[var(--brand-orange-soft)]">
+    <article className="group surface-card flex flex-col justify-between overflow-hidden rounded-2xl border border-(--brand-line) bg-(--surface-card) transition duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-(--brand-orange-soft)">
       <div>
         {/* Cover Image or Fallback Header */}
-        <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-[var(--brand-line)] bg-[var(--surface-strong)]">
+        <div className="relative aspect-video w-full overflow-hidden border-b border-(--brand-line) bg-(--surface-strong)">
           {project.coverImage ? (
             <img
               src={project.coverImage}
@@ -29,11 +29,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
               loading="lazy"
             />
           ) : (
-            <div className="flex size-full flex-col items-center justify-center bg-gradient-to-br from-[var(--brand-orange-soft)] via-[var(--surface-strong)] to-[var(--surface-card)] p-6 text-center">
-              <div className="mb-2 grid size-12 place-items-center rounded-full border border-[var(--brand-line)] bg-[var(--surface-card)] text-[var(--brand-orange-deep)] shadow-sm">
+            <div className="flex size-full flex-col items-center justify-center bg-linear-to-br from-(--brand-orange-soft) via-(--surface-strong) to-(--surface-card) p-6 text-center">
+              <div className="mb-2 grid size-12 place-items-center rounded-full border border-(--brand-line) bg-(--surface-card) text-(--brand-orange-deep) shadow-sm">
                 <Layers className="size-6" />
               </div>
-              <span className="font-mono text-xs font-semibold tracking-wider text-[var(--brand-muted)] uppercase">
+              <span className="font-mono text-xs font-semibold tracking-wider text-(--brand-muted) uppercase">
                 {project.category}
               </span>
             </div>
@@ -57,13 +57,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
               {project.technologies.slice(0, 5).map((tech) => (
                 <span
                   key={tech}
-                  className="rounded-md border border-[var(--brand-line)] bg-[var(--surface-strong)] px-2.5 py-0.5 font-mono text-xs font-medium text-[var(--brand-muted)]"
+                  className="rounded-md border border-(--brand-line) bg-(--surface-strong) px-2.5 py-0.5 font-mono text-xs font-medium text-(--brand-muted)"
                 >
                   {tech}
                 </span>
               ))}
               {project.technologies.length > 5 ? (
-                <span className="rounded-md border border-[var(--brand-line)] bg-[var(--surface-strong)] px-2 py-0.5 font-mono text-xs font-medium text-[var(--brand-muted)]">
+                <span className="rounded-md border border-(--brand-line) bg-(--surface-strong) px-2 py-0.5 font-mono text-xs font-medium text-(--brand-muted)">
                   +{project.technologies.length - 5}
                 </span>
               ) : null}
@@ -71,7 +71,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           ) : null}
 
           {/* Title */}
-          <h3 className="text-xl font-bold text-[var(--brand-ink)] transition group-hover:text-[var(--brand-orange-deep)]">
+          <h3 className="text-xl font-bold text-(--brand-ink) transition group-hover:text-(--brand-orange-deep)">
             <Link
               to="/projects/$slug"
               params={{ slug: project.slug }}
@@ -82,14 +82,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </h3>
 
           {/* Summary */}
-          <p className="mt-2 text-sm leading-relaxed text-[var(--brand-muted)] line-clamp-3">
+          <p className="mt-2 text-sm leading-relaxed text-(--brand-muted) line-clamp-3">
             {project.summary}
           </p>
         </div>
       </div>
 
       {/* Card Footer / Actions */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-[var(--brand-line)] bg-[var(--surface-strong)] p-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-(--brand-line) bg-(--surface-strong) p-4">
         <div className="flex flex-wrap items-center gap-2">
           {/* Live Production URL */}
           {hasProductionUrl ? (
@@ -98,9 +98,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noreferrer"
               title="Visit Live Site"
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--brand-line)] bg-[var(--surface-card)] px-3 py-1.5 text-xs font-semibold text-[var(--brand-ink)] no-underline transition hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange-deep)]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--surface-card) px-3 py-1.5 text-xs font-semibold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
             >
-              <Globe className="size-3.5 text-[var(--brand-orange-deep)]" />
+              <Globe className="size-3.5 text-(--brand-orange-deep)" />
               Live Site
             </a>
           ) : null}
@@ -112,7 +112,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noreferrer"
               title="View Demo"
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--brand-line)] bg-[var(--surface-card)] px-3 py-1.5 text-xs font-semibold text-[var(--brand-ink)] no-underline transition hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange-deep)]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--surface-card) px-3 py-1.5 text-xs font-semibold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
             >
               <ExternalLink className="size-3.5" />
               Demo
@@ -126,7 +126,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noreferrer"
               title="View GitHub Repository"
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--brand-line)] bg-[var(--surface-card)] px-3 py-1.5 text-xs font-semibold text-[var(--brand-ink)] no-underline transition hover:border-[var(--brand-orange)] hover:text-[var(--brand-orange-deep)]"
+              className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--surface-card) px-3 py-1.5 text-xs font-semibold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
             >
               <Github className="size-3.5" />
               Repository
@@ -138,7 +138,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <Link
           to="/projects/$slug"
           params={{ slug: project.slug }}
-          className="ml-auto inline-flex items-center gap-1 text-xs font-bold text-[var(--brand-orange-deep)] no-underline transition hover:translate-x-1"
+          className="ml-auto inline-flex items-center gap-1 text-xs font-bold text-(--brand-orange-deep) no-underline transition hover:translate-x-1"
         >
           Detail
           <ArrowRight className="size-3.5" />

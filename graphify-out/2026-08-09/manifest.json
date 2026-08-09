@@ -30,8 +30,8 @@
     "semantic_hash": ""
   },
   "drizzle/migrations/meta/_journal.json": {
-    "mtime": 1786034563.2989755,
-    "ast_hash": "cd58ef6314a69aefa72b34009da06868",
+    "mtime": 1786284232.761971,
+    "ast_hash": "96e0bac42a05e789e6f691284811bdd1",
     "semantic_hash": ""
   },
   "drizzle/scripts/reset.sql": {
@@ -335,14 +335,14 @@
     "semantic_hash": "a6ed34795fa491618e2e8ec761bb39fe"
   },
   "src/routes/dashboard.projects.$id.tsx": {
-    "mtime": 1786277538.1054714,
-    "ast_hash": "d6f0fe8d1e1463655ab7630c7af222ff",
+    "mtime": 1786283669.1944351,
+    "ast_hash": "130989a4bb9164aefa4189feec528fd6",
     "semantic_hash": ""
   },
   "src/routes/dashboard.projects.index.tsx": {
-    "mtime": 1781345204.4613314,
-    "ast_hash": "06d5d3e2d360630953287508c673eb03",
-    "semantic_hash": "06d5d3e2d360630953287508c673eb03"
+    "mtime": 1786284155.6729302,
+    "ast_hash": "d488834beddd13af4932740aa8d2b62e",
+    "semantic_hash": ""
   },
   "src/routes/dashboard.projects.new.tsx": {
     "mtime": 1781325271.7924378,
@@ -370,8 +370,8 @@
     "semantic_hash": ""
   },
   "src/routes/projects.index.tsx": {
-    "mtime": 1786278629.6470275,
-    "ast_hash": "3dd378e56669ea6d079628c2bfd98b75",
+    "mtime": 1786283342.2331786,
+    "ast_hash": "461b0f5c583cb189c2571279e11688b0",
     "semantic_hash": ""
   },
   "src/routes/resume.tsx": {
@@ -507,6 +507,21 @@
   "src/features/technologies/hooks.ts": {
     "mtime": 1786280753.4514775,
     "ast_hash": "67080979a7d3aff029a7d3b76a59dbc2",
+    "semantic_hash": ""
+  },
+  "drizzle/migrations/0001_add_repovisbility_and_production_url_on_projects.sql": {
+    "mtime": 1786281366.9734643,
+    "ast_hash": "e20443db522a86919eeedf34dc2def0c",
+    "semantic_hash": ""
+  },
+  "drizzle/migrations/meta/0001_snapshot.json": {
+    "mtime": 1786284233.2549777,
+    "ast_hash": "6ec2a7d2b6c7c4da9289f394842c24d0",
+    "semantic_hash": ""
+  },
+  "src/components/ui/table.tsx": {
+    "mtime": 1786284238.6770508,
+    "ast_hash": "dc1448957f8e153d639fb1a1524bbccd",
     "semantic_hash": ""
   }
 }

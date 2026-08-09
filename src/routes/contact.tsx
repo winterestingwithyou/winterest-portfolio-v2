@@ -38,7 +38,7 @@ function ContactPage() {
           </div>
 
           <div className="surface-card p-6">
-            <h2 className="text-2xl font-semibold text-[var(--brand-ink)]">
+            <h2 className="text-2xl font-semibold text-(--brand-ink)">
               {copy.contact.channels}
             </h2>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -46,14 +46,14 @@ function ContactPage() {
                 href={siteProfile.githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex min-h-12 items-center gap-3 rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] no-underline transition hover:-translate-y-0.5 hover:border-[var(--brand-orange)]"
+                className="inline-flex min-h-12 items-center gap-3 rounded-lg border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) no-underline transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
               >
                 <Github aria-hidden="true" className="size-4" />
                 GitHub
               </a>
               <a
                 href={`mailto:${siteProfile.contactEmail}`}
-                className="inline-flex min-h-12 items-center gap-3 rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] no-underline transition hover:-translate-y-0.5 hover:border-[var(--brand-orange)]"
+                className="inline-flex min-h-12 items-center gap-3 rounded-lg border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) no-underline transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
               >
                 <Mail aria-hidden="true" className="size-4" />
                 {siteProfile.contactEmail}
@@ -70,7 +70,7 @@ function ContactPage() {
             <div>
               <label
                 htmlFor="name"
-                className="text-sm font-bold text-[var(--brand-ink)]"
+                className="text-sm font-bold text-(--brand-ink)"
               >
                 {copy.contact.name}
               </label>
@@ -78,13 +78,13 @@ function ContactPage() {
                 id="name"
                 name="name"
                 autoComplete="name"
-                className="mt-2 min-h-11 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 text-sm text-[var(--brand-ink)]"
+                className="mt-2 min-h-11 w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 text-sm text-(--brand-ink)"
               />
             </div>
             <div>
               <label
                 htmlFor="email"
-                className="text-sm font-bold text-[var(--brand-ink)]"
+                className="text-sm font-bold text-(--brand-ink)"
               >
                 {copy.contact.email}
               </label>
@@ -93,13 +93,13 @@ function ContactPage() {
                 name="email"
                 type="email"
                 autoComplete="email"
-                className="mt-2 min-h-11 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 text-sm text-[var(--brand-ink)]"
+                className="mt-2 min-h-11 w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 text-sm text-(--brand-ink)"
               />
             </div>
             <div>
               <label
                 htmlFor="message"
-                className="text-sm font-bold text-[var(--brand-ink)]"
+                className="text-sm font-bold text-(--brand-ink)"
               >
                 {copy.contact.message}
               </label>
@@ -107,12 +107,12 @@ function ContactPage() {
                 id="message"
                 name="message"
                 rows={5}
-                className="mt-2 w-full rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-3 text-sm text-[var(--brand-ink)]"
+                className="mt-2 w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 py-3 text-sm text-(--brand-ink)"
               />
             </div>
             <button
               type="submit"
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-[var(--brand-orange)] px-5 text-sm font-bold text-white transition hover:-translate-y-0.5"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-bold text-white transition hover:-translate-y-0.5"
             >
               <Send aria-hidden="true" className="size-4" />
               {copy.contact.draft}

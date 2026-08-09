@@ -30,7 +30,7 @@ function DashboardHome() {
       actions={
         <Link
           to="/dashboard/projects"
-          className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[var(--brand-orange)] px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
+          className="inline-flex min-h-10 items-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
         >
           {copy.overview.action}
           <ArrowRight aria-hidden="true" className="size-4" />
@@ -62,26 +62,24 @@ function DashboardHome() {
 
       <div className="mt-6 grid gap-5 lg:grid-cols-[1fr_0.85fr]">
         <section className="surface-card p-5">
-          <h2 className="text-xl font-semibold text-[var(--brand-ink)]">
+          <h2 className="text-xl font-semibold text-(--brand-ink)">
             {copy.overview.chartTitle}
           </h2>
-          <p className="mt-2 text-sm leading-7 text-[var(--brand-muted)]">
+          <p className="mt-2 text-sm leading-7 text-(--brand-muted)">
             {copy.overview.chartDescription}
           </p>
           <div className="mt-6 grid gap-4">
             {contentMix.map((item) => (
               <div key={item.label}>
                 <div className="mb-2 flex items-center justify-between gap-3 text-sm">
-                  <span className="font-semibold text-[var(--brand-ink)]">
+                  <span className="font-semibold text-(--brand-ink)">
                     {item.label}
                   </span>
-                  <span className="text-[var(--brand-muted)]">
-                    {item.value}
-                  </span>
+                  <span className="text-(--brand-muted)">{item.value}</span>
                 </div>
-                <div className="h-3 overflow-hidden rounded-full bg-[var(--brand-orange-soft)]">
+                <div className="h-3 overflow-hidden rounded-full bg-(--brand-orange-soft)">
                   <div
-                    className="h-full rounded-full bg-[var(--brand-orange)]"
+                    className="h-full rounded-full bg-(--brand-orange)"
                     style={{ width: item.width }}
                   />
                 </div>
@@ -91,10 +89,10 @@ function DashboardHome() {
         </section>
 
         <section className="surface-card p-5">
-          <h2 className="text-xl font-semibold text-[var(--brand-ink)]">
+          <h2 className="text-xl font-semibold text-(--brand-ink)">
             {copy.overview.quickTitle}
           </h2>
-          <p className="mt-2 text-sm leading-7 text-[var(--brand-muted)]">
+          <p className="mt-2 text-sm leading-7 text-(--brand-muted)">
             {copy.overview.quickDescription}
           </p>
           <div className="mt-5 grid gap-2">
@@ -108,17 +106,17 @@ function DashboardHome() {
       </div>
 
       <section className="mt-6 surface-card overflow-hidden">
-        <div className="border-b border-[var(--brand-line)] p-5">
-          <h2 className="text-xl font-semibold text-[var(--brand-ink)]">
+        <div className="border-b border-(--brand-line) p-5">
+          <h2 className="text-xl font-semibold text-(--brand-ink)">
             {copy.overview.activityTitle}
           </h2>
-          <p className="mt-2 text-sm leading-7 text-[var(--brand-muted)]">
+          <p className="mt-2 text-sm leading-7 text-(--brand-muted)">
             {copy.overview.activityDescription}
           </p>
         </div>
-        <div className="grid gap-0 divide-y divide-[var(--brand-line)]">
+        <div className="grid gap-0 divide-y divide-(--brand-line)">
           {summary.recentProjects.length === 0 ? (
-            <div className="p-5 text-sm leading-7 text-[var(--brand-muted)]">
+            <div className="p-5 text-sm leading-7 text-(--brand-muted)">
               {copy.projects.emptyDescription}
             </div>
           ) : null}
@@ -127,15 +125,15 @@ function DashboardHome() {
               key={project.id}
               to="/dashboard/projects/$id"
               params={{ id: project.id }}
-              className="grid gap-2 p-5 text-[var(--brand-ink)] no-underline transition hover:bg-[var(--brand-orange-soft)] md:grid-cols-[1fr_auto] md:items-center"
+              className="grid gap-2 p-5 text-(--brand-ink) no-underline transition hover:bg-(--brand-orange-soft) md:grid-cols-[1fr_auto] md:items-center"
             >
               <div>
                 <h3 className="font-semibold">{project.title}</h3>
-                <p className="mt-1 text-sm text-[var(--brand-muted)]">
+                <p className="mt-1 text-sm text-(--brand-muted)">
                   {project.summary}
                 </p>
               </div>
-              <span className="rounded-full border border-[var(--brand-line)] bg-[var(--surface-strong)] px-3 py-1 text-xs font-bold text-[var(--brand-orange-deep)]">
+              <span className="rounded-full border border-(--brand-line) bg-(--surface-strong) px-3 py-1 text-xs font-bold text-(--brand-orange-deep)">
                 {project.status}
               </span>
             </Link>
@@ -150,7 +148,7 @@ function QuickAction({ to, label }: { to: string; label: string }) {
   return (
     <Link
       to={to}
-      className="flex min-h-11 items-center justify-between gap-3 rounded-lg border border-[var(--brand-line)] bg-[var(--surface-strong)] px-4 text-sm font-bold text-[var(--brand-ink)] no-underline transition hover:-translate-y-0.5 hover:border-[var(--brand-orange)]"
+      className="flex min-h-11 items-center justify-between gap-3 rounded-lg border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) no-underline transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
     >
       {label}
       <ArrowRight aria-hidden="true" className="size-4" />
@@ -169,13 +167,11 @@ function MetricCard({
 }) {
   return (
     <article className="surface-card p-5">
-      <div className="mb-4 grid size-10 place-items-center rounded-lg bg-[var(--brand-orange-soft)] text-[var(--brand-orange-deep)]">
+      <div className="mb-4 grid size-10 place-items-center rounded-lg bg-(--brand-orange-soft) text-(--brand-orange-deep)">
         {icon}
       </div>
-      <p className="text-sm font-semibold text-[var(--brand-muted)]">{label}</p>
-      <p className="mt-2 text-3xl font-semibold text-[var(--brand-ink)]">
-        {value}
-      </p>
+      <p className="text-sm font-semibold text-(--brand-muted)">{label}</p>
+      <p className="mt-2 text-3xl font-semibold text-(--brand-ink)">{value}</p>
     </article>
   )
 }

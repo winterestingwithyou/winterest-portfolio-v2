@@ -21,10 +21,10 @@ export function CharacterSpotlight() {
 
       <div className="character-spotlight__content">
         <p className="eyebrow mb-3">{copy.character.eyebrow}</p>
-        <h2 className="text-3xl font-semibold tracking-tight text-[var(--brand-ink)] sm:text-4xl">
+        <h2 className="text-3xl font-semibold tracking-tight text-(--brand-ink) sm:text-4xl">
           {copy.character.title}
         </h2>
-        <p className="mt-4 text-base leading-8 text-[var(--brand-muted)]">
+        <p className="mt-4 text-base leading-8 text-(--brand-muted)">
           {copy.character.description}
         </p>
 
@@ -34,14 +34,14 @@ export function CharacterSpotlight() {
 
             return (
               <article key={note.title} className="character-spotlight__note">
-                <div className="grid size-10 place-items-center rounded-lg bg-[var(--brand-orange-soft)] text-[var(--brand-orange-deep)]">
+                <div className="grid size-10 place-items-center rounded-lg bg-(--brand-orange-soft) text-(--brand-orange-deep)">
                   <Icon aria-hidden="true" className="size-5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-bold text-[var(--brand-ink)]">
+                  <h3 className="text-sm font-bold text-(--brand-ink)">
                     {note.title}
                   </h3>
-                  <p className="mt-1 text-sm leading-6 text-[var(--brand-muted)]">
+                  <p className="mt-1 text-sm leading-6 text-(--brand-muted)">
                     {note.description}
                   </p>
                 </div>
