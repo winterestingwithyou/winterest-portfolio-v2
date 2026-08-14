@@ -233,6 +233,10 @@ export const publicCopy = {
       title: 'Tech Stack that I use',
       description:
         'List of Tech and Tools that I use to build my projects.',
+      ultimateEyebrow: 'Ultimate Tech Stack',
+      ultimateTitle: 'Core Architecture & Preferred Stack',
+      ultimateDescription:
+        'The primary frameworks, runtimes, and databases powering my flagship production web platforms.',
       stackNode: 'Stack node',
     },
     contact: {
@@ -343,9 +347,9 @@ export const publicCopy = {
       readCaseStudy: 'Baca tulisannya',
       principlesEyebrow: 'Cara kerjaku',
       principlesTitle: 'Beberapa hal yang membentuk cara aku membangun.',
-      stackTitle: 'Tools yang beneran aku pakai.',
+      stackTitle: 'Teknologi yang paling suka kupakai',
       stackDescription:
-        'Stack utamaku sekarang — dipilih karena enak buat iterasi cepat, nyaman dirawat, dan cukup serius buat deployment yang proper.',
+        'Stack Utama, Prefer tech stack ini saat membuat project baru',
       ctaTitle:
         'Terbuka untuk kolaborasi, side project, dan obrolan seru soal web.',
       contact: 'Sapa aku',
@@ -379,6 +383,10 @@ export const publicCopy = {
       title: 'Tech Stack yang kupakai',
       description:
         'Daftar Tech dan Tools yang kugunakan untuk membuat project andalanku.',
+      ultimateEyebrow: 'Ultimate Tech Stack',
+      ultimateTitle: 'Arsitektur Utama & Stack Pilihan',
+      ultimateDescription:
+        'Framework, runtime, dan database utama yang menopang aplikasi web produksi milikku.',
       stackNode: 'Node stack',
     },
     contact: {

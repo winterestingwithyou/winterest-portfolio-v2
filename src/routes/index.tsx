@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   ArrowRight,
   Code2,
+  ExternalLink,
   Github,
   Mail,
   Rocket,
@@ -10,6 +11,8 @@ import {
 } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { Marquee } from '#/components/ui/marquee'
+import { TechIcon } from '#/components/ui/tech-icon'
 import { HeroVisual } from '#/components/visual/HeroVisual'
 import { getPublishedProjects } from '#/features/projects/public-loaders'
 import {
@@ -17,21 +20,25 @@ import {
   getPublicCopy,
   siteProfile,
 } from '#/features/portfolio/data'
+import { getPublicUltimateStack } from '#/features/technologies/public-loaders'
 import { getLocale } from '#/paraglide/runtime'
 
 export const Route = createFileRoute('/')({
   loader: async () => {
     const locale = getLocale()
-    const projects = await getPublishedProjects({ data: { locale } })
+    const [projects, ultimateTechs] = await Promise.all([
+      getPublishedProjects({ data: { locale } }),
+      getPublicUltimateStack(),
+    ])
 
-    return { projects }
+    return { projects, ultimateTechs }
   },
   component: HomePage,
 })
 
 function HomePage() {
   const copy = getPublicCopy()
-  const { projects } = Route.useLoaderData()
+  const { projects, ultimateTechs } = Route.useLoaderData()
   const { portfolioStats, principles, stackGroups } = getPortfolioContent()
   const highlightedProjects = projects
     .filter((project) => project.featured)
@@ -176,36 +183,81 @@ function HomePage() {
         </Container>
       </section>
 
-      <section className="px-4 py-14">
-        <Container className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+      {/* Ultimate Tech Stack Marquee Section */}
+      <section className="py-14">
+        <Container>
           <SectionHeader
-            eyebrow="Stack"
+            eyebrow={copy.stack.ultimateEyebrow}
             title={copy.home.stackTitle}
             description={copy.home.stackDescription}
           />
-          <div className="grid gap-4 sm:grid-cols-2">
-            {stackGroups.map((group) => (
-              <article key={group.title} className="surface-card p-5">
-                <h3 className="text-lg font-semibold text-(--brand-ink)">
-                  {group.title}
-                </h3>
-                <p className="mt-2 text-sm leading-7 text-(--brand-muted)">
-                  {group.description}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {group.items.slice(0, 4).map((item) => (
-                    <span
-                      key={item}
-                      className="rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-bold text-(--brand-orange-deep)"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
         </Container>
+
+        {ultimateTechs.length > 0 ? (
+          <div className="relative mt-8 w-full overflow-hidden py-2">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-(--brand-bg) to-transparent sm:w-24" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-(--brand-bg) to-transparent sm:w-24" />
+
+            <Marquee pauseOnHover className="py-4 [--duration:30s]" repeat={4}>
+              {ultimateTechs.map((tech) => (
+                <div
+                  key={tech.id}
+                  className="group relative flex w-44 shrink-0 flex-col items-center justify-center gap-3 rounded-2xl border border-(--brand-line)/60 bg-(--surface-strong)/60 p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:bg-(--surface-strong) hover:shadow-xl hover:shadow-(--brand-orange-soft) sm:w-52"
+                >
+                  <div className="flex items-center justify-center p-1 transition-transform duration-300 group-hover:scale-110">
+                    <TechIcon
+                      src={tech.icon}
+                      alt={tech.name}
+                      color={tech.color}
+                      className="size-12 sm:size-14 object-contain"
+                    />
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="font-bold text-sm text-(--brand-ink) sm:text-base">
+                      {tech.name}
+                    </h3>
+                    {tech.url ? (
+                      <a
+                        href={tech.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        title={`Visit ${tech.name}`}
+                        className="text-(--brand-muted) opacity-0 transition group-hover:opacity-100 hover:text-(--brand-orange-deep)"
+                      >
+                        <ExternalLink className="size-3.5" />
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
+              ))}
+            </Marquee>
+          </div>
+        ) : (
+          <Container className="mt-8">
+            <div className="grid gap-4 sm:grid-cols-2">
+              {stackGroups.map((group) => (
+                <article key={group.title} className="surface-card p-5">
+                  <h3 className="text-lg font-semibold text-(--brand-ink)">
+                    {group.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-7 text-(--brand-muted)">
+                    {group.description}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {group.items.slice(0, 4).map((item) => (
+                      <span
+                        key={item}
+                        className="rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-bold text-(--brand-orange-deep)"
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </Container>
+        )}
       </section>
 
       <section className="px-4 py-14">

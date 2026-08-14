@@ -8,6 +8,7 @@ import {
   RefreshCw,
   Trash2,
   X,
+  Zap,
 } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
@@ -48,7 +49,6 @@ function DashboardStackPage() {
   )
   const [catName, setCatName] = useState('')
   const [catSlug, setCatSlug] = useState('')
-  const [catDesc, setCatDesc] = useState('')
   const [catSortOrder, setCatSortOrder] = useState(0)
 
   // Tech Modal State
@@ -60,7 +60,7 @@ function DashboardStackPage() {
   const [techIcon, setTechIcon] = useState('')
   const [techColor, setTechColor] = useState('')
   const [techUrl, setTechUrl] = useState('')
-  const [techDesc, setTechDesc] = useState('')
+  const [techIsUltimate, setTechIsUltimate] = useState(false)
   const [selectedCatIds, setSelectedCatIds] = useState<string[]>([])
 
   const loadData = useCallback(async () => {
@@ -95,7 +95,6 @@ function DashboardStackPage() {
     setEditingCategory(null)
     setCatName('')
     setCatSlug('')
-    setCatDesc('')
     setCatSortOrder(categories.length + 1)
     setIsCategoryModalOpen(true)
   }
@@ -104,7 +103,6 @@ function DashboardStackPage() {
     setEditingCategory(cat)
     setCatName(cat.name)
     setCatSlug(cat.slug)
-    setCatDesc(cat.description ?? '')
     setCatSortOrder(cat.sortOrder)
     setIsCategoryModalOpen(true)
   }
@@ -116,7 +114,6 @@ function DashboardStackPage() {
       const payload = {
         name: catName,
         slug: catSlug,
-        description: catDesc,
         sortOrder: Number(catSortOrder),
       }
 
@@ -164,7 +161,7 @@ function DashboardStackPage() {
     setTechIcon('')
     setTechColor('')
     setTechUrl('')
-    setTechDesc('')
+    setTechIsUltimate(false)
     setSelectedCatIds(categories.map((c) => c.id).slice(0, 1))
     setIsTechModalOpen(true)
   }
@@ -176,7 +173,7 @@ function DashboardStackPage() {
     setTechIcon(tech.icon ?? '')
     setTechColor(tech.color ?? '')
     setTechUrl(tech.url ?? '')
-    setTechDesc(tech.description ?? '')
+    setTechIsUltimate(tech.isUltimate)
     setSelectedCatIds(tech.categoryIds)
     setIsTechModalOpen(true)
   }
@@ -191,7 +188,7 @@ function DashboardStackPage() {
         icon: techIcon,
         color: techColor,
         url: techUrl,
-        description: techDesc,
+        isUltimate: techIsUltimate,
         categoryIds: selectedCatIds,
       }
 
@@ -375,9 +372,16 @@ function DashboardStackPage() {
                             />
                           </div>
                           <div>
-                            <p className="font-semibold text-(--brand-ink)">
-                              {tech.name}
-                            </p>
+                            <div className="flex items-center gap-2">
+                              <p className="font-semibold text-(--brand-ink)">
+                                {tech.name}
+                              </p>
+                              {tech.isUltimate ? (
+                                <span className="inline-flex items-center gap-1 rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-bold text-amber-600 dark:text-amber-400">
+                                  <Zap className="size-3" /> Ultimate
+                                </span>
+                              ) : null}
+                            </div>
                             <p className="font-mono text-xs text-(--brand-muted)">
                               {tech.slug}
                             </p>
@@ -453,7 +457,7 @@ function DashboardStackPage() {
                           <button
                             type="button"
                             onClick={() => handleDeleteTech(tech.id)}
-                            className="inline-grid size-9 place-items-center rounded-full border border-red-500/30 bg-red-500/10 text-red-700 transition hover:bg-red-500/20"
+                            className="inline-grid size-9 place-items-center rounded-full border border-red-500/20 bg-red-500/10 text-red-600 transition hover:bg-red-500 hover:text-white"
                           >
                             <Trash2 className="size-4" />
                           </button>
@@ -481,7 +485,7 @@ function DashboardStackPage() {
                 No categories added yet.
               </h2>
               <p className="mt-2 text-sm leading-7 text-(--brand-muted)">
-                Click "New Category" to create your first tech stack category.
+                Click "New Category" to create your first tech category.
               </p>
             </div>
           ) : (
@@ -489,13 +493,13 @@ function DashboardStackPage() {
               <TableHeader className="bg-(--brand-orange-soft)">
                 <TableRow>
                   <TableHead className="px-5 py-3 font-bold text-(--brand-orange-deep)">
-                    Order
-                  </TableHead>
-                  <TableHead className="px-5 py-3 font-bold text-(--brand-orange-deep)">
                     Category Name
                   </TableHead>
                   <TableHead className="px-5 py-3 font-bold text-(--brand-orange-deep)">
-                    Description
+                    Slug
+                  </TableHead>
+                  <TableHead className="px-5 py-3 font-bold text-(--brand-orange-deep)">
+                    Sort Order
                   </TableHead>
                   <TableHead className="px-5 py-3 text-right font-bold text-(--brand-orange-deep)">
                     Actions
@@ -505,19 +509,14 @@ function DashboardStackPage() {
               <TableBody>
                 {categories.map((cat) => (
                   <TableRow key={cat.id}>
-                    <TableCell className="px-5 py-4 font-mono font-bold text-(--brand-ink)">
-                      #{cat.sortOrder}
+                    <TableCell className="px-5 py-4 align-top font-semibold text-(--brand-ink)">
+                      {cat.name}
                     </TableCell>
-                    <TableCell className="px-5 py-4 align-top">
-                      <p className="font-semibold text-(--brand-ink)">
-                        {cat.name}
-                      </p>
-                      <p className="font-mono text-xs text-(--brand-muted)">
-                        {cat.slug}
-                      </p>
+                    <TableCell className="px-5 py-4 align-top font-mono text-xs text-(--brand-muted)">
+                      {cat.slug}
                     </TableCell>
-                    <TableCell className="px-5 py-4 text-sm text-(--brand-muted)">
-                      {cat.description || '-'}
+                    <TableCell className="px-5 py-4 align-top text-xs text-(--brand-muted)">
+                      {cat.sortOrder}
                     </TableCell>
                     <TableCell className="px-5 py-4 align-top text-right">
                       <div className="flex justify-end gap-2">
@@ -531,7 +530,7 @@ function DashboardStackPage() {
                         <button
                           type="button"
                           onClick={() => handleDeleteCategory(cat.id)}
-                          className="inline-grid size-9 place-items-center rounded-full border border-red-500/30 bg-red-500/10 text-red-700 transition hover:bg-red-500/20"
+                          className="inline-grid size-9 place-items-center rounded-full border border-red-500/20 bg-red-500/10 text-red-600 transition hover:bg-red-500 hover:text-white"
                         >
                           <Trash2 className="size-4" />
                         </button>
@@ -582,7 +581,7 @@ function DashboardStackPage() {
                     }
                   }}
                   className="w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 py-2 text-sm text-(--brand-ink)"
-                  placeholder="e.g. Runtime & Edge"
+                  placeholder="e.g. Runtime & Edge Platform"
                 />
               </div>
               <div>
@@ -610,18 +609,6 @@ function DashboardStackPage() {
                     setCatSortOrder(parseInt(e.target.value) || 0)
                   }
                   className="w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 py-2 text-sm text-(--brand-ink)"
-                />
-              </div>
-              <div>
-                <label className="mb-1 block text-xs font-bold text-(--brand-ink)">
-                  Description
-                </label>
-                <textarea
-                  rows={3}
-                  value={catDesc}
-                  onChange={(e) => setCatDesc(e.target.value)}
-                  className="w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 py-2 text-sm text-(--brand-ink)"
-                  placeholder="Brief summary of what this category includes..."
                 />
               </div>
               <div className="mt-2 flex justify-end gap-2">
@@ -777,17 +764,27 @@ function DashboardStackPage() {
                 />
               </div>
 
-              <div>
-                <label className="mb-1 block text-xs font-bold text-(--brand-ink)">
-                  Description
-                </label>
-                <textarea
-                  rows={2}
-                  value={techDesc}
-                  onChange={(e) => setTechDesc(e.target.value)}
-                  className="w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 py-2 text-sm text-(--brand-ink)"
-                  placeholder="Short note on how you use this tech..."
+              {/* Ultimate Tech Stack Toggle */}
+              <div className="flex items-center gap-3 rounded-lg border border-amber-500/30 bg-amber-500/5 p-3">
+                <input
+                  type="checkbox"
+                  id="isUltimate"
+                  checked={techIsUltimate}
+                  onChange={(e) => setTechIsUltimate(e.target.checked)}
+                  className="size-4 rounded border-(--brand-line) text-(--brand-orange) focus:ring-(--brand-orange)"
                 />
+                <label
+                  htmlFor="isUltimate"
+                  className="cursor-pointer text-xs font-bold text-(--brand-ink)"
+                >
+                  <span className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400">
+                    <Zap className="size-3.5 fill-amber-500" />
+                    Ultimate Tech Stack
+                  </span>
+                  <span className="mt-0.5 block text-[11px] font-normal text-(--brand-muted)">
+                    Highlight this technology prominently on the homepage and at the top of the Stack page.
+                  </span>
+                </label>
               </div>
 
               <div className="mt-2 flex justify-end gap-2">

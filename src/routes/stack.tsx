@@ -1,5 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { ExternalLink } from 'lucide-react'
+import { ExternalLink, Zap } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { Marquee } from '#/components/ui/marquee'
@@ -14,7 +14,7 @@ export const Route = createFileRoute('/stack')({
 
 function StackPage() {
   const copy = getPublicCopy()
-  const categories = Route.useLoaderData()
+  const { categories, ultimateTechs } = Route.useLoaderData()
 
   return (
     <main className="py-14 sm:py-20">
@@ -26,8 +26,82 @@ function StackPage() {
         />
       </Container>
 
+      {/* Ultimate Tech Stack Highlight Section */}
+      {ultimateTechs.length > 0 && (
+        <section className="mt-8 mb-16 w-full">
+          <Container className="mb-6">
+            <div className="flex flex-col items-center justify-center text-center">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-orange)/40 bg-(--brand-orange-soft) px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep) shadow-[0_0_20px_var(--brand-orange-soft)]">
+                <Zap className="size-3.5 fill-(--brand-orange-deep)" />
+                {copy.stack.ultimateEyebrow}
+              </span>
+              <h2 className="mt-3 text-3xl font-black tracking-tight text-(--brand-ink) sm:text-4xl md:text-5xl">
+                <span className="bg-gradient-to-r from-(--brand-orange) via-(--brand-ink) to-(--brand-orange-deep) bg-clip-text text-transparent">
+                  {copy.stack.ultimateTitle}
+                </span>
+              </h2>
+              <p className="mt-2 max-w-xl text-sm font-medium text-(--brand-muted)">
+                {copy.stack.ultimateDescription}
+              </p>
+            </div>
+          </Container>
+
+          {/* Edge-to-Edge Marquee for Ultimate Tech Stack */}
+          <div className="relative w-full overflow-hidden py-3">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-(--brand-bg) to-transparent sm:w-24" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-(--brand-bg) to-transparent sm:w-24" />
+
+            <Marquee
+              pauseOnHover
+              className="py-6 [--duration:30s]"
+              repeat={4}
+            >
+              {ultimateTechs.map((tech) => (
+                <div
+                  key={tech.id}
+                  className="group relative flex w-52 shrink-0 flex-col items-center justify-center gap-4 rounded-3xl border border-(--brand-orange)/40 bg-gradient-to-b from-(--surface-strong) to-(--brand-orange-soft)/30 p-7 text-center shadow-lg transition-all duration-300 hover:-translate-y-1.5 hover:border-(--brand-orange) hover:bg-(--surface-strong) hover:shadow-2xl hover:shadow-(--brand-orange-soft) sm:w-60"
+                >
+                  {/* Subtle Ultimate Glow Badge */}
+                  <div className="absolute top-3 right-3 rounded-full bg-(--brand-orange) p-1 text-white opacity-80 shadow-md transition group-hover:scale-110 group-hover:opacity-100">
+                    <Zap className="size-3 fill-white" />
+                  </div>
+
+                  {/* Prominent Centerpiece Icon */}
+                  <div className="flex items-center justify-center p-2 transition-transform duration-300 group-hover:scale-110">
+                    <TechIcon
+                      src={tech.icon}
+                      alt={tech.name}
+                      color={tech.color}
+                      className="size-16 sm:size-20 object-contain drop-shadow-md"
+                    />
+                  </div>
+
+                  {/* Tech Name & Link */}
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="font-extrabold text-base text-(--brand-ink) sm:text-lg">
+                      {tech.name}
+                    </h3>
+                    {tech.url ? (
+                      <a
+                        href={tech.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        title={`Visit ${tech.name}`}
+                        className="text-(--brand-muted) opacity-0 transition group-hover:opacity-100 hover:text-(--brand-orange-deep)"
+                      >
+                        <ExternalLink className="size-4" />
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
+              ))}
+            </Marquee>
+          </div>
+        </section>
+      )}
+
       {/* Categories Marquee Showcase - Full Window Width */}
-      {categories.length === 0 ? (
+      {categories.length === 0 && ultimateTechs.length === 0 ? (
         <Container>
           <div className="surface-card p-8 text-center">
             <h2 className="text-xl font-semibold text-(--brand-ink)">
@@ -39,13 +113,13 @@ function StackPage() {
           </div>
         </Container>
       ) : (
-        <div className="mt-10 flex flex-col gap-14 sm:gap-20">
+        <div className="flex flex-col gap-14 sm:gap-20">
           {categories.map((category, index) => {
             if (category.technologies.length === 0) return null
 
             return (
               <section key={category.id} className="w-full">
-                {/* Centered Highlighted Category Title - No numbers */}
+                {/* Centered Highlighted Category Title */}
                 <Container className="mb-6">
                   <div className="flex flex-col items-center justify-center text-center">
                     <h2 className="text-2xl font-black tracking-tight text-(--brand-ink) sm:text-3xl md:text-4xl">
@@ -74,7 +148,7 @@ function StackPage() {
                         key={tech.id}
                         className="group relative flex w-44 shrink-0 flex-col items-center justify-center gap-3 rounded-2xl border border-(--brand-line)/60 bg-(--surface-strong)/60 p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:bg-(--surface-strong) hover:shadow-xl hover:shadow-(--brand-orange-soft) sm:w-52"
                       >
-                        {/* Prominent Centerpiece Icon - No container box */}
+                        {/* Prominent Centerpiece Icon */}
                         <div className="flex items-center justify-center p-1 transition-transform duration-300 group-hover:scale-110">
                           <TechIcon
                             src={tech.icon}

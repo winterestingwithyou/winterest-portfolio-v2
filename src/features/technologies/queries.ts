@@ -9,7 +9,6 @@ export type TechnologyRecord = typeof technologies.$inferSelect
 export type CategoryInput = {
   name: string
   slug: string
-  description?: string | null
   sortOrder?: number
 }
 
@@ -19,7 +18,7 @@ export type TechnologyInput = {
   icon?: string | null
   color?: string | null
   url?: string | null
-  description?: string | null
+  isUltimate?: boolean
   categoryIds: string[]
 }
 
@@ -31,7 +30,6 @@ export type PublicStackCategory = {
   id: string
   name: string
   slug: string
-  description?: string | null
   sortOrder: number
   technologies: {
     id: string
@@ -40,7 +38,7 @@ export type PublicStackCategory = {
     icon?: string | null
     color?: string | null
     url?: string | null
-    description?: string | null
+    isUltimate?: boolean
   }[]
 }
 
@@ -74,7 +72,6 @@ export async function createCategory(
       id,
       name: input.name,
       slug: input.slug,
-      description: input.description ?? null,
       sortOrder: input.sortOrder ?? 0,
       createdAt: now,
       updatedAt: now,
@@ -102,7 +99,6 @@ export async function updateCategory(
     .set({
       name: input.name,
       slug: input.slug,
-      description: input.description ?? null,
       sortOrder: input.sortOrder ?? existing.sortOrder,
       updatedAt: now,
     })
@@ -192,7 +188,7 @@ export async function createTechnology(
       icon: input.icon ?? null,
       color: input.color ?? null,
       url: input.url ?? null,
-      description: input.description ?? null,
+      isUltimate: input.isUltimate ?? false,
       createdAt: now,
       updatedAt: now,
     })
@@ -232,7 +228,7 @@ export async function updateTechnology(
       icon: input.icon ?? null,
       color: input.color ?? null,
       url: input.url ?? null,
-      description: input.description ?? null,
+      isUltimate: input.isUltimate ?? false,
       updatedAt: now,
     })
     .where(eq(technologies.id, id))
@@ -269,6 +265,16 @@ export async function deleteTechnology(
   return true
 }
 
+export async function listUltimateTechnologies(
+  db: Database,
+): Promise<TechnologyRecord[]> {
+  return db
+    .select()
+    .from(technologies)
+    .where(eq(technologies.isUltimate, true))
+    .all()
+}
+
 // Public Stack Query: Returns categories sorted with their associated technologies
 export async function listPublicStack(
   db: Database,
@@ -292,7 +298,7 @@ export async function listPublicStack(
       techIcon: technologies.icon,
       techColor: technologies.color,
       techUrl: technologies.url,
-      techDescription: technologies.description,
+      techIsUltimate: technologies.isUltimate,
     })
     .from(technologyCategories)
     .innerJoin(
@@ -312,7 +318,7 @@ export async function listPublicStack(
       icon: row.techIcon,
       color: row.techColor,
       url: row.techUrl,
-      description: row.techDescription,
+      isUltimate: row.techIsUltimate,
     })
     techByCatMap.set(row.categoryId, existing)
   }
@@ -321,7 +327,6 @@ export async function listPublicStack(
     id: cat.id,
     name: cat.name,
     slug: cat.slug,
-    description: cat.description,
     sortOrder: cat.sortOrder,
     technologies: techByCatMap.get(cat.id) ?? [],
   }))
