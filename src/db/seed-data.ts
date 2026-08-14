@@ -4,7 +4,6 @@ export type CategorySeed = {
   id: string
   name: string
   slug: string
-  description?: string
   sortOrder: number
 }
 
@@ -37,7 +36,7 @@ export type TechnologySeed = {
   icon?: string
   color?: string
   url?: string
-  description?: string
+  isUltimate?: boolean
 }
 
 export const categorySeeds = [
@@ -45,40 +44,30 @@ export const categorySeeds = [
     id: 'cat-runtime-edge',
     name: 'Runtime & Edge Platform',
     slug: 'runtime-edge',
-    description:
-      'Tools and runtimes used to keep local iteration fast and serverless edge deployment smooth.',
     sortOrder: 1,
   },
   {
     id: 'cat-fullstack-ui',
     name: 'Fullstack & UI',
     slug: 'fullstack-ui',
-    description:
-      'React frameworks, routing, server state, forms, animations, and component libraries.',
     sortOrder: 2,
   },
   {
     id: 'cat-data-auth',
     name: 'Data & Security',
     slug: 'data-security',
-    description:
-      'Databases, ORMs, authentication, type validation, and environment management.',
     sortOrder: 3,
   },
   {
     id: 'cat-design-styling',
     name: 'Design System & Styling',
     slug: 'design-styling',
-    description:
-      'Utility-first CSS, Radix UI primitives, animations, and responsive visual design tokens.',
     sortOrder: 4,
   },
   {
     id: 'cat-languages-tools',
     name: 'Languages & Core Tools',
     slug: 'languages-tools',
-    description:
-      'Primary programming languages, version control, and developer environment tools.',
     sortOrder: 5,
   },
 ] satisfies CategorySeed[]
@@ -92,8 +81,7 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/bun',
     color: '#fbf0df',
     url: 'https://bun.sh',
-    description:
-      'Fast JavaScript runtime, package manager, and project tooling.',
+    isUltimate: true,
   },
   {
     id: 'tech-react',
@@ -103,7 +91,7 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/react',
     color: '#61dafb',
     url: 'https://react.dev',
-    description: 'UI library for building interactive component interfaces.',
+    isUltimate: true,
   },
   {
     id: 'tech-tanstack-start',
@@ -113,8 +101,7 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/reactrouter',
     color: '#ff4154',
     url: 'https://tanstack.com/start',
-    description:
-      'Fullstack React framework powered by TanStack Router and Vite.',
+    isUltimate: true,
   },
   {
     id: 'tech-cloudflare-workers',
@@ -124,7 +111,7 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/cloudflare',
     color: '#f38020',
     url: 'https://workers.cloudflare.com',
-    description: 'Serverless edge runtime for fast global web applications.',
+    isUltimate: true,
   },
   {
     id: 'tech-cloudflare-d1',
@@ -134,8 +121,7 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/cloudflare',
     color: '#f38020',
     url: 'https://developers.cloudflare.com/d1',
-    description:
-      'Serverless SQLite database natively integrated with Cloudflare.',
+    isUltimate: true,
   },
   {
     id: 'tech-drizzle',
@@ -145,7 +131,7 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/drizzle',
     color: '#c5f74f',
     url: 'https://orm.drizzle.team',
-    description: 'TypeScript ORM used for type-safe database queries.',
+    isUltimate: true,
   },
   {
     id: 'tech-tailwind',
@@ -155,7 +141,7 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/tailwindcss',
     color: '#38bdf8',
     url: 'https://tailwindcss.com',
-    description: 'Utility-first CSS engine for the portfolio design system.',
+    isUltimate: true,
   },
   {
     id: 'tech-better-auth',
@@ -165,7 +151,6 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/auth0',
     color: '#ffc107',
     url: 'https://www.better-auth.com',
-    description: 'Authentication foundation for the private CMS dashboard.',
   },
   {
     id: 'tech-typescript',
@@ -175,8 +160,7 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/typescript',
     color: '#3178c6',
     url: 'https://www.typescriptlang.org',
-    description:
-      'Strongly typed programming language for end-to-end type safety.',
+    isUltimate: true,
   },
   {
     id: 'tech-zod',
@@ -186,7 +170,6 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/zod',
     color: '#3068b7',
     url: 'https://zod.dev',
-    description: 'TypeScript-first schema validation for API inputs and forms.',
   },
   {
     id: 'tech-vite',
@@ -196,7 +179,6 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/vite',
     color: '#646cff',
     url: 'https://vitejs.dev',
-    description: 'Next generation frontend tooling and development server.',
   },
   {
     id: 'tech-wrangler',
@@ -206,8 +188,6 @@ export const technologySeeds = [
     icon: 'https://cdn.simpleicons.org/cloudflare',
     color: '#f38020',
     url: 'https://developers.cloudflare.com/workers/wrangler',
-    description:
-      'Command line tool for developing and deploying Cloudflare Workers.',
   },
 ] satisfies TechnologySeed[]
 
@@ -248,7 +228,7 @@ export const projectSeeds = [
           'Platform portofolio utama dan CMS yang dibuat dengan TanStack Start dan dideploy ke Cloudflare Workers.',
         description:
           'Platform pengembang personal komprehensif dengan manajemen CMS dinamis untuk proyek dan tech stack, RBAC dashboard kustom, integrasi Cloudflare D1, serta estetika UI modern berinspirasi Cloudflare dan Bun.',
-        category: 'Fullstack Platform',
+        category: 'Platform Fullstack',
       },
     },
   },

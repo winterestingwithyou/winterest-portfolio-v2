@@ -211,7 +211,6 @@ export const categories = sqliteTable(
     id: text('id').primaryKey(),
     name: text('name').notNull(),
     slug: text('slug').notNull(),
-    description: text('description'),
     sortOrder: integer('sort_order').notNull().default(0),
     ...timestamps,
   },
@@ -230,10 +229,15 @@ export const technologies = sqliteTable(
     icon: text('icon'),
     color: text('color'),
     url: text('url'),
-    description: text('description'),
+    isUltimate: integer('is_ultimate', { mode: 'boolean' })
+      .notNull()
+      .default(false),
     ...timestamps,
   },
-  (table) => [uniqueIndex('technologies_slug_unique').on(table.slug)],
+  (table) => [
+    uniqueIndex('technologies_slug_unique').on(table.slug),
+    index('technologies_is_ultimate_idx').on(table.isUltimate),
+  ],
 )
 
 export const technologyCategories = sqliteTable(

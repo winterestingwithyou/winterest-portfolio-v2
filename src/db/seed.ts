@@ -40,7 +40,6 @@ async function upsertCategory(db: Database, seed: CategorySeed, now: Date) {
       id: seed.id,
       name: seed.name,
       slug: seed.slug,
-      description: seed.description ?? null,
       sortOrder: seed.sortOrder,
       updatedAt: now,
     })
@@ -48,7 +47,6 @@ async function upsertCategory(db: Database, seed: CategorySeed, now: Date) {
       target: categories.slug,
       set: {
         name: seed.name,
-        description: seed.description ?? null,
         sortOrder: seed.sortOrder,
         updatedAt: now,
       },
@@ -66,7 +64,7 @@ async function upsertTechnology(db: Database, seed: TechnologySeed, now: Date) {
       icon: seed.icon ?? null,
       color: seed.color ?? null,
       url: seed.url ?? null,
-      description: seed.description ?? null,
+      isUltimate: seed.isUltimate ?? false,
       updatedAt: now,
     })
     .onConflictDoUpdate({
@@ -76,7 +74,7 @@ async function upsertTechnology(db: Database, seed: TechnologySeed, now: Date) {
         icon: seed.icon ?? null,
         color: seed.color ?? null,
         url: seed.url ?? null,
-        description: seed.description ?? null,
+        isUltimate: seed.isUltimate ?? false,
         updatedAt: now,
       },
     })
