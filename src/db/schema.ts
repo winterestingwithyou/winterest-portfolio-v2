@@ -20,17 +20,6 @@ export type ContentLocale = (typeof contentLocales)[number]
 export const userRoles = ['owner', 'admin', 'editor', 'viewer'] as const
 export type UserRole = (typeof userRoles)[number]
 
-export const technologyCategories = [
-  'runtime',
-  'framework',
-  'database',
-  'styling',
-  'tooling',
-  'service',
-  'language',
-] as const
-export type TechnologyCategory = (typeof technologyCategories)[number]
-
 const timestamps = {
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
@@ -216,24 +205,54 @@ export const media = sqliteTable(
   ],
 )
 
+export const categories = sqliteTable(
+  'categories',
+  {
+    id: text('id').primaryKey(),
+    name: text('name').notNull(),
+    slug: text('slug').notNull(),
+    description: text('description'),
+    sortOrder: integer('sort_order').notNull().default(0),
+    ...timestamps,
+  },
+  (table) => [
+    uniqueIndex('categories_slug_unique').on(table.slug),
+    index('categories_sort_order_idx').on(table.sortOrder),
+  ],
+)
+
 export const technologies = sqliteTable(
   'technologies',
   {
     id: text('id').primaryKey(),
     name: text('name').notNull(),
     slug: text('slug').notNull(),
-    category: text('category', { enum: technologyCategories })
-      .notNull()
-      .default('tooling'),
     icon: text('icon'),
     color: text('color'),
     url: text('url'),
     description: text('description'),
     ...timestamps,
   },
+  (table) => [uniqueIndex('technologies_slug_unique').on(table.slug)],
+)
+
+export const technologyCategories = sqliteTable(
+  'technology_categories',
+  {
+    technologyId: text('technology_id')
+      .notNull()
+      .references(() => technologies.id, { onDelete: 'cascade' }),
+    categoryId: text('category_id')
+      .notNull()
+      .references(() => categories.id, { onDelete: 'cascade' }),
+  },
   (table) => [
-    uniqueIndex('technologies_slug_unique').on(table.slug),
-    index('technologies_category_idx').on(table.category),
+    primaryKey({
+      columns: [table.technologyId, table.categoryId],
+      name: 'technology_categories_pk',
+    }),
+    index('technology_categories_technology_id_idx').on(table.technologyId),
+    index('technology_categories_category_id_idx').on(table.categoryId),
   ],
 )
 
@@ -272,9 +291,28 @@ export const projectTranslationsRelations = relations(
   }),
 )
 
+export const categoriesRelations = relations(categories, ({ many }) => ({
+  technologyCategories: many(technologyCategories),
+}))
+
 export const technologiesRelations = relations(technologies, ({ many }) => ({
   projectTechnologies: many(projectTechnologies),
+  technologyCategories: many(technologyCategories),
 }))
+
+export const technologyCategoriesRelations = relations(
+  technologyCategories,
+  ({ one }) => ({
+    technology: one(technologies, {
+      fields: [technologyCategories.technologyId],
+      references: [technologies.id],
+    }),
+    category: one(categories, {
+      fields: [technologyCategories.categoryId],
+      references: [categories.id],
+    }),
+  }),
+)
 
 export const projectTechnologiesRelations = relations(
   projectTechnologies,
