@@ -1,25 +1,48 @@
 import { useQuery } from '@tanstack/react-query'
 
-export type TechnologyItem = {
-  id: string
-  name: string
-  slug: string
-  category: string
-  icon?: string | null
-  color?: string | null
-  url?: string | null
-  description?: string | null
+import type {
+  CategoryRecord,
+  PublicStackCategory,
+  TechnologyWithCategories,
+} from './queries'
+
+export function useCategories() {
+  return useQuery({
+    queryKey: ['categories'],
+    queryFn: async (): Promise<CategoryRecord[]> => {
+      const res = await fetch('/api/categories')
+      if (!res.ok) {
+        throw new Error('Failed to fetch categories')
+      }
+      const json: { data?: CategoryRecord[] } = await res.json()
+      return json.data ?? []
+    },
+  })
 }
 
 export function useTechnologies() {
   return useQuery({
     queryKey: ['technologies'],
-    queryFn: async (): Promise<TechnologyItem[]> => {
+    queryFn: async (): Promise<TechnologyWithCategories[]> => {
       const res = await fetch('/api/technologies')
       if (!res.ok) {
         throw new Error('Failed to fetch technologies')
       }
-      const json: { data?: TechnologyItem[] } = await res.json()
+      const json: { data?: TechnologyWithCategories[] } = await res.json()
+      return json.data ?? []
+    },
+  })
+}
+
+export function usePublicStack() {
+  return useQuery({
+    queryKey: ['publicStack'],
+    queryFn: async (): Promise<PublicStackCategory[]> => {
+      const res = await fetch('/api/stack')
+      if (!res.ok) {
+        throw new Error('Failed to fetch public stack')
+      }
+      const json: { data?: PublicStackCategory[] } = await res.json()
       return json.data ?? []
     },
   })

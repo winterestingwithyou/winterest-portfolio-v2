@@ -8,6 +8,7 @@ export const dashboardCopy = {
       nav: {
         overview: 'Overview',
         projects: 'Projects',
+        stack: 'Tech Stack',
         writing: 'Writing',
         lab: 'Lab',
         media: 'Media',
@@ -150,6 +151,7 @@ export const dashboardCopy = {
       nav: {
         overview: 'Ringkasan',
         projects: 'Project',
+        stack: 'Tech Stack',
         writing: 'Tulisan',
         lab: 'Lab',
         media: 'Media',

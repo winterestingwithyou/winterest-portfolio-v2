@@ -230,9 +230,9 @@ export const publicCopy = {
     },
     stack: {
       eyebrow: 'Stack',
-      title: 'The tools I use to build Winterest and related work.',
+      title: 'Tech Stack that I use',
       description:
-        'This page is not a trophy shelf. It is a map of the tools I trust for fast iteration, maintainable interfaces, content workflows, and edge-friendly deployment.',
+        'List of Tech and Tools that I use to build my projects.',
       stackNode: 'Stack node',
     },
     contact: {
@@ -376,9 +376,9 @@ export const publicCopy = {
     },
     stack: {
       eyebrow: 'Stack',
-      title: 'Tools yang kupakai untuk membangun Winterest dan karya terkait.',
+      title: 'Tech Stack yang kupakai',
       description:
-        'Halaman ini bukan rak piala. Ini peta tools yang kupercaya untuk iterasi cepat, interface yang mudah dirawat, workflow konten, dan deployment edge-friendly.',
+        'Daftar Tech dan Tools yang kugunakan untuk membuat project andalanku.',
       stackNode: 'Node stack',
     },
     contact: {

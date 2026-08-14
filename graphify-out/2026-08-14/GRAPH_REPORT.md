@@ -1,7 +1,7 @@
 # Graph Report - winterest-portfolio-v2  (2026-08-14)
 
 ## Corpus Check
-- 108 files · ~191,825 words
+- 108 files · ~192,480 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3ebbc670`
+- Built from commit: `4462eaff`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -168,7 +168,7 @@
 - @radix-ui/react-separator
 - Public Site Direction
 - react
-- @cloudflare/vite-plugin
+- react-dom
 - streamdown
 - Winterest Portfolio v2
 - Development Phases
@@ -403,7 +403,7 @@ Nodes (3): BasicImageTransformations, RequestInitCfPropertiesImage, RequestInitC
 
 ### Community 138 - "dependencies"
 Cohesion: 0.15
-Nodes (13): dependencies, radix-ui, @radix-ui/react-slot, react-dom, @t3-oss/env-core, tailwind-merge, @tanstack/ai-client, radix-ui (+5 more)
+Nodes (13): @cloudflare/vite-plugin, dependencies, @cloudflare/vite-plugin, radix-ui, @radix-ui/react-slot, @t3-oss/env-core, tailwind-merge, @tanstack/ai-client (+5 more)
 
 ### Community 139 - "login.tsx"
 Cohesion: 0.27

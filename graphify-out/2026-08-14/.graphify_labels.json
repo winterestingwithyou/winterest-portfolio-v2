@@ -152,7 +152,7 @@
   "150": "@radix-ui/react-separator",
   "151": "Public Site Direction",
   "152": "react",
-  "153": "@cloudflare/vite-plugin",
+  "153": "react-dom",
   "154": "streamdown",
   "155": "Winterest Portfolio v2",
   "156": "Development Phases",

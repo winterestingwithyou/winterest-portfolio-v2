@@ -4,25 +4,25 @@ import { env } from 'cloudflare:workers'
 import { getDb } from '#/db'
 import { requireDashboardUser } from '#/features/auth/session'
 import {
-  createTechnology,
-  deleteTechnology,
-  listTechnologies,
-  updateTechnology,
+  createCategory,
+  deleteCategory,
+  listCategories,
+  updateCategory,
 } from '#/features/technologies/queries'
-import type { TechnologyInput } from '#/features/technologies/queries'
+import type { CategoryInput } from '#/features/technologies/queries'
 
-export const Route = createFileRoute('/api/technologies')({
+export const Route = createFileRoute('/api/categories')({
   server: {
     handlers: {
       GET: async () => {
         try {
           const db = getDb(env.DB)
-          const items = await listTechnologies(db)
+          const items = await listCategories(db)
           return Response.json({ data: items })
         } catch (error) {
           console.error(error)
           return Response.json(
-            { error: 'Failed to fetch technologies.' },
+            { error: 'Failed to fetch categories.' },
             { status: 500 },
           )
         }
@@ -32,7 +32,7 @@ export const Route = createFileRoute('/api/technologies')({
           const user = await requireDashboardUser(request)
           if (user instanceof Response) return user
 
-          const body: TechnologyInput = await request.json()
+          const body: CategoryInput = await request.json()
           if (!body.name || !body.slug) {
             return Response.json(
               { error: 'Name and slug are required.' },
@@ -41,15 +41,12 @@ export const Route = createFileRoute('/api/technologies')({
           }
 
           const db = getDb(env.DB)
-          const item = await createTechnology(db, {
-            ...body,
-            categoryIds: body.categoryIds,
-          })
+          const item = await createCategory(db, body)
           return Response.json({ data: item })
         } catch (error) {
           console.error(error)
           return Response.json(
-            { error: 'Failed to create technology.' },
+            { error: 'Failed to create category.' },
             { status: 500 },
           )
         }
@@ -59,7 +56,7 @@ export const Route = createFileRoute('/api/technologies')({
           const user = await requireDashboardUser(request)
           if (user instanceof Response) return user
 
-          const body: TechnologyInput & { id: string } = await request.json()
+          const body: CategoryInput & { id: string } = await request.json()
           if (!body.id || !body.name || !body.slug) {
             return Response.json(
               { error: 'ID, name, and slug are required.' },
@@ -68,13 +65,10 @@ export const Route = createFileRoute('/api/technologies')({
           }
 
           const db = getDb(env.DB)
-          const item = await updateTechnology(db, body.id, {
-            ...body,
-            categoryIds: body.categoryIds,
-          })
+          const item = await updateCategory(db, body.id, body)
           if (!item) {
             return Response.json(
-              { error: 'Technology not found.' },
+              { error: 'Category not found.' },
               { status: 404 },
             )
           }
@@ -82,7 +76,7 @@ export const Route = createFileRoute('/api/technologies')({
         } catch (error) {
           console.error(error)
           return Response.json(
-            { error: 'Failed to update technology.' },
+            { error: 'Failed to update category.' },
             { status: 500 },
           )
         }
@@ -99,10 +93,10 @@ export const Route = createFileRoute('/api/technologies')({
           }
 
           const db = getDb(env.DB)
-          const success = await deleteTechnology(db, id)
+          const success = await deleteCategory(db, id)
           if (!success) {
             return Response.json(
-              { error: 'Technology not found.' },
+              { error: 'Category not found.' },
               { status: 404 },
             )
           }
@@ -110,7 +104,7 @@ export const Route = createFileRoute('/api/technologies')({
         } catch (error) {
           console.error(error)
           return Response.json(
-            { error: 'Failed to delete technology.' },
+            { error: 'Failed to delete category.' },
             { status: 500 },
           )
         }

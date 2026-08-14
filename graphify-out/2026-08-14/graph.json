@@ -835,8 +835,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "package_dependencies_cloudflare_vite_plugin",
-      "community": 153,
-      "community_name": "@cloudflare/vite-plugin",
+      "community": 138,
+      "community_name": "dependencies",
       "norm_label": "@cloudflare/vite-plugin"
     },
     {
@@ -846,8 +846,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "cloudflare_vite_plugin",
-      "community": 153,
-      "community_name": "@cloudflare/vite-plugin",
+      "community": 138,
+      "community_name": "dependencies",
       "norm_label": "@cloudflare/vite-plugin"
     },
     {
@@ -1715,8 +1715,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "package_dependencies_react_dom",
-      "community": 138,
-      "community_name": "dependencies",
+      "community": 153,
+      "community_name": "react-dom",
       "norm_label": "react-dom"
     },
     {
@@ -1726,8 +1726,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "react_dom",
-      "community": 138,
-      "community_name": "dependencies",
+      "community": 153,
+      "community_name": "react-dom",
       "norm_label": "react-dom"
     },
     {
@@ -3627,7 +3627,7 @@
       "label": "TechIconProps",
       "file_type": "code",
       "source_file": "src/components/ui/tech-icon.tsx",
-      "source_location": "L6",
+      "source_location": "L25",
       "_callable": true,
       "_callable_class": true,
       "_origin": "ast",
@@ -3640,7 +3640,7 @@
       "label": "TechIcon()",
       "file_type": "code",
       "source_file": "src/components/ui/tech-icon.tsx",
-      "source_location": "L14",
+      "source_location": "L32",
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_tech_icon_techicon",
@@ -35413,7 +35413,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/ui/tech-icon.tsx",
-      "source_location": "L14",
+      "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_ui_tech_icon",
@@ -35424,7 +35424,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/components/ui/tech-icon.tsx",
-      "source_location": "L6",
+      "source_location": "L25",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_ui_tech_icon",
@@ -35436,7 +35436,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/ui/tech-icon.tsx",
-      "source_location": "L4",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_ui_tech_icon",
@@ -35448,7 +35448,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/components/ui/tech-icon.tsx",
-      "source_location": "L4",
+      "source_location": "L23",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_ui_tech_icon",
@@ -35485,7 +35485,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "src/components/ui/tech-icon.tsx",
-      "source_location": "L33",
+      "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_components_ui_tech_icon_techicon",
@@ -63740,5 +63740,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "3ebbc67071beded352947dfcdca91dc5fb7848da"
+  "built_at_commit": "4462eaffab5a4da8f5ddeab7139cdef55b836974"
 }
