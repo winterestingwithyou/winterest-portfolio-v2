@@ -3,6 +3,7 @@ import { Save, Trash2 } from 'lucide-react'
 import type { FormEvent } from 'react'
 import { useMemo, useState } from 'react'
 
+import { TechIcon } from '#/components/ui/tech-icon'
 import { useTechnologies } from '#/features/technologies/hooks'
 import { getDashboardCopy } from './copy'
 
@@ -285,6 +286,12 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-muted) hover:border-(--brand-orange)'
                   }`}
                 >
+                  <TechIcon
+                    src={tech.icon}
+                    name={tech.name}
+                    color={tech.color}
+                    className="size-3.5"
+                  />
                   {tech.name}
                 </button>
               )

@@ -1,7 +1,7 @@
 # Graph Report - winterest-portfolio-v2  (2026-08-14)
 
 ## Corpus Check
-- 108 files · ~191,978 words
+- 110 files · ~193,972 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b1dffe0c`
+- Built from commit: `de6186e3`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -215,7 +215,7 @@
 - NonRetryableError
 - Pipeline
 - ProcessEnv
-- better-auth
+- @faker-js/faker
 - RateLimit
 - ResponseFunctionToolCall
 - RpcTarget
@@ -406,7 +406,7 @@ Nodes (3): BasicImageTransformations, RequestInitCfPropertiesImage, RequestInitC
 
 ### Community 138 - "dependencies"
 Cohesion: 0.15
-Nodes (13): @faker-js/faker, dependencies, @faker-js/faker, radix-ui, @radix-ui/react-slot, @t3-oss/env-core, tailwind-merge, @tanstack/ai-client (+5 more)
+Nodes (13): better-auth, dependencies, better-auth, radix-ui, @radix-ui/react-slot, @t3-oss/env-core, tailwind-merge, @tanstack/ai-client (+5 more)
 
 ### Community 139 - "login.tsx"
 Cohesion: 0.21

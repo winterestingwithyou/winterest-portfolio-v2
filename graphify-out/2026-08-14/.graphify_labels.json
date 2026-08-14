@@ -199,7 +199,7 @@
   "197": "NonRetryableError",
   "198": "Pipeline",
   "199": "ProcessEnv",
-  "200": "better-auth",
+  "200": "@faker-js/faker",
   "201": "RateLimit",
   "202": "ResponseFunctionToolCall",
   "203": "RpcTarget",

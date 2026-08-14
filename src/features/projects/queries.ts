@@ -28,6 +28,13 @@ export type DashboardProjectRecord = ProjectRecord & {
   technologyIds: string[]
 }
 
+export type PublicProjectTechnology = {
+  id: string
+  name: string
+  icon?: string | null
+  color?: string | null
+}
+
 export type PublicProjectRecord = {
   id: string
   slug: string
@@ -45,13 +52,13 @@ export type PublicProjectRecord = {
   startedAt?: Date | null
   completedAt?: Date | null
   publishedAt?: Date | null
-  technologies: string[]
+  technologies: PublicProjectTechnology[]
 }
 
 export function toPublicProjectRecord(
   record: ProjectRecord,
   translation: ProjectTranslationRecord,
-  technologyNames: readonly string[] = [],
+  projectTechs: readonly PublicProjectTechnology[] = [],
 ): PublicProjectRecord {
   return {
     id: record.id,
@@ -70,7 +77,7 @@ export function toPublicProjectRecord(
     startedAt: record.startedAt,
     completedAt: record.completedAt,
     publishedAt: record.publishedAt,
-    technologies: [...technologyNames],
+    technologies: [...projectTechs],
   }
 }
 
@@ -138,7 +145,7 @@ export async function listPublishedPublicProjects(
         translation: ProjectTranslationRecord
       } => Boolean(item.translation),
     )
-  const technologyMap = await listProjectTechnologyNames(
+  const technologyMap = await listProjectTechnologies(
     db,
     localizedRecords.map(({ record }) => record.id),
   )
@@ -166,7 +173,7 @@ export async function getPublishedPublicProjectBySlug(
     return null
   }
 
-  const technologyMap = await listProjectTechnologyNames(db, [project.id])
+  const technologyMap = await listProjectTechnologies(db, [project.id])
   return toPublicProjectRecord(
     project,
     translation,
@@ -235,18 +242,21 @@ async function listProjectTechnologyIds(
   }, new Map<string, string[]>())
 }
 
-async function listProjectTechnologyNames(
+async function listProjectTechnologies(
   db: Database,
   projectIds: readonly string[],
 ) {
   if (projectIds.length === 0) {
-    return new Map<string, string[]>()
+    return new Map<string, PublicProjectTechnology[]>()
   }
 
   const rows = await db
     .select({
       projectId: projectTechnologies.projectId,
-      technologyName: technologies.name,
+      id: technologies.id,
+      name: technologies.name,
+      icon: technologies.icon,
+      color: technologies.color,
     })
     .from(projectTechnologies)
     .innerJoin(
@@ -258,10 +268,15 @@ async function listProjectTechnologyNames(
 
   return rows.reduce((map, row) => {
     const existing = map.get(row.projectId) ?? []
-    existing.push(row.technologyName)
+    existing.push({
+      id: row.id,
+      name: row.name,
+      icon: row.icon,
+      color: row.color,
+    })
     map.set(row.projectId, existing)
     return map
-  }, new Map<string, string[]>())
+  }, new Map<string, PublicProjectTechnology[]>())
 }
 
 export async function getProjectByIdOrSlug(db: Database, idOrSlug: string) {

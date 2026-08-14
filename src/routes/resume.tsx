@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { TechIcon } from '#/components/ui/tech-icon'
 import { getPublishedProjects } from '#/features/projects/public-loaders'
 import {
   getPortfolioContent,
@@ -66,9 +67,22 @@ function ResumePage() {
                   <p className="mt-2 text-sm leading-7 text-(--brand-muted)">
                     {project.summary}
                   </p>
-                  <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-(--brand-orange-deep)">
-                    {project.technologies.join(' | ')}
-                  </p>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {project.technologies.map((tech) => (
+                      <span
+                        key={tech.id || tech.name}
+                        className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-(--brand-orange-deep)"
+                      >
+                        <TechIcon
+                          src={tech.icon}
+                          name={tech.name}
+                          color={tech.color}
+                          className="size-3.5"
+                        />
+                        {tech.name}
+                      </span>
+                    ))}
+                  </div>
                 </article>
               ))}
             </div>

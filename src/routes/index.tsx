@@ -134,10 +134,16 @@ function HomePage() {
                 <div className="mt-5 flex flex-wrap gap-2">
                   {project.technologies.slice(0, 4).map((item) => (
                     <span
-                      key={item}
-                      className="rounded-full border border-(--brand-line) bg-(--surface-strong) px-3 py-1 text-xs font-semibold text-(--brand-muted)"
+                      key={item.id || item.name}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--surface-strong) px-3 py-1 text-xs font-semibold text-(--brand-muted)"
                     >
-                      {item}
+                      <TechIcon
+                        src={item.icon}
+                        name={item.name}
+                        color={item.color}
+                        className="size-3.5"
+                      />
+                      {item.name}
                     </span>
                   ))}
                 </div>

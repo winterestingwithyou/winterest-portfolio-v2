@@ -857,8 +857,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "package_dependencies_faker_js_faker",
-      "community": 138,
-      "community_name": "dependencies",
+      "community": 200,
+      "community_name": "@faker-js/faker",
       "norm_label": "@faker-js/faker"
     },
     {
@@ -868,8 +868,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "faker_js_faker",
-      "community": 138,
-      "community_name": "dependencies",
+      "community": 200,
+      "community_name": "@faker-js/faker",
       "norm_label": "@faker-js/faker"
     },
     {
@@ -1495,8 +1495,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "package_dependencies_better_auth",
-      "community": 200,
-      "community_name": "better-auth",
+      "community": 138,
+      "community_name": "dependencies",
       "norm_label": "better-auth"
     },
     {
@@ -1506,8 +1506,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "better_auth",
-      "community": 200,
-      "community_name": "better-auth",
+      "community": 138,
+      "community_name": "dependencies",
       "norm_label": "better-auth"
     },
     {
@@ -4971,7 +4971,7 @@
       "label": "isIndonesianLocale()",
       "file_type": "code",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L466",
+      "source_location": "L474",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_portfolio_data_isindonesianlocale",
@@ -4983,7 +4983,7 @@
       "label": "getPublicCopy()",
       "file_type": "code",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L470",
+      "source_location": "L478",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_portfolio_data_getpubliccopy",
@@ -4995,7 +4995,7 @@
       "label": "getPortfolioContent()",
       "file_type": "code",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L474",
+      "source_location": "L482",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_portfolio_data_getportfoliocontent",
@@ -38506,7 +38506,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L474",
+      "source_location": "L482",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data",
@@ -38517,7 +38517,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L470",
+      "source_location": "L478",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data",
@@ -38572,7 +38572,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L466",
+      "source_location": "L474",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data",
@@ -38794,7 +38794,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L475",
+      "source_location": "L483",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data_getportfoliocontent",
@@ -38806,7 +38806,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L471",
+      "source_location": "L479",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data_getpubliccopy",
@@ -63869,5 +63869,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "b1dffe0c44211bd58dfbb8a13565906ddc633651"
+  "built_at_commit": "de6186e3d7340e593a0ebe1d74ec4962dc8e6d79"
 }

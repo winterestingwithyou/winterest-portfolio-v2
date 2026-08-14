@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, ExternalLink, Github, Globe, Layers } from 'lucide-react'
 
+import { TechIcon } from '#/components/ui/tech-icon'
 import type { PublicProjectRecord } from '#/features/projects/queries'
 
 type ProjectCardProps = {
@@ -56,10 +57,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
             <div className="mb-3 flex flex-wrap gap-1.5">
               {project.technologies.slice(0, 5).map((tech) => (
                 <span
-                  key={tech}
-                  className="rounded-md border border-(--brand-line) bg-(--surface-strong) px-2.5 py-0.5 font-mono text-xs font-medium text-(--brand-muted)"
+                  key={tech.id || tech.name}
+                  className="inline-flex items-center gap-1.5 rounded-md border border-(--brand-line) bg-(--surface-strong) px-2.5 py-0.5 font-mono text-xs font-medium text-(--brand-muted)"
                 >
-                  {tech}
+                  <TechIcon
+                    src={tech.icon}
+                    name={tech.name}
+                    color={tech.color}
+                    className="size-3.5"
+                  />
+                  {tech.name}
                 </span>
               ))}
               {project.technologies.length > 5 ? (

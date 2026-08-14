@@ -13,6 +13,7 @@ import {
 import type { ReactNode } from 'react'
 
 import { Container } from '#/components/marketing/section'
+import { TechIcon } from '#/components/ui/tech-icon'
 import { getPublicCopy } from '#/features/portfolio/data'
 import { getPublishedProject } from '#/features/projects/public-loaders'
 import { getLocale } from '#/paraglide/runtime'
@@ -206,10 +207,16 @@ function ProjectDetailPage() {
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.map((item) => (
                     <span
-                      key={item}
-                      className="rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 py-1 font-mono text-xs font-semibold text-(--brand-ink)"
+                      key={item.id || item.name}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 py-1 font-mono text-xs font-semibold text-(--brand-ink)"
                     >
-                      {item}
+                      <TechIcon
+                        src={item.icon}
+                        name={item.name}
+                        color={item.color}
+                        className="size-3.5"
+                      />
+                      {item.name}
                     </span>
                   ))}
                 </div>
