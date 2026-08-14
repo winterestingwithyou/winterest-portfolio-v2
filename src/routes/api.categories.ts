@@ -6,6 +6,7 @@ import { requireDashboardUser } from '#/features/auth/session'
 import {
   createCategory,
   deleteCategory,
+  getCategoryById,
   listCategories,
   updateCategory,
 } from '#/features/technologies/queries'
@@ -14,9 +15,23 @@ import type { CategoryInput } from '#/features/technologies/queries'
 export const Route = createFileRoute('/api/categories')({
   server: {
     handlers: {
-      GET: async () => {
+      GET: async ({ request }) => {
         try {
+          const url = new URL(request.url)
+          const id = url.searchParams.get('id')
           const db = getDb(env.DB)
+
+          if (id) {
+            const item = await getCategoryById(db, id)
+            if (!item) {
+              return Response.json(
+                { error: 'Category not found.' },
+                { status: 404 },
+              )
+            }
+            return Response.json({ data: item })
+          }
+
           const items = await listCategories(db)
           return Response.json({ data: items })
         } catch (error) {

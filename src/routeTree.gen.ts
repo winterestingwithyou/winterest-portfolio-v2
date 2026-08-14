@@ -19,17 +19,21 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
-import { Route as DashboardStackRouteImport } from './routes/dashboard.stack'
 import { Route as DashboardMediaRouteImport } from './routes/dashboard.media'
 import { Route as ApiTechnologiesRouteImport } from './routes/api.technologies'
 import { Route as ApiStackRouteImport } from './routes/api.stack'
 import { Route as ApiProjectsRouteImport } from './routes/api.projects'
 import { Route as ApiCategoriesRouteImport } from './routes/api.categories'
+import { Route as DashboardStackIndexRouteImport } from './routes/dashboard.stack.index'
 import { Route as DashboardProjectsIndexRouteImport } from './routes/dashboard.projects.index'
 import { Route as DashboardProjectsNewRouteImport } from './routes/dashboard.projects.new'
 import { Route as DashboardProjectsIdRouteImport } from './routes/dashboard.projects.$id'
 import { Route as ApiProjectsIdRouteImport } from './routes/api.projects.$id'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as DashboardStackTechnologiesNewRouteImport } from './routes/dashboard.stack.technologies.new'
+import { Route as DashboardStackTechnologiesIdRouteImport } from './routes/dashboard.stack.technologies.$id'
+import { Route as DashboardStackCategoriesNewRouteImport } from './routes/dashboard.stack.categories.new'
+import { Route as DashboardStackCategoriesIdRouteImport } from './routes/dashboard.stack.categories.$id'
 
 const StackRoute = StackRouteImport.update({
   id: '/stack',
@@ -81,11 +85,6 @@ const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
   path: '/projects/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardStackRoute = DashboardStackRouteImport.update({
-  id: '/stack',
-  path: '/stack',
-  getParentRoute: () => DashboardRoute,
-} as any)
 const DashboardMediaRoute = DashboardMediaRouteImport.update({
   id: '/media',
   path: '/media',
@@ -110,6 +109,11 @@ const ApiCategoriesRoute = ApiCategoriesRouteImport.update({
   id: '/api/categories',
   path: '/api/categories',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardStackIndexRoute = DashboardStackIndexRouteImport.update({
+  id: '/stack/',
+  path: '/stack/',
+  getParentRoute: () => DashboardRoute,
 } as any)
 const DashboardProjectsIndexRoute = DashboardProjectsIndexRouteImport.update({
   id: '/projects/',
@@ -136,6 +140,30 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardStackTechnologiesNewRoute =
+  DashboardStackTechnologiesNewRouteImport.update({
+    id: '/stack/technologies/new',
+    path: '/stack/technologies/new',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardStackTechnologiesIdRoute =
+  DashboardStackTechnologiesIdRouteImport.update({
+    id: '/stack/technologies/$id',
+    path: '/stack/technologies/$id',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardStackCategoriesNewRoute =
+  DashboardStackCategoriesNewRouteImport.update({
+    id: '/stack/categories/new',
+    path: '/stack/categories/new',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardStackCategoriesIdRoute =
+  DashboardStackCategoriesIdRouteImport.update({
+    id: '/stack/categories/$id',
+    path: '/stack/categories/$id',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -150,7 +178,6 @@ export interface FileRoutesByFullPath {
   '/api/stack': typeof ApiStackRoute
   '/api/technologies': typeof ApiTechnologiesRoute
   '/dashboard/media': typeof DashboardMediaRoute
-  '/dashboard/stack': typeof DashboardStackRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/projects/': typeof ProjectsIndexRoute
@@ -159,6 +186,11 @@ export interface FileRoutesByFullPath {
   '/dashboard/projects/$id': typeof DashboardProjectsIdRoute
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/projects/': typeof DashboardProjectsIndexRoute
+  '/dashboard/stack/': typeof DashboardStackIndexRoute
+  '/dashboard/stack/categories/$id': typeof DashboardStackCategoriesIdRoute
+  '/dashboard/stack/categories/new': typeof DashboardStackCategoriesNewRoute
+  '/dashboard/stack/technologies/$id': typeof DashboardStackTechnologiesIdRoute
+  '/dashboard/stack/technologies/new': typeof DashboardStackTechnologiesNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -172,7 +204,6 @@ export interface FileRoutesByTo {
   '/api/stack': typeof ApiStackRoute
   '/api/technologies': typeof ApiTechnologiesRoute
   '/dashboard/media': typeof DashboardMediaRoute
-  '/dashboard/stack': typeof DashboardStackRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/dashboard': typeof DashboardIndexRoute
   '/projects': typeof ProjectsIndexRoute
@@ -181,6 +212,11 @@ export interface FileRoutesByTo {
   '/dashboard/projects/$id': typeof DashboardProjectsIdRoute
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/projects': typeof DashboardProjectsIndexRoute
+  '/dashboard/stack': typeof DashboardStackIndexRoute
+  '/dashboard/stack/categories/$id': typeof DashboardStackCategoriesIdRoute
+  '/dashboard/stack/categories/new': typeof DashboardStackCategoriesNewRoute
+  '/dashboard/stack/technologies/$id': typeof DashboardStackTechnologiesIdRoute
+  '/dashboard/stack/technologies/new': typeof DashboardStackTechnologiesNewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -196,7 +232,6 @@ export interface FileRoutesById {
   '/api/stack': typeof ApiStackRoute
   '/api/technologies': typeof ApiTechnologiesRoute
   '/dashboard/media': typeof DashboardMediaRoute
-  '/dashboard/stack': typeof DashboardStackRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/projects/': typeof ProjectsIndexRoute
@@ -205,6 +240,11 @@ export interface FileRoutesById {
   '/dashboard/projects/$id': typeof DashboardProjectsIdRoute
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/projects/': typeof DashboardProjectsIndexRoute
+  '/dashboard/stack/': typeof DashboardStackIndexRoute
+  '/dashboard/stack/categories/$id': typeof DashboardStackCategoriesIdRoute
+  '/dashboard/stack/categories/new': typeof DashboardStackCategoriesNewRoute
+  '/dashboard/stack/technologies/$id': typeof DashboardStackTechnologiesIdRoute
+  '/dashboard/stack/technologies/new': typeof DashboardStackTechnologiesNewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -221,7 +261,6 @@ export interface FileRouteTypes {
     | '/api/stack'
     | '/api/technologies'
     | '/dashboard/media'
-    | '/dashboard/stack'
     | '/projects/$slug'
     | '/dashboard/'
     | '/projects/'
@@ -230,6 +269,11 @@ export interface FileRouteTypes {
     | '/dashboard/projects/$id'
     | '/dashboard/projects/new'
     | '/dashboard/projects/'
+    | '/dashboard/stack/'
+    | '/dashboard/stack/categories/$id'
+    | '/dashboard/stack/categories/new'
+    | '/dashboard/stack/technologies/$id'
+    | '/dashboard/stack/technologies/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -243,7 +287,6 @@ export interface FileRouteTypes {
     | '/api/stack'
     | '/api/technologies'
     | '/dashboard/media'
-    | '/dashboard/stack'
     | '/projects/$slug'
     | '/dashboard'
     | '/projects'
@@ -252,6 +295,11 @@ export interface FileRouteTypes {
     | '/dashboard/projects/$id'
     | '/dashboard/projects/new'
     | '/dashboard/projects'
+    | '/dashboard/stack'
+    | '/dashboard/stack/categories/$id'
+    | '/dashboard/stack/categories/new'
+    | '/dashboard/stack/technologies/$id'
+    | '/dashboard/stack/technologies/new'
   id:
     | '__root__'
     | '/'
@@ -266,7 +314,6 @@ export interface FileRouteTypes {
     | '/api/stack'
     | '/api/technologies'
     | '/dashboard/media'
-    | '/dashboard/stack'
     | '/projects/$slug'
     | '/dashboard/'
     | '/projects/'
@@ -275,6 +322,11 @@ export interface FileRouteTypes {
     | '/dashboard/projects/$id'
     | '/dashboard/projects/new'
     | '/dashboard/projects/'
+    | '/dashboard/stack/'
+    | '/dashboard/stack/categories/$id'
+    | '/dashboard/stack/categories/new'
+    | '/dashboard/stack/technologies/$id'
+    | '/dashboard/stack/technologies/new'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -366,13 +418,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/dashboard/stack': {
-      id: '/dashboard/stack'
-      path: '/stack'
-      fullPath: '/dashboard/stack'
-      preLoaderRoute: typeof DashboardStackRouteImport
-      parentRoute: typeof DashboardRoute
-    }
     '/dashboard/media': {
       id: '/dashboard/media'
       path: '/media'
@@ -407,6 +452,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/api/categories'
       preLoaderRoute: typeof ApiCategoriesRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/dashboard/stack/': {
+      id: '/dashboard/stack/'
+      path: '/stack'
+      fullPath: '/dashboard/stack/'
+      preLoaderRoute: typeof DashboardStackIndexRouteImport
+      parentRoute: typeof DashboardRoute
     }
     '/dashboard/projects/': {
       id: '/dashboard/projects/'
@@ -443,25 +495,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/stack/technologies/new': {
+      id: '/dashboard/stack/technologies/new'
+      path: '/stack/technologies/new'
+      fullPath: '/dashboard/stack/technologies/new'
+      preLoaderRoute: typeof DashboardStackTechnologiesNewRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/stack/technologies/$id': {
+      id: '/dashboard/stack/technologies/$id'
+      path: '/stack/technologies/$id'
+      fullPath: '/dashboard/stack/technologies/$id'
+      preLoaderRoute: typeof DashboardStackTechnologiesIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/stack/categories/new': {
+      id: '/dashboard/stack/categories/new'
+      path: '/stack/categories/new'
+      fullPath: '/dashboard/stack/categories/new'
+      preLoaderRoute: typeof DashboardStackCategoriesNewRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/stack/categories/$id': {
+      id: '/dashboard/stack/categories/$id'
+      path: '/stack/categories/$id'
+      fullPath: '/dashboard/stack/categories/$id'
+      preLoaderRoute: typeof DashboardStackCategoriesIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
   }
 }
 
 interface DashboardRouteChildren {
   DashboardMediaRoute: typeof DashboardMediaRoute
-  DashboardStackRoute: typeof DashboardStackRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardProjectsIdRoute: typeof DashboardProjectsIdRoute
   DashboardProjectsNewRoute: typeof DashboardProjectsNewRoute
   DashboardProjectsIndexRoute: typeof DashboardProjectsIndexRoute
+  DashboardStackIndexRoute: typeof DashboardStackIndexRoute
+  DashboardStackCategoriesIdRoute: typeof DashboardStackCategoriesIdRoute
+  DashboardStackCategoriesNewRoute: typeof DashboardStackCategoriesNewRoute
+  DashboardStackTechnologiesIdRoute: typeof DashboardStackTechnologiesIdRoute
+  DashboardStackTechnologiesNewRoute: typeof DashboardStackTechnologiesNewRoute
 }
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardMediaRoute: DashboardMediaRoute,
-  DashboardStackRoute: DashboardStackRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardProjectsIdRoute: DashboardProjectsIdRoute,
   DashboardProjectsNewRoute: DashboardProjectsNewRoute,
   DashboardProjectsIndexRoute: DashboardProjectsIndexRoute,
+  DashboardStackIndexRoute: DashboardStackIndexRoute,
+  DashboardStackCategoriesIdRoute: DashboardStackCategoriesIdRoute,
+  DashboardStackCategoriesNewRoute: DashboardStackCategoriesNewRoute,
+  DashboardStackTechnologiesIdRoute: DashboardStackTechnologiesIdRoute,
+  DashboardStackTechnologiesNewRoute: DashboardStackTechnologiesNewRoute,
 }
 
 const DashboardRouteWithChildren = DashboardRoute._addFileChildren(

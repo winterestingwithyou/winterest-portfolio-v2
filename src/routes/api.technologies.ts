@@ -6,6 +6,7 @@ import { requireDashboardUser } from '#/features/auth/session'
 import {
   createTechnology,
   deleteTechnology,
+  getTechnologyById,
   listTechnologies,
   updateTechnology,
 } from '#/features/technologies/queries'
@@ -14,9 +15,23 @@ import type { TechnologyInput } from '#/features/technologies/queries'
 export const Route = createFileRoute('/api/technologies')({
   server: {
     handlers: {
-      GET: async () => {
+      GET: async ({ request }) => {
         try {
+          const url = new URL(request.url)
+          const id = url.searchParams.get('id')
           const db = getDb(env.DB)
+
+          if (id) {
+            const item = await getTechnologyById(db, id)
+            if (!item) {
+              return Response.json(
+                { error: 'Technology not found.' },
+                { status: 404 },
+              )
+            }
+            return Response.json({ data: item })
+          }
+
           const items = await listTechnologies(db)
           return Response.json({ data: items })
         } catch (error) {
