@@ -2,17 +2,27 @@ import { eq } from 'drizzle-orm'
 
 import type { Database } from './index'
 import {
+  categories,
   contentLocales,
   projectTechnologies,
   projects,
   projectTranslations,
   technologies,
+  technologyCategories,
 } from './schema'
-import { projectSeeds, technologySeeds } from './seed-data'
-import type { PortfolioProjectSeed, TechnologySeed } from './seed-data'
+import { categorySeeds, projectSeeds, technologySeeds } from './seed-data'
+import type {
+  CategorySeed,
+  PortfolioProjectSeed,
+  TechnologySeed,
+} from './seed-data'
 
 export async function seedPortfolioData(db: Database) {
   const now = new Date()
+
+  for (const category of categorySeeds) {
+    await upsertCategory(db, category, now)
+  }
 
   for (const technology of technologySeeds) {
     await upsertTechnology(db, technology, now)
@@ -23,6 +33,29 @@ export async function seedPortfolioData(db: Database) {
   }
 }
 
+async function upsertCategory(db: Database, seed: CategorySeed, now: Date) {
+  await db
+    .insert(categories)
+    .values({
+      id: seed.id,
+      name: seed.name,
+      slug: seed.slug,
+      description: seed.description ?? null,
+      sortOrder: seed.sortOrder,
+      updatedAt: now,
+    })
+    .onConflictDoUpdate({
+      target: categories.slug,
+      set: {
+        name: seed.name,
+        description: seed.description ?? null,
+        sortOrder: seed.sortOrder,
+        updatedAt: now,
+      },
+    })
+    .run()
+}
+
 async function upsertTechnology(db: Database, seed: TechnologySeed, now: Date) {
   await db
     .insert(technologies)
@@ -30,9 +63,8 @@ async function upsertTechnology(db: Database, seed: TechnologySeed, now: Date) {
       id: seed.id,
       name: seed.name,
       slug: seed.slug,
-      category: seed.category,
-      icon: null,
-      color: null,
+      icon: seed.icon ?? null,
+      color: seed.color ?? null,
       url: seed.url ?? null,
       description: seed.description ?? null,
       updatedAt: now,
@@ -41,13 +73,38 @@ async function upsertTechnology(db: Database, seed: TechnologySeed, now: Date) {
       target: technologies.slug,
       set: {
         name: seed.name,
-        category: seed.category,
+        icon: seed.icon ?? null,
+        color: seed.color ?? null,
         url: seed.url ?? null,
         description: seed.description ?? null,
         updatedAt: now,
       },
     })
     .run()
+
+  const techRow = await db
+    .select({ id: technologies.id })
+    .from(technologies)
+    .where(eq(technologies.slug, seed.slug))
+    .get()
+
+  if (techRow) {
+    await db
+      .delete(technologyCategories)
+      .where(eq(technologyCategories.technologyId, techRow.id))
+      .run()
+
+    for (const catId of seed.categoryIds) {
+      await db
+        .insert(technologyCategories)
+        .values({
+          technologyId: techRow.id,
+          categoryId: catId,
+        })
+        .onConflictDoNothing()
+        .run()
+    }
+  }
 }
 
 async function upsertProject(

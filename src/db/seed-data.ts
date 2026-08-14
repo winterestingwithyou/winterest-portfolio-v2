@@ -1,4 +1,12 @@
-import type { ContentLocale, TechnologyCategory } from './schema'
+import type { ContentLocale } from './schema'
+
+export type CategorySeed = {
+  id: string
+  name: string
+  slug: string
+  description?: string
+  sortOrder: number
+}
 
 export type PortfolioProjectSeed = {
   id: string
@@ -25,75 +33,181 @@ export type TechnologySeed = {
   id: string
   name: string
   slug: string
-  category: TechnologyCategory
+  categoryIds: string[]
+  icon?: string
+  color?: string
   url?: string
   description?: string
 }
+
+export const categorySeeds = [
+  {
+    id: 'cat-runtime-edge',
+    name: 'Runtime & Edge Platform',
+    slug: 'runtime-edge',
+    description:
+      'Tools and runtimes used to keep local iteration fast and serverless edge deployment smooth.',
+    sortOrder: 1,
+  },
+  {
+    id: 'cat-fullstack-ui',
+    name: 'Fullstack & UI',
+    slug: 'fullstack-ui',
+    description:
+      'React frameworks, routing, server state, forms, animations, and component libraries.',
+    sortOrder: 2,
+  },
+  {
+    id: 'cat-data-auth',
+    name: 'Data & Security',
+    slug: 'data-security',
+    description:
+      'Databases, ORMs, authentication, type validation, and environment management.',
+    sortOrder: 3,
+  },
+  {
+    id: 'cat-design-styling',
+    name: 'Design System & Styling',
+    slug: 'design-styling',
+    description:
+      'Utility-first CSS, Radix UI primitives, animations, and responsive visual design tokens.',
+    sortOrder: 4,
+  },
+  {
+    id: 'cat-languages-tools',
+    name: 'Languages & Core Tools',
+    slug: 'languages-tools',
+    description:
+      'Primary programming languages, version control, and developer environment tools.',
+    sortOrder: 5,
+  },
+] satisfies CategorySeed[]
 
 export const technologySeeds = [
   {
     id: 'tech-bun',
     name: 'Bun',
     slug: 'bun',
-    category: 'runtime',
+    categoryIds: ['cat-runtime-edge', 'cat-languages-tools'],
+    icon: 'bun',
+    color: '#fbf0df',
     url: 'https://bun.sh',
-    description: 'Fast JavaScript runtime and project tooling.',
+    description:
+      'Fast JavaScript runtime, package manager, and project tooling.',
   },
   {
     id: 'tech-react',
-    name: 'React',
+    name: 'React 19',
     slug: 'react',
-    category: 'framework',
+    categoryIds: ['cat-fullstack-ui'],
+    icon: 'react',
+    color: '#61dafb',
     url: 'https://react.dev',
-    description: 'UI library for building interactive interfaces.',
+    description: 'UI library for building interactive component interfaces.',
   },
   {
     id: 'tech-tanstack-start',
     name: 'TanStack Start',
     slug: 'tanstack-start',
-    category: 'framework',
+    categoryIds: ['cat-fullstack-ui'],
+    icon: 'layers',
+    color: '#ff4154',
     url: 'https://tanstack.com/start',
-    description: 'Fullstack React framework powered by TanStack Router.',
+    description:
+      'Fullstack React framework powered by TanStack Router and Vite.',
   },
   {
     id: 'tech-cloudflare-workers',
     name: 'Cloudflare Workers',
     slug: 'cloudflare-workers',
-    category: 'service',
+    categoryIds: ['cat-runtime-edge'],
+    icon: 'cloudflare',
+    color: '#f38020',
     url: 'https://workers.cloudflare.com',
-    description: 'Edge runtime for fast web applications.',
+    description: 'Serverless edge runtime for fast global web applications.',
   },
   {
     id: 'tech-cloudflare-d1',
     name: 'Cloudflare D1',
     slug: 'cloudflare-d1',
-    category: 'database',
+    categoryIds: ['cat-data-auth', 'cat-runtime-edge'],
+    icon: 'database',
+    color: '#f38020',
     url: 'https://developers.cloudflare.com/d1',
-    description: 'Serverless SQLite database on Cloudflare.',
+    description:
+      'Serverless SQLite database natively integrated with Cloudflare.',
   },
   {
     id: 'tech-drizzle',
     name: 'Drizzle ORM',
     slug: 'drizzle-orm',
-    category: 'database',
+    categoryIds: ['cat-data-auth'],
+    icon: 'database',
+    color: '#c5f74f',
     url: 'https://orm.drizzle.team',
-    description: 'TypeScript ORM used for content and dashboard data.',
+    description: 'TypeScript ORM used for type-safe database queries.',
   },
   {
     id: 'tech-tailwind',
-    name: 'Tailwind CSS',
+    name: 'Tailwind CSS v4',
     slug: 'tailwind-css',
-    category: 'styling',
+    categoryIds: ['cat-design-styling'],
+    icon: 'tailwind',
+    color: '#38bdf8',
     url: 'https://tailwindcss.com',
-    description: 'Utility-first CSS for the portfolio design system.',
+    description: 'Utility-first CSS engine for the portfolio design system.',
   },
   {
     id: 'tech-better-auth',
     name: 'Better Auth',
     slug: 'better-auth',
-    category: 'service',
+    categoryIds: ['cat-data-auth'],
+    icon: 'shield-check',
+    color: '#ffc107',
     url: 'https://www.better-auth.com',
-    description: 'Authentication foundation for the private dashboard.',
+    description: 'Authentication foundation for the private CMS dashboard.',
+  },
+  {
+    id: 'tech-typescript',
+    name: 'TypeScript',
+    slug: 'typescript',
+    categoryIds: ['cat-languages-tools'],
+    icon: 'typescript',
+    color: '#3178c6',
+    url: 'https://www.typescriptlang.org',
+    description:
+      'Strongly typed programming language for end-to-end type safety.',
+  },
+  {
+    id: 'tech-zod',
+    name: 'Zod',
+    slug: 'zod',
+    categoryIds: ['cat-data-auth'],
+    icon: 'check-circle-2',
+    color: '#3068b7',
+    url: 'https://zod.dev',
+    description: 'TypeScript-first schema validation for API inputs and forms.',
+  },
+  {
+    id: 'tech-vite',
+    name: 'Vite',
+    slug: 'vite',
+    categoryIds: ['cat-runtime-edge'],
+    icon: 'vite',
+    color: '#646cff',
+    url: 'https://vitejs.dev',
+    description: 'Next generation frontend tooling and development server.',
+  },
+  {
+    id: 'tech-wrangler',
+    name: 'Wrangler',
+    slug: 'wrangler',
+    categoryIds: ['cat-runtime-edge'],
+    icon: 'terminal',
+    color: '#f38020',
+    url: 'https://developers.cloudflare.com/workers/wrangler',
+    description:
+      'Command line tool for developing and deploying Cloudflare Workers.',
   },
 ] satisfies TechnologySeed[]
 
