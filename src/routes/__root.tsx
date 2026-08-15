@@ -17,6 +17,7 @@ import { getPublicCopy } from '#/features/portfolio/data'
 import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
+import { TooltipProvider } from '#/components/ui/tooltip'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -82,10 +83,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
-      <body className="font-sans antialiased [overflow-wrap:anywhere] selection:bg-[rgba(244,129,32,0.22)]">
-        {usesAppChrome ? <Header /> : null}
-        {children}
-        {usesAppChrome ? <Footer /> : null}
+      <body className="font-sans antialiased wrap-anywhere selection:bg-[rgba(244,129,32,0.22)]">
+        <TooltipProvider>
+          {usesAppChrome ? <Header /> : null}
+          {children}
+          {usesAppChrome ? <Footer /> : null}
+        </TooltipProvider>
         <TanStackDevtools
           config={{
             position: 'bottom-right',
