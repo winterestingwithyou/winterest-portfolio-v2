@@ -115,9 +115,7 @@ export function TechnologyEditorForm({
 
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
-      setError(
-        caught instanceof Error ? caught.message : 'Terjadi kesalahan.',
-      )
+      setError(caught instanceof Error ? caught.message : 'Terjadi kesalahan.')
     } finally {
       setIsSaving(false)
     }
@@ -125,7 +123,11 @@ export function TechnologyEditorForm({
 
   const handleDelete = async () => {
     if (!initialData?.id) return
-    if (!confirm(`Apakah Anda yakin ingin menghapus teknologi "${initialData.name}"?`)) {
+    if (
+      !confirm(
+        `Apakah Anda yakin ingin menghapus teknologi "${initialData.name}"?`,
+      )
+    ) {
       return
     }
 
@@ -143,9 +145,7 @@ export function TechnologyEditorForm({
 
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
-      setError(
-        caught instanceof Error ? caught.message : 'Terjadi kesalahan.',
-      )
+      setError(caught instanceof Error ? caught.message : 'Terjadi kesalahan.')
     } finally {
       setIsDeleting(false)
     }
@@ -174,7 +174,10 @@ export function TechnologyEditorForm({
         {/* Name & Slug */}
         <div className="grid gap-6 sm:grid-cols-2">
           <div>
-            <label htmlFor="name" className="block text-sm font-bold text-(--brand-ink)">
+            <label
+              htmlFor="name"
+              className="block text-sm font-bold text-(--brand-ink)"
+            >
               Nama Teknologi <span className="text-red-500">*</span>
             </label>
             <input
@@ -189,7 +192,10 @@ export function TechnologyEditorForm({
           </div>
 
           <div>
-            <label htmlFor="slug" className="block text-sm font-bold text-(--brand-ink)">
+            <label
+              htmlFor="slug"
+              className="block text-sm font-bold text-(--brand-ink)"
+            >
               Slug URL <span className="text-red-500">*</span>
             </label>
             <input
@@ -207,12 +213,20 @@ export function TechnologyEditorForm({
         {/* Icon & Color */}
         <div className="grid gap-6 sm:grid-cols-2">
           <div>
-            <label htmlFor="icon" className="block text-sm font-bold text-(--brand-ink)">
+            <label
+              htmlFor="icon"
+              className="block text-sm font-bold text-(--brand-ink)"
+            >
               Icon URL
             </label>
             <div className="mt-2 flex items-center gap-3">
               <div className="grid size-10 shrink-0 place-items-center rounded-xl border border-(--brand-line) bg-(--surface-strong)">
-                <TechIcon src={icon} name={name} color={color} className="size-6" />
+                <TechIcon
+                  src={icon}
+                  name={name}
+                  color={color}
+                  className="size-6"
+                />
               </div>
               <input
                 id="icon"
@@ -229,7 +243,10 @@ export function TechnologyEditorForm({
           </div>
 
           <div>
-            <label htmlFor="color" className="block text-sm font-bold text-(--brand-ink)">
+            <label
+              htmlFor="color"
+              className="block text-sm font-bold text-(--brand-ink)"
+            >
               Warna Hex / CSS
             </label>
             <div className="mt-2 flex items-center gap-3">
@@ -253,7 +270,10 @@ export function TechnologyEditorForm({
 
         {/* Website URL */}
         <div>
-          <label htmlFor="url" className="block text-sm font-bold text-(--brand-ink)">
+          <label
+            htmlFor="url"
+            className="block text-sm font-bold text-(--brand-ink)"
+          >
             Official Website URL
           </label>
           <input
@@ -278,7 +298,8 @@ export function TechnologyEditorForm({
                   Ultimate Tech Stack
                 </span>
                 <p className="text-xs text-(--brand-muted)">
-                  Tampilkan di bagian paling atas halaman Stack dan Marquee Homepage.
+                  Tampilkan di bagian paling atas halaman Stack dan Marquee
+                  Homepage.
                 </p>
               </div>
             </div>
@@ -338,7 +359,9 @@ export function TechnologyEditorForm({
             <Trash2 className="size-4" />
             {isDeleting ? 'Hapus...' : 'Hapus Teknologi'}
           </button>
-        ) : <div />}
+        ) : (
+          <div />
+        )}
 
         <div className="flex items-center gap-3">
           <Link

@@ -231,8 +231,7 @@ export const publicCopy = {
     stack: {
       eyebrow: 'Stack',
       title: 'Tech Stack that I use',
-      description:
-        'List of Tech and Tools that I use to build my projects.',
+      description: 'List of Tech and Tools that I use to build my projects.',
       ultimateEyebrow: 'Ultimate Tech Stack',
       ultimateTitle: 'Core Architecture & Preferred Stack',
       ultimateDescription:

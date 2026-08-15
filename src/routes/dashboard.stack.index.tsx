@@ -56,9 +56,7 @@ function DashboardStackPage() {
       setCategories(catJson.data ?? [])
       setTechnologies(techJson.data ?? [])
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : 'Gagal memuat data stack.',
-      )
+      setError(err instanceof Error ? err.message : 'Gagal memuat data stack.')
     } finally {
       setIsLoading(false)
     }
@@ -69,7 +67,8 @@ function DashboardStackPage() {
   }, [loadData])
 
   const handleDeleteCategory = async (id: string, name: string) => {
-    if (!confirm(`Apakah Anda yakin ingin menghapus kategori "${name}"?`)) return
+    if (!confirm(`Apakah Anda yakin ingin menghapus kategori "${name}"?`))
+      return
     setError(null)
     try {
       const res = await fetch(`/api/categories?id=${id}`, { method: 'DELETE' })
@@ -81,7 +80,8 @@ function DashboardStackPage() {
   }
 
   const handleDeleteTech = async (id: string, name: string) => {
-    if (!confirm(`Apakah Anda yakin ingin menghapus teknologi "${name}"?`)) return
+    if (!confirm(`Apakah Anda yakin ingin menghapus teknologi "${name}"?`))
+      return
     setError(null)
     try {
       const res = await fetch(`/api/technologies?id=${id}`, {
@@ -96,7 +96,9 @@ function DashboardStackPage() {
     }
   }
 
-  const categoryMap = new Map<string, string>(categories.map((c) => [c.id, c.name]))
+  const categoryMap = new Map<string, string>(
+    categories.map((c) => [c.id, c.name]),
+  )
 
   return (
     <DashboardShell
@@ -116,7 +118,10 @@ function DashboardStackPage() {
             to="/dashboard/stack/categories/new"
             className="inline-flex min-h-10 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-card) px-4 text-sm font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange)"
           >
-            <Plus aria-hidden="true" className="size-4 text-(--brand-orange-deep)" />
+            <Plus
+              aria-hidden="true"
+              className="size-4 text-(--brand-orange-deep)"
+            />
             Tambah Kategori
           </Link>
           <Link
@@ -172,7 +177,9 @@ function DashboardStackPage() {
             </div>
           ) : technologies.length === 0 ? (
             <div className="p-8 text-center">
-              <p className="text-sm text-(--brand-muted)">Belum ada teknologi.</p>
+              <p className="text-sm text-(--brand-muted)">
+                Belum ada teknologi.
+              </p>
               <Link
                 to="/dashboard/stack/technologies/new"
                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-(--brand-orange) px-4 py-2 text-xs font-bold text-white no-underline"
@@ -231,7 +238,9 @@ function DashboardStackPage() {
                           Ultimate
                         </span>
                       ) : (
-                        <span className="font-mono text-xs text-(--brand-muted)">-</span>
+                        <span className="font-mono text-xs text-(--brand-muted)">
+                          -
+                        </span>
                       )}
                     </TableCell>
                     <TableCell>
@@ -283,7 +292,9 @@ function DashboardStackPage() {
             </div>
           ) : categories.length === 0 ? (
             <div className="p-8 text-center">
-              <p className="text-sm text-(--brand-muted)">Belum ada kategori.</p>
+              <p className="text-sm text-(--brand-muted)">
+                Belum ada kategori.
+              </p>
               <Link
                 to="/dashboard/stack/categories/new"
                 className="mt-4 inline-flex items-center gap-2 rounded-full bg-(--brand-orange) px-4 py-2 text-xs font-bold text-white no-underline"

@@ -30,9 +30,12 @@ export const getPublicUltimateStack = createServerFn({
   method: 'GET',
 }).handler(async () => {
   try {
-    const [{ env }, { getDb }, { listUltimateTechnologies }] = await Promise.all(
-      [import('cloudflare:workers'), import('#/db'), import('./queries')],
-    )
+    const [{ env }, { getDb }, { listUltimateTechnologies }] =
+      await Promise.all([
+        import('cloudflare:workers'),
+        import('#/db'),
+        import('./queries'),
+      ])
 
     const db = getDb(env.DB)
     return listUltimateTechnologies(db)

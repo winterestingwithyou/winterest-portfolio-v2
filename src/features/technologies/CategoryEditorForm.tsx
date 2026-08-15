@@ -78,9 +78,7 @@ export function CategoryEditorForm({
 
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
-      setError(
-        caught instanceof Error ? caught.message : 'Terjadi kesalahan.',
-      )
+      setError(caught instanceof Error ? caught.message : 'Terjadi kesalahan.')
     } finally {
       setIsSaving(false)
     }
@@ -88,7 +86,11 @@ export function CategoryEditorForm({
 
   const handleDelete = async () => {
     if (!initialData?.id) return
-    if (!confirm(`Apakah Anda yakin ingin menghapus kategori "${initialData.name}"?`)) {
+    if (
+      !confirm(
+        `Apakah Anda yakin ingin menghapus kategori "${initialData.name}"?`,
+      )
+    ) {
       return
     }
 
@@ -106,9 +108,7 @@ export function CategoryEditorForm({
 
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
-      setError(
-        caught instanceof Error ? caught.message : 'Terjadi kesalahan.',
-      )
+      setError(caught instanceof Error ? caught.message : 'Terjadi kesalahan.')
     } finally {
       setIsDeleting(false)
     }
@@ -136,7 +136,10 @@ export function CategoryEditorForm({
       <div className="surface-card space-y-6 p-6 sm:p-8">
         {/* Name */}
         <div>
-          <label htmlFor="name" className="block text-sm font-bold text-(--brand-ink)">
+          <label
+            htmlFor="name"
+            className="block text-sm font-bold text-(--brand-ink)"
+          >
             Nama Kategori <span className="text-red-500">*</span>
           </label>
           <input
@@ -152,7 +155,10 @@ export function CategoryEditorForm({
 
         {/* Slug */}
         <div>
-          <label htmlFor="slug" className="block text-sm font-bold text-(--brand-ink)">
+          <label
+            htmlFor="slug"
+            className="block text-sm font-bold text-(--brand-ink)"
+          >
             Slug URL <span className="text-red-500">*</span>
           </label>
           <input
@@ -168,7 +174,10 @@ export function CategoryEditorForm({
 
         {/* Sort Order */}
         <div>
-          <label htmlFor="sortOrder" className="block text-sm font-bold text-(--brand-ink)">
+          <label
+            htmlFor="sortOrder"
+            className="block text-sm font-bold text-(--brand-ink)"
+          >
             Urutan Tampil (Sort Order)
           </label>
           <input
@@ -197,7 +206,9 @@ export function CategoryEditorForm({
             <Trash2 className="size-4" />
             {isDeleting ? 'Hapus...' : 'Hapus Kategori'}
           </button>
-        ) : <div />}
+        ) : (
+          <div />
+        )}
 
         <div className="flex items-center gap-3">
           <Link

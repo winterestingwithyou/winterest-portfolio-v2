@@ -21,8 +21,7 @@ function DashboardCategoryEdit() {
     setError(null)
     try {
       const res = await fetch(`/api/categories?id=${id}`)
-      const result: { data?: CategoryRecord; error?: string } =
-        await res.json()
+      const result: { data?: CategoryRecord; error?: string } = await res.json()
 
       if (!res.ok) {
         throw new Error(result.error ?? 'Kategori tidak ditemukan.')

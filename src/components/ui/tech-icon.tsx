@@ -11,14 +11,15 @@ export interface TechIconProps {
   color?: string | null
 }
 
-export function TechIcon({
-  src,
-  name,
-  alt,
-  className,
-  color,
-}: TechIconProps) {
-  const iconUrl = src || (name && (name.startsWith('http://') || name.startsWith('https://') || name.startsWith('/')) ? name : null)
+export function TechIcon({ src, name, alt, className, color }: TechIconProps) {
+  const iconUrl =
+    src ||
+    (name &&
+    (name.startsWith('http://') ||
+      name.startsWith('https://') ||
+      name.startsWith('/'))
+      ? name
+      : null)
   const [hasError, setHasError] = useState(false)
 
   useEffect(() => {

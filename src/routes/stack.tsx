@@ -51,11 +51,7 @@ function StackPage() {
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-(--brand-bg) to-transparent sm:w-24" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-(--brand-bg) to-transparent sm:w-24" />
 
-            <Marquee
-              pauseOnHover
-              className="py-6 [--duration:30s]"
-              repeat={4}
-            >
+            <Marquee pauseOnHover className="py-6 [--duration:30s]" repeat={4}>
               {ultimateTechs.map((tech) => (
                 <div
                   key={tech.id}

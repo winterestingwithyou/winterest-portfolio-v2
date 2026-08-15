@@ -1,5 +1,8 @@
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
+import { DashboardHeader } from '#/components/dashboard/DashboardHeader'
+import { DashboardSidebar } from '#/components/dashboard/DashboardSidebar'
+import { SidebarInset, SidebarProvider } from '#/components/ui/sidebar'
 import { getDashboardSession } from '#/features/auth/server-functions'
 
 export const Route = createFileRoute('/dashboard')({
@@ -15,9 +18,25 @@ export const Route = createFileRoute('/dashboard')({
       })
     }
   },
+  loader: async () => {
+    const user = await getDashboardSession()
+    return { user }
+  },
   component: DashboardLayout,
 })
 
 function DashboardLayout() {
-  return <Outlet />
+  const { user } = Route.useLoaderData()
+
+  return (
+    <SidebarProvider defaultOpen>
+      <DashboardSidebar user={user} />
+      <SidebarInset className="min-h-screen bg-background">
+        <DashboardHeader user={user} />
+        <main className="flex-1 p-4 md:p-6">
+          <Outlet />
+        </main>
+      </SidebarInset>
+    </SidebarProvider>
+  )
 }
