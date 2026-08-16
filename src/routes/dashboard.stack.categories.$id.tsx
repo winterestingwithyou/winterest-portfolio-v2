@@ -2,8 +2,8 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { RefreshCw } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { DashboardShell } from '#/components/dashboard/DashboardShell'
-import { CategoryEditorForm } from '#/features/technologies/CategoryEditorForm'
+import { DashboardShell } from '#/components/dashboard/dashboard-shell'
+import { CategoryEditorForm } from '#/features/technologies/category-editor-form'
 import type { CategoryRecord } from '#/features/technologies/queries'
 
 export const Route = createFileRoute('/dashboard/stack/categories/$id')({

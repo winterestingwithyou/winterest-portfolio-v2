@@ -816,6 +816,7 @@ src/
 
 Rules:
 
+- Use `kebab-case` naming for all project files and directories (especially `.ts` and `.tsx` files, e.g. `dashboard-shell.tsx`, `project-editor-form.tsx`, `auth-client.ts`, `use-mobile.ts`).
 - Keep generic reusable UI in `src/components`.
 - Keep domain-specific logic in `src/features`.
 - Keep route files focused on routing, loading, and page composition.

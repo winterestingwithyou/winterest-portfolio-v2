@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowRight, BookOpen, FlaskConical, Image, Star } from 'lucide-react'
 import type { ReactNode } from 'react'
 
-import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { getDashboardSummary } from '#/features/dashboard/loaders'
 

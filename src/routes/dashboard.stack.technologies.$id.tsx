@@ -2,9 +2,9 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { RefreshCw } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import type { TechnologyWithCategories } from '#/features/technologies/queries'
-import { TechnologyEditorForm } from '#/features/technologies/TechnologyEditorForm'
+import { TechnologyEditorForm } from '#/features/technologies/technology-editor-form'
 
 export const Route = createFileRoute('/dashboard/stack/technologies/$id')({
   component: DashboardTechnologyEdit,

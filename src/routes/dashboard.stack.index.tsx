@@ -11,7 +11,7 @@ import {
 } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import {
   Table,
   TableBody,

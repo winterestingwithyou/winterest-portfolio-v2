@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
-import { ProjectCard } from '#/components/portfolio/ProjectCard'
+import { ProjectCard } from '#/components/portfolio/project-card'
 import { getPublicCopy } from '#/features/portfolio/data'
 import { getPublishedProjects } from '#/features/projects/public-loaders'
 import { getLocale } from '#/paraglide/runtime'

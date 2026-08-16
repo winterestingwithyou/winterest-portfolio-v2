@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
-import { CharacterSpotlight } from '#/components/visual/CharacterSpotlight'
+import { CharacterSpotlight } from '#/components/visual/character-spotlight'
 import { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/about')({

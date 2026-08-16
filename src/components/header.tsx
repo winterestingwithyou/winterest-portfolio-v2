@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react'
 import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
 import { authClient } from '#/lib/auth-client'
 
-import ParaglideLocaleSwitcher from './LocaleSwitcher.tsx'
-import GooeyNav from './react-bits/gooey-nav/GooeyNav'
-import ThemeToggle from './ThemeToggle'
+import ParaglideLocaleSwitcher from './locale-switcher.tsx'
+import GooeyNav from './react-bits/gooey-nav/gooey-nav'
+import ThemeToggle from './theme-toggle'
 
 export default function Header() {
   const copy = getPublicCopy()

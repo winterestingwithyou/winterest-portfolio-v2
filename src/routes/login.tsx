@@ -11,8 +11,8 @@ import {
 import type { FormEvent } from 'react'
 import { useState } from 'react'
 
-import ParaglideLocaleSwitcher from '#/components/LocaleSwitcher.tsx'
-import ThemeToggle from '#/components/ThemeToggle'
+import ParaglideLocaleSwitcher from '#/components/locale-switcher.tsx'
+import ThemeToggle from '#/components/theme-toggle'
 import { getDashboardSession } from '#/features/auth/server-functions'
 import { cn } from '#/lib/utils'
 import { getLocale } from '#/paraglide/runtime'

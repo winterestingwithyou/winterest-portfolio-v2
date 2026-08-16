@@ -13,7 +13,7 @@ import {
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { Marquee } from '#/components/ui/marquee'
 import { TechIcon } from '#/components/ui/tech-icon'
-import { HeroVisual } from '#/components/visual/HeroVisual'
+import { HeroVisual } from '#/components/visual/hero-visual'
 import { getPublishedProjects } from '#/features/projects/public-loaders'
 import {
   getPortfolioContent,

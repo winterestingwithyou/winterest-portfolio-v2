@@ -2,9 +2,9 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import { RefreshCw } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
-import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
-import { ProjectEditorForm } from '#/features/dashboard/ProjectEditorForm'
+import { ProjectEditorForm } from '#/features/dashboard/project-editor-form'
 
 type ProjectRecord = {
   id: string

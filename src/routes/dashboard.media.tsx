@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Image } from 'lucide-react'
 
-import { DashboardShell } from '#/components/dashboard/DashboardShell'
+import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 
 export const Route = createFileRoute('/dashboard/media')({

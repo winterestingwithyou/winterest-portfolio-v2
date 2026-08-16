@@ -1,8 +1,8 @@
 import { Link, useLocation } from '@tanstack/react-router'
 import { ChevronRight, LogOut } from 'lucide-react'
 
-import ParaglideLocaleSwitcher from '#/components/LocaleSwitcher'
-import ThemeToggle from '#/components/ThemeToggle'
+import ParaglideLocaleSwitcher from '#/components/locale-switcher'
+import ThemeToggle from '#/components/theme-toggle'
 import { Button } from '#/components/ui/button'
 import {
   Popover,

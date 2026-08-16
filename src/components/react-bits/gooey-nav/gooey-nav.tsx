@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import React, { useEffect, useRef, useState } from 'react'
 
-import './GooeyNav.css'
+import './gooey-nav.css'
 
 interface GooeyNavItem {
   label: string

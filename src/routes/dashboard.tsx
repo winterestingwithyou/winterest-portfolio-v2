@@ -1,7 +1,7 @@
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
-import { DashboardHeader } from '#/components/dashboard/DashboardHeader'
-import { DashboardSidebar } from '#/components/dashboard/DashboardSidebar'
+import { DashboardHeader } from '#/components/dashboard/dashboard-header'
+import { DashboardSidebar } from '#/components/dashboard/dashboard-sidebar'
 import { SidebarInset, SidebarProvider } from '#/components/ui/sidebar'
 import { getDashboardSession } from '#/features/auth/server-functions'
 
