@@ -41,6 +41,63 @@ export const principles = [
   },
 ]
 
+export const enthusiasms = [
+  {
+    title: 'Software Engineer',
+    iconName: 'Terminal',
+    description:
+      'Applying clean code principles, data structures, and systematic problem solving in modern software engineering.',
+  },
+  {
+    title: 'Frontend Dev',
+    iconName: 'Layout',
+    description:
+      'Crafting responsive, accessible, micro-animation rich user interfaces with intuitive UX.',
+  },
+  {
+    title: 'Backend Dev',
+    iconName: 'Server',
+    description:
+      'Building fast REST/GraphQL APIs, robust server architectures, and high-performance database flows.',
+  },
+  {
+    title: 'Fullstack Dev',
+    iconName: 'Layers',
+    description:
+      'Seamlessly connecting frontend user experiences with edge-ready server logic using modern web stacks.',
+  },
+  {
+    title: 'DevOps',
+    iconName: 'Workflow',
+    description:
+      'Automating CI/CD pipelines, streamlined deployments, and continuous integration workflows.',
+  },
+  {
+    title: 'Cloud Computing',
+    iconName: 'Cloud',
+    description:
+      'Leveraging edge runtime platforms, serverless infrastructure, and Cloudflare-native solutions.',
+  },
+  {
+    title: 'System Design',
+    iconName: 'Network',
+    description:
+      'Architecting scalable, fault-tolerant, and well-structured distributed web systems.',
+  },
+  {
+    title: 'QA Engineering',
+    iconName: 'ShieldCheck',
+    description:
+      'Ensuring software quality and reliability through automated testing, linting, and strict type safety.',
+  },
+  {
+    title: 'Mobile Dev',
+    iconName: 'Smartphone',
+    description:
+      'Developing responsive, performant, and user-friendly mobile application experiences.',
+  },
+] as const
+
 export const stackGroups = [
   {
     title: 'Runtime and Edge',
@@ -117,6 +174,63 @@ const idPrinciples = [
     title: 'Belajar dan catat secara terbuka',
     description:
       'Situs ini sebagian adalah learning log. Aku tulis apa yang kubangun, apa yang rusak, dan apa yang bakal kulakukan lebih baik — mostly buat aku sendiri di masa depan.',
+  },
+] as const
+
+const idEnthusiasms = [
+  {
+    title: 'Software Engineer',
+    iconName: 'Terminal',
+    description:
+      'Menerapkan prinsip clean code, struktur data, dan pemecahan masalah sistematis dalam rekayasa perangkat lunak modern.',
+  },
+  {
+    title: 'Frontend Dev',
+    iconName: 'Layout',
+    description:
+      'Membangun antarmuka web interaktif yang responsif, estetis, dan kaya akan micro-animation dengan UX intuitif.',
+  },
+  {
+    title: 'Backend Dev',
+    iconName: 'Server',
+    description:
+      'Merancang API cepat, arsitektur server yang andal, dan pengelolaan basis data berkinerja tinggi.',
+  },
+  {
+    title: 'Fullstack Dev',
+    iconName: 'Layers',
+    description:
+      'Mengintegrasikan pengalaman antarmuka pengguna dengan logic server edge-ready secara terpadu.',
+  },
+  {
+    title: 'DevOps',
+    iconName: 'Workflow',
+    description:
+      'Mengelola otomatisasi CI/CD, alur deployment cepat, dan pipeline integrasi berkelanjutan.',
+  },
+  {
+    title: 'Cloud Computing',
+    iconName: 'Cloud',
+    description:
+      'Memanfaatkan teknologi edge network, infrastruktur serverless, serta ekosistem Cloudflare modern.',
+  },
+  {
+    title: 'System Design',
+    iconName: 'Network',
+    description:
+      'Merancang arsitektur terdistribusi yang terukur (scalable), aman, dan bermutasi rendah.',
+  },
+  {
+    title: 'QA Engineering',
+    iconName: 'ShieldCheck',
+    description:
+      'Memastikan keandalan perangkat lunak melalui otomatisasi pengujian, linting, dan type safety ketat.',
+  },
+  {
+    title: 'Mobile Dev',
+    iconName: 'Smartphone',
+    description:
+      'Mengembangkan aplikasi seluler yang cepat, responsif, dan memberikan pengalaman pengguna yang mulus.',
   },
 ] as const
 
@@ -197,6 +311,10 @@ export const publicCopy = {
       readCaseStudy: 'Read writeup',
       principlesEyebrow: 'How I work',
       principlesTitle: 'A few things that shape how I build.',
+      enthusiasmsEyebrow: 'PASSION & FOCUS AREAS',
+      enthusiasmsTitle: "What I'm Enthusiastic About",
+      enthusiasmsDescription:
+        'Core software engineering disciplines and technologies I am passionate about exploring and mastering.',
       stackTitle: 'Tools I actually use.',
       stackDescription:
         'My current go-to stack — chosen because they are fast to iterate with, pleasant to maintain, and edge-friendly enough for serious deployment.',
@@ -346,6 +464,10 @@ export const publicCopy = {
       readCaseStudy: 'Baca tulisannya',
       principlesEyebrow: 'Cara kerjaku',
       principlesTitle: 'Beberapa hal yang membentuk cara aku membangun.',
+      enthusiasmsEyebrow: 'BIDANG MINAT & ANTUSIASME',
+      enthusiasmsTitle: 'Hal yang yang Saya Antusias',
+      enthusiasmsDescription:
+        'Bidang-bidang Software Engineeryang selalu saya eksplorasi dan pelajari.',
       stackTitle: 'Teknologi yang paling suka kupakai',
       stackDescription:
         'Stack Utama, Prefer tech stack ini saat membuat project baru',
@@ -483,6 +605,7 @@ export function getPortfolioContent() {
     return {
       portfolioStats: idPortfolioStats,
       principles: idPrinciples,
+      enthusiasms: idEnthusiasms,
       stackGroups: idStackGroups,
       timeline: idTimeline,
     }
@@ -491,6 +614,7 @@ export function getPortfolioContent() {
   return {
     portfolioStats,
     principles,
+    enthusiasms,
     stackGroups,
     timeline,
   }

@@ -1,13 +1,18 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   ArrowRight,
-  Code2,
+  Cloud,
   ExternalLink,
   Github,
+  Layers,
+  Layout,
   Mail,
-  Rocket,
-  Sparkles,
+  Network,
+  Server,
+  ShieldCheck,
+  Smartphone,
   Terminal,
+  Workflow,
 } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
@@ -23,6 +28,18 @@ import {
 import { getPublishedProjects } from '#/features/projects/public-loaders'
 import { getPublicUltimateStack } from '#/features/technologies/public-loaders'
 import { getLocale } from '#/paraglide/runtime'
+
+const ENTHUSIASM_ICONS = {
+  Terminal,
+  Layout,
+  Server,
+  Layers,
+  Workflow,
+  Cloud,
+  Network,
+  ShieldCheck,
+  Smartphone,
+} as const
 
 export const Route = createFileRoute('/')({
   loader: async () => {
@@ -40,7 +57,7 @@ export const Route = createFileRoute('/')({
 function HomePage() {
   const copy = getPublicCopy()
   const { projects, ultimateTechs } = Route.useLoaderData()
-  const { portfolioStats, principles, stackGroups } = getPortfolioContent()
+  const { portfolioStats, enthusiasms, stackGroups } = getPortfolioContent()
   const featuredOnly = projects.filter((project) => project.featured)
   const highlightedProjects =
     featuredOnly.length > 0 ? featuredOnly.slice(0, 4) : projects.slice(0, 4)
@@ -124,7 +141,7 @@ function HomePage() {
           <div className="mt-10 flex justify-center">
             <Link
               to="/projects"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-card) px-6 text-sm font-bold text-(--brand-ink) no-underline shadow-xs transition duration-300 hover:-translate-y-0.5 hover:border-(--brand-orange) hover:text-(--brand-orange-deep) hover:shadow-md hover:shadow-(--brand-orange-soft)"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-card) px-6 text-sm font-bold text-(--brand-ink) no-underline shadow-xs transition duration-300 hover:-translate-y-0.5 hover:border-(--brand-orange) hover:text-(--brand-orange-deep) hover:shadow-(--brand-orange-soft)"
             >
               {copy.home.viewProjects}
               <ArrowRight aria-hidden="true" className="size-4" />
@@ -133,27 +150,38 @@ function HomePage() {
         </Container>
       </section>
 
+      {/* Enthusiasms & Focus Areas Section */}
       <section className="px-4 py-14">
         <Container>
           <SectionHeader
-            eyebrow={copy.home.principlesEyebrow}
-            title={copy.home.principlesTitle}
+            eyebrow={copy.home.enthusiasmsEyebrow}
+            title={copy.home.enthusiasmsTitle}
+            description={copy.home.enthusiasmsDescription}
           />
-          <div className="grid gap-5 md:grid-cols-3">
-            {principles.map((principle, index) => {
-              const Icon = index === 0 ? Rocket : index === 1 ? Code2 : Sparkles
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {enthusiasms.map((item) => {
+              const Icon = ENTHUSIASM_ICONS[item.iconName]
 
               return (
-                <article key={principle.title} className="surface-card p-6">
-                  <div className="mb-5 grid size-11 place-items-center rounded-lg bg-(--brand-orange) text-white">
-                    <Icon aria-hidden="true" className="size-5" />
+                <article
+                  key={item.title}
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-(--brand-line) bg-(--surface-card) p-6 transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-xl hover:shadow-(--brand-orange-soft)/25"
+                >
+                  {/* Background ambient glow on hover */}
+                  <div className="pointer-events-none absolute -right-8 -top-8 size-32 rounded-full bg-(--brand-orange)/10 blur-2xl transition duration-500 group-hover:scale-150 group-hover:bg-(--brand-orange)/20" />
+
+                  <div>
+                    <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl border border-(--brand-line) bg-(--brand-orange-soft) text-(--brand-orange-deep) shadow-xs transition duration-300 group-hover:scale-110 group-hover:border-(--brand-orange) group-hover:bg-(--brand-orange) group-hover:text-white">
+                      <Icon aria-hidden="true" className="size-6" />
+                    </div>
+
+                    <h3 className="text-xl font-bold text-(--brand-ink) transition group-hover:text-(--brand-orange-deep)">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-(--brand-muted)">
+                      {item.description}
+                    </p>
                   </div>
-                  <h3 className="text-xl font-semibold text-(--brand-ink)">
-                    {principle.title}
-                  </h3>
-                  <p className="mt-3 text-sm leading-7 text-(--brand-muted)">
-                    {principle.description}
-                  </p>
                 </article>
               )
             })}
@@ -173,14 +201,14 @@ function HomePage() {
 
         {ultimateTechs.length > 0 ? (
           <div className="relative mt-8 w-full overflow-hidden py-2">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-(--brand-bg) to-transparent sm:w-24" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-(--brand-bg) to-transparent sm:w-24" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-(--brand-bg) to-transparent sm:w-24" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-(--brand-bg) to-transparent sm:w-24" />
 
             <Marquee pauseOnHover className="py-4 [--duration:30s]" repeat={4}>
               {ultimateTechs.map((tech) => (
                 <div
                   key={tech.id}
-                  className="group relative flex w-44 shrink-0 flex-col items-center justify-center gap-3 rounded-2xl border border-(--brand-line)/60 bg-(--surface-strong)/60 p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:bg-(--surface-strong) hover:shadow-xl hover:shadow-(--brand-orange-soft) sm:w-52"
+                  className="group relative flex w-44 shrink-0 flex-col items-center justify-center gap-3 rounded-2xl border border-(--brand-line)/60 bg-(--surface-strong)/60 p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:bg-(--surface-strong) hover:shadow-xl sm:w-52"
                 >
                   <div className="flex items-center justify-center p-1 transition-transform duration-300 group-hover:scale-110">
                     <TechIcon

@@ -160,8 +160,8 @@
     "semantic_hash": ""
   },
   "src/features/projects/queries.ts": {
-    "mtime": 1786714832.0010052,
-    "ast_hash": "a6ea278207912e693fc8ffc9086dc51b",
+    "mtime": 1786897210.6835494,
+    "ast_hash": "d4f834931904b1bb2f22d3a90b932d9b",
     "semantic_hash": ""
   },
   "src/features/projects/validation.ts": {
@@ -280,8 +280,8 @@
     "semantic_hash": ""
   },
   "src/routes/projects.index.tsx": {
-    "mtime": 1786893800.227189,
-    "ast_hash": "88844f640d5ecaa36b9074cbc9166fbf",
+    "mtime": 1786897105.3151991,
+    "ast_hash": "a4950ea090d67adb9bb166b3434b8527",
     "semantic_hash": ""
   },
   "src/routes/resume.tsx": {
