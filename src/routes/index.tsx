@@ -11,15 +11,16 @@ import {
 } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { ProjectCard } from '#/components/portfolio/project-card'
 import { Marquee } from '#/components/ui/marquee'
 import { TechIcon } from '#/components/ui/tech-icon'
 import { HeroVisual } from '#/components/visual/hero-visual'
-import { getPublishedProjects } from '#/features/projects/public-loaders'
 import {
   getPortfolioContent,
   getPublicCopy,
   siteProfile,
 } from '#/features/portfolio/data'
+import { getPublishedProjects } from '#/features/projects/public-loaders'
 import { getPublicUltimateStack } from '#/features/technologies/public-loaders'
 import { getLocale } from '#/paraglide/runtime'
 
@@ -40,9 +41,9 @@ function HomePage() {
   const copy = getPublicCopy()
   const { projects, ultimateTechs } = Route.useLoaderData()
   const { portfolioStats, principles, stackGroups } = getPortfolioContent()
-  const highlightedProjects = projects
-    .filter((project) => project.featured)
-    .slice(0, 2)
+  const featuredOnly = projects.filter((project) => project.featured)
+  const highlightedProjects =
+    featuredOnly.length > 0 ? featuredOnly.slice(0, 4) : projects.slice(0, 4)
 
   return (
     <main>
@@ -104,9 +105,9 @@ function HomePage() {
             title={copy.home.featuredTitle}
             description={copy.home.featuredDescription}
           />
-          <div className="grid gap-5 lg:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2">
             {highlightedProjects.length === 0 ? (
-              <div className="surface-card p-6 lg:col-span-2">
+              <div className="surface-card p-6 md:col-span-2">
                 <h3 className="text-2xl font-semibold text-(--brand-ink)">
                   {copy.projects.emptyTitle}
                 </h3>
@@ -116,47 +117,18 @@ function HomePage() {
               </div>
             ) : null}
             {highlightedProjects.map((project) => (
-              <article key={project.slug} className="surface-card p-6">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-bold text-(--brand-orange-deep)">
-                    {project.status}
-                  </span>
-                  <span className="text-sm font-medium text-(--brand-muted)">
-                    {project.category}
-                  </span>
-                </div>
-                <h3 className="mt-5 text-2xl font-semibold tracking-tight text-(--brand-ink)">
-                  {project.title}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-(--brand-muted)">
-                  {project.summary}
-                </p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {project.technologies.slice(0, 4).map((item) => (
-                    <span
-                      key={item.id || item.name}
-                      className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--surface-strong) px-3 py-1 text-xs font-semibold text-(--brand-muted)"
-                    >
-                      <TechIcon
-                        src={item.icon}
-                        name={item.name}
-                        color={item.color}
-                        className="size-3.5"
-                      />
-                      {item.name}
-                    </span>
-                  ))}
-                </div>
-                <Link
-                  to="/projects/$slug"
-                  params={{ slug: project.slug }}
-                  className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-(--brand-orange-deep) no-underline"
-                >
-                  {copy.home.readCaseStudy}
-                  <ArrowRight aria-hidden="true" className="size-4" />
-                </Link>
-              </article>
+              <ProjectCard key={project.slug} project={project} />
             ))}
+          </div>
+
+          <div className="mt-10 flex justify-center">
+            <Link
+              to="/projects"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-card) px-6 text-sm font-bold text-(--brand-ink) no-underline shadow-xs transition duration-300 hover:-translate-y-0.5 hover:border-(--brand-orange) hover:text-(--brand-orange-deep) hover:shadow-md hover:shadow-(--brand-orange-soft)"
+            >
+              {copy.home.viewProjects}
+              <ArrowRight aria-hidden="true" className="size-4" />
+            </Link>
           </div>
         </Container>
       </section>

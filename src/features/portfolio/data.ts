@@ -189,11 +189,11 @@ export const publicCopy = {
       intro:
         "I'm Adam. I build web apps, open source tools, and side projects. Into design and gaming too.",
       introSuffix: 'Projects, experiments, and notes — all on this site.',
-      viewProjects: 'See my work',
-      featuredEyebrow: 'Featured projects',
-      featuredTitle: 'Things I built and wrote about.',
+      viewProjects: 'See my other works',
+      featuredEyebrow: 'FEATURED PROJECTS',
+      featuredTitle: 'My Favorite Projects',
       featuredDescription:
-        'Each project has a writeup — what the problem was, the decisions I made, and what I would do differently.',
+        'A curated selection of high-performance web systems, developer tools, and edge platforms engineered for speed, clean architecture, and real-world reliability.',
       readCaseStudy: 'Read writeup',
       principlesEyebrow: 'How I work',
       principlesTitle: 'A few things that shape how I build.',
@@ -338,11 +338,11 @@ export const publicCopy = {
       intro:
         'Halo, aku Adam. Bangun web app, tools open source, dan side project. Suka desain sama gaming juga.',
       introSuffix: 'Project, eksperimen, dan catatan — semuanya ada di sini.',
-      viewProjects: 'Lihat karyaku',
-      featuredEyebrow: 'Project pilihan',
-      featuredTitle: 'Hal yang kubangun dan tulis.',
+      viewProjects: 'Lihat Projekku lainnya',
+      featuredEyebrow: 'PROJECT PILIHAN',
+      featuredTitle: 'Project andalanku',
       featuredDescription:
-        'Setiap project ada tulisannya — masalahnya apa, keputusan yang kuambil, dan apa yang akan kulakukan berbeda.',
+        'Deretan sistem web, developer tools, dan platform edge pilihan yang dirancang dengan performa tinggi, arsitektur bersih, dan solusi nyata.',
       readCaseStudy: 'Baca tulisannya',
       principlesEyebrow: 'Cara kerjaku',
       principlesTitle: 'Beberapa hal yang membentuk cara aku membangun.',

@@ -1,7 +1,7 @@
 # Graph Report - winterest-portfolio-v2  (2026-08-16)
 
 ## Corpus Check
-- 124 files · ~198,426 words
+- 124 files · ~198,446 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -268,7 +268,7 @@
 - `SidebarProvider()` --references--> `react`  [EXTRACTED]
   src/components/ui/sidebar.tsx → package.json
 - `useIsMobile()` --references--> `react`  [EXTRACTED]
-  src/hooks/use_mobile.ts → package.json
+  src/hooks/use-mobile.ts → package.json
 - `PopoverHeader()` --calls--> `cn()`  [EXTRACTED]
   src/components/ui/popover.tsx → src/lib/utils.ts
 
@@ -466,7 +466,7 @@ Nodes (7): PublicStackCategory, TechnologyWithCategories, slugify(), TechnologyE
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `dependencies` connect `dependencies` to `scripts`, `clsx`, `drizzle-kit`, `drizzle-orm`, `lucide-react`, `marked`, `@radix-ui/react-checkbox`, `@radix-ui/react-hover-card`, `@radix-ui/react-separator`, `react`, `@cloudflare/vite-plugin`, `streamdown`, `tailwindcss-animate`, `@tailwindcss/vite`, `@tanstack/ai`, `@tanstack/ai-anthropic`, `@tanstack/ai-react`, `@tanstack/match-sorter-utils`, `@tanstack/query-db-collection`, `@tanstack/react-db`, `@tanstack/react-query`, `radix-ui`, `@tanstack/react-router`, `@tanstack/react-router-ssr-query`, `@tanstack/react-table`, `@tanstack/router-plugin`, `@radix-ui/react-slot`, `@tanstack/store`, `zod`, `react-dom`, `@t3-oss/env-core`, `tailwind-merge`, `@faker-js/faker`, `better-sqlite3`, `@tanstack/react-devtools`, `@tanstack/ai-client`, `@tanstack/react-query-devtools`, `@tanstack/react-start`, `@tanstack/react-store`, `class-variance-authority`, `@tanstack/ai-gemini`, `tailwindcss`?**
-  _High betweenness centrality (0.027) - this node is a cross-community bridge._
+  _High betweenness centrality (0.026) - this node is a cross-community bridge._
 - **Why does `Event` connect `Event` to `worker-configuration.d.ts`?**
   _High betweenness centrality (0.024) - this node is a cross-community bridge._
 - **Why does `DurableObjectTransaction` connect `DurableObjectTransaction` to `worker-configuration.d.ts`?**
