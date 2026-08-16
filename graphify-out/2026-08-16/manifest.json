@@ -145,8 +145,8 @@
     "semantic_hash": "ef8005a59be4a6827c521aae439dea82"
   },
   "src/features/dashboard/copy.ts": {
-    "mtime": 1786696780.3431401,
-    "ast_hash": "16a6b9c6467be51aa768ad01f74d08ef",
+    "mtime": 1786895762.4575593,
+    "ast_hash": "691883ee058551cc5ba1a0593f5926bb",
     "semantic_hash": ""
   },
   "src/features/dashboard/loaders.ts": {
@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "src/features/portfolio/data.ts": {
-    "mtime": 1786894754.2872486,
-    "ast_hash": "ca643c18d4439769327eba7f78fd79e7",
+    "mtime": 1786895358.6789398,
+    "ast_hash": "541d80be5d8603e983db903d8076c79d",
     "semantic_hash": ""
   },
   "src/features/projects/queries.ts": {
@@ -250,8 +250,8 @@
     "semantic_hash": ""
   },
   "src/routes/dashboard.projects.index.tsx": {
-    "mtime": 1786893563.3203235,
-    "ast_hash": "8267e261ef5d519cefad1939787d87ca",
+    "mtime": 1786895774.5557292,
+    "ast_hash": "99ddcd8aebfd709a4f1a406a3e64732c",
     "semantic_hash": ""
   },
   "src/routes/dashboard.projects.new.tsx": {
@@ -550,8 +550,8 @@
     "semantic_hash": ""
   },
   "src/components/portfolio/project-card.tsx": {
-    "mtime": 1786894780.332636,
-    "ast_hash": "9443972d00f257d5604107449adb73bf",
+    "mtime": 1786896680.4328144,
+    "ast_hash": "2a45f2d608c5d8aa32b3bcec90524233",
     "semantic_hash": ""
   },
   "src/components/react-bits/gooey-nav/gooey-nav.tsx": {

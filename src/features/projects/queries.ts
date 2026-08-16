@@ -52,6 +52,7 @@ export type PublicProjectRecord = {
   startedAt?: Date | null
   completedAt?: Date | null
   publishedAt?: Date | null
+  updatedAt?: Date | null
   technologies: PublicProjectTechnology[]
 }
 
@@ -77,6 +78,7 @@ export function toPublicProjectRecord(
     startedAt: record.startedAt,
     completedAt: record.completedAt,
     publishedAt: record.publishedAt,
+    updatedAt: record.updatedAt,
     technologies: [...projectTechs],
   }
 }
@@ -112,7 +114,7 @@ export async function listPublishedProjects(db: Database) {
     .where(
       and(eq(projects.status, 'published'), eq(projects.visibility, 'public')),
     )
-    .orderBy(desc(projects.publishedAt), desc(projects.updatedAt))
+    .orderBy(desc(projects.featured), desc(projects.updatedAt))
     .all()
 }
 
@@ -126,7 +128,7 @@ export async function listPublishedPublicProjects(
     .where(
       and(eq(projects.status, 'published'), eq(projects.visibility, 'public')),
     )
-    .orderBy(desc(projects.publishedAt), desc(projects.updatedAt))
+    .orderBy(desc(projects.featured), desc(projects.updatedAt))
     .all()
   const translations = await listProjectTranslations(
     db,
