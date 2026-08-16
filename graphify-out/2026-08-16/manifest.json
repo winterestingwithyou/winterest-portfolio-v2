@@ -155,8 +155,8 @@
     "semantic_hash": ""
   },
   "src/features/portfolio/data.ts": {
-    "mtime": 1786812923.8918355,
-    "ast_hash": "fcdd4732059ec15f2eb119bd316a8306",
+    "mtime": 1786894754.2872486,
+    "ast_hash": "ca643c18d4439769327eba7f78fd79e7",
     "semantic_hash": ""
   },
   "src/features/projects/queries.ts": {
@@ -265,8 +265,8 @@
     "semantic_hash": ""
   },
   "src/routes/index.tsx": {
-    "mtime": 1786893524.4735587,
-    "ast_hash": "15e20615b10ee879aec93f51c31dafbf",
+    "mtime": 1786894795.861862,
+    "ast_hash": "6ada9740b207d899808966a4244b3efd",
     "semantic_hash": ""
   },
   "src/routes/login.tsx": {
@@ -550,8 +550,8 @@
     "semantic_hash": ""
   },
   "src/components/portfolio/project-card.tsx": {
-    "mtime": 1786893516.9464252,
-    "ast_hash": "b108c028b40f19d60fdff8c5b11623e6",
+    "mtime": 1786894780.332636,
+    "ast_hash": "9443972d00f257d5604107449adb73bf",
     "semantic_hash": ""
   },
   "src/components/react-bits/gooey-nav/gooey-nav.tsx": {

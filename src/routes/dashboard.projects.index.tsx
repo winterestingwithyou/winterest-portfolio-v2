@@ -5,7 +5,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table'
-import { Edit3, Plus, RefreshCw, Trash2 } from 'lucide-react'
+import { Edit3, Plus, RefreshCw, Sparkles, Trash2 } from 'lucide-react'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
@@ -123,6 +123,10 @@ function DashboardProjects() {
       columnHelper.accessor('status', {
         header: copy.common.status,
         cell: (info) => <StatusBadge value={info.getValue()} />,
+      }),
+      columnHelper.accessor('featured', {
+        header: copy.common.featured,
+        cell: (info) => <FeaturedBadge value={info.getValue()} />,
       }),
       columnHelper.accessor('availableLocales', {
         header: copy.common.language,
@@ -279,6 +283,22 @@ function StatusBadge({ value }: { value: ProjectRow['status'] }) {
   return (
     <span className="rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-bold text-(--brand-orange-deep)">
       {value}
+    </span>
+  )
+}
+
+function FeaturedBadge({ value }: { value: boolean }) {
+  if (value) {
+    return (
+      <span className="inline-flex items-center gap-1 rounded-full border border-orange-500/30 bg-orange-500/10 px-2.5 py-0.5 font-mono text-xs font-bold text-orange-600 dark:text-orange-400">
+        <Sparkles className="size-3 text-orange-500 fill-orange-500 animate-pulse" />
+        Featured
+      </span>
+    )
+  }
+  return (
+    <span className="font-mono text-xs text-(--brand-muted)">
+      Standard
     </span>
   )
 }
