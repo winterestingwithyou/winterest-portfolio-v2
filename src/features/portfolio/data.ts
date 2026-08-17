@@ -319,7 +319,7 @@ export const publicCopy = {
       stackDescription:
         'My current go-to stack — chosen because they are fast to iterate with, pleasant to maintain, and edge-friendly enough for serious deployment.',
       ctaTitle:
-        'Open to collaborations, side projects, and good conversations about web stuff.',
+        'Open to collaborations, side projects, and good conversations about coding stuff.',
       contact: 'Say hi',
     },
     about: {
@@ -472,7 +472,7 @@ export const publicCopy = {
       stackDescription:
         'Stack Utama, Prefer tech stack ini saat membuat project baru',
       ctaTitle:
-        'Terbuka untuk kolaborasi, side project, dan obrolan seru soal web.',
+        'Terbuka untuk kolaborasi, side project, dan ngobrol tentang ngoding.',
       contact: 'Sapa aku',
     },
     about: {
