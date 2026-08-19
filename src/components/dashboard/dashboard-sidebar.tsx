@@ -105,7 +105,7 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild tooltip="Winterest CMS">
               <Link to="/dashboard" className="flex items-center gap-3">
-                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-(--brand-orange) to-(--brand-orange-deep) text-white shadow-md shadow-(--brand-orange-soft)">
+                <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-(--brand-orange) to-(--brand-orange-deep) text-white shadow-[0_4px_12px_var(--brand-orange-soft)]">
                   <Sparkles className="size-5" />
                 </div>
                 <div className="flex flex-col text-left leading-tight group-data-[collapsible=icon]:hidden">

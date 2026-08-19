@@ -297,9 +297,7 @@ function FeaturedBadge({ value }: { value: boolean }) {
     )
   }
   return (
-    <span className="font-mono text-xs text-(--brand-muted)">
-      Standard
-    </span>
+    <span className="font-mono text-xs text-(--brand-muted)">Standard</span>
   )
 }
 

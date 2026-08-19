@@ -1,5 +1,12 @@
 import { Link } from '@tanstack/react-router'
-import { ArrowRight, ExternalLink, Github, Globe, Layers, Sparkles } from 'lucide-react'
+import {
+  ArrowRight,
+  ExternalLink,
+  Github,
+  Globe,
+  Layers,
+  Sparkles,
+} from 'lucide-react'
 
 import { TechIcon } from '#/components/ui/tech-icon'
 import type { PublicProjectRecord } from '#/features/projects/queries'
@@ -21,8 +28,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
     <article
       className={`group relative flex size-full flex-col justify-between overflow-hidden transition-all duration-300 ${
         project.featured
-          ? 'rounded-2xl border border-(--brand-orange)/40 bg-linear-to-br from-(--surface-card) via-(--surface-card) to-(--brand-orange-soft)/30 shadow-lg shadow-(--brand-orange-soft)/20 hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-xl hover:shadow-(--brand-orange-soft)/35'
-          : 'rounded-2xl border border-(--brand-line) bg-(--surface-card) hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-xl hover:shadow-(--brand-orange-soft)/20'
+          ? 'rounded-2xl border border-(--brand-orange)/40 bg-linear-to-br from-(--surface-card) via-(--surface-card) to-(--brand-orange-soft)/30 shadow-[0_10px_25px_-5px_var(--brand-orange-soft)] hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-[0_20px_35px_-5px_var(--brand-orange-soft)]'
+          : 'rounded-2xl border border-(--brand-line) bg-(--surface-card) hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-[0_20px_35px_-5px_var(--brand-orange-soft)]'
       }`}
     >
       {/* Background ambient glow effect on hover */}

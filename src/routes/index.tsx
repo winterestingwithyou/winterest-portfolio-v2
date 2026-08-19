@@ -141,7 +141,7 @@ function HomePage() {
           <div className="mt-10 flex justify-center">
             <Link
               to="/projects"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-card) px-6 text-sm font-bold text-(--brand-ink) no-underline shadow-xs transition duration-300 hover:-translate-y-0.5 hover:border-(--brand-orange) hover:text-(--brand-orange-deep) hover:shadow-(--brand-orange-soft)"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-card) px-6 text-sm font-bold text-(--brand-ink) no-underline shadow-xs transition duration-300 hover:-translate-y-0.5 hover:border-(--brand-orange) hover:text-(--brand-orange-deep) hover:shadow-[0_8px_20px_var(--brand-orange-soft)]"
             >
               {copy.home.viewProjects}
               <ArrowRight aria-hidden="true" className="size-4" />
@@ -165,7 +165,7 @@ function HomePage() {
               return (
                 <article
                   key={item.title}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-(--brand-line) bg-(--surface-card) p-6 transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-xl hover:shadow-(--brand-orange-soft)/25"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-(--brand-line) bg-(--surface-card) p-6 transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-[0_20px_35px_-5px_var(--brand-orange-soft)]"
                 >
                   {/* Background ambient glow on hover */}
                   <div className="pointer-events-none absolute -right-8 -top-8 size-32 rounded-full bg-(--brand-orange)/10 blur-2xl transition duration-500 group-hover:scale-150 group-hover:bg-(--brand-orange)/20" />

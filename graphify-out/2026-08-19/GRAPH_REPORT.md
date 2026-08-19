@@ -1,7 +1,7 @@
 # Graph Report - winterest-portfolio-v2  (2026-08-19)
 
 ## Corpus Check
-- 126 files · ~208,377 words
+- 126 files · ~208,774 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary

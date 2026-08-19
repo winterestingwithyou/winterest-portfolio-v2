@@ -218,7 +218,7 @@ function LoginPage() {
 
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_10%_12%,color-mix(in_srgb,var(--brand-orange)_24%,transparent),transparent_28rem),radial-gradient(circle_at_86%_78%,color-mix(in_srgb,var(--brand-orange-deep)_20%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-cream)_92%,white),color-mix(in_srgb,var(--brand-orange-soft)_42%,var(--brand-cream)))] text-(--brand-ink) dark:bg-[radial-gradient(circle_at_12%_14%,color-mix(in_srgb,var(--brand-orange)_22%,transparent),transparent_28rem),radial-gradient(circle_at_84%_76%,color-mix(in_srgb,var(--brand-orange-deep)_28%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-dark)_96%,black),color-mix(in_srgb,#24170d_72%,var(--brand-dark)))]">
-      <div className="mx-auto min-h-screen w-full max-w-[74rem] px-3 py-3 sm:px-6 sm:py-6 lg:px-8">
+      <div className="mx-auto min-h-screen w-full max-w-296 px-3 py-3 sm:px-6 sm:py-6 lg:px-8">
         <header
           className="flex items-start justify-between gap-4 sm:items-center"
           aria-label="Authentication navigation"
@@ -246,7 +246,7 @@ function LoginPage() {
               <span>Winterest</span>
             </div>
             <p className="eyebrow">{copy.eyebrow}</p>
-            <h1 className="max-w-2xl text-[clamp(2rem,9vw,3rem)] leading-[1] font-black text-(--brand-ink) sm:text-[clamp(2.2rem,5vw,4rem)]">
+            <h1 className="max-w-2xl text-[clamp(2rem,9vw,3rem)] leading-none font-black text-(--brand-ink) sm:text-[clamp(2.2rem,5vw,4rem)]">
               {copy.title}
             </h1>
             <p className="max-w-xl text-base leading-8 text-(--brand-muted) sm:text-lg">

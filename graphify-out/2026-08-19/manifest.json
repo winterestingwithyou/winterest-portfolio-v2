@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   "src/routes/about.tsx": {
-    "mtime": 1787141449.4701934,
-    "ast_hash": "6f02ce517c35e2a970bf79afd4ffa2ec",
+    "mtime": 1787135879.5569677,
+    "ast_hash": "bce83b7db489b6c97b8bbab9513160ea",
     "semantic_hash": ""
   },
   "src/routes/api.projects.$id.ts": {
@@ -650,8 +650,8 @@
     "semantic_hash": ""
   },
   "src/features/portfolio/about-data.ts": {
-    "mtime": 1787141438.4924874,
-    "ast_hash": "05e27840055215273c81306ae2bfa4a3",
+    "mtime": 1787140315.9583235,
+    "ast_hash": "2a06597d14b31deb8899459decaa5d07",
     "semantic_hash": ""
   },
   "about-page-content-spec.md": {
