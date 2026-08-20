@@ -44,13 +44,38 @@ export const aboutData = {
       badges: ['INTJ / 4w5', 'Fresh Graduate', 'Fullstack & Edge Explorer'],
       mindsetQuote:
         'I believe I am not just someone who writes code. I also analyze problems, evaluate trade-offs, design robust systems, and maintain a future-minded perspective.',
+      cardLabel: 'Engineering Mindset',
     },
     drives: {
       eyebrow: '02 / WHAT DRIVES ME',
-      title: 'Satisfying curiosity through coding.',
+      title: 'Curiosity, continuous growth, and sustainable engineering.',
       subtitle:
-        'My interest in coding started from a simple thing: programming lets me build applications from anywhere. Today, the vastness of SWE keeps me even more hooked.',
-      mindset: 'This is just hard, not impossible.',
+        'Why I started programming, what keeps me hooked every day, and how I approach complex technical challenges.',
+      originTitle: 'Origin of Interest',
+      originQuote: 'Programming lets me create applications.',
+      originDetail:
+        'The ability to turn an abstract idea into something tangible and usable is what initially attracted me to software engineering.',
+      curiosityTitle: 'What Keeps Me Interested',
+      curiosityQuote: 'Everything new comes every day.',
+      curiosityDetail:
+        'Software engineering constantly evolves. There is always something new to learn, satisfying my natural curiosity and drive to explore without the field ever feeling stagnant or boring.',
+      mindsetLabel: 'Approach to Difficulty',
+      mindsetQuote: 'Difficult does not mean impossible.',
+      mindsetDetail:
+        'I am willing to work through complex, friction-heavy technical problems rather than treating them as dead ends.',
+      refactoringTitle: 'Continuous Improvement',
+      refactoringDetail:
+        'I enjoy refining existing solutions toward better practices and smoother system workflows. I care about making things better, not merely making them work once.',
+      forecastingTitle: 'Long-Term Vision & Forecasting',
+      forecastingQuote:
+        'Not only solving today’s problem, but anticipating what problems today’s solution could create tomorrow.',
+      forecastingDetail:
+        'I care about building software that remains useful for a long time through sustainable problem solving and proactive forecasting.',
+      hierarchyTitle: 'Hierarchy of Satisfaction',
+      hierarchySubtitle:
+        'Ordered by what brings me the deepest sense of engineering accomplishment:',
+      hierarchyNote:
+        '"It works" is just the baseline — understanding, efficiency, and elegant solutions bring true satisfaction.',
       satisfactionHierarchy: [
         {
           rank: 1,
@@ -66,21 +91,21 @@ export const aboutData = {
         },
         {
           rank: 4,
-          title: 'Finding a cool solution',
+          title: 'Finding an elegant solution',
         },
         {
           rank: 5,
-          title: 'Making something work',
+          title: 'Successfully making something work',
         },
       ],
-      forecastingNote:
-        'I want to be a sustainable problem-solving engineer who can forecast future impacts so today’s solutions don’t create tomorrow’s new problems.',
     },
     workflow: {
       eyebrow: '03 / HOW I BUILD',
       title: 'A deliberate 7-step engineering workflow.',
       subtitle:
         'Building software is not about blindly writing code until something runs. It requires a clear, deliberate methodology from problem discovery to continuous post-deployment polish.',
+      philosophyLabel: 'Technology & Complexity Philosophy',
+      ruleLabel: 'Core Rule',
       steps: [
         {
           step: '01',
@@ -134,6 +159,8 @@ export const aboutData = {
       title: 'How my engineering mindset developed over time.',
       subtitle:
         'My growth as a developer is not just a list of languages learned, but a transformation in how I think about building software.',
+      currentStageTitle: 'Current Stage',
+      growthFocusTitle: 'Personal Growth Focus',
       steps: [
         {
           year: '2023',
@@ -350,6 +377,7 @@ export const aboutData = {
           ign: 'Winter',
           notes:
             'Low Spender player. Started around Fontaine, took a 2-year break, and returned before Snezhnaya.',
+          favLabel: 'Favorites:',
           favorites: [
             {
               name: 'Arlecchino',
@@ -368,6 +396,8 @@ export const aboutData = {
         title: 'Anime Corner',
         summary:
           'I follow current popular titles, especially fantasy anime featuring intricate power systems, strategic battles, and rich world-building.',
+        seriesLabel: 'Favorite Series',
+        charLabel: 'Favorite Character',
         favorite: 'Jujutsu Kaisen (JJK)',
         favChar: 'Gojo Satoru',
         reason:
@@ -377,6 +407,8 @@ export const aboutData = {
         title: 'K-Pop Fanboy',
         summary:
           'Open multifan enthusiast who loves energetic, polished K-pop girl group music.',
+        biasLabel: 'Bias:',
+        songLabel: 'Fav Song:',
         groups: [
           {
             name: 'aespa',
@@ -468,13 +500,39 @@ export const aboutData = {
       badges: ['INTJ / 4w5', 'Fresh Graduate', 'Fullstack & Edge Explorer'],
       mindsetQuote:
         'Aku yakin bahwa aku bukanlah seoarang yang cuma bisa nulis ngoding. Tapi juga bisa menganalisis masalah, memberi pertimbangan, design sistem yang robust, dan future-minded.',
+      cardLabel: 'Mindset Rekayasa',
     },
     drives: {
       eyebrow: '02 / APA YANG MENDORONGKU',
-      title: 'Memuaskan curiosity lewat ngoding.',
+      title:
+        'Rasa ingin tahu, pertumbuhan berkelanjutan, dan rekayasa yang tahan lama.',
       subtitle:
-        'Interest-ku pada dunia koding berawal dari hal simpel: koding bikin aku bisa nyiptain aplikasi dari mana aja. Sekarang, luasnya ilmu di dunia SWE bikin aku makin kecanduan.',
-      mindset: 'Ini hanya susah, bukan mustahil.',
+        'Alasan awal aku mulai ngoding, apa yang bikin aku terus penasaran setiap hari, dan caraku menghadapi tantangan teknikal.',
+      originTitle: 'Awal Ketertarikan',
+      originQuote: 'Programming bikin aku bisa nyiptain aplikasi.',
+      originDetail:
+        'Kemampuan mengubah ide abstrak menjadi aplikasi nyata yang benar-benar bisa dipakai adalah hal utama yang pertama kali membuatku tertarik pada dunia rekayasa perangkat lunak.',
+      curiosityTitle: 'Yang Bikin Selalu Penasaran',
+      curiosityQuote: 'Selalu ada hal baru setiap hari.',
+      curiosityDetail:
+        'Dunia software engineering terus berkembang. Selalu ada hal baru untuk dipelajari yang memuaskan rasa ingin tahu dan dorongan eksplorasiku, sehingga bidang ini tidak pernah terasa membosankan.',
+      mindsetLabel: 'Cara Menghadapi Kesulitan',
+      mindsetQuote: 'Ini hanya susah, bukan mustahil.',
+      mindsetDetail:
+        'Aku selalu bersedia mengulik dan menyelesaikan masalah teknikal yang rumit ketimbang menganggapnya sebagai jalan buntu.',
+      refactoringTitle: 'Peningkatan Berkelanjutan',
+      refactoringDetail:
+        'Aku suka merapikan solusi yang ada agar sesuai praktik terbaik dan meningkatkan alur kerja sistem. Aku tertarik bikin sesuatu jadi lebih baik, bukan cuma sekadar asal jalan sekali.',
+      forecastingTitle: 'Visi Jangka Panjang & Perkiraan Dampak',
+      forecastingQuote:
+        'Bukan cuma menyelesaikan masalah hari ini, tapi memperkirakan masalah apa yang bisa dipicu oleh solusi hari ini di masa depan.',
+      forecastingDetail:
+        'Aku peduli agar software yang kubangun tetap bermanfaat dalam jangka panjang lewat pemecahan masalah yang berkelanjutan dan prediksi dampak yang matang.',
+      hierarchyTitle: 'Hirarki Kepuasan Koding',
+      hierarchySubtitle:
+        'Diurutkan berdasarkan apa yang memberikan rasa pencapaian terdalam saat ngoding:',
+      hierarchyNote:
+        '"Bisa jalan" barulah titik awal — pemahaman mendalam, efisiensi, dan solusi yang elegan adalah sumber kepuasan sejati.',
       satisfactionHierarchy: [
         {
           rank: 1,
@@ -486,25 +544,25 @@ export const aboutData = {
         },
         {
           rank: 3,
-          title: 'Melihat orang lain pakai buatan sendiri',
+          title: 'Melihat orang lain memakai buatan sendiri',
         },
         {
           rank: 4,
-          title: 'Nemu solusi yang keren',
+          title: 'Nemu solusi yang elegan',
         },
         {
           rank: 5,
           title: 'Berhasil bikin sesuatu jalan',
         },
       ],
-      forecastingNote:
-        'Aku ingin menjadi engineer yang menyelesaikan masalah secara berkelanjutan yang bisa memperkirakan dampak ke depan agar solusi hari ini tidak menciptakan masalah baru besok.',
     },
     workflow: {
       eyebrow: '03 / CARA AKU MEMBANGUN',
       title: 'Alur kerja rekayasa terencana dalam 7 langkah.',
       subtitle:
         'Membangun software bukan soal nulis kode secara asal sampai aplikasi bisa jalan. Butuh metodologi yang jelas dan terencana dari penemuan masalah hingga penyempurnaan pasca-deploy.',
+      philosophyLabel: 'Filosofi Teknologi & Kompleksitas',
+      ruleLabel: 'Prinsip Utama',
       steps: [
         {
           step: '01',
@@ -558,6 +616,8 @@ export const aboutData = {
       title: 'Bagaimana cara berpikirku berkembang dari waktu ke waktu.',
       subtitle:
         'Perkembanganku sebagai developer bukan sekadar daftar bahasa yang dipelajari, tapi transformasi dalam cara berpikir saat membangun software.',
+      currentStageTitle: 'Fase Saat Ini',
+      growthFocusTitle: 'Fokus Pengembangan Diri',
       steps: [
         {
           year: '2023',
@@ -776,6 +836,7 @@ export const aboutData = {
           ign: 'Winter',
           notes:
             'Pemain Low Spender. Mulai di era Fontaine, sempat rehat ~2 tahun, dan balik lagi sebelum Snezhnaya rilis.',
+          favLabel: 'Favorit:',
           favorites: [
             {
               name: 'Arlecchino',
@@ -797,6 +858,8 @@ export const aboutData = {
         title: 'Sudut Anime',
         summary:
           'Aku mengikuti anime populer yang sedang hangat, terutama genre fantasy dengan sistem kekuatan yang kompleks dan world-building yang mendalam.',
+        seriesLabel: 'Serial Favorit',
+        charLabel: 'Karakter Favorit',
         favorite: 'Jujutsu Kaisen (JJK)',
         favChar: 'Gojo Satoru',
         reason:
@@ -806,6 +869,8 @@ export const aboutData = {
         title: 'K-Pop Fanboy',
         summary:
           'Terang-terangan seorang multifan yang suka musik girl group K-pop energik.',
+        biasLabel: 'Bias:',
+        songLabel: 'Lagu Favorit:',
         groups: [
           {
             name: 'aespa',

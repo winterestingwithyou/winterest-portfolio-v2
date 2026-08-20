@@ -11,11 +11,11 @@ import {
   Gamepad2,
   Lightbulb,
   Music,
-  Rocket,
   ShieldCheck,
   Sparkles,
   Target,
   Terminal,
+  TrendingUp,
   Tv,
   Users,
   Zap,
@@ -66,15 +66,15 @@ function AboutPage() {
 
               {/* Personality Badges */}
               <div className="flex flex-wrap gap-2 pt-2">
-                {data.hero.badges.map((badge) => (
-                  <span
-                    key={badge}
+                  {data.hero.badges.map((badge) => (
+                    <span
+                      key={badge}
                     className="inline-flex items-center gap-1.5 rounded-md border border-(--brand-line) bg-(--surface-strong) px-3 py-1.5 text-xs font-semibold text-(--brand-ink) shadow-xs"
-                  >
+                    >
                     <Sparkles className="size-3.5 text-(--brand-orange)" />
-                    {badge}
-                  </span>
-                ))}
+                      {badge}
+                    </span>
+                  ))}
               </div>
             </div>
 
@@ -86,7 +86,7 @@ function AboutPage() {
               <div className="relative z-10 space-y-4">
                 <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
                   <Lightbulb className="size-4" />
-                  <span>Engineering Mindset</span>
+                  <span>{data.hero.cardLabel}</span>
                 </div>
                 <blockquote className="text-lg font-medium leading-snug text-(--brand-ink) italic">
                   "{data.hero.mindsetQuote}"
@@ -109,57 +109,107 @@ function AboutPage() {
             description={data.drives.subtitle}
           />
 
-          <div className="grid gap-6 lg:grid-cols-[1fr_1.2fr]">
-            {/* Left Card: Mindset & Forecasting */}
-            <div className="surface-card flex flex-col justify-between p-6 sm:p-8 bg-linear-to-br from-(--surface-strong) to-(--brand-orange-soft)/30">
+          <div className="grid gap-6 lg:grid-cols-3">
+            {/* Card 1: Origin & Curiosity */}
+            <div className="surface-card flex flex-col justify-between p-6 sm:p-8 space-y-6">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 rounded-full bg-(--brand-orange) px-3 py-1 text-xs font-bold text-white shadow-xs">
-                  <Flame className="size-3.5" />
-                  <span>Core Mantra</span>
+                <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
+                  <Compass className="size-4" />
+                  <span>{data.drives.originTitle}</span>
                 </div>
-                <h3 className="text-2xl font-bold text-(--brand-ink)">
-                  "{data.drives.mindset}"
-                </h3>
-                <p className="text-sm leading-relaxed text-(--brand-muted)">
-                  {data.drives.forecastingNote}
+                <blockquote className="text-xl font-bold leading-snug text-(--brand-ink)">
+                  "{data.drives.originQuote}"
+                </blockquote>
+                <p className="text-xs leading-relaxed text-(--brand-muted)">
+                  {data.drives.originDetail}
                 </p>
               </div>
 
-              <div className="mt-8 rounded-lg border border-(--brand-line) bg-(--surface) p-4 text-xs text-(--brand-muted)">
-                <div className="font-semibold text-(--brand-ink) mb-1 flex items-center gap-1.5">
-                  <Zap className="size-3.5 text-(--brand-orange)" />
-                  Continuous Refactoring
+              <div className="pt-6 border-t border-(--brand-line) space-y-3">
+                <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
+                  <Sparkles className="size-4" />
+                  <span>{data.drives.curiosityTitle}</span>
                 </div>
-                I enjoy taking working systems and refining them toward cleaner
-                maintainability and smarter workflows.
+                <div className="text-sm font-semibold text-(--brand-ink)">
+                  "{data.drives.curiosityQuote}"
+                </div>
+                <p className="text-xs leading-relaxed text-(--brand-muted)">
+                  {data.drives.curiosityDetail}
+                </p>
               </div>
             </div>
 
-            {/* Right List: Satisfaction Hierarchy */}
-            <div className="surface-card p-6 sm:p-8 space-y-4">
-              <h3 className="text-lg font-bold text-(--brand-ink) flex items-center gap-2">
-                <Award className="size-5 text-(--brand-orange-deep)" />
-                Hierarchy of Satisfaction
-              </h3>
-              <p className="text-xs text-(--brand-muted)">
-                Ordered by what brings me the deepest sense of accomplishment in
-                engineering:
-              </p>
+            {/* Card 2: Mindset, Refactoring & Forecasting */}
+            <div className="surface-card flex flex-col justify-between p-6 sm:p-8 space-y-6 bg-linear-to-br from-(--surface-strong) to-(--brand-orange-soft)/30">
+              <div className="space-y-4">
+                <div className="inline-flex items-center gap-2 rounded-full bg-(--brand-orange) px-3 py-1 text-xs font-bold text-white shadow-xs">
+                  <Flame className="size-3.5" />
+                  <span>{data.drives.mindsetLabel}</span>
+                </div>
+                <h3 className="text-2xl font-bold text-(--brand-ink)">
+                  "{data.drives.mindsetQuote}"
+                </h3>
+                <p className="text-xs leading-relaxed text-(--brand-muted)">
+                  {data.drives.mindsetDetail}
+                </p>
+              </div>
 
-              <div className="space-y-3 pt-2">
-                {data.drives.satisfactionHierarchy.map((item) => (
-                  <div
-                    key={item.rank}
-                    className="group flex items-center gap-3 rounded-lg border border-(--brand-line) bg-(--surface-strong) p-3 transition-colors hover:border-(--brand-orange)"
-                  >
-                    <div className="grid size-7 shrink-0 place-items-center rounded-md bg-(--brand-orange-soft) text-xs font-extrabold text-(--brand-orange-deep)">
-                      #{item.rank}
-                    </div>
-                    <h4 className="min-w-0 flex-1 text-sm font-semibold text-(--brand-ink) group-hover:text-(--brand-orange-deep) transition-colors">
-                      {item.title}
-                    </h4>
+              <div className="space-y-4 pt-4 border-t border-(--brand-line)">
+                <div className="space-y-1.5">
+                  <div className="font-semibold text-xs text-(--brand-ink) flex items-center gap-1.5">
+                    <Zap className="size-3.5 text-(--brand-orange)" />
+                    {data.drives.refactoringTitle}
                   </div>
-                ))}
+                  <p className="text-xs leading-relaxed text-(--brand-muted)">
+                    {data.drives.refactoringDetail}
+                  </p>
+                </div>
+
+                <div className="space-y-1.5 pt-2">
+                  <div className="font-semibold text-xs text-(--brand-ink) flex items-center gap-1.5">
+                    <TrendingUp className="size-3.5 text-(--brand-orange)" />
+                    {data.drives.forecastingTitle}
+                  </div>
+                  <blockquote className="text-xs italic font-medium text-(--brand-ink) border-l-2 border-(--brand-orange) pl-2.5 my-1">
+                    "{data.drives.forecastingQuote}"
+                  </blockquote>
+                  <p className="text-xs leading-relaxed text-(--brand-muted)">
+                    {data.drives.forecastingDetail}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: Hierarchy of Satisfaction */}
+            <div className="surface-card flex flex-col justify-between p-6 sm:p-8 space-y-4">
+              <div>
+                <h3 className="text-lg font-bold text-(--brand-ink) flex items-center gap-2">
+                  <Award className="size-5 text-(--brand-orange-deep)" />
+                  {data.drives.hierarchyTitle}
+                </h3>
+                <p className="text-xs text-(--brand-muted) mt-1">
+                  {data.drives.hierarchySubtitle}
+                </p>
+
+                <div className="space-y-2.5 pt-4">
+                  {data.drives.satisfactionHierarchy.map((item) => (
+                    <div
+                      key={item.rank}
+                      className="group flex items-center gap-3 rounded-lg border border-(--brand-line) bg-(--surface-strong) p-2.5 transition-colors hover:border-(--brand-orange)"
+                    >
+                      <div className="grid size-6 shrink-0 place-items-center rounded-md bg-(--brand-orange-soft) text-[11px] font-extrabold text-(--brand-orange-deep)">
+                        #{item.rank}
+                      </div>
+                      <h4 className="min-w-0 flex-1 text-xs font-semibold text-(--brand-ink) group-hover:text-(--brand-orange-deep) transition-colors">
+                        {item.title}
+                      </h4>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-4 rounded-lg border border-(--brand-line) bg-(--surface-strong) p-3 text-[11px] italic leading-relaxed text-(--brand-muted)">
+                {data.drives.hierarchyNote}
               </div>
             </div>
           </div>
@@ -202,7 +252,7 @@ function AboutPage() {
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
                 <Code2 className="size-4" />
-                <span>Technology & Complexity Philosophy</span>
+                <span>{data.workflow.philosophyLabel}</span>
               </div>
               <p className="text-sm leading-relaxed text-(--brand-muted)">
                 {data.workflow.techSelection}
@@ -211,7 +261,7 @@ function AboutPage() {
 
             <div className="flex flex-col items-center justify-center rounded-xl border border-(--brand-line) bg-(--surface-strong) p-6 text-center shadow-xs">
               <span className="text-xs font-extrabold uppercase tracking-widest text-(--brand-muted)">
-                Core Rule
+                {data.workflow.ruleLabel}
               </span>
               <span className="mt-1 text-2xl font-black tracking-tight text-(--brand-orange-deep)">
                 "{data.workflow.goldenRule}"
@@ -277,7 +327,7 @@ function AboutPage() {
             <div className="surface-card p-5 border-l-4 border-l-sky-500">
               <h4 className="text-sm font-bold text-(--brand-ink) flex items-center gap-2">
                 <BookOpen className="size-4 text-sky-500" />
-                Current Stage
+                {data.journey.currentStageTitle}
               </h4>
               <p className="mt-2 text-xs leading-relaxed text-(--brand-muted)">
                 {data.journey.currentStage}
@@ -286,7 +336,7 @@ function AboutPage() {
             <div className="surface-card p-5 border-l-4 border-l-emerald-500">
               <h4 className="text-sm font-bold text-(--brand-ink) flex items-center gap-2">
                 <Users className="size-4 text-emerald-500" />
-                Personal Growth Focus
+                {data.journey.growthFocusTitle}
               </h4>
               <p className="mt-2 text-xs leading-relaxed text-(--brand-muted)">
                 {data.journey.softSkillsFocus}
@@ -483,7 +533,7 @@ function AboutPage() {
                   </p>
                   <div className="pt-2 border-t border-(--brand-line) space-y-1.5">
                     <span className="text-[11px] font-bold text-(--brand-ink) block">
-                      Favorites:
+                      {data.beyond.gaming.genshin.favLabel}
                     </span>
                     <div className="grid grid-cols-2 gap-1.5">
                       {data.beyond.gaming.genshin.favorites.map((fav) => (
@@ -517,7 +567,7 @@ function AboutPage() {
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-5 space-y-2">
                     <span className="text-xs font-extrabold uppercase text-(--brand-orange-deep)">
-                      Favorite Series
+                      {data.beyond.anime.seriesLabel}
                     </span>
                     <h3 className="text-2xl font-bold text-(--brand-ink)">
                       {data.beyond.anime.favorite}
@@ -526,7 +576,7 @@ function AboutPage() {
 
                   <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-5 space-y-2">
                     <span className="text-xs font-extrabold uppercase text-(--brand-orange-deep)">
-                      Favorite Character
+                      {data.beyond.anime.charLabel}
                     </span>
                     <h3 className="text-2xl font-bold text-(--brand-ink)">
                       {data.beyond.anime.favChar}
@@ -559,14 +609,16 @@ function AboutPage() {
                       </h3>
                       <div className="space-y-1 text-xs">
                         <div className="flex justify-between">
-                          <span className="text-(--brand-muted)">Bias:</span>
+                          <span className="text-(--brand-muted)">
+                            {data.beyond.kpop.biasLabel}
+                          </span>
                           <span className="font-bold text-(--brand-orange-deep)">
                             {group.bias}
                           </span>
                         </div>
                         <div className="flex justify-between">
                           <span className="text-(--brand-muted)">
-                            Fav Song:
+                            {data.beyond.kpop.songLabel}
                           </span>
                           <span className="font-semibold text-(--brand-ink)">
                             {group.song}
