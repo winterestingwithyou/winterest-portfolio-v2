@@ -317,38 +317,6 @@ export const aboutData = {
           detail:
             'I value great tooling and DX, but will accept DX friction if it delivers a strictly superior experience for end users.',
         },
-        {
-          rank: 13,
-          title: 'Reliability',
-          key: 'reliability',
-          summary: 'Dependable execution for targeted use cases.',
-          detail:
-            'Focus on handling core edge cases solidly rather than obsessively over-engineering against every hypothetical scenario.',
-        },
-        {
-          rank: 14,
-          title: 'Simplicity',
-          key: 'simplicity',
-          summary: 'Appropriate complexity over minimal complexity.',
-          detail:
-            'Simple code is easier to maintain, but robust software often requires thoughtful internal complexity to present a seamless experience.',
-        },
-        {
-          rank: 15,
-          title: 'Accessibility',
-          key: 'accessibility',
-          summary: 'Software built for diverse human capabilities.',
-          detail:
-            'Never assume every user navigates software identically. Maintain keyboard accessibility, focus indicators, and screen reader support.',
-        },
-        {
-          rank: 16,
-          title: 'Privacy',
-          key: 'privacy',
-          summary: 'Respecting user data confidentiality with integrity.',
-          detail:
-            'Collect only what is necessary, store it securely, and respect user privacy with transparent practices.',
-        },
       ],
     },
     beyond: {
@@ -775,38 +743,6 @@ export const aboutData = {
             'DX yang bagus mempercepat iterasi, tapi UX tetap nomor satu.',
           detail:
             'Aku menghargai tooling yang nyaman, tapi rela menghadapi sedikit ketidaknyamanan DX jika hasilnya memberikan UX yang jauh lebih baik untuk pengguna.',
-        },
-        {
-          rank: 13,
-          title: 'Keandalan (Reliability)',
-          key: 'reliability',
-          summary: 'Eksekusi andal untuk skenario yang ditargetkan.',
-          detail:
-            'Fokus menangani edge case utama secara solid daripada berlebihan mengantisipasi setiap skenario hipotetis yang belum tentu terjadi.',
-        },
-        {
-          rank: 14,
-          title: 'Kesederhanaan (Simplicity)',
-          key: 'simplicity',
-          summary: 'Kompromi kompleksitas yang sesuai konteks.',
-          detail:
-            'Kode simpel lebih mudah dirawat, tapi software yang tangguh kadang butuh kompleksitas internal agar bisa menyajikan pengalaman simpel bagi pengguna.',
-        },
-        {
-          rank: 15,
-          title: 'Aksesibilitas',
-          key: 'accessibility',
-          summary: 'Software yang dirancang untuk berbagai kemampuan pengguna.',
-          detail:
-            'Jangan pernah menganggap semua orang memakai aplikasi dengan cara yang sama. Jaga aksesibilitas keyboard, fokus visual, dan pembaca layar.',
-        },
-        {
-          rank: 16,
-          title: 'Privasi',
-          key: 'privacy',
-          summary: 'Menghormati kerahasiaan data pengguna dengan integritas.',
-          detail:
-            'Ambil data yang diperlukan saja, simpan dengan aman, dan hormati privasi pengguna lewat praktik yang transparan.',
         },
       ],
     },

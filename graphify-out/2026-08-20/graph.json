@@ -1495,8 +1495,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "package_dependencies_better_auth",
-      "community": 138,
-      "community_name": "dependencies",
+      "community": 146,
+      "community_name": "better-auth",
       "norm_label": "better-auth"
     },
     {
@@ -1506,8 +1506,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "better_auth",
-      "community": 138,
-      "community_name": "dependencies",
+      "community": 146,
+      "community_name": "better-auth",
       "norm_label": "better-auth"
     },
     {
@@ -1649,8 +1649,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "package_dependencies_marked",
-      "community": 146,
-      "community_name": "marked",
+      "community": 138,
+      "community_name": "dependencies",
       "norm_label": "marked"
     },
     {
@@ -1660,8 +1660,8 @@
       "source_location": "L74",
       "_origin": "ast",
       "id": "marked",
-      "community": 146,
-      "community_name": "marked",
+      "community": 138,
+      "community_name": "dependencies",
       "norm_label": "marked"
     },
     {
@@ -45742,7 +45742,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/about.tsx",
-      "source_location": "L250",
+      "source_location": "L255",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_about_aboutpage",
