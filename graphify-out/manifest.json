@@ -210,8 +210,8 @@
     "semantic_hash": ""
   },
   "src/routes/about.tsx": {
-    "mtime": 1787230786.001986,
-    "ast_hash": "d0540b36f09c6a6609cad9204da52add",
+    "mtime": 1787235712.8152745,
+    "ast_hash": "3ae7fa792368860efd48ee5fd66388b7",
     "semantic_hash": ""
   },
   "src/routes/api.projects.$id.ts": {
