@@ -1,7 +1,7 @@
 # Graph Report - winterest-portfolio-v2  (2026-08-20)
 
 ## Corpus Check
-- 126 files · ~209,207 words
+- 126 files · ~208,941 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `febdc800`
+- Built from commit: `c858a56e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -22,7 +22,7 @@
 - devDependencies
 - ServiceWorkerGlobalScope
 - Event
-- technology-editor-form.tsx
+- dashboard.stack.categories.$id.tsx
 - projects/queries.ts
 - scripts
 - schema.ts
@@ -173,7 +173,7 @@
 - Winterest Portfolio v2
 - Development Phases
 - class-variance-authority
-- tailwindcss-animate
+- technology-editor-form.tsx
 - @tailwindcss/vite
 - @tanstack/ai
 - @tanstack/ai-anthropic
@@ -200,6 +200,7 @@
 - __BaseEnv_Env
 - CacheContext
 - CacheStorage
+- marked
 - DispatchNamespace
 - DocumentEnd
 - react-dom
@@ -256,7 +257,6 @@
 - 2. What Drives Me
 - Writing & Design Guidance
 - project-editor-form.tsx
-- projects.$slug.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `cn()` - 81 edges
@@ -301,7 +301,7 @@ Nodes (21): Badge(), badgeVariants, Card(), CardAction(), CardContent(), CardDes
 
 ### Community 3 - "routeTree.gen.ts"
 Cohesion: 0.05
-Nodes (47): Route, Route, Route, Route, Route, Route, Route, Route (+39 more)
+Nodes (50): Route, Route, Route, Route, Route, Route, Route, Route (+42 more)
 
 ### Community 4 - "devDependencies"
 Cohesion: 0.04
@@ -315,9 +315,9 @@ Nodes (7): AbortSignal, EventSource, EventTarget, MessagePort, ServiceWorkerGlob
 Cohesion: 0.04
 Nodes (12): CloseEvent, CustomEvent, EmailEvent, ErrorEvent, Event, ExtendableEvent, FetchEvent, MessageEvent (+4 more)
 
-### Community 7 - "technology-editor-form.tsx"
-Cohesion: 0.12
-Nodes (12): CategoryEditorForm(), CategoryEditorFormProps, slugify(), CategoryRecord, PublicStackCategory, TechnologyWithCategories, slugify(), TechnologyEditorForm() (+4 more)
+### Community 7 - "dashboard.stack.categories.$id.tsx"
+Cohesion: 0.17
+Nodes (7): CategoryEditorForm(), CategoryEditorFormProps, slugify(), CategoryRecord, PublicStackCategory, Route, Route
 
 ### Community 8 - "projects/queries.ts"
 Cohesion: 0.20
@@ -333,7 +333,7 @@ Nodes (28): account, accountRelations, categories, categoriesRelations, ContentV
 
 ### Community 11 - "data.ts"
 Cohesion: 0.08
-Nodes (32): Footer(), Header(), Container(), ContainerProps, SectionHeader(), SectionHeaderProps, GooeyNav(), GooeyNavItem (+24 more)
+Nodes (26): Footer(), Header(), GooeyNav(), GooeyNavItem, GooeyNavProps, CharacterSpotlight(), noteIcons, enthusiasms (+18 more)
 
 ### Community 12 - "compilerOptions"
 Cohesion: 0.06
@@ -417,15 +417,15 @@ Nodes (3): BasicImageTransformations, RequestInitCfPropertiesImage, RequestInitC
 
 ### Community 138 - "dependencies"
 Cohesion: 0.15
-Nodes (13): marked, dependencies, marked, @tanstack/ai-ollama, @tanstack/ai-openai, @tanstack/react-form, @tanstack/react-router-devtools, tw-animate-css (+5 more)
+Nodes (13): dependencies, tailwindcss-animate, @tanstack/ai-ollama, @tanstack/ai-openai, @tanstack/react-form, @tanstack/react-router-devtools, tw-animate-css, tailwindcss-animate (+5 more)
 
 ### Community 139 - "api.projects.$id.ts"
 Cohesion: 0.17
 Nodes (11): contentStatuses, contentVisibilities, ProjectInput, projectInputSchema, projectTranslationSchema, handleApiError(), handleApiError(), json() (+3 more)
 
 ### Community 140 - "index.tsx"
-Cohesion: 0.15
-Nodes (14): ProjectCard(), ProjectCardProps, Marquee(), MarqueeProps, TechIcon(), TechIconProps, HeroVisual(), signalItems (+6 more)
+Cohesion: 0.09
+Nodes (27): Container(), ContainerProps, SectionHeader(), SectionHeaderProps, ProjectCard(), ProjectCardProps, Marquee(), MarqueeProps (+19 more)
 
 ### Community 144 - "loaders.ts"
 Cohesion: 0.25
@@ -454,6 +454,10 @@ Nodes (9): Authentication, Current Phase, Database, Deployment, Development, Dir
 ### Community 156 - "Development Phases"
 Cohesion: 0.29
 Nodes (7): Development Phases, Phase 1: Clean Starter and Build Public Shell, Phase 2: Portfolio Content, Phase 3: Database and CMS Foundation, Phase 4: Auth and RBAC, Phase 5: Writing, Lab, Media, Phase 6: Visual Polish and 3D
+
+### Community 158 - "technology-editor-form.tsx"
+Cohesion: 0.25
+Nodes (6): TechnologyWithCategories, slugify(), TechnologyEditorForm(), TechnologyEditorFormProps, Route, Route
 
 ### Community 162 - "technologies/queries.ts"
 Cohesion: 0.20
@@ -504,12 +508,8 @@ Cohesion: 0.33
 Nodes (6): Content principle, Important nuance, Page structure, Tone, Visual direction, Writing & Design Guidance
 
 ### Community 250 - "project-editor-form.tsx"
-Cohesion: 0.08
-Nodes (26): DashboardShell(), DashboardShellProps, dashboardCopy, getDashboardCopy(), formatDateForInput(), getTranslation(), LocaleOption, localeOptions (+18 more)
-
-### Community 251 - "projects.$slug.tsx"
-Cohesion: 0.20
-Nodes (7): ContentLocale, contentLocales, getProjectDb(), getPublishedProject, formatDate(), ProjectDetailPage(), Route
+Cohesion: 0.10
+Nodes (22): DashboardShell(), DashboardShellProps, dashboardCopy, getDashboardCopy(), formatDateForInput(), getTranslation(), LocaleOption, localeOptions (+14 more)
 
 ## Knowledge Gaps
 - **1314 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+1309 more)
@@ -519,7 +519,7 @@ Nodes (7): ContentLocale, contentLocales, getProjectDb(), getPublishedProject, f
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dependencies` connect `dependencies` to `scripts`, `clsx`, `drizzle-kit`, `drizzle-orm`, `lucide-react`, `better-auth`, `@radix-ui/react-checkbox`, `@radix-ui/react-hover-card`, `@radix-ui/react-separator`, `react`, `streamdown`, `class-variance-authority`, `tailwindcss-animate`, `@tailwindcss/vite`, `@tanstack/ai`, `@tanstack/ai-anthropic`, `@tanstack/ai-react`, `@tanstack/match-sorter-utils`, `@tanstack/query-db-collection`, `@tanstack/react-db`, `@tanstack/react-query`, `radix-ui`, `@tanstack/react-router`, `@tanstack/react-router-ssr-query`, `@tanstack/react-table`, `@tanstack/router-plugin`, `@radix-ui/react-slot`, `@tanstack/store`, `zod`, `react-dom`, `@t3-oss/env-core`, `tailwind-merge`, `@faker-js/faker`, `better-sqlite3`, `@tanstack/react-devtools`, `@tanstack/ai-client`, `@tanstack/react-query-devtools`, `@tanstack/react-start`, `@tanstack/react-store`, `@cloudflare/vite-plugin`, `@tanstack/ai-gemini`, `tailwindcss`?**
+- **Why does `dependencies` connect `dependencies` to `scripts`, `clsx`, `drizzle-kit`, `drizzle-orm`, `lucide-react`, `better-auth`, `@radix-ui/react-checkbox`, `@radix-ui/react-hover-card`, `@radix-ui/react-separator`, `react`, `streamdown`, `class-variance-authority`, `@tailwindcss/vite`, `@tanstack/ai`, `@tanstack/ai-anthropic`, `@tanstack/ai-react`, `@tanstack/match-sorter-utils`, `@tanstack/query-db-collection`, `@tanstack/react-db`, `@tanstack/react-query`, `radix-ui`, `@tanstack/react-router`, `@tanstack/react-router-ssr-query`, `@tanstack/react-table`, `@tanstack/router-plugin`, `@radix-ui/react-slot`, `@tanstack/store`, `zod`, `marked`, `react-dom`, `@t3-oss/env-core`, `tailwind-merge`, `@faker-js/faker`, `better-sqlite3`, `@tanstack/react-devtools`, `@tanstack/ai-client`, `@tanstack/react-query-devtools`, `@tanstack/react-start`, `@tanstack/react-store`, `@cloudflare/vite-plugin`, `@tanstack/ai-gemini`, `tailwindcss`?**
   _High betweenness centrality (0.025) - this node is a cross-community bridge._
 - **Why does `react` connect `react` to `sidebar.tsx`, `dependencies`?**
   _High betweenness centrality (0.019) - this node is a cross-community bridge._

@@ -1495,8 +1495,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "package_dependencies_better_auth",
-      "community": 146,
-      "community_name": "better-auth",
+      "community": 138,
+      "community_name": "dependencies",
       "norm_label": "better-auth"
     },
     {
@@ -1506,8 +1506,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "better_auth",
-      "community": 146,
-      "community_name": "better-auth",
+      "community": 138,
+      "community_name": "dependencies",
       "norm_label": "better-auth"
     },
     {
@@ -1803,8 +1803,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "package_dependencies_tailwindcss_animate",
-      "community": 138,
-      "community_name": "dependencies",
+      "community": 153,
+      "community_name": "tailwindcss-animate",
       "norm_label": "tailwindcss-animate"
     },
     {
@@ -1814,8 +1814,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "tailwindcss_animate",
-      "community": 138,
-      "community_name": "dependencies",
+      "community": 153,
+      "community_name": "tailwindcss-animate",
       "norm_label": "tailwindcss-animate"
     },
     {
@@ -2694,7 +2694,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_dashboard_dashboard_header",
-      "community": 164,
+      "community": 13,
       "community_name": "dashboard-header.tsx",
       "norm_label": "dashboard-header.tsx"
     },
@@ -2707,7 +2707,7 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_components_dashboard_dashboard_header_dashboardheaderprops",
-      "community": 164,
+      "community": 13,
       "community_name": "dashboard-header.tsx",
       "norm_label": "dashboardheaderprops"
     },
@@ -2718,7 +2718,7 @@
       "source_location": "L25",
       "_origin": "ast",
       "id": "src_components_dashboard_dashboard_header_breadcrumbmap",
-      "community": 164,
+      "community": 13,
       "community_name": "dashboard-header.tsx",
       "norm_label": "breadcrumbmap"
     },
@@ -2836,8 +2836,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_header",
-      "community": 11,
-      "community_name": "data.ts",
+      "community": 13,
+      "community_name": "dashboard-header.tsx",
       "norm_label": "header.tsx"
     },
     {
@@ -2860,8 +2860,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_header_dashboardlink",
-      "community": 11,
-      "community_name": "data.ts",
+      "community": 13,
+      "community_name": "dashboard-header.tsx",
       "norm_label": "dashboardlink()"
     },
     {
@@ -2872,7 +2872,7 @@
       "_origin": "ast",
       "id": "src_components_locale_switcher",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "locale-switcher.tsx"
     },
     {
@@ -2883,7 +2883,7 @@
       "_origin": "ast",
       "id": "src_components_locale_switcher_localenames",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "localenames"
     },
     {
@@ -2894,8 +2894,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_locale_switcher_paraglidelocaleswitcher",
-      "community": 36,
-      "community_name": "login.tsx",
+      "community": 13,
+      "community_name": "dashboard-header.tsx",
       "norm_label": "paraglidelocaleswitcher()"
     },
     {
@@ -3002,8 +3002,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_react_bits_gooey_nav_gooey_nav",
-      "community": 11,
-      "community_name": "data.ts",
+      "community": 13,
+      "community_name": "dashboard-header.tsx",
       "norm_label": "gooey-nav.tsx"
     },
     {
@@ -3015,8 +3015,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_components_react_bits_gooey_nav_gooey_nav_gooeynavitem",
-      "community": 11,
-      "community_name": "data.ts",
+      "community": 13,
+      "community_name": "dashboard-header.tsx",
       "norm_label": "gooeynavitem"
     },
     {
@@ -3028,8 +3028,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_components_react_bits_gooey_nav_gooey_nav_gooeynavprops",
-      "community": 11,
-      "community_name": "data.ts",
+      "community": 13,
+      "community_name": "dashboard-header.tsx",
       "norm_label": "gooeynavprops"
     },
     {
@@ -3040,8 +3040,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_react_bits_gooey_nav_gooey_nav_gooeynav",
-      "community": 11,
-      "community_name": "data.ts",
+      "community": 13,
+      "community_name": "dashboard-header.tsx",
       "norm_label": "gooeynav()"
     },
     {
@@ -3052,7 +3052,7 @@
       "_origin": "ast",
       "id": "src_components_theme_toggle",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "theme-toggle.tsx"
     },
     {
@@ -3065,7 +3065,7 @@
       "_origin": "ast",
       "id": "src_components_theme_toggle_thememode",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "thememode"
     },
     {
@@ -3077,7 +3077,7 @@
       "_origin": "ast",
       "id": "src_components_theme_toggle_getinitialmode",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "getinitialmode()"
     },
     {
@@ -3089,7 +3089,7 @@
       "_origin": "ast",
       "id": "src_components_theme_toggle_applythememode",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "applythememode()"
     },
     {
@@ -3101,7 +3101,7 @@
       "_origin": "ast",
       "id": "src_components_theme_toggle_themetoggle",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "themetoggle()"
     },
     {
@@ -3145,8 +3145,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_ui_button",
-      "community": 164,
-      "community_name": "dashboard-header.tsx",
+      "community": 1,
+      "community_name": "sidebar.tsx",
       "norm_label": "button.tsx"
     },
     {
@@ -3156,8 +3156,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "src_components_ui_button_buttonvariants",
-      "community": 164,
-      "community_name": "dashboard-header.tsx",
+      "community": 1,
+      "community_name": "sidebar.tsx",
       "norm_label": "buttonvariants"
     },
     {
@@ -3168,8 +3168,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_button_button",
-      "community": 164,
-      "community_name": "dashboard-header.tsx",
+      "community": 1,
+      "community_name": "sidebar.tsx",
       "norm_label": "button()"
     },
     {
@@ -3404,7 +3404,7 @@
       "_origin": "ast",
       "id": "src_components_ui_popover",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "popover.tsx"
     },
     {
@@ -3416,7 +3416,7 @@
       "_origin": "ast",
       "id": "src_components_ui_popover_popover",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "popover()"
     },
     {
@@ -3428,7 +3428,7 @@
       "_origin": "ast",
       "id": "src_components_ui_popover_popovertrigger",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "popovertrigger()"
     },
     {
@@ -3440,7 +3440,7 @@
       "_origin": "ast",
       "id": "src_components_ui_popover_popovercontent",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "popovercontent()"
     },
     {
@@ -3452,7 +3452,7 @@
       "_origin": "ast",
       "id": "src_components_ui_popover_popoveranchor",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "popoveranchor()"
     },
     {
@@ -3464,7 +3464,7 @@
       "_origin": "ast",
       "id": "src_components_ui_popover_popoverheader",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "popoverheader()"
     },
     {
@@ -3476,7 +3476,7 @@
       "_origin": "ast",
       "id": "src_components_ui_popover_popovertitle",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "popovertitle()"
     },
     {
@@ -3488,7 +3488,7 @@
       "_origin": "ast",
       "id": "src_components_ui_popover_popoverdescription",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "popoverdescription()"
     },
     {
@@ -3498,8 +3498,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_ui_separator",
-      "community": 164,
-      "community_name": "dashboard-header.tsx",
+      "community": 2,
+      "community_name": "cn",
       "norm_label": "separator.tsx"
     },
     {
@@ -3510,8 +3510,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_separator_separator",
-      "community": 164,
-      "community_name": "dashboard-header.tsx",
+      "community": 2,
+      "community_name": "cn",
       "norm_label": "separator()"
     },
     {
@@ -3521,8 +3521,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_components_ui_sheet",
-      "community": 2,
-      "community_name": "cn",
+      "community": 144,
+      "community_name": "sheet.tsx",
       "norm_label": "sheet.tsx"
     },
     {
@@ -3533,8 +3533,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_sheet_sheet",
-      "community": 2,
-      "community_name": "cn",
+      "community": 144,
+      "community_name": "sheet.tsx",
       "norm_label": "sheet()"
     },
     {
@@ -3545,8 +3545,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_sheet_sheettrigger",
-      "community": 2,
-      "community_name": "cn",
+      "community": 144,
+      "community_name": "sheet.tsx",
       "norm_label": "sheettrigger()"
     },
     {
@@ -3557,8 +3557,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_sheet_sheetclose",
-      "community": 2,
-      "community_name": "cn",
+      "community": 144,
+      "community_name": "sheet.tsx",
       "norm_label": "sheetclose()"
     },
     {
@@ -3569,8 +3569,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_sheet_sheetportal",
-      "community": 2,
-      "community_name": "cn",
+      "community": 144,
+      "community_name": "sheet.tsx",
       "norm_label": "sheetportal()"
     },
     {
@@ -3581,8 +3581,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_sheet_sheetoverlay",
-      "community": 2,
-      "community_name": "cn",
+      "community": 144,
+      "community_name": "sheet.tsx",
       "norm_label": "sheetoverlay()"
     },
     {
@@ -3593,8 +3593,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_sheet_sheetcontent",
-      "community": 2,
-      "community_name": "cn",
+      "community": 144,
+      "community_name": "sheet.tsx",
       "norm_label": "sheetcontent()"
     },
     {
@@ -3605,8 +3605,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_sheet_sheetheader",
-      "community": 2,
-      "community_name": "cn",
+      "community": 144,
+      "community_name": "sheet.tsx",
       "norm_label": "sheetheader()"
     },
     {
@@ -3617,8 +3617,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_sheet_sheetfooter",
-      "community": 2,
-      "community_name": "cn",
+      "community": 144,
+      "community_name": "sheet.tsx",
       "norm_label": "sheetfooter()"
     },
     {
@@ -3629,8 +3629,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_sheet_sheettitle",
-      "community": 2,
-      "community_name": "cn",
+      "community": 144,
+      "community_name": "sheet.tsx",
       "norm_label": "sheettitle()"
     },
     {
@@ -3641,8 +3641,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_components_ui_sheet_sheetdescription",
-      "community": 2,
-      "community_name": "cn",
+      "community": 144,
+      "community_name": "sheet.tsx",
       "norm_label": "sheetdescription()"
     },
     {
@@ -4362,7 +4362,7 @@
       "_origin": "ast",
       "id": "src_db_index",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "db/index.ts"
     },
     {
@@ -4374,8 +4374,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_db_index_database",
-      "community": 8,
-      "community_name": "projects/queries.ts",
+      "community": 162,
+      "community_name": "Database",
       "norm_label": "database"
     },
     {
@@ -4387,7 +4387,7 @@
       "_origin": "ast",
       "id": "src_db_index_getdb",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "getdb()"
     },
     {
@@ -4421,8 +4421,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_db_schema_contentstatus",
-      "community": 144,
-      "community_name": "loaders.ts",
+      "community": 10,
+      "community_name": "schema.ts",
       "norm_label": "contentstatus"
     },
     {
@@ -4480,8 +4480,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "src_db_schema_userroles",
-      "community": 20,
-      "community_name": "session.ts",
+      "community": 10,
+      "community_name": "schema.ts",
       "norm_label": "userroles"
     },
     {
@@ -4559,8 +4559,8 @@
       "source_location": "L130",
       "_origin": "ast",
       "id": "src_db_schema_projects",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 14,
+      "community_name": "seed.ts",
       "norm_label": "projects"
     },
     {
@@ -4570,8 +4570,8 @@
       "source_location": "L167",
       "_origin": "ast",
       "id": "src_db_schema_projecttranslations",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 8,
+      "community_name": "projects/queries.ts",
       "norm_label": "projecttranslations"
     },
     {
@@ -4592,8 +4592,8 @@
       "source_location": "L208",
       "_origin": "ast",
       "id": "src_db_schema_categories",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 14,
+      "community_name": "seed.ts",
       "norm_label": "categories"
     },
     {
@@ -4603,8 +4603,8 @@
       "source_location": "L223",
       "_origin": "ast",
       "id": "src_db_schema_technologies",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 8,
+      "community_name": "projects/queries.ts",
       "norm_label": "technologies"
     },
     {
@@ -4614,8 +4614,8 @@
       "source_location": "L243",
       "_origin": "ast",
       "id": "src_db_schema_technologycategories",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 14,
+      "community_name": "seed.ts",
       "norm_label": "technologycategories"
     },
     {
@@ -4625,8 +4625,8 @@
       "source_location": "L263",
       "_origin": "ast",
       "id": "src_db_schema_projecttechnologies",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 8,
+      "community_name": "projects/queries.ts",
       "norm_label": "projecttechnologies"
     },
     {
@@ -4736,7 +4736,7 @@
       "_origin": "ast",
       "id": "src_db_seed_cli",
       "community": 14,
-      "community_name": "seed-cli.ts",
+      "community_name": "seed.ts",
       "norm_label": "seed-cli.ts"
     },
     {
@@ -4748,7 +4748,7 @@
       "_origin": "ast",
       "id": "src_db_seed_cli_seedlocal",
       "community": 14,
-      "community_name": "seed-cli.ts",
+      "community_name": "seed.ts",
       "norm_label": "seedlocal()"
     },
     {
@@ -4760,7 +4760,7 @@
       "_origin": "ast",
       "id": "src_db_seed_cli_seedremote",
       "community": 14,
-      "community_name": "seed-cli.ts",
+      "community_name": "seed.ts",
       "norm_label": "seedremote()"
     },
     {
@@ -4772,7 +4772,7 @@
       "_origin": "ast",
       "id": "src_db_seed_cli_readenv",
       "community": 14,
-      "community_name": "seed-cli.ts",
+      "community_name": "seed.ts",
       "norm_label": "readenv()"
     },
     {
@@ -4784,7 +4784,7 @@
       "_origin": "ast",
       "id": "src_db_seed_cli_findlocald1database",
       "community": 14,
-      "community_name": "seed-cli.ts",
+      "community_name": "seed.ts",
       "norm_label": "findlocald1database()"
     },
     {
@@ -4797,7 +4797,7 @@
       "_origin": "ast",
       "id": "src_db_seed_cli_d1queryresponse",
       "community": 14,
-      "community_name": "seed-cli.ts",
+      "community_name": "seed.ts",
       "norm_label": "d1queryresponse"
     },
     {
@@ -4807,8 +4807,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_db_seed_data",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 14,
+      "community_name": "seed.ts",
       "norm_label": "seed-data.ts"
     },
     {
@@ -4820,8 +4820,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_db_seed_data_categoryseed",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 14,
+      "community_name": "seed.ts",
       "norm_label": "categoryseed"
     },
     {
@@ -4833,8 +4833,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_db_seed_data_portfolioprojectseed",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 14,
+      "community_name": "seed.ts",
       "norm_label": "portfolioprojectseed"
     },
     {
@@ -4846,8 +4846,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_db_seed_data_technologyseed",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 14,
+      "community_name": "seed.ts",
       "norm_label": "technologyseed"
     },
     {
@@ -4857,8 +4857,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "src_db_seed_data_categoryseeds",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 14,
+      "community_name": "seed.ts",
       "norm_label": "categoryseeds"
     },
     {
@@ -4868,8 +4868,8 @@
       "source_location": "L75",
       "_origin": "ast",
       "id": "src_db_seed_data_technologyseeds",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 14,
+      "community_name": "seed.ts",
       "norm_label": "technologyseeds"
     },
     {
@@ -4879,8 +4879,8 @@
       "source_location": "L194",
       "_origin": "ast",
       "id": "src_db_seed_data_projectseeds",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 14,
+      "community_name": "seed.ts",
       "norm_label": "projectseeds"
     },
     {
@@ -4890,8 +4890,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_db_seed",
-      "community": 10,
-      "community_name": "schema.ts",
+      "community": 14,
+      "community_name": "seed.ts",
       "norm_label": "seed.ts"
     },
     {
@@ -4903,7 +4903,7 @@
       "_origin": "ast",
       "id": "src_db_seed_seedportfoliodata",
       "community": 14,
-      "community_name": "seed-cli.ts",
+      "community_name": "seed.ts",
       "norm_label": "seedportfoliodata()"
     },
     {
@@ -4915,7 +4915,7 @@
       "_origin": "ast",
       "id": "src_db_seed_upsertcategory",
       "community": 14,
-      "community_name": "seed-cli.ts",
+      "community_name": "seed.ts",
       "norm_label": "upsertcategory()"
     },
     {
@@ -4927,7 +4927,7 @@
       "_origin": "ast",
       "id": "src_db_seed_upserttechnology",
       "community": 14,
-      "community_name": "seed-cli.ts",
+      "community_name": "seed.ts",
       "norm_label": "upserttechnology()"
     },
     {
@@ -4939,7 +4939,7 @@
       "_origin": "ast",
       "id": "src_db_seed_upsertproject",
       "community": 14,
-      "community_name": "seed-cli.ts",
+      "community_name": "seed.ts",
       "norm_label": "upsertproject()"
     },
     {
@@ -5145,8 +5145,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_features_dashboard_loaders",
-      "community": 144,
-      "community_name": "loaders.ts",
+      "community": 10,
+      "community_name": "schema.ts",
       "norm_label": "loaders.ts"
     },
     {
@@ -5158,8 +5158,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_features_dashboard_loaders_dashboardsummaryitem",
-      "community": 144,
-      "community_name": "loaders.ts",
+      "community": 10,
+      "community_name": "schema.ts",
       "norm_label": "dashboardsummaryitem"
     },
     {
@@ -5171,8 +5171,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_features_dashboard_loaders_dashboardsummary",
-      "community": 144,
-      "community_name": "loaders.ts",
+      "community": 10,
+      "community_name": "schema.ts",
       "norm_label": "dashboardsummary"
     },
     {
@@ -5182,8 +5182,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "src_features_dashboard_loaders_emptysummary",
-      "community": 144,
-      "community_name": "loaders.ts",
+      "community": 10,
+      "community_name": "schema.ts",
       "norm_label": "emptysummary"
     },
     {
@@ -5193,8 +5193,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "src_features_dashboard_loaders_getdashboardsummary",
-      "community": 144,
-      "community_name": "loaders.ts",
+      "community": 10,
+      "community_name": "schema.ts",
       "norm_label": "getdashboardsummary"
     },
     {
@@ -5205,8 +5205,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_dashboard_loaders_ismissingtableerror",
-      "community": 144,
-      "community_name": "loaders.ts",
+      "community": 10,
+      "community_name": "schema.ts",
       "norm_label": "ismissingtableerror()"
     },
     {
@@ -5217,8 +5217,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_dashboard_loaders_getdashboarddb",
-      "community": 144,
-      "community_name": "loaders.ts",
+      "community": 10,
+      "community_name": "schema.ts",
       "norm_label": "getdashboarddb()"
     },
     {
@@ -5409,8 +5409,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_features_portfolio_about_data",
-      "community": 13,
-      "community_name": "about.tsx",
+      "community": 146,
+      "community_name": "about-data.ts",
       "norm_label": "about-data.ts"
     },
     {
@@ -5422,8 +5422,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_features_portfolio_about_data_priorityitem",
-      "community": 13,
-      "community_name": "about.tsx",
+      "community": 146,
+      "community_name": "about-data.ts",
       "norm_label": "priorityitem"
     },
     {
@@ -5435,8 +5435,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_features_portfolio_about_data_journeystep",
-      "community": 13,
-      "community_name": "about.tsx",
+      "community": 146,
+      "community_name": "about-data.ts",
       "norm_label": "journeystep"
     },
     {
@@ -5448,8 +5448,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_features_portfolio_about_data_workflowstep",
-      "community": 13,
-      "community_name": "about.tsx",
+      "community": 146,
+      "community_name": "about-data.ts",
       "norm_label": "workflowstep"
     },
     {
@@ -5461,8 +5461,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_features_portfolio_about_data_kpopgroup",
-      "community": 13,
-      "community_name": "about.tsx",
+      "community": 146,
+      "community_name": "about-data.ts",
       "norm_label": "kpopgroup"
     },
     {
@@ -5474,8 +5474,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_features_portfolio_about_data_genshinchar",
-      "community": 13,
-      "community_name": "about.tsx",
+      "community": 146,
+      "community_name": "about-data.ts",
       "norm_label": "genshinchar"
     },
     {
@@ -5485,8 +5485,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "src_features_portfolio_about_data_aboutdata",
-      "community": 13,
-      "community_name": "about.tsx",
+      "community": 146,
+      "community_name": "about-data.ts",
       "norm_label": "aboutdata"
     },
     {
@@ -5497,8 +5497,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_portfolio_about_data_getaboutdata",
-      "community": 13,
-      "community_name": "about.tsx",
+      "community": 146,
+      "community_name": "about-data.ts",
       "norm_label": "getaboutdata()"
     },
     {
@@ -5519,8 +5519,8 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_features_portfolio_data_siteprofile",
-      "community": 140,
-      "community_name": "index.tsx",
+      "community": 11,
+      "community_name": "data.ts",
       "norm_label": "siteprofile"
     },
     {
@@ -5648,7 +5648,7 @@
       "label": "isIndonesianLocale()",
       "file_type": "code",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L595",
+      "source_location": "L617",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_portfolio_data_isindonesianlocale",
@@ -5660,7 +5660,7 @@
       "label": "getPublicCopy()",
       "file_type": "code",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L599",
+      "source_location": "L621",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_portfolio_data_getpubliccopy",
@@ -5672,7 +5672,7 @@
       "label": "getPortfolioContent()",
       "file_type": "code",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L603",
+      "source_location": "L625",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_portfolio_data_getportfoliocontent",
@@ -6167,8 +6167,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_features_technologies_hooks",
-      "community": 7,
-      "community_name": "dashboard.stack.categories.$id.tsx",
+      "community": 162,
+      "community_name": "Database",
       "norm_label": "hooks.ts"
     },
     {
@@ -6179,8 +6179,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_technologies_hooks_usecategories",
-      "community": 7,
-      "community_name": "dashboard.stack.categories.$id.tsx",
+      "community": 162,
+      "community_name": "Database",
       "norm_label": "usecategories()"
     },
     {
@@ -6203,8 +6203,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_technologies_hooks_usepublicstack",
-      "community": 7,
-      "community_name": "dashboard.stack.categories.$id.tsx",
+      "community": 162,
+      "community_name": "Database",
       "norm_label": "usepublicstack()"
     },
     {
@@ -6248,7 +6248,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "technologies/queries.ts"
     },
     {
@@ -6274,7 +6274,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_technologyrecord",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "technologyrecord"
     },
     {
@@ -6287,7 +6287,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_categoryinput",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "categoryinput"
     },
     {
@@ -6300,7 +6300,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_technologyinput",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "technologyinput"
     },
     {
@@ -6312,8 +6312,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_features_technologies_queries_technologywithcategories",
-      "community": 158,
-      "community_name": "technology-editor-form.tsx",
+      "community": 162,
+      "community_name": "Database",
       "norm_label": "technologywithcategories"
     },
     {
@@ -6325,8 +6325,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "src_features_technologies_queries_publicstackcategory",
-      "community": 7,
-      "community_name": "dashboard.stack.categories.$id.tsx",
+      "community": 162,
+      "community_name": "Database",
       "norm_label": "publicstackcategory"
     },
     {
@@ -6338,7 +6338,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_listcategories",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "listcategories()"
     },
     {
@@ -6350,7 +6350,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_getcategorybyid",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "getcategorybyid()"
     },
     {
@@ -6362,7 +6362,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_createcategory",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "createcategory()"
     },
     {
@@ -6374,7 +6374,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_updatecategory",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "updatecategory()"
     },
     {
@@ -6386,7 +6386,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_deletecategory",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "deletecategory()"
     },
     {
@@ -6398,7 +6398,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_listtechnologies",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "listtechnologies()"
     },
     {
@@ -6410,7 +6410,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_gettechnologybyid",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "gettechnologybyid()"
     },
     {
@@ -6422,7 +6422,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_createtechnology",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "createtechnology()"
     },
     {
@@ -6434,7 +6434,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_updatetechnology",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "updatetechnology()"
     },
     {
@@ -6446,7 +6446,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_deletetechnology",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "deletetechnology()"
     },
     {
@@ -6458,7 +6458,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_listultimatetechnologies",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "listultimatetechnologies()"
     },
     {
@@ -6470,7 +6470,7 @@
       "_origin": "ast",
       "id": "src_features_technologies_queries_listpublicstack",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "listpublicstack()"
     },
     {
@@ -6597,7 +6597,7 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_auth_client",
-      "community": 164,
+      "community": 13,
       "community_name": "dashboard-header.tsx",
       "norm_label": "auth-client.ts"
     },
@@ -6608,7 +6608,7 @@
       "source_location": "L3",
       "_origin": "ast",
       "id": "src_lib_auth_client_authclient",
-      "community": 164,
+      "community": 13,
       "community_name": "dashboard-header.tsx",
       "norm_label": "authclient"
     },
@@ -6619,8 +6619,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_lib_auth",
-      "community": 20,
-      "community_name": "session.ts",
+      "community": 22,
+      "community_name": "auth.ts",
       "norm_label": "auth.ts"
     },
     {
@@ -6630,8 +6630,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "src_lib_auth_db",
-      "community": 20,
-      "community_name": "session.ts",
+      "community": 22,
+      "community_name": "auth.ts",
       "norm_label": "db"
     },
     {
@@ -6641,8 +6641,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "src_lib_auth_auth",
-      "community": 20,
-      "community_name": "session.ts",
+      "community": 22,
+      "community_name": "auth.ts",
       "norm_label": "auth"
     },
     {
@@ -6653,7 +6653,7 @@
       "_origin": "ast",
       "id": "src_lib_auth_password_test",
       "community": 22,
-      "community_name": "password.ts",
+      "community_name": "auth.ts",
       "norm_label": "password.test.ts"
     },
     {
@@ -6664,7 +6664,7 @@
       "_origin": "ast",
       "id": "src_lib_auth_password",
       "community": 22,
-      "community_name": "password.ts",
+      "community_name": "auth.ts",
       "norm_label": "password.ts"
     },
     {
@@ -6675,7 +6675,7 @@
       "_origin": "ast",
       "id": "src_lib_auth_password_encoder",
       "community": 22,
-      "community_name": "password.ts",
+      "community_name": "auth.ts",
       "norm_label": "encoder"
     },
     {
@@ -6687,7 +6687,7 @@
       "_origin": "ast",
       "id": "src_lib_auth_password_hashpassword",
       "community": 22,
-      "community_name": "password.ts",
+      "community_name": "auth.ts",
       "norm_label": "hashpassword()"
     },
     {
@@ -6699,7 +6699,7 @@
       "_origin": "ast",
       "id": "src_lib_auth_password_verifypassword",
       "community": 22,
-      "community_name": "password.ts",
+      "community_name": "auth.ts",
       "norm_label": "verifypassword()"
     },
     {
@@ -6711,7 +6711,7 @@
       "_origin": "ast",
       "id": "src_lib_auth_password_derivepasswordkey",
       "community": 22,
-      "community_name": "password.ts",
+      "community_name": "auth.ts",
       "norm_label": "derivepasswordkey()"
     },
     {
@@ -6723,7 +6723,7 @@
       "_origin": "ast",
       "id": "src_lib_auth_password_toarraybufferbytes",
       "community": 22,
-      "community_name": "password.ts",
+      "community_name": "auth.ts",
       "norm_label": "toarraybufferbytes()"
     },
     {
@@ -6735,7 +6735,7 @@
       "_origin": "ast",
       "id": "src_lib_auth_password_timingsafeequal",
       "community": 22,
-      "community_name": "password.ts",
+      "community_name": "auth.ts",
       "norm_label": "timingsafeequal()"
     },
     {
@@ -6747,7 +6747,7 @@
       "_origin": "ast",
       "id": "src_lib_auth_password_base64urlencode",
       "community": 22,
-      "community_name": "password.ts",
+      "community_name": "auth.ts",
       "norm_label": "base64urlencode()"
     },
     {
@@ -6759,7 +6759,7 @@
       "_origin": "ast",
       "id": "src_lib_auth_password_base64urldecode",
       "community": 22,
-      "community_name": "password.ts",
+      "community_name": "auth.ts",
       "norm_label": "base64urldecode()"
     },
     {
@@ -7357,7 +7357,7 @@
       "_origin": "ast",
       "id": "src_routes_about",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "about.tsx"
     },
     {
@@ -7368,7 +7368,7 @@
       "_origin": "ast",
       "id": "src_routes_about_step_icons",
       "community": 13,
-      "community_name": "about.tsx",
+      "community_name": "dashboard-header.tsx",
       "norm_label": "step_icons"
     },
     {
@@ -7390,8 +7390,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_routes_about_aboutpage",
-      "community": 13,
-      "community_name": "about.tsx",
+      "community": 146,
+      "community_name": "about-data.ts",
       "norm_label": "aboutpage()"
     },
     {
@@ -7402,7 +7402,7 @@
       "_origin": "ast",
       "id": "src_routes_api_categories",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "api.categories.ts"
     },
     {
@@ -7412,8 +7412,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_routes_api_categories_route",
-      "community": 3,
-      "community_name": "routeTree.gen.ts",
+      "community": 162,
+      "community_name": "Database",
       "norm_label": "route"
     },
     {
@@ -7434,8 +7434,8 @@
       "source_location": "L14",
       "_origin": "ast",
       "id": "src_routes_api_projects_id_route",
-      "community": 139,
-      "community_name": "api.projects.$id.ts",
+      "community": 3,
+      "community_name": "routeTree.gen.ts",
       "norm_label": "route"
     },
     {
@@ -7516,7 +7516,7 @@
       "_origin": "ast",
       "id": "src_routes_api_stack",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "api.stack.ts"
     },
     {
@@ -7538,7 +7538,7 @@
       "_origin": "ast",
       "id": "src_routes_api_technologies",
       "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community_name": "Database",
       "norm_label": "api.technologies.ts"
     },
     {
@@ -7548,8 +7548,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "src_routes_api_technologies_route",
-      "community": 162,
-      "community_name": "technologies/queries.ts",
+      "community": 3,
+      "community_name": "routeTree.gen.ts",
       "norm_label": "route"
     },
     {
@@ -7559,8 +7559,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_api_auth",
-      "community": 20,
-      "community_name": "session.ts",
+      "community": 22,
+      "community_name": "auth.ts",
       "norm_label": "$.ts"
     },
     {
@@ -7570,8 +7570,8 @@
       "source_location": "L4",
       "_origin": "ast",
       "id": "src_routes_api_auth_route",
-      "community": 20,
-      "community_name": "session.ts",
+      "community": 22,
+      "community_name": "auth.ts",
       "norm_label": "route"
     },
     {
@@ -7589,23 +7589,23 @@
       "label": "Route",
       "file_type": "code",
       "source_file": "src/routes/contact.tsx",
-      "source_location": "L7",
+      "source_location": "L16",
       "_origin": "ast",
       "id": "src_routes_contact_route",
-      "community": 3,
-      "community_name": "routeTree.gen.ts",
+      "community": 140,
+      "community_name": "index.tsx",
       "norm_label": "route"
     },
     {
       "label": "ContactPage()",
       "file_type": "code",
       "source_file": "src/routes/contact.tsx",
-      "source_location": "L11",
+      "source_location": "L20",
       "_callable": true,
       "_origin": "ast",
       "id": "src_routes_contact_contactpage",
-      "community": 11,
-      "community_name": "data.ts",
+      "community": 140,
+      "community_name": "index.tsx",
       "norm_label": "contactpage()"
     },
     {
@@ -7684,8 +7684,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_routes_dashboard_media_route",
-      "community": 3,
-      "community_name": "routeTree.gen.ts",
+      "community": 250,
+      "community_name": "project-editor-form.tsx",
       "norm_label": "route"
     },
     {
@@ -7731,8 +7731,8 @@
       "source_location": "L42",
       "_origin": "ast",
       "id": "src_routes_dashboard_projects_id_route",
-      "community": 3,
-      "community_name": "routeTree.gen.ts",
+      "community": 250,
+      "community_name": "project-editor-form.tsx",
       "norm_label": "route"
     },
     {
@@ -7859,8 +7859,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "src_routes_dashboard_projects_new_route",
-      "community": 3,
-      "community_name": "routeTree.gen.ts",
+      "community": 250,
+      "community_name": "project-editor-form.tsx",
       "norm_label": "route"
     },
     {
@@ -8031,8 +8031,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_dashboard_stack_technologies_new",
-      "community": 158,
-      "community_name": "technology-editor-form.tsx",
+      "community": 250,
+      "community_name": "project-editor-form.tsx",
       "norm_label": "dashboard.stack.technologies.new.tsx"
     },
     {
@@ -8042,8 +8042,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "src_routes_dashboard_stack_technologies_new_route",
-      "community": 158,
-      "community_name": "technology-editor-form.tsx",
+      "community": 250,
+      "community_name": "project-editor-form.tsx",
       "norm_label": "route"
     },
     {
@@ -8054,8 +8054,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_routes_dashboard_stack_technologies_new_dashboardtechnologynew",
-      "community": 158,
-      "community_name": "technology-editor-form.tsx",
+      "community": 250,
+      "community_name": "project-editor-form.tsx",
       "norm_label": "dashboardtechnologynew()"
     },
     {
@@ -8121,8 +8121,8 @@
       "source_location": "L44",
       "_origin": "ast",
       "id": "src_routes_index_route",
-      "community": 3,
-      "community_name": "routeTree.gen.ts",
+      "community": 140,
+      "community_name": "index.tsx",
       "norm_label": "route"
     },
     {
@@ -8309,8 +8309,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "src_routes_projects_index_route",
-      "community": 3,
-      "community_name": "routeTree.gen.ts",
+      "community": 140,
+      "community_name": "index.tsx",
       "norm_label": "route"
     },
     {
@@ -8321,8 +8321,8 @@
       "_callable": true,
       "_origin": "ast",
       "id": "src_routes_projects_index_projectspage",
-      "community": 11,
-      "community_name": "data.ts",
+      "community": 140,
+      "community_name": "index.tsx",
       "norm_label": "projectspage()"
     },
     {
@@ -8332,8 +8332,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "src_routes_resume",
-      "community": 140,
-      "community_name": "index.tsx",
+      "community": 11,
+      "community_name": "data.ts",
       "norm_label": "resume.tsx"
     },
     {
@@ -31336,1172 +31336,6 @@
       "norm_label": "deployment"
     },
     {
-      "label": "about-page-content-spec.md",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "about_page_content_spec",
-      "community": 244,
-      "community_name": "about-page-content-spec.md",
-      "norm_label": "about-page-content-spec.md"
-    },
-    {
-      "label": "About Page \u2014 Content Specification",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "about_page_content_spec_about_page_content_specification",
-      "community": 244,
-      "community_name": "about-page-content-spec.md",
-      "norm_label": "about page \u2014 content specification"
-    },
-    {
-      "label": "Purpose",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L3",
-      "_origin": "ast",
-      "id": "about_page_content_spec_purpose",
-      "community": 244,
-      "community_name": "about-page-content-spec.md",
-      "norm_label": "purpose"
-    },
-    {
-      "label": "Index/Home already covers",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L9",
-      "_origin": "ast",
-      "id": "about_page_content_spec_index_home_already_covers",
-      "community": 244,
-      "community_name": "about-page-content-spec.md",
-      "norm_label": "index/home already covers"
-    },
-    {
-      "label": "1. Who Am I?",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L36",
-      "_origin": "ast",
-      "id": "about_page_content_spec_1_who_am_i",
-      "community": 247,
-      "community_name": "1. Who Am I?",
-      "norm_label": "1. who am i?"
-    },
-    {
-      "label": "Purpose",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L38",
-      "_origin": "ast",
-      "id": "about_page_content_spec_purpose_38",
-      "community": 247,
-      "community_name": "1. Who Am I?",
-      "norm_label": "purpose"
-    },
-    {
-      "label": "Core identity",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L46",
-      "_origin": "ast",
-      "id": "about_page_content_spec_core_identity",
-      "community": 247,
-      "community_name": "1. Who Am I?",
-      "norm_label": "core identity"
-    },
-    {
-      "label": "Personality / characteristics",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L54",
-      "_origin": "ast",
-      "id": "about_page_content_spec_personality_characteristics",
-      "community": 247,
-      "community_name": "1. Who Am I?",
-      "norm_label": "personality / characteristics"
-    },
-    {
-      "label": "What differentiates me",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L70",
-      "_origin": "ast",
-      "id": "about_page_content_spec_what_differentiates_me",
-      "community": 247,
-      "community_name": "1. Who Am I?",
-      "norm_label": "what differentiates me"
-    },
-    {
-      "label": "What I want people to remember",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L80",
-      "_origin": "ast",
-      "id": "about_page_content_spec_what_i_want_people_to_remember",
-      "community": 247,
-      "community_name": "1. Who Am I?",
-      "norm_label": "what i want people to remember"
-    },
-    {
-      "label": "What I enjoy about software engineering",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L84",
-      "_origin": "ast",
-      "id": "about_page_content_spec_what_i_enjoy_about_software_engineering",
-      "community": 247,
-      "community_name": "1. Who Am I?",
-      "norm_label": "what i enjoy about software engineering"
-    },
-    {
-      "label": "Coding mindset",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L93",
-      "_origin": "ast",
-      "id": "about_page_content_spec_coding_mindset",
-      "community": 247,
-      "community_name": "1. Who Am I?",
-      "norm_label": "coding mindset"
-    },
-    {
-      "label": "2. What Drives Me",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L108",
-      "_origin": "ast",
-      "id": "about_page_content_spec_2_what_drives_me",
-      "community": 248,
-      "community_name": "2. What Drives Me",
-      "norm_label": "2. what drives me"
-    },
-    {
-      "label": "Purpose",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L110",
-      "_origin": "ast",
-      "id": "about_page_content_spec_purpose_110",
-      "community": 248,
-      "community_name": "2. What Drives Me",
-      "norm_label": "purpose"
-    },
-    {
-      "label": "Origin of interest",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L114",
-      "_origin": "ast",
-      "id": "about_page_content_spec_origin_of_interest",
-      "community": 248,
-      "community_name": "2. What Drives Me",
-      "norm_label": "origin of interest"
-    },
-    {
-      "label": "What keeps me interested",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L122",
-      "_origin": "ast",
-      "id": "about_page_content_spec_what_keeps_me_interested",
-      "community": 248,
-      "community_name": "2. What Drives Me",
-      "norm_label": "what keeps me interested"
-    },
-    {
-      "label": "How I approach difficulty",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L134",
-      "_origin": "ast",
-      "id": "about_page_content_spec_how_i_approach_difficulty",
-      "community": 248,
-      "community_name": "2. What Drives Me",
-      "norm_label": "how i approach difficulty"
-    },
-    {
-      "label": "What feels most satisfying",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L142",
-      "_origin": "ast",
-      "id": "about_page_content_spec_what_feels_most_satisfying",
-      "community": 248,
-      "community_name": "2. What Drives Me",
-      "norm_label": "what feels most satisfying"
-    },
-    {
-      "label": "Improvement / refactoring",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L154",
-      "_origin": "ast",
-      "id": "about_page_content_spec_improvement_refactoring",
-      "community": 248,
-      "community_name": "2. What Drives Me",
-      "norm_label": "improvement / refactoring"
-    },
-    {
-      "label": "Long-term motivation",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L160",
-      "_origin": "ast",
-      "id": "about_page_content_spec_long_term_motivation",
-      "community": 248,
-      "community_name": "2. What Drives Me",
-      "norm_label": "long-term motivation"
-    },
-    {
-      "label": "3. How I Build",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L172",
-      "_origin": "ast",
-      "id": "about_page_content_spec_3_how_i_build",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "3. how i build"
-    },
-    {
-      "label": "IMPORTANT DIRECTION",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L174",
-      "_origin": "ast",
-      "id": "about_page_content_spec_important_direction",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "important direction"
-    },
-    {
-      "label": "Workflow details",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L184",
-      "_origin": "ast",
-      "id": "about_page_content_spec_workflow_details",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "workflow details"
-    },
-    {
-      "label": "01 \u2014 Understand the Problem",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L186",
-      "_origin": "ast",
-      "id": "about_page_content_spec_01_understand_the_problem",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "01 \u2014 understand the problem"
-    },
-    {
-      "label": "02 \u2014 Define the Goal",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L199",
-      "_origin": "ast",
-      "id": "about_page_content_spec_02_define_the_goal",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "02 \u2014 define the goal"
-    },
-    {
-      "label": "03 \u2014 Research & Design",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L207",
-      "_origin": "ast",
-      "id": "about_page_content_spec_03_research_design",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "03 \u2014 research & design"
-    },
-    {
-      "label": "04 \u2014 Build the Minimum Deployable Solution",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L218",
-      "_origin": "ast",
-      "id": "about_page_content_spec_04_build_the_minimum_deployable_solution",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "04 \u2014 build the minimum deployable solution"
-    },
-    {
-      "label": "05 \u2014 Test",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L230",
-      "_origin": "ast",
-      "id": "about_page_content_spec_05_test",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "05 \u2014 test"
-    },
-    {
-      "label": "06 \u2014 Deploy",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L238",
-      "_origin": "ast",
-      "id": "about_page_content_spec_06_deploy",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "06 \u2014 deploy"
-    },
-    {
-      "label": "07 \u2014 Improve",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L244",
-      "_origin": "ast",
-      "id": "about_page_content_spec_07_improve",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "07 \u2014 improve"
-    },
-    {
-      "label": "Technology selection",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L255",
-      "_origin": "ast",
-      "id": "about_page_content_spec_technology_selection",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "technology selection"
-    },
-    {
-      "label": "Complexity philosophy",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L269",
-      "_origin": "ast",
-      "id": "about_page_content_spec_complexity_philosophy",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "complexity philosophy"
-    },
-    {
-      "label": "Core principle",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L280",
-      "_origin": "ast",
-      "id": "about_page_content_spec_core_principle",
-      "community": 239,
-      "community_name": "Workflow details",
-      "norm_label": "core principle"
-    },
-    {
-      "label": "4. My Journey",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L288",
-      "_origin": "ast",
-      "id": "about_page_content_spec_4_my_journey",
-      "community": 245,
-      "community_name": "4. My Journey",
-      "norm_label": "4. my journey"
-    },
-    {
-      "label": "Purpose",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L290",
-      "_origin": "ast",
-      "id": "about_page_content_spec_purpose_290",
-      "community": 245,
-      "community_name": "4. My Journey",
-      "norm_label": "purpose"
-    },
-    {
-      "label": "2023 \u2014 First contact with programming",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L296",
-      "_origin": "ast",
-      "id": "about_page_content_spec_2023_first_contact_with_programming",
-      "community": 245,
-      "community_name": "4. My Journey",
-      "norm_label": "2023 \u2014 first contact with programming"
-    },
-    {
-      "label": "Early university projects \u2014 2024",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L312",
-      "_origin": "ast",
-      "id": "about_page_content_spec_early_university_projects_2024",
-      "community": 245,
-      "community_name": "4. My Journey",
-      "norm_label": "early university projects \u2014 2024"
-    },
-    {
-      "label": "Early 2025 \u2014 IMPHNEN turning point",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L334",
-      "_origin": "ast",
-      "id": "about_page_content_spec_early_2025_imphnen_turning_point",
-      "community": 245,
-      "community_name": "4. My Journey",
-      "norm_label": "early 2025 \u2014 imphnen turning point"
-    },
-    {
-      "label": "2025 onward \u2014 Going deeper",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L350",
-      "_origin": "ast",
-      "id": "about_page_content_spec_2025_onward_going_deeper",
-      "community": 245,
-      "community_name": "4. My Journey",
-      "norm_label": "2025 onward \u2014 going deeper"
-    },
-    {
-      "label": "Biggest change: way of thinking",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L379",
-      "_origin": "ast",
-      "id": "about_page_content_spec_biggest_change_way_of_thinking",
-      "community": 245,
-      "community_name": "4. My Journey",
-      "norm_label": "biggest change: way of thinking"
-    },
-    {
-      "label": "Current stage",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L389",
-      "_origin": "ast",
-      "id": "about_page_content_spec_current_stage",
-      "community": 245,
-      "community_name": "4. My Journey",
-      "norm_label": "current stage"
-    },
-    {
-      "label": "Technical growth vs personal growth",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L402",
-      "_origin": "ast",
-      "id": "about_page_content_spec_technical_growth_vs_personal_growth",
-      "community": 245,
-      "community_name": "4. My Journey",
-      "norm_label": "technical growth vs personal growth"
-    },
-    {
-      "label": "5. Things I Care About",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L414",
-      "_origin": "ast",
-      "id": "about_page_content_spec_5_things_i_care_about",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "5. things i care about"
-    },
-    {
-      "label": "Purpose",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L416",
-      "_origin": "ast",
-      "id": "about_page_content_spec_purpose_416",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "purpose"
-    },
-    {
-      "label": "Priority order",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L426",
-      "_origin": "ast",
-      "id": "about_page_content_spec_priority_order",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "priority order"
-    },
-    {
-      "label": "UX",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L447",
-      "_origin": "ast",
-      "id": "about_page_content_spec_ux",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "ux"
-    },
-    {
-      "label": "Performance",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L455",
-      "_origin": "ast",
-      "id": "about_page_content_spec_performance",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "performance"
-    },
-    {
-      "label": "Security",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L465",
-      "_origin": "ast",
-      "id": "about_page_content_spec_security",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "security"
-    },
-    {
-      "label": "Type Safety",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L473",
-      "_origin": "ast",
-      "id": "about_page_content_spec_type_safety",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "type safety"
-    },
-    {
-      "label": "Automation",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L479",
-      "_origin": "ast",
-      "id": "about_page_content_spec_automation",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "automation"
-    },
-    {
-      "label": "Efficiency",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L485",
-      "_origin": "ast",
-      "id": "about_page_content_spec_efficiency",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "efficiency"
-    },
-    {
-      "label": "Long-term usefulness",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L491",
-      "_origin": "ast",
-      "id": "about_page_content_spec_long_term_usefulness",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "long-term usefulness"
-    },
-    {
-      "label": "Maintainability",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L499",
-      "_origin": "ast",
-      "id": "about_page_content_spec_maintainability",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "maintainability"
-    },
-    {
-      "label": "Good Architecture",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L509",
-      "_origin": "ast",
-      "id": "about_page_content_spec_good_architecture",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "good architecture"
-    },
-    {
-      "label": "Scalability",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L523",
-      "_origin": "ast",
-      "id": "about_page_content_spec_scalability",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "scalability"
-    },
-    {
-      "label": "Documentation",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L531",
-      "_origin": "ast",
-      "id": "about_page_content_spec_documentation",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "documentation"
-    },
-    {
-      "label": "Developer Experience",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L545",
-      "_origin": "ast",
-      "id": "about_page_content_spec_developer_experience",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "developer experience"
-    },
-    {
-      "label": "Reliability",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L553",
-      "_origin": "ast",
-      "id": "about_page_content_spec_reliability",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "reliability"
-    },
-    {
-      "label": "Simplicity",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L559",
-      "_origin": "ast",
-      "id": "about_page_content_spec_simplicity",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "simplicity"
-    },
-    {
-      "label": "Accessibility",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L571",
-      "_origin": "ast",
-      "id": "about_page_content_spec_accessibility",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "accessibility"
-    },
-    {
-      "label": "Privacy",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L577",
-      "_origin": "ast",
-      "id": "about_page_content_spec_privacy",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "privacy"
-    },
-    {
-      "label": "Overall philosophy",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L583",
-      "_origin": "ast",
-      "id": "about_page_content_spec_overall_philosophy",
-      "community": 153,
-      "community_name": "5. Things I Care About",
-      "norm_label": "overall philosophy"
-    },
-    {
-      "label": "6. Beyond Code",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L602",
-      "_origin": "ast",
-      "id": "about_page_content_spec_6_beyond_code",
-      "community": 242,
-      "community_name": "6. Beyond Code",
-      "norm_label": "6. beyond code"
-    },
-    {
-      "label": "Purpose",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L604",
-      "_origin": "ast",
-      "id": "about_page_content_spec_purpose_604",
-      "community": 242,
-      "community_name": "6. Beyond Code",
-      "norm_label": "purpose"
-    },
-    {
-      "label": "Games",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L618",
-      "_origin": "ast",
-      "id": "about_page_content_spec_games",
-      "community": 242,
-      "community_name": "6. Beyond Code",
-      "norm_label": "games"
-    },
-    {
-      "label": "Mobile Legends",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L620",
-      "_origin": "ast",
-      "id": "about_page_content_spec_mobile_legends",
-      "community": 242,
-      "community_name": "6. Beyond Code",
-      "norm_label": "mobile legends"
-    },
-    {
-      "label": "Growtopia",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L629",
-      "_origin": "ast",
-      "id": "about_page_content_spec_growtopia",
-      "community": 242,
-      "community_name": "6. Beyond Code",
-      "norm_label": "growtopia"
-    },
-    {
-      "label": "Genshin Impact",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L636",
-      "_origin": "ast",
-      "id": "about_page_content_spec_genshin_impact",
-      "community": 242,
-      "community_name": "6. Beyond Code",
-      "norm_label": "genshin impact"
-    },
-    {
-      "label": "Visual instruction",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L659",
-      "_origin": "ast",
-      "id": "about_page_content_spec_visual_instruction",
-      "community": 242,
-      "community_name": "6. Beyond Code",
-      "norm_label": "visual instruction"
-    },
-    {
-      "label": "Anime",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L670",
-      "_origin": "ast",
-      "id": "about_page_content_spec_anime",
-      "community": 242,
-      "community_name": "6. Beyond Code",
-      "norm_label": "anime"
-    },
-    {
-      "label": "Favorite",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L676",
-      "_origin": "ast",
-      "id": "about_page_content_spec_favorite",
-      "community": 242,
-      "community_name": "6. Beyond Code",
-      "norm_label": "favorite"
-    },
-    {
-      "label": "Music \u2014 K-pop",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L690",
-      "_origin": "ast",
-      "id": "about_page_content_spec_music_k_pop",
-      "community": 242,
-      "community_name": "6. Beyond Code",
-      "norm_label": "music \u2014 k-pop"
-    },
-    {
-      "label": "Visual instruction",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L706",
-      "_origin": "ast",
-      "id": "about_page_content_spec_visual_instruction_706",
-      "community": 242,
-      "community_name": "6. Beyond Code",
-      "norm_label": "visual instruction"
-    },
-    {
-      "label": "7. Currently Exploring",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L720",
-      "_origin": "ast",
-      "id": "about_page_content_spec_7_currently_exploring",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "7. currently exploring"
-    },
-    {
-      "label": "Purpose",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L722",
-      "_origin": "ast",
-      "id": "about_page_content_spec_purpose_722",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "purpose"
-    },
-    {
-      "label": "Current focus",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L728",
-      "_origin": "ast",
-      "id": "about_page_content_spec_current_focus",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "current focus"
-    },
-    {
-      "label": "AI Engineering",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L735",
-      "_origin": "ast",
-      "id": "about_page_content_spec_ai_engineering",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "ai engineering"
-    },
-    {
-      "label": "RAG",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L741",
-      "_origin": "ast",
-      "id": "about_page_content_spec_rag",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "rag"
-    },
-    {
-      "label": "SvelteKit",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L751",
-      "_origin": "ast",
-      "id": "about_page_content_spec_sveltekit",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "sveltekit"
-    },
-    {
-      "label": "Cloud & Networking",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L757",
-      "_origin": "ast",
-      "id": "about_page_content_spec_cloud_networking",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "cloud & networking"
-    },
-    {
-      "label": "Current projects",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L768",
-      "_origin": "ast",
-      "id": "about_page_content_spec_current_projects",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "current projects"
-    },
-    {
-      "label": "Portfolio",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L770",
-      "_origin": "ast",
-      "id": "about_page_content_spec_portfolio",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "portfolio"
-    },
-    {
-      "label": "Finance PWA",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L774",
-      "_origin": "ast",
-      "id": "about_page_content_spec_finance_pwa",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "finance pwa"
-    },
-    {
-      "label": "Future direction",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L787",
-      "_origin": "ast",
-      "id": "about_page_content_spec_future_direction",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "future direction"
-    },
-    {
-      "label": "Personal development",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L793",
-      "_origin": "ast",
-      "id": "about_page_content_spec_personal_development",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "personal development"
-    },
-    {
-      "label": "Long-term career direction",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L801",
-      "_origin": "ast",
-      "id": "about_page_content_spec_long_term_career_direction",
-      "community": 241,
-      "community_name": "7. Currently Exploring",
-      "norm_label": "long-term career direction"
-    },
-    {
-      "label": "Overall Content Direction for the AI Agent",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L809",
-      "_origin": "ast",
-      "id": "about_page_content_spec_overall_content_direction_for_the_ai_agent",
-      "community": 244,
-      "community_name": "about-page-content-spec.md",
-      "norm_label": "overall content direction for the ai agent"
-    },
-    {
-      "label": "Core identity to communicate",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L811",
-      "_origin": "ast",
-      "id": "about_page_content_spec_core_identity_to_communicate",
-      "community": 246,
-      "community_name": "Core identity to communicate",
-      "norm_label": "core identity to communicate"
-    },
-    {
-      "label": "1. Curiosity",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L815",
-      "_origin": "ast",
-      "id": "about_page_content_spec_1_curiosity",
-      "community": 246,
-      "community_name": "Core identity to communicate",
-      "norm_label": "1. curiosity"
-    },
-    {
-      "label": "2. Problem solving",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L819",
-      "_origin": "ast",
-      "id": "about_page_content_spec_2_problem_solving",
-      "community": 246,
-      "community_name": "Core identity to communicate",
-      "norm_label": "2. problem solving"
-    },
-    {
-      "label": "3. Engineering mindset",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L823",
-      "_origin": "ast",
-      "id": "about_page_content_spec_3_engineering_mindset",
-      "community": 246,
-      "community_name": "Core identity to communicate",
-      "norm_label": "3. engineering mindset"
-    },
-    {
-      "label": "4. Context-aware engineering",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L827",
-      "_origin": "ast",
-      "id": "about_page_content_spec_4_context_aware_engineering",
-      "community": 246,
-      "community_name": "Core identity to communicate",
-      "norm_label": "4. context-aware engineering"
-    },
-    {
-      "label": "5. Future-oriented thinking",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L840",
-      "_origin": "ast",
-      "id": "about_page_content_spec_5_future_oriented_thinking",
-      "community": 246,
-      "community_name": "Core identity to communicate",
-      "norm_label": "5. future-oriented thinking"
-    },
-    {
-      "label": "6. Continuous improvement",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L844",
-      "_origin": "ast",
-      "id": "about_page_content_spec_6_continuous_improvement",
-      "community": 246,
-      "community_name": "Core identity to communicate",
-      "norm_label": "6. continuous improvement"
-    },
-    {
-      "label": "7. Human side",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L850",
-      "_origin": "ast",
-      "id": "about_page_content_spec_7_human_side",
-      "community": 246,
-      "community_name": "Core identity to communicate",
-      "norm_label": "7. human side"
-    },
-    {
-      "label": "Desired Visitor Impression",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L858",
-      "_origin": "ast",
-      "id": "about_page_content_spec_desired_visitor_impression",
-      "community": 244,
-      "community_name": "about-page-content-spec.md",
-      "norm_label": "desired visitor impression"
-    },
-    {
-      "label": "Relationship Between Index and About",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L882",
-      "_origin": "ast",
-      "id": "about_page_content_spec_relationship_between_index_and_about",
-      "community": 244,
-      "community_name": "about-page-content-spec.md",
-      "norm_label": "relationship between index and about"
-    },
-    {
-      "label": "Index",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L884",
-      "_origin": "ast",
-      "id": "about_page_content_spec_index",
-      "community": 244,
-      "community_name": "about-page-content-spec.md",
-      "norm_label": "index"
-    },
-    {
-      "label": "About",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L899",
-      "_origin": "ast",
-      "id": "about_page_content_spec_about",
-      "community": 244,
-      "community_name": "about-page-content-spec.md",
-      "norm_label": "about"
-    },
-    {
-      "label": "Writing & Design Guidance",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L919",
-      "_origin": "ast",
-      "id": "about_page_content_spec_writing_design_guidance",
-      "community": 249,
-      "community_name": "Writing & Design Guidance",
-      "norm_label": "writing & design guidance"
-    },
-    {
-      "label": "Tone",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L921",
-      "_origin": "ast",
-      "id": "about_page_content_spec_tone",
-      "community": 249,
-      "community_name": "Writing & Design Guidance",
-      "norm_label": "tone"
-    },
-    {
-      "label": "Content principle",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L941",
-      "_origin": "ast",
-      "id": "about_page_content_spec_content_principle",
-      "community": 249,
-      "community_name": "Writing & Design Guidance",
-      "norm_label": "content principle"
-    },
-    {
-      "label": "Important nuance",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L957",
-      "_origin": "ast",
-      "id": "about_page_content_spec_important_nuance",
-      "community": 249,
-      "community_name": "Writing & Design Guidance",
-      "norm_label": "important nuance"
-    },
-    {
-      "label": "Page structure",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L974",
-      "_origin": "ast",
-      "id": "about_page_content_spec_page_structure",
-      "community": 249,
-      "community_name": "Writing & Design Guidance",
-      "norm_label": "page structure"
-    },
-    {
-      "label": "Visual direction",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L988",
-      "_origin": "ast",
-      "id": "about_page_content_spec_visual_direction",
-      "community": 249,
-      "community_name": "Writing & Design Guidance",
-      "norm_label": "visual direction"
-    },
-    {
-      "label": "AI Agent Implementation Reminder",
-      "file_type": "document",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L1008",
-      "_origin": "ast",
-      "id": "about_page_content_spec_ai_agent_implementation_reminder",
-      "community": 244,
-      "community_name": "about-page-content-spec.md",
-      "norm_label": "ai agent implementation reminder"
-    },
-    {
       "label": "code-school.md",
       "file_type": "document",
       "source_file": "content/education/code-school.md",
@@ -36615,7 +35449,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/contact.tsx",
-      "source_location": "L4",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_contact",
@@ -36711,7 +35545,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/contact.tsx",
-      "source_location": "L4",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_contact",
@@ -36807,7 +35641,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/contact.tsx",
-      "source_location": "L4",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_contact",
@@ -42939,7 +41773,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L603",
+      "source_location": "L625",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data",
@@ -42950,7 +41784,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L599",
+      "source_location": "L621",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data",
@@ -43016,7 +41850,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L595",
+      "source_location": "L617",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data",
@@ -43106,7 +41940,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/contact.tsx",
-      "source_location": "L5",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_contact",
@@ -43190,7 +42024,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/contact.tsx",
-      "source_location": "L5",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_contact",
@@ -43226,7 +42060,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L604",
+      "source_location": "L626",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data_getportfoliocontent",
@@ -43238,7 +42072,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L600",
+      "source_location": "L622",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data_getpubliccopy",
@@ -43274,7 +42108,7 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/contact.tsx",
-      "source_location": "L5",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_contact",
@@ -43286,7 +42120,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/contact.tsx",
-      "source_location": "L12",
+      "source_location": "L21",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_contact_contactpage",
@@ -47460,7 +46294,7 @@
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "src/routes/contact.tsx",
-      "source_location": "L8",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "context": "collection",
@@ -47472,7 +46306,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/routes/contact.tsx",
-      "source_location": "L7",
+      "source_location": "L16",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_routes_contact",
@@ -68939,1163 +67773,8 @@
       "source": "readme_winterest_portfolio_v2",
       "target": "readme_stack",
       "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L36",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_1_who_am_i",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L108",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_2_what_drives_me",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L172",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_3_how_i_build",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L288",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_4_my_journey",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L414",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_5_things_i_care_about",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L602",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_6_beyond_code",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L720",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_7_currently_exploring",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_about_page_content_specification",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L1008",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_ai_agent_implementation_reminder",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L858",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_desired_visitor_impression",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L809",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_overall_content_direction_for_the_ai_agent",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L882",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_relationship_between_index_and_about",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L919",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec",
-      "target": "about_page_content_spec_writing_design_guidance",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_about_page_content_specification",
-      "target": "about_page_content_spec_purpose",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L9",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_purpose",
-      "target": "about_page_content_spec_index_home_already_covers",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L93",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_1_who_am_i",
-      "target": "about_page_content_spec_coding_mindset",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L46",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_1_who_am_i",
-      "target": "about_page_content_spec_core_identity",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L54",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_1_who_am_i",
-      "target": "about_page_content_spec_personality_characteristics",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L38",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_1_who_am_i",
-      "target": "about_page_content_spec_purpose_38",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L70",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_1_who_am_i",
-      "target": "about_page_content_spec_what_differentiates_me",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L84",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_1_who_am_i",
-      "target": "about_page_content_spec_what_i_enjoy_about_software_engineering",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L80",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_1_who_am_i",
-      "target": "about_page_content_spec_what_i_want_people_to_remember",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L134",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_2_what_drives_me",
-      "target": "about_page_content_spec_how_i_approach_difficulty",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L154",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_2_what_drives_me",
-      "target": "about_page_content_spec_improvement_refactoring",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L160",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_2_what_drives_me",
-      "target": "about_page_content_spec_long_term_motivation",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L114",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_2_what_drives_me",
-      "target": "about_page_content_spec_origin_of_interest",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L110",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_2_what_drives_me",
-      "target": "about_page_content_spec_purpose_110",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L142",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_2_what_drives_me",
-      "target": "about_page_content_spec_what_feels_most_satisfying",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L122",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_2_what_drives_me",
-      "target": "about_page_content_spec_what_keeps_me_interested",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L269",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_3_how_i_build",
-      "target": "about_page_content_spec_complexity_philosophy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L280",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_3_how_i_build",
-      "target": "about_page_content_spec_core_principle",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L174",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_3_how_i_build",
-      "target": "about_page_content_spec_important_direction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L255",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_3_how_i_build",
-      "target": "about_page_content_spec_technology_selection",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L184",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_3_how_i_build",
-      "target": "about_page_content_spec_workflow_details",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L186",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_workflow_details",
-      "target": "about_page_content_spec_01_understand_the_problem",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L199",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_workflow_details",
-      "target": "about_page_content_spec_02_define_the_goal",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L207",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_workflow_details",
-      "target": "about_page_content_spec_03_research_design",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L218",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_workflow_details",
-      "target": "about_page_content_spec_04_build_the_minimum_deployable_solution",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L230",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_workflow_details",
-      "target": "about_page_content_spec_05_test",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L238",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_workflow_details",
-      "target": "about_page_content_spec_06_deploy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L244",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_workflow_details",
-      "target": "about_page_content_spec_07_improve",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L296",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_4_my_journey",
-      "target": "about_page_content_spec_2023_first_contact_with_programming",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L350",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_4_my_journey",
-      "target": "about_page_content_spec_2025_onward_going_deeper",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L379",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_4_my_journey",
-      "target": "about_page_content_spec_biggest_change_way_of_thinking",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L389",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_4_my_journey",
-      "target": "about_page_content_spec_current_stage",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L334",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_4_my_journey",
-      "target": "about_page_content_spec_early_2025_imphnen_turning_point",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L312",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_4_my_journey",
-      "target": "about_page_content_spec_early_university_projects_2024",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L290",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_4_my_journey",
-      "target": "about_page_content_spec_purpose_290",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L402",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_4_my_journey",
-      "target": "about_page_content_spec_technical_growth_vs_personal_growth",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L571",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_accessibility",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L479",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_automation",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L545",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_developer_experience",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L531",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_documentation",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L485",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_efficiency",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L509",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_good_architecture",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L491",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_long_term_usefulness",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L499",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_maintainability",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L583",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_overall_philosophy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L455",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_performance",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L426",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_priority_order",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L577",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_privacy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L416",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_purpose_416",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L553",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_reliability",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L523",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_scalability",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L465",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_security",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L559",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_simplicity",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L473",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_type_safety",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L447",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_5_things_i_care_about",
-      "target": "about_page_content_spec_ux",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L670",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_6_beyond_code",
-      "target": "about_page_content_spec_anime",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L618",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_6_beyond_code",
-      "target": "about_page_content_spec_games",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L690",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_6_beyond_code",
-      "target": "about_page_content_spec_music_k_pop",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L604",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_6_beyond_code",
-      "target": "about_page_content_spec_purpose_604",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L636",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_games",
-      "target": "about_page_content_spec_genshin_impact",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L629",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_games",
-      "target": "about_page_content_spec_growtopia",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L620",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_games",
-      "target": "about_page_content_spec_mobile_legends",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L659",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_games",
-      "target": "about_page_content_spec_visual_instruction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L676",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_anime",
-      "target": "about_page_content_spec_favorite",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L706",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_music_k_pop",
-      "target": "about_page_content_spec_visual_instruction_706",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L735",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_7_currently_exploring",
-      "target": "about_page_content_spec_ai_engineering",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L757",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_7_currently_exploring",
-      "target": "about_page_content_spec_cloud_networking",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L728",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_7_currently_exploring",
-      "target": "about_page_content_spec_current_focus",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L768",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_7_currently_exploring",
-      "target": "about_page_content_spec_current_projects",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L787",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_7_currently_exploring",
-      "target": "about_page_content_spec_future_direction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L801",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_7_currently_exploring",
-      "target": "about_page_content_spec_long_term_career_direction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L793",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_7_currently_exploring",
-      "target": "about_page_content_spec_personal_development",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L722",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_7_currently_exploring",
-      "target": "about_page_content_spec_purpose_722",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L741",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_7_currently_exploring",
-      "target": "about_page_content_spec_rag",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L751",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_7_currently_exploring",
-      "target": "about_page_content_spec_sveltekit",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L774",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_current_projects",
-      "target": "about_page_content_spec_finance_pwa",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L770",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_current_projects",
-      "target": "about_page_content_spec_portfolio",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L811",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_overall_content_direction_for_the_ai_agent",
-      "target": "about_page_content_spec_core_identity_to_communicate",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L815",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_core_identity_to_communicate",
-      "target": "about_page_content_spec_1_curiosity",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L819",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_core_identity_to_communicate",
-      "target": "about_page_content_spec_2_problem_solving",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L823",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_core_identity_to_communicate",
-      "target": "about_page_content_spec_3_engineering_mindset",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L827",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_core_identity_to_communicate",
-      "target": "about_page_content_spec_4_context_aware_engineering",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L840",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_core_identity_to_communicate",
-      "target": "about_page_content_spec_5_future_oriented_thinking",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L844",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_core_identity_to_communicate",
-      "target": "about_page_content_spec_6_continuous_improvement",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L850",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_core_identity_to_communicate",
-      "target": "about_page_content_spec_7_human_side",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L899",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_relationship_between_index_and_about",
-      "target": "about_page_content_spec_about",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L884",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_relationship_between_index_and_about",
-      "target": "about_page_content_spec_index",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L941",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_writing_design_guidance",
-      "target": "about_page_content_spec_content_principle",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L957",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_writing_design_guidance",
-      "target": "about_page_content_spec_important_nuance",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L974",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_writing_design_guidance",
-      "target": "about_page_content_spec_page_structure",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L921",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_writing_design_guidance",
-      "target": "about_page_content_spec_tone",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "about-page-content-spec.md",
-      "source_location": "L988",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "about_page_content_spec_writing_design_guidance",
-      "target": "about_page_content_spec_visual_direction",
-      "confidence_score": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "c858a56e835d86e87cb3210174a65cdc12fe1ee7"
+  "built_at_commit": "2035c9ca47543bf22911da59e0887172711f187e"
 }

@@ -6,7 +6,7 @@
   "4": "devDependencies",
   "5": "ServiceWorkerGlobalScope",
   "6": "Event",
-  "7": "technology-editor-form.tsx",
+  "7": "dashboard.stack.categories.$id.tsx",
   "8": "projects/queries.ts",
   "9": "scripts",
   "10": "schema.ts",
@@ -157,7 +157,7 @@
   "155": "Winterest Portfolio v2",
   "156": "Development Phases",
   "157": "class-variance-authority",
-  "158": "tailwindcss-animate",
+  "158": "technology-editor-form.tsx",
   "159": "@tailwindcss/vite",
   "160": "@tanstack/ai",
   "161": "@tanstack/ai-anthropic",
@@ -184,6 +184,7 @@
   "182": "__BaseEnv_Env",
   "183": "CacheContext",
   "184": "CacheStorage",
+  "185": "marked",
   "186": "DispatchNamespace",
   "187": "DocumentEnd",
   "188": "react-dom",
@@ -247,6 +248,5 @@
   "247": "1. Who Am I?",
   "248": "2. What Drives Me",
   "249": "Writing & Design Guidance",
-  "250": "project-editor-form.tsx",
-  "251": "projects.$slug.tsx"
+  "250": "project-editor-form.tsx"
 }

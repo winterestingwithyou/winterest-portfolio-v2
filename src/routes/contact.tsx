@@ -1,5 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Github, Mail, Send, Terminal } from 'lucide-react'
+import {
+  Check,
+  Copy,
+  ExternalLink,
+  Github,
+  Mail,
+  MapPin,
+  Send,
+} from 'lucide-react'
+import { useState } from 'react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
@@ -10,113 +19,290 @@ export const Route = createFileRoute('/contact')({
 
 function ContactPage() {
   const copy = getPublicCopy()
+  const [copied, setCopied] = useState(false)
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  })
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(siteProfile.contactEmail)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    } catch {
+      // Fallback if clipboard API fails
+      setCopied(false)
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    const subjectText =
+      formData.subject.trim() ||
+      `Message from ${formData.name || 'Portfolio Visitor'}`
+    const bodyText = `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+
+    const mailtoUrl = `mailto:${siteProfile.contactEmail}?subject=${encodeURIComponent(
+      subjectText,
+    )}&body=${encodeURIComponent(bodyText)}`
+
+    window.location.href = mailtoUrl
+  }
 
   return (
-    <main className="px-4 py-14 sm:py-20">
-      <Container className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+    <main className="px-4 py-12 sm:py-16">
+      <Container className="max-w-5xl">
         <SectionHeader
           eyebrow={copy.contact.eyebrow}
           title={copy.contact.title}
           description={copy.contact.description}
         />
 
-        <div className="grid gap-5">
-          <div className="contact-signal">
-            <div>
-              <p className="m-0 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wide text-orange-200">
-                <Terminal aria-hidden="true" className="size-4" />
-                contact --mode practical
-              </p>
-              <h2 className="mt-4 text-2xl font-semibold tracking-tight text-white">
-                {copy.contact.signalTitle}
-              </h2>
+        <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+          {/* Left Column: Direct Channels & Status */}
+          <div className="grid gap-5">
+            <div className="surface-card p-6 sm:p-7">
+              <div className="flex items-center gap-3 border-b border-(--brand-line) pb-4">
+                <div className="inline-flex size-10 items-center justify-center rounded-xl bg-(--brand-orange-soft) text-(--brand-orange-deep)">
+                  <Mail aria-hidden="true" className="size-5" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-bold text-(--brand-ink)">
+                    {copy.contact.directTitle}
+                  </h2>
+                  <p className="text-xs text-(--brand-muted)">
+                    {copy.contact.directSubtitle}
+                  </p>
+                </div>
+              </div>
+
+              {/* Email Direct Block */}
+              <div className="mt-5 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
+                    Email
+                  </span>
+                  <span className="text-xs font-bold text-(--brand-orange-deep)">
+                    Direct
+                  </span>
+                </div>
+                <p className="mt-1 text-base font-bold text-(--brand-ink) break-all">
+                  {siteProfile.contactEmail}
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={handleCopyEmail}
+                    className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                  >
+                    {copied ? (
+                      <>
+                        <Check
+                          aria-hidden="true"
+                          className="size-3.5 text-emerald-500"
+                        />
+                        <span className="text-emerald-600 dark:text-emerald-400">
+                          {copy.contact.copiedEmail}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy
+                          aria-hidden="true"
+                          className="size-3.5 text-(--brand-muted)"
+                        />
+                        <span>{copy.contact.copyEmail}</span>
+                      </>
+                    )}
+                  </button>
+
+                  <a
+                    href={`mailto:${siteProfile.contactEmail}`}
+                    className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                  >
+                    <ExternalLink
+                      aria-hidden="true"
+                      className="size-3.5 text-(--brand-muted)"
+                    />
+                    <span>{copy.contact.sendEmail}</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* GitHub Block */}
+              <div className="mt-3 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
+                    GitHub
+                  </span>
+                  <span className="text-xs font-bold text-(--brand-muted)">
+                    Public Profile
+                  </span>
+                </div>
+                <div className="mt-2 flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2.5">
+                    <Github
+                      aria-hidden="true"
+                      className="size-5 text-(--brand-ink)"
+                    />
+                    <span className="text-sm font-bold text-(--brand-ink)">
+                      @{siteProfile.handle}
+                    </span>
+                  </div>
+                  <a
+                    href={siteProfile.githubUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                  >
+                    <ExternalLink
+                      aria-hidden="true"
+                      className="size-3.5 text-(--brand-muted)"
+                    />
+                    <span>Open</span>
+                  </a>
+                </div>
+              </div>
             </div>
-            <div className="contact-signal__status" aria-hidden="true">
-              <span />
-              {copy.contact.async}
+
+            {/* Status & Location Pill Card */}
+            <div className="surface-card p-5">
+              <div className="flex items-center gap-3">
+                <span className="relative flex size-3">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex size-3 rounded-full bg-emerald-500" />
+                </span>
+                <p className="text-xs font-bold text-(--brand-ink)">
+                  {copy.contact.status}
+                </p>
+              </div>
+              <div className="mt-3 flex items-center gap-2 text-xs text-(--brand-muted) pt-3 border-t border-(--brand-line)">
+                <MapPin
+                  aria-hidden="true"
+                  className="size-3.5 text-(--brand-orange)"
+                />
+                <span>{copy.contact.location}</span>
+              </div>
             </div>
           </div>
 
-          <div className="surface-card p-6">
-            <h2 className="text-2xl font-semibold text-(--brand-ink)">
-              {copy.contact.channels}
-            </h2>
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <a
-                href={siteProfile.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex min-h-12 items-center gap-3 rounded-lg border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) no-underline transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
-              >
-                <Github aria-hidden="true" className="size-4" />
-                GitHub
-              </a>
-              <a
-                href={`mailto:${siteProfile.contactEmail}`}
-                className="inline-flex min-h-12 items-center gap-3 rounded-lg border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) no-underline transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
-              >
-                <Mail aria-hidden="true" className="size-4" />
-                {siteProfile.contactEmail}
-              </a>
-            </div>
-          </div>
-
+          {/* Right Column: Clean Form */}
           <form
-            action={`mailto:${siteProfile.contactEmail}`}
-            method="post"
-            encType="text/plain"
-            className="surface-card grid gap-5 p-6"
+            onSubmit={handleSubmit}
+            className="surface-card grid gap-5 p-6 sm:p-8"
           >
             <div>
-              <label
-                htmlFor="name"
-                className="text-sm font-bold text-(--brand-ink)"
-              >
-                {copy.contact.name}
-              </label>
-              <input
-                id="name"
-                name="name"
-                autoComplete="name"
-                className="mt-2 min-h-11 w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 text-sm text-(--brand-ink)"
-              />
+              <h2 className="text-xl font-bold text-(--brand-ink)">
+                {copy.contact.formTitle}
+              </h2>
+              <p className="mt-1 text-xs text-(--brand-muted)">
+                {copy.contact.formSubtitle}
+              </p>
             </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                >
+                  {copy.contact.name}
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  required
+                  autoComplete="name"
+                  placeholder={copy.contact.namePlaceholder}
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                >
+                  {copy.contact.email}
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  placeholder={copy.contact.emailPlaceholder}
+                  value={formData.email}
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none"
+                />
+              </div>
+            </div>
+
             <div>
               <label
-                htmlFor="email"
-                className="text-sm font-bold text-(--brand-ink)"
+                htmlFor="subject"
+                className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
               >
-                {copy.contact.email}
+                {copy.contact.subject}
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                className="mt-2 min-h-11 w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 text-sm text-(--brand-ink)"
+                id="subject"
+                name="subject"
+                type="text"
+                placeholder={copy.contact.subjectPlaceholder}
+                value={formData.subject}
+                onChange={(e) =>
+                  setFormData({ ...formData, subject: e.target.value })
+                }
+                className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none"
               />
             </div>
+
             <div>
               <label
                 htmlFor="message"
-                className="text-sm font-bold text-(--brand-ink)"
+                className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
               >
                 {copy.contact.message}
               </label>
               <textarea
                 id="message"
                 name="message"
+                required
                 rows={5}
-                className="mt-2 w-full rounded-lg border border-(--brand-line) bg-(--surface-strong) px-3 py-3 text-sm text-(--brand-ink)"
+                placeholder={copy.contact.messagePlaceholder}
+                value={formData.message}
+                onChange={(e) =>
+                  setFormData({ ...formData, message: e.target.value })
+                }
+                className="mt-1.5 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 py-3 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none"
               />
             </div>
-            <button
-              type="submit"
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-bold text-white transition hover:-translate-y-0.5"
-            >
-              <Send aria-hidden="true" className="size-4" />
-              {copy.contact.draft}
-            </button>
+
+            <div className="pt-2">
+              <button
+                type="submit"
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-6 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-(--brand-glow) active:translate-y-0"
+              >
+                <Send aria-hidden="true" className="size-4" />
+                <span>{copy.contact.send}</span>
+              </button>
+              <p className="mt-2 text-center text-xs text-(--brand-muted)">
+                {copy.contact.sendNotice}
+              </p>
+            </div>
           </form>
         </div>
       </Container>
