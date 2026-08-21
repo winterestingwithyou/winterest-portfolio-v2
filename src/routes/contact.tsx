@@ -47,8 +47,7 @@ function ContactPage() {
         body: JSON.stringify(formData),
       })
 
-      const data: { error?: string; success?: boolean } =
-        await response.json()
+      const data: { error?: string; success?: boolean } = await response.json()
 
       if (!response.ok || data.error) {
         throw new Error(data.error || copy.contact.sendErrorTitle)
@@ -382,9 +381,6 @@ function ContactPage() {
                       </>
                     )}
                   </button>
-                  <p className="mt-2 text-center text-xs text-(--brand-muted)">
-                    {copy.contact.sendNotice}
-                  </p>
                 </div>
               </form>
             )}

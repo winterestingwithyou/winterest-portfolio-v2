@@ -385,7 +385,6 @@ export const publicCopy = {
       messagePlaceholder: 'Write your message here...',
       send: 'Send Message',
       sending: 'Sending...',
-      sendNotice: 'Your message will be sent directly to my inbox via Resend.',
       sendSuccessTitle: 'Message sent!',
       sendSuccessSubtitle:
         'Thank you for reaching out! Your message has been delivered to my inbox.',
@@ -556,8 +555,6 @@ export const publicCopy = {
       messagePlaceholder: 'Tuliskan pesan Anda di sini...',
       send: 'Kirim Pesan',
       sending: 'Mengirim...',
-      sendNotice:
-        'Pesan Anda akan dikirim langsung ke email saya melalui Resend.',
       sendSuccessTitle: 'Pesan terkirim!',
       sendSuccessSubtitle:
         'Terima kasih telah menghubungi! Pesan Anda telah berhasil terkirim.',
