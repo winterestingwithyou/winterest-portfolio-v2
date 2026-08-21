@@ -384,7 +384,13 @@ export const publicCopy = {
       message: 'Message',
       messagePlaceholder: 'Write your message here...',
       send: 'Send Message',
-      sendNotice: 'This will open your default email application.',
+      sending: 'Sending...',
+      sendNotice: 'Your message will be sent directly to my inbox via Resend.',
+      sendSuccessTitle: 'Message sent!',
+      sendSuccessSubtitle:
+        'Thank you for reaching out! Your message has been delivered to my inbox.',
+      sendAnother: 'Send Another Message',
+      sendErrorTitle: 'Failed to send message',
     },
     resume: {
       eyebrow: 'Resume',
@@ -549,7 +555,14 @@ export const publicCopy = {
       message: 'Pesan',
       messagePlaceholder: 'Tuliskan pesan Anda di sini...',
       send: 'Kirim Pesan',
-      sendNotice: 'Formulir ini akan membuka aplikasi email default Anda.',
+      sending: 'Mengirim...',
+      sendNotice:
+        'Pesan Anda akan dikirim langsung ke email saya melalui Resend.',
+      sendSuccessTitle: 'Pesan terkirim!',
+      sendSuccessSubtitle:
+        'Terima kasih telah menghubungi! Pesan Anda telah berhasil terkirim.',
+      sendAnother: 'Kirim Pesan Lain',
+      sendErrorTitle: 'Gagal mengirim pesan',
     },
     resume: {
       eyebrow: 'Resume',

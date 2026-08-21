@@ -1,16 +1,16 @@
-# Graph Report - winterest-portfolio-v2  (2026-08-20)
+# Graph Report - winterest-portfolio-v2  (2026-08-21)
 
 ## Corpus Check
-- 125 files · ~205,352 words
+- 125 files · ~205,394 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 2577 nodes · 3228 edges · 240 communities (54 shown, 186 thin omitted)
+- 2577 nodes · 3228 edges · 239 communities (53 shown, 186 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 24 edges (avg confidence: 0.53)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2035c9ca`
+- Built from commit: `100c9a19`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -161,7 +161,6 @@
 - drizzle-orm
 - sheet.tsx
 - lucide-react
-- about-data.ts
 - Content Model Direction
 - @radix-ui/react-checkbox
 - @radix-ui/react-hover-card
@@ -275,7 +274,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (240 total, 186 thin omitted)
+## Communities (239 total, 186 thin omitted)
 
 ### Community 0 - "worker-configuration.d.ts"
 Cohesion: 0.00
@@ -330,8 +329,8 @@ Cohesion: 0.06
 Nodes (30): DOM, DOM.Iterable, ES2022, eslint.config.js, node, prettier.config.js, **/*.ts, **/*.tsx (+22 more)
 
 ### Community 13 - "dashboard-header.tsx"
-Cohesion: 0.13
-Nodes (19): breadcrumbMap, DashboardHeaderProps, localeNames, ParaglideLocaleSwitcher(), GooeyNav(), GooeyNavItem, GooeyNavProps, applyThemeMode() (+11 more)
+Cohesion: 0.09
+Nodes (27): breadcrumbMap, DashboardHeaderProps, localeNames, ParaglideLocaleSwitcher(), GooeyNav(), GooeyNavItem, GooeyNavProps, applyThemeMode() (+19 more)
 
 ### Community 14 - "seed.ts"
 Cohesion: 0.16
@@ -421,10 +420,6 @@ Nodes (31): Container(), ContainerProps, SectionHeader(), SectionHeaderProps, Pr
 Cohesion: 0.18
 Nodes (7): Sheet(), SheetContent(), SheetDescription(), SheetFooter(), SheetHeader(), SheetOverlay(), SheetTitle()
 
-### Community 146 - "about-data.ts"
-Cohesion: 0.22
-Nodes (8): aboutData, GenshinChar, getAboutData(), JourneyStep, KpopGroup, PriorityItem, WorkflowStep, AboutPage()
-
 ### Community 147 - "Content Model Direction"
 Cohesion: 0.18
 Nodes (11): Content Model Direction, `experience`, `labEntries`, `media`, `projects`, `projectTech`, `siteSettings`, `skills` (+3 more)
@@ -446,8 +441,8 @@ Cohesion: 0.29
 Nodes (7): Development Phases, Phase 1: Clean Starter and Build Public Shell, Phase 2: Portfolio Content, Phase 3: Database and CMS Foundation, Phase 4: Auth and RBAC, Phase 5: Writing, Lab, Media, Phase 6: Visual Polish and 3D
 
 ### Community 158 - "technology-editor-form.tsx"
-Cohesion: 0.38
-Nodes (4): slugify(), TechnologyEditorForm(), TechnologyEditorFormProps, Route
+Cohesion: 0.27
+Nodes (5): slugify(), TechnologyEditorForm(), TechnologyEditorFormProps, Route, Route
 
 ### Community 162 - "Database"
 Cohesion: 0.18
@@ -458,8 +453,8 @@ Cohesion: 0.18
 Nodes (13): Table(), TableBody(), TableCaption(), TableCell(), TableFooter(), TableHead(), TableHeader(), TableRow() (+5 more)
 
 ### Community 250 - "project-editor-form.tsx"
-Cohesion: 0.08
-Nodes (26): DashboardShell(), DashboardShellProps, dashboardCopy, getDashboardCopy(), formatDateForInput(), getTranslation(), LocaleOption, localeOptions (+18 more)
+Cohesion: 0.09
+Nodes (25): DashboardShell(), DashboardShellProps, dashboardCopy, getDashboardCopy(), formatDateForInput(), getTranslation(), LocaleOption, localeOptions (+17 more)
 
 ## Knowledge Gaps
 - **1227 isolated node(s):** `$schema`, `style`, `rsc`, `tsx`, `config` (+1222 more)

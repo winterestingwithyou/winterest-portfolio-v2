@@ -1,9 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import {
+  AlertCircle,
+  CheckCircle2,
   ExternalLink,
   Facebook,
   Github,
   Instagram,
+  Loader2,
   MapPin,
   MessageSquare,
   Send,
@@ -25,20 +28,46 @@ function ContactPage() {
     subject: '',
     message: '',
   })
+  const [status, setStatus] = useState<
+    'idle' | 'loading' | 'success' | 'error'
+  >('idle')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setStatus('loading')
+    setErrorMessage(null)
 
-    const subjectText =
-      formData.subject.trim() ||
-      `Message from ${formData.name || 'Portfolio Visitor'}`
-    const bodyText = `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
 
-    const mailtoUrl = `mailto:${siteProfile.contactEmail}?subject=${encodeURIComponent(
-      subjectText,
-    )}&body=${encodeURIComponent(bodyText)}`
+      const data: { error?: string; success?: boolean } =
+        await response.json()
 
-    window.location.href = mailtoUrl
+      if (!response.ok || data.error) {
+        throw new Error(data.error || copy.contact.sendErrorTitle)
+      }
+
+      setStatus('success')
+      setFormData({
+        name: '',
+        email: '',
+        subject: '',
+        message: '',
+      })
+    } catch (err: unknown) {
+      console.error('Failed to send contact message:', err)
+      setStatus('error')
+      setErrorMessage(
+        err instanceof Error ? err.message : copy.contact.sendErrorTitle,
+      )
+    }
   }
 
   return (
@@ -197,120 +226,169 @@ function ContactPage() {
             </div>
           </div>
 
-          {/* Right Column: Clean Form */}
-          <form
-            onSubmit={handleSubmit}
-            className="surface-card grid gap-5 p-6 sm:p-8"
-          >
-            <div>
-              <h2 className="text-xl font-bold text-(--brand-ink)">
-                {copy.contact.formTitle}
-              </h2>
-              <p className="mt-1 text-xs text-(--brand-muted)">
-                {copy.contact.formSubtitle}
-              </p>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+          {/* Right Column: Resend Form or Success View */}
+          <div className="surface-card p-6 sm:p-8">
+            {status === 'success' ? (
+              <div className="flex flex-col items-center justify-center py-8 text-center">
+                <div className="inline-flex size-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500 mb-4">
+                  <CheckCircle2 className="size-7" />
+                </div>
+                <h3 className="text-xl font-bold text-(--brand-ink)">
+                  {copy.contact.sendSuccessTitle}
+                </h3>
+                <p className="mt-2 max-w-md text-sm text-(--brand-muted)">
+                  {copy.contact.sendSuccessSubtitle}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setStatus('idle')}
+                  className="mt-6 inline-flex min-h-10 items-center justify-center rounded-full border border-(--brand-line) bg-(--surface-strong) px-5 text-xs font-bold text-(--brand-ink) transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
                 >
-                  {copy.contact.name}
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required
-                  autoComplete="name"
-                  placeholder={copy.contact.namePlaceholder}
-                  value={formData.name}
-                  onChange={(e) =>
-                    setFormData({ ...formData, name: e.target.value })
-                  }
-                  className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none"
-                />
+                  {copy.contact.sendAnother}
+                </button>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="grid gap-5">
+                <div>
+                  <h2 className="text-xl font-bold text-(--brand-ink)">
+                    {copy.contact.formTitle}
+                  </h2>
+                  <p className="mt-1 text-xs text-(--brand-muted)">
+                    {copy.contact.formSubtitle}
+                  </p>
+                </div>
 
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-                >
-                  {copy.contact.email}
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  autoComplete="email"
-                  placeholder={copy.contact.emailPlaceholder}
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                  className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none"
-                />
-              </div>
-            </div>
+                {status === 'error' && (
+                  <div className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-red-600 dark:text-red-400">
+                    <AlertCircle className="size-5 shrink-0 mt-0.5" />
+                    <div className="text-xs">
+                      <p className="font-bold">{copy.contact.sendErrorTitle}</p>
+                      <p className="mt-0.5 opacity-90">
+                        {errorMessage || copy.contact.sendErrorTitle}
+                      </p>
+                    </div>
+                  </div>
+                )}
 
-            <div>
-              <label
-                htmlFor="subject"
-                className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-              >
-                {copy.contact.subject}
-              </label>
-              <input
-                id="subject"
-                name="subject"
-                type="text"
-                placeholder={copy.contact.subjectPlaceholder}
-                value={formData.subject}
-                onChange={(e) =>
-                  setFormData({ ...formData, subject: e.target.value })
-                }
-                className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none"
-              />
-            </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                    >
+                      {copy.contact.name}
+                    </label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      required
+                      disabled={status === 'loading'}
+                      autoComplete="name"
+                      placeholder={copy.contact.namePlaceholder}
+                      value={formData.name}
+                      onChange={(e) =>
+                        setFormData({ ...formData, name: e.target.value })
+                      }
+                      className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none disabled:opacity-60"
+                    />
+                  </div>
 
-            <div>
-              <label
-                htmlFor="message"
-                className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-              >
-                {copy.contact.message}
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                required
-                rows={5}
-                placeholder={copy.contact.messagePlaceholder}
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
-                className="mt-1.5 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 py-3 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none"
-              />
-            </div>
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                    >
+                      {copy.contact.email}
+                    </label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      required
+                      disabled={status === 'loading'}
+                      autoComplete="email"
+                      placeholder={copy.contact.emailPlaceholder}
+                      value={formData.email}
+                      onChange={(e) =>
+                        setFormData({ ...formData, email: e.target.value })
+                      }
+                      className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none disabled:opacity-60"
+                    />
+                  </div>
+                </div>
 
-            <div className="pt-2">
-              <button
-                type="submit"
-                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-6 text-sm font-bold text-white shadow-[0_12px_32px_var(--brand-glow)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_48px_var(--brand-glow)] active:translate-y-0"
-              >
-                <Send aria-hidden="true" className="size-4" />
-                <span>{copy.contact.send}</span>
-              </button>
-              <p className="mt-2 text-center text-xs text-(--brand-muted)">
-                {copy.contact.sendNotice}
-              </p>
-            </div>
-          </form>
+                <div>
+                  <label
+                    htmlFor="subject"
+                    className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                  >
+                    {copy.contact.subject}
+                  </label>
+                  <input
+                    id="subject"
+                    name="subject"
+                    type="text"
+                    disabled={status === 'loading'}
+                    placeholder={copy.contact.subjectPlaceholder}
+                    value={formData.subject}
+                    onChange={(e) =>
+                      setFormData({ ...formData, subject: e.target.value })
+                    }
+                    className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none disabled:opacity-60"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="message"
+                    className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                  >
+                    {copy.contact.message}
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    required
+                    disabled={status === 'loading'}
+                    rows={5}
+                    placeholder={copy.contact.messagePlaceholder}
+                    value={formData.message}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
+                    className="mt-1.5 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 py-3 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none disabled:opacity-60"
+                  />
+                </div>
+
+                <div className="pt-2">
+                  <button
+                    type="submit"
+                    disabled={status === 'loading'}
+                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-6 text-sm font-bold text-white shadow-[0_12px_32px_var(--brand-glow)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_48px_var(--brand-glow)] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                  >
+                    {status === 'loading' ? (
+                      <>
+                        <Loader2
+                          aria-hidden="true"
+                          className="size-4 animate-spin"
+                        />
+                        <span>{copy.contact.sending}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send aria-hidden="true" className="size-4" />
+                        <span>{copy.contact.send}</span>
+                      </>
+                    )}
+                  </button>
+                  <p className="mt-2 text-center text-xs text-(--brand-muted)">
+                    {copy.contact.sendNotice}
+                  </p>
+                </div>
+              </form>
+            )}
+          </div>
         </div>
       </Container>
     </main>

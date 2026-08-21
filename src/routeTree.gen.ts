@@ -23,6 +23,7 @@ import { Route as DashboardMediaRouteImport } from './routes/dashboard.media'
 import { Route as ApiTechnologiesRouteImport } from './routes/api.technologies'
 import { Route as ApiStackRouteImport } from './routes/api.stack'
 import { Route as ApiProjectsRouteImport } from './routes/api.projects'
+import { Route as ApiContactRouteImport } from './routes/api.contact'
 import { Route as ApiCategoriesRouteImport } from './routes/api.categories'
 import { Route as DashboardStackIndexRouteImport } from './routes/dashboard.stack.index'
 import { Route as DashboardProjectsIndexRouteImport } from './routes/dashboard.projects.index'
@@ -105,6 +106,11 @@ const ApiProjectsRoute = ApiProjectsRouteImport.update({
   path: '/api/projects',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiContactRoute = ApiContactRouteImport.update({
+  id: '/api/contact',
+  path: '/api/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiCategoriesRoute = ApiCategoriesRouteImport.update({
   id: '/api/categories',
   path: '/api/categories',
@@ -174,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/resume': typeof ResumeRoute
   '/stack': typeof StackRoute
   '/api/categories': typeof ApiCategoriesRoute
+  '/api/contact': typeof ApiContactRoute
   '/api/projects': typeof ApiProjectsRouteWithChildren
   '/api/stack': typeof ApiStackRoute
   '/api/technologies': typeof ApiTechnologiesRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByTo {
   '/resume': typeof ResumeRoute
   '/stack': typeof StackRoute
   '/api/categories': typeof ApiCategoriesRoute
+  '/api/contact': typeof ApiContactRoute
   '/api/projects': typeof ApiProjectsRouteWithChildren
   '/api/stack': typeof ApiStackRoute
   '/api/technologies': typeof ApiTechnologiesRoute
@@ -228,6 +236,7 @@ export interface FileRoutesById {
   '/resume': typeof ResumeRoute
   '/stack': typeof StackRoute
   '/api/categories': typeof ApiCategoriesRoute
+  '/api/contact': typeof ApiContactRoute
   '/api/projects': typeof ApiProjectsRouteWithChildren
   '/api/stack': typeof ApiStackRoute
   '/api/technologies': typeof ApiTechnologiesRoute
@@ -257,6 +266,7 @@ export interface FileRouteTypes {
     | '/resume'
     | '/stack'
     | '/api/categories'
+    | '/api/contact'
     | '/api/projects'
     | '/api/stack'
     | '/api/technologies'
@@ -283,6 +293,7 @@ export interface FileRouteTypes {
     | '/resume'
     | '/stack'
     | '/api/categories'
+    | '/api/contact'
     | '/api/projects'
     | '/api/stack'
     | '/api/technologies'
@@ -310,6 +321,7 @@ export interface FileRouteTypes {
     | '/resume'
     | '/stack'
     | '/api/categories'
+    | '/api/contact'
     | '/api/projects'
     | '/api/stack'
     | '/api/technologies'
@@ -338,6 +350,7 @@ export interface RootRouteChildren {
   ResumeRoute: typeof ResumeRoute
   StackRoute: typeof StackRoute
   ApiCategoriesRoute: typeof ApiCategoriesRoute
+  ApiContactRoute: typeof ApiContactRoute
   ApiProjectsRoute: typeof ApiProjectsRouteWithChildren
   ApiStackRoute: typeof ApiStackRoute
   ApiTechnologiesRoute: typeof ApiTechnologiesRoute
@@ -444,6 +457,13 @@ declare module '@tanstack/react-router' {
       path: '/api/projects'
       fullPath: '/api/projects'
       preLoaderRoute: typeof ApiProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/contact': {
+      id: '/api/contact'
+      path: '/api/contact'
+      fullPath: '/api/contact'
+      preLoaderRoute: typeof ApiContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/categories': {
@@ -577,6 +597,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResumeRoute: ResumeRoute,
   StackRoute: StackRoute,
   ApiCategoriesRoute: ApiCategoriesRoute,
+  ApiContactRoute: ApiContactRoute,
   ApiProjectsRoute: ApiProjectsRouteWithChildren,
   ApiStackRoute: ApiStackRoute,
   ApiTechnologiesRoute: ApiTechnologiesRoute,
