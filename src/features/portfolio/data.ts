@@ -13,6 +13,11 @@ export const siteProfile = {
   longIntro:
     'I study Computer Science at Universitas Sriwijaya and spend most of my free time building things for the web. This site is my public home for projects, experiments, devlogs, and the work I want people to actually see.',
   githubUrl: 'https://github.com/winterestingwithyou',
+  githubDisplayName: 'Winterest | M. Adam Yudistira',
+  facebookUrl: 'https://www.facebook.com/adam.yudistira.14203',
+  facebookName: 'Adam Winter',
+  instagramUrl: 'https://instagram.com/adamyyy___',
+  instagramName: 'Adam Y',
   repoUrl: 'https://github.com/winterestingwithyou/winterest-portfolio-v2',
   contactEmail: 'hello@winterest.tech',
 }
@@ -360,9 +365,9 @@ export const publicCopy = {
       eyebrow: 'Contact',
       title: "Let's connect.",
       description:
-        'Have a project idea, question, or opportunity? Reach out directly via email, GitHub, or send a message below.',
+        'Have a project idea, question, or opportunity? Reach out directly via social media or send a message below.',
       directTitle: 'Direct Channels',
-      directSubtitle: 'Fastest response via email or GitHub.',
+      directSubtitle: 'Social media & public profiles.',
       copyEmail: 'Copy email',
       copiedEmail: 'Copied!',
       sendEmail: 'Send email',
@@ -525,9 +530,9 @@ export const publicCopy = {
       eyebrow: 'Kontak',
       title: 'Mari terhubung.',
       description:
-        'Punya ide proyek, pertanyaan, atau peluang kerja sama? Hubungi aku langsung via email, GitHub, atau kirim pesan di bawah.',
+        'Punya ide proyek, pertanyaan, atau peluang kerja sama? Hubungi saya langsung via media sosial atau kirim pesan di bawah.',
       directTitle: 'Kontak Langsung',
-      directSubtitle: 'Respon paling cepat melalui email atau GitHub.',
+      directSubtitle: 'Media sosial & profil publik.',
       copyEmail: 'Salin email',
       copiedEmail: 'Tersalin!',
       sendEmail: 'Kirim email',

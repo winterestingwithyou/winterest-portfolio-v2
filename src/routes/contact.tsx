@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 import {
-  Check,
-  Copy,
   ExternalLink,
+  Facebook,
   Github,
-  Mail,
+  Instagram,
   MapPin,
+  MessageSquare,
   Send,
 } from 'lucide-react'
 import { useState } from 'react'
@@ -19,24 +19,12 @@ export const Route = createFileRoute('/contact')({
 
 function ContactPage() {
   const copy = getPublicCopy()
-  const [copied, setCopied] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: '',
   })
-
-  const handleCopyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(siteProfile.contactEmail)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2500)
-    } catch {
-      // Fallback if clipboard API fails
-      setCopied(false)
-    }
-  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -68,7 +56,7 @@ function ContactPage() {
             <div className="surface-card p-6 sm:p-7">
               <div className="flex items-center gap-3 border-b border-(--brand-line) pb-4">
                 <div className="inline-flex size-10 items-center justify-center rounded-xl bg-(--brand-orange-soft) text-(--brand-orange-deep)">
-                  <Mail aria-hidden="true" className="size-5" />
+                  <MessageSquare aria-hidden="true" className="size-5" />
                 </div>
                 <div>
                   <h2 className="text-lg font-bold text-(--brand-ink)">
@@ -80,91 +68,110 @@ function ContactPage() {
                 </div>
               </div>
 
-              {/* Email Direct Block */}
-              <div className="mt-5 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
-                    Email
-                  </span>
-                  <span className="text-xs font-bold text-(--brand-orange-deep)">
-                    Direct
-                  </span>
-                </div>
-                <p className="mt-1 text-base font-bold text-(--brand-ink) break-all">
-                  {siteProfile.contactEmail}
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={handleCopyEmail}
-                    className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
-                  >
-                    {copied ? (
-                      <>
-                        <Check
-                          aria-hidden="true"
-                          className="size-3.5 text-emerald-500"
-                        />
-                        <span className="text-emerald-600 dark:text-emerald-400">
-                          {copy.contact.copiedEmail}
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy
-                          aria-hidden="true"
-                          className="size-3.5 text-(--brand-muted)"
-                        />
-                        <span>{copy.contact.copyEmail}</span>
-                      </>
-                    )}
-                  </button>
-
-                  <a
-                    href={`mailto:${siteProfile.contactEmail}`}
-                    className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
-                  >
-                    <ExternalLink
-                      aria-hidden="true"
-                      className="size-3.5 text-(--brand-muted)"
-                    />
-                    <span>{copy.contact.sendEmail}</span>
-                  </a>
-                </div>
-              </div>
-
-              {/* GitHub Block */}
-              <div className="mt-3 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
-                    GitHub
-                  </span>
-                  <span className="text-xs font-bold text-(--brand-muted)">
-                    Public Profile
-                  </span>
-                </div>
-                <div className="mt-2 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5">
-                    <Github
-                      aria-hidden="true"
-                      className="size-5 text-(--brand-ink)"
-                    />
-                    <span className="text-sm font-bold text-(--brand-ink)">
-                      @{siteProfile.handle}
+              <div className="mt-4 grid gap-3">
+                {/* GitHub Block */}
+                <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
+                      GitHub
+                    </span>
+                    <span className="text-xs font-bold text-(--brand-muted)">
+                      Public Profile
                     </span>
                   </div>
-                  <a
-                    href={siteProfile.githubUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
-                  >
-                    <ExternalLink
-                      aria-hidden="true"
-                      className="size-3.5 text-(--brand-muted)"
-                    />
-                    <span>Open</span>
-                  </a>
+                  <div className="mt-2 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Github
+                        aria-hidden="true"
+                        className="size-5 shrink-0 text-(--brand-ink)"
+                      />
+                      <span className="text-sm font-bold text-(--brand-ink) truncate">
+                        {siteProfile.githubDisplayName}
+                      </span>
+                    </div>
+                    <a
+                      href={siteProfile.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                    >
+                      <ExternalLink
+                        aria-hidden="true"
+                        className="size-3.5 text-(--brand-muted)"
+                      />
+                      <span>Open</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Facebook Block */}
+                <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
+                      Facebook
+                    </span>
+                    <span className="text-xs font-bold text-(--brand-muted)">
+                      Social Profile
+                    </span>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Facebook
+                        aria-hidden="true"
+                        className="size-5 shrink-0 text-(--brand-ink)"
+                      />
+                      <span className="text-sm font-bold text-(--brand-ink) truncate">
+                        {siteProfile.facebookName}
+                      </span>
+                    </div>
+                    <a
+                      href={siteProfile.facebookUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                    >
+                      <ExternalLink
+                        aria-hidden="true"
+                        className="size-3.5 text-(--brand-muted)"
+                      />
+                      <span>Open</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Instagram Block */}
+                <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
+                      Instagram
+                    </span>
+                    <span className="text-xs font-bold text-(--brand-muted)">
+                      Social Profile
+                    </span>
+                  </div>
+                  <div className="mt-2 flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <Instagram
+                        aria-hidden="true"
+                        className="size-5 shrink-0 text-(--brand-ink)"
+                      />
+                      <span className="text-sm font-bold text-(--brand-ink) truncate">
+                        {siteProfile.instagramName}
+                      </span>
+                    </div>
+                    <a
+                      href={siteProfile.instagramUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                    >
+                      <ExternalLink
+                        aria-hidden="true"
+                        className="size-3.5 text-(--brand-muted)"
+                      />
+                      <span>Open</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -294,7 +301,7 @@ function ContactPage() {
             <div className="pt-2">
               <button
                 type="submit"
-                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-6 text-sm font-bold text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-(--brand-glow) active:translate-y-0"
+                className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-6 text-sm font-bold text-white shadow-[0_12px_32px_var(--brand-glow)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_48px_var(--brand-glow)] active:translate-y-0"
               >
                 <Send aria-hidden="true" className="size-4" />
                 <span>{copy.contact.send}</span>
