@@ -1,7 +1,7 @@
-# Graph Report - winterest-portfolio-v2  (2026-08-21)
+# Graph Report - winterest-portfolio-v2  (2026-08-22)
 
 ## Corpus Check
-- 126 files · ~206,244 words
+- 126 files · ~206,213 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f4aa05f3`
+- Built from commit: `9a8c1470`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -239,7 +239,7 @@
 - @tanstack/react-query-devtools
 - @tanstack/react-start
 - @tanstack/react-store
-- @cloudflare/vite-plugin
+- class-variance-authority
 - CompileError
 - @tanstack/ai-gemini
 - MediaBinding
@@ -450,7 +450,7 @@ Nodes (7): Development Phases, Phase 1: Clean Starter and Build Public Shell, Ph
 
 ### Community 157 - "dependencies"
 Cohesion: 0.15
-Nodes (13): class-variance-authority, dependencies, class-variance-authority, radix-ui, @radix-ui/react-slot, @t3-oss/env-core, tailwind-merge, @tanstack/ai-client (+5 more)
+Nodes (13): @cloudflare/vite-plugin, dependencies, @cloudflare/vite-plugin, radix-ui, @radix-ui/react-slot, @t3-oss/env-core, tailwind-merge, @tanstack/ai-client (+5 more)
 
 ### Community 158 - "technology-editor-form.tsx"
 Cohesion: 0.25
@@ -500,7 +500,7 @@ Nodes (13): DashboardShell(), DashboardShellProps, dashboardCopy, getDashboardCo
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `dependencies` connect `dependencies` to `scripts`, `better-auth`, `clsx`, `drizzle-kit`, `drizzle-orm`, `lucide-react`, `@radix-ui/react-checkbox`, `@radix-ui/react-hover-card`, `@radix-ui/react-separator`, `react`, `tailwindcss-animate`, `streamdown`, `@tailwindcss/vite`, `@tanstack/ai`, `@tanstack/ai-anthropic`, `@tanstack/ai-react`, `@tanstack/match-sorter-utils`, `@tanstack/query-db-collection`, `@tanstack/react-db`, `@tanstack/react-query`, `@tanstack/react-router`, `@tanstack/react-router-ssr-query`, `@tanstack/react-table`, `@tanstack/router-plugin`, `@tanstack/store`, `zod`, `marked`, `react-dom`, `@faker-js/faker`, `better-sqlite3`, `@tanstack/react-devtools`, `@tanstack/react-query-devtools`, `@tanstack/react-start`, `@tanstack/react-store`, `@cloudflare/vite-plugin`, `@tanstack/ai-gemini`, `resend`, `tailwindcss`, `@tanstack/ai-ollama`, `@tanstack/ai-openai`, `@tanstack/react-form`, `@tanstack/react-router-devtools`, `tw-animate-css`?**
+- **Why does `dependencies` connect `dependencies` to `scripts`, `better-auth`, `clsx`, `drizzle-kit`, `drizzle-orm`, `lucide-react`, `@radix-ui/react-checkbox`, `@radix-ui/react-hover-card`, `@radix-ui/react-separator`, `react`, `tailwindcss-animate`, `streamdown`, `@tailwindcss/vite`, `@tanstack/ai`, `@tanstack/ai-anthropic`, `@tanstack/ai-react`, `@tanstack/match-sorter-utils`, `@tanstack/query-db-collection`, `@tanstack/react-db`, `@tanstack/react-query`, `@tanstack/react-router`, `@tanstack/react-router-ssr-query`, `@tanstack/react-table`, `@tanstack/router-plugin`, `@tanstack/store`, `zod`, `marked`, `react-dom`, `@faker-js/faker`, `better-sqlite3`, `@tanstack/react-devtools`, `@tanstack/react-query-devtools`, `@tanstack/react-start`, `@tanstack/react-store`, `class-variance-authority`, `@tanstack/ai-gemini`, `resend`, `tailwindcss`, `@tanstack/ai-ollama`, `@tanstack/ai-openai`, `@tanstack/react-form`, `@tanstack/react-router-devtools`, `tw-animate-css`?**
   _High betweenness centrality (0.028) - this node is a cross-community bridge._
 - **Why does `react` connect `react` to `sidebar.tsx`, `dependencies`?**
   _High betweenness centrality (0.022) - this node is a cross-community bridge._

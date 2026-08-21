@@ -82,13 +82,10 @@ export default function Header() {
             <span className="sr-only">Open GitHub profile</span>
             <Github aria-hidden="true" className="size-4" />
           </a>
-          <a
-            href={`mailto:${siteProfile.contactEmail}`}
-            className="icon-link hidden sm:inline-grid"
-          >
-            <span className="sr-only">Email Winterest</span>
+          <Link to="/contact" className="icon-link hidden sm:inline-grid">
+            <span className="sr-only">Contact Winterest</span>
             <Mail aria-hidden="true" className="size-4" />
-          </a>
+          </Link>
           <DashboardLink />
           <ParaglideLocaleSwitcher />
           <ThemeToggle />
@@ -143,14 +140,15 @@ export default function Header() {
               <Github aria-hidden="true" className="size-4" />
               GitHub
             </a>
-            <a
-              href={`mailto:${siteProfile.contactEmail}`}
+            <Link
+              to="/contact"
               className="mobile-nav-action"
               tabIndex={mobileNavOpen ? 0 : -1}
+              onClick={() => setMobileNavOpen(false)}
             >
               <Mail aria-hidden="true" className="size-4" />
-              Email
-            </a>
+              Contact
+            </Link>
           </div>
         </div>
       </div>

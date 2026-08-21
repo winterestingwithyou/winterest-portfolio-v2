@@ -835,8 +835,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "package_dependencies_cloudflare_vite_plugin",
-      "community": 232,
-      "community_name": "@cloudflare/vite-plugin",
+      "community": 157,
+      "community_name": "dependencies",
       "norm_label": "@cloudflare/vite-plugin"
     },
     {
@@ -846,8 +846,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "cloudflare_vite_plugin",
-      "community": 232,
-      "community_name": "@cloudflare/vite-plugin",
+      "community": 157,
+      "community_name": "dependencies",
       "norm_label": "@cloudflare/vite-plugin"
     },
     {
@@ -1539,8 +1539,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "package_dependencies_class_variance_authority",
-      "community": 157,
-      "community_name": "dependencies",
+      "community": 232,
+      "community_name": "class-variance-authority",
       "norm_label": "class-variance-authority"
     },
     {
@@ -1550,8 +1550,8 @@
       "source_location": "L69",
       "_origin": "ast",
       "id": "class_variance_authority",
-      "community": 157,
-      "community_name": "dependencies",
+      "community": 232,
+      "community_name": "class-variance-authority",
       "norm_label": "class-variance-authority"
     },
     {
@@ -5670,7 +5670,7 @@
       "label": "isIndonesianLocale()",
       "file_type": "code",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L635",
+      "source_location": "L632",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_portfolio_data_isindonesianlocale",
@@ -5682,7 +5682,7 @@
       "label": "getPublicCopy()",
       "file_type": "code",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L639",
+      "source_location": "L636",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_portfolio_data_getpubliccopy",
@@ -5694,7 +5694,7 @@
       "label": "getPortfolioContent()",
       "file_type": "code",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L643",
+      "source_location": "L640",
       "_callable": true,
       "_origin": "ast",
       "id": "src_features_portfolio_data_getportfoliocontent",
@@ -41874,7 +41874,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L643",
+      "source_location": "L640",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data",
@@ -41885,7 +41885,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L639",
+      "source_location": "L636",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data",
@@ -41951,7 +41951,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L635",
+      "source_location": "L632",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data",
@@ -42185,7 +42185,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L644",
+      "source_location": "L641",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data_getportfoliocontent",
@@ -42197,7 +42197,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "src/features/portfolio/data.ts",
-      "source_location": "L640",
+      "source_location": "L637",
       "weight": 1.0,
       "_origin": "ast",
       "source": "src_features_portfolio_data_getpubliccopy",
@@ -67981,5 +67981,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "f4aa05f341c6cd754a37c366868e7a29c24f49f1"
+  "built_at_commit": "9a8c147052b422312d9b3dede29d5b1812db227a"
 }

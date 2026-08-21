@@ -137,7 +137,7 @@
   "135": "WorkerStub",
   "136": "WorkflowStep",
   "137": "WritableStreamDefaultController",
-  "138": "better-auth",
+  "138": "@cloudflare/vite-plugin",
   "139": "api.projects.$id.ts",
   "140": "projects.$slug.tsx",
   "141": "clsx",
