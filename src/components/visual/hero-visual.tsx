@@ -1,21 +1,71 @@
-import { Cloud, Code2, Cpu, Sparkles } from 'lucide-react'
+import { Code2 } from 'lucide-react'
 
-const signalItems = [
-  { label: 'Workers', value: 'edge-ready', icon: Cloud },
-  { label: 'Bun', value: 'fast loops', icon: Sparkles },
-  { label: 'Design', value: 'clean ui', icon: Cpu },
+function BunIcon({ className = 'size-4' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M12 3.25c-4.97 0-9 3.58-9 8 0 2.76 1.58 5.19 4 6.57-.14.54-.56 2.14-1.87 3.83 0 0 2.86-.27 5.27-2.01 1.03.24 2.1.28 3.1.05 2.41 1.74 5.27 2.01 5.27 2.01-1.31-1.69-1.73-3.29-1.87-3.83 2.42-1.38 4-3.81 4-6.57 0-4.42-4.03-8-9-8z" />
+    </svg>
+  )
+}
+
+function TsIcon({ className = 'size-4' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <rect
+        width="24"
+        height="24"
+        rx="4"
+        fill="currentColor"
+        fillOpacity="0.2"
+      />
+      <path d="M13.72 17.5c.87.5 1.88.75 2.92.73 1.24 0 2.05-.48 2.05-1.33 0-.84-.71-1.2-2.18-1.67-2.14-.68-3.48-1.57-3.48-3.53 0-2.16 1.77-3.7 4.54-3.7 1.37 0 2.57.34 3.44.89l-.92 1.84c-.75-.43-1.68-.69-2.58-.69-1.23 0-1.85.5-1.85 1.19 0 .76.68 1.13 2.22 1.63 2.37.76 3.46 1.7 3.46 3.63 0 2.42-1.92 3.78-4.83 3.78-1.54 0-2.88-.36-3.8-1.02l1.01-1.95zm-6.72-8.5h6.45v2.05h-2.15v8.95H8.92v-8.95H6.77V9c0 0 0 0 0 0z" />
+    </svg>
+  )
+}
+
+function CloudflareIcon({ className = 'size-4' }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M16.48 10.3c-.47-2.69-2.79-4.73-5.6-4.73-2.38 0-4.46 1.48-5.28 3.64C3.26 9.53 1.5 11.41 1.5 13.73c0 2.5 2.03 4.53 4.53 4.53h10.97c2.2 0 3.98-1.78 3.98-3.98 0-2.07-1.58-3.77-3.6-3.95z" />
+    </svg>
+  )
+}
+
+const techItems = [
+  { name: 'Bun', icon: BunIcon },
+  { name: 'TypeScript', icon: TsIcon },
+  { name: 'Cloudflare', icon: CloudflareIcon },
 ] as const
 
 export function HeroVisual() {
   return (
-    <figure className="hero-visual" aria-labelledby="hero-visual-title">
-      <div className="hero-visual__media">
+    <figure
+      className="relative isolate m-0 min-h-[min(34rem,78vw)] overflow-hidden rounded-xl border border-(--brand-line) bg-gradient-to-br from-(--surface-strong)/82 to-(--brand-orange-soft)/56 shadow-2xl max-sm:min-h-[34rem]"
+      aria-labelledby="hero-visual-title"
+    >
+      <div className="absolute inset-0">
         <img
           src="/assets/characters/winterest-mascot.png"
           alt="Original Winterest developer mascot with orange cloud accents and floating code panels."
           width={1536}
           height={1024}
           fetchPriority="high"
+          className="size-full object-cover object-[50%_48%] saturate-[1.02] contrast-[1.01] max-sm:object-[54%_50%] md:scale-[1.03] md:animate-[hero-visual-float_8s_ease-in-out_infinite]"
         />
       </div>
 
@@ -23,7 +73,33 @@ export function HeroVisual() {
         Original Winterest mascot for a Cloudflare and Bun inspired portfolio.
       </figcaption>
 
-      <div className="hero-visual__terminal" aria-hidden="true">
+      {/* Tech Stack Badges (Top-Left) */}
+      <div
+        className="absolute top-4 left-4 z-10 flex flex-col gap-2 max-sm:top-3 max-sm:left-3"
+        aria-hidden="true"
+      >
+        {techItems.map((item) => {
+          const Icon = item.icon
+
+          return (
+            <div
+              key={item.name}
+              className="flex items-center gap-2.5 rounded-full border border-orange-300/30 bg-(--brand-dark)/85 px-3 py-2 text-[#fff7ec] shadow-lg backdrop-blur-md transition-transform hover:scale-105"
+            >
+              <Icon className="size-4 shrink-0 text-orange-400" />
+              <span className="text-xs font-extrabold leading-none tracking-wide">
+                {item.name}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Terminal Info (Bottom-Right) */}
+      <div
+        className="absolute right-4 bottom-4 z-10 w-[min(17rem,calc(100%-2rem))] rounded-xl border border-orange-300/30 bg-(--brand-dark)/85 p-4 text-[#fff7ec] shadow-xl backdrop-blur-md max-sm:right-3 max-sm:bottom-3"
+        aria-hidden="true"
+      >
         <div className="mb-3 flex items-center gap-1.5">
           <span className="size-2 rounded-full bg-[#ff5f56]" />
           <span className="size-2 rounded-full bg-[#ffbd2e]" />
@@ -34,36 +110,25 @@ export function HeroVisual() {
         </div>
         <div className="grid gap-1.5 font-mono text-[0.72rem] leading-5 text-orange-50">
           <span>
-            <span className="text-orange-300">runtime</span>: workers
+            <span className="text-orange-300">realname</span>: M. Adam Yudistira
           </span>
           <span>
-            <span className="text-orange-300">stack</span>: fullstack web
+            <span className="text-orange-300">nickname</span>: Winterest
           </span>
           <span>
-            <span className="text-orange-300">mood</span>: playful, precise
+            <span className="text-orange-300">stack</span>: Bun, TypeScript,
+            Cloudflare
           </span>
         </div>
       </div>
 
-      <div className="hero-visual__signals" aria-hidden="true">
-        {signalItems.map((item) => {
-          const Icon = item.icon
-
-          return (
-            <div key={item.label} className="hero-visual__signal">
-              <Icon className="size-4" />
-              <div>
-                <p>{item.label}</p>
-                <span>{item.value}</span>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-
-      <div className="hero-visual__badge" aria-hidden="true">
-        <Code2 className="size-4" />
-        Fullstack
+      {/* Role Badge (Top-Right) */}
+      <div
+        className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-orange-300/30 bg-(--brand-dark)/85 px-3.5 py-2 text-xs font-extrabold text-[#fff7ec] shadow-lg backdrop-blur-md max-sm:hidden"
+        aria-hidden="true"
+      >
+        <Code2 className="size-4 text-orange-400" />
+        Junior Developer
       </div>
     </figure>
   )
