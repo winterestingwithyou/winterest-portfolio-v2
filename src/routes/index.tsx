@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import {
   ArrowRight,
   Cloud,
   ExternalLink,
+  FileText,
   Github,
   Layers,
   Layout,
@@ -61,6 +63,13 @@ function HomePage() {
   const featuredOnly = projects.filter((project) => project.featured)
   const highlightedProjects =
     featuredOnly.length > 0 ? featuredOnly.slice(0, 4) : projects.slice(0, 4)
+  const [cvNotice, setCvNotice] = useState(false)
+
+  const handleDownloadCv = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setCvNotice(true)
+    setTimeout(() => setCvNotice(false), 4000)
+  }
 
   return (
     <main>
@@ -78,7 +87,7 @@ function HomePage() {
               {copy.home.introSuffix}
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
                 to="/projects"
                 className="inline-flex min-h-11 items-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-bold text-white no-underline shadow-[0_18px_48px_var(--brand-glow)] transition hover:-translate-y-0.5"
@@ -95,6 +104,25 @@ function HomePage() {
                 <Github aria-hidden="true" className="size-4" />
                 GitHub
               </a>
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={handleDownloadCv}
+                  className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-5 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
+                >
+                  <FileText
+                    aria-hidden="true"
+                    className="size-4 text-(--brand-orange)"
+                  />
+                  {copy.home.downloadCv}
+                </button>
+
+                {cvNotice ? (
+                  <div className="absolute left-0 top-full z-20 mt-2.5 w-max max-w-xs rounded-xl border border-orange-300/30 bg-(--brand-dark) px-3.5 py-2.5 text-xs font-semibold text-[#fff7ec] shadow-xl backdrop-blur-md animate-in fade-in slide-in-from-top-1">
+                    {copy.home.cvNotAvailable}
+                  </div>
+                ) : null}
+              </div>
             </div>
 
             <div className="mt-10 grid gap-3 sm:grid-cols-3">

@@ -24,9 +24,9 @@ export const siteProfile = {
 
 export const portfolioStats = [
   { label: 'University', value: 'Universitas Sriwijaya' },
-  { label: 'Currently building', value: 'Finance app + this site' },
-  { label: 'Also into', value: 'Open source · Design · Games' },
-]
+  { label: 'GPA', value: '3.98' },
+  { label: 'Major', value: 'Information Management' },
+] as const
 
 export const principles = [
   {
@@ -160,8 +160,8 @@ export const timeline = [
 
 const idPortfolioStats = [
   { label: 'Universitas', value: 'Universitas Sriwijaya' },
-  { label: 'Lagi dibangun', value: 'Finance app + situs ini' },
-  { label: 'Juga suka', value: 'Open source · Desain · Game' },
+  { label: 'IPK', value: '3.98' },
+  { label: 'Jurusan', value: 'Manajemen Informatika' },
 ] as const
 
 const idPrinciples = [
@@ -304,10 +304,13 @@ export const publicCopy = {
     },
     home: {
       eyebrow: 'M. Adam Yudistira — Winterest',
-      title: 'Computer Science student at Universitas Sriwijaya.',
+      title:
+        'Fresh Graduate of Computer Science at Universitas Sriwijaya.',
       intro:
-        "I'm Adam. I build web apps, open source tools, and side projects. Into design and gaming too.",
-      introSuffix: 'Projects, experiments, and notes — all on this site.',
+        "Hello, I'm Adam. Also known as Winterest. I'm a Junior Developer who loves building systems with Bun, TypeScript, and Cloudflare.",
+      introSuffix: 'Everything about me is here!',
+      downloadCv: 'Download CV',
+      cvNotAvailable: 'CV is not available at the moment.',
       viewProjects: 'See my other works',
       featuredEyebrow: 'FEATURED PROJECTS',
       featuredTitle: 'My Favorite Projects',
@@ -473,10 +476,12 @@ export const publicCopy = {
     },
     home: {
       eyebrow: 'M. Adam Yudistira — Winterest',
-      title: 'Mahasiswa Ilmu Komputer Universitas Sriwijaya.',
+      title: 'Fresh Graduate Ilmu Komputer Universitas Sriwijaya.',
       intro:
-        'Halo, aku Adam. Bangun web app, tools open source, dan side project. Suka desain sama gaming juga.',
-      introSuffix: 'Project, eksperimen, dan catatan — semuanya ada di sini.',
+        'Halo, aku Adam. Juga biasa dipanggil Winterest. Aku Junior Developer yang suka bangun Sistem dengan stack Bun, Typescript, dan Cloudflare',
+      introSuffix: 'Semua tentangku ada disini!',
+      downloadCv: 'Unduh CV',
+      cvNotAvailable: 'CV belum tersedia untuk saat ini.',
       viewProjects: 'Lihat Projekku lainnya',
       featuredEyebrow: 'PROJECT PILIHAN',
       featuredTitle: 'Project andalanku',
