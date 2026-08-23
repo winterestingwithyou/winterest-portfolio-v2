@@ -20,6 +20,10 @@ export function canManageContent(role: UserRole): boolean {
   return role === 'owner' || role === 'admin' || role === 'editor'
 }
 
+export function canManageUsers(role: UserRole): boolean {
+  return role === 'owner'
+}
+
 export function toDashboardUser(value: unknown): DashboardUser | null {
   if (!value || typeof value !== 'object') {
     return null

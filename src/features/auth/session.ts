@@ -1,6 +1,11 @@
 import { auth } from '#/lib/auth'
 
-import { canAccessDashboard, canManageContent, toDashboardUser } from './roles'
+import {
+  canAccessDashboard,
+  canManageContent,
+  canManageUsers,
+  toDashboardUser,
+} from './roles'
 import type { DashboardUser } from './roles'
 
 export async function getDashboardUserFromRequest(
@@ -29,6 +34,25 @@ export async function requireDashboardUser(
 
   if (!canManageContent(user.role)) {
     return Response.json({ error: 'Insufficient role.' }, { status: 403 })
+  }
+
+  return user
+}
+
+export async function requireOwnerUser(
+  request: Request,
+): Promise<DashboardUser | Response> {
+  const user = await getDashboardUserFromRequest(request)
+
+  if (!user) {
+    return Response.json({ error: 'Authentication required.' }, { status: 401 })
+  }
+
+  if (!canManageUsers(user.role)) {
+    return Response.json(
+      { error: 'Insufficient role. Only owner can manage users.' },
+      { status: 403 },
+    )
   }
 
   return user

@@ -80,11 +80,15 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
       to: '/dashboard/users',
       label: copy.shell.nav.users,
       icon: Users,
+      exact: false,
+      disabled: false,
     },
     {
       to: '/dashboard/settings',
       label: copy.shell.nav.settings,
       icon: Settings,
+      exact: false,
+      disabled: true,
     },
   ]
 
@@ -167,19 +171,42 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
             <SidebarMenu>
               {systemNav.map((item) => {
                 const Icon = item.icon
+                const active = isLinkActive(item.to, item.exact)
+
+                if (item.disabled) {
+                  return (
+                    <SidebarMenuItem key={item.to}>
+                      <SidebarMenuButton
+                        disabled
+                        tooltip={`${item.label} (${copy.shell.soon})`}
+                        className="cursor-not-allowed text-sidebar-foreground/50 opacity-60"
+                      >
+                        <Icon className="size-4" />
+                        <span>{item.label}</span>
+                        <SidebarMenuBadge className="bg-sidebar-accent text-[0.6rem] font-extrabold uppercase text-sidebar-foreground/70">
+                          {copy.shell.soon}
+                        </SidebarMenuBadge>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )
+                }
 
                 return (
                   <SidebarMenuItem key={item.to}>
                     <SidebarMenuButton
-                      disabled
-                      tooltip={`${item.label} (${copy.shell.soon})`}
-                      className="cursor-not-allowed text-sidebar-foreground/50 opacity-60"
+                      asChild
+                      isActive={active}
+                      tooltip={item.label}
+                      className={
+                        active
+                          ? 'bg-sidebar-accent font-bold text-sidebar-accent-foreground shadow-xs'
+                          : 'text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground'
+                      }
                     >
-                      <Icon className="size-4" />
-                      <span>{item.label}</span>
-                      <SidebarMenuBadge className="bg-sidebar-accent text-[0.6rem] font-extrabold uppercase text-sidebar-foreground/70">
-                        {copy.shell.soon}
-                      </SidebarMenuBadge>
+                      <Link to={item.to}>
+                        <Icon className="size-4" />
+                        <span>{item.label}</span>
+                      </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 )
