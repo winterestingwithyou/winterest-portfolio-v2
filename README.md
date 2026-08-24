@@ -190,3 +190,36 @@ Keep server-side code edge-friendly:
 - Keep server functions small.
 - Do not commit secrets.
 - Validate environment variables through T3Env.
+
+## License
+
+Winterest Portfolio V2 is free and open-source software licensed under the **GNU Affero General Public License v3.0 (AGPLv3)**.
+
+You are free to use, study, modify, and distribute the software in accordance with the terms of the AGPLv3.
+
+### Commercial License
+
+A commercial license is also available for organizations or individuals who require additional rights beyond those provided by the AGPLv3.
+
+This may include:
+
+- proprietary modifications;
+- private extensions;
+- white-label deployments;
+- proprietary distribution;
+- commercial customization;
+- additional commercial rights or services.
+
+The commercial license is provided separately and does not replace or modify the rights granted by the AGPLv3.
+
+For commercial licensing and custom development inquiries:
+
+**Email:** yudistiraadam3@gmail.com
+
+See [`LICENSE-COMMERCIAL`](./LICENSE-COMMERCIAL) for more information.
+
+### Third-Party Licenses
+
+This project uses third-party dependencies that are distributed under their respective licenses.
+
+Third-party licenses remain applicable to their respective components.
