@@ -1,5 +1,5 @@
 import { Link, useLocation } from '@tanstack/react-router'
-import { ChevronRight, LogOut } from 'lucide-react'
+import { ChevronRight, LogOut, User } from 'lucide-react'
 
 import ParaglideLocaleSwitcher from '#/components/locale-switcher'
 import ThemeToggle from '#/components/theme-toggle'
@@ -31,6 +31,7 @@ const breadcrumbMap: Record<string, string> = {
   media: 'Media',
   users: 'Pengguna',
   settings: 'Pengaturan',
+  account: 'Akun',
   new: 'Tambah Baru',
 }
 
@@ -119,6 +120,17 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
                   </span>
                 </div>
               </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                asChild
+                className="flex w-full justify-start gap-2 text-xs font-semibold text-(--brand-ink) hover:bg-surface-soft"
+              >
+                <Link to="/dashboard/account">
+                  <User className="size-3.5 text-(--brand-orange)" />
+                  {copy.shell.nav.account}
+                </Link>
+              </Button>
               <Button
                 variant="ghost"
                 size="sm"

@@ -17,16 +17,16 @@ Refactored forms:
 - `src/routes/contact.tsx` (Public contact form)
 - `src/features/dashboard/project-editor-form.tsx` (Project CRUD + multilingual translations en/id + select dropdowns)
 - `src/features/settings/settings-editor-form.tsx` (Dashboard Settings form with 4 tabs: General, Social, SEO, System)
+- `src/features/account/account-editor-form.tsx` (Account Settings form: Profile update, Password change with current password verification, Sessions info)
 
 ## Verification Recently Run
 
-After form refactor changes, these passed:
+After Account Settings implementation, these passed:
 
 ```bash
-bun run check
-bun run typecheck (tsc --noEmit)
+bunx tsc --noEmit
 bun run lint (eslint)
-bun run test (vitest - 14 tests)
+bun run test (vitest - 12 tests passed)
 bun run build (vite + Cloudflare Worker bundle)
 bunx graphify update .
 ```

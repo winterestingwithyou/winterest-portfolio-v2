@@ -29,8 +29,10 @@ import { Route as ApiCategoriesRouteImport } from './routes/api/categories'
 import { Route as DashboardUsersIndexRouteImport } from './routes/dashboard/users/index'
 import { Route as DashboardStackIndexRouteImport } from './routes/dashboard/stack/index'
 import { Route as DashboardProjectsIndexRouteImport } from './routes/dashboard/projects/index'
+import { Route as DashboardAccountIndexRouteImport } from './routes/dashboard/account/index'
 import { Route as ApiUsersIndexRouteImport } from './routes/api/users/index'
 import { Route as ApiProjectsIndexRouteImport } from './routes/api/projects/index'
+import { Route as ApiAccountIndexRouteImport } from './routes/api/account/index'
 import { Route as DashboardUsersNewRouteImport } from './routes/dashboard/users/new'
 import { Route as DashboardUsersIdRouteImport } from './routes/dashboard/users/$id'
 import { Route as DashboardProjectsNewRouteImport } from './routes/dashboard/projects/new'
@@ -38,6 +40,7 @@ import { Route as DashboardProjectsIdRouteImport } from './routes/dashboard/proj
 import { Route as ApiUsersResetPasswordRouteImport } from './routes/api/users/reset-password'
 import { Route as ApiProjectsIdRouteImport } from './routes/api/projects/$id'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ApiAccountPasswordRouteImport } from './routes/api/account/password'
 import { Route as DashboardStackTechnologiesNewRouteImport } from './routes/dashboard/stack/technologies/new'
 import { Route as DashboardStackTechnologiesIdRouteImport } from './routes/dashboard/stack/technologies/$id'
 import { Route as DashboardStackCategoriesNewRouteImport } from './routes/dashboard/stack/categories/new'
@@ -143,6 +146,11 @@ const DashboardProjectsIndexRoute = DashboardProjectsIndexRouteImport.update({
   path: '/projects/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardAccountIndexRoute = DashboardAccountIndexRouteImport.update({
+  id: '/account/',
+  path: '/account/',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const ApiUsersIndexRoute = ApiUsersIndexRouteImport.update({
   id: '/api/users/',
   path: '/api/users/',
@@ -151,6 +159,11 @@ const ApiUsersIndexRoute = ApiUsersIndexRouteImport.update({
 const ApiProjectsIndexRoute = ApiProjectsIndexRouteImport.update({
   id: '/api/projects/',
   path: '/api/projects/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAccountIndexRoute = ApiAccountIndexRouteImport.update({
+  id: '/api/account/',
+  path: '/api/account/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardUsersNewRoute = DashboardUsersNewRouteImport.update({
@@ -186,6 +199,11 @@ const ApiProjectsIdRoute = ApiProjectsIdRouteImport.update({
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAccountPasswordRoute = ApiAccountPasswordRouteImport.update({
+  id: '/api/account/password',
+  path: '/api/account/password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardStackTechnologiesNewRoute =
@@ -231,6 +249,7 @@ export interface FileRoutesByFullPath {
   '/projects/$slug': typeof ProjectsSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/api/account/password': typeof ApiAccountPasswordRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
@@ -238,8 +257,10 @@ export interface FileRoutesByFullPath {
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/users/$id': typeof DashboardUsersIdRoute
   '/dashboard/users/new': typeof DashboardUsersNewRoute
+  '/api/account/': typeof ApiAccountIndexRoute
   '/api/projects/': typeof ApiProjectsIndexRoute
   '/api/users/': typeof ApiUsersIndexRoute
+  '/dashboard/account/': typeof DashboardAccountIndexRoute
   '/dashboard/projects/': typeof DashboardProjectsIndexRoute
   '/dashboard/stack/': typeof DashboardStackIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
@@ -265,6 +286,7 @@ export interface FileRoutesByTo {
   '/projects/$slug': typeof ProjectsSlugRoute
   '/dashboard': typeof DashboardIndexRoute
   '/projects': typeof ProjectsIndexRoute
+  '/api/account/password': typeof ApiAccountPasswordRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
@@ -272,8 +294,10 @@ export interface FileRoutesByTo {
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/users/$id': typeof DashboardUsersIdRoute
   '/dashboard/users/new': typeof DashboardUsersNewRoute
+  '/api/account': typeof ApiAccountIndexRoute
   '/api/projects': typeof ApiProjectsIndexRoute
   '/api/users': typeof ApiUsersIndexRoute
+  '/dashboard/account': typeof DashboardAccountIndexRoute
   '/dashboard/projects': typeof DashboardProjectsIndexRoute
   '/dashboard/stack': typeof DashboardStackIndexRoute
   '/dashboard/users': typeof DashboardUsersIndexRoute
@@ -301,6 +325,7 @@ export interface FileRoutesById {
   '/projects/$slug': typeof ProjectsSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/api/account/password': typeof ApiAccountPasswordRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
@@ -308,8 +333,10 @@ export interface FileRoutesById {
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/users/$id': typeof DashboardUsersIdRoute
   '/dashboard/users/new': typeof DashboardUsersNewRoute
+  '/api/account/': typeof ApiAccountIndexRoute
   '/api/projects/': typeof ApiProjectsIndexRoute
   '/api/users/': typeof ApiUsersIndexRoute
+  '/dashboard/account/': typeof DashboardAccountIndexRoute
   '/dashboard/projects/': typeof DashboardProjectsIndexRoute
   '/dashboard/stack/': typeof DashboardStackIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
@@ -338,6 +365,7 @@ export interface FileRouteTypes {
     | '/projects/$slug'
     | '/dashboard/'
     | '/projects/'
+    | '/api/account/password'
     | '/api/auth/$'
     | '/api/projects/$id'
     | '/api/users/reset-password'
@@ -345,8 +373,10 @@ export interface FileRouteTypes {
     | '/dashboard/projects/new'
     | '/dashboard/users/$id'
     | '/dashboard/users/new'
+    | '/api/account/'
     | '/api/projects/'
     | '/api/users/'
+    | '/dashboard/account/'
     | '/dashboard/projects/'
     | '/dashboard/stack/'
     | '/dashboard/users/'
@@ -372,6 +402,7 @@ export interface FileRouteTypes {
     | '/projects/$slug'
     | '/dashboard'
     | '/projects'
+    | '/api/account/password'
     | '/api/auth/$'
     | '/api/projects/$id'
     | '/api/users/reset-password'
@@ -379,8 +410,10 @@ export interface FileRouteTypes {
     | '/dashboard/projects/new'
     | '/dashboard/users/$id'
     | '/dashboard/users/new'
+    | '/api/account'
     | '/api/projects'
     | '/api/users'
+    | '/dashboard/account'
     | '/dashboard/projects'
     | '/dashboard/stack'
     | '/dashboard/users'
@@ -407,6 +440,7 @@ export interface FileRouteTypes {
     | '/projects/$slug'
     | '/dashboard/'
     | '/projects/'
+    | '/api/account/password'
     | '/api/auth/$'
     | '/api/projects/$id'
     | '/api/users/reset-password'
@@ -414,8 +448,10 @@ export interface FileRouteTypes {
     | '/dashboard/projects/new'
     | '/dashboard/users/$id'
     | '/dashboard/users/new'
+    | '/api/account/'
     | '/api/projects/'
     | '/api/users/'
+    | '/dashboard/account/'
     | '/dashboard/projects/'
     | '/dashboard/stack/'
     | '/dashboard/users/'
@@ -440,9 +476,11 @@ export interface RootRouteChildren {
   ApiTechnologiesRoute: typeof ApiTechnologiesRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
+  ApiAccountPasswordRoute: typeof ApiAccountPasswordRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiProjectsIdRoute: typeof ApiProjectsIdRoute
   ApiUsersResetPasswordRoute: typeof ApiUsersResetPasswordRoute
+  ApiAccountIndexRoute: typeof ApiAccountIndexRoute
   ApiProjectsIndexRoute: typeof ApiProjectsIndexRoute
   ApiUsersIndexRoute: typeof ApiUsersIndexRoute
 }
@@ -589,6 +627,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardProjectsIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/account/': {
+      id: '/dashboard/account/'
+      path: '/account'
+      fullPath: '/dashboard/account/'
+      preLoaderRoute: typeof DashboardAccountIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/api/users/': {
       id: '/api/users/'
       path: '/api/users'
@@ -601,6 +646,13 @@ declare module '@tanstack/react-router' {
       path: '/api/projects'
       fullPath: '/api/projects/'
       preLoaderRoute: typeof ApiProjectsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/account/': {
+      id: '/api/account/'
+      path: '/api/account'
+      fullPath: '/api/account/'
+      preLoaderRoute: typeof ApiAccountIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard/users/new': {
@@ -652,6 +704,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/account/password': {
+      id: '/api/account/password'
+      path: '/api/account/password'
+      fullPath: '/api/account/password'
+      preLoaderRoute: typeof ApiAccountPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard/stack/technologies/new': {
       id: '/dashboard/stack/technologies/new'
       path: '/stack/technologies/new'
@@ -691,6 +750,7 @@ interface DashboardRouteChildren {
   DashboardProjectsNewRoute: typeof DashboardProjectsNewRoute
   DashboardUsersIdRoute: typeof DashboardUsersIdRoute
   DashboardUsersNewRoute: typeof DashboardUsersNewRoute
+  DashboardAccountIndexRoute: typeof DashboardAccountIndexRoute
   DashboardProjectsIndexRoute: typeof DashboardProjectsIndexRoute
   DashboardStackIndexRoute: typeof DashboardStackIndexRoute
   DashboardUsersIndexRoute: typeof DashboardUsersIndexRoute
@@ -708,6 +768,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardProjectsNewRoute: DashboardProjectsNewRoute,
   DashboardUsersIdRoute: DashboardUsersIdRoute,
   DashboardUsersNewRoute: DashboardUsersNewRoute,
+  DashboardAccountIndexRoute: DashboardAccountIndexRoute,
   DashboardProjectsIndexRoute: DashboardProjectsIndexRoute,
   DashboardStackIndexRoute: DashboardStackIndexRoute,
   DashboardUsersIndexRoute: DashboardUsersIndexRoute,
@@ -736,9 +797,11 @@ const rootRouteChildren: RootRouteChildren = {
   ApiTechnologiesRoute: ApiTechnologiesRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
+  ApiAccountPasswordRoute: ApiAccountPasswordRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiProjectsIdRoute: ApiProjectsIdRoute,
   ApiUsersResetPasswordRoute: ApiUsersResetPasswordRoute,
+  ApiAccountIndexRoute: ApiAccountIndexRoute,
   ApiProjectsIndexRoute: ApiProjectsIndexRoute,
   ApiUsersIndexRoute: ApiUsersIndexRoute,
 }

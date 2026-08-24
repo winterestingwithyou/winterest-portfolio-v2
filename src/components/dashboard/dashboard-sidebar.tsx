@@ -8,6 +8,7 @@ import {
   LogOut,
   Settings,
   Sparkles,
+  User,
   Users,
 } from 'lucide-react'
 
@@ -87,6 +88,13 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
       to: '/dashboard/settings',
       label: copy.shell.nav.settings,
       icon: Settings,
+      exact: false,
+      disabled: false,
+    },
+    {
+      to: '/dashboard/account',
+      label: copy.shell.nav.account,
+      icon: User,
       exact: false,
       disabled: false,
     },
@@ -284,6 +292,17 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
                       </span>
                     </div>
                   </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    asChild
+                    className="flex w-full justify-start gap-2 text-xs font-semibold text-(--brand-ink) hover:bg-surface-soft"
+                  >
+                    <Link to="/dashboard/account">
+                      <User className="size-3.5 text-(--brand-orange)" />
+                      {copy.shell.nav.account}
+                    </Link>
+                  </Button>
                   <Button
                     variant="ghost"
                     size="sm"
