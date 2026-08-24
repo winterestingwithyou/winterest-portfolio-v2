@@ -1,3 +1,4 @@
+import { useForm } from '@tanstack/react-form'
 import { Link, useNavigate } from '@tanstack/react-router'
 import {
   AlertCircle,
@@ -12,10 +13,16 @@ import {
   Trash2,
   User,
 } from 'lucide-react'
-import type { FormEvent } from 'react'
 import { useState } from 'react'
+import { z } from 'zod'
 
 import { Button } from '#/components/ui/button'
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
 import { userRoles } from '#/db/schema'
 import type { UserRole } from '#/db/schema'
@@ -43,17 +50,9 @@ export function UserEditorForm({
   const copy = getDashboardCopy()
   const userCopy = copy.users
 
-  const [name, setName] = useState(initialData?.name ?? '')
-  const [email, setEmail] = useState(initialData?.email ?? '')
-  const [role, setRole] = useState<UserRole>(initialData?.role ?? 'editor')
-  const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-
-  // Reset password state for edit mode
-  const [newPassword, setNewPassword] = useState('')
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [resetSuccess, setResetSuccess] = useState(false)
-
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
   const isSelf = Boolean(currentUserId && initialData?.id === currentUserId)
@@ -73,72 +72,105 @@ export function UserEditorForm({
   const deleteError = deleteMutation.error?.message ?? null
   const resetError = resetPasswordMutation.error?.message ?? null
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setSuccessMessage(null)
+  const roleDescriptions: Record<UserRole, string> = {
+    owner: userCopy.roles.ownerDesc,
+    admin: userCopy.roles.adminDesc,
+    editor: userCopy.roles.editorDesc,
+    viewer: userCopy.roles.viewerDesc,
+  }
 
-    if (!name.trim() || !email.trim()) {
-      return
-    }
+  const userFormSchema = z.object({
+    name: z.string().min(1, `${userCopy.form.name} wajib diisi.`),
+    email: z.string().email('Format email tidak valid.'),
+    role: z.enum(['owner', 'admin', 'editor', 'viewer'] as const),
+    password: z.string().refine(
+      (val) => {
+        if (mode === 'create') {
+          return val.length >= 8
+        }
+        return true
+      },
+      { message: 'Password minimal 8 karakter.' },
+    ),
+  })
 
-    if (mode === 'create' && password.length < 8) {
-      return
-    }
+  const form = useForm({
+    defaultValues: {
+      name: initialData?.name ?? '',
+      email: initialData?.email ?? '',
+      role: initialData?.role ?? 'editor',
+      password: '',
+    },
+    validators: {
+      onSubmit: userFormSchema,
+    },
+    onSubmit: async ({ value }) => {
+      setSuccessMessage(null)
 
-    if (mode === 'edit' && initialData?.id) {
-      await updateMutation
-        .mutateAsync({
-          id: initialData.id,
-          name: name.trim(),
-          email: email.trim().toLowerCase(),
-          role,
-        })
+      if (mode === 'edit' && initialData?.id) {
+        await updateMutation
+          .mutateAsync({
+            id: initialData.id,
+            name: value.name.trim(),
+            email: value.email.trim().toLowerCase(),
+            role: value.role,
+          })
+          .then(() => {
+            setSuccessMessage(userCopy.feedback.updated)
+            setTimeout(() => {
+              void navigate({ to: '/dashboard/users' })
+            }, 700)
+          })
+          .catch(() => {
+            // error displayed from mutation.error
+          })
+      } else {
+        await createMutation
+          .mutateAsync({
+            name: value.name.trim(),
+            email: value.email.trim().toLowerCase(),
+            password: value.password,
+            role: value.role,
+          })
+          .then(() => {
+            setSuccessMessage(userCopy.feedback.created)
+            setTimeout(() => {
+              void navigate({ to: '/dashboard/users' })
+            }, 700)
+          })
+          .catch(() => {
+            // error displayed from mutation.error
+          })
+      }
+    },
+  })
+
+  const resetPasswordSchema = z.object({
+    newPassword: z.string().min(8, 'Password baru minimal 8 karakter.'),
+  })
+
+  const resetForm = useForm({
+    defaultValues: {
+      newPassword: '',
+    },
+    validators: {
+      onSubmit: resetPasswordSchema,
+    },
+    onSubmit: async ({ value }) => {
+      if (!initialData?.id) return
+      setResetSuccess(false)
+
+      await resetPasswordMutation
+        .mutateAsync({ id: initialData.id, newPassword: value.newPassword })
         .then(() => {
-          setSuccessMessage(userCopy.feedback.updated)
-          setTimeout(() => {
-            void navigate({ to: '/dashboard/users' })
-          }, 700)
+          setResetSuccess(true)
+          resetForm.reset()
         })
         .catch(() => {
           // error displayed from mutation.error
         })
-    } else {
-      await createMutation
-        .mutateAsync({
-          name: name.trim(),
-          email: email.trim().toLowerCase(),
-          password,
-          role,
-        })
-        .then(() => {
-          setSuccessMessage(userCopy.feedback.created)
-          setTimeout(() => {
-            void navigate({ to: '/dashboard/users' })
-          }, 700)
-        })
-        .catch(() => {
-          // error displayed from mutation.error
-        })
-    }
-  }
-
-  const handleResetPassword = async (e: FormEvent) => {
-    e.preventDefault()
-    if (!initialData?.id) return
-    if (newPassword.length < 8) return
-
-    setResetSuccess(false)
-
-    await resetPasswordMutation
-      .mutateAsync({ id: initialData.id, newPassword })
-      .then(() => {
-        setResetSuccess(true)
-        setNewPassword('')
-      })
-      .catch(() => {
-        // error displayed from mutation.error
-      })
-  }
+    },
+  })
 
   const handleDelete = async () => {
     if (!initialData?.id) return
@@ -156,13 +188,6 @@ export function UserEditorForm({
       .catch(() => {
         // error displayed from mutation.error
       })
-  }
-
-  const roleDescriptions: Record<UserRole, string> = {
-    owner: userCopy.roles.ownerDesc,
-    admin: userCopy.roles.adminDesc,
-    editor: userCopy.roles.editorDesc,
-    viewer: userCopy.roles.viewerDesc,
   }
 
   return (
@@ -214,134 +239,196 @@ export function UserEditorForm({
 
       {/* Main Profile & Role Form */}
       <form
-        onSubmit={(e) => void handleSubmit(e)}
+        onSubmit={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          void form.handleSubmit()
+        }}
         className="space-y-6 rounded-2xl border border-(--brand-line) bg-card p-6 shadow-sm sm:p-8"
       >
         <div className="border-b border-(--brand-line) pb-4">
           <h2 className="text-lg font-bold text-(--brand-ink)">
-            {mode === 'create' ? userCopy.newDescription : userCopy.editDescription}
+            {mode === 'create'
+              ? userCopy.newDescription
+              : userCopy.editDescription}
           </h2>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2">
-          {/* Name */}
-          <div className="space-y-2 sm:col-span-2">
-            <label
-              htmlFor="user-name"
-              className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-            >
-              <User className="size-3.5 text-(--brand-orange)" />
-              {userCopy.form.name} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              id="user-name"
-              type="text"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder={userCopy.form.namePlaceholder}
-              className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
-            />
-          </div>
-
-          {/* Email */}
-          <div className="space-y-2 sm:col-span-2">
-            <label
-              htmlFor="user-email"
-              className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-            >
-              <Mail className="size-3.5 text-(--brand-orange)" />
-              {userCopy.form.email} <span className="text-red-500">*</span>
-            </label>
-            <Input
-              id="user-email"
-              type="email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder={userCopy.form.emailPlaceholder}
-              className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
-            />
-          </div>
-
-          {/* Password (Create Mode Only) */}
-          {mode === 'create' && (
-            <div className="space-y-2 sm:col-span-2">
-              <label
-                htmlFor="user-password"
-                className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-              >
-                <KeyRound className="size-3.5 text-(--brand-orange)" />
-                {userCopy.form.password} <span className="text-red-500">*</span>
-              </label>
-              <div className="relative">
-                <Input
-                  id="user-password"
-                  type={showPassword ? 'text' : 'password'}
-                  required
-                  minLength={8}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder={userCopy.form.passwordPlaceholder}
-                  className="h-11 rounded-xl border-(--brand-line) bg-surface pr-10 text-sm"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-(--brand-muted) hover:text-(--brand-ink)"
-                  tabIndex={-1}
-                >
-                  {showPassword ? (
-                    <EyeOff className="size-4" />
-                  ) : (
-                    <Eye className="size-4" />
-                  )}
-                </button>
-              </div>
-              <p className="text-xs text-(--brand-muted)">
-                {userCopy.form.passwordPlaceholder}
-              </p>
-            </div>
-          )}
-
-          {/* Role Selection */}
-          <div className="space-y-3 sm:col-span-2">
-            <label className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-ink)">
-              <Shield className="size-3.5 text-(--brand-orange)" />
-              {userCopy.form.role} <span className="text-red-500">*</span>
-            </label>
-
-            <div className="grid gap-3 sm:grid-cols-2">
-              {userRoles.map((r) => {
-                const isSelected = role === r
-                return (
-                  <button
-                    key={r}
-                    type="button"
-                    onClick={() => setRole(r)}
-                    className={`flex flex-col items-start rounded-xl border p-3.5 text-left transition ${
-                      isSelected
-                        ? 'border-(--brand-orange) bg-(--brand-orange-soft)/30 shadow-xs'
-                        : 'border-(--brand-line) bg-surface hover:border-(--brand-orange)/50 hover:bg-surface-soft'
-                    }`}
-                  >
-                    <div className="flex w-full items-center justify-between">
-                      <span className="text-xs font-extrabold uppercase tracking-wide text-(--brand-ink)">
-                        {userCopy.roles[r]}
-                      </span>
-                      {isSelected && (
-                        <span className="size-2 rounded-full bg-(--brand-orange)" />
+        <FieldGroup>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {/* Name */}
+            <div className="sm:col-span-2">
+              <form.Field
+                name="name"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel
+                        htmlFor={field.name}
+                        className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                      >
+                        <User className="size-3.5 text-(--brand-orange)" />
+                        {userCopy.form.name}{' '}
+                        <span className="text-red-500">*</span>
+                      </FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder={userCopy.form.namePlaceholder}
+                        aria-invalid={isInvalid}
+                        className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
                       )}
+                    </Field>
+                  )
+                }}
+              />
+            </div>
+
+            {/* Email */}
+            <div className="sm:col-span-2">
+              <form.Field
+                name="email"
+                children={(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel
+                        htmlFor={field.name}
+                        className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                      >
+                        <Mail className="size-3.5 text-(--brand-orange)" />
+                        {userCopy.form.email}{' '}
+                        <span className="text-red-500">*</span>
+                      </FieldLabel>
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        type="email"
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder={userCopy.form.emailPlaceholder}
+                        aria-invalid={isInvalid}
+                        className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
+                      />
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                    </Field>
+                  )
+                }}
+              />
+            </div>
+
+            {/* Password (Create Mode Only) */}
+            {mode === 'create' && (
+              <div className="sm:col-span-2">
+                <form.Field
+                  name="password"
+                  children={(field) => {
+                    const isInvalid =
+                      field.state.meta.isTouched && !field.state.meta.isValid
+                    return (
+                      <Field data-invalid={isInvalid}>
+                        <FieldLabel
+                          htmlFor={field.name}
+                          className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                        >
+                          <KeyRound className="size-3.5 text-(--brand-orange)" />
+                          {userCopy.form.password}{' '}
+                          <span className="text-red-500">*</span>
+                        </FieldLabel>
+                        <div className="relative">
+                          <Input
+                            id={field.name}
+                            name={field.name}
+                            type={showPassword ? 'text' : 'password'}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            placeholder={userCopy.form.passwordPlaceholder}
+                            aria-invalid={isInvalid}
+                            className="h-11 rounded-xl border-(--brand-line) bg-surface pr-10 text-sm"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute inset-y-0 right-0 flex items-center pr-3 text-(--brand-muted) hover:text-(--brand-ink)"
+                            tabIndex={-1}
+                          >
+                            {showPassword ? (
+                              <EyeOff className="size-4" />
+                            ) : (
+                              <Eye className="size-4" />
+                            )}
+                          </button>
+                        </div>
+                        {isInvalid && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                      </Field>
+                    )
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Role Selection */}
+            <div className="sm:col-span-2">
+              <form.Field
+                name="role"
+                children={(field) => (
+                  <Field>
+                    <FieldLabel className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-ink)">
+                      <Shield className="size-3.5 text-(--brand-orange)" />
+                      {userCopy.form.role}{' '}
+                      <span className="text-red-500">*</span>
+                    </FieldLabel>
+
+                    <div className="grid gap-3 sm:grid-cols-2 pt-1">
+                      {userRoles.map((r) => {
+                        const isSelected = field.state.value === r
+                        return (
+                          <button
+                            key={r}
+                            type="button"
+                            onClick={() => field.handleChange(r)}
+                            className={`flex flex-col items-start rounded-xl border p-3.5 text-left transition ${
+                              isSelected
+                                ? 'border-(--brand-orange) bg-(--brand-orange-soft)/30 shadow-xs'
+                                : 'border-(--brand-line) bg-surface hover:border-(--brand-orange)/50 hover:bg-surface-soft'
+                            }`}
+                          >
+                            <div className="flex w-full items-center justify-between">
+                              <span className="text-xs font-extrabold uppercase tracking-wide text-(--brand-ink)">
+                                {userCopy.roles[r]}
+                              </span>
+                              {isSelected && (
+                                <span className="size-2 rounded-full bg-(--brand-orange)" />
+                              )}
+                            </div>
+                            <p className="mt-1 text-[0.75rem] leading-relaxed text-(--brand-muted)">
+                              {roleDescriptions[r]}
+                            </p>
+                          </button>
+                        )
+                      })}
                     </div>
-                    <p className="mt-1 text-[0.75rem] leading-relaxed text-(--brand-muted)">
-                      {roleDescriptions[r]}
-                    </p>
-                  </button>
-                )
-              })}
+                  </Field>
+                )}
+              />
             </div>
           </div>
-        </div>
+        </FieldGroup>
 
         {/* Submit */}
         <div className="flex justify-end pt-4">
@@ -363,7 +450,11 @@ export function UserEditorForm({
       {/* Reset Password Card (Edit Mode Only) */}
       {mode === 'edit' && initialData && (
         <form
-          onSubmit={(e) => void handleResetPassword(e)}
+          onSubmit={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            void resetForm.handleSubmit()
+          }}
           className="space-y-4 rounded-2xl border border-(--brand-line) bg-card p-6 shadow-sm sm:p-8"
         >
           <div className="border-b border-(--brand-line) pb-4">
@@ -390,44 +481,59 @@ export function UserEditorForm({
             </div>
           )}
 
-          <div className="space-y-2">
-            <label
-              htmlFor="reset-password-input"
-              className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-            >
-              {userCopy.form.newPassword}
-            </label>
-            <div className="relative">
-              <Input
-                id="reset-password-input"
-                type={showNewPassword ? 'text' : 'password'}
-                required
-                minLength={8}
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                placeholder={userCopy.form.passwordPlaceholder}
-                className="h-11 rounded-xl border-(--brand-line) bg-surface pr-10 text-sm"
-              />
-              <button
-                type="button"
-                onClick={() => setShowNewPassword(!showNewPassword)}
-                className="absolute inset-y-0 right-0 flex items-center pr-3 text-(--brand-muted) hover:text-(--brand-ink)"
-                tabIndex={-1}
-              >
-                {showNewPassword ? (
-                  <EyeOff className="size-4" />
-                ) : (
-                  <Eye className="size-4" />
-                )}
-              </button>
-            </div>
-          </div>
+          <FieldGroup>
+            <resetForm.Field
+              name="newPassword"
+              children={(field) => {
+                const isInvalid =
+                  field.state.meta.isTouched && !field.state.meta.isValid
+                return (
+                  <Field data-invalid={isInvalid}>
+                    <FieldLabel
+                      htmlFor={field.name}
+                      className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                    >
+                      {userCopy.form.newPassword}
+                    </FieldLabel>
+                    <div className="relative">
+                      <Input
+                        id={field.name}
+                        name={field.name}
+                        type={showNewPassword ? 'text' : 'password'}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder={userCopy.form.passwordPlaceholder}
+                        aria-invalid={isInvalid}
+                        className="h-11 rounded-xl border-(--brand-line) bg-surface pr-10 text-sm"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowNewPassword(!showNewPassword)}
+                        className="absolute inset-y-0 right-0 flex items-center pr-3 text-(--brand-muted) hover:text-(--brand-ink)"
+                        tabIndex={-1}
+                      >
+                        {showNewPassword ? (
+                          <EyeOff className="size-4" />
+                        ) : (
+                          <Eye className="size-4" />
+                        )}
+                      </button>
+                    </div>
+                    {isInvalid && (
+                      <FieldError errors={field.state.meta.errors} />
+                    )}
+                  </Field>
+                )
+              }}
+            />
+          </FieldGroup>
 
           <div className="flex justify-end pt-2">
             <Button
               type="submit"
               variant="outline"
-              disabled={isResettingPassword || !newPassword}
+              disabled={isResettingPassword}
               className="gap-2 border-(--brand-line) font-bold text-(--brand-ink) hover:bg-surface-soft disabled:opacity-50"
             >
               <KeyRound className="size-4" />

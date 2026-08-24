@@ -1,3 +1,4 @@
+import { useForm } from '@tanstack/react-form'
 import { createFileRoute } from '@tanstack/react-router'
 import {
   AlertCircle,
@@ -12,62 +13,79 @@ import {
   Send,
 } from 'lucide-react'
 import { useState } from 'react'
+import { z } from 'zod'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { Button } from '#/components/ui/button'
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '#/components/ui/field'
+import { Input } from '#/components/ui/input'
+import { Textarea } from '#/components/ui/textarea'
 import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
 
 export const Route = createFileRoute('/contact')({
   component: ContactPage,
 })
 
+const contactSchema = z.object({
+  name: z.string().min(1, 'Nama wajib diisi.'),
+  email: z.string().email('Format email tidak valid.'),
+  subject: z.string(),
+  message: z.string().min(10, 'Pesan minimal 10 karakter.'),
+})
+
 function ContactPage() {
   const copy = getPublicCopy()
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  })
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
   >('idle')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setStatus('loading')
-    setErrorMessage(null)
+  const form = useForm({
+    defaultValues: {
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+    },
+    validators: {
+      onSubmit: contactSchema,
+    },
+    onSubmit: async ({ value }) => {
+      setStatus('loading')
+      setErrorMessage(null)
 
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(value),
+        })
 
-      const data: { error?: string; success?: boolean } = await response.json()
+        const data: { error?: string; success?: boolean } =
+          await response.json()
 
-      if (!response.ok || data.error) {
-        throw new Error(data.error || copy.contact.sendErrorTitle)
+        if (!response.ok || data.error) {
+          throw new Error(data.error || copy.contact.sendErrorTitle)
+        }
+
+        setStatus('success')
+        form.reset()
+      } catch (err: unknown) {
+        console.error('Failed to send contact message:', err)
+        setStatus('error')
+        setErrorMessage(
+          err instanceof Error ? err.message : copy.contact.sendErrorTitle,
+        )
       }
-
-      setStatus('success')
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
-      })
-    } catch (err: unknown) {
-      console.error('Failed to send contact message:', err)
-      setStatus('error')
-      setErrorMessage(
-        err instanceof Error ? err.message : copy.contact.sendErrorTitle,
-      )
-    }
-  }
+    },
+  })
 
   return (
     <main className="px-4 py-12 sm:py-16">
@@ -238,16 +256,24 @@ function ContactPage() {
                 <p className="mt-2 max-w-md text-sm text-(--brand-muted)">
                   {copy.contact.sendSuccessSubtitle}
                 </p>
-                <button
+                <Button
                   type="button"
                   onClick={() => setStatus('idle')}
-                  className="mt-6 inline-flex min-h-10 items-center justify-center rounded-full border border-(--brand-line) bg-(--surface-strong) px-5 text-xs font-bold text-(--brand-ink) transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                  variant="outline"
+                  className="mt-6 rounded-full border-(--brand-line) font-bold text-(--brand-ink) hover:bg-(--brand-orange-soft) hover:border-(--brand-orange)"
                 >
                   {copy.contact.sendAnother}
-                </button>
+                </Button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="grid gap-5">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  void form.handleSubmit()
+                }}
+                className="grid gap-5"
+              >
                 <div>
                   <h2 className="text-xl font-bold text-(--brand-ink)">
                     {copy.contact.formTitle}
@@ -269,102 +295,161 @@ function ContactPage() {
                   </div>
                 )}
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-                    >
-                      {copy.contact.name}
-                    </label>
-                    <input
-                      id="name"
+                <FieldGroup>
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {/* Name */}
+                    <form.Field
                       name="name"
-                      type="text"
-                      required
-                      disabled={status === 'loading'}
-                      autoComplete="name"
-                      placeholder={copy.contact.namePlaceholder}
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none disabled:opacity-60"
+                      children={(field) => {
+                        const isInvalid =
+                          field.state.meta.isTouched && !field.state.meta.isValid
+                        return (
+                          <Field data-invalid={isInvalid}>
+                            <FieldLabel
+                              htmlFor={field.name}
+                              className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                            >
+                              {copy.contact.name}
+                            </FieldLabel>
+                            <Input
+                              id={field.name}
+                              name={field.name}
+                              type="text"
+                              disabled={status === 'loading'}
+                              autoComplete="name"
+                              placeholder={copy.contact.namePlaceholder}
+                              value={field.state.value}
+                              onBlur={field.handleBlur}
+                              onChange={(e) =>
+                                field.handleChange(e.target.value)
+                              }
+                              aria-invalid={isInvalid}
+                              className="h-11 rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
+                            />
+                            {isInvalid && (
+                              <FieldError errors={field.state.meta.errors} />
+                            )}
+                          </Field>
+                        )
+                      }}
                     />
-                  </div>
 
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-                    >
-                      {copy.contact.email}
-                    </label>
-                    <input
-                      id="email"
+                    {/* Email */}
+                    <form.Field
                       name="email"
-                      type="email"
-                      required
-                      disabled={status === 'loading'}
-                      autoComplete="email"
-                      placeholder={copy.contact.emailPlaceholder}
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none disabled:opacity-60"
+                      children={(field) => {
+                        const isInvalid =
+                          field.state.meta.isTouched && !field.state.meta.isValid
+                        return (
+                          <Field data-invalid={isInvalid}>
+                            <FieldLabel
+                              htmlFor={field.name}
+                              className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                            >
+                              {copy.contact.email}
+                            </FieldLabel>
+                            <Input
+                              id={field.name}
+                              name={field.name}
+                              type="email"
+                              disabled={status === 'loading'}
+                              autoComplete="email"
+                              placeholder={copy.contact.emailPlaceholder}
+                              value={field.state.value}
+                              onBlur={field.handleBlur}
+                              onChange={(e) =>
+                                field.handleChange(e.target.value)
+                              }
+                              aria-invalid={isInvalid}
+                              className="h-11 rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
+                            />
+                            {isInvalid && (
+                              <FieldError errors={field.state.meta.errors} />
+                            )}
+                          </Field>
+                        )
+                      }}
                     />
                   </div>
-                </div>
 
-                <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-                  >
-                    {copy.contact.subject}
-                  </label>
-                  <input
-                    id="subject"
+                  {/* Subject */}
+                  <form.Field
                     name="subject"
-                    type="text"
-                    disabled={status === 'loading'}
-                    placeholder={copy.contact.subjectPlaceholder}
-                    value={formData.subject}
-                    onChange={(e) =>
-                      setFormData({ ...formData, subject: e.target.value })
-                    }
-                    className="mt-1.5 min-h-11 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none disabled:opacity-60"
+                    children={(field) => {
+                      const isInvalid =
+                        field.state.meta.isTouched && !field.state.meta.isValid
+                      return (
+                        <Field data-invalid={isInvalid}>
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                          >
+                            {copy.contact.subject}
+                          </FieldLabel>
+                          <Input
+                            id={field.name}
+                            name={field.name}
+                            type="text"
+                            disabled={status === 'loading'}
+                            placeholder={copy.contact.subjectPlaceholder}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) =>
+                              field.handleChange(e.target.value)
+                            }
+                            aria-invalid={isInvalid}
+                            className="h-11 rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
+                          />
+                          {isInvalid && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </Field>
+                      )
+                    }}
                   />
-                </div>
 
-                <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-                  >
-                    {copy.contact.message}
-                  </label>
-                  <textarea
-                    id="message"
+                  {/* Message */}
+                  <form.Field
                     name="message"
-                    required
-                    disabled={status === 'loading'}
-                    rows={5}
-                    placeholder={copy.contact.messagePlaceholder}
-                    value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    className="mt-1.5 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-3.5 py-3 text-sm text-(--brand-ink) placeholder:text-(--brand-muted) focus:border-(--brand-orange) focus:outline-none disabled:opacity-60"
+                    children={(field) => {
+                      const isInvalid =
+                        field.state.meta.isTouched && !field.state.meta.isValid
+                      return (
+                        <Field data-invalid={isInvalid}>
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                          >
+                            {copy.contact.message}
+                          </FieldLabel>
+                          <Textarea
+                            id={field.name}
+                            name={field.name}
+                            disabled={status === 'loading'}
+                            rows={5}
+                            placeholder={copy.contact.messagePlaceholder}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) =>
+                              field.handleChange(e.target.value)
+                            }
+                            aria-invalid={isInvalid}
+                            className="min-h-28 rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
+                          />
+                          {isInvalid && (
+                            <FieldError errors={field.state.meta.errors} />
+                          )}
+                        </Field>
+                      )
+                    }}
                   />
-                </div>
+                </FieldGroup>
 
                 <div className="pt-2">
-                  <button
+                  <Button
                     type="submit"
                     disabled={status === 'loading'}
-                    className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-6 text-sm font-bold text-white shadow-[0_12px_32px_var(--brand-glow)] transition hover:-translate-y-0.5 hover:shadow-[0_18px_48px_var(--brand-glow)] active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+                    className="min-h-11 w-full gap-2 rounded-full bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) font-bold text-white shadow-[0_12px_32px_var(--brand-glow)] transition hover:opacity-95 hover:shadow-[0_18px_48px_var(--brand-glow)] disabled:opacity-60"
                   >
                     {status === 'loading' ? (
                       <>
@@ -380,7 +465,7 @@ function ContactPage() {
                         <span>{copy.contact.send}</span>
                       </>
                     )}
-                  </button>
+                  </Button>
                 </div>
               </form>
             )}

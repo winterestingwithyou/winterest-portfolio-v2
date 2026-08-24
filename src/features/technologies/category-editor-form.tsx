@@ -1,8 +1,18 @@
+import { useForm } from '@tanstack/react-form'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, Save, Trash2 } from 'lucide-react'
-import type { FormEvent } from 'react'
 import { useState } from 'react'
+import { z } from 'zod'
 
+import { Button } from '#/components/ui/button'
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '#/components/ui/field'
+import { Input } from '#/components/ui/input'
 import type { CategoryRecord } from '#/features/technologies/queries'
 
 function slugify(text: string): string {
@@ -14,6 +24,18 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, '')
 }
 
+const categorySchema = z.object({
+  name: z.string().min(1, 'Nama kategori wajib diisi.'),
+  slug: z
+    .string()
+    .min(1, 'Slug URL wajib diisi.')
+    .regex(
+      /^[a-z0-9-]+$/,
+      'Slug hanya boleh berisi huruf kecil, angka, dan tanda hubung (-).',
+    ),
+  sortOrder: z.number(),
+})
+
 type CategoryEditorFormProps = {
   mode: 'create' | 'edit'
   initialData?: CategoryRecord | null
@@ -24,65 +46,58 @@ export function CategoryEditorForm({
   initialData,
 }: CategoryEditorFormProps) {
   const navigate = useNavigate()
-
-  const [name, setName] = useState(initialData?.name ?? '')
-  const [slug, setSlug] = useState(initialData?.slug ?? '')
-  const [sortOrder, setSortOrder] = useState<number>(
-    initialData?.sortOrder ?? 0,
-  )
-
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleNameChange = (val: string) => {
-    setName(val)
-    if (mode === 'create' || !initialData) {
-      setSlug(slugify(val))
-    }
-  }
+  const form = useForm({
+    defaultValues: {
+      name: initialData?.name ?? '',
+      slug: initialData?.slug ?? '',
+      sortOrder: initialData?.sortOrder ?? 0,
+    },
+    validators: {
+      onSubmit: categorySchema,
+    },
+    onSubmit: async ({ value }) => {
+      setError(null)
+      setIsSaving(true)
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
-    setError(null)
-    setIsSaving(true)
+      try {
+        const payload = {
+          name: value.name.trim(),
+          slug: value.slug.trim(),
+          sortOrder: Number(value.sortOrder),
+        }
 
-    try {
-      const payload = {
-        name: name.trim(),
-        slug: slug.trim(),
-        sortOrder: Number(sortOrder),
+        const isEdit = mode === 'edit' && initialData?.id
+        const targetUrl = '/api/categories'
+        const method = isEdit ? 'PUT' : 'POST'
+        const body = isEdit
+          ? JSON.stringify({ id: initialData.id, ...payload })
+          : JSON.stringify(payload)
+
+        const res = await fetch(targetUrl, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body,
+        })
+
+        const result: { error?: string } = await res.json()
+        if (!res.ok) {
+          throw new Error(result.error ?? 'Gagal menyimpan kategori.')
+        }
+
+        void navigate({ to: '/dashboard/stack' })
+      } catch (caught) {
+        setError(
+          caught instanceof Error ? caught.message : 'Terjadi kesalahan.',
+        )
+      } finally {
+        setIsSaving(false)
       }
-
-      if (!payload.name || !payload.slug) {
-        throw new Error('Nama dan Slug wajib diisi.')
-      }
-
-      const isEdit = mode === 'edit' && initialData?.id
-      const targetUrl = '/api/categories'
-      const method = isEdit ? 'PUT' : 'POST'
-      const body = isEdit
-        ? JSON.stringify({ id: initialData.id, ...payload })
-        : JSON.stringify(payload)
-
-      const res = await fetch(targetUrl, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body,
-      })
-
-      const result: { error?: string } = await res.json()
-      if (!res.ok) {
-        throw new Error(result.error ?? 'Gagal menyimpan kategori.')
-      }
-
-      void navigate({ to: '/dashboard/stack' })
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : 'Terjadi kesalahan.')
-    } finally {
-      setIsSaving(false)
-    }
-  }
+    },
+  })
 
   const handleDelete = async () => {
     if (!initialData?.id) return
@@ -115,7 +130,14 @@ export function CategoryEditorForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="w-full space-y-6">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        void form.handleSubmit()
+      }}
+      className="w-full space-y-6"
+    >
       {/* Header Link */}
       <div className="flex items-center justify-between gap-4">
         <Link
@@ -134,98 +156,143 @@ export function CategoryEditorForm({
       ) : null}
 
       <div className="surface-card space-y-6 p-6 sm:p-8">
-        {/* Name */}
-        <div>
-          <label
-            htmlFor="name"
-            className="block text-sm font-bold text-(--brand-ink)"
-          >
-            Nama Kategori <span className="text-red-500">*</span>
-          </label>
-          <input
-            id="name"
-            type="text"
-            required
-            value={name}
-            onChange={(e) => handleNameChange(e.target.value)}
-            placeholder="e.g. Frontend"
-            className="mt-2 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-4 py-2.5 text-sm text-(--brand-ink) focus:border-(--brand-orange) focus:outline-none"
+        <FieldGroup>
+          {/* Name Field */}
+          <form.Field
+            name="name"
+            children={(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Nama Kategori <span className="text-red-500">*</span>
+                  </FieldLabel>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => {
+                      const val = e.target.value
+                      field.handleChange(val)
+                      if (mode === 'create' || !initialData) {
+                        form.setFieldValue('slug', slugify(val))
+                      }
+                    }}
+                    placeholder="e.g. Frontend"
+                    aria-invalid={isInvalid}
+                    className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
+                  />
+                  {isInvalid && (
+                    <FieldError errors={field.state.meta.errors} />
+                  )}
+                </Field>
+              )
+            }}
           />
-        </div>
 
-        {/* Slug */}
-        <div>
-          <label
-            htmlFor="slug"
-            className="block text-sm font-bold text-(--brand-ink)"
-          >
-            Slug URL <span className="text-red-500">*</span>
-          </label>
-          <input
-            id="slug"
-            type="text"
-            required
-            value={slug}
-            onChange={(e) => setSlug(e.target.value)}
-            placeholder="e.g. frontend"
-            className="mt-2 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-4 py-2.5 text-sm text-(--brand-ink) focus:border-(--brand-orange) focus:outline-none font-mono"
+          {/* Slug Field */}
+          <form.Field
+            name="slug"
+            children={(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Slug URL <span className="text-red-500">*</span>
+                  </FieldLabel>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    placeholder="e.g. frontend"
+                    aria-invalid={isInvalid}
+                    className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
+                  />
+                  {isInvalid && (
+                    <FieldError errors={field.state.meta.errors} />
+                  )}
+                </Field>
+              )
+            }}
           />
-        </div>
 
-        {/* Sort Order */}
-        <div>
-          <label
-            htmlFor="sortOrder"
-            className="block text-sm font-bold text-(--brand-ink)"
-          >
-            Urutan Tampil (Sort Order)
-          </label>
-          <input
-            id="sortOrder"
-            type="number"
-            value={sortOrder}
-            onChange={(e) => setSortOrder(Number(e.target.value))}
-            placeholder="1"
-            className="mt-2 w-full rounded-xl border border-(--brand-line) bg-(--surface-strong) px-4 py-2.5 text-sm text-(--brand-ink) focus:border-(--brand-orange) focus:outline-none font-mono"
+          {/* Sort Order Field */}
+          <form.Field
+            name="sortOrder"
+            children={(field) => {
+              const isInvalid =
+                field.state.meta.isTouched && !field.state.meta.isValid
+              return (
+                <Field data-invalid={isInvalid}>
+                  <FieldLabel htmlFor={field.name}>
+                    Urutan Tampil (Sort Order)
+                  </FieldLabel>
+                  <Input
+                    id={field.name}
+                    name={field.name}
+                    type="number"
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) =>
+                      field.handleChange(Number(e.target.value))
+                    }
+                    placeholder="1"
+                    aria-invalid={isInvalid}
+                    className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
+                  />
+                  <FieldDescription>
+                    Angka lebih kecil akan ditampilkan lebih awal pada daftar kategori.
+                  </FieldDescription>
+                  {isInvalid && (
+                    <FieldError errors={field.state.meta.errors} />
+                  )}
+                </Field>
+              )
+            }}
           />
-          <p className="mt-1 text-xs text-(--brand-muted)">
-            Angka lebih kecil akan ditampilkan lebih awal pada daftar kategori.
-          </p>
-        </div>
+        </FieldGroup>
       </div>
 
       {/* Form Action Footer */}
       <div className="flex items-center justify-between gap-4 pt-2">
         {mode === 'edit' && initialData ? (
-          <button
+          <Button
             type="button"
-            onClick={handleDelete}
+            variant="destructive"
+            onClick={() => void handleDelete()}
             disabled={isDeleting || isSaving}
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-red-500/20 bg-red-500/10 px-5 text-sm font-bold text-red-500 transition hover:bg-red-500 hover:text-white disabled:opacity-50"
+            className="gap-2 rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
           >
             <Trash2 className="size-4" />
             {isDeleting ? 'Hapus...' : 'Hapus Kategori'}
-          </button>
+          </Button>
         ) : (
           <div />
         )}
 
         <div className="flex items-center gap-3">
-          <Link
-            to="/dashboard/stack"
-            className="inline-flex min-h-11 items-center rounded-full border border-(--brand-line) bg-(--surface-strong) px-6 text-sm font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange)"
+          <Button
+            type="button"
+            variant="outline"
+            asChild
+            className="rounded-full border-(--brand-line) font-bold text-(--brand-ink) hover:bg-surface-soft"
           >
-            Batal
-          </Link>
+            <Link to="/dashboard/stack">Batal</Link>
+          </Button>
 
-          <button
+          <Button
             type="submit"
             disabled={isSaving || isDeleting}
-            className="inline-flex min-h-11 items-center gap-2 rounded-full bg-(--brand-orange) px-6 text-sm font-bold text-white transition hover:-translate-y-0.5 disabled:opacity-50"
+            className="gap-2 rounded-full bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) font-bold text-white shadow-md hover:opacity-90 disabled:opacity-50"
           >
             <Save className="size-4" />
             {isSaving ? 'Menyimpan...' : 'Simpan Kategori'}
-          </button>
+          </Button>
         </div>
       </div>
     </form>

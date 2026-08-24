@@ -1,6 +1,34 @@
 # Winterest Portfolio V2 Handover
 
-Last updated: 2026-06-13
+Last updated: 2026-08-24
+
+## Form Architecture & Refactoring State (Standardized)
+
+All forms across the application have been refactored to use:
+- `@tanstack/react-form` for state management, field validation, and submit handling.
+- `zod` for declarative schema validation.
+- `src/components/ui/field.tsx` components (`Field`, `FieldLabel`, `FieldDescription`, `FieldError`, `FieldGroup`, `FieldSet`, `FieldLegend`).
+- Standardized UI controls (`Input`, `Textarea`, `Checkbox`, `Select`, `Button`).
+
+Refactored forms:
+- `src/features/technologies/category-editor-form.tsx` (Stack category CRUD + auto-slug)
+- `src/features/technologies/technology-editor-form.tsx` (Tech stack CRUD + Checkbox ultimate toggle + categories multi-select)
+- `src/features/users/user-editor-form.tsx` (User CRUD + password reset form + role selector)
+- `src/routes/contact.tsx` (Public contact form)
+- `src/features/dashboard/project-editor-form.tsx` (Project CRUD + multilingual translations en/id + select dropdowns)
+
+## Verification Recently Run
+
+After form refactor changes, these passed:
+
+```bash
+bun run check
+bun run typecheck (tsc --noEmit)
+bun run lint (eslint)
+bun run test (vitest - 14 tests)
+bun run build (vite + Cloudflare Worker bundle)
+bunx graphify update .
+```
 
 ## Project Identity
 
