@@ -19,6 +19,4 @@ todos.json
 !.env.example
 
 ## Graphifyy
-graphify-out/cost.json        
-graphify-out/cache/   
-.graphify_root   
+graphify-out/
