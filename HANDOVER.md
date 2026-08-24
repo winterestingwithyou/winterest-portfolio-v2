@@ -21,14 +21,14 @@ Refactored forms:
 
 ## Verification Recently Run
 
-After Account Settings implementation, these passed:
+After "Beyond The Code" About page redesign & asset integration, these passed:
 
 ```bash
-bunx tsc --noEmit
-bun run lint (eslint)
+bunx tsc --noEmit (clean TypeScript check)
+bun run lint (eslint - 0 errors)
 bun run test (vitest - 12 tests passed)
-bun run build (vite + Cloudflare Worker bundle)
-bunx graphify update .
+bun run build (vite + Cloudflare Worker bundle passed in 4.6s)
+bunx graphify update . (knowledge graph updated)
 ```
 
 ## Project Identity

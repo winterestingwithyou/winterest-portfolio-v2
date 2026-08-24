@@ -27,11 +27,15 @@ export type KpopGroup = {
   bias: string
   song: string
   color: string
+  albumCover: string
+  spotifyUrl: string
+  biasImage: string
 }
 
 export type GenshinChar = {
   name: string
   reason: string
+  image: string
 }
 
 export const aboutData = {
@@ -330,6 +334,12 @@ export const aboutData = {
           name: 'Mobile Legends',
           ign: 'Escapee',
           server: 'Advance Server',
+          iconUrl:
+            'https://static.wikia.nocookie.net/mobile-legends/images/f/fb/MLBB_icon.png/revision/latest?cb=20241013132437',
+          heroName: 'Hirara',
+          heroLabel: 'Currently Favorite',
+          heroImage:
+            'https://cdn-www.bluestacks.com/bs-images/MobileLegendsBangBang_Guide_HiraraGuide_EN011.png',
           notes:
             'Testing new and revamped heroes (currently enjoying Hirara). Rank play on main server is paused to prioritize real-life goals.',
         },
@@ -337,26 +347,44 @@ export const aboutData = {
           name: 'Growtopia',
           ign: 'WinterEsCape',
           world: 'UYCRIM',
+          iconUrl:
+            'https://s3.eu-west-1.amazonaws.com/cdn.growtopiagame.com/website/resources/assets/upload/1_grow_icon_1513191167.jpg',
           notes:
             'Love the game as a unique real-life simulation of grinding, trading, and chasing goals.',
         },
         genshin: {
           name: 'Genshin Impact',
           ign: 'Winter',
+          iconUrl:
+            'https://static.wikia.nocookie.net/logopedia/images/3/3a/Genshin_Impact_Icon_Version_1.0.png/revision/latest/scale-to-width-down/250?cb=20250902081559',
           notes:
             'Low Spender player. Started around Fontaine, took a 2-year break, and returned before Snezhnaya.',
-          favLabel: 'Favorites:',
+          favLabel: 'Favorite Characters',
           favorites: [
             {
               name: 'Arlecchino',
               reason: 'Strong "baddie" appeal and sleek combat.',
+              image:
+                'https://static.wikia.nocookie.net/genshin-impact/images/6/69/Arlecchino_Birthday_2024.jpg/revision/latest/scale-to-width-down/1200?cb=20240822040458',
             },
             {
               name: 'Wanderer',
               reason: 'Resonates with my analytical personality.',
+              image:
+                'https://upload-os-bbs.hoyolab.com/upload/2024/08/09/159056263/cde043660397343b27fc1f6005f8b4f1_1167825517051000668.jpg',
             },
-            { name: 'Lohen', reason: 'Cool twin-like aesthetic to Wanderer.' },
-            { name: 'Tsaritsa', reason: 'The ultimate queen of Snezhnaya.' },
+            {
+              name: 'Lohen',
+              reason: 'Cool twin-like aesthetic to Wanderer.',
+              image:
+                'https://static.wikia.nocookie.net/genshin-impact/images/5/56/Lohen_Card.png/revision/latest?cb=20260414040204',
+            },
+            {
+              name: 'Tsaritsa',
+              reason: 'The ultimate queen of Snezhnaya.',
+              image:
+                'https://static.wikia.nocookie.net/genshin-impact/images/f/f5/Tsaritsa_Illustration.png/revision/latest?cb=20260627014155',
+            },
           ],
         },
       },
@@ -368,6 +396,8 @@ export const aboutData = {
         charLabel: 'Favorite Character',
         favorite: 'Jujutsu Kaisen (JJK)',
         favChar: 'Gojo Satoru',
+        charImage:
+          'https://i.pinimg.com/564x/86/b2/10/86b21044fa7c743a9816b39ad251582f.jpg',
         reason:
           'Gojo is insanely cool, and JJK has one of the most interesting domain expansion power mechanics.',
       },
@@ -375,37 +405,67 @@ export const aboutData = {
         title: 'K-Pop Fanboy',
         summary:
           'Open multifan enthusiast who loves energetic, polished K-pop girl group music.',
-        biasLabel: 'Bias:',
-        songLabel: 'Fav Song:',
+        biasLabel: 'Bias',
+        songLabel: 'Fav Track',
+        spotifyLabel: 'Open in Spotify',
         groups: [
           {
             name: 'aespa',
             bias: 'Winter',
             song: 'Armageddon',
+            albumCover:
+              'https://i.scdn.co/image/ab67616d0000b273c60843bafc67821cff6df260',
+            spotifyUrl: 'https://open.spotify.com/album/4SboBpuYojDm02qS4iFeJC',
+            biasImage:
+              'https://static.wikia.nocookie.net/aespa/images/0/04/THE_CULTURE%2C_THE_FUTURE_Teaser_Winter_%282%29.jpg/revision/latest?cb=20250331093258',
             color: 'from-blue-500/20 to-purple-500/20',
           },
           {
             name: 'BLACKPINK',
             bias: 'Rosé',
             song: 'Ddu-du Ddu-du',
+            albumCover:
+              'https://i.scdn.co/image/ab67616d0000b27398135e0d2d1675f2b502f01c',
+            spotifyUrl:
+              'https://open.spotify.com/intl-id/track/2aI2k39nfa3KFsa4JclQzw',
+            biasImage:
+              'https://img.okezone.com/okz/500/library/images/2024/09/26/rose_blackpink_21875.jpg',
             color: 'from-pink-500/20 to-rose-500/20',
           },
           {
             name: 'LE SSERAFIM',
             bias: 'Chaewon',
             song: 'Sour Grape',
+            albumCover:
+              'https://i.scdn.co/image/ab67616d0000b2739ae8d973353277c7dec2c27d',
+            spotifyUrl:
+              'https://open.spotify.com/intl-id/track/6wBpO4Xc4YgShnENGSFA1M',
+            biasImage:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbBA2awG_EbxgQoz4KVn6NuUq1LZ7BBFnBXa1zoSNQsj2_x5i7dbTyyAY&s=10',
             color: 'from-amber-500/20 to-orange-500/20',
           },
           {
             name: 'IVE',
             bias: 'Wonyoung',
             song: 'Off The Record',
+            albumCover:
+              'https://i.scdn.co/image/ab67616d0000b273e5cc60bec326c779d17ee76e',
+            spotifyUrl:
+              'https://open.spotify.com/intl-id/album/7qch1xWGWuU5VxZEYBF5KW',
+            biasImage:
+              'https://upload.wikimedia.org/wikipedia/commons/0/07/Jang_Won-young_at_the_Bulgari_Eclettica_event_in_Seoul%2C_May_12%2C_2026_%281%29.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original',
             color: 'from-indigo-500/20 to-blue-500/20',
           },
           {
             name: 'Hearts2Hearts',
             bias: 'A-na',
             song: 'The Chase',
+            albumCover:
+              'https://i.scdn.co/image/ab67616d0000b273d346fc1102eb417305b5358b',
+            spotifyUrl:
+              'https://open.spotify.com/intl-id/track/68UrZQUuO3O6eUiD226xHg',
+            biasImage:
+              'https://upload.wikimedia.org/wikipedia/commons/8/82/A-Na_of_Hearts2Hearts%2C_March_29%2C_2025.jpg?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original',
             color: 'from-emerald-500/20 to-teal-500/20',
           },
         ],
@@ -757,6 +817,12 @@ export const aboutData = {
           name: 'Mobile Legends',
           ign: 'Escapee',
           server: 'Advance Server',
+          iconUrl:
+            'https://static.wikia.nocookie.net/mobile-legends/images/f/fb/MLBB_icon.png/revision/latest?cb=20241013132437',
+          heroName: 'Hirara',
+          heroLabel: 'Hero Favorit Saat Ini',
+          heroImage:
+            'https://cdn-www.bluestacks.com/bs-images/MobileLegendsBangBang_Guide_HiraraGuide_EN011.png',
           notes:
             'Suka nyobain hero baru / revamp (sekarang lagi suka Hirara). Rehat push rank di server utama demi prioritas dunia nyata.',
         },
@@ -764,29 +830,44 @@ export const aboutData = {
           name: 'Growtopia',
           ign: 'WinterEsCape',
           world: 'UYCRIM',
+          iconUrl:
+            'https://s3.eu-west-1.amazonaws.com/cdn.growtopiagame.com/website/resources/assets/upload/1_grow_icon_1513191167.jpg',
           notes:
             'Suka banget sama game ini karena kerasa kayak simulasi kehidupan nyata tentang grinding, trading, dan mengejar impian.',
         },
         genshin: {
           name: 'Genshin Impact',
           ign: 'Winter',
+          iconUrl:
+            'https://static.wikia.nocookie.net/logopedia/images/3/3a/Genshin_Impact_Icon_Version_1.0.png/revision/latest/scale-to-width-down/250?cb=20250902081559',
           notes:
             'Pemain Low Spender. Mulai di era Fontaine, sempat rehat ~2 tahun, dan balik lagi sebelum Snezhnaya rilis.',
-          favLabel: 'Favorit:',
+          favLabel: 'Karakter Favorit',
           favorites: [
             {
               name: 'Arlecchino',
               reason: 'Suka karena aura "baddie"-nya yang keren parah.',
+              image:
+                'https://static.wikia.nocookie.net/genshin-impact/images/6/69/Arlecchino_Birthday_2024.jpg/revision/latest/scale-to-width-down/1200?cb=20240822040458',
             },
             {
               name: 'Wanderer',
               reason: 'Ngerasa personalitasnya mirip sama aku.',
+              image:
+                'https://upload-os-bbs.hoyolab.com/upload/2024/08/09/159056263/cde043660397343b27fc1f6005f8b4f1_1167825517051000668.jpg',
             },
             {
               name: 'Lohen',
               reason: 'Punya visual dan aura kembar mirip Wanderer.',
+              image:
+                'https://static.wikia.nocookie.net/genshin-impact/images/5/56/Lohen_Card.png/revision/latest?cb=20260414040204',
             },
-            { name: 'Tsaritsa', reason: 'Ratu sejati dari Snezhnaya.' },
+            {
+              name: 'Tsaritsa',
+              reason: 'Ratu sejati dari Snezhnaya.',
+              image:
+                'https://static.wikia.nocookie.net/genshin-impact/images/f/f5/Tsaritsa_Illustration.png/revision/latest?cb=20260627014155',
+            },
           ],
         },
       },
@@ -798,6 +879,8 @@ export const aboutData = {
         charLabel: 'Karakter Favorit',
         favorite: 'Jujutsu Kaisen (JJK)',
         favChar: 'Gojo Satoru',
+        charImage:
+          'https://i.pinimg.com/564x/86/b2/10/86b21044fa7c743a9816b39ad251582f.jpg',
         reason:
           'Gojo itu keren banget, dan JJK punya salah satu sistem kekuatan domain expansion yang paling menarik.',
       },
@@ -805,37 +888,67 @@ export const aboutData = {
         title: 'K-Pop Fanboy',
         summary:
           'Terang-terangan seorang multifan yang suka musik girl group K-pop energik.',
-        biasLabel: 'Bias:',
-        songLabel: 'Lagu Favorit:',
+        biasLabel: 'Bias',
+        songLabel: 'Lagu Favorit',
+        spotifyLabel: 'Buka di Spotify',
         groups: [
           {
             name: 'aespa',
             bias: 'Winter',
             song: 'Armageddon',
+            albumCover:
+              'https://i.scdn.co/image/ab67616d0000b273c60843bafc67821cff6df260',
+            spotifyUrl: 'https://open.spotify.com/album/4SboBpuYojDm02qS4iFeJC',
+            biasImage:
+              'https://static.wikia.nocookie.net/aespa/images/0/04/THE_CULTURE%2C_THE_FUTURE_Teaser_Winter_%282%29.jpg/revision/latest?cb=20250331093258',
             color: 'from-blue-500/20 to-purple-500/20',
           },
           {
             name: 'BLACKPINK',
             bias: 'Rosé',
             song: 'Ddu-du Ddu-du',
+            albumCover:
+              'https://i.scdn.co/image/ab67616d0000b27398135e0d2d1675f2b502f01c',
+            spotifyUrl:
+              'https://open.spotify.com/intl-id/track/2aI2k39nfa3KFsa4JclQzw',
+            biasImage:
+              'https://img.okezone.com/okz/500/library/images/2024/09/26/rose_blackpink_21875.jpg',
             color: 'from-pink-500/20 to-rose-500/20',
           },
           {
             name: 'LE SSERAFIM',
             bias: 'Chaewon',
             song: 'Sour Grape',
+            albumCover:
+              'https://i.scdn.co/image/ab67616d0000b2739ae8d973353277c7dec2c27d',
+            spotifyUrl:
+              'https://open.spotify.com/intl-id/track/6wBpO4Xc4YgShnENGSFA1M',
+            biasImage:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbBA2awG_EbxgQoz4KVn6NuUq1LZ7BBFnBXa1zoSNQsj2_x5i7dbTyyAY&s=10',
             color: 'from-amber-500/20 to-orange-500/20',
           },
           {
             name: 'IVE',
             bias: 'Wonyoung',
             song: 'Off The Record',
+            albumCover:
+              'https://i.scdn.co/image/ab67616d0000b273e5cc60bec326c779d17ee76e',
+            spotifyUrl:
+              'https://open.spotify.com/intl-id/album/7qch1xWGWuU5VxZEYBF5KW',
+            biasImage:
+              'https://upload.wikimedia.org/wikipedia/commons/0/07/Jang_Won-young_at_the_Bulgari_Eclettica_event_in_Seoul%2C_May_12%2C_2026_%281%29.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original',
             color: 'from-indigo-500/20 to-blue-500/20',
           },
           {
             name: 'Hearts2Hearts',
             bias: 'A-na',
             song: 'The Chase',
+            albumCover:
+              'https://i.scdn.co/image/ab67616d0000b273d346fc1102eb417305b5358b',
+            spotifyUrl:
+              'https://open.spotify.com/intl-id/track/68UrZQUuO3O6eUiD226xHg',
+            biasImage:
+              'https://upload.wikimedia.org/wikipedia/commons/8/82/A-Na_of_Hearts2Hearts%2C_March_29%2C_2025.jpg?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original',
             color: 'from-emerald-500/20 to-teal-500/20',
           },
         ],

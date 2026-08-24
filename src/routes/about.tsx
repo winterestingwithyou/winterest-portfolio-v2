@@ -7,11 +7,14 @@ import {
   ChevronUp,
   Code2,
   Compass,
+  Disc3,
+  ExternalLink,
   Flame,
   Flag,
   Gamepad2,
   Lightbulb,
   Music,
+  Play,
   Rocket,
   ShieldCheck,
   Sparkles,
@@ -35,6 +38,37 @@ import type { PriorityItem } from '#/features/portfolio/about-data'
 import { cn } from '#/lib/utils'
 
 const STEP_ICONS = [Target, Flag, Compass, Code2, ShieldCheck, Rocket, Sparkles]
+
+const GLASS_SHARDS = [
+  {
+    // Shard 0: Arlecchino (Top-Left, sharp vertical wedge)
+    clipPath: 'polygon(15% 0%, 98% 6%, 82% 98%, 0% 84%)',
+    svgPoints: '15,0 98,6 82,98 0,84',
+    rotation: '-rotate-3 group-hover:rotate-0',
+    offset: 'sm:-translate-y-2',
+  },
+  {
+    // Shard 1: Wanderer (Top-Right, inverted angular polygon)
+    clipPath: 'polygon(10% 4%, 90% 0%, 100% 88%, 18% 100%)',
+    svgPoints: '10,4 90,0 100,88 18,100',
+    rotation: 'rotate-4 group-hover:rotate-0',
+    offset: 'sm:translate-y-3',
+  },
+  {
+    // Shard 2: Lohen (Bottom-Left, sharp diagonal prism)
+    clipPath: 'polygon(4% 10%, 96% 0%, 94% 84%, 12% 98%)',
+    svgPoints: '4,10 96,0 94,84 12,98',
+    rotation: '-rotate-2 group-hover:rotate-0',
+    offset: 'sm:-translate-y-1',
+  },
+  {
+    // Shard 3: Tsaritsa (Bottom-Right, tall crystal shard pointing outward)
+    clipPath: 'polygon(12% 0%, 100% 15%, 85% 100%, 0% 88%)',
+    svgPoints: '12,0 100,15 85,100 0,88',
+    rotation: 'rotate-3 group-hover:rotate-0',
+    offset: 'sm:translate-y-2',
+  },
+]
 
 export const Route = createFileRoute('/about')({
   component: AboutPage,
@@ -549,7 +583,7 @@ function AboutPage() {
               type="button"
               onClick={() => setActiveBeyondTab('gaming')}
               className={cn(
-                'inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all',
+                'inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all cursor-pointer',
                 activeBeyondTab === 'gaming'
                   ? 'bg-(--brand-orange) text-white shadow-xs'
                   : 'bg-(--surface-strong) text-(--brand-muted) hover:text-(--brand-ink)',
@@ -562,7 +596,7 @@ function AboutPage() {
               type="button"
               onClick={() => setActiveBeyondTab('anime')}
               className={cn(
-                'inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all',
+                'inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all cursor-pointer',
                 activeBeyondTab === 'anime'
                   ? 'bg-(--brand-orange) text-white shadow-xs'
                   : 'bg-(--surface-strong) text-(--brand-muted) hover:text-(--brand-ink)',
@@ -575,7 +609,7 @@ function AboutPage() {
               type="button"
               onClick={() => setActiveBeyondTab('kpop')}
               className={cn(
-                'inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all',
+                'inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all cursor-pointer',
                 activeBeyondTab === 'kpop'
                   ? 'bg-(--brand-orange) text-white shadow-xs'
                   : 'bg-(--surface-strong) text-(--brand-muted) hover:text-(--brand-ink)',
@@ -590,89 +624,267 @@ function AboutPage() {
           <div className="pt-2">
             {/* GAMING TAB */}
             {activeBeyondTab === 'gaming' && (
-              <div className="grid gap-6 md:grid-cols-3 animate-in fade-in-50 duration-200">
-                {/* MLBB */}
-                <div className="surface-card p-6 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-extrabold uppercase text-(--brand-orange-deep)">
-                      MOBA
-                    </span>
-                    <span className="rounded bg-(--brand-orange-soft) px-2 py-0.5 text-[10px] font-bold text-(--brand-orange-deep)">
-                      {data.beyond.gaming.mlbb.server}
-                    </span>
+              <div className="space-y-6 animate-in fade-in-50 duration-200">
+                {/* 1. Mobile Legends Row */}
+                <div className="surface-card p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 transition-all hover:border-(--brand-orange)">
+                  <div className="flex items-start gap-4 sm:gap-5 max-w-2xl">
+                    <img
+                      src={data.beyond.gaming.mlbb.iconUrl}
+                      alt={data.beyond.gaming.mlbb.name}
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                      className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover shadow-xs"
+                    />
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
+                          MOBA
+                        </span>
+                        <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[11px] font-bold text-(--brand-orange-deep)">
+                          {data.beyond.gaming.mlbb.server}
+                        </span>
+                        <span className="text-xs text-(--brand-muted)">
+                          IGN:{' '}
+                          <span className="font-bold text-(--brand-ink)">
+                            {data.beyond.gaming.mlbb.ign}
+                          </span>
+                        </span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-(--brand-ink)">
+                        {data.beyond.gaming.mlbb.name}
+                      </h3>
+                      <p className="text-xs sm:text-sm leading-relaxed text-(--brand-muted)">
+                        {data.beyond.gaming.mlbb.notes}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-(--brand-ink)">
-                    {data.beyond.gaming.mlbb.name}
-                  </h3>
-                  <div className="text-xs text-(--brand-muted)">
-                    IGN:{' '}
-                    <span className="font-semibold text-(--brand-ink)">
-                      {data.beyond.gaming.mlbb.ign}
-                    </span>
+
+                  {/* Hirara Hero Spotlight */}
+                  <div className="group flex items-center gap-4 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3 sm:p-4 shrink-0 transition-all hover:border-(--brand-orange)">
+                    <div className="relative size-16 sm:size-20 shrink-0 overflow-hidden rounded-lg border border-(--brand-orange)/40 bg-black/20 shadow-xs">
+                      <img
+                        src={data.beyond.gaming.mlbb.heroImage}
+                        alt={data.beyond.gaming.mlbb.heroName}
+                        referrerPolicy="no-referrer"
+                        loading="lazy"
+                        className="size-full object-cover object-top transition-transform duration-300 group-hover:scale-110"
+                      />
+                    </div>
+                    <div className="space-y-1">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
+                        <Flame className="size-3 text-(--brand-orange)" />
+                        {data.beyond.gaming.mlbb.heroLabel}
+                      </span>
+                      <h4 className="text-sm sm:text-base font-bold text-(--brand-ink)">
+                        {data.beyond.gaming.mlbb.heroName}
+                      </h4>
+                      <span className="text-[11px] text-(--brand-muted)">
+                        Cuma Bisa Hirara
+                      </span>
+                    </div>
                   </div>
-                  <p className="text-xs leading-relaxed text-(--brand-muted)">
-                    {data.beyond.gaming.mlbb.notes}
-                  </p>
                 </div>
 
-                {/* Growtopia */}
-                <div className="surface-card p-6 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-extrabold uppercase text-(--brand-orange-deep)">
-                      Sandbox / Trade
-                    </span>
-                    <span className="rounded bg-(--brand-orange-soft) px-2 py-0.5 text-[10px] font-bold text-(--brand-orange-deep)">
-                      {data.beyond.gaming.growtopia.world}
-                    </span>
+                {/* 2. Growtopia Row */}
+                <div className="surface-card p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 transition-all hover:border-(--brand-orange)">
+                  <div className="flex items-start gap-4 sm:gap-5 max-w-3xl">
+                    <img
+                      src={data.beyond.gaming.growtopia.iconUrl}
+                      alt={data.beyond.gaming.growtopia.name}
+                      referrerPolicy="no-referrer"
+                      loading="lazy"
+                      className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover shadow-xs"
+                    />
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
+                          Sandbox / Trading MMO
+                        </span>
+                        <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[11px] font-bold text-(--brand-orange-deep)">
+                          World: {data.beyond.gaming.growtopia.world}
+                        </span>
+                        <span className="text-xs text-(--brand-muted)">
+                          IGN:{' '}
+                          <span className="font-bold text-(--brand-ink)">
+                            {data.beyond.gaming.growtopia.ign}
+                          </span>
+                        </span>
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-bold text-(--brand-ink)">
+                        {data.beyond.gaming.growtopia.name}
+                      </h3>
+                      <p className="text-xs sm:text-sm leading-relaxed text-(--brand-muted)">
+                        {data.beyond.gaming.growtopia.notes}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="text-xl font-bold text-(--brand-ink)">
-                    {data.beyond.gaming.growtopia.name}
-                  </h3>
-                  <div className="text-xs text-(--brand-muted)">
-                    IGN:{' '}
-                    <span className="font-semibold text-(--brand-ink)">
-                      {data.beyond.gaming.growtopia.ign}
-                    </span>
-                  </div>
-                  <p className="text-xs leading-relaxed text-(--brand-muted)">
-                    {data.beyond.gaming.growtopia.notes}
-                  </p>
                 </div>
 
-                {/* Genshin */}
-                <div className="surface-card p-6 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-extrabold uppercase text-(--brand-orange-deep)">
-                      Open World RPG
-                    </span>
-                    <span className="rounded bg-(--brand-orange-soft) px-2 py-0.5 text-[10px] font-bold text-(--brand-orange-deep)">
-                      Low Spender
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-bold text-(--brand-ink)">
-                    {data.beyond.gaming.genshin.name}
-                  </h3>
-                  <p className="text-xs text-(--brand-muted)">
-                    {data.beyond.gaming.genshin.notes}
-                  </p>
-                  <div className="pt-2 border-t border-(--brand-line) space-y-1.5">
-                    <span className="text-[11px] font-bold text-(--brand-ink) block">
-                      {data.beyond.gaming.genshin.favLabel}
-                    </span>
-                    <div className="grid grid-cols-2 gap-1.5">
-                      {data.beyond.gaming.genshin.favorites.map((fav) => (
-                        <div
-                          key={fav.name}
-                          className="rounded-md bg-(--surface-strong) p-2 border border-(--brand-line)"
-                        >
-                          <div className="text-xs font-bold text-(--brand-orange-deep)">
-                            {fav.name}
-                          </div>
-                          <div className="text-[10px] text-(--brand-muted) line-clamp-1">
-                            {fav.reason}
-                          </div>
+                {/* 3. Genshin Impact Row with Broken-Glass / Fractured Collage */}
+                <div className="surface-card p-6 sm:p-8 space-y-6 transition-all hover:border-(--brand-orange)">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-(--brand-line) pb-5">
+                    <div className="flex items-center gap-4">
+                      <img
+                        src={data.beyond.gaming.genshin.iconUrl}
+                        alt={data.beyond.gaming.genshin.name}
+                        referrerPolicy="no-referrer"
+                        loading="lazy"
+                        className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover shadow-xs"
+                      />
+                      <div>
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
+                            Open World RPG
+                          </span>
+                          <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[11px] font-bold text-(--brand-orange-deep)">
+                            Low Spender
+                          </span>
+                          <span className="text-xs text-(--brand-muted)">
+                            IGN:{' '}
+                            <span className="font-bold text-(--brand-ink)">
+                              {data.beyond.gaming.genshin.ign}
+                            </span>
+                          </span>
                         </div>
-                      ))}
+                        <h3 className="text-xl sm:text-2xl font-bold text-(--brand-ink) mt-1">
+                          {data.beyond.gaming.genshin.name}
+                        </h3>
+                      </div>
+                    </div>
+                    <p className="text-xs sm:text-sm text-(--brand-muted) max-w-md">
+                      {data.beyond.gaming.genshin.notes}
+                    </p>
+                  </div>
+
+                  {/* Shattered Glass Showcase */}
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep) flex items-center gap-1.5">
+                          <Sparkles className="size-3.5 text-(--brand-orange)" />
+                          {data.beyond.gaming.genshin.favLabel}
+                        </span>
+                        <span className="text-[11px] text-(--brand-muted) italic hidden sm:inline">
+                          — (Klik pecahan kaca untuk melihat ulasan karakter)
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Broken Glass Shattered Arena */}
+                    <div className="relative overflow-hidden rounded-2xl border border-(--brand-line) bg-radial from-(--brand-orange-soft)/20 via-(--surface-strong)/50 to-(--site-bg) p-4 sm:p-8">
+                      {/* Background Fractured Crack Lines & Impact Center */}
+                      <svg
+                        aria-hidden="true"
+                        className="pointer-events-none absolute inset-0 size-full opacity-30 dark:opacity-40"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <line x1="50%" y1="50%" x2="5%" y2="8%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
+                        <line x1="50%" y1="50%" x2="95%" y2="4%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
+                        <line x1="50%" y1="50%" x2="8%" y2="92%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
+                        <line x1="50%" y1="50%" x2="92%" y2="95%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
+                        <line x1="50%" y1="50%" x2="50%" y2="0%" stroke="var(--brand-line)" strokeWidth="1" />
+                        <line x1="50%" y1="50%" x2="50%" y2="100%" stroke="var(--brand-line)" strokeWidth="1" />
+                        <line x1="50%" y1="50%" x2="0%" y2="50%" stroke="var(--brand-line)" strokeWidth="1" />
+                        <line x1="50%" y1="50%" x2="100%" y2="50%" stroke="var(--brand-line)" strokeWidth="1" />
+                        <circle cx="50%" cy="50%" r="6" fill="var(--brand-orange)" opacity="0.4" />
+                      </svg>
+
+                      {/* 4 Shattered Glass Shards */}
+                      <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 py-4">
+                        {data.beyond.gaming.genshin.favorites.map((fav, i) => {
+                          const shard = GLASS_SHARDS[i] || GLASS_SHARDS[0]
+                          return (
+                            <Popover key={fav.name}>
+                              <PopoverTrigger asChild>
+                                <button
+                                  type="button"
+                                  className={cn(
+                                    'group relative aspect-[3/4] w-full cursor-pointer transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-(--brand-orange) hover:scale-105 hover:z-30',
+                                    shard.rotation,
+                                    shard.offset,
+                                  )}
+                                  aria-label={`Inspect ${fav.name} glass shard`}
+                                >
+                                  {/* Glass Shard Polygon Body */}
+                                  <div
+                                    className="relative size-full overflow-hidden bg-black/60 shadow-xl transition-all duration-300"
+                                    style={{ clipPath: shard.clipPath }}
+                                  >
+                                    <img
+                                      src={fav.image}
+                                      alt={fav.name}
+                                      referrerPolicy="no-referrer"
+                                      loading="lazy"
+                                      className="size-full object-cover object-top transition-transform duration-700 group-hover:scale-115"
+                                    />
+
+                                    {/* Glass Specular Glint Reflection */}
+                                    <div className="pointer-events-none absolute inset-0 bg-linear-to-tr from-cyan-400/20 via-white/30 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+
+                                    {/* Vignette Bottom Gradient */}
+                                    <div className="absolute inset-0 bg-linear-to-t from-black/85 via-transparent to-black/20" />
+                                  </div>
+
+                                  {/* Glass Shard Outlined Bevel Border (SVG) */}
+                                  <svg
+                                    aria-hidden="true"
+                                    className="pointer-events-none absolute inset-0 size-full overflow-visible"
+                                    viewBox="0 0 100 100"
+                                    preserveAspectRatio="none"
+                                  >
+                                    <polygon
+                                      points={shard.svgPoints}
+                                      fill="none"
+                                      stroke="rgba(255,255,255,0.7)"
+                                      strokeWidth="2.5"
+                                      className="transition-all duration-300 group-hover:stroke-(--brand-orange) drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                                    />
+                                  </svg>
+
+                                  {/* Shard Label Floating Name (Outside clipped polygon with z-20 so it never gets clipped) */}
+                                  <div className="pointer-events-none absolute inset-x-0 -bottom-3 z-20 flex justify-center">
+                                    <span className="rounded-full bg-(--surface-strong) px-3 py-1 text-xs font-black tracking-wide text-(--brand-ink) border border-(--brand-line) shadow-xl group-hover:border-(--brand-orange) group-hover:text-(--brand-orange-deep) group-hover:scale-105 transition-all">
+                                      {fav.name}
+                                    </span>
+                                  </div>
+                                </button>
+                              </PopoverTrigger>
+
+                              <PopoverContent
+                                side="top"
+                                sideOffset={16}
+                                className="w-72 sm:w-80 rounded-2xl border-(--brand-orange)/40 bg-(--surface-strong)/95 backdrop-blur-md p-4 shadow-2xl space-y-3"
+                              >
+                                <div className="flex items-center gap-3">
+                                  <img
+                                    src={fav.image}
+                                    alt={fav.name}
+                                    referrerPolicy="no-referrer"
+                                    className="size-11 rounded-xl object-cover border border-(--brand-orange)/50 shrink-0"
+                                  />
+                                  <div>
+                                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-(--brand-orange-deep) block">
+                                      Genshin Impact
+                                    </span>
+                                    <h4 className="font-bold text-base text-(--brand-ink) leading-tight">
+                                      {fav.name}
+                                    </h4>
+                                  </div>
+                                </div>
+
+                                <div className="rounded-xl border border-(--brand-line) bg-(--site-bg)/80 p-3 space-y-1">
+                                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-(--brand-muted) block">
+                                    Catatan Karakter
+                                  </span>
+                                  <blockquote className="text-xs italic font-medium leading-relaxed text-(--brand-ink)">
+                                    "{fav.reason}"
+                                  </blockquote>
+                                </div>
+                              </PopoverContent>
+                            </Popover>
+                          )
+                        })}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -681,33 +893,55 @@ function AboutPage() {
 
             {/* ANIME TAB */}
             {activeBeyondTab === 'anime' && (
-              <div className="surface-card p-6 sm:p-8 space-y-6 animate-in fade-in-50 duration-200">
-                <div className="max-w-2xl space-y-3">
-                  <p className="text-sm leading-relaxed text-(--brand-muted)">
-                    {data.beyond.anime.summary}
-                  </p>
-                </div>
+              <div className="surface-card p-6 sm:p-8 transition-all hover:border-(--brand-orange) animate-in fade-in-50 duration-200">
+                <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <div className="inline-flex items-center gap-2 rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
+                        <Tv className="size-3.5" />
+                        <span>{data.beyond.anime.seriesLabel}</span>
+                      </div>
+                      <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-(--brand-ink)">
+                        {data.beyond.anime.favorite}
+                      </h3>
+                    </div>
 
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-5 space-y-2">
-                    <span className="text-xs font-extrabold uppercase text-(--brand-orange-deep)">
-                      {data.beyond.anime.seriesLabel}
-                    </span>
-                    <h3 className="text-2xl font-bold text-(--brand-ink)">
-                      {data.beyond.anime.favorite}
-                    </h3>
+                    <p className="text-sm leading-relaxed text-(--brand-muted)">
+                      {data.beyond.anime.summary}
+                    </p>
+
+                    <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4 space-y-2 border-l-4 border-l-(--brand-orange)">
+                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
+                        <Sparkles className="size-4 text-(--brand-orange)" />
+                        <span>Domain Expansion & Tactical Battles</span>
+                      </div>
+                      <p className="text-xs leading-relaxed text-(--brand-muted)">
+                        {data.beyond.anime.reason}
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-5 space-y-2">
-                    <span className="text-xs font-extrabold uppercase text-(--brand-orange-deep)">
-                      {data.beyond.anime.charLabel}
-                    </span>
-                    <h3 className="text-2xl font-bold text-(--brand-ink)">
-                      {data.beyond.anime.favChar}
-                    </h3>
-                    <p className="text-xs text-(--brand-muted)">
-                      {data.beyond.anime.reason}
-                    </p>
+                  {/* Gojo Portrait Showcase (Clean, No Reason Text as Requested) */}
+                  <div className="group relative overflow-hidden rounded-2xl border-2 border-(--brand-line) bg-(--surface-strong) shadow-xl transition-all duration-300 hover:border-(--brand-orange)">
+                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-black/40">
+                      <img
+                        src={data.beyond.anime.charImage}
+                        alt={data.beyond.anime.favChar}
+                        referrerPolicy="no-referrer"
+                        loading="lazy"
+                        className="size-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+
+                      <div className="absolute inset-x-0 bottom-0 p-5 text-white space-y-1">
+                        <span className="inline-block rounded-full bg-(--brand-orange) px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-white shadow-xs">
+                          {data.beyond.anime.charLabel}
+                        </span>
+                        <h4 className="text-2xl font-black tracking-tight text-white drop-shadow-md">
+                          {data.beyond.anime.favChar}
+                        </h4>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -716,38 +950,92 @@ function AboutPage() {
             {/* KPOP TAB */}
             {activeBeyondTab === 'kpop' && (
               <div className="space-y-6 animate-in fade-in-50 duration-200">
-                <p className="text-sm text-(--brand-muted)">
+                <p className="text-sm leading-relaxed text-(--brand-muted) max-w-2xl">
                   {data.beyond.kpop.summary}
                 </p>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+
+                {/* 5 Group Rows */}
+                <div className="space-y-3.5">
                   {data.beyond.kpop.groups.map((group) => (
                     <div
                       key={group.name}
                       className={cn(
-                        'surface-card p-5 space-y-3 bg-linear-to-b transition-all hover:-translate-y-1 hover:border-(--brand-orange)',
+                        'surface-card p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-(--brand-orange) hover:shadow-md bg-linear-to-r',
                         group.color,
                       )}
                     >
-                      <h3 className="text-lg font-bold text-(--brand-ink)">
-                        {group.name}
-                      </h3>
-                      <div className="space-y-1 text-xs">
-                        <div className="flex justify-between">
-                          <span className="text-(--brand-muted)">
-                            {data.beyond.kpop.biasLabel}
-                          </span>
-                          <span className="font-bold text-(--brand-orange-deep)">
-                            {group.bias}
-                          </span>
+                      {/* Left: Bias Portrait + Group & Bias Info */}
+                      <div className="flex items-center gap-4 min-w-0">
+                        <div className="relative size-16 sm:size-20 shrink-0 rounded-2xl overflow-hidden shadow-xs border border-(--brand-line) bg-(--surface-strong)">
+                          <img
+                            src={group.biasImage}
+                            alt={`${group.bias} (${group.name})`}
+                            referrerPolicy="no-referrer"
+                            loading="lazy"
+                            className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          />
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-(--brand-muted)">
-                            {data.beyond.kpop.songLabel}
-                          </span>
-                          <span className="font-semibold text-(--brand-ink)">
-                            {group.song}
-                          </span>
+
+                        <div className="space-y-1.5 min-w-0">
+                          <h3 className="text-base sm:text-lg font-bold text-(--brand-ink) truncate">
+                            {group.name}
+                          </h3>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="inline-flex items-center gap-1 rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-xs font-extrabold text-(--brand-orange-deep)">
+                              <Sparkles className="size-3 text-(--brand-orange)" />
+                              <span>
+                                {data.beyond.kpop.biasLabel}: {group.bias}
+                              </span>
+                            </span>
+                          </div>
                         </div>
+                      </div>
+
+                      {/* Right: Album Cover + Song Info + Spotify Action Button */}
+                      <div className="flex items-center justify-between md:justify-end gap-3 sm:gap-4 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-(--brand-line)">
+                        {/* Album & Song Snippet */}
+                        <div className="flex items-center gap-3 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-2 pr-3.5 shadow-xs">
+                          <a
+                            href={group.spotifyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group/album relative size-11 sm:size-12 shrink-0 rounded-lg overflow-hidden shadow-xs border border-(--brand-line) cursor-pointer"
+                            aria-label={`Listen to ${group.song} by ${group.name} on Spotify`}
+                          >
+                            <img
+                              src={group.albumCover}
+                              alt={`${group.song} album cover`}
+                              referrerPolicy="no-referrer"
+                              loading="lazy"
+                              className="size-full object-cover transition-transform duration-300 group-hover/album:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/album:opacity-100 transition-opacity">
+                              <Play className="size-4 text-white fill-white" />
+                            </div>
+                          </a>
+
+                          <div className="text-left min-w-0 max-w-[140px] sm:max-w-[170px]">
+                            <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-(--brand-muted) block leading-none">
+                              {data.beyond.kpop.songLabel}
+                            </span>
+                            <div className="flex items-center gap-1 text-xs sm:text-sm font-bold text-(--brand-ink) truncate mt-0.5">
+                              <Disc3 className="size-3 sm:size-3.5 shrink-0 text-(--brand-orange) animate-spin" />
+                              <span className="truncate">{group.song}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Spotify Direct Action Button */}
+                        <a
+                          href={group.spotifyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-white px-3.5 py-2.5 text-xs font-bold transition-all shadow-xs hover:shadow-md cursor-pointer shrink-0"
+                          aria-label={`Open ${group.song} on Spotify`}
+                        >
+                          <span>Spotify</span>
+                          <ExternalLink className="size-3.5" />
+                        </a>
                       </div>
                     </div>
                   ))}
