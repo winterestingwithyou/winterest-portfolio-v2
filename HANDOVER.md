@@ -16,6 +16,7 @@ Refactored forms:
 - `src/features/users/user-editor-form.tsx` (User CRUD + password reset form + role selector)
 - `src/routes/contact.tsx` (Public contact form)
 - `src/features/dashboard/project-editor-form.tsx` (Project CRUD + multilingual translations en/id + select dropdowns)
+- `src/features/settings/settings-editor-form.tsx` (Dashboard Settings form with 4 tabs: General, Social, SEO, System)
 
 ## Verification Recently Run
 

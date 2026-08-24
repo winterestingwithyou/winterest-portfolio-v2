@@ -19,10 +19,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects.$slug'
+import { Route as DashboardSettingsRouteImport } from './routes/dashboard.settings'
 import { Route as DashboardMediaRouteImport } from './routes/dashboard.media'
 import { Route as ApiUsersRouteImport } from './routes/api.users'
 import { Route as ApiTechnologiesRouteImport } from './routes/api.technologies'
 import { Route as ApiStackRouteImport } from './routes/api.stack'
+import { Route as ApiSettingsRouteImport } from './routes/api.settings'
 import { Route as ApiProjectsRouteImport } from './routes/api.projects'
 import { Route as ApiContactRouteImport } from './routes/api.contact'
 import { Route as ApiCategoriesRouteImport } from './routes/api.categories'
@@ -91,6 +93,11 @@ const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
   path: '/projects/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardSettingsRoute = DashboardSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const DashboardMediaRoute = DashboardMediaRouteImport.update({
   id: '/media',
   path: '/media',
@@ -109,6 +116,11 @@ const ApiTechnologiesRoute = ApiTechnologiesRouteImport.update({
 const ApiStackRoute = ApiStackRouteImport.update({
   id: '/api/stack',
   path: '/api/stack',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSettingsRoute = ApiSettingsRouteImport.update({
+  id: '/api/settings',
+  path: '/api/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiProjectsRoute = ApiProjectsRouteImport.update({
@@ -212,10 +224,12 @@ export interface FileRoutesByFullPath {
   '/api/categories': typeof ApiCategoriesRoute
   '/api/contact': typeof ApiContactRoute
   '/api/projects': typeof ApiProjectsRouteWithChildren
+  '/api/settings': typeof ApiSettingsRoute
   '/api/stack': typeof ApiStackRoute
   '/api/technologies': typeof ApiTechnologiesRoute
   '/api/users': typeof ApiUsersRouteWithChildren
   '/dashboard/media': typeof DashboardMediaRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/projects/': typeof ProjectsIndexRoute
@@ -244,10 +258,12 @@ export interface FileRoutesByTo {
   '/api/categories': typeof ApiCategoriesRoute
   '/api/contact': typeof ApiContactRoute
   '/api/projects': typeof ApiProjectsRouteWithChildren
+  '/api/settings': typeof ApiSettingsRoute
   '/api/stack': typeof ApiStackRoute
   '/api/technologies': typeof ApiTechnologiesRoute
   '/api/users': typeof ApiUsersRouteWithChildren
   '/dashboard/media': typeof DashboardMediaRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/dashboard': typeof DashboardIndexRoute
   '/projects': typeof ProjectsIndexRoute
@@ -278,10 +294,12 @@ export interface FileRoutesById {
   '/api/categories': typeof ApiCategoriesRoute
   '/api/contact': typeof ApiContactRoute
   '/api/projects': typeof ApiProjectsRouteWithChildren
+  '/api/settings': typeof ApiSettingsRoute
   '/api/stack': typeof ApiStackRoute
   '/api/technologies': typeof ApiTechnologiesRoute
   '/api/users': typeof ApiUsersRouteWithChildren
   '/dashboard/media': typeof DashboardMediaRoute
+  '/dashboard/settings': typeof DashboardSettingsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/projects/': typeof ProjectsIndexRoute
@@ -313,10 +331,12 @@ export interface FileRouteTypes {
     | '/api/categories'
     | '/api/contact'
     | '/api/projects'
+    | '/api/settings'
     | '/api/stack'
     | '/api/technologies'
     | '/api/users'
     | '/dashboard/media'
+    | '/dashboard/settings'
     | '/projects/$slug'
     | '/dashboard/'
     | '/projects/'
@@ -345,10 +365,12 @@ export interface FileRouteTypes {
     | '/api/categories'
     | '/api/contact'
     | '/api/projects'
+    | '/api/settings'
     | '/api/stack'
     | '/api/technologies'
     | '/api/users'
     | '/dashboard/media'
+    | '/dashboard/settings'
     | '/projects/$slug'
     | '/dashboard'
     | '/projects'
@@ -378,10 +400,12 @@ export interface FileRouteTypes {
     | '/api/categories'
     | '/api/contact'
     | '/api/projects'
+    | '/api/settings'
     | '/api/stack'
     | '/api/technologies'
     | '/api/users'
     | '/dashboard/media'
+    | '/dashboard/settings'
     | '/projects/$slug'
     | '/dashboard/'
     | '/projects/'
@@ -412,6 +436,7 @@ export interface RootRouteChildren {
   ApiCategoriesRoute: typeof ApiCategoriesRoute
   ApiContactRoute: typeof ApiContactRoute
   ApiProjectsRoute: typeof ApiProjectsRouteWithChildren
+  ApiSettingsRoute: typeof ApiSettingsRoute
   ApiStackRoute: typeof ApiStackRoute
   ApiTechnologiesRoute: typeof ApiTechnologiesRoute
   ApiUsersRoute: typeof ApiUsersRouteWithChildren
@@ -492,6 +517,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/settings': {
+      id: '/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof DashboardSettingsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/media': {
       id: '/dashboard/media'
       path: '/media'
@@ -518,6 +550,13 @@ declare module '@tanstack/react-router' {
       path: '/api/stack'
       fullPath: '/api/stack'
       preLoaderRoute: typeof ApiStackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/settings': {
+      id: '/api/settings'
+      path: '/api/settings'
+      fullPath: '/api/settings'
+      preLoaderRoute: typeof ApiSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/projects': {
@@ -644,6 +683,7 @@ declare module '@tanstack/react-router' {
 
 interface DashboardRouteChildren {
   DashboardMediaRoute: typeof DashboardMediaRoute
+  DashboardSettingsRoute: typeof DashboardSettingsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardProjectsIdRoute: typeof DashboardProjectsIdRoute
   DashboardProjectsNewRoute: typeof DashboardProjectsNewRoute
@@ -660,6 +700,7 @@ interface DashboardRouteChildren {
 
 const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardMediaRoute: DashboardMediaRoute,
+  DashboardSettingsRoute: DashboardSettingsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardProjectsIdRoute: DashboardProjectsIdRoute,
   DashboardProjectsNewRoute: DashboardProjectsNewRoute,
@@ -713,6 +754,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiCategoriesRoute: ApiCategoriesRoute,
   ApiContactRoute: ApiContactRoute,
   ApiProjectsRoute: ApiProjectsRouteWithChildren,
+  ApiSettingsRoute: ApiSettingsRoute,
   ApiStackRoute: ApiStackRoute,
   ApiTechnologiesRoute: ApiTechnologiesRoute,
   ApiUsersRoute: ApiUsersRouteWithChildren,

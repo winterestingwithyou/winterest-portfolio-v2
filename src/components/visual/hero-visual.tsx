@@ -1,5 +1,7 @@
 import { Code2 } from 'lucide-react'
 
+import { useSiteSettings } from '#/features/settings/hooks'
+
 function BunIcon({ className = 'size-4' }: { className?: string }) {
   return (
     <svg
@@ -53,21 +55,26 @@ const techItems = [
 ] as const
 
 export function HeroVisual() {
+  const { data: settings } = useSiteSettings()
+  const showMascot = settings?.enableCharacter ?? true
+
   return (
     <figure
       className="relative isolate m-0 min-h-[min(34rem,78vw)] overflow-hidden rounded-xl border border-(--brand-line) bg-gradient-to-br from-(--surface-strong)/82 to-(--brand-orange-soft)/56 shadow-2xl max-sm:min-h-[34rem]"
       aria-labelledby="hero-visual-title"
     >
-      <div className="absolute inset-0">
-        <img
-          src="/assets/characters/winterest-mascot.png"
-          alt="Original Winterest developer mascot with orange cloud accents and floating code panels."
-          width={1536}
-          height={1024}
-          fetchPriority="high"
-          className="size-full object-cover object-[50%_48%] saturate-[1.02] contrast-[1.01] max-sm:object-[54%_50%] md:scale-[1.03] md:animate-[hero-visual-float_8s_ease-in-out_infinite]"
-        />
-      </div>
+      {showMascot && (
+        <div className="absolute inset-0">
+          <img
+            src="/assets/characters/winterest-mascot.png"
+            alt="Original Winterest developer mascot with orange cloud accents and floating code panels."
+            width={1536}
+            height={1024}
+            fetchPriority="high"
+            className="size-full object-cover object-[50%_48%] saturate-[1.02] contrast-[1.01] max-sm:object-[54%_50%] md:scale-[1.03] md:animate-[hero-visual-float_8s_ease-in-out_infinite]"
+          />
+        </div>
+      )}
 
       <figcaption className="sr-only" id="hero-visual-title">
         Original Winterest mascot for a Cloudflare and Bun inspired portfolio.

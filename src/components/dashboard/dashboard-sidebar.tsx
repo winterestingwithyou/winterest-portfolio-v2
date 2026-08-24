@@ -88,7 +88,7 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
       label: copy.shell.nav.settings,
       icon: Settings,
       exact: false,
-      disabled: true,
+      disabled: false,
     },
   ]
 

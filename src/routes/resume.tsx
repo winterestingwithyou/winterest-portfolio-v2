@@ -45,7 +45,6 @@ function ResumePage() {
             <div className="text-sm leading-7 text-(--brand-muted) md:text-right">
               <p>{siteProfile.location}</p>
               <p>{siteProfile.contactEmail}</p>
-              <p>{siteProfile.githubUrl}</p>
             </div>
           </section>
 

@@ -3,6 +3,7 @@ import { auth } from '#/lib/auth'
 import {
   canAccessDashboard,
   canManageContent,
+  canManageSettings,
   canManageUsers,
   toDashboardUser,
 } from './roles'
@@ -57,3 +58,23 @@ export async function requireOwnerUser(
 
   return user
 }
+
+export async function requireSettingsUser(
+  request: Request,
+): Promise<DashboardUser | Response> {
+  const user = await getDashboardUserFromRequest(request)
+
+  if (!user) {
+    return Response.json({ error: 'Authentication required.' }, { status: 401 })
+  }
+
+  if (!canManageSettings(user.role)) {
+    return Response.json(
+      { error: 'Insufficient role. Only owner or admin can manage settings.' },
+      { status: 403 },
+    )
+  }
+
+  return user
+}
+

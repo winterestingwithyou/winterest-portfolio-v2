@@ -28,6 +28,7 @@ import {
   siteProfile,
 } from '#/features/portfolio/data'
 import { getPublishedProjects } from '#/features/projects/public-loaders'
+import { useSiteSettings } from '#/features/settings/hooks'
 import { getPublicUltimateStack } from '#/features/technologies/public-loaders'
 import { getLocale } from '#/paraglide/runtime'
 
@@ -58,6 +59,9 @@ export const Route = createFileRoute('/')({
 
 function HomePage() {
   const copy = getPublicCopy()
+  const { data: settings } = useSiteSettings()
+  const githubUrl = settings?.githubUrl || ''
+
   const { projects, ultimateTechs } = Route.useLoaderData()
   const { portfolioStats, enthusiasms, stackGroups } = getPortfolioContent()
   const featuredOnly = projects.filter((project) => project.featured)
@@ -95,15 +99,17 @@ function HomePage() {
                 {copy.home.viewProjects}
                 <ArrowRight aria-hidden="true" className="size-4" />
               </Link>
-              <a
-                href={siteProfile.githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex min-h-11 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-5 text-sm font-bold text-(--brand-ink) no-underline transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
-              >
-                <Github aria-hidden="true" className="size-4" />
-                GitHub
-              </a>
+              {githubUrl && (
+                <a
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-5 text-sm font-bold text-(--brand-ink) no-underline transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
+                >
+                  <Github aria-hidden="true" className="size-4" />
+                  GitHub
+                </a>
+              )}
               <div className="relative">
                 <button
                   type="button"

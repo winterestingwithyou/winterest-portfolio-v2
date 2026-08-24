@@ -24,6 +24,10 @@ export function canManageUsers(role: UserRole): boolean {
   return role === 'owner'
 }
 
+export function canManageSettings(role: UserRole): boolean {
+  return role === 'owner' || role === 'admin'
+}
+
 export function toDashboardUser(value: unknown): DashboardUser | null {
   if (!value || typeof value !== 'object') {
     return null

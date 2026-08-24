@@ -11,8 +11,9 @@ import Header from '../components/header'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
-import { getLocale } from '#/paraglide/runtime'
 import { getPublicCopy } from '#/features/portfolio/data'
+import { useSiteSettings } from '#/features/settings/hooks'
+import { getLocale } from '#/paraglide/runtime'
 
 import appCss from '../styles.css?url'
 
@@ -73,6 +74,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   })
+  const { data: settings } = useSiteSettings()
   const isDashboard = pathname.startsWith('/dashboard')
   const isAuth = pathname.startsWith('/login')
   const usesAppChrome = !isDashboard && !isAuth
@@ -85,6 +87,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="font-sans antialiased wrap-anywhere selection:bg-[rgba(244,129,32,0.22)]">
         <TooltipProvider>
+          {settings?.maintenanceMode && usesAppChrome && (
+            <div className="bg-amber-500 text-slate-950 font-bold px-4 py-2 text-center text-xs border-b border-amber-600 shadow-xs z-50 relative">
+              ⚠️ Maintenance Mode Enabled — Site is currently undergoing updates.
+            </div>
+          )}
           {usesAppChrome ? <Header /> : null}
           {children}
           {usesAppChrome ? <Footer /> : null}

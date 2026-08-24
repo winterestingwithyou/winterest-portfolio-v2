@@ -12,12 +12,6 @@ export const siteProfile = {
     "I'm Adam — a CS student from Sriwijaya who builds web apps, open source tools, and occasional side projects. Online, I go by Winterest.",
   longIntro:
     'I study Computer Science at Universitas Sriwijaya and spend most of my free time building things for the web. This site is my public home for projects, experiments, devlogs, and the work I want people to actually see.',
-  githubUrl: 'https://github.com/winterestingwithyou',
-  githubDisplayName: 'Winterest | M. Adam Yudistira',
-  facebookUrl: 'https://www.facebook.com/adam.yudistira.14203',
-  facebookName: 'Adam Winter',
-  instagramUrl: 'https://instagram.com/adamyyy___',
-  instagramName: 'Adam Y',
   repoUrl: 'https://github.com/winterestingwithyou/winterest-portfolio-v2',
   contactEmail: 'hello@winterest.tech',
 }

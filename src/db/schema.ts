@@ -350,3 +350,14 @@ export const accountRelations = relations(account, ({ one }) => ({
     references: [user.id],
   }),
 }))
+
+export const siteSettings = sqliteTable(
+  'site_settings',
+  {
+    key: text('key').primaryKey(),
+    value: text('value').notNull(),
+    ...timestamps,
+  },
+  (table) => [index('site_settings_key_idx').on(table.key)],
+)
+

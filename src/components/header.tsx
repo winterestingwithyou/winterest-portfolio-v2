@@ -2,7 +2,8 @@ import { Link, useRouterState } from '@tanstack/react-router'
 import { Cloud, Github, LayoutDashboard, Mail, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
+import { getPublicCopy } from '#/features/portfolio/data'
+import { useSiteSettings } from '#/features/settings/hooks'
 import { authClient } from '#/lib/auth-client'
 
 import ParaglideLocaleSwitcher from './locale-switcher.tsx'
@@ -11,6 +12,8 @@ import ThemeToggle from './theme-toggle'
 
 export default function Header() {
   const copy = getPublicCopy()
+  const { data: settings } = useSiteSettings()
+  const githubUrl = settings?.githubUrl || ''
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
@@ -73,15 +76,17 @@ export default function Header() {
         </div>
 
         <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
-          <a
-            href={siteProfile.githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="icon-link hidden sm:inline-grid"
-          >
-            <span className="sr-only">Open GitHub profile</span>
-            <Github aria-hidden="true" className="size-4" />
-          </a>
+          {githubUrl && (
+            <a
+              href={githubUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="icon-link hidden sm:inline-grid"
+            >
+              <span className="sr-only">Open GitHub profile</span>
+              <Github aria-hidden="true" className="size-4" />
+            </a>
+          )}
           <Link to="/contact" className="icon-link hidden sm:inline-grid">
             <span className="sr-only">Contact Winterest</span>
             <Mail aria-hidden="true" className="size-4" />
@@ -130,16 +135,18 @@ export default function Header() {
             )
           })}
           <div className="mobile-nav-actions">
-            <a
-              href={siteProfile.githubUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="mobile-nav-action"
-              tabIndex={mobileNavOpen ? 0 : -1}
-            >
-              <Github aria-hidden="true" className="size-4" />
-              GitHub
-            </a>
+            {githubUrl && (
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="mobile-nav-action"
+                tabIndex={mobileNavOpen ? 0 : -1}
+              >
+                <Github aria-hidden="true" className="size-4" />
+                GitHub
+              </a>
+            )}
             <Link
               to="/contact"
               className="mobile-nav-action"

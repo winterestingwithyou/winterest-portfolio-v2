@@ -467,7 +467,7 @@ export const aboutData = {
         'Perkenalkan aku M. Adam Yudistira (Winterest), seorang Junior Software Engineer / fresh graduate asal Indonesia yang suka membuat aplikasi menggunakan Typescript, Bun, dan Cloudflare.',
       badges: ['INTJ / 4w5', 'Fresh Graduate', 'Fullstack & Edge Explorer'],
       mindsetQuote:
-        'Aku yakin bahwa aku bukanlah seoarang yang cuma bisa nulis ngoding. Tapi juga bisa menganalisis masalah, memberi pertimbangan, design sistem yang robust, dan future-minded.',
+        'Aku yakin bahwa aku bukanlah seoarang yang cuma bisa ngoding. Tapi juga bisa menganalisis masalah, memberi pertimbangan, design sistem yang robust, dan future-minded.',
       cardLabel: 'Mindset Rekayasa',
     },
     drives: {
