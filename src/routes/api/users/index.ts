@@ -16,7 +16,7 @@ import {
   updateUserSchema,
 } from '#/features/users/validation'
 
-export const Route = createFileRoute('/api/users')({
+export const Route = createFileRoute('/api/users/')({
   server: {
     handlers: {
       GET: async ({ request }) => {

@@ -7,7 +7,7 @@ import { requireDashboardUser } from '#/features/auth/session'
 import { createProject, listProjects } from '#/features/projects/queries'
 import { projectInputSchema } from '#/features/projects/validation'
 
-export const Route = createFileRoute('/api/projects')({
+export const Route = createFileRoute('/api/projects/')({
   server: {
     handlers: {
       GET: async ({ request }) => {

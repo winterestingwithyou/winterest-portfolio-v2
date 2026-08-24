@@ -829,7 +829,17 @@ Rules:
 
 Use TanStack Router file-based routing.
 
-Rules:
+### Mandatory Folder-Based Route Structure
+
+- **Strict Folder-Based Routing**: All route files, nested routes, and API endpoints **MUST** use a folder/directory-based structure instead of flat dot-separated file names (flat dot files).
+- **No Flat Dot Routes**: Do **NOT** create flat route files with dot notation (e.g., avoid `src/routes/dashboard.projects.new.tsx`, `src/routes/dashboard.settings.tsx`, `src/routes/api.users.reset-password.ts`, `src/routes/projects.index.tsx`).
+- **Directory Layouts & Index Files**:
+  - Index routes must be inside their feature folder as `index.tsx` / `index.ts` (e.g., `src/routes/projects/index.tsx`, `src/routes/dashboard/users/index.tsx`, `src/routes/api/users/index.ts`).
+  - Sub-resources and dynamic parameters must be nested within dedicated folders (e.g., `src/routes/dashboard/users/$id.tsx`, `src/routes/dashboard/users/new.tsx`, `src/routes/dashboard/stack/categories/$id.tsx`, `src/routes/dashboard/stack/technologies/new.tsx`).
+  - Layout routes should use directory layouts (e.g., `src/routes/dashboard/route.tsx` or parent `src/routes/dashboard.tsx`).
+  - Group nested actions/sub-routes into feature folders (e.g., `src/routes/api/users/reset-password.ts`).
+
+### General Routing Rules
 
 - Public routes should be simple and SEO-friendly.
 - Dynamic slugs should be stable.
@@ -841,22 +851,58 @@ Rules:
 Recommended route grouping:
 
 ```txt
-src/routes/index.tsx
-src/routes/about.tsx
-src/routes/projects/index.tsx
-src/routes/projects/$slug.tsx
-src/routes/lab/index.tsx
-src/routes/lab/$slug.tsx
-src/routes/writing/index.tsx
-src/routes/writing/$slug.tsx
-src/routes/stack.tsx
-src/routes/contact.tsx
-src/routes/resume.tsx
-src/routes/dashboard/index.tsx
-src/routes/dashboard/projects/index.tsx
-src/routes/dashboard/projects/new.tsx
-src/routes/dashboard/projects/$id.tsx
-src/routes/api/auth/$.ts
+src/routes/
+  __root.tsx
+  index.tsx
+  about.tsx
+  contact.tsx
+  login.tsx
+  resume.tsx
+  stack.tsx
+  projects/
+    index.tsx
+    $slug.tsx
+  lab/
+    index.tsx
+    $slug.tsx
+  writing/
+    index.tsx
+    $slug.tsx
+  dashboard/
+    route.tsx          # or dashboard.tsx layout
+    index.tsx
+    media.tsx
+    settings.tsx
+    projects/
+      index.tsx
+      new.tsx
+      $id.tsx
+    stack/
+      index.tsx
+      categories/
+        new.tsx
+        $id.tsx
+      technologies/
+        new.tsx
+        $id.tsx
+    users/
+      index.tsx
+      new.tsx
+      $id.tsx
+  api/
+    auth/
+      $.ts
+    categories.ts
+    contact.ts
+    settings.ts
+    stack.ts
+    technologies.ts
+    projects/
+      index.ts
+      $id.ts
+    users/
+      index.ts
+      reset-password.ts
 ```
 
 ## Server and API Rules
