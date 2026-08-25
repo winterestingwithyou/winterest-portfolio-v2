@@ -331,12 +331,11 @@ function AboutPage() {
                   : index % 3 === 1
                     ? 'border-(--brand-orange-deep)'
                     : 'border-(--brand-orange)/60'
-
               const circleNode = (
                 <motion.div
                   variants={flowNodeVariant}
                   className={cn(
-                    'group relative flex size-14 sm:size-16 shrink-0 items-center justify-center rounded-full border-4 bg-(--surface-strong) text-(--brand-orange-deep) shadow-xl transition-all duration-300 hover:scale-110 hover:border-(--brand-orange) relative z-10',
+                    'group relative flex size-14 sm:size-16 shrink-0 items-center justify-center rounded-full border-4 bg-(--surface-strong) text-(--brand-orange-deep) shadow-xl transition-all duration-300 hover:scale-110 hover:border-(--brand-orange) z-10',
                     isOddStep ? 'sm:-translate-x-6' : 'sm:translate-x-6',
                     borderClass,
                   )}
@@ -345,7 +344,8 @@ function AboutPage() {
                   <span
                     className={cn(
                       'absolute -bottom-1 flex size-5 sm:size-6 items-center justify-center rounded-full bg-(--brand-orange-deep) text-[10px] sm:text-xs font-black text-white shadow-xs',
-                      isOddStep ? '-right-1' : '-left-1',
+                      '-right-1',
+                      isOddStep ? 'sm:-right-1' : 'sm:-left-1',
                     )}
                   >
                     {step.step}
@@ -365,31 +365,26 @@ function AboutPage() {
                 >
                   <div
                     className={cn(
-                      'flex items-center gap-2 flex-wrap',
-                      isOddStep
-                        ? 'justify-start sm:justify-end'
-                        : 'justify-start',
+                      'flex items-center gap-2 flex-wrap justify-start',
+                      isOddStep ? 'sm:justify-end' : 'sm:justify-start',
                     )}
                   >
-                    {isOddStep ? (
-                      <>
-                        <h3 className="text-base sm:text-lg font-black text-(--brand-ink) tracking-tight order-2 sm:order-1">
-                          {step.title}
-                        </h3>
-                        <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[10px] sm:text-xs font-black tracking-widest text-(--brand-orange-deep) uppercase shrink-0 order-1 sm:order-2 border border-(--brand-orange)/20">
-                          Step {step.step}
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[10px] sm:text-xs font-black tracking-widest text-(--brand-orange-deep) uppercase shrink-0 border border-(--brand-orange)/20">
-                          Step {step.step}
-                        </span>
-                        <h3 className="text-base sm:text-lg font-black text-(--brand-ink) tracking-tight">
-                          {step.title}
-                        </h3>
-                      </>
-                    )}
+                    <span
+                      className={cn(
+                        'rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[10px] sm:text-xs font-black tracking-widest text-(--brand-orange-deep) uppercase shrink-0 border border-(--brand-orange)/20',
+                        isOddStep ? 'order-1 sm:order-2' : 'order-1',
+                      )}
+                    >
+                      Step {step.step}
+                    </span>
+                    <h3
+                      className={cn(
+                        'text-base sm:text-lg font-black text-(--brand-ink) tracking-tight',
+                        isOddStep ? 'order-2 sm:order-1' : 'order-2',
+                      )}
+                    >
+                      {step.title}
+                    </h3>
                   </div>
                   <p className="text-xs sm:text-sm leading-relaxed text-(--brand-muted)">
                     {step.description}
@@ -402,9 +397,26 @@ function AboutPage() {
                   key={step.step}
                   initial="hidden"
                   whileInView="visible"
-                  viewport={{ once: true, amount: 0.25, margin: '0px 0px -40px 0px' }}
-                  className="relative"
+                  viewport={{ once: true, amount: 0.1 }}
+                  className="relative pb-8 sm:pb-0"
                 >
+                  {/* Vertical flow connector for mobile */}
+                  {!isLast && (
+                    <div className="sm:hidden absolute left-7 top-10 bottom-[-2.25rem] w-0.5 -translate-x-1/2 pointer-events-none z-0">
+                      <motion.div
+                        variants={{
+                          hidden: { scaleY: 0 },
+                          visible: {
+                            scaleY: 1,
+                            transition: { duration: 0.5, ease: 'easeOut' },
+                          },
+                        }}
+                        style={{ transformOrigin: 'top' }}
+                        className="h-full w-full bg-linear-to-b from-(--brand-orange) via-(--brand-orange) to-(--brand-orange-deep) opacity-85 shadow-[0_0_8px_var(--brand-orange)]"
+                      />
+                    </div>
+                  )}
+
                   {/* Step row: 3-column layout on sm+, flex on mobile */}
                   <div className="flex flex-row items-center gap-4 sm:grid sm:grid-cols-[1fr_140px_1fr] sm:gap-0 min-h-[80px]">
                     {/* Left Column (Content for Odd steps) */}
@@ -427,7 +439,7 @@ function AboutPage() {
                     )}
                   </div>
 
-                  {/* Seamless S-Curve connector between alternating nodes */}
+                  {/* Seamless S-Curve connector between alternating nodes for desktop */}
                   {!isLast && (
                     <div className="hidden sm:grid sm:grid-cols-[1fr_140px_1fr] items-center pointer-events-none -my-4 relative z-0">
                       <div aria-hidden="true" />
