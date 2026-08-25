@@ -366,7 +366,7 @@ export const aboutData = {
               name: 'Arlecchino',
               reason: 'Strong "baddie" appeal and sleek combat.',
               image:
-                'https://static.wikia.nocookie.net/genshin-impact/images/6/69/Arlecchino_Birthday_2024.jpg/revision/latest/scale-to-width-down/1200?cb=20240822040458',
+                'https://upload-os-bbs.hoyolab.com/upload/2022/07/20/43682162/35c6f8b267f8ef6a75ea8ad3cb9ca96d_2245523228234067124.jpg',
             },
             {
               name: 'Wanderer',
@@ -384,7 +384,7 @@ export const aboutData = {
               name: 'Tsaritsa',
               reason: 'The ultimate queen of Snezhnaya.',
               image:
-                'https://static.wikia.nocookie.net/genshin-impact/images/f/f5/Tsaritsa_Illustration.png/revision/latest?cb=20260627014155',
+                'https://static.wikia.nocookie.net/villains/images/e/e9/TheTsaritsa.webp/revision/latest/thumbnail/width/360/height/450?cb=20260626041211',
             },
           ],
         },
@@ -651,7 +651,7 @@ export const aboutData = {
       goldenRule: 'Tulis kode untuk masa depan.',
     },
     journey: {
-      eyebrow: '04 / PERJALANAN REKAYASA',
+      eyebrow: '04 / PERJALANANKU',
       title: 'Bagaimana cara berpikirku berkembang dari waktu ke waktu.',
       subtitle:
         'Perkembanganku sebagai developer bukan sekadar daftar bahasa yang dipelajari, tapi transformasi dalam cara berpikir saat membangun software.',

@@ -1,6 +1,8 @@
 import type { ComponentPropsWithoutRef } from 'react'
+import { useState } from 'react'
+import { motion } from 'motion/react'
 
-import { cn } from '#/lib/utils.ts'
+import { cn } from '#/lib/utils'
 
 interface MarqueeProps extends ComponentPropsWithoutRef<'div'> {
   /**
@@ -28,7 +30,7 @@ interface MarqueeProps extends ComponentPropsWithoutRef<'div'> {
   vertical?: boolean
   /**
    * Number of times to repeat the content
-   * @default 4
+   * @default 6
    */
   repeat?: number
 }
@@ -39,36 +41,68 @@ export function Marquee({
   pauseOnHover = false,
   children,
   vertical = false,
-  repeat = 4,
+  repeat = 6,
   ...props
 }: MarqueeProps) {
+  const [isHovered, setIsHovered] = useState(false)
+
   return (
     <div
       {...props}
       className={cn(
-        'group flex gap-(--gap) overflow-hidden p-2 [--duration:40s] [--gap:1rem]',
-        {
-          'flex-row': !vertical,
-          'flex-col': vertical,
-        },
+        'group flex overflow-hidden p-2',
+        vertical ? 'flex-col' : 'flex-row',
         className,
       )}
+      style={{
+        gap: '1.5rem',
+        ...props.style,
+      }}
+      onMouseEnter={() => pauseOnHover && setIsHovered(true)}
+      onMouseLeave={() => pauseOnHover && setIsHovered(false)}
     >
-      {Array(repeat)
-        .fill(0)
-        .map((_, i) => (
-          <div
-            key={i}
-            className={cn('flex shrink-0 justify-around gap-(--gap)', {
-              'animate-marquee flex-row': !vertical,
-              'animate-marquee-vertical flex-col': vertical,
-              'group-hover:[animation-play-state:paused]': pauseOnHover,
-              '[animation-direction:reverse]': reverse,
-            })}
-          >
-            {children}
-          </div>
-        ))}
+      {Array.from({ length: repeat }).map((_, i) => (
+        <motion.div
+          key={i}
+          aria-hidden={i > 0}
+          animate={
+            isHovered && pauseOnHover
+              ? false
+              : {
+                  x: vertical
+                    ? 0
+                    : reverse
+                      ? ['-100%', '0%']
+                      : ['0%', '-100%'],
+                  y: !vertical
+                    ? 0
+                    : reverse
+                      ? ['-100%', '0%']
+                      : ['0%', '-100%'],
+                }
+          }
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: 'loop',
+              duration: 30,
+              ease: 'linear',
+            },
+            y: {
+              repeat: Infinity,
+              repeatType: 'loop',
+              duration: 30,
+              ease: 'linear',
+            },
+          }}
+          className={cn(
+            'flex shrink-0 items-center gap-6',
+            vertical ? 'flex-col' : 'flex-row',
+          )}
+        >
+          {children}
+        </motion.div>
+      ))}
     </div>
   )
 }

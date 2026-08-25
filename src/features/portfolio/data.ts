@@ -233,33 +233,6 @@ const idEnthusiasms = [
   },
 ] as const
 
-const idStackGroups = [
-  {
-    ...stackGroups[0],
-    title: 'Runtime dan Edge',
-    description:
-      'Tools yang kupakai untuk menjaga iterasi lokal tetap cepat sambil menjaga deployment dekat dengan edge.',
-  },
-  {
-    ...stackGroups[1],
-    title: 'UI Fullstack',
-    description:
-      'Stack React praktis untuk routing, server state, forms, tables, dan shared UI state.',
-  },
-  {
-    ...stackGroups[2],
-    title: 'Data dan Auth',
-    description:
-      'Layer yang tidak selalu glamor tapi penting untuk konten, session, validasi, dan kerja dashboard yang aman.',
-  },
-  {
-    ...stackGroups[3],
-    title: 'Design System',
-    description:
-      'Primitive UI yang dibentuk menjadi bahasa visual Winterest yang hangat, orange, dan ramah dark mode.',
-  },
-] as const
-
 const idTimeline = [
   {
     period: 'Sekarang',
@@ -320,6 +293,9 @@ export const publicCopy = {
       stackTitle: 'Tools I actually use.',
       stackDescription:
         'My current go-to stack — chosen because they are fast to iterate with, pleasant to maintain, and edge-friendly enough for serious deployment.',
+      emptyUltimateTitle: 'Ultimate tech stack coming soon!',
+      emptyUltimateDescription:
+        'Core tech stack entries are currently being curated and will be published shortly.',
       ctaTitle:
         'Open to collaborations, side projects, and good conversations about coding stuff.',
       contact: 'Say hi',
@@ -491,6 +467,9 @@ export const publicCopy = {
       stackTitle: 'Teknologi yang paling suka kupakai',
       stackDescription:
         'Stack Utama, Prefer tech stack ini saat membuat project baru',
+      emptyUltimateTitle: 'Tech stack utama akan segera hadir!',
+      emptyUltimateDescription:
+        'Daftar teknologi andalan sedang disiapkan dan akan segera ditampilkan di sini.',
       ctaTitle:
         'Terbuka untuk kolaborasi, side project, dan ngobrol tentang ngoding.',
       contact: 'Sapa aku',
@@ -642,7 +621,6 @@ export function getPortfolioContent() {
       portfolioStats: idPortfolioStats,
       principles: idPrinciples,
       enthusiasms: idEnthusiasms,
-      stackGroups: idStackGroups,
       timeline: idTimeline,
     }
   }

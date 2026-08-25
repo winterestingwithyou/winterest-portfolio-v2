@@ -16,6 +16,7 @@ import {
   Terminal,
   Workflow,
 } from 'lucide-react'
+import { motion } from 'motion/react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { ProjectCard } from '#/components/portfolio/project-card'
@@ -30,6 +31,15 @@ import {
 import { getPublishedProjects } from '#/features/projects/public-loaders'
 import { useSiteSettings } from '#/features/settings/hooks'
 import { getPublicUltimateStack } from '#/features/technologies/public-loaders'
+import {
+  defaultViewport,
+  fadeIn,
+  fadeUp,
+  scaleIn,
+  staggerContainer,
+  staggerItem,
+  staggerItemScale,
+} from '#/lib/motion'
 import { getLocale } from '#/paraglide/runtime'
 
 const ENTHUSIASM_ICONS = {
@@ -63,7 +73,7 @@ function HomePage() {
   const githubUrl = settings?.githubUrl || ''
 
   const { projects, ultimateTechs } = Route.useLoaderData()
-  const { portfolioStats, enthusiasms, stackGroups } = getPortfolioContent()
+  const { portfolioStats, enthusiasms } = getPortfolioContent()
   const featuredOnly = projects.filter((project) => project.featured)
   const highlightedProjects =
     featuredOnly.length > 0 ? featuredOnly.slice(0, 4) : projects.slice(0, 4)
@@ -77,21 +87,46 @@ function HomePage() {
 
   return (
     <main>
+      {/* Hero Section */}
       <section className="px-4 pb-16 pt-14 sm:pb-24 sm:pt-20">
-        <Container className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-          <div>
-            <p className="eyebrow mb-5">{copy.home.eyebrow}</p>
-            <h1 className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-tight text-(--brand-ink) sm:text-6xl lg:text-7xl">
-              {copy.home.title}
-            </h1>
-            <p className="mt-6 max-w-xl text-lg leading-8 text-(--brand-ink)">
-              {copy.home.intro}
-            </p>
-            <p className="mt-3 max-w-xl text-base leading-7 text-(--brand-muted)">
-              {copy.home.introSuffix}
-            </p>
+        <Container className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          {/* Visual rendered first on mobile, right on desktop */}
+          <div className="order-1 flex w-full justify-center lg:order-2">
+            <HeroVisual />
+          </div>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+          <motion.div
+            variants={staggerContainer(0.09, 0.1)}
+            initial="hidden"
+            animate="visible"
+            className="order-2 lg:order-1"
+          >
+            <motion.p variants={fadeUp} className="eyebrow mb-5">
+              {copy.home.eyebrow}
+            </motion.p>
+            <motion.h1
+              variants={fadeUp}
+              className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-tight text-(--brand-ink) sm:text-6xl lg:text-7xl"
+            >
+              {copy.home.title}
+            </motion.h1>
+            <motion.p
+              variants={fadeUp}
+              className="mt-6 max-w-xl text-lg leading-8 text-(--brand-ink)"
+            >
+              {copy.home.intro}
+            </motion.p>
+            <motion.p
+              variants={fadeUp}
+              className="mt-3 max-w-xl text-base leading-7 text-(--brand-muted)"
+            >
+              {copy.home.introSuffix}
+            </motion.p>
+
+            <motion.div
+              variants={fadeUp}
+              className="mt-8 flex flex-wrap items-center gap-3"
+            >
               <Link
                 to="/projects"
                 className="inline-flex min-h-11 items-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-bold text-white no-underline shadow-[0_18px_48px_var(--brand-glow)] transition hover:-translate-y-0.5"
@@ -129,34 +164,51 @@ function HomePage() {
                   </div>
                 ) : null}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="mt-10 grid gap-3 sm:grid-cols-3">
+            <motion.div
+              variants={staggerContainer(0.07, 0.35)}
+              className="mt-10 grid gap-3 sm:grid-cols-3"
+            >
               {portfolioStats.map((stat) => (
-                <div key={stat.label} className="surface-card p-4">
+                <motion.div
+                  key={stat.label}
+                  variants={staggerItemScale}
+                  className="surface-card p-4"
+                >
                   <p className="m-0 text-xs font-semibold uppercase tracking-wide text-(--brand-muted)">
                     {stat.label}
                   </p>
                   <p className="mt-2 text-lg font-semibold text-(--brand-ink)">
                     {stat.value}
                   </p>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
-
-          <HeroVisual />
+            </motion.div>
+          </motion.div>
         </Container>
       </section>
 
-      <section className="px-4 py-14">
+      {/* Featured Projects Section */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={defaultViewport}
+        variants={fadeIn}
+        className="px-4 py-14"
+      >
         <Container>
-          <SectionHeader
-            eyebrow={copy.home.featuredEyebrow}
-            title={copy.home.featuredTitle}
-            description={copy.home.featuredDescription}
-          />
-          <div className="grid gap-6 md:grid-cols-2">
+          <motion.div variants={fadeUp}>
+            <SectionHeader
+              eyebrow={copy.home.featuredEyebrow}
+              title={copy.home.featuredTitle}
+              description={copy.home.featuredDescription}
+            />
+          </motion.div>
+          <motion.div
+            variants={staggerContainer(0.12, 0.1)}
+            className="grid gap-6 md:grid-cols-2"
+          >
             {highlightedProjects.length === 0 ? (
               <div className="surface-card p-6 md:col-span-2">
                 <h3 className="text-2xl font-semibold text-(--brand-ink)">
@@ -168,11 +220,13 @@ function HomePage() {
               </div>
             ) : null}
             {highlightedProjects.map((project) => (
-              <ProjectCard key={project.slug} project={project} />
+              <motion.div key={project.slug} variants={staggerItem}>
+                <ProjectCard project={project} />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <div className="mt-10 flex justify-center">
+          <motion.div variants={fadeUp} className="mt-10 flex justify-center">
             <Link
               to="/projects"
               className="inline-flex min-h-11 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-card) px-6 text-sm font-bold text-(--brand-ink) no-underline shadow-xs transition duration-300 hover:-translate-y-0.5 hover:border-(--brand-orange) hover:text-(--brand-orange-deep) hover:shadow-[0_8px_20px_var(--brand-orange-soft)]"
@@ -180,25 +234,41 @@ function HomePage() {
               {copy.home.viewProjects}
               <ArrowRight aria-hidden="true" className="size-4" />
             </Link>
-          </div>
+          </motion.div>
         </Container>
-      </section>
+      </motion.section>
 
       {/* Enthusiasms & Focus Areas Section */}
       <section className="px-4 py-14">
         <Container>
-          <SectionHeader
-            eyebrow={copy.home.enthusiasmsEyebrow}
-            title={copy.home.enthusiasmsTitle}
-            description={copy.home.enthusiasmsDescription}
-          />
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={defaultViewport}
+            variants={fadeUp}
+          >
+            <SectionHeader
+              eyebrow={copy.home.enthusiasmsEyebrow}
+              title={copy.home.enthusiasmsTitle}
+              description={copy.home.enthusiasmsDescription}
+            />
+          </motion.div>
+
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {enthusiasms.map((item) => {
               const Icon = ENTHUSIASM_ICONS[item.iconName]
 
               return (
-                <article
+                <motion.article
                   key={item.title}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{
+                    once: true,
+                    amount: 0.2,
+                    margin: '0px 0px -40px 0px',
+                  }}
+                  variants={fadeUp}
                   className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-(--brand-line) bg-(--surface-card) p-6 transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-[0_20px_35px_-5px_var(--brand-orange-soft)]"
                 >
                   {/* Background ambient glow on hover */}
@@ -216,7 +286,7 @@ function HomePage() {
                       {item.description}
                     </p>
                   </div>
-                </article>
+                </motion.article>
               )
             })}
           </div>
@@ -224,21 +294,32 @@ function HomePage() {
       </section>
 
       {/* Ultimate Tech Stack Marquee Section */}
-      <section className="py-14">
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={defaultViewport}
+        variants={fadeIn}
+        className="py-14"
+      >
         <Container>
-          <SectionHeader
-            eyebrow={copy.stack.ultimateEyebrow}
-            title={copy.home.stackTitle}
-            description={copy.home.stackDescription}
-          />
+          <motion.div variants={fadeUp}>
+            <SectionHeader
+              eyebrow={copy.stack.ultimateEyebrow}
+              title={copy.home.stackTitle}
+              description={copy.home.stackDescription}
+            />
+          </motion.div>
         </Container>
 
         {ultimateTechs.length > 0 ? (
-          <div className="relative mt-8 w-full overflow-hidden py-2">
+          <motion.div
+            variants={fadeUp}
+            className="relative mt-8 w-full overflow-hidden py-2"
+          >
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-(--brand-bg) to-transparent sm:w-24" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-(--brand-bg) to-transparent sm:w-24" />
 
-            <Marquee pauseOnHover className="py-4 [--duration:30s]" repeat={4}>
+            <Marquee pauseOnHover className="py-4 [--duration:30s]" repeat={6}>
               {ultimateTechs.map((tech) => (
                 <div
                   key={tech.id}
@@ -271,38 +352,37 @@ function HomePage() {
                 </div>
               ))}
             </Marquee>
-          </div>
+          </motion.div>
         ) : (
           <Container className="mt-8">
-            <div className="grid gap-4 sm:grid-cols-2">
-              {stackGroups.map((group) => (
-                <article key={group.title} className="surface-card p-5">
-                  <h3 className="text-lg font-semibold text-(--brand-ink)">
-                    {group.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-7 text-(--brand-muted)">
-                    {group.description}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {group.items.slice(0, 4).map((item) => (
-                      <span
-                        key={item}
-                        className="rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-bold text-(--brand-orange-deep)"
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </div>
+            <motion.div
+              variants={fadeUp}
+              className="surface-card mx-auto max-w-xl p-8 text-center"
+            >
+              <h3 className="text-xl font-bold text-(--brand-ink)">
+                {copy.home.emptyUltimateTitle}
+              </h3>
+              <p className="mt-2 text-sm text-(--brand-muted)">
+                {copy.home.emptyUltimateDescription}
+              </p>
+            </motion.div>
           </Container>
         )}
-      </section>
+      </motion.section>
 
-      <section className="px-4 py-14">
+      {/* Command Strip CTA Section */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={defaultViewport}
+        variants={fadeIn}
+        className="px-4 py-14"
+      >
         <Container>
-          <div className="command-strip grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
+          <motion.div
+            variants={scaleIn}
+            className="command-strip grid gap-6 p-6 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center"
+          >
             <div>
               <p className="m-0 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wide text-orange-200">
                 <Terminal aria-hidden="true" className="size-4" />
@@ -319,9 +399,9 @@ function HomePage() {
               <Mail aria-hidden="true" className="size-4" />
               {copy.home.contact}
             </a>
-          </div>
+          </motion.div>
         </Container>
-      </section>
+      </motion.section>
     </main>
   )
 }

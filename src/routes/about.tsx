@@ -24,6 +24,7 @@ import {
   Users,
   Zap,
 } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
@@ -32,8 +33,20 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '#/components/ui/popover'
+import { Timeline } from '#/components/ui/timeline'
 import { getAboutData } from '#/features/portfolio/about-data'
 import type { PriorityItem } from '#/features/portfolio/about-data'
+import {
+  defaultViewport,
+  fadeUp,
+  flowNodeVariant,
+  flowPathVariant,
+  scaleIn,
+  staggerContainer,
+  staggerItem,
+  staggerItemScale,
+  timelineStepVariant,
+} from '#/lib/motion'
 import { cn } from '#/lib/utils'
 
 const STEP_ICONS = [Target, Flag, Compass, Code2, ShieldCheck, Rocket, Sparkles]
@@ -92,36 +105,59 @@ function AboutPage() {
         {/* ==================================================================== */}
         <section className="relative">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-(--brand-line) bg-(--brand-orange-soft) px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
+            <motion.div
+              variants={staggerContainer(0.08, 0.1)}
+              initial="hidden"
+              animate="visible"
+              className="space-y-6"
+            >
+              <motion.div
+                variants={fadeUp}
+                className="inline-flex items-center gap-2 rounded-full border border-(--brand-line) bg-(--brand-orange-soft) px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep)"
+              >
                 <Brain className="size-3.5" />
                 <span>{data.hero.eyebrow}</span>
-              </div>
+              </motion.div>
 
-              <h1 className="text-4xl font-bold tracking-tight text-(--brand-ink) sm:text-5xl lg:text-6xl leading-[1.15]">
+              <motion.h1
+                variants={fadeUp}
+                className="text-4xl font-bold tracking-tight text-(--brand-ink) sm:text-5xl lg:text-6xl leading-[1.15]"
+              >
                 {data.hero.title}
-              </h1>
+              </motion.h1>
 
-              <p className="text-lg leading-relaxed text-(--brand-muted) sm:text-xl">
+              <motion.p
+                variants={fadeUp}
+                className="text-lg leading-relaxed text-(--brand-muted) sm:text-xl"
+              >
                 {data.hero.subtitle}
-              </p>
+              </motion.p>
 
               {/* Personality Badges */}
-              <div className="flex flex-wrap gap-2 pt-2">
+              <motion.div
+                variants={staggerContainer(0.06, 0.2)}
+                className="flex flex-wrap gap-2 pt-2"
+              >
                 {data.hero.badges.map((badge) => (
-                  <span
+                  <motion.span
                     key={badge}
+                    variants={staggerItemScale}
                     className="inline-flex items-center gap-1.5 rounded-md border border-(--brand-line) bg-(--surface-strong) px-3 py-1.5 text-xs font-semibold text-(--brand-ink) shadow-xs"
                   >
                     <Sparkles className="size-3.5 text-(--brand-orange)" />
                     {badge}
-                  </span>
+                  </motion.span>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Quote Card */}
-            <div className="surface-card relative overflow-hidden p-6 sm:p-8 border-l-4 border-l-(--brand-orange)">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={scaleIn}
+              className="surface-card relative overflow-hidden p-6 sm:p-8 border-l-4 border-l-(--brand-orange)"
+            >
               <div className="absolute right-4 top-4 opacity-10 text-(--brand-orange)">
                 <Terminal className="size-28" />
               </div>
@@ -137,7 +173,7 @@ function AboutPage() {
                   — M. Adam Yudistira (Winterest)
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -145,15 +181,23 @@ function AboutPage() {
         {/* 2. WHAT DRIVES ME */}
         {/* ==================================================================== */}
         <section className="space-y-8">
-          <SectionHeader
-            eyebrow={data.drives.eyebrow}
-            title={data.drives.title}
-            description={data.drives.subtitle}
-          />
+          <motion.div initial="hidden" whileInView="visible" viewport={defaultViewport} variants={fadeUp}>
+            <SectionHeader
+              eyebrow={data.drives.eyebrow}
+              title={data.drives.title}
+              description={data.drives.subtitle}
+            />
+          </motion.div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
+          <motion.div
+            variants={staggerContainer(0.1, 0.1)}
+            className="grid gap-6 lg:grid-cols-3"
+          >
             {/* Card 1: Origin & Curiosity */}
-            <div className="surface-card flex flex-col justify-between p-6 sm:p-8 space-y-6">
+            <motion.div
+              variants={staggerItem}
+              className="surface-card flex flex-col justify-between p-6 sm:p-8 space-y-6"
+            >
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
                   <Compass className="size-4" />
@@ -179,10 +223,13 @@ function AboutPage() {
                   {data.drives.curiosityDetail}
                 </p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 2: Mindset, Refactoring & Forecasting */}
-            <div className="surface-card flex flex-col justify-between p-6 sm:p-8 space-y-6 bg-linear-to-br from-(--surface-strong) to-(--brand-orange-soft)/30">
+            <motion.div
+              variants={staggerItem}
+              className="surface-card flex flex-col justify-between p-6 sm:p-8 space-y-6 bg-linear-to-br from-(--surface-strong) to-(--brand-orange-soft)/30"
+            >
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 rounded-full bg-(--brand-orange) px-3 py-1 text-xs font-bold text-white shadow-xs">
                   <Flame className="size-3.5" />
@@ -220,10 +267,13 @@ function AboutPage() {
                   </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
             {/* Card 3: Hierarchy of Satisfaction */}
-            <div className="surface-card flex flex-col justify-between p-6 sm:p-8 space-y-4">
+            <motion.div
+              variants={staggerItem}
+              className="surface-card flex flex-col justify-between p-6 sm:p-8 space-y-4"
+            >
               <div>
                 <h3 className="text-lg font-bold text-(--brand-ink) flex items-center gap-2">
                   <Award className="size-5 text-(--brand-orange-deep)" />
@@ -253,19 +303,21 @@ function AboutPage() {
               <div className="mt-4 rounded-lg border border-(--brand-line) bg-(--surface-strong) p-3 text-[11px] italic leading-relaxed text-(--brand-muted)">
                 {data.drives.hierarchyNote}
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </section>
 
         {/* ==================================================================== */}
         {/* 3. HOW I BUILD (WORKFLOW) */}
         {/* ==================================================================== */}
         <section className="space-y-12">
-          <SectionHeader
-            eyebrow={data.workflow.eyebrow}
-            title={data.workflow.title}
-            description={data.workflow.subtitle}
-          />
+          <motion.div variants={fadeUp}>
+            <SectionHeader
+              eyebrow={data.workflow.eyebrow}
+              title={data.workflow.title}
+              description={data.workflow.subtitle}
+            />
+          </motion.div>
 
           {/* Central Serpentine S-Curve Workflow Timeline */}
           <div className="max-w-4xl mx-auto px-3 sm:px-6">
@@ -281,7 +333,8 @@ function AboutPage() {
                     : 'border-(--brand-orange)/60'
 
               const circleNode = (
-                <div
+                <motion.div
+                  variants={flowNodeVariant}
                   className={cn(
                     'group relative flex size-14 sm:size-16 shrink-0 items-center justify-center rounded-full border-4 bg-(--surface-strong) text-(--brand-orange-deep) shadow-xl transition-all duration-300 hover:scale-110 hover:border-(--brand-orange) relative z-10',
                     isOddStep ? 'sm:-translate-x-6' : 'sm:translate-x-6',
@@ -297,11 +350,12 @@ function AboutPage() {
                   >
                     {step.step}
                   </span>
-                </div>
+                </motion.div>
               )
 
               const textNode = (
-                <div
+                <motion.div
+                  variants={timelineStepVariant(isOddStep)}
                   className={cn(
                     'space-y-1.5 transition-all duration-200',
                     isOddStep
@@ -340,11 +394,17 @@ function AboutPage() {
                   <p className="text-xs sm:text-sm leading-relaxed text-(--brand-muted)">
                     {step.description}
                   </p>
-                </div>
+                </motion.div>
               )
 
               return (
-                <div key={step.step} className="relative">
+                <motion.div
+                  key={step.step}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.25, margin: '0px 0px -40px 0px' }}
+                  className="relative"
+                >
                   {/* Step row: 3-column layout on sm+, flex on mobile */}
                   <div className="flex flex-row items-center gap-4 sm:grid sm:grid-cols-[1fr_140px_1fr] sm:gap-0 min-h-[80px]">
                     {/* Left Column (Content for Odd steps) */}
@@ -399,7 +459,11 @@ function AboutPage() {
                               />
                             </linearGradient>
                           </defs>
-                          <path
+                          <motion.path
+                            variants={flowPathVariant}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.3 }}
                             d={
                               isOddStep
                                 ? 'M 46 0 C 46 48, 94 32, 94 80'
@@ -415,13 +479,16 @@ function AboutPage() {
                       <div aria-hidden="true" />
                     </div>
                   )}
-                </div>
+                </motion.div>
               )
             })}
           </div>
 
           {/* Tech Selection & Philosophy Banner */}
-          <div className="surface-card grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.5fr_0.8fr] lg:items-center bg-linear-to-r from-(--surface-strong) via-(--brand-orange-soft)/20 to-(--surface-strong)">
+          <motion.div
+            variants={scaleIn}
+            className="surface-card grid gap-6 p-6 sm:p-8 lg:grid-cols-[1.5fr_0.8fr] lg:items-center bg-linear-to-r from-(--surface-strong) via-(--brand-orange-soft)/20 to-(--surface-strong)"
+          >
             <div className="space-y-3">
               <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
                 <Code2 className="size-4" />
@@ -440,30 +507,29 @@ function AboutPage() {
                 "{data.workflow.goldenRule}"
               </span>
             </div>
-          </div>
+          </motion.div>
         </section>
 
         {/* ==================================================================== */}
         {/* 4. MY JOURNEY */}
         {/* ==================================================================== */}
         <section className="space-y-8">
-          <SectionHeader
-            eyebrow={data.journey.eyebrow}
-            title={data.journey.title}
-            description={data.journey.subtitle}
-          />
+          <motion.div initial="hidden" whileInView="visible" viewport={defaultViewport} variants={fadeUp}>
+            <SectionHeader
+              eyebrow={data.journey.eyebrow}
+              title={data.journey.title}
+              description={data.journey.subtitle}
+            />
+          </motion.div>
 
-          <div className="relative border-l-2 border-(--brand-line) pl-6 sm:pl-8 space-y-10 ml-2 sm:ml-4">
-            {data.journey.steps.map((step) => (
-              <div key={step.year} className="relative group">
-                {/* Timeline Node Dot */}
-                <div className="absolute left-[-31px] sm:left-[-39px] top-1 grid size-5 place-items-center rounded-full border-2 border-(--brand-orange) bg-(--site-bg) text-(--brand-orange) group-hover:bg-(--brand-orange) group-hover:text-white transition-colors">
-                  <div className="size-2 rounded-full bg-current" />
-                </div>
-
-                <div className="surface-card p-6 transition-all hover:border-(--brand-orange)">
+          <Timeline
+            data={data.journey.steps.map((step) => ({
+              title: step.year,
+              tagline: step.tagline,
+              content: (
+                <div className="surface-card p-5 sm:p-6 transition-all hover:border-(--brand-orange) hover:shadow-[0_12px_32px_var(--brand-glow)]">
                   <div className="flex flex-wrap items-center justify-between gap-2 border-b border-(--brand-line) pb-3 mb-3">
-                    <span className="text-sm font-black tracking-wider text-(--brand-orange-deep) uppercase">
+                    <span className="text-sm font-black tracking-wider text-(--brand-orange-deep) uppercase md:hidden">
                       {step.year}
                     </span>
                     <span className="text-xs font-semibold text-(--brand-muted) italic">
@@ -491,13 +557,19 @@ function AboutPage() {
                     </div>
                   ) : null}
                 </div>
-              </div>
-            ))}
-          </div>
+              ),
+            }))}
+          />
 
           {/* Current Stage & Soft Skills Callout */}
           <div className="grid gap-4 sm:grid-cols-2">
-            <div className="surface-card p-5 border-l-4 border-l-sky-500">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2, margin: '0px 0px -40px 0px' }}
+              variants={fadeUp}
+              className="surface-card p-5 border-l-4 border-l-sky-500"
+            >
               <h4 className="text-sm font-bold text-(--brand-ink) flex items-center gap-2">
                 <BookOpen className="size-4 text-sky-500" />
                 {data.journey.currentStageTitle}
@@ -505,8 +577,14 @@ function AboutPage() {
               <p className="mt-2 text-xs leading-relaxed text-(--brand-muted)">
                 {data.journey.currentStage}
               </p>
-            </div>
-            <div className="surface-card p-5 border-l-4 border-l-emerald-500">
+            </motion.div>
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2, margin: '0px 0px -40px 0px' }}
+              variants={fadeUp}
+              className="surface-card p-5 border-l-4 border-l-emerald-500"
+            >
               <h4 className="text-sm font-bold text-(--brand-ink) flex items-center gap-2">
                 <Users className="size-4 text-emerald-500" />
                 {data.journey.growthFocusTitle}
@@ -514,7 +592,7 @@ function AboutPage() {
               <p className="mt-2 text-xs leading-relaxed text-(--brand-muted)">
                 {data.journey.softSkillsFocus}
               </p>
-            </div>
+            </motion.div>
           </div>
         </section>
 
@@ -522,24 +600,33 @@ function AboutPage() {
         {/* 5. THINGS I CARE ABOUT (VALUES) */}
         {/* ==================================================================== */}
         <section className="space-y-8">
-          <SectionHeader
-            eyebrow={data.values.eyebrow}
-            title={data.values.title}
-            description={data.values.subtitle}
-          />
+          <motion.div initial="hidden" whileInView="visible" viewport={defaultViewport} variants={fadeUp}>
+            <SectionHeader
+              eyebrow={data.values.eyebrow}
+              title={data.values.title}
+              description={data.values.subtitle}
+            />
+          </motion.div>
 
-          <div className="surface-card p-4 sm:p-5 bg-(--brand-orange-soft)/40 border-(--brand-line) text-xs text-(--brand-orange-deep) font-semibold flex items-center gap-3">
+          <motion.div
+            variants={fadeUp}
+            className="surface-card p-4 sm:p-5 bg-(--brand-orange-soft)/40 border-(--brand-line) text-xs text-(--brand-orange-deep) font-semibold flex items-center gap-3"
+          >
             <ShieldCheck className="size-5 shrink-0 text-(--brand-orange)" />
             <span>{data.values.contextNote}</span>
-          </div>
+          </motion.div>
 
           {/* Priority Cards Grid */}
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {data.values.items.map((item: PriorityItem) => {
               const isExpanded = expandedValueKey === item.key
               return (
-                <div
+                <motion.div
                   key={item.key}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2, margin: '0px 0px -40px 0px' }}
+                  variants={fadeUp}
                   onClick={() => toggleValue(item.key)}
                   className={cn(
                     'surface-card cursor-pointer p-4 transition-all duration-200 hover:border-(--brand-orange)',
@@ -571,12 +658,22 @@ function AboutPage() {
                     {item.summary}
                   </p>
 
-                  {isExpanded ? (
-                    <div className="mt-3 pt-3 border-t border-(--brand-line) text-xs leading-relaxed text-(--brand-muted) animate-in fade-in-50 duration-200">
-                      {item.detail}
-                    </div>
-                  ) : null}
-                </div>
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="mt-3 pt-3 border-t border-(--brand-line) text-xs leading-relaxed text-(--brand-muted)">
+                          {item.detail}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
               )
             })}
           </div>
@@ -586,14 +683,19 @@ function AboutPage() {
         {/* 6. BEYOND CODE */}
         {/* ==================================================================== */}
         <section className="space-y-8">
-          <SectionHeader
-            eyebrow={data.beyond.eyebrow}
-            title={data.beyond.title}
-            description={data.beyond.subtitle}
-          />
+          <motion.div initial="hidden" whileInView="visible" viewport={defaultViewport} variants={fadeUp}>
+            <SectionHeader
+              eyebrow={data.beyond.eyebrow}
+              title={data.beyond.title}
+              description={data.beyond.subtitle}
+            />
+          </motion.div>
 
           {/* Subtabs Navigation */}
-          <div className="flex flex-wrap gap-2 border-b border-(--brand-line) pb-4">
+          <motion.div
+            variants={fadeUp}
+            className="flex flex-wrap gap-2 border-b border-(--brand-line) pb-4"
+          >
             <button
               type="button"
               onClick={() => setActiveBeyondTab('gaming')}
@@ -633,479 +735,514 @@ function AboutPage() {
               <Music className="size-4" />
               <span>{data.beyond.kpop.title}</span>
             </button>
-          </div>
+          </motion.div>
 
           {/* Tab Content */}
           <div className="pt-2">
-            {/* GAMING TAB */}
-            {activeBeyondTab === 'gaming' && (
-              <div className="space-y-6 animate-in fade-in-50 duration-200">
-                {/* 1. Mobile Legends Row */}
-                <div className="surface-card p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 transition-all hover:border-(--brand-orange)">
-                  <div className="flex items-start gap-4 sm:gap-5 max-w-2xl">
-                    <img
-                      src={data.beyond.gaming.mlbb.iconUrl}
-                      alt={data.beyond.gaming.mlbb.name}
-                      referrerPolicy="no-referrer"
-                      loading="lazy"
-                      className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover shadow-xs"
-                    />
-                    <div className="space-y-2">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
-                          MOBA
-                        </span>
-                        <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[11px] font-bold text-(--brand-orange-deep)">
-                          {data.beyond.gaming.mlbb.server}
-                        </span>
-                        <span className="text-xs text-(--brand-muted)">
-                          IGN:{' '}
-                          <span className="font-bold text-(--brand-ink)">
-                            {data.beyond.gaming.mlbb.ign}
-                          </span>
-                        </span>
-                      </div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-(--brand-ink)">
-                        {data.beyond.gaming.mlbb.name}
-                      </h3>
-                      <p className="text-xs sm:text-sm leading-relaxed text-(--brand-muted)">
-                        {data.beyond.gaming.mlbb.notes}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Hirara Hero Spotlight */}
-                  <div className="group flex items-center gap-4 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3 sm:p-4 shrink-0 transition-all hover:border-(--brand-orange)">
-                    <div className="relative size-16 sm:size-20 shrink-0 overflow-hidden rounded-lg border border-(--brand-orange)/40 bg-black/20 shadow-xs">
+            <AnimatePresence mode="wait">
+              {/* GAMING TAB */}
+              {activeBeyondTab === 'gaming' && (
+                <motion.div
+                  key="gaming"
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6"
+                >
+                  {/* 1. Mobile Legends Row */}
+                  <div className="surface-card p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 transition-all hover:border-(--brand-orange)">
+                    <div className="flex items-start gap-4 sm:gap-5 max-w-2xl">
                       <img
-                        src={data.beyond.gaming.mlbb.heroImage}
-                        alt={data.beyond.gaming.mlbb.heroName}
-                        referrerPolicy="no-referrer"
-                        loading="lazy"
-                        className="size-full object-cover object-top transition-transform duration-300 group-hover:scale-110"
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
-                        <Flame className="size-3 text-(--brand-orange)" />
-                        {data.beyond.gaming.mlbb.heroLabel}
-                      </span>
-                      <h4 className="text-sm sm:text-base font-bold text-(--brand-ink)">
-                        {data.beyond.gaming.mlbb.heroName}
-                      </h4>
-                      <span className="text-[11px] text-(--brand-muted)">
-                        Cuma Bisa Hirara
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 2. Growtopia Row */}
-                <div className="surface-card p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 transition-all hover:border-(--brand-orange)">
-                  <div className="flex items-start gap-4 sm:gap-5 max-w-3xl">
-                    <img
-                      src={data.beyond.gaming.growtopia.iconUrl}
-                      alt={data.beyond.gaming.growtopia.name}
-                      referrerPolicy="no-referrer"
-                      loading="lazy"
-                      className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover shadow-xs"
-                    />
-                    <div className="space-y-2">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <span className="text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
-                          Sandbox / Trading MMO
-                        </span>
-                        <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[11px] font-bold text-(--brand-orange-deep)">
-                          World: {data.beyond.gaming.growtopia.world}
-                        </span>
-                        <span className="text-xs text-(--brand-muted)">
-                          IGN:{' '}
-                          <span className="font-bold text-(--brand-ink)">
-                            {data.beyond.gaming.growtopia.ign}
-                          </span>
-                        </span>
-                      </div>
-                      <h3 className="text-xl sm:text-2xl font-bold text-(--brand-ink)">
-                        {data.beyond.gaming.growtopia.name}
-                      </h3>
-                      <p className="text-xs sm:text-sm leading-relaxed text-(--brand-muted)">
-                        {data.beyond.gaming.growtopia.notes}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* 3. Genshin Impact Row with Broken-Glass / Fractured Collage */}
-                <div className="surface-card p-6 sm:p-8 space-y-6 transition-all hover:border-(--brand-orange)">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-(--brand-line) pb-5">
-                    <div className="flex items-center gap-4">
-                      <img
-                        src={data.beyond.gaming.genshin.iconUrl}
-                        alt={data.beyond.gaming.genshin.name}
+                        src={data.beyond.gaming.mlbb.iconUrl}
+                        alt={data.beyond.gaming.mlbb.name}
                         referrerPolicy="no-referrer"
                         loading="lazy"
                         className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover shadow-xs"
                       />
-                      <div>
+                      <div className="space-y-2">
                         <div className="flex flex-wrap items-center gap-2">
                           <span className="text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
-                            Open World RPG
+                            MOBA
                           </span>
                           <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[11px] font-bold text-(--brand-orange-deep)">
-                            Low Spender
+                            {data.beyond.gaming.mlbb.server}
                           </span>
                           <span className="text-xs text-(--brand-muted)">
                             IGN:{' '}
                             <span className="font-bold text-(--brand-ink)">
-                              {data.beyond.gaming.genshin.ign}
+                              {data.beyond.gaming.mlbb.ign}
                             </span>
                           </span>
                         </div>
-                        <h3 className="text-xl sm:text-2xl font-bold text-(--brand-ink) mt-1">
-                          {data.beyond.gaming.genshin.name}
+                        <h3 className="text-xl sm:text-2xl font-bold text-(--brand-ink)">
+                          {data.beyond.gaming.mlbb.name}
                         </h3>
+                        <p className="text-xs sm:text-sm leading-relaxed text-(--brand-muted)">
+                          {data.beyond.gaming.mlbb.notes}
+                        </p>
                       </div>
                     </div>
-                    <p className="text-xs sm:text-sm text-(--brand-muted) max-w-md">
-                      {data.beyond.gaming.genshin.notes}
-                    </p>
+
+                    {/* Hirara Hero Spotlight */}
+                    <div className="group flex items-center gap-4 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3 sm:p-4 shrink-0 transition-all hover:border-(--brand-orange)">
+                      <div className="relative size-16 sm:size-20 shrink-0 overflow-hidden rounded-lg border border-(--brand-orange)/40 bg-black/20 shadow-xs">
+                        <img
+                          src={data.beyond.gaming.mlbb.heroImage}
+                          alt={data.beyond.gaming.mlbb.heroName}
+                          referrerPolicy="no-referrer"
+                          loading="lazy"
+                          className="size-full object-cover object-top transition-transform duration-300 group-hover:scale-110"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <span className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
+                          <Flame className="size-3 text-(--brand-orange)" />
+                          {data.beyond.gaming.mlbb.heroLabel}
+                        </span>
+                        <h4 className="text-sm sm:text-base font-bold text-(--brand-ink)">
+                          {data.beyond.gaming.mlbb.heroName}
+                        </h4>
+                        <span className="text-[11px] text-(--brand-muted)">
+                          Cuma Bisa Hirara
+                        </span>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Shattered Glass Showcase */}
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep) flex items-center gap-1.5">
-                          <Sparkles className="size-3.5 text-(--brand-orange)" />
-                          {data.beyond.gaming.genshin.favLabel}
-                        </span>
-                        <span className="text-[11px] text-(--brand-muted) italic hidden sm:inline">
-                          — (Klik pecahan kaca untuk melihat ulasan karakter)
-                        </span>
+                  {/* 2. Growtopia Row */}
+                  <div className="surface-card p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6 transition-all hover:border-(--brand-orange)">
+                    <div className="flex items-start gap-4 sm:gap-5 max-w-3xl">
+                      <img
+                        src={data.beyond.gaming.growtopia.iconUrl}
+                        alt={data.beyond.gaming.growtopia.name}
+                        referrerPolicy="no-referrer"
+                        loading="lazy"
+                        className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover shadow-xs"
+                      />
+                      <div className="space-y-2">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <span className="text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
+                            Sandbox / Trading MMO
+                          </span>
+                          <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[11px] font-bold text-(--brand-orange-deep)">
+                            World: {data.beyond.gaming.growtopia.world}
+                          </span>
+                          <span className="text-xs text-(--brand-muted)">
+                            IGN:{' '}
+                            <span className="font-bold text-(--brand-ink)">
+                              {data.beyond.gaming.growtopia.ign}
+                            </span>
+                          </span>
+                        </div>
+                        <h3 className="text-xl sm:text-2xl font-bold text-(--brand-ink)">
+                          {data.beyond.gaming.growtopia.name}
+                        </h3>
+                        <p className="text-xs sm:text-sm leading-relaxed text-(--brand-muted)">
+                          {data.beyond.gaming.growtopia.notes}
+                        </p>
                       </div>
                     </div>
+                  </div>
 
-                    {/* Broken Glass Shattered Arena */}
-                    <div className="relative overflow-hidden rounded-2xl border border-(--brand-line) bg-radial from-(--brand-orange-soft)/20 via-(--surface-strong)/50 to-(--site-bg) p-4 sm:p-8">
-                      {/* Background Fractured Crack Lines & Impact Center */}
-                      <svg
-                        aria-hidden="true"
-                        className="pointer-events-none absolute inset-0 size-full opacity-30 dark:opacity-40"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <line x1="50%" y1="50%" x2="5%" y2="8%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
-                        <line x1="50%" y1="50%" x2="95%" y2="4%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
-                        <line x1="50%" y1="50%" x2="8%" y2="92%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
-                        <line x1="50%" y1="50%" x2="92%" y2="95%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
-                        <line x1="50%" y1="50%" x2="50%" y2="0%" stroke="var(--brand-line)" strokeWidth="1" />
-                        <line x1="50%" y1="50%" x2="50%" y2="100%" stroke="var(--brand-line)" strokeWidth="1" />
-                        <line x1="50%" y1="50%" x2="0%" y2="50%" stroke="var(--brand-line)" strokeWidth="1" />
-                        <line x1="50%" y1="50%" x2="100%" y2="50%" stroke="var(--brand-line)" strokeWidth="1" />
-                        <circle cx="50%" cy="50%" r="6" fill="var(--brand-orange)" opacity="0.4" />
-                      </svg>
+                  {/* 3. Genshin Impact Row with Broken-Glass / Fractured Collage */}
+                  <div className="surface-card p-6 sm:p-8 space-y-6 transition-all hover:border-(--brand-orange)">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-(--brand-line) pb-5">
+                      <div className="flex items-center gap-4">
+                        <img
+                          src={data.beyond.gaming.genshin.iconUrl}
+                          alt={data.beyond.gaming.genshin.name}
+                          referrerPolicy="no-referrer"
+                          loading="lazy"
+                          className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover shadow-xs"
+                        />
+                        <div>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
+                              Open World RPG
+                            </span>
+                            <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[11px] font-bold text-(--brand-orange-deep)">
+                              Low Spender
+                            </span>
+                            <span className="text-xs text-(--brand-muted)">
+                              IGN:{' '}
+                              <span className="font-bold text-(--brand-ink)">
+                                {data.beyond.gaming.genshin.ign}
+                              </span>
+                            </span>
+                          </div>
+                          <h3 className="text-xl sm:text-2xl font-bold text-(--brand-ink) mt-1">
+                            {data.beyond.gaming.genshin.name}
+                          </h3>
+                        </div>
+                      </div>
+                      <p className="text-xs sm:text-sm text-(--brand-muted) max-w-md">
+                        {data.beyond.gaming.genshin.notes}
+                      </p>
+                    </div>
 
-                      {/* 4 Shattered Glass Shards */}
-                      <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 py-4">
-                        {data.beyond.gaming.genshin.favorites.map((fav, i) => {
-                          const shard = GLASS_SHARDS[i] || GLASS_SHARDS[0]
-                          return (
-                            <Popover key={fav.name}>
-                              <PopoverTrigger asChild>
-                                <button
-                                  type="button"
-                                  className={cn(
-                                    'group relative aspect-[3/4] w-full cursor-pointer transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-(--brand-orange) hover:scale-105 hover:z-30',
-                                    shard.rotation,
-                                    shard.offset,
-                                  )}
-                                  aria-label={`Inspect ${fav.name} glass shard`}
-                                >
-                                  {/* Glass Shard Polygon Body */}
-                                  <div
-                                    className="relative size-full overflow-hidden bg-black/60 shadow-xl transition-all duration-300"
-                                    style={{ clipPath: shard.clipPath }}
+                    {/* Shattered Glass Showcase */}
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <span className="text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep) flex items-center gap-1.5">
+                            <Sparkles className="size-3.5 text-(--brand-orange)" />
+                            {data.beyond.gaming.genshin.favLabel}
+                          </span>
+                          <span className="text-[11px] text-(--brand-muted) italic hidden sm:inline">
+                            — (Klik pecahan kaca untuk melihat ulasan karakter)
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Broken Glass Shattered Arena */}
+                      <div className="relative overflow-hidden rounded-2xl border border-(--brand-line) bg-radial from-(--brand-orange-soft)/20 via-(--surface-strong)/50 to-(--site-bg) p-4 sm:p-8">
+                        {/* Background Fractured Crack Lines & Impact Center */}
+                        <svg
+                          aria-hidden="true"
+                          className="pointer-events-none absolute inset-0 size-full opacity-30 dark:opacity-40"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <line x1="50%" y1="50%" x2="5%" y2="8%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
+                          <line x1="50%" y1="50%" x2="95%" y2="4%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
+                          <line x1="50%" y1="50%" x2="8%" y2="92%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
+                          <line x1="50%" y1="50%" x2="92%" y2="95%" stroke="var(--brand-orange)" strokeWidth="1" strokeDasharray="4 4" />
+                          <line x1="50%" y1="50%" x2="50%" y2="0%" stroke="var(--brand-line)" strokeWidth="1" />
+                          <line x1="50%" y1="50%" x2="50%" y2="100%" stroke="var(--brand-line)" strokeWidth="1" />
+                          <line x1="50%" y1="50%" x2="0%" y2="50%" stroke="var(--brand-line)" strokeWidth="1" />
+                          <line x1="50%" y1="50%" x2="100%" y2="50%" stroke="var(--brand-line)" strokeWidth="1" />
+                          <circle cx="50%" cy="50%" r="6" fill="var(--brand-orange)" opacity="0.4" />
+                        </svg>
+
+                        {/* 4 Shattered Glass Shards */}
+                        <motion.div
+                          variants={staggerContainer(0.08, 0.1)}
+                          initial="hidden"
+                          animate="visible"
+                          className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 py-4"
+                        >
+                          {data.beyond.gaming.genshin.favorites.map((fav, i) => {
+                            const shard = GLASS_SHARDS[i] || GLASS_SHARDS[0]
+                            return (
+                              <Popover key={fav.name}>
+                                <PopoverTrigger asChild>
+                                  <motion.button
+                                    variants={staggerItemScale}
+                                    type="button"
+                                    className={cn(
+                                      'group relative aspect-[3/4] w-full cursor-pointer transition-all duration-500 focus:outline-none focus:ring-2 focus:ring-(--brand-orange) hover:scale-105 hover:z-30',
+                                      shard.rotation,
+                                      shard.offset,
+                                    )}
+                                    aria-label={`Inspect ${fav.name} glass shard`}
                                   >
+                                    {/* Glass Shard Polygon Body */}
+                                    <div
+                                      className="relative size-full overflow-hidden bg-black/60 shadow-xl transition-all duration-300"
+                                      style={{ clipPath: shard.clipPath }}
+                                    >
+                                      <img
+                                        src={fav.image}
+                                        alt={fav.name}
+                                        referrerPolicy="no-referrer"
+                                        loading="lazy"
+                                        className="size-full object-cover object-top transition-transform duration-700 group-hover:scale-115"
+                                      />
+
+                                      {/* Glass Specular Glint Reflection */}
+                                      <div className="pointer-events-none absolute inset-0 bg-linear-to-tr from-cyan-400/20 via-white/30 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
+
+                                      {/* Vignette Bottom Gradient */}
+                                      <div className="absolute inset-0 bg-linear-to-t from-black/85 via-transparent to-black/20" />
+                                    </div>
+
+                                    {/* Glass Shard Outlined Bevel Border (SVG) */}
+                                    <svg
+                                      aria-hidden="true"
+                                      className="pointer-events-none absolute inset-0 size-full overflow-visible"
+                                      viewBox="0 0 100 100"
+                                      preserveAspectRatio="none"
+                                    >
+                                      <polygon
+                                        points={shard.svgPoints}
+                                        fill="none"
+                                        stroke="rgba(255,255,255,0.7)"
+                                        strokeWidth="2.5"
+                                        className="transition-all duration-300 group-hover:stroke-(--brand-orange) drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+                                      />
+                                    </svg>
+
+                                    {/* Shard Label Floating Name (Outside clipped polygon with z-20 so it never gets clipped) */}
+                                    <div className="pointer-events-none absolute inset-x-0 -bottom-3 z-20 flex justify-center">
+                                      <span className="rounded-full bg-(--surface-strong) px-3 py-1 text-xs font-black tracking-wide text-(--brand-ink) border border-(--brand-line) shadow-xl group-hover:border-(--brand-orange) group-hover:text-(--brand-orange-deep) group-hover:scale-105 transition-all">
+                                        {fav.name}
+                                      </span>
+                                    </div>
+                                  </motion.button>
+                                </PopoverTrigger>
+
+                                <PopoverContent
+                                  side="top"
+                                  sideOffset={16}
+                                  className="w-72 sm:w-80 rounded-2xl border-(--brand-orange)/40 bg-(--surface-strong)/95 backdrop-blur-md p-4 shadow-2xl space-y-3"
+                                >
+                                  <div className="flex items-center gap-3">
                                     <img
                                       src={fav.image}
                                       alt={fav.name}
                                       referrerPolicy="no-referrer"
-                                      loading="lazy"
-                                      className="size-full object-cover object-top transition-transform duration-700 group-hover:scale-115"
+                                      className="size-11 rounded-xl object-cover border border-(--brand-orange)/50 shrink-0"
                                     />
-
-                                    {/* Glass Specular Glint Reflection */}
-                                    <div className="pointer-events-none absolute inset-0 bg-linear-to-tr from-cyan-400/20 via-white/30 to-transparent opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
-
-                                    {/* Vignette Bottom Gradient */}
-                                    <div className="absolute inset-0 bg-linear-to-t from-black/85 via-transparent to-black/20" />
+                                    <div>
+                                      <span className="text-[10px] font-extrabold uppercase tracking-widest text-(--brand-orange-deep) block">
+                                        Genshin Impact
+                                      </span>
+                                      <h4 className="font-bold text-base text-(--brand-ink) leading-tight">
+                                        {fav.name}
+                                      </h4>
+                                    </div>
                                   </div>
 
-                                  {/* Glass Shard Outlined Bevel Border (SVG) */}
-                                  <svg
-                                    aria-hidden="true"
-                                    className="pointer-events-none absolute inset-0 size-full overflow-visible"
-                                    viewBox="0 0 100 100"
-                                    preserveAspectRatio="none"
-                                  >
-                                    <polygon
-                                      points={shard.svgPoints}
-                                      fill="none"
-                                      stroke="rgba(255,255,255,0.7)"
-                                      strokeWidth="2.5"
-                                      className="transition-all duration-300 group-hover:stroke-(--brand-orange) drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
-                                    />
-                                  </svg>
-
-                                  {/* Shard Label Floating Name (Outside clipped polygon with z-20 so it never gets clipped) */}
-                                  <div className="pointer-events-none absolute inset-x-0 -bottom-3 z-20 flex justify-center">
-                                    <span className="rounded-full bg-(--surface-strong) px-3 py-1 text-xs font-black tracking-wide text-(--brand-ink) border border-(--brand-line) shadow-xl group-hover:border-(--brand-orange) group-hover:text-(--brand-orange-deep) group-hover:scale-105 transition-all">
-                                      {fav.name}
+                                  <div className="rounded-xl border border-(--brand-line) bg-(--site-bg)/80 p-3 space-y-1">
+                                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-(--brand-muted) block">
+                                      Catatan Karakter
                                     </span>
+                                    <blockquote className="text-xs italic font-medium leading-relaxed text-(--brand-ink)">
+                                      "{fav.reason}"
+                                    </blockquote>
                                   </div>
-                                </button>
-                              </PopoverTrigger>
-
-                              <PopoverContent
-                                side="top"
-                                sideOffset={16}
-                                className="w-72 sm:w-80 rounded-2xl border-(--brand-orange)/40 bg-(--surface-strong)/95 backdrop-blur-md p-4 shadow-2xl space-y-3"
-                              >
-                                <div className="flex items-center gap-3">
-                                  <img
-                                    src={fav.image}
-                                    alt={fav.name}
-                                    referrerPolicy="no-referrer"
-                                    className="size-11 rounded-xl object-cover border border-(--brand-orange)/50 shrink-0"
-                                  />
-                                  <div>
-                                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-(--brand-orange-deep) block">
-                                      Genshin Impact
-                                    </span>
-                                    <h4 className="font-bold text-base text-(--brand-ink) leading-tight">
-                                      {fav.name}
-                                    </h4>
-                                  </div>
-                                </div>
-
-                                <div className="rounded-xl border border-(--brand-line) bg-(--site-bg)/80 p-3 space-y-1">
-                                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-(--brand-muted) block">
-                                    Catatan Karakter
-                                  </span>
-                                  <blockquote className="text-xs italic font-medium leading-relaxed text-(--brand-ink)">
-                                    "{fav.reason}"
-                                  </blockquote>
-                                </div>
-                              </PopoverContent>
-                            </Popover>
-                          )
-                        })}
+                                </PopoverContent>
+                              </Popover>
+                            )
+                          })}
+                        </motion.div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
+                </motion.div>
+              )}
 
-            {/* ANIME TAB */}
-            {activeBeyondTab === 'anime' && (
-              <div className="surface-card p-6 sm:p-8 transition-all hover:border-(--brand-orange) animate-in fade-in-50 duration-200">
-                <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <div className="inline-flex items-center gap-2 rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
-                        <Tv className="size-3.5" />
-                        <span>{data.beyond.anime.seriesLabel}</span>
+              {/* ANIME TAB */}
+              {activeBeyondTab === 'anime' && (
+                <motion.div
+                  key="anime"
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.3 }}
+                  className="surface-card p-6 sm:p-8 transition-all hover:border-(--brand-orange)"
+                >
+                  <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+                    <div className="space-y-6">
+                      <div className="space-y-2">
+                        <div className="inline-flex items-center gap-2 rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
+                          <Tv className="size-3.5" />
+                          <span>{data.beyond.anime.seriesLabel}</span>
+                        </div>
+                        <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-(--brand-ink)">
+                          {data.beyond.anime.favorite}
+                        </h3>
                       </div>
-                      <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-(--brand-ink)">
-                        {data.beyond.anime.favorite}
-                      </h3>
-                    </div>
 
-                    <p className="text-sm leading-relaxed text-(--brand-muted)">
-                      {data.beyond.anime.summary}
-                    </p>
-
-                    <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4 space-y-2 border-l-4 border-l-(--brand-orange)">
-                      <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
-                        <Sparkles className="size-4 text-(--brand-orange)" />
-                        <span>Domain Expansion & Tactical Battles</span>
-                      </div>
-                      <p className="text-xs leading-relaxed text-(--brand-muted)">
-                        {data.beyond.anime.reason}
+                      <p className="text-sm leading-relaxed text-(--brand-muted)">
+                        {data.beyond.anime.summary}
                       </p>
+
+                      <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4 space-y-2 border-l-4 border-l-(--brand-orange)">
+                        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
+                          <Sparkles className="size-4 text-(--brand-orange)" />
+                          <span>Domain Expansion & Tactical Battles</span>
+                        </div>
+                        <p className="text-xs leading-relaxed text-(--brand-muted)">
+                          {data.beyond.anime.reason}
+                        </p>
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Gojo Portrait Showcase (Clean, No Reason Text as Requested) */}
-                  <div className="group relative overflow-hidden rounded-2xl border-2 border-(--brand-line) bg-(--surface-strong) shadow-xl transition-all duration-300 hover:border-(--brand-orange)">
-                    <div className="relative aspect-[4/5] w-full overflow-hidden bg-black/40">
-                      <img
-                        src={data.beyond.anime.charImage}
-                        alt={data.beyond.anime.favChar}
-                        referrerPolicy="no-referrer"
-                        loading="lazy"
-                        className="size-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+                    {/* Gojo Portrait Showcase */}
+                    <div className="group relative overflow-hidden rounded-2xl border-2 border-(--brand-line) bg-(--surface-strong) shadow-xl transition-all duration-300 hover:border-(--brand-orange)">
+                      <div className="relative aspect-[4/5] w-full overflow-hidden bg-black/40">
+                        <img
+                          src={data.beyond.anime.charImage}
+                          alt={data.beyond.anime.favChar}
+                          referrerPolicy="no-referrer"
+                          loading="lazy"
+                          className="size-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
 
-                      <div className="absolute inset-x-0 bottom-0 p-5 text-white space-y-1">
-                        <span className="inline-block rounded-full bg-(--brand-orange) px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-white shadow-xs">
-                          {data.beyond.anime.charLabel}
-                        </span>
-                        <h4 className="text-2xl font-black tracking-tight text-white drop-shadow-md">
-                          {data.beyond.anime.favChar}
-                        </h4>
+                        <div className="absolute inset-x-0 bottom-0 p-5 text-white space-y-1">
+                          <span className="inline-block rounded-full bg-(--brand-orange) px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-white shadow-xs">
+                            {data.beyond.anime.charLabel}
+                          </span>
+                          <h4 className="text-2xl font-black tracking-tight text-white drop-shadow-md">
+                            {data.beyond.anime.favChar}
+                          </h4>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            )}
+                </motion.div>
+              )}
 
-            {/* KPOP TAB */}
-            {activeBeyondTab === 'kpop' && (
-              <div className="space-y-6 animate-in fade-in-50 duration-200">
-                <p className="text-sm leading-relaxed text-(--brand-muted) max-w-2xl">
-                  {data.beyond.kpop.summary}
-                </p>
+              {/* KPOP TAB */}
+              {activeBeyondTab === 'kpop' && (
+                <motion.div
+                  key="kpop"
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-6"
+                >
+                  <p className="text-sm leading-relaxed text-(--brand-muted) max-w-2xl">
+                    {data.beyond.kpop.summary}
+                  </p>
 
-                {/* 5 Group Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-                  {data.beyond.kpop.groups.map((group) => (
-                    <div
-                      key={group.name}
-                      className={cn(
-                        'group relative overflow-hidden rounded-3xl border border-(--brand-line) bg-(--surface-strong)/90 backdrop-blur-md p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-xl flex flex-col justify-between bg-linear-to-br',
-                        group.color,
-                      )}
-                    >
-                      {/* Ambient background glow blur */}
-                      <div className="pointer-events-none absolute -right-10 -top-10 size-36 rounded-full bg-(--brand-orange)/10 blur-3xl group-hover:bg-(--brand-orange)/20 transition-all duration-500" />
+                  {/* 5 Group Cards Grid */}
+                  <motion.div
+                    variants={staggerContainer(0.08, 0.1)}
+                    initial="hidden"
+                    animate="visible"
+                    className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6"
+                  >
+                    {data.beyond.kpop.groups.map((group) => (
+                      <motion.div
+                        key={group.name}
+                        variants={staggerItem}
+                        className={cn(
+                          'group relative overflow-hidden rounded-3xl border border-(--brand-line) bg-(--surface-strong)/90 backdrop-blur-md p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-xl flex flex-col justify-between bg-linear-to-br',
+                          group.color,
+                        )}
+                      >
+                        {/* Ambient background glow blur */}
+                        <div className="pointer-events-none absolute -right-10 -top-10 size-36 rounded-full bg-(--brand-orange)/10 blur-3xl group-hover:bg-(--brand-orange)/20 transition-all duration-500" />
 
-                      {/* Top Header: Official Logo + Group Name + Bias Badge */}
-                      <div className="relative z-10 flex items-center justify-between gap-3 border-b border-(--brand-line)/60 pb-4 mb-4">
-                        <div className="flex items-center gap-3 min-w-0">
-                          <div className="size-11 sm:size-12 shrink-0 rounded-2xl border border-(--brand-line) bg-white/90 overflow-hidden shadow-xs">
+                        {/* Top Header: Official Logo + Group Name + Bias Badge */}
+                        <div className="relative z-10 flex items-center justify-between gap-3 border-b border-(--brand-line)/60 pb-4 mb-4">
+                          <div className="flex items-center gap-3 min-w-0">
+                            <div className="size-11 sm:size-12 shrink-0 rounded-2xl border border-(--brand-line) bg-white/90 overflow-hidden shadow-xs">
+                              <img
+                                src={group.logoUrl}
+                                alt={`${group.name} official logo`}
+                                referrerPolicy="no-referrer"
+                                loading="lazy"
+                                className="size-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              />
+                            </div>
+                            <div className="min-w-0">
+                              <span className="text-[10px] font-extrabold uppercase tracking-widest text-(--brand-orange-deep) block leading-tight">
+                                K-Pop Artist
+                              </span>
+                              <h3 className="text-lg sm:text-xl font-black text-(--brand-ink) tracking-tight truncate">
+                                {group.name}
+                              </h3>
+                            </div>
+                          </div>
+
+                          {/* Bias Pill Badge */}
+                          <div className="inline-flex items-center gap-1.5 rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-black text-(--brand-orange-deep) border border-(--brand-orange)/30 shadow-xs shrink-0">
+                            <Sparkles className="size-3.5 text-(--brand-orange)" />
+                            <span>
+                              {data.beyond.kpop.biasLabel}:{' '}
+                              <strong className="text-(--brand-ink)">
+                                {group.bias}
+                              </strong>
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Main Body: Bias Showcase on Left + Vinyl Track Player on Right */}
+                        <div className="relative z-10 grid grid-cols-[105px_1fr] sm:grid-cols-[120px_1fr] gap-4 items-center">
+                          {/* Left: Bias Portrait with Glass Frame */}
+                          <div className="group/bias relative aspect-[3/4] w-full rounded-2xl overflow-hidden border-2 border-(--brand-line) bg-black/40 shadow-md group-hover:border-(--brand-orange) transition-colors">
                             <img
-                              src={group.logoUrl}
-                              alt={`${group.name} official logo`}
+                              src={group.biasImage}
+                              alt={`${group.bias} (${group.name})`}
                               referrerPolicy="no-referrer"
                               loading="lazy"
-                              className="size-full object-cover group-hover:scale-110 transition-transform duration-300"
+                              className="size-full object-cover object-top transition-transform duration-500 group-hover/bias:scale-110"
                             />
-                          </div>
-                          <div className="min-w-0">
-                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-(--brand-orange-deep) block leading-tight">
-                              K-Pop Artist
-                            </span>
-                            <h3 className="text-lg sm:text-xl font-black text-(--brand-ink) tracking-tight truncate">
-                              {group.name}
-                            </h3>
-                          </div>
-                        </div>
-
-                        {/* Bias Pill Badge */}
-                        <div className="inline-flex items-center gap-1.5 rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-black text-(--brand-orange-deep) border border-(--brand-orange)/30 shadow-xs shrink-0">
-                          <Sparkles className="size-3.5 text-(--brand-orange)" />
-                          <span>
-                            {data.beyond.kpop.biasLabel}:{' '}
-                            <strong className="text-(--brand-ink)">
-                              {group.bias}
-                            </strong>
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Main Body: Bias Showcase on Left + Vinyl Track Player on Right */}
-                      <div className="relative z-10 grid grid-cols-[105px_1fr] sm:grid-cols-[120px_1fr] gap-4 items-center">
-                        {/* Left: Bias Portrait with Glass Frame */}
-                        <div className="group/bias relative aspect-[3/4] w-full rounded-2xl overflow-hidden border-2 border-(--brand-line) bg-black/40 shadow-md group-hover:border-(--brand-orange) transition-colors">
-                          <img
-                            src={group.biasImage}
-                            alt={`${group.bias} (${group.name})`}
-                            referrerPolicy="no-referrer"
-                            loading="lazy"
-                            className="size-full object-cover object-top transition-transform duration-500 group-hover/bias:scale-110"
-                          />
-                          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-black/20" />
-                          <div className="absolute inset-x-0 bottom-1.5 text-center">
-                            <span className="rounded-md bg-black/75 backdrop-blur-xs px-2 py-0.5 text-[10px] font-black text-white border border-white/20">
-                              {group.bias}
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Right: Vinyl Player & Spotify Action */}
-                        <div className="space-y-3 min-w-0">
-                          {/* Vinyl Album Player */}
-                          <div className="flex items-center gap-3 rounded-2xl border border-(--brand-line) bg-(--site-bg)/90 backdrop-blur-md p-2.5 sm:p-3 shadow-xs">
-                            {/* Album Cover with Spinning Vinyl Disk peeking out */}
-                            <div className="relative size-12 sm:size-14 shrink-0">
-                              {/* Vinyl Disk peeking out */}
-                              <div className="absolute top-0 right-0 size-12 sm:size-14 rounded-full bg-black border-2 border-neutral-800 shadow-md flex items-center justify-center translate-x-2.5 group-hover:translate-x-3.5 transition-transform duration-300 animate-spin [animation-duration:8s]">
-                                <div className="size-4 sm:size-5 rounded-full border border-neutral-700 bg-neutral-900 flex items-center justify-center">
-                                  <div className="size-1.5 sm:size-2 rounded-full bg-(--brand-orange)" />
-                                </div>
-                              </div>
-
-                              {/* Album Cover */}
-                              <a
-                                href={group.spotifyUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="group/album relative z-10 block size-full rounded-xl overflow-hidden shadow-md border border-(--brand-line) cursor-pointer"
-                                aria-label={`Play ${group.song} by ${group.name} on Spotify`}
-                              >
-                                <img
-                                  src={group.albumCover}
-                                  alt={`${group.song} album cover`}
-                                  referrerPolicy="no-referrer"
-                                  loading="lazy"
-                                  className="size-full object-cover group-hover/album:scale-105 transition-transform"
-                                />
-                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/album:opacity-100 transition-opacity">
-                                  <Play className="size-4 text-white fill-white" />
-                                </div>
-                              </a>
-                            </div>
-
-                            {/* Track Info & Animated Equalizer */}
-                            <div className="min-w-0 flex-1 pl-2 sm:pl-2.5 space-y-1">
-                              <div className="flex items-center justify-between gap-1">
-                                <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-(--brand-muted)">
-                                  {data.beyond.kpop.songLabel}
-                                </span>
-                                {/* Equalizer bars */}
-                                <div className="flex items-end gap-0.5 h-3">
-                                  <span className="w-0.5 bg-(--brand-orange) rounded-full animate-pulse h-2" />
-                                  <span className="w-0.5 bg-(--brand-orange) rounded-full animate-pulse h-3 [animation-delay:150ms]" />
-                                  <span className="w-0.5 bg-(--brand-orange) rounded-full animate-pulse h-1.5 [animation-delay:300ms]" />
-                                </div>
-                              </div>
-                              <h4 className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate leading-tight">
-                                {group.song}
-                              </h4>
+                            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-black/20" />
+                            <div className="absolute inset-x-0 bottom-1.5 text-center">
+                              <span className="rounded-md bg-black/75 backdrop-blur-xs px-2 py-0.5 text-[10px] font-black text-white border border-white/20">
+                                {group.bias}
+                              </span>
                             </div>
                           </div>
 
-                          {/* Spotify Direct Button */}
-                          <a
-                            href={group.spotifyUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center justify-center gap-2 w-full rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black font-extrabold px-3 py-2 text-xs transition-all shadow-xs hover:shadow-md hover:shadow-emerald-500/20 cursor-pointer"
-                            aria-label={`Open ${group.song} on Spotify`}
-                          >
-                            <span>{data.beyond.kpop.spotifyLabel}</span>
-                            <ExternalLink className="size-3.5" />
-                          </a>
+                          {/* Right: Vinyl Player & Spotify Action */}
+                          <div className="space-y-3 min-w-0">
+                            {/* Vinyl Album Player */}
+                            <div className="flex items-center gap-3 rounded-2xl border border-(--brand-line) bg-(--site-bg)/90 backdrop-blur-md p-2.5 sm:p-3 shadow-xs">
+                              {/* Album Cover with Spinning Vinyl Disk peeking out */}
+                              <div className="relative size-12 sm:size-14 shrink-0">
+                                {/* Vinyl Disk peeking out */}
+                                <div className="absolute top-0 right-0 size-12 sm:size-14 rounded-full bg-black border-2 border-neutral-800 shadow-md flex items-center justify-center translate-x-2.5 group-hover:translate-x-3.5 transition-transform duration-300 animate-spin [animation-duration:8s]">
+                                  <div className="size-4 sm:size-5 rounded-full border border-neutral-700 bg-neutral-900 flex items-center justify-center">
+                                    <div className="size-1.5 sm:size-2 rounded-full bg-(--brand-orange)" />
+                                  </div>
+                                </div>
+
+                                {/* Album Cover */}
+                                <a
+                                  href={group.spotifyUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="group/album relative z-10 block size-full rounded-xl overflow-hidden shadow-md border border-(--brand-line) cursor-pointer"
+                                  aria-label={`Play ${group.song} by ${group.name} on Spotify`}
+                                >
+                                  <img
+                                    src={group.albumCover}
+                                    alt={`${group.song} album cover`}
+                                    referrerPolicy="no-referrer"
+                                    loading="lazy"
+                                    className="size-full object-cover group-hover/album:scale-105 transition-transform"
+                                  />
+                                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/album:opacity-100 transition-opacity">
+                                    <Play className="size-4 text-white fill-white" />
+                                  </div>
+                                </a>
+                              </div>
+
+                              {/* Track Info & Animated Equalizer */}
+                              <div className="min-w-0 flex-1 pl-2 sm:pl-2.5 space-y-1">
+                                <div className="flex items-center justify-between gap-1">
+                                  <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-(--brand-muted)">
+                                    {data.beyond.kpop.songLabel}
+                                  </span>
+                                  {/* Equalizer bars */}
+                                  <div className="flex items-end gap-0.5 h-3">
+                                    <span className="w-0.5 bg-(--brand-orange) rounded-full animate-pulse h-2" />
+                                    <span className="w-0.5 bg-(--brand-orange) rounded-full animate-pulse h-3 [animation-delay:150ms]" />
+                                    <span className="w-0.5 bg-(--brand-orange) rounded-full animate-pulse h-1.5 [animation-delay:300ms]" />
+                                  </div>
+                                </div>
+                                <h4 className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate leading-tight">
+                                  {group.song}
+                                </h4>
+                              </div>
+                            </div>
+
+                            {/* Spotify Direct Button */}
+                            <a
+                              href={group.spotifyUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 w-full rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black font-extrabold px-3 py-2 text-xs transition-all shadow-xs hover:shadow-md hover:shadow-emerald-500/20 cursor-pointer"
+                              aria-label={`Open ${group.song} on Spotify`}
+                            >
+                              <span>{data.beyond.kpop.spotifyLabel}</span>
+                              <ExternalLink className="size-3.5" />
+                            </a>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </section>
 
@@ -1113,16 +1250,22 @@ function AboutPage() {
         {/* 7. CURRENTLY EXPLORING */}
         {/* ==================================================================== */}
         <section className="space-y-8 pb-10">
-          <SectionHeader
-            eyebrow={data.exploring.eyebrow}
-            title={data.exploring.title}
-            description={data.exploring.subtitle}
-          />
+          <motion.div variants={fadeUp}>
+            <SectionHeader
+              eyebrow={data.exploring.eyebrow}
+              title={data.exploring.title}
+              description={data.exploring.subtitle}
+            />
+          </motion.div>
 
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <motion.div
+            variants={staggerContainer(0.08, 0.1)}
+            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {data.exploring.items.map((item) => (
-              <div
+              <motion.div
                 key={item.title}
+                variants={staggerItem}
                 className="surface-card p-5 space-y-2 transition-all hover:border-(--brand-orange)"
               >
                 <span className="text-[11px] font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
@@ -1134,12 +1277,15 @@ function AboutPage() {
                 <p className="text-xs leading-relaxed text-(--brand-muted)">
                   {item.description}
                 </p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Long Term Ambition Banner */}
-          <div className="surface-card p-6 sm:p-8 bg-linear-to-r from-(--brand-orange-soft)/50 via-(--surface-strong) to-(--brand-orange-soft)/50 border-(--brand-line) text-center space-y-3">
+          <motion.div
+            variants={scaleIn}
+            className="surface-card p-6 sm:p-8 bg-linear-to-r from-(--brand-orange-soft)/50 via-(--surface-strong) to-(--brand-orange-soft)/50 border-(--brand-line) text-center space-y-3"
+          >
             <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-widest text-(--brand-orange-deep)">
               <Target className="size-4" />
               {data.exploring.ambitionTitle}
@@ -1147,7 +1293,7 @@ function AboutPage() {
             <p className="max-w-2xl mx-auto text-base sm:text-lg font-bold text-(--brand-ink)">
               "{data.exploring.ambitionText}"
             </p>
-          </div>
+          </motion.div>
         </section>
       </Container>
     </main>

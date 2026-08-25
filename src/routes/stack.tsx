@@ -1,11 +1,13 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { ExternalLink, Zap } from 'lucide-react'
+import { motion } from 'motion/react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { Marquee } from '#/components/ui/marquee'
 import { TechIcon } from '#/components/ui/tech-icon'
 import { getPublicCopy } from '#/features/portfolio/data'
 import { getPublicStackData } from '#/features/technologies/public-loaders'
+import { defaultViewport, fadeIn, fadeUp, scaleIn } from '#/lib/motion'
 
 export const Route = createFileRoute('/stack')({
   loader: () => getPublicStackData(),
@@ -19,18 +21,33 @@ function StackPage() {
   return (
     <main className="py-14 sm:py-20">
       <Container>
-        <SectionHeader
-          eyebrow={copy.stack.eyebrow}
-          title={copy.stack.title}
-          description={copy.stack.description}
-        />
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+        >
+          <SectionHeader
+            eyebrow={copy.stack.eyebrow}
+            title={copy.stack.title}
+            description={copy.stack.description}
+          />
+        </motion.div>
       </Container>
 
       {/* Ultimate Tech Stack Highlight Section */}
       {ultimateTechs.length > 0 && (
-        <section className="mt-8 mb-16 w-full">
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={defaultViewport}
+          variants={fadeIn}
+          className="mt-8 mb-16 w-full"
+        >
           <Container className="mb-6">
-            <div className="flex flex-col items-center justify-center text-center">
+            <motion.div
+              variants={fadeUp}
+              className="flex flex-col items-center justify-center text-center"
+            >
               <span className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-orange)/40 bg-(--brand-orange-soft) px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep) shadow-[0_0_20px_var(--brand-orange-soft)]">
                 <Zap className="size-3.5 fill-(--brand-orange-deep)" />
                 {copy.stack.ultimateEyebrow}
@@ -43,15 +60,18 @@ function StackPage() {
               <p className="mt-2 max-w-xl text-sm font-medium text-(--brand-muted)">
                 {copy.stack.ultimateDescription}
               </p>
-            </div>
+            </motion.div>
           </Container>
 
           {/* Edge-to-Edge Marquee for Ultimate Tech Stack */}
-          <div className="relative w-full overflow-hidden py-3">
+          <motion.div
+            variants={scaleIn}
+            className="relative w-full overflow-hidden py-3"
+          >
             <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-(--brand-bg) to-transparent sm:w-24" />
             <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-(--brand-bg) to-transparent sm:w-24" />
 
-            <Marquee pauseOnHover className="py-6 [--duration:30s]" repeat={4}>
+            <Marquee pauseOnHover className="py-6 [--duration:30s]" repeat={6}>
               {ultimateTechs.map((tech) => (
                 <div
                   key={tech.id}
@@ -92,8 +112,8 @@ function StackPage() {
                 </div>
               ))}
             </Marquee>
-          </div>
-        </section>
+          </motion.div>
+        </motion.section>
       )}
 
       {/* Categories Marquee Showcase - Full Window Width */}
@@ -114,21 +134,34 @@ function StackPage() {
             if (category.technologies.length === 0) return null
 
             return (
-              <section key={category.id} className="w-full">
+              <motion.section
+                key={category.id}
+                initial="hidden"
+                whileInView="visible"
+                viewport={defaultViewport}
+                variants={fadeIn}
+                className="w-full"
+              >
                 {/* Centered Highlighted Category Title */}
                 <Container className="mb-6">
-                  <div className="flex flex-col items-center justify-center text-center">
+                  <motion.div
+                    variants={fadeUp}
+                    className="flex flex-col items-center justify-center text-center"
+                  >
                     <h2 className="text-2xl font-black tracking-tight text-(--brand-ink) sm:text-3xl md:text-4xl">
                       <span className="bg-linear-to-r from-(--brand-ink) via-(--brand-orange-deep) to-(--brand-ink) bg-clip-text text-transparent">
                         {category.name}
                       </span>
                     </h2>
                     <span className="mt-3 h-1 w-12 rounded-full bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) opacity-80" />
-                  </div>
+                  </motion.div>
                 </Container>
 
                 {/* Marquee Row - Edge to Edge across full window width */}
-                <div className="relative w-full overflow-hidden py-2">
+                <motion.div
+                  variants={fadeUp}
+                  className="relative w-full overflow-hidden py-2"
+                >
                   {/* Gradient Fade Overlays */}
                   <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-linear-to-r from-(--brand-bg) to-transparent sm:w-24" />
                   <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-linear-to-l from-(--brand-bg) to-transparent sm:w-24" />
@@ -137,7 +170,7 @@ function StackPage() {
                     pauseOnHover
                     reverse={index % 2 === 1}
                     className="py-4 [--duration:35s]"
-                    repeat={4}
+                    repeat={6}
                   >
                     {category.technologies.map((tech) => (
                       <div
@@ -174,8 +207,8 @@ function StackPage() {
                       </div>
                     ))}
                   </Marquee>
-                </div>
-              </section>
+                </motion.div>
+              </motion.section>
             )
           })}
         </div>

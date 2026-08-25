@@ -1,6 +1,9 @@
 import { Code2 } from 'lucide-react'
+import { motion } from 'motion/react'
 
 import { useSiteSettings } from '#/features/settings/hooks'
+import { easeOutCubic, scaleIn, staggerContainer } from '#/lib/motion'
+import { cn } from '#/lib/utils'
 
 function BunIcon({ className = 'size-4' }: { className?: string }) {
   return (
@@ -54,13 +57,19 @@ const techItems = [
   { name: 'Cloudflare', icon: CloudflareIcon },
 ] as const
 
-export function HeroVisual() {
+export function HeroVisual({ className }: { className?: string } = {}) {
   const { data: settings } = useSiteSettings()
   const showMascot = settings?.enableCharacter ?? true
 
   return (
-    <figure
-      className="relative isolate m-0 min-h-[min(34rem,78vw)] overflow-hidden rounded-xl border border-(--brand-line) bg-gradient-to-br from-(--surface-strong)/82 to-(--brand-orange-soft)/56 shadow-2xl max-sm:min-h-[34rem]"
+    <motion.figure
+      initial="hidden"
+      animate="visible"
+      variants={scaleIn}
+      className={cn(
+        'relative isolate m-0 w-full min-h-[min(34rem,78vw)] overflow-hidden rounded-2xl border border-(--brand-line) bg-gradient-to-br from-(--surface-strong)/82 to-(--brand-orange-soft)/56 shadow-2xl max-sm:min-h-[34rem]',
+        className,
+      )}
       aria-labelledby="hero-visual-title"
     >
       {showMascot && (
@@ -81,7 +90,10 @@ export function HeroVisual() {
       </figcaption>
 
       {/* Tech Stack Badges (Top-Left) */}
-      <div
+      <motion.div
+        variants={staggerContainer(0.12, 0.25)}
+        initial="hidden"
+        animate="visible"
         className="absolute top-4 left-4 z-10 flex flex-col gap-2 max-sm:top-3 max-sm:left-3"
         aria-hidden="true"
       >
@@ -89,21 +101,41 @@ export function HeroVisual() {
           const Icon = item.icon
 
           return (
-            <div
+            <motion.div
               key={item.name}
-              className="flex items-center gap-2.5 rounded-full border border-orange-300/30 bg-(--brand-dark)/85 px-3 py-2 text-[#fff7ec] shadow-lg backdrop-blur-md transition-transform hover:scale-105"
+              variants={{
+                hidden: { opacity: 0, x: -16 },
+                visible: {
+                  opacity: 1,
+                  x: 0,
+                  transition: { duration: 0.45, ease: easeOutCubic },
+                },
+              }}
+              whileHover={{ scale: 1.06, x: 2 }}
+              className="flex items-center gap-2.5 rounded-full border border-orange-300/30 bg-(--brand-dark)/85 px-3 py-2 text-[#fff7ec] shadow-lg backdrop-blur-md transition-shadow hover:shadow-orange-500/20"
             >
               <Icon className="size-4 shrink-0 text-orange-400" />
               <span className="text-xs font-extrabold leading-none tracking-wide">
                 {item.name}
               </span>
-            </div>
+            </motion.div>
           )
         })}
-      </div>
+      </motion.div>
 
       {/* Terminal Info (Bottom-Right) */}
-      <div
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: 20, scale: 0.95 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            transition: { duration: 0.55, delay: 0.35, ease: easeOutCubic },
+          },
+        }}
+        initial="hidden"
+        animate="visible"
         className="absolute right-4 bottom-4 z-10 w-[min(17rem,calc(100%-2rem))] rounded-xl border border-orange-300/30 bg-(--brand-dark)/85 p-4 text-[#fff7ec] shadow-xl backdrop-blur-md max-sm:right-3 max-sm:bottom-3"
         aria-hidden="true"
       >
@@ -127,16 +159,27 @@ export function HeroVisual() {
             Cloudflare
           </span>
         </div>
-      </div>
+      </motion.div>
 
       {/* Role Badge (Top-Right) */}
-      <div
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: -14 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.45, delay: 0.3, ease: easeOutCubic },
+          },
+        }}
+        initial="hidden"
+        animate="visible"
+        whileHover={{ scale: 1.05 }}
         className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-orange-300/30 bg-(--brand-dark)/85 px-3.5 py-2 text-xs font-extrabold text-[#fff7ec] shadow-lg backdrop-blur-md max-sm:hidden"
         aria-hidden="true"
       >
         <Code2 className="size-4 text-orange-400" />
         Junior Developer
-      </div>
-    </figure>
+      </motion.div>
+    </motion.figure>
   )
 }

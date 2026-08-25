@@ -14,6 +14,7 @@ import {
   Send,
   Twitter,
 } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { z } from 'zod'
 
@@ -30,6 +31,14 @@ import { Textarea } from '#/components/ui/textarea'
 import { getPublicCopy } from '#/features/portfolio/data'
 import { useSiteSettings } from '#/features/settings/hooks'
 import { defaultSiteSettings } from '#/features/settings/types'
+import {
+  defaultViewport,
+  fadeIn,
+  fadeUp,
+  scaleIn,
+  staggerContainer,
+  staggerItem,
+} from '#/lib/motion'
 
 export const Route = createFileRoute('/contact')({
   component: ContactPage,
@@ -127,16 +136,31 @@ function ContactPage() {
   return (
     <main className="px-4 py-12 sm:py-16">
       <Container className="max-w-5xl">
-        <SectionHeader
-          eyebrow={copy.contact.eyebrow}
-          title={copy.contact.title}
-          description={copy.contact.description}
-        />
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+        >
+          <SectionHeader
+            eyebrow={copy.contact.eyebrow}
+            title={copy.contact.title}
+            description={copy.contact.description}
+          />
+        </motion.div>
 
-        <div className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={defaultViewport}
+          variants={fadeIn}
+          className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start"
+        >
           {/* Left Column: Direct Channels & Status */}
-          <div className="grid gap-5">
-            <div className="surface-card p-6 sm:p-7">
+          <motion.div
+            variants={staggerContainer(0.08, 0.1)}
+            className="grid gap-5"
+          >
+            <motion.div variants={staggerItem} className="surface-card p-6 sm:p-7">
               <div className="flex items-center gap-3 border-b border-(--brand-line) pb-4">
                 <div className="inline-flex size-10 items-center justify-center rounded-xl bg-(--brand-orange-soft) text-(--brand-orange-deep)">
                   <MessageSquare aria-hidden="true" className="size-5" />
@@ -308,7 +332,7 @@ function ContactPage() {
                         Instagram
                       </span>
                       <span className="text-xs font-bold text-(--brand-muted)">
-                        Social Profile
+                        Photo & Media
                       </span>
                     </div>
                     <div className="mt-2 flex items-center justify-between gap-3">
@@ -345,7 +369,7 @@ function ContactPage() {
                         TikTok
                       </span>
                       <span className="text-xs font-bold text-(--brand-muted)">
-                        Social Profile
+                        Short Videos
                       </span>
                     </div>
                     <div className="mt-2 flex items-center justify-between gap-3">
@@ -371,10 +395,10 @@ function ContactPage() {
                   </div>
                 )}
               </div>
-            </div>
+            </motion.div>
 
             {/* Status & Location Pill Card */}
-            <div className="surface-card p-5">
+            <motion.div variants={staggerItem} className="surface-card p-5">
               <div className="flex items-center gap-3">
                 <span className="relative flex size-3">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -391,62 +415,73 @@ function ContactPage() {
                 />
                 <span>{copy.contact.location}</span>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Right Column: Resend Form or Success View */}
-          <div className="surface-card p-6 sm:p-8">
-            {status === 'success' ? (
-              <div className="flex flex-col items-center justify-center py-8 text-center">
-                <div className="inline-flex size-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500 mb-4">
-                  <CheckCircle2 className="size-7" />
-                </div>
-                <h3 className="text-xl font-bold text-(--brand-ink)">
-                  {copy.contact.sendSuccessTitle}
-                </h3>
-                <p className="mt-2 max-w-md text-sm text-(--brand-muted)">
-                  {copy.contact.sendSuccessSubtitle}
-                </p>
-                <Button
-                  type="button"
-                  onClick={() => setStatus('idle')}
-                  variant="outline"
-                  className="mt-6 rounded-full border-(--brand-line) font-bold text-(--brand-ink) hover:bg-(--brand-orange-soft) hover:border-(--brand-orange)"
+          <motion.div
+            variants={scaleIn}
+            className="surface-card p-6 sm:p-8"
+          >
+            <AnimatePresence mode="wait">
+              {status === 'success' ? (
+                <motion.div
+                  key="success"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex flex-col items-center justify-center py-8 text-center"
                 >
-                  {copy.contact.sendAnother}
-                </Button>
-              </div>
-            ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  e.stopPropagation()
-                  void form.handleSubmit()
-                }}
-                className="grid gap-5"
-              >
-                <div>
-                  <h2 className="text-xl font-bold text-(--brand-ink)">
-                    {copy.contact.formTitle}
-                  </h2>
-                  <p className="mt-1 text-xs text-(--brand-muted)">
-                    {copy.contact.formSubtitle}
-                  </p>
-                </div>
-
-                {status === 'error' && (
-                  <div className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-red-600 dark:text-red-400">
-                    <AlertCircle className="size-5 shrink-0 mt-0.5" />
-                    <div className="text-xs">
-                      <p className="font-bold">{copy.contact.sendErrorTitle}</p>
-                      <p className="mt-0.5 opacity-90">
-                        {errorMessage || copy.contact.sendErrorTitle}
-                      </p>
-                    </div>
+                  <div className="inline-flex size-14 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-500 mb-4">
+                    <CheckCircle2 className="size-7" />
                   </div>
-                )}
+                  <h3 className="text-xl font-bold text-(--brand-ink)">
+                    {copy.contact.sendSuccessTitle}
+                  </h3>
+                  <p className="mt-2 max-w-md text-sm text-(--brand-muted)">
+                    {copy.contact.sendSuccessSubtitle}
+                  </p>
+                  <Button
+                    type="button"
+                    onClick={() => setStatus('idle')}
+                    variant="outline"
+                    className="mt-6 rounded-full border-(--brand-line) font-bold text-(--brand-ink) hover:bg-(--brand-orange-soft) hover:border-(--brand-orange)"
+                  >
+                    {copy.contact.sendAnother}
+                  </Button>
+                </motion.div>
+              ) : (
+                <form
+                  onSubmit={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    void form.handleSubmit()
+                  }}
+                  className="grid gap-5"
+                >
+                  <div>
+                    <h2 className="text-xl font-bold text-(--brand-ink)">
+                      {copy.contact.formTitle}
+                    </h2>
+                    <p className="mt-1 text-xs text-(--brand-muted)">
+                      {copy.contact.formSubtitle}
+                    </p>
+                  </div>
 
-                <FieldGroup>
+                  {status === 'error' && (
+                    <div className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-red-600 dark:text-red-400">
+                      <AlertCircle className="size-5 shrink-0 mt-0.5" />
+                      <div className="text-xs">
+                        <p className="font-bold">{copy.contact.sendErrorTitle}</p>
+                        <p className="mt-0.5 opacity-90">
+                          {errorMessage || copy.contact.sendErrorTitle}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  <FieldGroup>
                   <div className="grid gap-4 sm:grid-cols-2">
                     {/* Name */}
                     <form.Field
@@ -620,8 +655,9 @@ function ContactPage() {
                 </div>
               </form>
             )}
-          </div>
-        </div>
+            </AnimatePresence>
+          </motion.div>
+        </motion.div>
       </Container>
     </main>
   )
