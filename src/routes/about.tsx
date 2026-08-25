@@ -7,7 +7,6 @@ import {
   ChevronUp,
   Code2,
   Compass,
-  Disc3,
   ExternalLink,
   Flame,
   Flag,
@@ -954,88 +953,137 @@ function AboutPage() {
                   {data.beyond.kpop.summary}
                 </p>
 
-                {/* 5 Group Rows */}
-                <div className="space-y-3.5">
+                {/* 5 Group Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
                   {data.beyond.kpop.groups.map((group) => (
                     <div
                       key={group.name}
                       className={cn(
-                        'surface-card p-4 sm:p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-(--brand-orange) hover:shadow-md bg-linear-to-r',
+                        'group relative overflow-hidden rounded-3xl border border-(--brand-line) bg-(--surface-strong)/90 backdrop-blur-md p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-xl flex flex-col justify-between bg-linear-to-br',
                         group.color,
                       )}
                     >
-                      {/* Left: Bias Portrait + Group & Bias Info */}
-                      <div className="flex items-center gap-4 min-w-0">
-                        <div className="relative size-16 sm:size-20 shrink-0 rounded-2xl overflow-hidden shadow-xs border border-(--brand-line) bg-(--surface-strong)">
+                      {/* Ambient background glow blur */}
+                      <div className="pointer-events-none absolute -right-10 -top-10 size-36 rounded-full bg-(--brand-orange)/10 blur-3xl group-hover:bg-(--brand-orange)/20 transition-all duration-500" />
+
+                      {/* Top Header: Official Logo + Group Name + Bias Badge */}
+                      <div className="relative z-10 flex items-center justify-between gap-3 border-b border-(--brand-line)/60 pb-4 mb-4">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="size-11 sm:size-12 shrink-0 rounded-2xl border border-(--brand-line) bg-white/90 overflow-hidden shadow-xs">
+                            <img
+                              src={group.logoUrl}
+                              alt={`${group.name} official logo`}
+                              referrerPolicy="no-referrer"
+                              loading="lazy"
+                              className="size-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            />
+                          </div>
+                          <div className="min-w-0">
+                            <span className="text-[10px] font-extrabold uppercase tracking-widest text-(--brand-orange-deep) block leading-tight">
+                              K-Pop Artist
+                            </span>
+                            <h3 className="text-lg sm:text-xl font-black text-(--brand-ink) tracking-tight truncate">
+                              {group.name}
+                            </h3>
+                          </div>
+                        </div>
+
+                        {/* Bias Pill Badge */}
+                        <div className="inline-flex items-center gap-1.5 rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-black text-(--brand-orange-deep) border border-(--brand-orange)/30 shadow-xs shrink-0">
+                          <Sparkles className="size-3.5 text-(--brand-orange)" />
+                          <span>
+                            {data.beyond.kpop.biasLabel}:{' '}
+                            <strong className="text-(--brand-ink)">
+                              {group.bias}
+                            </strong>
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Main Body: Bias Showcase on Left + Vinyl Track Player on Right */}
+                      <div className="relative z-10 grid grid-cols-[105px_1fr] sm:grid-cols-[120px_1fr] gap-4 items-center">
+                        {/* Left: Bias Portrait with Glass Frame */}
+                        <div className="group/bias relative aspect-[3/4] w-full rounded-2xl overflow-hidden border-2 border-(--brand-line) bg-black/40 shadow-md group-hover:border-(--brand-orange) transition-colors">
                           <img
                             src={group.biasImage}
                             alt={`${group.bias} (${group.name})`}
                             referrerPolicy="no-referrer"
                             loading="lazy"
-                            className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            className="size-full object-cover object-top transition-transform duration-500 group-hover/bias:scale-110"
                           />
-                        </div>
-
-                        <div className="space-y-1.5 min-w-0">
-                          <h3 className="text-base sm:text-lg font-bold text-(--brand-ink) truncate">
-                            {group.name}
-                          </h3>
-                          <div className="flex flex-wrap items-center gap-2">
-                            <span className="inline-flex items-center gap-1 rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-xs font-extrabold text-(--brand-orange-deep)">
-                              <Sparkles className="size-3 text-(--brand-orange)" />
-                              <span>
-                                {data.beyond.kpop.biasLabel}: {group.bias}
-                              </span>
+                          <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-black/20" />
+                          <div className="absolute inset-x-0 bottom-1.5 text-center">
+                            <span className="rounded-md bg-black/75 backdrop-blur-xs px-2 py-0.5 text-[10px] font-black text-white border border-white/20">
+                              {group.bias}
                             </span>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Right: Album Cover + Song Info + Spotify Action Button */}
-                      <div className="flex items-center justify-between md:justify-end gap-3 sm:gap-4 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-(--brand-line)">
-                        {/* Album & Song Snippet */}
-                        <div className="flex items-center gap-3 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-2 pr-3.5 shadow-xs">
+                        {/* Right: Vinyl Player & Spotify Action */}
+                        <div className="space-y-3 min-w-0">
+                          {/* Vinyl Album Player */}
+                          <div className="flex items-center gap-3 rounded-2xl border border-(--brand-line) bg-(--site-bg)/90 backdrop-blur-md p-2.5 sm:p-3 shadow-xs">
+                            {/* Album Cover with Spinning Vinyl Disk peeking out */}
+                            <div className="relative size-12 sm:size-14 shrink-0">
+                              {/* Vinyl Disk peeking out */}
+                              <div className="absolute top-0 right-0 size-12 sm:size-14 rounded-full bg-black border-2 border-neutral-800 shadow-md flex items-center justify-center translate-x-2.5 group-hover:translate-x-3.5 transition-transform duration-300 animate-spin [animation-duration:8s]">
+                                <div className="size-4 sm:size-5 rounded-full border border-neutral-700 bg-neutral-900 flex items-center justify-center">
+                                  <div className="size-1.5 sm:size-2 rounded-full bg-(--brand-orange)" />
+                                </div>
+                              </div>
+
+                              {/* Album Cover */}
+                              <a
+                                href={group.spotifyUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group/album relative z-10 block size-full rounded-xl overflow-hidden shadow-md border border-(--brand-line) cursor-pointer"
+                                aria-label={`Play ${group.song} by ${group.name} on Spotify`}
+                              >
+                                <img
+                                  src={group.albumCover}
+                                  alt={`${group.song} album cover`}
+                                  referrerPolicy="no-referrer"
+                                  loading="lazy"
+                                  className="size-full object-cover group-hover/album:scale-105 transition-transform"
+                                />
+                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/album:opacity-100 transition-opacity">
+                                  <Play className="size-4 text-white fill-white" />
+                                </div>
+                              </a>
+                            </div>
+
+                            {/* Track Info & Animated Equalizer */}
+                            <div className="min-w-0 flex-1 pl-2 sm:pl-2.5 space-y-1">
+                              <div className="flex items-center justify-between gap-1">
+                                <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider text-(--brand-muted)">
+                                  {data.beyond.kpop.songLabel}
+                                </span>
+                                {/* Equalizer bars */}
+                                <div className="flex items-end gap-0.5 h-3">
+                                  <span className="w-0.5 bg-(--brand-orange) rounded-full animate-pulse h-2" />
+                                  <span className="w-0.5 bg-(--brand-orange) rounded-full animate-pulse h-3 [animation-delay:150ms]" />
+                                  <span className="w-0.5 bg-(--brand-orange) rounded-full animate-pulse h-1.5 [animation-delay:300ms]" />
+                                </div>
+                              </div>
+                              <h4 className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate leading-tight">
+                                {group.song}
+                              </h4>
+                            </div>
+                          </div>
+
+                          {/* Spotify Direct Button */}
                           <a
                             href={group.spotifyUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group/album relative size-11 sm:size-12 shrink-0 rounded-lg overflow-hidden shadow-xs border border-(--brand-line) cursor-pointer"
-                            aria-label={`Listen to ${group.song} by ${group.name} on Spotify`}
+                            className="flex items-center justify-center gap-2 w-full rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-black font-extrabold px-3 py-2 text-xs transition-all shadow-xs hover:shadow-md hover:shadow-emerald-500/20 cursor-pointer"
+                            aria-label={`Open ${group.song} on Spotify`}
                           >
-                            <img
-                              src={group.albumCover}
-                              alt={`${group.song} album cover`}
-                              referrerPolicy="no-referrer"
-                              loading="lazy"
-                              className="size-full object-cover transition-transform duration-300 group-hover/album:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/album:opacity-100 transition-opacity">
-                              <Play className="size-4 text-white fill-white" />
-                            </div>
+                            <span>{data.beyond.kpop.spotifyLabel}</span>
+                            <ExternalLink className="size-3.5" />
                           </a>
-
-                          <div className="text-left min-w-0 max-w-[140px] sm:max-w-[170px]">
-                            <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-(--brand-muted) block leading-none">
-                              {data.beyond.kpop.songLabel}
-                            </span>
-                            <div className="flex items-center gap-1 text-xs sm:text-sm font-bold text-(--brand-ink) truncate mt-0.5">
-                              <Disc3 className="size-3 sm:size-3.5 shrink-0 text-(--brand-orange) animate-spin" />
-                              <span className="truncate">{group.song}</span>
-                            </div>
-                          </div>
                         </div>
-
-                        {/* Spotify Direct Action Button */}
-                        <a
-                          href={group.spotifyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-xl bg-[#1DB954] hover:bg-[#1ed760] text-white px-3.5 py-2.5 text-xs font-bold transition-all shadow-xs hover:shadow-md cursor-pointer shrink-0"
-                          aria-label={`Open ${group.song} on Spotify`}
-                        >
-                          <span>Spotify</span>
-                          <ExternalLink className="size-3.5" />
-                        </a>
                       </div>
                     </div>
                   ))}

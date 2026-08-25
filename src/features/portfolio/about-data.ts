@@ -30,6 +30,7 @@ export type KpopGroup = {
   albumCover: string
   spotifyUrl: string
   biasImage: string
+  logoUrl: string
 }
 
 export type GenshinChar = {
@@ -377,7 +378,7 @@ export const aboutData = {
               name: 'Lohen',
               reason: 'Cool twin-like aesthetic to Wanderer.',
               image:
-                'https://static.wikia.nocookie.net/genshin-impact/images/5/56/Lohen_Card.png/revision/latest?cb=20260414040204',
+                'https://preview.redd.it/lohen-fanart-art-by-me-v0-nfaet96zft5h1.jpg?width=640&crop=smart&auto=webp&s=6a66582017b3ff95a5031299a2ba033f67ff4548',
             },
             {
               name: 'Tsaritsa',
@@ -418,7 +419,9 @@ export const aboutData = {
             spotifyUrl: 'https://open.spotify.com/album/4SboBpuYojDm02qS4iFeJC',
             biasImage:
               'https://static.wikia.nocookie.net/aespa/images/0/04/THE_CULTURE%2C_THE_FUTURE_Teaser_Winter_%282%29.jpg/revision/latest?cb=20250331093258',
-            color: 'from-blue-500/20 to-purple-500/20',
+            logoUrl:
+              'https://images.seeklogo.com/logo-png/40/1/aespa-logo-png_seeklogo-406894.png',
+            color: 'from-blue-500/20 via-purple-500/15 to-transparent',
           },
           {
             name: 'BLACKPINK',
@@ -430,7 +433,9 @@ export const aboutData = {
               'https://open.spotify.com/intl-id/track/2aI2k39nfa3KFsa4JclQzw',
             biasImage:
               'https://img.okezone.com/okz/500/library/images/2024/09/26/rose_blackpink_21875.jpg',
-            color: 'from-pink-500/20 to-rose-500/20',
+            logoUrl:
+              'https://images.seeklogo.com/logo-png/38/1/blackpink-logo-png_seeklogo-384214.png',
+            color: 'from-pink-500/20 via-rose-500/15 to-transparent',
           },
           {
             name: 'LE SSERAFIM',
@@ -442,7 +447,9 @@ export const aboutData = {
               'https://open.spotify.com/intl-id/track/6wBpO4Xc4YgShnENGSFA1M',
             biasImage:
               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbBA2awG_EbxgQoz4KVn6NuUq1LZ7BBFnBXa1zoSNQsj2_x5i7dbTyyAY&s=10',
-            color: 'from-amber-500/20 to-orange-500/20',
+            logoUrl:
+              'https://i.pinimg.com/564x/a1/b9/57/a1b95706564eb26a6959617951f706ac.jpg',
+            color: 'from-amber-500/20 via-orange-500/15 to-transparent',
           },
           {
             name: 'IVE',
@@ -454,7 +461,9 @@ export const aboutData = {
               'https://open.spotify.com/intl-id/album/7qch1xWGWuU5VxZEYBF5KW',
             biasImage:
               'https://upload.wikimedia.org/wikipedia/commons/0/07/Jang_Won-young_at_the_Bulgari_Eclettica_event_in_Seoul%2C_May_12%2C_2026_%281%29.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original',
-            color: 'from-indigo-500/20 to-blue-500/20',
+            logoUrl:
+              'https://i.pinimg.com/564x/a6/7c/f5/a67cf5ee06108c44d716f5969d873ac8.jpg',
+            color: 'from-indigo-500/20 via-sky-500/15 to-transparent',
           },
           {
             name: 'Hearts2Hearts',
@@ -466,7 +475,9 @@ export const aboutData = {
               'https://open.spotify.com/intl-id/track/68UrZQUuO3O6eUiD226xHg',
             biasImage:
               'https://upload.wikimedia.org/wikipedia/commons/8/82/A-Na_of_Hearts2Hearts%2C_March_29%2C_2025.jpg?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original',
-            color: 'from-emerald-500/20 to-teal-500/20',
+            logoUrl:
+              'https://i.pinimg.com/564x/9f/79/4a/9f794aa34348d15f8a07e99006275b03.jpg',
+            color: 'from-emerald-500/20 via-teal-500/15 to-transparent',
           },
         ],
       },
@@ -848,7 +859,7 @@ export const aboutData = {
               name: 'Arlecchino',
               reason: 'Suka karena aura "baddie"-nya yang keren parah.',
               image:
-                'https://static.wikia.nocookie.net/genshin-impact/images/6/69/Arlecchino_Birthday_2024.jpg/revision/latest/scale-to-width-down/1200?cb=20240822040458',
+                'https://static.wikia.nocookie.net/gensin-impact/images/6/69/Arlecchino_Birthday_2024.jpg/revision/latest/scale-to-width-down/1200?cb=20240822040458',
             },
             {
               name: 'Wanderer',
@@ -860,13 +871,13 @@ export const aboutData = {
               name: 'Lohen',
               reason: 'Punya visual dan aura kembar mirip Wanderer.',
               image:
-                'https://static.wikia.nocookie.net/genshin-impact/images/5/56/Lohen_Card.png/revision/latest?cb=20260414040204',
+                'https://preview.redd.it/lohen-fanart-art-by-me-v0-nfaet96zft5h1.jpg?width=640&crop=smart&auto=webp&s=6a66582017b3ff95a5031299a2ba033f67ff4548',
             },
             {
               name: 'Tsaritsa',
               reason: 'Ratu sejati dari Snezhnaya.',
               image:
-                'https://static.wikia.nocookie.net/genshin-impact/images/f/f5/Tsaritsa_Illustration.png/revision/latest?cb=20260627014155',
+                'https://static.wikia.nocookie.net/gensin-impact/images/f/f5/Tsaritsa_Illustration.png/revision/latest?cb=20260627014155',
             },
           ],
         },
@@ -901,7 +912,9 @@ export const aboutData = {
             spotifyUrl: 'https://open.spotify.com/album/4SboBpuYojDm02qS4iFeJC',
             biasImage:
               'https://static.wikia.nocookie.net/aespa/images/0/04/THE_CULTURE%2C_THE_FUTURE_Teaser_Winter_%282%29.jpg/revision/latest?cb=20250331093258',
-            color: 'from-blue-500/20 to-purple-500/20',
+            logoUrl:
+              'https://images.seeklogo.com/logo-png/40/1/aespa-logo-png_seeklogo-406894.png',
+            color: 'from-blue-500/20 via-purple-500/15 to-transparent',
           },
           {
             name: 'BLACKPINK',
@@ -913,7 +926,9 @@ export const aboutData = {
               'https://open.spotify.com/intl-id/track/2aI2k39nfa3KFsa4JclQzw',
             biasImage:
               'https://img.okezone.com/okz/500/library/images/2024/09/26/rose_blackpink_21875.jpg',
-            color: 'from-pink-500/20 to-rose-500/20',
+            logoUrl:
+              'https://images.seeklogo.com/logo-png/38/1/blackpink-logo-png_seeklogo-384214.png',
+            color: 'from-pink-500/20 via-rose-500/15 to-transparent',
           },
           {
             name: 'LE SSERAFIM',
@@ -925,7 +940,9 @@ export const aboutData = {
               'https://open.spotify.com/intl-id/track/6wBpO4Xc4YgShnENGSFA1M',
             biasImage:
               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbBA2awG_EbxgQoz4KVn6NuUq1LZ7BBFnBXa1zoSNQsj2_x5i7dbTyyAY&s=10',
-            color: 'from-amber-500/20 to-orange-500/20',
+            logoUrl:
+              'https://i.pinimg.com/564x/a1/b9/57/a1b95706564eb26a6959617951f706ac.jpg',
+            color: 'from-amber-500/20 via-orange-500/15 to-transparent',
           },
           {
             name: 'IVE',
@@ -937,7 +954,9 @@ export const aboutData = {
               'https://open.spotify.com/intl-id/album/7qch1xWGWuU5VxZEYBF5KW',
             biasImage:
               'https://upload.wikimedia.org/wikipedia/commons/0/07/Jang_Won-young_at_the_Bulgari_Eclettica_event_in_Seoul%2C_May_12%2C_2026_%281%29.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original',
-            color: 'from-indigo-500/20 to-blue-500/20',
+            logoUrl:
+              'https://i.pinimg.com/564x/a6/7c/f5/a67cf5ee06108c44d716f5969d873ac8.jpg',
+            color: 'from-indigo-500/20 via-sky-500/15 to-transparent',
           },
           {
             name: 'Hearts2Hearts',
@@ -949,7 +968,9 @@ export const aboutData = {
               'https://open.spotify.com/intl-id/track/68UrZQUuO3O6eUiD226xHg',
             biasImage:
               'https://upload.wikimedia.org/wikipedia/commons/8/82/A-Na_of_Hearts2Hearts%2C_March_29%2C_2025.jpg?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original',
-            color: 'from-emerald-500/20 to-teal-500/20',
+            logoUrl:
+              'https://i.pinimg.com/564x/9f/79/4a/9f794aa34348d15f8a07e99006275b03.jpg',
+            color: 'from-emerald-500/20 via-teal-500/15 to-transparent',
           },
         ],
       },
