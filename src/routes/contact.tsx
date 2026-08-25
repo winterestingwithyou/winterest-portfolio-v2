@@ -134,7 +134,7 @@ function ContactPage() {
   })
 
   return (
-    <main className="px-4 py-12 sm:py-16">
+    <main className="overflow-x-clip px-4 py-12 sm:py-16">
       <Container className="max-w-5xl">
         <motion.div
           initial="hidden"
@@ -153,23 +153,23 @@ function ContactPage() {
           whileInView="visible"
           viewport={defaultViewport}
           variants={fadeIn}
-          className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start"
+          className="mt-8 grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start w-full min-w-0 max-w-full"
         >
           {/* Left Column: Direct Channels & Status */}
           <motion.div
             variants={staggerContainer(0.08, 0.1)}
-            className="grid gap-5"
+            className="grid gap-5 w-full min-w-0 max-w-full"
           >
-            <motion.div variants={staggerItem} className="surface-card p-6 sm:p-7">
+            <motion.div variants={staggerItem} className="surface-card p-4 sm:p-6 md:p-7 w-full min-w-0 max-w-full overflow-hidden">
               <div className="flex items-center gap-3 border-b border-(--brand-line) pb-4">
-                <div className="inline-flex size-10 items-center justify-center rounded-xl bg-(--brand-orange-soft) text-(--brand-orange-deep)">
+                <div className="inline-flex size-10 items-center justify-center rounded-xl bg-(--brand-orange-soft) text-(--brand-orange-deep) shrink-0">
                   <MessageSquare aria-hidden="true" className="size-5" />
                 </div>
-                <div>
-                  <h2 className="text-lg font-bold text-(--brand-ink)">
+                <div className="min-w-0 flex-1">
+                  <h2 className="text-lg font-bold text-(--brand-ink) truncate">
                     {copy.contact.directTitle}
                   </h2>
-                  <p className="text-xs text-(--brand-muted)">
+                  <p className="text-xs text-(--brand-muted) truncate">
                     {copy.contact.directSubtitle}
                   </p>
                 </div>
@@ -178,7 +178,7 @@ function ContactPage() {
               <div className="mt-4 grid gap-3">
                 {/* GitHub Block */}
                 {githubUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
                         GitHub
@@ -187,13 +187,13 @@ function ContactPage() {
                         Public Profile
                       </span>
                     </div>
-                    <div className="mt-2 flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
+                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
                         <Github
                           aria-hidden="true"
                           className="size-5 shrink-0 text-(--brand-ink)"
                         />
-                        <span className="text-sm font-bold text-(--brand-ink) truncate">
+                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
                           {githubName}
                         </span>
                       </div>
@@ -201,7 +201,7 @@ function ContactPage() {
                         href={githubUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1 sm:gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
                       >
                         <ExternalLink
                           aria-hidden="true"
@@ -215,7 +215,7 @@ function ContactPage() {
 
                 {/* LinkedIn Block */}
                 {linkedinUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
                         LinkedIn
@@ -224,13 +224,13 @@ function ContactPage() {
                         Professional Profile
                       </span>
                     </div>
-                    <div className="mt-2 flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
+                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
                         <Linkedin
                           aria-hidden="true"
                           className="size-5 shrink-0 text-(--brand-ink)"
                         />
-                        <span className="text-sm font-bold text-(--brand-ink) truncate">
+                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
                           {linkedinName}
                         </span>
                       </div>
@@ -238,7 +238,7 @@ function ContactPage() {
                         href={linkedinUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1 sm:gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
                       >
                         <ExternalLink
                           aria-hidden="true"
@@ -252,7 +252,7 @@ function ContactPage() {
 
                 {/* Twitter / X Block */}
                 {twitterUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
                         Twitter / X
@@ -261,13 +261,13 @@ function ContactPage() {
                         Social Profile
                       </span>
                     </div>
-                    <div className="mt-2 flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
+                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
                         <Twitter
                           aria-hidden="true"
                           className="size-5 shrink-0 text-(--brand-ink)"
                         />
-                        <span className="text-sm font-bold text-(--brand-ink) truncate">
+                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
                           {twitterName}
                         </span>
                       </div>
@@ -275,7 +275,7 @@ function ContactPage() {
                         href={twitterUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
                       >
                         <ExternalLink
                           aria-hidden="true"
@@ -289,7 +289,7 @@ function ContactPage() {
 
                 {/* Facebook Block */}
                 {facebookUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
                         Facebook
@@ -298,13 +298,13 @@ function ContactPage() {
                         Social Profile
                       </span>
                     </div>
-                    <div className="mt-2 flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
+                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
                         <Facebook
                           aria-hidden="true"
                           className="size-5 shrink-0 text-(--brand-ink)"
                         />
-                        <span className="text-sm font-bold text-(--brand-ink) truncate">
+                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
                           {facebookName}
                         </span>
                       </div>
@@ -312,7 +312,7 @@ function ContactPage() {
                         href={facebookUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
                       >
                         <ExternalLink
                           aria-hidden="true"
@@ -326,7 +326,7 @@ function ContactPage() {
 
                 {/* Instagram Block */}
                 {instagramUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
                         Instagram
@@ -335,13 +335,13 @@ function ContactPage() {
                         Photo & Media
                       </span>
                     </div>
-                    <div className="mt-2 flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
+                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
                         <Instagram
                           aria-hidden="true"
                           className="size-5 shrink-0 text-(--brand-ink)"
                         />
-                        <span className="text-sm font-bold text-(--brand-ink) truncate">
+                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
                           {instagramName}
                         </span>
                       </div>
@@ -349,7 +349,7 @@ function ContactPage() {
                         href={instagramUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
                       >
                         <ExternalLink
                           aria-hidden="true"
@@ -363,7 +363,7 @@ function ContactPage() {
 
                 {/* TikTok Block */}
                 {tiktokUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
                     <div className="flex items-center justify-between gap-2">
                       <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
                         TikTok
@@ -372,10 +372,10 @@ function ContactPage() {
                         Short Videos
                       </span>
                     </div>
-                    <div className="mt-2 flex items-center justify-between gap-3">
-                      <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
+                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
                         <TikTokIcon className="size-5 shrink-0 text-(--brand-ink)" />
-                        <span className="text-sm font-bold text-(--brand-ink) truncate">
+                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
                           {tiktokName}
                         </span>
                       </div>
@@ -383,7 +383,7 @@ function ContactPage() {
                         href={tiktokUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
                       >
                         <ExternalLink
                           aria-hidden="true"
@@ -398,22 +398,22 @@ function ContactPage() {
             </motion.div>
 
             {/* Status & Location Pill Card */}
-            <motion.div variants={staggerItem} className="surface-card p-5">
+            <motion.div variants={staggerItem} className="surface-card p-4 sm:p-5 w-full min-w-0 max-w-full">
               <div className="flex items-center gap-3">
-                <span className="relative flex size-3">
+                <span className="relative flex size-3 shrink-0">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                   <span className="relative inline-flex size-3 rounded-full bg-emerald-500" />
                 </span>
-                <p className="text-xs font-bold text-(--brand-ink)">
+                <p className="text-xs font-bold text-(--brand-ink) truncate">
                   {copy.contact.status}
                 </p>
               </div>
               <div className="mt-3 flex items-center gap-2 text-xs text-(--brand-muted) pt-3 border-t border-(--brand-line)">
                 <MapPin
                   aria-hidden="true"
-                  className="size-3.5 text-(--brand-orange)"
+                  className="size-3.5 text-(--brand-orange) shrink-0"
                 />
-                <span>{copy.contact.location}</span>
+                <span className="truncate">{copy.contact.location}</span>
               </div>
             </motion.div>
           </motion.div>
@@ -421,7 +421,7 @@ function ContactPage() {
           {/* Right Column: Resend Form or Success View */}
           <motion.div
             variants={scaleIn}
-            className="surface-card p-6 sm:p-8"
+            className="surface-card p-4 sm:p-6 md:p-8 w-full min-w-0 max-w-full overflow-hidden"
           >
             <AnimatePresence mode="wait">
               {status === 'success' ? (
@@ -481,36 +481,110 @@ function ContactPage() {
                     </div>
                   )}
 
-                  <FieldGroup>
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    {/* Name */}
+                  <FieldGroup className="w-full min-w-0 max-w-full">
+                    <div className="grid gap-4 sm:grid-cols-2 w-full min-w-0 max-w-full">
+                      {/* Name */}
+                      <form.Field
+                        name="name"
+                        children={(field) => {
+                          const isInvalid =
+                            field.state.meta.isTouched && !field.state.meta.isValid
+                          return (
+                            <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
+                              <FieldLabel
+                                htmlFor={field.name}
+                                className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                              >
+                                {copy.contact.name}
+                              </FieldLabel>
+                              <Input
+                                id={field.name}
+                                name={field.name}
+                                type="text"
+                                disabled={status === 'loading'}
+                                autoComplete="name"
+                                placeholder={copy.contact.namePlaceholder}
+                                value={field.state.value}
+                                onBlur={field.handleBlur}
+                                onChange={(e) =>
+                                  field.handleChange(e.target.value)
+                                }
+                                aria-invalid={isInvalid}
+                                className="h-11 w-full min-w-0 max-w-full rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
+                              />
+                              {isInvalid && (
+                                <FieldError errors={field.state.meta.errors} />
+                              )}
+                            </Field>
+                          )
+                        }}
+                      />
+
+                      {/* Email */}
+                      <form.Field
+                        name="email"
+                        children={(field) => {
+                          const isInvalid =
+                            field.state.meta.isTouched && !field.state.meta.isValid
+                          return (
+                            <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
+                              <FieldLabel
+                                htmlFor={field.name}
+                                className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                              >
+                                {copy.contact.email}
+                              </FieldLabel>
+                              <Input
+                                id={field.name}
+                                name={field.name}
+                                type="email"
+                                disabled={status === 'loading'}
+                                autoComplete="email"
+                                placeholder={copy.contact.emailPlaceholder}
+                                value={field.state.value}
+                                onBlur={field.handleBlur}
+                                onChange={(e) =>
+                                  field.handleChange(e.target.value)
+                                }
+                                aria-invalid={isInvalid}
+                                className="h-11 w-full min-w-0 max-w-full rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
+                              />
+                              {isInvalid && (
+                                <FieldError errors={field.state.meta.errors} />
+                              )}
+                            </Field>
+                          )
+                        }}
+                      />
+                    </div>
+
+                    {/* Subject */}
                     <form.Field
-                      name="name"
+                      name="subject"
                       children={(field) => {
                         const isInvalid =
                           field.state.meta.isTouched && !field.state.meta.isValid
                         return (
-                          <Field data-invalid={isInvalid}>
+                          <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
                             <FieldLabel
                               htmlFor={field.name}
                               className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
                             >
-                              {copy.contact.name}
+                              {copy.contact.subject}
                             </FieldLabel>
                             <Input
                               id={field.name}
                               name={field.name}
                               type="text"
                               disabled={status === 'loading'}
-                              autoComplete="name"
-                              placeholder={copy.contact.namePlaceholder}
+                              placeholder={copy.contact.subjectPlaceholder}
                               value={field.state.value}
                               onBlur={field.handleBlur}
                               onChange={(e) =>
                                 field.handleChange(e.target.value)
                               }
                               aria-invalid={isInvalid}
-                              className="h-11 rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
+                              className="h-11 w-full min-w-0 max-w-full rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
                             />
                             {isInvalid && (
                               <FieldError errors={field.state.meta.errors} />
@@ -520,34 +594,33 @@ function ContactPage() {
                       }}
                     />
 
-                    {/* Email */}
+                    {/* Message */}
                     <form.Field
-                      name="email"
+                      name="message"
                       children={(field) => {
                         const isInvalid =
                           field.state.meta.isTouched && !field.state.meta.isValid
                         return (
-                          <Field data-invalid={isInvalid}>
+                          <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
                             <FieldLabel
                               htmlFor={field.name}
                               className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
                             >
-                              {copy.contact.email}
+                              {copy.contact.message}
                             </FieldLabel>
-                            <Input
+                            <Textarea
                               id={field.name}
                               name={field.name}
-                              type="email"
                               disabled={status === 'loading'}
-                              autoComplete="email"
-                              placeholder={copy.contact.emailPlaceholder}
+                              rows={5}
+                              placeholder={copy.contact.messagePlaceholder}
                               value={field.state.value}
                               onBlur={field.handleBlur}
                               onChange={(e) =>
                                 field.handleChange(e.target.value)
                               }
                               aria-invalid={isInvalid}
-                              className="h-11 rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
+                              className="min-h-28 w-full min-w-0 max-w-full rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
                             />
                             {isInvalid && (
                               <FieldError errors={field.state.meta.errors} />
@@ -556,80 +629,7 @@ function ContactPage() {
                         )
                       }}
                     />
-                  </div>
-
-                  {/* Subject */}
-                  <form.Field
-                    name="subject"
-                    children={(field) => {
-                      const isInvalid =
-                        field.state.meta.isTouched && !field.state.meta.isValid
-                      return (
-                        <Field data-invalid={isInvalid}>
-                          <FieldLabel
-                            htmlFor={field.name}
-                            className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-                          >
-                            {copy.contact.subject}
-                          </FieldLabel>
-                          <Input
-                            id={field.name}
-                            name={field.name}
-                            type="text"
-                            disabled={status === 'loading'}
-                            placeholder={copy.contact.subjectPlaceholder}
-                            value={field.state.value}
-                            onBlur={field.handleBlur}
-                            onChange={(e) =>
-                              field.handleChange(e.target.value)
-                            }
-                            aria-invalid={isInvalid}
-                            className="h-11 rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
-                          />
-                          {isInvalid && (
-                            <FieldError errors={field.state.meta.errors} />
-                          )}
-                        </Field>
-                      )
-                    }}
-                  />
-
-                  {/* Message */}
-                  <form.Field
-                    name="message"
-                    children={(field) => {
-                      const isInvalid =
-                        field.state.meta.isTouched && !field.state.meta.isValid
-                      return (
-                        <Field data-invalid={isInvalid}>
-                          <FieldLabel
-                            htmlFor={field.name}
-                            className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
-                          >
-                            {copy.contact.message}
-                          </FieldLabel>
-                          <Textarea
-                            id={field.name}
-                            name={field.name}
-                            disabled={status === 'loading'}
-                            rows={5}
-                            placeholder={copy.contact.messagePlaceholder}
-                            value={field.state.value}
-                            onBlur={field.handleBlur}
-                            onChange={(e) =>
-                              field.handleChange(e.target.value)
-                            }
-                            aria-invalid={isInvalid}
-                            className="min-h-28 rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
-                          />
-                          {isInvalid && (
-                            <FieldError errors={field.state.meta.errors} />
-                          )}
-                        </Field>
-                      )
-                    }}
-                  />
-                </FieldGroup>
+                  </FieldGroup>
 
                 <div className="pt-2">
                   <Button
