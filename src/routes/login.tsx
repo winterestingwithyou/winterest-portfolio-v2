@@ -6,7 +6,6 @@ import {
   LogIn,
   ShieldCheck,
   Sparkles,
-  UserPlus,
 } from 'lucide-react'
 import type { FormEvent } from 'react'
 import { useState } from 'react'
@@ -14,14 +13,11 @@ import { useState } from 'react'
 import ParaglideLocaleSwitcher from '#/components/locale-switcher.tsx'
 import ThemeToggle from '#/components/theme-toggle'
 import { getDashboardSession } from '#/features/auth/server-functions'
-import { cn } from '#/lib/utils'
 import { getLocale } from '#/paraglide/runtime'
 
 type LoginSearch = {
   redirectTo?: string
 }
-
-type AuthMode = 'signin' | 'signup'
 
 const authCopy = {
   en: {
@@ -34,28 +30,20 @@ const authCopy = {
       'A simple entry point for maintaining the stories, work, and notes behind the portfolio.',
     noteTitle: 'Personal access only',
     note: 'This area is reserved for Winterest, so the public site can stay clean, focused, and easy to explore.',
-    mode: {
-      signin: 'Sign in',
-      signup: 'Bootstrap',
-    },
     fields: {
-      name: 'Name',
       email: 'Email',
       password: 'Password',
     },
     placeholders: {
-      name: 'Winterest',
       email: 'you@example.com',
       password: 'Your password',
     },
     submit: {
       signin: 'Enter dashboard',
-      signup: 'Create owner',
       pending: 'Checking...',
     },
     errors: {
-      signin: 'Sign in failed.',
-      signup: 'Owner bootstrap failed.',
+      signin: 'Sign in failed. Check your email and password.',
       request: 'Auth request failed.',
     },
     highlights: [
@@ -74,28 +62,20 @@ const authCopy = {
       'Tempat sederhana untuk merapikan cerita, karya, dan catatan yang hidup di balik portfolio.',
     noteTitle: 'Akses personal',
     note: 'Area ini disiapkan untuk Winterest, agar halaman publik tetap rapi, fokus, dan nyaman dijelajahi.',
-    mode: {
-      signin: 'Masuk',
-      signup: 'Bootstrap',
-    },
     fields: {
-      name: 'Nama',
       email: 'Email',
       password: 'Password',
     },
     placeholders: {
-      name: 'Winterest',
       email: 'kamu@example.com',
       password: 'Password kamu',
     },
     submit: {
       signin: 'Masuk dashboard',
-      signup: 'Buat owner',
       pending: 'Memeriksa...',
     },
     errors: {
-      signin: 'Gagal masuk.',
-      signup: 'Gagal membuat owner.',
+      signin: 'Gagal masuk. Periksa kembali email dan password.',
       request: 'Request auth gagal.',
     },
     highlights: [
@@ -115,11 +95,10 @@ const authCopy = {
     description: string
     noteTitle: string
     note: string
-    mode: Record<AuthMode, string>
-    fields: Record<'name' | 'email' | 'password', string>
-    placeholders: Record<'name' | 'email' | 'password', string>
-    submit: Record<AuthMode | 'pending', string>
-    errors: Record<AuthMode | 'request', string>
+    fields: Record<'email' | 'password', string>
+    placeholders: Record<'email' | 'password', string>
+    submit: { signin: string; pending: string }
+    errors: { signin: string; request: string }
     highlights: string[]
   }
 >
@@ -162,7 +141,6 @@ function LoginPage() {
   const navigate = useNavigate()
   const { redirectTo } = Route.useSearch()
   const copy = getCopy()
-  const [mode, setMode] = useState<AuthMode>('signin')
   const [isPending, setIsPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -173,7 +151,6 @@ function LoginPage() {
 
     const formData = new FormData(event.currentTarget)
     const payload = {
-      name: String(formData.get('name') ?? 'Winterest'),
       email: String(formData.get('email') ?? ''),
       password: String(formData.get('password') ?? ''),
       callbackURL: redirectTo ?? '/dashboard',
@@ -181,31 +158,17 @@ function LoginPage() {
     }
 
     try {
-      const response = await fetch(
-        mode === 'signup'
-          ? '/api/auth/sign-up/email'
-          : '/api/auth/sign-in/email',
-        {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify(
-            mode === 'signup'
-              ? payload
-              : {
-                  email: payload.email,
-                  password: payload.password,
-                  callbackURL: payload.callbackURL,
-                  rememberMe: payload.rememberMe,
-                },
-          ),
+      const response = await fetch('/api/auth/sign-in/email', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
         },
-      )
+        body: JSON.stringify(payload),
+      })
       const result: { message?: string; error?: string } = await response.json()
 
       if (!response.ok) {
-        throw new Error(result.message ?? result.error ?? copy.errors[mode])
+        throw new Error(result.message ?? result.error ?? copy.errors.signin)
       }
 
       await navigate({ to: redirectTo ?? '/dashboard' })
@@ -284,45 +247,20 @@ function LoginPage() {
             onSubmit={handleSubmit}
             className="grid gap-4 rounded-[1.25rem] border border-[color-mix(in_srgb,var(--brand-orange)_28%,var(--brand-line))] bg-[linear-gradient(145deg,color-mix(in_srgb,var(--surface-strong)_96%,transparent),color-mix(in_srgb,var(--brand-orange-soft)_28%,transparent)),var(--surface-strong)] p-4 shadow-[0_28px_80px_rgba(42,26,10,0.16),inset_0_1px_0_color-mix(in_srgb,white_42%,transparent)] sm:p-5"
           >
-            <div
-              className="grid grid-cols-2 gap-1 rounded-full border border-(--brand-line) bg-[color-mix(in_srgb,var(--brand-dark)_5%,var(--surface-strong))] p-1"
-              aria-label="Authentication mode"
-            >
-              <button
-                type="button"
-                onClick={() => {
-                  setMode('signin')
-                  setError(null)
-                }}
-                aria-pressed={mode === 'signin'}
-                className={getModeButtonClass(mode === 'signin')}
-              >
-                <LogIn aria-hidden="true" className="size-4" />
-                {copy.mode.signin}
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setMode('signup')
-                  setError(null)
-                }}
-                aria-pressed={mode === 'signup'}
-                className={getModeButtonClass(mode === 'signup')}
-              >
-                <UserPlus aria-hidden="true" className="size-4" />
-                {copy.mode.signup}
-              </button>
+            <div className="flex items-center gap-2 border-b border-(--brand-line) pb-3">
+              <div className="flex size-8 items-center justify-center rounded-lg bg-(--brand-orange-soft) text-(--brand-orange-deep)">
+                <LogIn className="size-4" />
+              </div>
+              <div>
+                <h2 className="text-sm font-extrabold text-(--brand-ink)">
+                  {copy.submit.signin}
+                </h2>
+                <p className="text-xs text-(--brand-muted)">
+                  {copy.noteTitle}
+                </p>
+              </div>
             </div>
 
-            {mode === 'signup' ? (
-              <Field
-                label={copy.fields.name}
-                name="name"
-                autoComplete="name"
-                defaultValue="Winterest"
-                placeholder={copy.placeholders.name}
-              />
-            ) : null}
             <Field
               label={copy.fields.email}
               name="email"
@@ -333,9 +271,7 @@ function LoginPage() {
             <Field
               label={copy.fields.password}
               name="password"
-              autoComplete={
-                mode === 'signup' ? 'new-password' : 'current-password'
-              }
+              autoComplete="current-password"
               type="password"
               placeholder={copy.placeholders.password}
             />
@@ -352,21 +288,12 @@ function LoginPage() {
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-black text-white shadow-[0_18px_44px_var(--brand-glow)] transition hover:-translate-y-px hover:shadow-[0_22px_54px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
             >
               <KeyRound aria-hidden="true" className="size-4" />
-              {isPending ? copy.submit.pending : copy.submit[mode]}
+              {isPending ? copy.submit.pending : copy.submit.signin}
             </button>
           </form>
         </section>
       </div>
     </main>
-  )
-}
-
-function getModeButtonClass(isActive: boolean) {
-  return cn(
-    'inline-flex min-h-10 items-center justify-center gap-2 rounded-full text-sm font-extrabold transition',
-    isActive
-      ? 'bg-(--brand-orange) text-white shadow-[0_12px_32px_var(--brand-glow)]'
-      : 'text-(--brand-muted) hover:text-(--brand-ink)',
   )
 }
 

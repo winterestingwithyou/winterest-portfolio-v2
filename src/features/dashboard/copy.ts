@@ -153,7 +153,7 @@ export const dashboardCopy = {
         total: 'Total users',
         owners: 'Owners',
         admins: 'Admins',
-        team: 'Editors & Viewers',
+        team: 'Editors',
       },
       table: {
         user: 'User',
@@ -167,11 +167,9 @@ export const dashboardCopy = {
         owner: 'Owner',
         admin: 'Admin',
         editor: 'Editor',
-        viewer: 'Viewer',
         ownerDesc: 'Full access to users, roles, settings, and all CMS content.',
         adminDesc: 'Manage content, media, and dashboard settings.',
         editorDesc: 'Create and edit portfolio content.',
-        viewerDesc: 'Read-only access to dashboard.',
       },
       form: {
         name: 'Full name',
@@ -479,7 +477,7 @@ export const dashboardCopy = {
         total: 'Total pengguna',
         owners: 'Owner',
         admins: 'Admin',
-        team: 'Editor & Viewer',
+        team: 'Editor',
       },
       table: {
         user: 'Pengguna',
@@ -493,12 +491,10 @@ export const dashboardCopy = {
         owner: 'Owner',
         admin: 'Admin',
         editor: 'Editor',
-        viewer: 'Viewer',
         ownerDesc:
           'Akses penuh ke manajemen user, role, pengaturan, dan semua konten CMS.',
         adminDesc: 'Kelola konten CMS, media, dan pengaturan dashboard.',
         editorDesc: 'Buat dan edit konten portfolio.',
-        viewerDesc: 'Akses baca (read-only) ke dashboard.',
       },
       form: {
         name: 'Nama lengkap',

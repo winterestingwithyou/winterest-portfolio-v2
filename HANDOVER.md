@@ -147,31 +147,20 @@ Needs polish:
 
 ### Phase 4: Auth And RBAC
 
-Status: Implemented baseline.
+Status: Implemented & Refined (Strict 1 Owner, No Viewer, CLI Owner Setup).
 
 Implemented:
 
-- Better Auth integration.
-- Cloudflare-friendly PBKDF2 password hashing fix was made.
-- Dashboard protection exists.
-- Owner/bootstrap flow exists.
-- Dashboard link appears in navbar only if logged in.
-- Logout exists in dashboard shell.
-- Login page was redesigned as its own auth layout, not using public header/footer.
-
-Recent login page work:
-
-- `src/routes/__root.tsx` hides public Header/Footer for `/login`.
-- `src/routes/login.tsx` has a custom auth layout.
-- Login page copy is bilingual via local `authCopy`.
-- Login page uses Tailwind directly, not custom CSS.
-- Copy was adjusted to avoid exposing internal technical wording like CMS/bootstrap/drafts in the hero area.
-- Login title size was reduced.
-
-Needs polish:
-
-- The mode button still says `Bootstrap` / submit says `Create owner` for signup mode. This may be okay because signup is internal/manual, but if the user wants zero technical wording, rename it more softly.
-- Better Auth errors are still shown directly if returned by API. Could map common errors to friendlier bilingual messages.
+- Better Auth integration with Cloudflare-friendly PBKDF2 password hashing.
+- Strictly **1 Owner Rule**: Portfolio permits exactly 1 owner account. Dashboard prevents creating a second owner, promoting to owner, demoting the owner, or deleting the owner.
+- Role `viewer` removed. Active roles: `owner`, `admin`, `editor`.
+- Public register/bootstrap UI and API hooks removed. `/login` is a pure Single Sign-In page.
+- Interactive CLI scripts for owner setup:
+  - `bun run create-owner:local`
+  - `bun run create-owner:remote`
+- Dashboard protection and RBAC permissions enforced across API routes and forms.
+- Dashboard link appears in navbar only when authenticated.
+- Login page has dedicated aesthetic auth layout with language & theme popovers.
 
 ### Phase 5: Writing, Lab, Media
 
@@ -272,6 +261,7 @@ drizzle/scripts
 Reason:
 
 - Reset SQL should not live beside migrations, because Wrangler picked it up as a migration file.
+- **Rule**: Always keep `drizzle/scripts/reset.sql` updated with `DROP TABLE IF EXISTS` for all tables when altering or creating new tables in `src/db/schema.ts`. Otherwise, `bun run db:fresh:local` / `remote` leaves orphaned tables that cause migration collisions.
 
 Do not run migrations unless user explicitly asks.
 

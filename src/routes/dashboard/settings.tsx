@@ -27,7 +27,7 @@ function DashboardSettingsPage() {
     refetch,
   } = useSiteSettings()
 
-  const role = isUserRole(currentUser?.role) ? currentUser.role : 'viewer'
+  const role = isUserRole(currentUser?.role) ? currentUser.role : 'editor'
   const canEdit = canManageSettings(role)
 
   return (

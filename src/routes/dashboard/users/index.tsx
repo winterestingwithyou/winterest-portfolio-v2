@@ -14,7 +14,6 @@ import {
   ShieldAlert,
   ShieldCheck,
   Trash2,
-  UserCheck,
   Users,
 } from 'lucide-react'
 import { useMemo } from 'react'
@@ -77,9 +76,7 @@ function DashboardUsersPage() {
   const totalUsers = users.length
   const ownerCount = users.filter((u) => u.role === 'owner').length
   const adminCount = users.filter((u) => u.role === 'admin').length
-  const teamCount = users.filter(
-    (u) => u.role === 'editor' || u.role === 'viewer',
-  ).length
+  const teamCount = users.filter((u) => u.role === 'editor').length
 
   const roleBadges: Record<
     UserRole,
@@ -102,12 +99,6 @@ function DashboardUsersPage() {
       className:
         'bg-blue-500/15 text-blue-600 dark:text-blue-300 border-blue-500/30',
       icon: Shield,
-    },
-    viewer: {
-      label: userCopy.roles.viewer,
-      className:
-        'bg-(--surface-soft) text-(--brand-muted) border-(--brand-line)',
-      icon: UserCheck,
     },
   }
 

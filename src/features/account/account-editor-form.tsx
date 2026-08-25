@@ -96,18 +96,12 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
       className:
         'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:border-blue-800 font-bold',
     },
-    viewer: {
-      label: userCopy.roles.viewer,
-      className:
-        'bg-neutral-100 text-neutral-700 border-neutral-200 dark:bg-neutral-800 dark:text-neutral-300 dark:border-neutral-700 font-bold',
-    },
   }
 
   const roleDescriptions: Record<UserRole, string> = {
     owner: userCopy.roles.ownerDesc,
     admin: userCopy.roles.adminDesc,
     editor: userCopy.roles.editorDesc,
-    viewer: userCopy.roles.viewerDesc,
   }
 
   // Profile Form

@@ -1,7 +1,6 @@
 import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { tanstackStartCookies } from 'better-auth/tanstack-start'
-import { count } from 'drizzle-orm'
 import { env } from 'cloudflare:workers'
 
 import { getDb } from '#/db'
@@ -39,21 +38,9 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-        before: async (newUser) => {
-          const [{ value }] = await db
-            .select({ value: count() })
-            .from(schema.user)
-
-          if (value > 0) {
-            return false
-          }
-
-          return {
-            data: {
-              ...newUser,
-              role: 'owner',
-            },
-          }
+        before: async () => {
+          // Public signup is disabled. Owner is created via CLI script, and subsequent users via dashboard.
+          return false
         },
       },
     },

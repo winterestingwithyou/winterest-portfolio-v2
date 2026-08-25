@@ -17,7 +17,6 @@ const rolePriority: Record<UserRole, number> = {
   owner: 1,
   admin: 2,
   editor: 3,
-  viewer: 4,
 }
 
 export async function listUsers(db: Database): Promise<UserWithSessionCount[]> {
@@ -43,7 +42,7 @@ export async function listUsers(db: Database): Promise<UserWithSessionCount[]> {
     sessionCount: sessionCountMap.get(u.id) ?? 0,
   }))
 
-  // Sort by role priority first (owner -> admin -> editor -> viewer), then by createdAt desc
+  // Sort by role priority first (owner -> admin -> editor), then by createdAt desc
   return result.sort((a, b) => {
     const pA = rolePriority[a.role]
     const pB = rolePriority[b.role]
@@ -84,6 +83,19 @@ export async function createUser(
 
   if (existing) {
     throw new Error('Email is already registered.')
+  }
+
+  // Enforce 1 owner rule
+  if (input.role === 'owner') {
+    const ownerStat = await db
+      .select({ count: count() })
+      .from(user)
+      .where(eq(user.role, 'owner'))
+      .get()
+
+    if ((ownerStat?.count ?? 0) >= 1) {
+      throw new Error('Only 1 owner account is allowed in this portfolio.')
+    }
   }
 
   const userId = crypto.randomUUID()
@@ -146,17 +158,22 @@ export async function updateUser(
     }
   }
 
-  // Check sole owner demotion protection
-  if (targetUser.role === 'owner' && input.role !== 'owner') {
+  // Enforce 1 owner rule: Cannot promote to owner if one already exists
+  if (targetUser.role !== 'owner' && input.role === 'owner') {
     const ownerStat = await db
       .select({ count: count() })
       .from(user)
       .where(eq(user.role, 'owner'))
       .get()
 
-    if ((ownerStat?.count ?? 0) <= 1) {
-      throw new Error('Cannot change role: at least one owner must remain.')
+    if ((ownerStat?.count ?? 0) >= 1) {
+      throw new Error('Only 1 owner account is allowed in this portfolio.')
     }
+  }
+
+  // Enforce 1 owner rule: Cannot demote the sole owner
+  if (targetUser.role === 'owner' && input.role !== 'owner') {
+    throw new Error('Cannot change owner role: the portfolio must have exactly one owner.')
   }
 
   const updatedUser = await db
@@ -237,17 +254,9 @@ export async function deleteUser(
     throw new Error('User not found.')
   }
 
-  // Check sole owner protection
+  // Enforce 1 owner rule: Owner cannot be deleted
   if (targetUser.role === 'owner') {
-    const ownerStat = await db
-      .select({ count: count() })
-      .from(user)
-      .where(eq(user.role, 'owner'))
-      .get()
-
-    if ((ownerStat?.count ?? 0) <= 1) {
-      throw new Error('Cannot delete the only remaining owner.')
-    }
+    throw new Error('Cannot delete the owner account.')
   }
 
   // Deleting user will cascade delete accounts and sessions thanks to foreign key onDelete: 'cascade'

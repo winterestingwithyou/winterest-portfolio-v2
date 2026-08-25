@@ -138,9 +138,19 @@ BETTER_AUTH_SECRET=
 Generate and store `BETTER_AUTH_SECRET` locally or as a Worker secret. Do not
 commit real secrets.
 
-The first successful signup at `/login` bootstraps the first user as `owner`.
-After an owner exists, public signup is blocked until a user-management flow is
-added.
+### Owner Account Setup (CLI)
+
+The portfolio enforces a strict **1 Owner Rule**. Initialize the owner account via interactive terminal CLI:
+
+```bash
+# For local D1 database:
+bun run create-owner:local
+
+# For remote Cloudflare D1 database:
+bun run create-owner:remote
+```
+
+The script interactively prompts for Name, Email, and Password, validates inputs, and securely stores the owner credentials. Public registration is disabled; additional users (Admins & Editors) can be managed via the Dashboard.
 
 ## Current Phase
 

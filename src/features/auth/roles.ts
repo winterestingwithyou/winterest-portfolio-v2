@@ -13,11 +13,11 @@ export function isUserRole(value: unknown): value is UserRole {
 }
 
 export function canAccessDashboard(role: UserRole): boolean {
-  return role === 'owner' || role === 'admin' || role === 'editor'
+  return userRoles.includes(role)
 }
 
 export function canManageContent(role: UserRole): boolean {
-  return role === 'owner' || role === 'admin' || role === 'editor'
+  return userRoles.includes(role)
 }
 
 export function canManageUsers(role: UserRole): boolean {

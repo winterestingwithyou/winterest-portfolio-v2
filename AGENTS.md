@@ -942,6 +942,7 @@ Rules:
 - Avoid N+1 queries.
 - Keep seed data safe and non-sensitive.
 - Do not use `better-sqlite3` in Cloudflare runtime paths.
+- **Mandatory `reset.sql` Maintenance**: Whenever adding, renaming, or modifying tables in `src/db/schema.ts` or creating new migrations, you **MUST** update `drizzle/scripts/reset.sql` to include `DROP TABLE IF EXISTS` for every new/modified table. Failing to update `reset.sql` causes `bun run db:fresh:local` and `bun run db:fresh:remote` to leave orphaned tables behind and break migration replays.
 
 D1-specific guidance:
 

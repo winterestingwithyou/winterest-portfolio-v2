@@ -17,7 +17,7 @@ export type ContentVisibility = (typeof contentVisibilities)[number]
 export const contentLocales = ['en', 'id'] as const
 export type ContentLocale = (typeof contentLocales)[number]
 
-export const userRoles = ['owner', 'admin', 'editor', 'viewer'] as const
+export const userRoles = ['owner', 'admin', 'editor'] as const
 export type UserRole = (typeof userRoles)[number]
 
 const timestamps = {

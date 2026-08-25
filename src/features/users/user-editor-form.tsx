@@ -10,6 +10,7 @@ import {
   Mail,
   Save,
   Shield,
+  ShieldAlert,
   Trash2,
   User,
 } from 'lucide-react'
@@ -24,7 +25,6 @@ import {
   FieldLabel,
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
-import { userRoles } from '#/db/schema'
 import type { UserRole } from '#/db/schema'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import {
@@ -56,6 +56,7 @@ export function UserEditorForm({
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
   const isSelf = Boolean(currentUserId && initialData?.id === currentUserId)
+  const isOwner = initialData?.role === 'owner'
 
   const createMutation = useCreateUser()
   const updateMutation = useUpdateUser()
@@ -76,13 +77,12 @@ export function UserEditorForm({
     owner: userCopy.roles.ownerDesc,
     admin: userCopy.roles.adminDesc,
     editor: userCopy.roles.editorDesc,
-    viewer: userCopy.roles.viewerDesc,
   }
 
   const userFormSchema = z.object({
     name: z.string().min(1, `${userCopy.form.name} wajib diisi.`),
     email: z.string().email('Format email tidak valid.'),
-    role: z.enum(['owner', 'admin', 'editor', 'viewer'] as const),
+    role: z.enum(['owner', 'admin', 'editor'] as const),
     password: z.string().refine(
       (val) => {
         if (mode === 'create') {
@@ -174,6 +174,10 @@ export function UserEditorForm({
 
   const handleDelete = async () => {
     if (!initialData?.id) return
+    if (isOwner) {
+      alert('Akun Owner tidak dapat dihapus.')
+      return
+    }
     if (isSelf) {
       alert(userCopy.form.selfDeleteWarning)
       return
@@ -189,6 +193,10 @@ export function UserEditorForm({
         // error displayed from mutation.error
       })
   }
+
+  const availableRoles: UserRole[] = isOwner
+    ? ['owner']
+    : ['admin', 'editor']
 
   return (
     <div className="mx-auto max-w-3xl space-y-8 pb-12">
@@ -206,7 +214,7 @@ export function UserEditorForm({
           </Link>
         </Button>
 
-        {mode === 'edit' && initialData && (
+        {mode === 'edit' && initialData && !isOwner && (
           <Button
             type="button"
             variant="destructive"
@@ -394,35 +402,52 @@ export function UserEditorForm({
                       <span className="text-red-500">*</span>
                     </FieldLabel>
 
-                    <div className="grid gap-3 sm:grid-cols-2 pt-1">
-                      {userRoles.map((r) => {
-                        const isSelected = field.state.value === r
-                        return (
-                          <button
-                            key={r}
-                            type="button"
-                            onClick={() => field.handleChange(r)}
-                            className={`flex flex-col items-start rounded-xl border p-3.5 text-left transition ${
-                              isSelected
-                                ? 'border-(--brand-orange) bg-(--brand-orange-soft)/30 shadow-xs'
-                                : 'border-(--brand-line) bg-surface hover:border-(--brand-orange)/50 hover:bg-surface-soft'
-                            }`}
-                          >
-                            <div className="flex w-full items-center justify-between">
-                              <span className="text-xs font-extrabold uppercase tracking-wide text-(--brand-ink)">
-                                {userCopy.roles[r]}
-                              </span>
-                              {isSelected && (
-                                <span className="size-2 rounded-full bg-(--brand-orange)" />
-                              )}
-                            </div>
-                            <p className="mt-1 text-[0.75rem] leading-relaxed text-(--brand-muted)">
-                              {roleDescriptions[r]}
-                            </p>
-                          </button>
-                        )
-                      })}
-                    </div>
+                    {isOwner ? (
+                      <div className="mt-1 rounded-xl border border-(--brand-orange)/40 bg-(--brand-orange-soft)/30 p-4">
+                        <div className="flex items-center gap-2">
+                          <ShieldAlert className="size-4 text-(--brand-orange-deep)" />
+                          <span className="text-xs font-black uppercase tracking-wide text-(--brand-orange-deep)">
+                            {userCopy.roles.owner}
+                          </span>
+                        </div>
+                        <p className="mt-1.5 text-xs text-(--brand-muted)">
+                          {roleDescriptions.owner}
+                        </p>
+                        <p className="mt-2 text-[0.7rem] font-semibold text-(--brand-orange-deep)">
+                          Role Owner bersifat tetap untuk akun utama portfolio ini dan tidak dapat diubah.
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="grid gap-3 sm:grid-cols-2 pt-1">
+                        {availableRoles.map((r) => {
+                          const isSelected = field.state.value === r
+                          return (
+                            <button
+                              key={r}
+                              type="button"
+                              onClick={() => field.handleChange(r)}
+                              className={`flex flex-col items-start rounded-xl border p-3.5 text-left transition ${
+                                isSelected
+                                  ? 'border-(--brand-orange) bg-(--brand-orange-soft)/30 shadow-xs'
+                                  : 'border-(--brand-line) bg-surface hover:border-(--brand-orange)/50 hover:bg-surface-soft'
+                              }`}
+                            >
+                              <div className="flex w-full items-center justify-between">
+                                <span className="text-xs font-extrabold uppercase tracking-wide text-(--brand-ink)">
+                                  {userCopy.roles[r]}
+                                </span>
+                                {isSelected && (
+                                  <span className="size-2 rounded-full bg-(--brand-orange)" />
+                                )}
+                              </div>
+                              <p className="mt-1 text-[0.75rem] leading-relaxed text-(--brand-muted)">
+                                {roleDescriptions[r]}
+                              </p>
+                            </button>
+                          )
+                        })}
+                      </div>
+                    )}
                   </Field>
                 )}
               />
