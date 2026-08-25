@@ -267,10 +267,10 @@ function AboutPage() {
             description={data.workflow.subtitle}
           />
 
-          {/* Wide Zigzag flow: Circles near outer edges (X=5 / X=95) with wide S-curves */}
-          <div className="max-w-4xl mx-auto px-2 sm:px-6">
+          {/* Central Serpentine S-Curve Workflow Timeline */}
+          <div className="max-w-4xl mx-auto px-3 sm:px-6">
             {data.workflow.steps.map((step, index) => {
-              const isEven = index % 2 === 0
+              const isOddStep = index % 2 === 0 // index 0, 2, 4, 6 -> Step 01, 03, 05, 07
               const isLast = index === data.workflow.steps.length - 1
               const StepIcon = STEP_ICONS[index] || Code2
               const borderClass =
@@ -281,123 +281,139 @@ function AboutPage() {
                     : 'border-(--brand-orange)/60'
 
               const circleNode = (
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <button
-                      type="button"
-                      className={cn(
-                        'group relative flex size-16 sm:size-20 shrink-0 items-center justify-center rounded-full border-4 bg-(--surface-strong) text-(--brand-orange-deep) shadow-lg transition-all duration-300 hover:scale-110 hover:bg-(--brand-orange-soft)/40 hover:shadow-xl hover:shadow-(--brand-orange-soft)/60 focus:outline-none focus:ring-4 focus:ring-(--brand-orange-soft) cursor-pointer',
-                        borderClass,
-                      )}
-                      aria-label={`Step ${step.step}: ${step.title}`}
-                    >
-                      <StepIcon className="size-7 sm:size-8 transition-transform duration-200 group-hover:scale-110 group-hover:text-(--brand-orange)" />
-                      <span className="absolute -bottom-1 -right-1 flex size-5 sm:size-6 items-center justify-center rounded-full bg-(--brand-orange-deep) text-[10px] sm:text-xs font-black text-white shadow-sm">
-                        {step.step}
-                      </span>
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    side={isEven ? 'right' : 'left'}
-                    sideOffset={14}
-                    className="w-72 sm:w-80 border-(--brand-line) bg-(--surface) p-4 shadow-2xl space-y-2 rounded-xl"
+                <div
+                  className={cn(
+                    'group relative flex size-14 sm:size-16 shrink-0 items-center justify-center rounded-full border-4 bg-(--surface-strong) text-(--brand-orange-deep) shadow-xl transition-all duration-300 hover:scale-110 hover:border-(--brand-orange) relative z-10',
+                    isOddStep ? 'sm:-translate-x-6' : 'sm:translate-x-6',
+                    borderClass,
+                  )}
+                >
+                  <StepIcon className="size-6 sm:size-7 transition-transform duration-200 group-hover:scale-110 text-(--brand-orange)" />
+                  <span
+                    className={cn(
+                      'absolute -bottom-1 flex size-5 sm:size-6 items-center justify-center rounded-full bg-(--brand-orange-deep) text-[10px] sm:text-xs font-black text-white shadow-xs',
+                      isOddStep ? '-right-1' : '-left-1',
+                    )}
                   >
-                    <div className="flex items-center gap-2.5">
-                      <div className="grid size-7 place-items-center rounded-lg bg-(--brand-orange-soft) text-xs font-extrabold text-(--brand-orange-deep)">
-                        {step.step}
-                      </div>
-                      <h4 className="font-bold text-sm text-(--brand-ink) leading-tight">
-                        {step.title}
-                      </h4>
-                    </div>
-                    <p className="text-xs leading-relaxed text-(--brand-muted) pt-2 border-t border-(--brand-line)">
-                      {step.description}
-                    </p>
-                  </PopoverContent>
-                </Popover>
+                    {step.step}
+                  </span>
+                </div>
               )
 
               const textNode = (
                 <div
                   className={cn(
-                    'space-y-1 max-w-[240px] sm:max-w-xs',
-                    isEven ? 'text-left' : 'text-right',
+                    'space-y-1.5 transition-all duration-200',
+                    isOddStep
+                      ? 'text-left sm:text-right sm:ml-auto max-w-md sm:pr-6'
+                      : 'text-left sm:mr-auto max-w-md sm:pl-6',
                   )}
                 >
-                  <span className="inline-block rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[10px] sm:text-[11px] font-black tracking-widest text-(--brand-orange-deep) uppercase">
-                    Step {step.step}
-                  </span>
-                  <h3 className="text-sm sm:text-base font-bold text-(--brand-ink) leading-tight">
-                    {step.title}
-                  </h3>
+                  <div
+                    className={cn(
+                      'flex items-center gap-2 flex-wrap',
+                      isOddStep
+                        ? 'justify-start sm:justify-end'
+                        : 'justify-start',
+                    )}
+                  >
+                    {isOddStep ? (
+                      <>
+                        <h3 className="text-base sm:text-lg font-black text-(--brand-ink) tracking-tight order-2 sm:order-1">
+                          {step.title}
+                        </h3>
+                        <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[10px] sm:text-xs font-black tracking-widest text-(--brand-orange-deep) uppercase shrink-0 order-1 sm:order-2 border border-(--brand-orange)/20">
+                          Step {step.step}
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="rounded-full bg-(--brand-orange-soft) px-2.5 py-0.5 text-[10px] sm:text-xs font-black tracking-widest text-(--brand-orange-deep) uppercase shrink-0 border border-(--brand-orange)/20">
+                          Step {step.step}
+                        </span>
+                        <h3 className="text-base sm:text-lg font-black text-(--brand-ink) tracking-tight">
+                          {step.title}
+                        </h3>
+                      </>
+                    )}
+                  </div>
+                  <p className="text-xs sm:text-sm leading-relaxed text-(--brand-muted)">
+                    {step.description}
+                  </p>
                 </div>
               )
 
               return (
-                <div key={step.step}>
-                  {/* Step row: circles anchored near outer edges */}
-                  <div
-                    className={cn(
-                      'flex items-center gap-4 sm:gap-6 py-1',
-                      isEven ? 'justify-start' : 'justify-end',
-                    )}
-                  >
-                    {isEven ? (
-                      <>
-                        {circleNode}
-                        {textNode}
-                      </>
+                <div key={step.step} className="relative">
+                  {/* Step row: 3-column layout on sm+, flex on mobile */}
+                  <div className="flex flex-row items-center gap-4 sm:grid sm:grid-cols-[1fr_140px_1fr] sm:gap-0 min-h-[80px]">
+                    {/* Left Column (Content for Odd steps) */}
+                    {isOddStep ? (
+                      <div className="w-full min-w-0">{textNode}</div>
                     ) : (
-                      <>
-                        {textNode}
-                        {circleNode}
-                      </>
+                      <div className="hidden sm:block" aria-hidden="true" />
+                    )}
+
+                    {/* Center Column: Node */}
+                    <div className="shrink-0 flex justify-center items-center order-first sm:order-none">
+                      {circleNode}
+                    </div>
+
+                    {/* Right Column (Content for Even steps) */}
+                    {!isOddStep ? (
+                      <div className="w-full min-w-0">{textNode}</div>
+                    ) : (
+                      <div className="hidden sm:block" aria-hidden="true" />
                     )}
                   </div>
 
-                  {/* Inline SVG connector: X=5 (left circle) to X=95 (right circle) */}
+                  {/* Seamless S-Curve connector between alternating nodes */}
                   {!isLast && (
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 100 60"
-                      height="60"
-                      width="100%"
-                      preserveAspectRatio="none"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <defs>
-                        <linearGradient
-                          id={`cg-${index}`}
-                          x1="0"
-                          y1="0"
-                          x2="1"
-                          y2="0"
+                    <div className="hidden sm:grid sm:grid-cols-[1fr_140px_1fr] items-center pointer-events-none -my-4 relative z-0">
+                      <div aria-hidden="true" />
+                      <div className="w-full h-20 flex items-center justify-center">
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 140 80"
+                          className="w-full h-20 overflow-visible"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          <stop
-                            offset="0%"
-                            stopColor="var(--brand-orange)"
-                            stopOpacity="0.7"
+                          <defs>
+                            <linearGradient
+                              id={`cg-${index}`}
+                              x1="0"
+                              y1="0"
+                              x2="0"
+                              y2="1"
+                            >
+                              <stop
+                                offset="0%"
+                                stopColor="var(--brand-orange)"
+                                stopOpacity="0.8"
+                              />
+                              <stop
+                                offset="100%"
+                                stopColor="var(--brand-orange-deep)"
+                                stopOpacity="0.95"
+                              />
+                            </linearGradient>
+                          </defs>
+                          <path
+                            d={
+                              isOddStep
+                                ? 'M 46 0 C 46 48, 94 32, 94 80'
+                                : 'M 94 0 C 94 48, 46 32, 46 80'
+                            }
+                            stroke={`url(#cg-${index})`}
+                            strokeWidth="3.5"
+                            strokeDasharray="7 5"
+                            strokeLinecap="round"
                           />
-                          <stop
-                            offset="100%"
-                            stopColor="var(--brand-orange-deep)"
-                            stopOpacity="0.9"
-                          />
-                        </linearGradient>
-                      </defs>
-                      <path
-                        d={
-                          isEven
-                            ? 'M 5 0 C 5 35, 95 25, 95 60'
-                            : 'M 95 0 C 95 35, 5 25, 5 60'
-                        }
-                        stroke={`url(#cg-${index})`}
-                        strokeWidth="2"
-                        strokeDasharray="7 4"
-                        strokeLinecap="round"
-                      />
-                    </svg>
+                        </svg>
+                      </div>
+                      <div aria-hidden="true" />
+                    </div>
                   )}
                 </div>
               )
