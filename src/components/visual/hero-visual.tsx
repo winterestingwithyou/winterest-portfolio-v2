@@ -80,7 +80,7 @@ export function HeroVisual({ className }: { className?: string } = {}) {
             width={1536}
             height={1024}
             fetchPriority="high"
-            className="size-full object-cover object-[50%_48%] saturate-[1.02] contrast-[1.01] max-sm:object-[54%_50%] md:scale-[1.03] md:animate-[hero-visual-float_8s_ease-in-out_infinite]"
+            className="size-full object-cover object-[50%_46%] saturate-[1.02] contrast-[1.01] md:scale-[1.03] md:animate-[hero-visual-float_8s_ease-in-out_infinite]"
           />
         </div>
       )}
@@ -112,10 +112,10 @@ export function HeroVisual({ className }: { className?: string } = {}) {
                 },
               }}
               whileHover={{ scale: 1.06, x: 2 }}
-              className="flex items-center gap-2.5 rounded-full border border-orange-300/30 bg-(--brand-dark)/85 px-3 py-2 text-[#fff7ec] shadow-lg backdrop-blur-md transition-shadow hover:shadow-orange-500/20"
+              className="flex items-center gap-2.5 rounded-full border border-orange-300/30 bg-(--brand-dark)/85 px-3 py-2 text-[#fff7ec] shadow-lg backdrop-blur-md transition-shadow hover:shadow-orange-500/20 max-sm:px-2.5 max-sm:py-1.5"
             >
-              <Icon className="size-4 shrink-0 text-orange-400" />
-              <span className="text-xs font-extrabold leading-none tracking-wide">
+              <Icon className="size-4 shrink-0 text-orange-400 max-sm:size-3.5" />
+              <span className="text-xs font-extrabold leading-none tracking-wide max-sm:text-[11px]">
                 {item.name}
               </span>
             </motion.div>
@@ -136,10 +136,10 @@ export function HeroVisual({ className }: { className?: string } = {}) {
         }}
         initial="hidden"
         animate="visible"
-        className="absolute right-4 bottom-4 z-10 w-[min(17rem,calc(100%-2rem))] rounded-xl border border-orange-300/30 bg-(--brand-dark)/85 p-4 text-[#fff7ec] shadow-xl backdrop-blur-md max-sm:right-3 max-sm:bottom-3"
+        className="absolute right-4 bottom-4 z-10 w-[min(17rem,calc(100%-2rem))] rounded-xl border border-orange-300/30 bg-(--brand-dark)/85 p-3.5 sm:p-4 text-[#fff7ec] shadow-xl backdrop-blur-md max-sm:right-3 max-sm:bottom-3 max-sm:w-[calc(100%-1.5rem)]"
         aria-hidden="true"
       >
-        <div className="mb-3 flex items-center gap-1.5">
+        <div className="mb-2.5 sm:mb-3 flex items-center gap-1.5">
           <span className="size-2 rounded-full bg-[#ff5f56]" />
           <span className="size-2 rounded-full bg-[#ffbd2e]" />
           <span className="size-2 rounded-full bg-[#27c93f]" />
@@ -174,10 +174,10 @@ export function HeroVisual({ className }: { className?: string } = {}) {
         initial="hidden"
         animate="visible"
         whileHover={{ scale: 1.05 }}
-        className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-orange-300/30 bg-(--brand-dark)/85 px-3.5 py-2 text-xs font-extrabold text-[#fff7ec] shadow-lg backdrop-blur-md max-sm:hidden"
+        className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-orange-300/30 bg-(--brand-dark)/85 px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-xs font-extrabold text-[#fff7ec] shadow-lg backdrop-blur-md max-sm:top-3 max-sm:right-3"
         aria-hidden="true"
       >
-        <Code2 className="size-4 text-orange-400" />
+        <Code2 className="size-3.5 sm:size-4 text-orange-400" />
         Junior Developer
       </motion.div>
     </motion.figure>
