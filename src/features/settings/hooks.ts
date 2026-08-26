@@ -3,9 +3,10 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { SiteSettingsInput } from './types'
 import { defaultSiteSettings } from './types'
 
-export function useSiteSettings() {
+export function useSiteSettings(options?: { enabled?: boolean }) {
   return useQuery<SiteSettingsInput>({
     queryKey: ['site-settings'],
+    enabled: options?.enabled ?? true,
     queryFn: async () => {
       const response = await fetch('/api/settings')
       if (!response.ok) {

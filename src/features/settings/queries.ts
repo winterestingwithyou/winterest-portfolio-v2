@@ -52,7 +52,11 @@ export async function getSiteSettings(db: Database): Promise<SiteSettingsInput> 
         : defaultSiteSettings.maintenanceMode,
     }
   } catch (error) {
-    console.error('Failed to read site_settings table:', error)
+    const isMissingTable =
+      error instanceof Error && error.message.toLowerCase().includes('no such table')
+    if (!isMissingTable) {
+      console.error('Failed to read site_settings table:', error)
+    }
     return defaultSiteSettings
   }
 }

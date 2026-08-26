@@ -11,8 +11,10 @@ import Header from '../components/header'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
+import { SetupRequiredScreen } from '#/components/system/setup-required'
 import { getPublicCopy } from '#/features/portfolio/data'
 import { useSiteSettings } from '#/features/settings/hooks'
+import { getSystemStatus } from '#/features/system/server-functions'
 import { getLocale } from '#/paraglide/runtime'
 
 import appCss from '../styles.css?url'
@@ -33,6 +35,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     if (typeof document !== 'undefined') {
       document.documentElement.setAttribute('lang', getLocale())
     }
+  },
+
+  loader: async () => {
+    const systemStatus = await getSystemStatus()
+    return { systemStatus }
   },
 
   head: () => ({
@@ -71,13 +78,34 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { systemStatus } = Route.useLoaderData()
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   })
-  const { data: settings } = useSiteSettings()
+  const { data: settings } = useSiteSettings({
+    enabled: Boolean(systemStatus.hasOwner),
+  })
   const isDashboard = pathname.startsWith('/dashboard')
   const isAuth = pathname.startsWith('/login')
   const usesAppChrome = !isDashboard && !isAuth
+
+  // If no owner exists, lock the entire web app and render Setup Required screen
+  if (!systemStatus.hasOwner) {
+    return (
+      <html lang={getLocale()} suppressHydrationWarning>
+        <head>
+          <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+          <HeadContent />
+        </head>
+        <body className="font-sans antialiased wrap-anywhere selection:bg-[rgba(244,129,32,0.22)]">
+          <TooltipProvider>
+            <SetupRequiredScreen status={systemStatus} />
+          </TooltipProvider>
+          <Scripts />
+        </body>
+      </html>
+    )
+  }
 
   return (
     <html lang={getLocale()} suppressHydrationWarning>
