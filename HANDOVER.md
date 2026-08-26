@@ -5,6 +5,7 @@ Last updated: 2026-08-27
 ## Recent Major Milestones
 
 ### 1. Two-Stage Setup Guard (Migration & Owner Enforcement)
+
 - Implemented automated root layout guard in `src/routes/__root.tsx` and `src/components/system/setup-required.tsx`.
 - Stage 1: If database tables are not migrated, web UI locks and displays dedicated **Database Migration Required** screen with `bun run db:migrate:local` / `bun run db:migrate:remote` instructions.
 - Stage 2: If database is migrated but no owner exists, web UI locks and displays dedicated **Owner Account Required** screen with `bun run create-owner:local` / `bun run create-owner:remote` instructions.
@@ -13,27 +14,47 @@ Last updated: 2026-08-27
 - Disabled extraneous queries (e.g. `useSiteSettings`) during locked setup state.
 
 ### 2. Interactive CLI Owner Creation Script
+
 - Interactive CLI in `src/db/create-owner-cli.ts` (`bun run create-owner:local` & `bun run create-owner:remote`).
 - Prompts for Name, Email, and Password with **masked asterisk input (`*`)**, backspace support, and password confirmation prompt.
 - Secure PBKDF2 Web Crypto password hashing compatible with Better Auth.
 
 ### 3. Strict 1-Owner RBAC & Clean Auth
+
 - Enforced strict 1 Owner rule across queries and forms.
 - Removed deprecated `viewer` role; remaining roles are `owner`, `admin`, `editor`.
 - Disabled public registration hook in Better Auth; all additional accounts are created by Owner via dashboard.
 
-### 4. Database Reset & Migration Cleanliness
+### 4. Cloudflare R2 Object Storage & Media Library Integration
+
+- Configured R2 bucket binding `MEDIA_BUCKET` (`winterest-portfolio-media`) in `wrangler.jsonc`.
+- Generated Worker types via `bun run cf-typegen` for `env.MEDIA_BUCKET: R2Bucket`.
+- Backend endpoints:
+  - `POST /api/media`: Uploads `multipart/form-data` to Cloudflare R2, extracts metadata, saves to D1 `media` table.
+  - `GET /api/media`: Lists media assets with search filtering.
+  - `DELETE /api/media/:id`: Deletes object from R2 and removes record from D1.
+  - `GET /api/media/file/*`: Public edge streaming handler with `Cache-Control: public, max-age=31536000, immutable`, `ETag`, and `304 Not Modified` conditional responses.
+- Frontend components:
+  - `ImageUploader` (`src/components/media/image-uploader.tsx`): Drag-and-drop upload zone, direct file selection, live aspect ratio preview, and manual URL fallback.
+  - `MediaPickerDialog` (`src/components/media/media-picker-dialog.tsx`): Modal gallery for picking previously uploaded assets or uploading on-the-fly.
+  - `ProjectEditorForm`: Integrated `ImageUploader` for project `coverImage`.
+  - `/dashboard/media` (`src/routes/dashboard/media.tsx`): Full Media Library manager with upload dropzone, search filter, size formatting, copy URL button, and deletion modal.
+
+### 5. Database Reset & Migration Cleanliness
+
 - Centralized `drizzle/scripts/reset.sql` dropping all tables cleanly without breaking migration replay.
 
 ## Form Architecture & Refactoring State (Standardized)
 
 All forms across the application have been refactored to use:
+
 - `@tanstack/react-form` for state management, field validation, and submit handling.
 - `zod` for declarative schema validation.
 - `src/components/ui/field.tsx` components (`Field`, `FieldLabel`, `FieldDescription`, `FieldError`, `FieldGroup`, `FieldSet`, `FieldLegend`).
 - Standardized UI controls (`Input`, `Textarea`, `Checkbox`, `Select`, `Button`).
 
 Refactored forms:
+
 - `src/features/technologies/category-editor-form.tsx` (Stack category CRUD + auto-slug)
 - `src/features/technologies/technology-editor-form.tsx` (Tech stack CRUD + Checkbox ultimate toggle + categories multi-select)
 - `src/features/users/user-editor-form.tsx` (User CRUD + password reset form + role selector)
@@ -44,14 +65,14 @@ Refactored forms:
 
 ## Verification Recently Run
 
-After "Beyond The Code" About page redesign & asset integration, these passed:
+After Cloudflare R2 Object Storage and Media Library integration, these passed cleanly:
 
 ```bash
-bunx tsc --noEmit (clean TypeScript check)
+bunx tsc --noEmit (clean TypeScript check - 0 errors)
 bun run lint (eslint - 0 errors)
 bun run test (vitest - 12 tests passed)
-bun run build (vite + Cloudflare Worker bundle passed in 4.6s)
-bunx graphify update . (knowledge graph updated)
+bun run build (vite client + Cloudflare Worker SSR bundle passed in 31.5s)
+bun run generate-routes (tsr route generation passed)
 ```
 
 ## Project Identity
@@ -187,19 +208,19 @@ Implemented:
 
 ### Phase 5: Writing, Lab, Media
 
-Status: Implemented baseline.
+Status: Implemented & Integrated with Cloudflare R2.
 
 Implemented:
 
 - Writing CRUD.
 - Lab CRUD.
-- Media metadata route/page.
+- Media Library and Cloudflare R2 upload/streaming handler fully implemented.
+- Reusable `ImageUploader` and `MediaPickerDialog` components integrated into `project-editor-form.tsx`.
 - Writing/lab public routes read DB-backed published content.
 - Migration `0002_add_writing_lab_media.sql` exists.
 
 Needs polish:
 
-- Media upload/R2 is not fully implemented yet; currently metadata/URL-oriented.
 - Markdown rendering/sanitization should be reviewed before allowing rich content publicly.
 
 ### Phase 6: Visual Polish And 3D

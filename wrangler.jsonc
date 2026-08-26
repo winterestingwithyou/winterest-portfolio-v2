@@ -20,6 +20,12 @@
       "migrations_dir": "drizzle/migrations",
     },
   ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA_BUCKET",
+      "bucket_name": "winterest-portfolio-media",
+    },
+  ],
   /**
    * Smart Placement
    * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

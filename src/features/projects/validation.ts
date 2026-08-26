@@ -20,6 +20,26 @@ const projectTranslationSchema = z.object({
   category: z.string().trim().min(2).max(80).default('Project'),
 })
 
+const imagePathOrUrl = z
+  .string()
+  .trim()
+  .refine(
+    (val) => {
+      if (!val) return true
+      if (val.startsWith('/')) return true
+      try {
+        const parsed = new URL(val)
+        return parsed.protocol === 'http:' || parsed.protocol === 'https:'
+      } catch {
+        return false
+      }
+    },
+    {
+      message:
+        'Cover image must be a valid URL or path (e.g. /api/media/file/... or https://...).',
+    },
+  )
+
 export const projectInputSchema = z.object({
   slug: z
     .string()
@@ -31,7 +51,7 @@ export const projectInputSchema = z.object({
   visibility: z.enum(contentVisibilities).default('public'),
   repoVisibility: z.enum(contentVisibilities).default('public'),
   featured: z.boolean().default(false),
-  coverImage: z.preprocess(emptyToUndefined, z.string().url().optional()),
+  coverImage: z.preprocess(emptyToUndefined, imagePathOrUrl.optional()),
   repoUrl: z.preprocess(emptyToUndefined, z.string().url().optional()),
   demoUrl: z.preprocess(emptyToUndefined, z.string().url().optional()),
   productionUrl: z.preprocess(emptyToUndefined, z.string().url().optional()),

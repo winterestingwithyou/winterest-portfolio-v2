@@ -31,6 +31,7 @@ import {
 } from '#/components/ui/select'
 import { TechIcon } from '#/components/ui/tech-icon'
 import { Textarea } from '#/components/ui/textarea'
+import { ImageUploader } from '#/components/media/image-uploader'
 import { useTechnologies } from '#/features/technologies/hooks'
 import { getDashboardCopy } from './copy'
 
@@ -489,19 +490,13 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 const isInvalid =
                   field.state.meta.isTouched && !field.state.meta.isValid
                 return (
-                  <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      {copy.form.coverImageUrl}
-                    </FieldLabel>
-                    <Input
-                      id={field.name}
-                      name={field.name}
+                  <Field data-invalid={isInvalid} className="md:col-span-2">
+                    <ImageUploader
                       value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="https://... atau /assets/projects/..."
-                      aria-invalid={isInvalid}
-                      className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
+                      onChange={(url) => field.handleChange(url ?? '')}
+                      label={copy.form.coverImageUrl}
+                      description={copy.media.coverImageRecommended}
+                      aspectRatio="wide"
                     />
                     {isInvalid && (
                       <FieldError errors={field.state.meta.errors} />

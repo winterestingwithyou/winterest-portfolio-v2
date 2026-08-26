@@ -26,7 +26,7 @@ if (target === 'local') {
 }
 
 async function seedLocal() {
-  const localDbPath = process.env.D1_LOCAL_DB_PATH ?? findLocalD1Database()
+  const localDbPath = findLocalD1Database()
 
   if (!localDbPath) {
     throw new Error(
