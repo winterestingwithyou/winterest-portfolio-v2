@@ -1,146 +1,88 @@
 # Winterest Portfolio v2
 
-Personal portfolio platform for **Winterest**.
+Personal developer platform and portfolio for **Winterest**.
 
-This project is evolving from a TanStack Start resume starter into a polished public portfolio, CMS dashboard, and developer lab with a Cloudflare + Bun inspired aesthetic.
+Built with **TanStack Start**, **React 19**, and **Cloudflare Workers**, featuring a **Cloudflare + Bun** inspired visual language (orange accents, clean dark/light modes, and playful developer energy).
 
-## Direction
+---
 
-- Public portfolio pages for projects, writing, lab experiments, stack, contact, and resume.
-- CMS dashboard for projects first, then writing, lab, skills, media, users, roles, and settings.
-- Cloudflare Workers-compatible deployment with D1 for CMS data.
-- Better Auth with simple owner/editor RBAC for private dashboard access.
-- Optional character or 3D visual layer only after the core product is stable.
+## Features & Direction
 
-## Stack
+- **Public Portfolio**: Projects, interactive Dev Lab, technical writing/devlog, tech stack showcase, contact page, and resume.
+- **CMS Dashboard**: Content management for projects, technologies, categories, site settings, and team accounts.
+- **Strict 1-Owner Model**: Single owner architecture with RBAC (`owner`, `admin`, `editor`). Public signup is disabled; admins and editors are managed privately from the dashboard.
+- **Built-in Setup Guard**: Two-stage initialization guard that displays dedicated terminal instructions on the web UI if database migrations or the owner account are pending.
+- **Cloudflare-First Architecture**: Built for Cloudflare Workers with D1 SQL database and edge-compatible runtime.
 
-- Bun
-- React 19
-- TanStack Start and TanStack Router
-- TanStack Query, Form, Table, Store, and React DB where useful
-- TypeScript
-- Vite
-- Cloudflare Vite plugin and Wrangler
-- Tailwind CSS v4
-- Radix/shadcn-style UI primitives
-- Drizzle ORM and Cloudflare D1
-- Better Auth
-- Paraglide/Inlang
-- T3Env
-- Vitest, Testing Library, ESLint, Prettier
+---
 
-## Development
+## Tech Stack
 
-Install dependencies with Bun:
+- **Runtime & Framework**: Bun, React 19, TanStack Start, TanStack Router
+- **State & Data**: TanStack Query, Drizzle ORM, Cloudflare D1 (SQLite)
+- **Authentication**: Better Auth (with PBKDF2 Web Crypto password hashing & secure cookie sessions)
+- **Styling**: Tailwind CSS v4, Radix UI primitives, Lucide React, class-variance-authority
+- **Internationalization**: Paraglide / Inlang (English `en` & Indonesian `id`)
+- **Environment & Config**: T3Env, Vite, Cloudflare Vite plugin, Wrangler
+- **Testing & Quality**: Vitest, Testing Library, ESLint, Prettier, TypeScript (`tsc --noEmit`)
+
+---
+
+## Getting Started
+
+### 1. Prerequisites
+
+- [Bun](https://bun.sh) (v1.1+ recommended)
+- Node.js (for Cloudflare Wrangler tools)
+
+### 2. Installation
+
+Clone the repository and install dependencies with Bun:
 
 ```bash
+git clone https://github.com/winterestingwithyou/winterest-portfolio-v2.git
+cd winterest-portfolio-v2
 bun install
 ```
 
-Useful checks:
+### 3. Environment Variables
+
+Create a `.env` or `.env.local` file from `.env.example`:
 
 ```bash
-bun run check
-bun run lint
-bun run test
-bun run build
+cp .env.example .env.local
 ```
 
-Generate TanStack Router route types after adding route files:
-
-```bash
-bun run generate-routes
-```
-
-Preview and Cloudflare type generation are available when needed:
-
-```bash
-bun run preview
-bun run cf-typegen
-```
-
-## Owner-Run Commands
-
-The project owner runs development servers and database migration commands personally.
-
-Agents should not run these unless explicitly asked in the same turn:
-
-```bash
-bun run dev
-bun --bun run dev
-vite dev
-bun run db:migrate
-bun run db:push
-bun run db:pull
-bun run db:studio
-```
-
-`bun run db:generate` should only be used for intentional schema-file work.
-
-## Database
-
-Cloudflare D1 is configured in `wrangler.jsonc`:
-
-- Binding: `DB`
-- Database name: `winterest-portfolio`
-- Migrations directory: `drizzle`
-
-The first Drizzle schema covers the project CMS foundation:
-
-- `projects`
-- `technologies`
-- `project_technologies`
-- Better Auth tables: `user`, `session`, `account`, `verification`
-- Phase 5 content tables: `writing`, `lab_entries`, `media`
-
-Generate migration files after intentional schema edits:
-
-```bash
-bun run db:generate -- --name initial_portfolio_cms
-```
-
-Current generated migration files:
-
-- `drizzle/0001_add_auth_rbac.sql`
-- `drizzle/0002_add_writing_lab_media.sql`
-
-Runtime database access uses the Cloudflare D1 binding directly:
-
-```ts
-import { drizzle } from 'drizzle-orm/d1'
-
-const db = drizzle(env.DB)
-```
-
-Drizzle Kit remote commands use the Cloudflare D1 HTTP driver. Owner-run
-migration/push/pull commands need these local environment variables:
-
-```bash
-CLOUDFLARE_ACCOUNT_ID=
-CLOUDFLARE_D1_DATABASE_ID=7ff292bd-6969-4fce-9644-22a4bba8805e
-CLOUDFLARE_D1_API_TOKEN=
-```
-
-`DATABASE_URL` is not used for the Cloudflare D1 runtime.
-
-## Authentication
-
-Better Auth is configured against the Cloudflare D1 `DB` binding with a
-Cloudflare-friendly PBKDF2 Web Crypto password hasher.
-
-Required local/runtime variables:
+Required variables:
 
 ```bash
 BETTER_AUTH_URL=http://localhost:3000
-BETTER_AUTH_SECRET=
+BETTER_AUTH_SECRET=your-random-32-char-secret-key-here
 ```
 
-Generate and store `BETTER_AUTH_SECRET` locally or as a Worker secret. Do not
-commit real secrets.
+For remote Cloudflare D1 operations (optional for local dev):
 
-### Owner Account Setup (CLI)
+```bash
+CLOUDFLARE_ACCOUNT_ID=your-cloudflare-account-id
+CLOUDFLARE_D1_DATABASE_ID=your-d1-database-id
+CLOUDFLARE_D1_API_TOKEN=your-cloudflare-api-token
+```
 
-The portfolio enforces a strict **1 Owner Rule**. Initialize the owner account via interactive terminal CLI:
+### 4. Database Setup & Migrations
+
+Initialize the local D1 database schema:
+
+```bash
+# Apply migrations to local D1 SQLite:
+bun run db:migrate:local
+
+# Or reset and apply all migrations cleanly from scratch:
+bun run db:fresh:local
+```
+
+### 5. Create Owner Account (CLI)
+
+The platform requires a primary owner account before full access is unlocked. Run the interactive CLI script:
 
 ```bash
 # For local D1 database:
@@ -150,86 +92,112 @@ bun run create-owner:local
 bun run create-owner:remote
 ```
 
-The script interactively prompts for Name, Email, and Password, validates inputs, and securely stores the owner credentials. Public registration is disabled; additional users (Admins & Editors) can be managed via the Dashboard.
+The CLI interactively prompts for:
 
-## Current Phase
+- **Owner Name** (default: `Winterest`)
+- **Owner Email** (e.g. `owner@winterest.tech`)
+- **Owner Password** (masked with asterisks `*` and includes confirmation prompt)
 
-The public portfolio shell, project CMS foundation, and first visual layer are
-in place:
+### 6. Start Development Server
 
-- `/`
-- `/about`
-- `/projects`
-- `/projects/$slug`
-- `/lab`
-- `/lab/$slug`
-- `/writing`
-- `/writing/$slug`
-- `/stack`
-- `/contact`
-- `/resume`
-- `/dashboard`
-- `/dashboard/projects`
-- `/dashboard/projects/new`
-- `/dashboard/projects/$id`
-- `/dashboard/writing`
-- `/dashboard/writing/new`
-- `/dashboard/writing/$id`
-- `/dashboard/lab`
-- `/dashboard/lab/new`
-- `/dashboard/lab/$id`
-- `/dashboard/media`
+```bash
+bun run dev
+```
 
-The early public content is still local seed data in
-`src/features/portfolio/data.ts`, but public writing and lab routes now try to
-load published D1 records first and fall back to seeds when migrations are not
-applied yet. Dashboard project, writing, and lab CRUD use D1 through API routes
-and require a Better Auth dashboard session.
+Visit [http://localhost:3000](http://localhost:3000) in your browser.
 
-The first static mascot asset lives at
-`public/assets/characters/winterest-mascot.png` and is used by the homepage hero.
+---
 
-## Deployment
+## Setup Guard & Initialization Flow
 
-The current direction is Cloudflare Workers-compatible deployment through the Cloudflare Vite plugin and `wrangler.jsonc`.
+The application includes an automated **Two-Stage Setup Guard** in the web app:
 
-Keep server-side code edge-friendly:
+1. **Stage 1 — Database Migration Required**: If database tables have not been created yet, the web UI locks and displays the dedicated **Database Migration Required** screen with commands (`bun run db:migrate:local`).
+2. **Stage 2 — Owner Account Required**: Once tables exist but no owner has been registered, the UI locks and displays the **Owner Account Required** screen with CLI commands (`bun run create-owner:local`).
+3. **Stage 3 — Unlocked**: Once the owner account is created and the page refreshed, full access to public pages and the dashboard is unlocked.
 
-- Prefer Web APIs.
-- Avoid Node-only runtime assumptions.
-- Keep server functions small.
-- Do not commit secrets.
-- Validate environment variables through T3Env.
+---
+
+## Available Scripts
+
+### Development & Checks
+
+```bash
+bun run dev             # Start dev server
+bun run typecheck       # TypeScript typecheck (tsc --noEmit)
+bun run lint            # ESLint check
+bun run test            # Run Vitest test suite
+bun run build           # Build production Cloudflare Worker bundle
+bun run preview         # Preview production build locally
+bun run check           # Prettier formatting check
+bun run format          # Format files with Prettier
+bun run cf-typegen      # Regenerate Cloudflare worker configuration types
+```
+
+### Database Management
+
+```bash
+# Local D1 (Miniflare SQLite)
+bun run db:migrate:local   # Apply pending D1 migrations locally
+bun run db:reset:local     # Drop all tables using drizzle/scripts/reset.sql
+bun run db:fresh:local     # Reset + apply all migrations locally
+bun run create-owner:local # Create owner account on local D1
+bun run db:seed:local      # Seed local database
+
+# Remote Cloudflare D1
+bun run db:migrate:remote   # Apply pending D1 migrations to Cloudflare
+bun run db:reset:remote     # Drop all remote tables
+bun run db:fresh:remote     # Reset + apply all migrations to remote
+bun run create-owner:remote # Create owner account on remote D1
+bun run db:seed:remote      # Seed remote Cloudflare D1 database
+
+# Drizzle Kit
+bun run db:generate         # Generate new SQL migration file from src/db/schema.ts
+```
+
+> **Note on `reset.sql` Maintenance**: Whenever new tables are added or modified in `src/db/schema.ts`, `drizzle/scripts/reset.sql` must be updated with corresponding `DROP TABLE IF EXISTS` statements.
+
+---
+
+## Authentication & RBAC
+
+- **Authentication Foundation**: Better Auth with PBKDF2 Web Crypto password hashing and secure HTTP-only cookies.
+- **Roles**:
+  - `owner`: Full access to the platform, user management (promoting/demoting admins and editors), site settings, and content management. Exactly 1 owner account permitted.
+  - `admin`: Content management, media uploads, and site settings.
+  - `editor`: Create, edit, and manage portfolio content (projects, writing, lab, stack).
+- **Public Signup Disabled**: All team accounts are invited and created privately by the owner via `/dashboard/users`.
+
+---
+
+## Routes Structure
+
+- `/` — Homepage Hero, Featured Projects, Lab Showcase, Tech Stack highlights
+- `/about` — Developer journey, timeline, principles, and workflow
+- `/projects` & `/projects/$slug` — Case studies and portfolio projects
+- `/lab` & `/lab/$slug` — Interactive dev experiments and UI demos
+- `/writing` & `/writing/$slug` — Articles, learning notes, and devlogs
+- `/stack` — Technology stack and tooling showcase
+- `/contact` — Contact details and social links
+- `/resume` — Clean, printable resume view
+- `/login` — Secure single sign-in page for dashboard users
+- `/dashboard` — Content and platform management CMS
+  - `/dashboard/projects` — Projects management
+  - `/dashboard/stack` — Technologies & Categories management
+  - `/dashboard/users` — Team user accounts & role management
+  - `/dashboard/media` — Media asset library
+  - `/dashboard/settings` — Global site & SEO settings
+
+---
 
 ## License
 
-Winterest Portfolio V2 is free and open-source software licensed under the **GNU Affero General Public License v3.0 (AGPLv3)**.
+Winterest Portfolio is free and open-source software licensed under the **GNU Affero General Public License v3.0 (AGPLv3)**.
 
-You are free to use, study, modify, and distribute the software in accordance with the terms of the AGPLv3.
+See [`LICENSE`](./LICENSE) for full details.
 
 ### Commercial License
 
-A commercial license is also available for organizations or individuals who require additional rights beyond those provided by the AGPLv3.
+A commercial license is available for organizations or individuals requiring proprietary modifications, private extensions, or commercial distribution rights.
 
-This may include:
-
-- proprietary modifications;
-- private extensions;
-- white-label deployments;
-- proprietary distribution;
-- commercial customization;
-- additional commercial rights or services.
-
-The commercial license is provided separately and does not replace or modify the rights granted by the AGPLv3.
-
-For commercial licensing and custom development inquiries:
-
-**Email:** yudistiraadam3@gmail.com
-
-See [`LICENSE-COMMERCIAL`](./LICENSE-COMMERCIAL) for more information.
-
-### Third-Party Licenses
-
-This project uses third-party dependencies that are distributed under their respective licenses.
-
-Third-party licenses remain applicable to their respective components.
+**Contact:** yudistiraadam3@gmail.com — See [`LICENSE-COMMERCIAL`](./LICENSE-COMMERCIAL) for details.

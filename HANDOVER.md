@@ -1,6 +1,29 @@
 # Winterest Portfolio V2 Handover
 
-Last updated: 2026-08-24
+Last updated: 2026-08-27
+
+## Recent Major Milestones
+
+### 1. Two-Stage Setup Guard (Migration & Owner Enforcement)
+- Implemented automated root layout guard in `src/routes/__root.tsx` and `src/components/system/setup-required.tsx`.
+- Stage 1: If database tables are not migrated, web UI locks and displays dedicated **Database Migration Required** screen with `bun run db:migrate:local` / `bun run db:migrate:remote` instructions.
+- Stage 2: If database is migrated but no owner exists, web UI locks and displays dedicated **Owner Account Required** screen with `bun run create-owner:local` / `bun run create-owner:remote` instructions.
+- Stage 3: When owner is created, web app unlocks full public portfolio & dashboard access.
+- Added bilingual copy in `src/features/system/copy.ts`.
+- Disabled extraneous queries (e.g. `useSiteSettings`) during locked setup state.
+
+### 2. Interactive CLI Owner Creation Script
+- Interactive CLI in `src/db/create-owner-cli.ts` (`bun run create-owner:local` & `bun run create-owner:remote`).
+- Prompts for Name, Email, and Password with **masked asterisk input (`*`)**, backspace support, and password confirmation prompt.
+- Secure PBKDF2 Web Crypto password hashing compatible with Better Auth.
+
+### 3. Strict 1-Owner RBAC & Clean Auth
+- Enforced strict 1 Owner rule across queries and forms.
+- Removed deprecated `viewer` role; remaining roles are `owner`, `admin`, `editor`.
+- Disabled public registration hook in Better Auth; all additional accounts are created by Owner via dashboard.
+
+### 4. Database Reset & Migration Cleanliness
+- Centralized `drizzle/scripts/reset.sql` dropping all tables cleanly without breaking migration replay.
 
 ## Form Architecture & Refactoring State (Standardized)
 
