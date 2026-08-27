@@ -12,8 +12,9 @@ import Header from '../components/header'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import { SetupRequiredScreen } from '#/components/system/setup-required'
-import { getPublicCopy } from '#/features/portfolio/data'
 import { useSiteSettings } from '#/features/settings/hooks'
+import { getPublicSiteSettings } from '#/features/settings/server-functions'
+import { defaultSiteSettings } from '#/features/settings/types'
 import { getSystemStatus } from '#/features/system/server-functions'
 import { getLocale } from '#/paraglide/runtime'
 
@@ -38,52 +39,126 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   },
 
   loader: async () => {
-    const systemStatus = await getSystemStatus()
-    return { systemStatus }
+    const [systemStatus, siteSettings] = await Promise.all([
+      getSystemStatus(),
+      getPublicSiteSettings(),
+    ])
+    return { systemStatus, siteSettings }
   },
 
-  head: () => ({
-    meta: [
-      {
-        charSet: 'utf-8',
-      },
-      {
-        name: 'viewport',
-        content: 'width=device-width, initial-scale=1',
-      },
-      {
-        title: getPublicCopy().meta.title,
-      },
-      {
-        name: 'description',
-        content: getPublicCopy().meta.description,
-      },
-      {
-        property: 'og:title',
-        content: getPublicCopy().meta.title,
-      },
-      {
-        property: 'og:description',
-        content: getPublicCopy().meta.ogDescription,
-      },
-    ],
-    links: [
-      {
-        rel: 'stylesheet',
-        href: appCss,
-      },
-    ],
-  }),
+  head: ({ loaderData }) => {
+    const isIndo = getLocale() === 'id'
+    const settings = loaderData?.siteSettings
+
+    const rawTitle = isIndo
+      ? settings?.metaTitleId ||
+        settings?.metaTitleEn ||
+        defaultSiteSettings.metaTitleId
+      : settings?.metaTitleEn || defaultSiteSettings.metaTitleEn
+
+    const description = isIndo
+      ? settings?.metaDescriptionId || settings?.metaDescriptionEn || ''
+      : settings?.metaDescriptionEn || ''
+
+    const ogDescription = isIndo
+      ? settings?.ogDescriptionId || settings?.ogDescriptionEn || description
+      : settings?.ogDescriptionEn || description
+
+    const ogImage = settings?.ogImageUrl || ''
+    const favicon = settings?.faviconUrl || '/favicon.ico'
+
+    return {
+      meta: [
+        {
+          charSet: 'utf-8',
+        },
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1',
+        },
+        {
+          title: rawTitle,
+        },
+        ...(description
+          ? [
+              {
+                name: 'description',
+                content: description,
+              },
+            ]
+          : []),
+        {
+          property: 'og:title',
+          content: rawTitle,
+        },
+        ...(ogDescription
+          ? [
+              {
+                property: 'og:description',
+                content: ogDescription,
+              },
+            ]
+          : []),
+        {
+          property: 'og:type',
+          content: 'website',
+        },
+        ...(ogImage
+          ? [
+              {
+                property: 'og:image',
+                content: ogImage,
+              },
+            ]
+          : []),
+        {
+          name: 'twitter:card',
+          content: ogImage ? 'summary_large_image' : 'summary',
+        },
+        {
+          name: 'twitter:title',
+          content: rawTitle,
+        },
+        ...(ogDescription
+          ? [
+              {
+                name: 'twitter:description',
+                content: ogDescription,
+              },
+            ]
+          : []),
+        ...(ogImage
+          ? [
+              {
+                name: 'twitter:image',
+                content: ogImage,
+              },
+            ]
+          : []),
+      ],
+      links: [
+        {
+          rel: 'icon',
+          href: favicon,
+        },
+        {
+          rel: 'stylesheet',
+          href: appCss,
+        },
+      ],
+    }
+  },
   shellComponent: RootDocument,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { systemStatus } = Route.useLoaderData()
+  const { systemStatus, siteSettings } = Route.useLoaderData()
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   })
   const { data: settings } = useSiteSettings({
     enabled: Boolean(systemStatus.hasOwner),
+    initialData: siteSettings,
   })
   const isDashboard = pathname.startsWith('/dashboard')
   const isAuth = pathname.startsWith('/login')

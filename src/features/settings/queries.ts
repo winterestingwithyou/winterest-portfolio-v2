@@ -39,10 +39,25 @@ export async function getSiteSettings(db: Database): Promise<SiteSettingsInput> 
       tiktokUrl: map.get('tiktokUrl') ?? defaultSiteSettings.tiktokUrl,
       tiktokName: map.get('tiktokName') ?? defaultSiteSettings.tiktokName,
       publicEmail: map.get('publicEmail') ?? defaultSiteSettings.publicEmail,
+      metaTitleEn:
+        map.get('metaTitleEn') ??
+        map.get('metaTitle') ??
+        defaultSiteSettings.metaTitleEn,
+      metaTitleId:
+        map.get('metaTitleId') ?? defaultSiteSettings.metaTitleId,
+      metaDescriptionEn:
+        map.get('metaDescriptionEn') ??
+        map.get('metaDescription') ??
+        defaultSiteSettings.metaDescriptionEn,
+      metaDescriptionId:
+        map.get('metaDescriptionId') ?? defaultSiteSettings.metaDescriptionId,
+      ogDescriptionEn:
+        map.get('ogDescriptionEn') ?? defaultSiteSettings.ogDescriptionEn,
+      ogDescriptionId:
+        map.get('ogDescriptionId') ?? defaultSiteSettings.ogDescriptionId,
       metaTitleTemplate:
         map.get('metaTitleTemplate') ?? defaultSiteSettings.metaTitleTemplate,
-      metaDescription:
-        map.get('metaDescription') ?? defaultSiteSettings.metaDescription,
+      faviconUrl: map.get('faviconUrl') ?? defaultSiteSettings.faviconUrl,
       ogImageUrl: map.get('ogImageUrl') ?? defaultSiteSettings.ogImageUrl,
       heroVisualUrl:
         map.get('heroVisualUrl') ?? defaultSiteSettings.heroVisualUrl,
@@ -84,8 +99,14 @@ export async function updateSiteSettings(
     { key: 'tiktokUrl', value: input.tiktokUrl.trim() },
     { key: 'tiktokName', value: input.tiktokName.trim() },
     { key: 'publicEmail', value: input.publicEmail.trim() },
+    { key: 'metaTitleEn', value: input.metaTitleEn.trim() },
+    { key: 'metaTitleId', value: input.metaTitleId.trim() },
+    { key: 'metaDescriptionEn', value: input.metaDescriptionEn.trim() },
+    { key: 'metaDescriptionId', value: input.metaDescriptionId.trim() },
+    { key: 'ogDescriptionEn', value: input.ogDescriptionEn.trim() },
+    { key: 'ogDescriptionId', value: input.ogDescriptionId.trim() },
     { key: 'metaTitleTemplate', value: input.metaTitleTemplate.trim() },
-    { key: 'metaDescription', value: input.metaDescription.trim() },
+    { key: 'faviconUrl', value: input.faviconUrl.trim() },
     { key: 'ogImageUrl', value: input.ogImageUrl.trim() },
     { key: 'heroVisualUrl', value: input.heroVisualUrl.trim() },
     { key: 'maintenanceMode', value: String(input.maintenanceMode) },

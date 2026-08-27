@@ -262,13 +262,6 @@ export const publicCopy = {
       stack: 'Stack',
       contact: 'Contact',
     },
-    meta: {
-      title: 'Winterest | Fullstack Web Developer',
-      description:
-        'Personal portfolio platform for Winterest (M. Adam Yudistira).',
-      ogDescription:
-        'Projects, experiments, and practical fullstack web work from Indonesia.',
-    },
     home: {
       eyebrow: 'M. Adam Yudistira — Winterest',
       title:
@@ -413,13 +406,6 @@ export const publicCopy = {
       projects: 'Project',
       stack: 'Stack',
       contact: 'Kontak',
-    },
-    meta: {
-      title: 'Winterest | Fullstack Web Developer',
-      description:
-        'Platform portfolio personal milik Winterest (M. Adam Yudistira).',
-      ogDescription:
-        'Project, eksperimen, dan karya web fullstack praktis dari Indonesia.',
     },
     home: {
       eyebrow: 'M. Adam Yudistira — Winterest',

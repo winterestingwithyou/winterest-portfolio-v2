@@ -45,11 +45,29 @@ export function SettingsEditorForm({
   const settingsCopy = copy.settings
 
   const [activeTab, setActiveTab] = useState<SettingsTab>('general')
+  const [metaLangTab, setMetaLangTab] = useState<'en' | 'id'>('en')
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
 
   const updateMutation = useUpdateSiteSettings()
   const isSaving = updateMutation.isPending
   const saveError = updateMutation.error?.message ?? null
+
+  const previewAppUrl = (() => {
+    const rawUrl =
+      import.meta.env.VITE_PUBLIC_APP_URL ||
+      (typeof window !== 'undefined' ? window.location.origin : '')
+    try {
+      if (rawUrl) {
+        return (
+          new URL(rawUrl).host ||
+          rawUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '')
+        )
+      }
+    } catch {
+      return rawUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '')
+    }
+    return 'winterest.tech'
+  })()
 
   const form = useForm({
     defaultValues: initialData,
@@ -251,20 +269,6 @@ export function SettingsEditorForm({
                   />
                 )}
               </form.Field>
-
-              <div className="border-t border-(--brand-line) pt-4">
-                <form.Field name="ogImageUrl">
-                  {(field) => (
-                    <ImageUploader
-                      label={settingsCopy.form.ogImageUrl}
-                      description={settingsCopy.form.ogImageDesc}
-                      value={field.state.value}
-                      onChange={(val) => field.handleChange(val ?? '')}
-                      aspectRatio="wide"
-                    />
-                  )}
-                </form.Field>
-              </div>
             </FieldGroup>
           </div>
         )}
@@ -506,46 +510,292 @@ export function SettingsEditorForm({
 
         {/* Tab 4: SEO Settings */}
         {activeTab === 'seo' && (
-          <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
-            <FieldGroup>
-              <form.Field name="metaTitleTemplate">
-                {(field) => (
-                  <Field>
-                    <FieldLabel>
-                      {settingsCopy.form.metaTitleTemplate}
-                    </FieldLabel>
-                    <Input
-                      disabled={!canEdit || isSaving}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="%s | Winterest"
-                    />
-                    <FieldDescription>
-                      {settingsCopy.form.metaTitleTemplateDesc}
-                    </FieldDescription>
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )}
-              </form.Field>
+          <div className="grid gap-8">
+            {/* Visual Meta (Favicon & OpenGraph Image) */}
+            <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
+              <h3 className="font-bold text-sm text-(--brand-ink)">
+                Visual Meta & Social Asset
+              </h3>
+              <FieldGroup>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <form.Field name="faviconUrl">
+                    {(field) => (
+                      <ImageUploader
+                        label={settingsCopy.form.faviconUrl}
+                        description={settingsCopy.form.faviconDesc}
+                        value={field.state.value}
+                        onChange={(val) => field.handleChange(val ?? '')}
+                        aspectRatio="square"
+                      />
+                    )}
+                  </form.Field>
 
-              <form.Field name="metaDescription">
-                {(field) => (
-                  <Field>
-                    <FieldLabel>{settingsCopy.form.metaDescription}</FieldLabel>
-                    <Textarea
-                      rows={3}
-                      disabled={!canEdit || isSaving}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="Default SEO description..."
-                    />
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
+                  <form.Field name="ogImageUrl">
+                    {(field) => (
+                      <ImageUploader
+                        label={settingsCopy.form.ogImageUrl}
+                        description={settingsCopy.form.ogImageDesc}
+                        value={field.state.value}
+                        onChange={(val) => field.handleChange(val ?? '')}
+                        aspectRatio="wide"
+                      />
+                    )}
+                  </form.Field>
+                </div>
+
+                <div className="border-t border-(--brand-line) pt-4">
+                  <form.Field name="metaTitleTemplate">
+                    {(field) => (
+                      <Field>
+                        <FieldLabel>
+                          {settingsCopy.form.metaTitleTemplate}
+                        </FieldLabel>
+                        <Input
+                          disabled={!canEdit || isSaving}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          placeholder="%s | Winterest"
+                        />
+                        <FieldDescription>
+                          {settingsCopy.form.metaTitleTemplateDesc}
+                        </FieldDescription>
+                        <FieldError errors={field.state.meta.errors} />
+                      </Field>
+                    )}
+                  </form.Field>
+                </div>
+              </FieldGroup>
+            </div>
+
+            {/* Multilingual Text Meta */}
+            <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-(--brand-line) pb-4">
+                <div>
+                  <h3 className="font-bold text-sm text-(--brand-ink)">
+                    Multilingual SEO & OpenGraph Content
+                  </h3>
+                  <p className="text-xs text-(--brand-muted) mt-0.5">
+                    Customize title and descriptions per language.
+                  </p>
+                </div>
+                <div className="flex rounded-lg border border-(--brand-line) bg-muted/40 p-1">
+                  <button
+                    type="button"
+                    onClick={() => setMetaLangTab('en')}
+                    className={`flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-bold transition ${
+                      metaLangTab === 'en'
+                        ? 'bg-(--surface-strong) text-(--brand-orange-deep) shadow-xs'
+                        : 'text-(--brand-muted) hover:text-(--brand-ink)'
+                    }`}
+                  >
+                    🇺🇸 {settingsCopy.form.metaLanguageEn}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setMetaLangTab('id')}
+                    className={`flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-bold transition ${
+                      metaLangTab === 'id'
+                        ? 'bg-(--surface-strong) text-(--brand-orange-deep) shadow-xs'
+                        : 'text-(--brand-muted) hover:text-(--brand-ink)'
+                    }`}
+                  >
+                    🇮🇩 {settingsCopy.form.metaLanguageId}
+                  </button>
+                </div>
+              </div>
+
+              <FieldGroup>
+                {metaLangTab === 'en' ? (
+                  <>
+                    <form.Field name="metaTitleEn">
+                      {(field) => (
+                        <Field>
+                          <FieldLabel>{settingsCopy.form.metaTitleEn}</FieldLabel>
+                          <Input
+                            disabled={!canEdit || isSaving}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            placeholder="Winterest Portfolio"
+                          />
+                          <FieldDescription>
+                            {settingsCopy.form.metaTitleDesc}
+                          </FieldDescription>
+                          <FieldError errors={field.state.meta.errors} />
+                        </Field>
+                      )}
+                    </form.Field>
+
+                    <form.Field name="metaDescriptionEn">
+                      {(field) => (
+                        <Field>
+                          <FieldLabel>
+                            {settingsCopy.form.metaDescriptionEn}
+                          </FieldLabel>
+                          <Textarea
+                            rows={3}
+                            disabled={!canEdit || isSaving}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            placeholder="Personal portfolio platform for Winterest..."
+                          />
+                          <FieldDescription>
+                            {settingsCopy.form.metaDescriptionDesc}
+                          </FieldDescription>
+                          <FieldError errors={field.state.meta.errors} />
+                        </Field>
+                      )}
+                    </form.Field>
+
+                    <form.Field name="ogDescriptionEn">
+                      {(field) => (
+                        <Field>
+                          <FieldLabel>{settingsCopy.form.ogDescriptionEn}</FieldLabel>
+                          <Textarea
+                            rows={3}
+                            disabled={!canEdit || isSaving}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            placeholder="Projects, experiments, and practical fullstack web work..."
+                          />
+                          <FieldDescription>
+                            {settingsCopy.form.ogDescriptionDesc}
+                          </FieldDescription>
+                          <FieldError errors={field.state.meta.errors} />
+                        </Field>
+                      )}
+                    </form.Field>
+                  </>
+                ) : (
+                  <>
+                    <form.Field name="metaTitleId">
+                      {(field) => (
+                        <Field>
+                          <FieldLabel>{settingsCopy.form.metaTitleId}</FieldLabel>
+                          <Input
+                            disabled={!canEdit || isSaving}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            placeholder="Winterest Portfolio"
+                          />
+                          <FieldDescription>
+                            {settingsCopy.form.metaTitleDesc}
+                          </FieldDescription>
+                          <FieldError errors={field.state.meta.errors} />
+                        </Field>
+                      )}
+                    </form.Field>
+
+                    <form.Field name="metaDescriptionId">
+                      {(field) => (
+                        <Field>
+                          <FieldLabel>
+                            {settingsCopy.form.metaDescriptionId}
+                          </FieldLabel>
+                          <Textarea
+                            rows={3}
+                            disabled={!canEdit || isSaving}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            placeholder="Platform portfolio personal milik Winterest..."
+                          />
+                          <FieldDescription>
+                            {settingsCopy.form.metaDescriptionDesc}
+                          </FieldDescription>
+                          <FieldError errors={field.state.meta.errors} />
+                        </Field>
+                      )}
+                    </form.Field>
+
+                    <form.Field name="ogDescriptionId">
+                      {(field) => (
+                        <Field>
+                          <FieldLabel>{settingsCopy.form.ogDescriptionId}</FieldLabel>
+                          <Textarea
+                            rows={3}
+                            disabled={!canEdit || isSaving}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            placeholder="Project, eksperimen, dan karya web fullstack praktis..."
+                          />
+                          <FieldDescription>
+                            {settingsCopy.form.ogDescriptionDesc}
+                          </FieldDescription>
+                          <FieldError errors={field.state.meta.errors} />
+                        </Field>
+                      )}
+                    </form.Field>
+                  </>
                 )}
-              </form.Field>
-            </FieldGroup>
+              </FieldGroup>
+            </div>
+
+            {/* Social Card Preview */}
+            <form.Subscribe
+              selector={(state) => ({
+                ogImageUrl: state.values.ogImageUrl,
+                metaTitle:
+                  metaLangTab === 'en'
+                    ? state.values.metaTitleEn
+                    : state.values.metaTitleId,
+                description:
+                  metaLangTab === 'en'
+                    ? state.values.ogDescriptionEn ||
+                      state.values.metaDescriptionEn
+                    : state.values.ogDescriptionId ||
+                      state.values.metaDescriptionId,
+              })}
+            >
+              {({ ogImageUrl, metaTitle, description }) => (
+                <div className="grid gap-3 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-bold text-sm text-(--brand-ink)">
+                      {settingsCopy.form.socialPreviewTitle}
+                    </h3>
+                    <span className="text-xs text-(--brand-muted) uppercase font-mono">
+                      {metaLangTab} Preview
+                    </span>
+                  </div>
+
+                  <div className="mx-auto w-full max-w-lg overflow-hidden rounded-xl border border-(--brand-line) bg-(--surface-strong) shadow-md">
+                    <div className="aspect-[1200/630] w-full bg-linear-to-br from-neutral-800 to-neutral-900 relative overflow-hidden flex items-center justify-center">
+                      {ogImageUrl ? (
+                        <img
+                          src={ogImageUrl}
+                          alt="OpenGraph preview"
+                          className="size-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex flex-col items-center gap-2 p-6 text-center text-neutral-400">
+                          <Share2 className="size-8 text-(--brand-orange)" />
+                          <p className="text-xs font-mono font-medium text-neutral-300">
+                            No OpenGraph Image configured
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-4 space-y-1 bg-surface">
+                      <p className="font-mono text-[11px] text-(--brand-orange-deep) font-semibold uppercase tracking-wider">
+                        {previewAppUrl}
+                      </p>
+                      <p className="font-bold text-sm text-(--brand-ink) line-clamp-1">
+                        {metaTitle || 'Winterest Portfolio'}
+                      </p>
+                      <p className="text-xs text-(--brand-muted) line-clamp-2 leading-relaxed">
+                        {description ||
+                          'No description provided. Set an OG or SEO description to display preview text.'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </form.Subscribe>
           </div>
         )}
 
