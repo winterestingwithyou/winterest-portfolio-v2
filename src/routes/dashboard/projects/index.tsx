@@ -106,14 +106,14 @@ function DashboardProjects() {
         cell: (info) => {
           const project = info.row.original
           return (
-            <div>
+            <div className="min-w-70 max-w-md space-y-1.5">
               <p className="font-semibold text-(--brand-ink)">
                 {project.title}
               </p>
-              <p className="mt-1 max-w-lg text-xs leading-relaxed text-(--brand-muted)">
+              <p className="text-xs leading-relaxed text-(--brand-muted)">
                 {project.summary}
               </p>
-              <p className="mt-2 font-mono text-xs text-(--brand-muted)">
+              <p className="font-mono text-xs text-(--brand-muted)">
                 /projects/{project.slug}
               </p>
             </div>
@@ -131,7 +131,7 @@ function DashboardProjects() {
       columnHelper.accessor('availableLocales', {
         header: copy.common.language,
         cell: (info) => (
-          <span className="text-(--brand-muted)">
+          <span className="whitespace-nowrap text-xs font-medium text-(--brand-muted)">
             {formatLocales(info.getValue())}
           </span>
         ),
@@ -139,7 +139,7 @@ function DashboardProjects() {
       columnHelper.accessor('visibility', {
         header: copy.common.visibility,
         cell: (info) => (
-          <span className="text-(--brand-muted) capitalize">
+          <span className="whitespace-nowrap text-xs font-medium capitalize text-(--brand-muted)">
             {info.getValue()}
           </span>
         ),
@@ -147,22 +147,27 @@ function DashboardProjects() {
       columnHelper.accessor('category', {
         header: copy.common.category,
         cell: (info) => (
-          <span className="text-(--brand-muted)">{info.getValue()}</span>
+          <span className="whitespace-nowrap text-xs font-medium text-(--brand-muted)">
+            {info.getValue()}
+          </span>
         ),
       }),
       columnHelper.display({
         id: 'actions',
         header: () => (
-          <div className="text-right font-bold">{copy.common.actions}</div>
+          <div className="whitespace-nowrap text-right font-bold">
+            {copy.common.actions}
+          </div>
         ),
         cell: (info) => {
           const project = info.row.original
           return (
-            <div className="flex justify-end gap-2">
+            <div className="flex items-center justify-end gap-2">
               <Link
                 to="/dashboard/projects/$id"
                 params={{ id: project.id }}
-                className="inline-grid size-9 place-items-center rounded-full border border-(--brand-line) bg-(--surface-strong) text-(--brand-ink) transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
+                className="inline-grid size-9 place-items-center rounded-lg border border-(--brand-line) bg-(--surface-strong) text-(--brand-ink) transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
+                title={`${copy.common.edit} ${project.title}`}
               >
                 <span className="sr-only">
                   {copy.common.edit} {project.title}
@@ -172,7 +177,8 @@ function DashboardProjects() {
               <button
                 type="button"
                 onClick={() => void deleteProject(project)}
-                className="inline-grid size-9 place-items-center rounded-full border border-red-500/30 bg-red-500/10 text-red-700 transition hover:-translate-y-0.5 dark:text-red-200"
+                className="inline-grid size-9 place-items-center rounded-lg border border-red-500/30 bg-red-500/10 text-red-700 transition hover:-translate-y-0.5 dark:text-red-200"
+                title={`${copy.common.delete} ${project.title}`}
               >
                 <span className="sr-only">
                   {copy.common.delete} {project.title}
@@ -238,14 +244,14 @@ function DashboardProjects() {
             </p>
           </div>
         ) : (
-          <Table>
+          <Table className="min-w-240">
             <TableHeader className="bg-(--brand-orange-soft)">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <TableHead
                       key={header.id}
-                      className="px-5 py-3 font-bold text-(--brand-orange-deep)"
+                      className="px-5 py-3.5 text-xs font-bold whitespace-nowrap text-(--brand-orange-deep)"
                     >
                       {header.isPlaceholder
                         ? null
@@ -260,7 +266,10 @@ function DashboardProjects() {
             </TableHeader>
             <TableBody>
               {table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow
+                  key={row.id}
+                  className="border-(--brand-line) transition hover:bg-surface/50"
+                >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="px-5 py-4 align-top">
                       {flexRender(
@@ -280,8 +289,19 @@ function DashboardProjects() {
 }
 
 function StatusBadge({ value }: { value: ProjectRow['status'] }) {
+  const isPublished = value === 'published'
+  const isDraft = value === 'draft'
+
   return (
-    <span className="rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-bold text-(--brand-orange-deep)">
+    <span
+      className={`inline-flex whitespace-nowrap items-center rounded-full px-3 py-1 text-xs font-bold capitalize ${
+        isPublished
+          ? 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+          : isDraft
+            ? 'border border-(--brand-orange)/30 bg-(--brand-orange-soft) text-(--brand-orange-deep)'
+            : 'border border-zinc-500/30 bg-zinc-500/10 text-zinc-600 dark:text-zinc-400'
+      }`}
+    >
       {value}
     </span>
   )
@@ -290,14 +310,14 @@ function StatusBadge({ value }: { value: ProjectRow['status'] }) {
 function FeaturedBadge({ value }: { value: boolean }) {
   if (value) {
     return (
-      <span className="inline-flex items-center gap-1 rounded-full border border-orange-500/30 bg-orange-500/10 px-2.5 py-0.5 font-mono text-xs font-bold text-orange-600 dark:text-orange-400">
-        <Sparkles className="size-3 text-orange-500 fill-orange-500 animate-pulse" />
+      <span className="inline-flex whitespace-nowrap items-center gap-1.5 rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 font-mono text-xs font-bold text-orange-600 dark:text-orange-400">
+        <Sparkles className="size-3.5 fill-orange-500 text-orange-500" />
         Featured
       </span>
     )
   }
   return (
-    <span className="font-mono text-xs text-(--brand-muted)">Standard</span>
+    <span className="whitespace-nowrap font-mono text-xs text-(--brand-muted)">Standard</span>
   )
 }
 

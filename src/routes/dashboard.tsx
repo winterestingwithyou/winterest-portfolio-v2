@@ -31,9 +31,9 @@ function DashboardLayout() {
   return (
     <SidebarProvider defaultOpen>
       <DashboardSidebar user={user} />
-      <SidebarInset className="min-h-screen bg-background">
+      <SidebarInset className="min-h-screen min-w-0 max-w-full bg-background">
         <DashboardHeader user={user} />
-        <main className="flex-1 p-4 md:p-6">
+        <main className="flex-1 min-w-0 max-w-full p-4 md:p-6">
           <Outlet />
         </main>
       </SidebarInset>
