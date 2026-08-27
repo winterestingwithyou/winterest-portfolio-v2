@@ -97,7 +97,10 @@ export const Route = createFileRoute('/api/media/')({
             },
           })
 
-          const publicUrl = `/api/media/file/${key}`
+          const appUrl = (
+            env.PUBLIC_APP_URL || new URL(request.url).origin
+          ).replace(/\/+$/, '')
+          const publicUrl = `${appUrl}/api/media/file/${key}`
           const db = getDb(env.DB)
 
           const mediaRecord = await createMediaRecord(db, {

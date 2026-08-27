@@ -23,17 +23,31 @@ describe('projectInputSchema', () => {
     },
   }
 
-  it('accepts relative media URLs for coverImage (R2 object storage paths)', () => {
-    const relativeUrl =
-      '/api/media/file/projects/1787766478212-3b2e374d-screenshot-20260825-202903.jpg'
+  it('accepts full absolute HTTP URLs (localhost / dev)', () => {
+    const localUrl =
+      'http://localhost:3000/api/media/file/projects/1787766478212-3b2e374d-screenshot.jpg'
     const result = projectInputSchema.safeParse({
       ...baseValidProject,
-      coverImage: relativeUrl,
+      coverImage: localUrl,
     })
 
     expect(result.success).toBe(true)
     if (result.success) {
-      expect(result.data.coverImage).toBe(relativeUrl)
+      expect(result.data.coverImage).toBe(localUrl)
+    }
+  })
+
+  it('accepts full absolute HTTPS URLs (production / CDN)', () => {
+    const prodUrl =
+      'https://winterest.tech/api/media/file/projects/1787766478212-3b2e374d-screenshot.jpg'
+    const result = projectInputSchema.safeParse({
+      ...baseValidProject,
+      coverImage: prodUrl,
+    })
+
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data.coverImage).toBe(prodUrl)
     }
   })
 
@@ -62,10 +76,19 @@ describe('projectInputSchema', () => {
     }
   })
 
-  it('rejects invalid non-path and non-URL coverImage strings', () => {
+  it('rejects relative path strings (strictly requires full absolute URL)', () => {
     const result = projectInputSchema.safeParse({
       ...baseValidProject,
-      coverImage: 'ftp://not-supported',
+      coverImage: '/api/media/file/projects/screenshot.jpg',
+    })
+
+    expect(result.success).toBe(false)
+  })
+
+  it('rejects invalid non-URL coverImage strings', () => {
+    const result = projectInputSchema.safeParse({
+      ...baseValidProject,
+      coverImage: 'not-a-valid-url',
     })
 
     expect(result.success).toBe(false)

@@ -51,14 +51,29 @@ export function MediaPickerDialog({
     }
   }, [open, currentUrl, mediaList])
 
+  const normalizeMedia = (media: MediaRecord): MediaRecord => {
+    if (media.url.startsWith('http://') || media.url.startsWith('https://')) {
+      return media
+    }
+    const baseUrl = (
+      import.meta.env.VITE_PUBLIC_APP_URL ||
+      (typeof window !== 'undefined' ? window.location.origin : '')
+    ).replace(/\/+$/, '')
+    return {
+      ...media,
+      url: `${baseUrl}${media.url.startsWith('/') ? '' : '/'}${media.url}`,
+    }
+  }
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
     try {
       const uploaded = await uploadMutation.mutateAsync({ file })
-      setSelectedId(uploaded.id)
-      onSelect(uploaded)
+      const normalized = normalizeMedia(uploaded)
+      setSelectedId(normalized.id)
+      onSelect(normalized)
       onOpenChange(false)
     } catch (err) {
       console.error(err)
@@ -72,7 +87,7 @@ export function MediaPickerDialog({
   const handleConfirm = () => {
     const selected = mediaList.find((m) => m.id === selectedId)
     if (selected) {
-      onSelect(selected)
+      onSelect(normalizeMedia(selected))
       onOpenChange(false)
     }
   }
@@ -129,7 +144,7 @@ export function MediaPickerDialog({
         ) : null}
 
         {/* Media Grid */}
-        <div className="flex-1 overflow-y-auto min-h-[280px] max-h-[400px] border border-(--brand-line) rounded-xl p-3 bg-(--surface-strong)/50">
+        <div className="flex-1 overflow-y-auto min-h-70 max-h-100 border border-(--brand-line) rounded-xl p-3 bg-(--surface-strong)/50">
           {isLoading ? (
             <div className="grid size-full place-items-center py-12">
               <Loader2 className="size-6 animate-spin text-(--brand-orange)" />
@@ -180,7 +195,7 @@ export function MediaPickerDialog({
                       />
                       {isSelected ? (
                         <div className="absolute right-2 top-2 grid size-6 place-items-center rounded-full bg-(--brand-orange) text-white shadow-md">
-                          <Check className="size-3.5 stroke-[3]" />
+                          <Check className="size-3.5 stroke-3" />
                         </div>
                       ) : null}
                     </div>

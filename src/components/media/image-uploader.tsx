@@ -89,7 +89,14 @@ export function ImageUploader({
   const processFileUpload = async (file: File) => {
     try {
       const uploaded = await uploadMutation.mutateAsync({ file })
-      onChange(uploaded.url)
+      const baseUrl = (
+        import.meta.env.VITE_PUBLIC_APP_URL ||
+        (typeof window !== 'undefined' ? window.location.origin : '')
+      ).replace(/\/+$/, '')
+      const fullUrl = uploaded.url.startsWith('http')
+        ? uploaded.url
+        : `${baseUrl}${uploaded.url.startsWith('/') ? '' : '/'}${uploaded.url}`
+      onChange(fullUrl)
     } catch (err) {
       console.error('File upload failed:', err)
     }
@@ -103,6 +110,16 @@ export function ImageUploader({
     }
     setIsManualUrl(false)
   }
+
+  const baseUrl = (
+    import.meta.env.VITE_PUBLIC_APP_URL ||
+    (typeof window !== 'undefined' ? window.location.origin : '')
+  ).replace(/\/+$/, '')
+  const displayUrl = value
+    ? value.startsWith('http')
+      ? value
+      : `${baseUrl}${value.startsWith('/') ? '' : '/'}${value}`
+    : ''
 
   return (
     <div className="space-y-3">
@@ -144,11 +161,11 @@ export function ImageUploader({
       ) : null}
 
       {/* Main Preview / Upload Box */}
-      {value ? (
+      {displayUrl ? (
         <div className="relative group overflow-hidden rounded-2xl border border-(--brand-line) bg-(--surface-card) shadow-xs">
           <div className={`relative w-full overflow-hidden bg-black/5 ${aspectClass}`}>
             <img
-              src={value}
+              src={displayUrl}
               alt="Project Cover"
               className="size-full object-cover"
             />
@@ -175,7 +192,7 @@ export function ImageUploader({
                 {copy.media.removeImage}
               </Button>
               <a
-                href={value}
+                href={displayUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex size-9 items-center justify-center rounded-lg bg-white/90 text-black hover:bg-white transition"
@@ -187,7 +204,9 @@ export function ImageUploader({
           </div>
 
           <div className="flex items-center justify-between p-3 border-t border-(--brand-line) bg-(--surface-strong)/50 text-xs text-(--brand-muted)">
-            <span className="truncate max-w-[280px] font-mono">{value}</span>
+            <span className="truncate max-w-85 font-mono" title={displayUrl}>
+              {displayUrl}
+            </span>
             <div className="flex items-center gap-2">
               <button
                 type="button"

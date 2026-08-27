@@ -66,9 +66,13 @@ function DashboardMediaPage() {
 
   const handleCopyUrl = async (item: MediaRecord) => {
     try {
+      const baseUrl = (
+        import.meta.env.VITE_PUBLIC_APP_URL ||
+        (typeof window !== 'undefined' ? window.location.origin : '')
+      ).replace(/\/+$/, '')
       const fullUrl = item.url.startsWith('http')
         ? item.url
-        : `${window.location.origin}${item.url}`
+        : `${baseUrl}${item.url.startsWith('/') ? '' : '/'}${item.url}`
       await navigator.clipboard.writeText(fullUrl)
       setCopiedId(item.id)
       setTimeout(() => setCopiedId(null), 2500)
