@@ -44,9 +44,8 @@ export async function getSiteSettings(db: Database): Promise<SiteSettingsInput> 
       metaDescription:
         map.get('metaDescription') ?? defaultSiteSettings.metaDescription,
       ogImageUrl: map.get('ogImageUrl') ?? defaultSiteSettings.ogImageUrl,
-      enableCharacter: map.has('enableCharacter')
-        ? map.get('enableCharacter') === 'true'
-        : defaultSiteSettings.enableCharacter,
+      heroVisualUrl:
+        map.get('heroVisualUrl') ?? defaultSiteSettings.heroVisualUrl,
       maintenanceMode: map.has('maintenanceMode')
         ? map.get('maintenanceMode') === 'true'
         : defaultSiteSettings.maintenanceMode,
@@ -88,7 +87,7 @@ export async function updateSiteSettings(
     { key: 'metaTitleTemplate', value: input.metaTitleTemplate.trim() },
     { key: 'metaDescription', value: input.metaDescription.trim() },
     { key: 'ogImageUrl', value: input.ogImageUrl.trim() },
-    { key: 'enableCharacter', value: String(input.enableCharacter) },
+    { key: 'heroVisualUrl', value: input.heroVisualUrl.trim() },
     { key: 'maintenanceMode', value: String(input.maintenanceMode) },
   ]
 

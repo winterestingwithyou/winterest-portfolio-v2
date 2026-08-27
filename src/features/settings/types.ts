@@ -27,7 +27,7 @@ export const siteSettingsSchema = z.object({
   metaTitleTemplate: z.string(),
   metaDescription: z.string(),
   ogImageUrl: z.string().or(z.literal('')),
-  enableCharacter: z.boolean(),
+  heroVisualUrl: z.string().or(z.literal('')),
   maintenanceMode: z.boolean(),
 })
 
@@ -55,6 +55,6 @@ export const defaultSiteSettings: SiteSettingsInput = {
   metaTitleTemplate: '%s | Winterest',
   metaDescription: 'Winterest - Personal portfolio platform.',
   ogImageUrl: '',
-  enableCharacter: true,
+  heroVisualUrl: '',
   maintenanceMode: false,
 }

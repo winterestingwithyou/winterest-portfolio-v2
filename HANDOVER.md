@@ -65,14 +65,13 @@ Refactored forms:
 
 ## Verification Recently Run
 
-After Cloudflare R2 Object Storage and Media Library integration, these passed cleanly:
+After Branding & Visual settings tab, Hero Visual dynamic media integration, and character-spotlight cleanup, these passed cleanly:
 
 ```bash
 bunx tsc --noEmit (clean TypeScript check - 0 errors)
 bun run lint (eslint - 0 errors)
-bun run test (vitest - 12 tests passed)
-bun run build (vite client + Cloudflare Worker SSR bundle passed in 31.5s)
-bun run generate-routes (tsr route generation passed)
+bun run test (vitest - 18 tests passed)
+bun run build (vite client + Cloudflare Worker SSR bundle passed)
 ```
 
 ## Project Identity
@@ -229,7 +228,9 @@ Status: In progress.
 
 Implemented:
 
-- Static visual/character work exists, including `CharacterSpotlight`.
+- Hero Visual dynamic media integration in new **Branding & Visual** tab in `/dashboard/settings`.
+- Fallback mascot `/assets/characters/winterest.png` when `heroVisualUrl` is not set.
+- Removed obsolete `character-spotlight.tsx`, CSS classes, and unused copy.
 - Homepage/about visual polish has been improved.
 - React Bits GooeyNav integrated and moved under `src/components/react-bits/gooey-nav`.
 - GooeyNav colors were tuned to orange/header background and root route clears active highlight.

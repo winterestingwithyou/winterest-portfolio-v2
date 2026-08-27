@@ -235,6 +235,7 @@ export const dashboardCopy = {
         'System settings are restricted to accounts with Owner or Admin roles.',
       tabs: {
         general: 'General',
+        visual: 'Branding & Visual',
         social: 'Social & Contact',
         seo: 'SEO & Meta',
         system: 'System',
@@ -247,6 +248,9 @@ export const dashboardCopy = {
         siteDescription: 'Site summary / bio',
         siteDescriptionDesc: 'Personal intro summary used on public pages.',
         defaultLocale: 'Default language',
+        heroVisualUrl: 'Hero Visual / Mascot Image',
+        heroVisualDesc:
+          'Custom hero image or mascot for the homepage. Leave empty to use the default mascot.',
         githubUrl: 'GitHub URL',
         githubName: 'GitHub display name',
         linkedinUrl: 'LinkedIn URL',
@@ -264,8 +268,8 @@ export const dashboardCopy = {
         metaTitleTemplateDesc: 'Template for browser tab title (e.g. %s | Winterest).',
         metaDescription: 'Default SEO description',
         ogImageUrl: 'Default OG Image URL',
-        enableCharacter: 'Enable character spotlight',
-        enableCharacterDesc: 'Display character graphics on public pages.',
+        ogImageDesc:
+          'Default image displayed when sharing website links on social platforms.',
         maintenanceMode: 'Maintenance mode',
         maintenanceModeDesc: 'Show maintenance screen for public visitors.',
         saveChanges: 'Save settings',
@@ -585,6 +589,7 @@ export const dashboardCopy = {
         'Pengaturan sistem hanya dapat diakses oleh akun dengan role Owner atau Admin.',
       tabs: {
         general: 'Umum',
+        visual: 'Branding & Visual',
         social: 'Sosial & Kontak',
         seo: 'SEO & Meta',
         system: 'Sistem',
@@ -597,6 +602,9 @@ export const dashboardCopy = {
         siteDescription: 'Ringkasan / bio situs',
         siteDescriptionDesc: 'Perkenalan singkat untuk halaman publik.',
         defaultLocale: 'Bahasa bawaan',
+        heroVisualUrl: 'Gambar Hero Visual / Maskot',
+        heroVisualDesc:
+          'Gambar hero atau maskot custom untuk homepage. Kosongkan untuk menggunakan maskot bawaan.',
         githubUrl: 'URL GitHub',
         githubName: 'Nama tampilan GitHub',
         linkedinUrl: 'URL LinkedIn',
@@ -614,8 +622,8 @@ export const dashboardCopy = {
         metaTitleTemplateDesc: 'Format judul tab browser (cth. %s | Winterest).',
         metaDescription: 'Deskripsi SEO bawaan',
         ogImageUrl: 'URL Gambar OG bawaan',
-        enableCharacter: 'Aktifkan gambar karakter',
-        enableCharacterDesc: 'Tampilkan grafik maskot/karakter pada halaman publik.',
+        ogImageDesc:
+          'Gambar bawaan yang ditampilkan saat tautan situs dibagikan di media sosial.',
         maintenanceMode: 'Mode pemeliharaan',
         maintenanceModeDesc: 'Tampilkan pesan pemeliharaan untuk pengunjung publik.',
         saveChanges: 'Simpan pengaturan',

@@ -406,29 +406,6 @@ export const publicCopy = {
       nextSteps: 'Next Steps',
       result: 'Result',
     },
-    character: {
-      eyebrow: 'Character layer',
-      title: 'A mascot accent, not a performance tax.',
-      description:
-        'The visual layer gives Winterest a recognizable presence while keeping the portfolio readable, fast, and useful. It starts as a static illustration and can later grow into a small progressive 3D scene.',
-      notes: [
-        {
-          title: 'Static first',
-          description:
-            'The mascot is a lightweight visual accent that does not block core portfolio content.',
-        },
-        {
-          title: 'Progressive motion',
-          description:
-            'Subtle CSS motion is allowed, with reduced-motion users getting a still experience.',
-        },
-        {
-          title: '3D later',
-          description:
-            'A small GLB scene can arrive after the CMS, auth, and publishing flows are stable.',
-        },
-      ],
-    },
   },
   id: {
     nav: {
@@ -580,29 +557,6 @@ export const publicCopy = {
       decisions: 'Keputusan Kunci',
       nextSteps: 'Langkah Berikutnya',
       result: 'Hasil',
-    },
-    character: {
-      eyebrow: 'Layer karakter',
-      title: 'Aksen maskot, bukan beban performa.',
-      description:
-        'Layer visual memberi Winterest identitas yang mudah dikenali sambil menjaga portfolio tetap terbaca, cepat, dan berguna. Dimulai sebagai ilustrasi statis, lalu bisa tumbuh menjadi scene 3D kecil secara progresif.',
-      notes: [
-        {
-          title: 'Statis dulu',
-          description:
-            'Maskot adalah aksen visual ringan yang tidak menghalangi konten utama portfolio.',
-        },
-        {
-          title: 'Motion progresif',
-          description:
-            'Motion CSS yang halus boleh dipakai, dengan pengalaman statis untuk pengguna reduced-motion.',
-        },
-        {
-          title: '3D nanti',
-          description:
-            'Scene GLB kecil bisa hadir setelah CMS, auth, dan publishing flow stabil.',
-        },
-      ],
     },
   },
 } as const

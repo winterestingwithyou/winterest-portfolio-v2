@@ -4,6 +4,7 @@ import {
   CheckCircle2,
   Globe,
   Loader2,
+  Palette,
   Save,
   Search,
   Share2,
@@ -11,6 +12,7 @@ import {
 } from 'lucide-react'
 import { useState } from 'react'
 
+import { ImageUploader } from '#/components/media/image-uploader'
 import { Button } from '#/components/ui/button'
 import { Checkbox } from '#/components/ui/checkbox'
 import {
@@ -33,7 +35,7 @@ type SettingsEditorFormProps = {
   canEdit: boolean
 }
 
-type SettingsTab = 'general' | 'social' | 'seo' | 'system'
+type SettingsTab = 'general' | 'visual' | 'social' | 'seo' | 'system'
 
 export function SettingsEditorForm({
   initialData,
@@ -67,6 +69,7 @@ export function SettingsEditorForm({
 
   const tabs: Array<{ id: SettingsTab; label: string; icon: typeof Globe }> = [
     { id: 'general', label: settingsCopy.tabs.general, icon: Globe },
+    { id: 'visual', label: settingsCopy.tabs.visual, icon: Palette },
     { id: 'social', label: settingsCopy.tabs.social, icon: Share2 },
     { id: 'seo', label: settingsCopy.tabs.seo, icon: Search },
     { id: 'system', label: settingsCopy.tabs.system, icon: Sliders },
@@ -233,7 +236,40 @@ export function SettingsEditorForm({
           </div>
         )}
 
-        {/* Tab 2: Social & Contact Settings */}
+        {/* Tab 2: Branding & Visual */}
+        {activeTab === 'visual' && (
+          <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
+            <FieldGroup>
+              <form.Field name="heroVisualUrl">
+                {(field) => (
+                  <ImageUploader
+                    label={settingsCopy.form.heroVisualUrl}
+                    description={settingsCopy.form.heroVisualDesc}
+                    value={field.state.value}
+                    onChange={(val) => field.handleChange(val ?? '')}
+                    aspectRatio="wide"
+                  />
+                )}
+              </form.Field>
+
+              <div className="border-t border-(--brand-line) pt-4">
+                <form.Field name="ogImageUrl">
+                  {(field) => (
+                    <ImageUploader
+                      label={settingsCopy.form.ogImageUrl}
+                      description={settingsCopy.form.ogImageDesc}
+                      value={field.state.value}
+                      onChange={(val) => field.handleChange(val ?? '')}
+                      aspectRatio="wide"
+                    />
+                  )}
+                </form.Field>
+              </div>
+            </FieldGroup>
+          </div>
+        )}
+
+        {/* Tab 3: Social & Contact */}
         {activeTab === 'social' && (
           <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
             <FieldGroup>
@@ -319,7 +355,7 @@ export function SettingsEditorForm({
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="https://x.com/username"
+                        placeholder="https://twitter.com/username"
                       />
                       <FieldError errors={field.state.meta.errors} />
                     </Field>
@@ -468,7 +504,7 @@ export function SettingsEditorForm({
           </div>
         )}
 
-        {/* Tab 3: SEO Settings */}
+        {/* Tab 4: SEO Settings */}
         {activeTab === 'seo' && (
           <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
             <FieldGroup>
@@ -509,56 +545,14 @@ export function SettingsEditorForm({
                   </Field>
                 )}
               </form.Field>
-
-              <form.Field name="ogImageUrl">
-                {(field) => (
-                  <Field>
-                    <FieldLabel>{settingsCopy.form.ogImageUrl}</FieldLabel>
-                    <Input
-                      disabled={!canEdit || isSaving}
-                      value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="https://..."
-                    />
-                    <FieldError errors={field.state.meta.errors} />
-                  </Field>
-                )}
-              </form.Field>
             </FieldGroup>
           </div>
         )}
 
-        {/* Tab 4: System Preferences */}
+        {/* Tab 5: System Preferences */}
         {activeTab === 'system' && (
           <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
             <FieldGroup>
-              <form.Field name="enableCharacter">
-                {(field) => (
-                  <div className="flex items-start gap-3 rounded-lg border border-(--brand-line) p-4 bg-muted/20">
-                    <Checkbox
-                      id="enableCharacter"
-                      disabled={!canEdit || isSaving}
-                      checked={field.state.value}
-                      onCheckedChange={(checked) =>
-                        field.handleChange(Boolean(checked))
-                      }
-                    />
-                    <div className="flex flex-col gap-0.5 leading-none">
-                      <label
-                        htmlFor="enableCharacter"
-                        className="cursor-pointer font-bold text-xs"
-                      >
-                        {settingsCopy.form.enableCharacter}
-                      </label>
-                      <span className="text-muted-foreground text-xs">
-                        {settingsCopy.form.enableCharacterDesc}
-                      </span>
-                    </div>
-                  </div>
-                )}
-              </form.Field>
-
               <form.Field name="maintenanceMode">
                 {(field) => (
                   <div className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50/50 p-4 dark:border-red-900/30 dark:bg-red-950/20">

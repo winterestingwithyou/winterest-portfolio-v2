@@ -59,7 +59,7 @@ const techItems = [
 
 export function HeroVisual({ className }: { className?: string } = {}) {
   const { data: settings } = useSiteSettings()
-  const showMascot = settings?.enableCharacter ?? true
+  const mascotSrc = settings?.heroVisualUrl || '/assets/characters/winterest.png'
 
   return (
     <motion.figure
@@ -67,23 +67,21 @@ export function HeroVisual({ className }: { className?: string } = {}) {
       animate="visible"
       variants={scaleIn}
       className={cn(
-        'relative isolate m-0 w-full min-h-[min(34rem,78vw)] overflow-hidden rounded-2xl border border-(--brand-line) bg-gradient-to-br from-(--surface-strong)/82 to-(--brand-orange-soft)/56 shadow-2xl max-sm:min-h-[34rem]',
+        'relative isolate m-0 w-full min-h-[min(34rem,78vw)] overflow-hidden rounded-2xl border border-(--brand-line) bg-linear-to-br from-(--surface-strong)/82 to-(--brand-orange-soft)/56 shadow-2xl max-sm:min-h-136',
         className,
       )}
       aria-labelledby="hero-visual-title"
     >
-      {showMascot && (
-        <div className="absolute inset-0">
-          <img
-            src="/assets/characters/winterest-mascot.png"
-            alt="Original Winterest developer mascot with orange cloud accents and floating code panels."
-            width={1536}
-            height={1024}
-            fetchPriority="high"
-            className="size-full object-cover object-[50%_46%] saturate-[1.02] contrast-[1.01] md:scale-[1.03] md:animate-[hero-visual-float_8s_ease-in-out_infinite]"
-          />
-        </div>
-      )}
+      <div className="absolute inset-0">
+        <img
+          src={mascotSrc}
+          alt="Original Winterest developer mascot with orange cloud accents and floating code panels."
+          width={1536}
+          height={1024}
+          fetchPriority="high"
+          className="size-full object-cover object-[50%_46%] saturate-[1.02] contrast-[1.01] md:scale-[1.03] md:animate-[hero-visual-float_8s_ease-in-out_infinite]"
+        />
+      </div>
 
       <figcaption className="sr-only" id="hero-visual-title">
         Original Winterest mascot for a Cloudflare and Bun inspired portfolio.
