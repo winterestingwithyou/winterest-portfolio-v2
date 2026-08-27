@@ -76,6 +76,7 @@
     "lucide-react": "^0.577.0",
     "marked": "^15.0.8",
     "motion": "^13.1.1",
+    "ofetch": "^1.5.1",
     "radix-ui": "^1.5.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
