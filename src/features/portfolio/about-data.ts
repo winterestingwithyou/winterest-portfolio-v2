@@ -49,7 +49,7 @@ export const aboutData = {
       badges: ['INTJ / 4w5', 'Fresh Graduate', 'Fullstack & Edge Explorer'],
       mindsetQuote:
         'I believe I am not just someone who writes code. I also analyze problems, evaluate trade-offs, design robust systems, and maintain a future-minded perspective.',
-      cardLabel: 'Engineering Mindset',
+      cardLabel: 'Developer Mindset',
     },
     drives: {
       eyebrow: '02 / WHAT DRIVES ME',
@@ -539,7 +539,7 @@ export const aboutData = {
       badges: ['INTJ / 4w5', 'Fresh Graduate', 'Fullstack & Edge Explorer'],
       mindsetQuote:
         'Aku yakin bahwa aku bukanlah seoarang yang cuma bisa ngoding. Tapi juga bisa menganalisis masalah, memberi pertimbangan, design sistem yang robust, dan future-minded.',
-      cardLabel: 'Mindset Rekayasa',
+      cardLabel: 'Mindset Developer',
     },
     drives: {
       eyebrow: '02 / APA YANG MENDORONGKU',
