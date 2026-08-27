@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import type { TechnologyWithCategories } from '#/features/technologies/queries'
 import { TechnologyEditorForm } from '#/features/technologies/technology-editor-form'
+import { api, getApiErrorMessage } from '#/lib/api-client'
 
 export const Route = createFileRoute('/dashboard/stack/technologies/$id')({
   component: DashboardTechnologyEdit,
@@ -20,21 +21,18 @@ function DashboardTechnologyEdit() {
     setIsLoading(true)
     setError(null)
     try {
-      const res = await fetch(`/api/technologies?id=${id}`)
-      const result: { data?: TechnologyWithCategories; error?: string } =
-        await res.json()
+      const result = await api<{ data?: TechnologyWithCategories }>(
+        '/api/technologies',
+        { query: { id } },
+      )
 
-      if (!res.ok) {
-        throw new Error(result.error ?? 'Teknologi tidak ditemukan.')
+      if (!result.data) {
+        throw new Error('Teknologi tidak ditemukan.')
       }
 
-      setTech(result.data ?? null)
+      setTech(result.data)
     } catch (caught) {
-      setError(
-        caught instanceof Error
-          ? caught.message
-          : 'Gagal memuat data teknologi.',
-      )
+      setError(getApiErrorMessage(caught, 'Gagal memuat data teknologi.'))
     } finally {
       setIsLoading(false)
     }

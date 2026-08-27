@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { api } from '#/lib/api-client'
 import type { MediaRecord } from './queries'
 
 export const mediaQueryKeys = {
@@ -12,19 +13,10 @@ export function useMediaList(search?: string) {
   return useQuery({
     queryKey: mediaQueryKeys.list(search),
     queryFn: async (): Promise<MediaRecord[]> => {
-      const url = new URL('/api/media', window.location.origin)
-      if (search && search.trim()) {
-        url.searchParams.set('search', search.trim())
-      }
-
-      const res = await fetch(url.toString())
-      const json: { data?: MediaRecord[]; error?: string } = await res.json()
-
-      if (!res.ok) {
-        throw new Error(json.error ?? 'Failed to fetch media library')
-      }
-
-      return json.data ?? []
+      const res = await api<{ data?: MediaRecord[] }>('/api/media', {
+        query: search?.trim() ? { search: search.trim() } : undefined,
+      })
+      return res.data ?? []
     },
   })
 }
@@ -45,22 +37,16 @@ export function useUploadMedia() {
         formData.append('alt', payload.alt.trim())
       }
 
-      const res = await fetch('/api/media', {
+      const res = await api<{ data?: MediaRecord }>('/api/media', {
         method: 'POST',
         body: formData,
       })
 
-      const json: { data?: MediaRecord; error?: string } = await res.json()
-
-      if (!res.ok) {
-        throw new Error(json.error ?? 'Failed to upload media')
-      }
-
-      if (!json.data) {
+      if (!res.data) {
         throw new Error('No media returned after upload')
       }
 
-      return json.data
+      return res.data
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: mediaQueryKeys.all })
@@ -73,17 +59,11 @@ export function useDeleteMedia() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<boolean> => {
-      const res = await fetch(`/api/media/${id}`, {
+      const res = await api<{ success?: boolean }>(`/api/media/${id}`, {
         method: 'DELETE',
       })
 
-      const json: { success?: boolean; error?: string } = await res.json()
-
-      if (!res.ok) {
-        throw new Error(json.error ?? 'Failed to delete media')
-      }
-
-      return json.success ?? true
+      return res.success ?? true
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: mediaQueryKeys.all })

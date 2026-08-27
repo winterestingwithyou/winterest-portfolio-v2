@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { ProjectEditorForm } from '#/features/dashboard/project-editor-form'
+import { api, getApiErrorMessage } from '#/lib/api-client'
 
 type ProjectRecord = {
   id: string
@@ -55,21 +56,17 @@ function DashboardProjectEdit() {
     setError(null)
 
     try {
-      const response = await fetch(`/api/projects/${id}`)
-      const result: {
+      const result = await api<{
         data?: ProjectRecord
-        error?: string
-      } = await response.json()
+      }>(`/api/projects/${id}`)
 
-      if (!response.ok) {
-        throw new Error(result.error ?? copy.projects.notFound)
+      if (!result.data) {
+        throw new Error(copy.projects.notFound)
       }
 
-      setProject(result.data ?? null)
+      setProject(result.data)
     } catch (caught) {
-      setError(
-        caught instanceof Error ? caught.message : copy.projects.notFound,
-      )
+      setError(getApiErrorMessage(caught, copy.projects.notFound))
     } finally {
       setIsLoading(false)
     }

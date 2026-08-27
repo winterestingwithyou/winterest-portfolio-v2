@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { CategoryEditorForm } from '#/features/technologies/category-editor-form'
 import type { CategoryRecord } from '#/features/technologies/queries'
+import { api, getApiErrorMessage } from '#/lib/api-client'
 
 export const Route = createFileRoute('/dashboard/stack/categories/$id')({
   component: DashboardCategoryEdit,
@@ -20,20 +21,17 @@ function DashboardCategoryEdit() {
     setIsLoading(true)
     setError(null)
     try {
-      const res = await fetch(`/api/categories?id=${id}`)
-      const result: { data?: CategoryRecord; error?: string } = await res.json()
+      const result = await api<{ data?: CategoryRecord }>('/api/categories', {
+        query: { id },
+      })
 
-      if (!res.ok) {
-        throw new Error(result.error ?? 'Kategori tidak ditemukan.')
+      if (!result.data) {
+        throw new Error('Kategori tidak ditemukan.')
       }
 
-      setCategory(result.data ?? null)
+      setCategory(result.data)
     } catch (caught) {
-      setError(
-        caught instanceof Error
-          ? caught.message
-          : 'Gagal memuat data kategori.',
-      )
+      setError(getApiErrorMessage(caught, 'Gagal memuat data kategori.'))
     } finally {
       setIsLoading(false)
     }

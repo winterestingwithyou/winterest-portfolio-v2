@@ -33,6 +33,7 @@ import { TechIcon } from '#/components/ui/tech-icon'
 import { Textarea } from '#/components/ui/textarea'
 import { ImageUploader } from '#/components/media/image-uploader'
 import { useTechnologies } from '#/features/technologies/hooks'
+import { api, getApiErrorMessage } from '#/lib/api-client'
 import { getDashboardCopy } from './copy'
 
 type ProjectFormInitial = {
@@ -222,18 +223,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
       }
 
       try {
-        const response = await fetch(endpoint, {
+        await api(endpoint, {
           method: mode === 'create' ? 'POST' : 'PATCH',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify(payload),
+          body: payload,
         })
-        const result: { error?: string } = await response.json()
-
-        if (!response.ok) {
-          throw new Error(result.error ?? copy.projects.saveError)
-        }
 
         setMessage(
           mode === 'create'
@@ -242,9 +235,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         )
         await navigate({ to: '/dashboard/projects' })
       } catch (caught) {
-        setError(
-          caught instanceof Error ? caught.message : copy.projects.saveError,
-        )
+        setError(getApiErrorMessage(caught, copy.projects.saveError))
       } finally {
         setIsPending(false)
       }
@@ -269,20 +260,11 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
     setMessage(null)
 
     try {
-      const response = await fetch(endpoint, { method: 'DELETE' })
-      const result: { error?: string } = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.error ?? copy.projects.deleteSaveError)
-      }
+      await api(endpoint, { method: 'DELETE' })
 
       await navigate({ to: '/dashboard/projects' })
     } catch (caught) {
-      setError(
-        caught instanceof Error
-          ? caught.message
-          : copy.projects.deleteSaveError,
-      )
+      setError(getApiErrorMessage(caught, copy.projects.deleteSaveError))
     } finally {
       setIsPending(false)
     }

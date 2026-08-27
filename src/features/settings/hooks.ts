@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { api } from '#/lib/api-client'
 import type { SiteSettingsInput } from './types'
 import { defaultSiteSettings } from './types'
 
@@ -12,12 +13,8 @@ export function useSiteSettings(options?: {
     enabled: options?.enabled ?? true,
     initialData: options?.initialData,
     queryFn: async () => {
-      const response = await fetch('/api/settings')
-      if (!response.ok) {
-        throw new Error('Failed to fetch settings.')
-      }
-      const json: { data?: SiteSettingsInput } = await response.json()
-      return json.data ?? defaultSiteSettings
+      const response = await api<{ data?: SiteSettingsInput }>('/api/settings')
+      return response.data ?? defaultSiteSettings
     },
   })
 }
@@ -27,22 +24,12 @@ export function useUpdateSiteSettings() {
 
   return useMutation({
     mutationFn: async (input: SiteSettingsInput) => {
-      const response = await fetch('/api/settings', {
+      const response = await api<{ data?: SiteSettingsInput }>('/api/settings', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(input),
+        body: input,
       })
 
-      const json: { data?: SiteSettingsInput; error?: string } =
-        await response.json()
-
-      if (!response.ok || json.error) {
-        throw new Error(json.error ?? 'Failed to save settings.')
-      }
-
-      return json.data
+      return response.data
     },
     onSuccess: (data) => {
       if (data) {

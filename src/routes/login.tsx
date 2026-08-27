@@ -13,6 +13,7 @@ import { useState } from 'react'
 import ParaglideLocaleSwitcher from '#/components/locale-switcher.tsx'
 import ThemeToggle from '#/components/theme-toggle'
 import { getDashboardSession } from '#/features/auth/server-functions'
+import { api, getApiErrorMessage } from '#/lib/api-client'
 import { getLocale } from '#/paraglide/runtime'
 
 type LoginSearch = {
@@ -158,22 +159,14 @@ function LoginPage() {
     }
 
     try {
-      const response = await fetch('/api/auth/sign-in/email', {
+      await api('/api/auth/sign-in/email', {
         method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify(payload),
+        body: payload,
       })
-      const result: { message?: string; error?: string } = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.message ?? result.error ?? copy.errors.signin)
-      }
 
       await navigate({ to: redirectTo ?? '/dashboard' })
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : copy.errors.request)
+      setError(getApiErrorMessage(caught, copy.errors.signin))
     } finally {
       setIsPending(false)
     }

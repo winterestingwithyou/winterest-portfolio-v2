@@ -31,6 +31,7 @@ import { Textarea } from '#/components/ui/textarea'
 import { getPublicCopy } from '#/features/portfolio/data'
 import { useSiteSettings } from '#/features/settings/hooks'
 import { defaultSiteSettings } from '#/features/settings/types'
+import { api, getApiErrorMessage } from '#/lib/api-client'
 import {
   defaultViewport,
   fadeIn,
@@ -106,29 +107,17 @@ function ContactPage() {
       setErrorMessage(null)
 
       try {
-        const response = await fetch('/api/contact', {
+        await api<{ success?: boolean }>('/api/contact', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(value),
+          body: value,
         })
-
-        const data: { error?: string; success?: boolean } =
-          await response.json()
-
-        if (!response.ok || data.error) {
-          throw new Error(data.error || copy.contact.sendErrorTitle)
-        }
 
         setStatus('success')
         form.reset()
       } catch (err: unknown) {
         console.error('Failed to send contact message:', err)
         setStatus('error')
-        setErrorMessage(
-          err instanceof Error ? err.message : copy.contact.sendErrorTitle,
-        )
+        setErrorMessage(getApiErrorMessage(err, copy.contact.sendErrorTitle))
       }
     },
   })

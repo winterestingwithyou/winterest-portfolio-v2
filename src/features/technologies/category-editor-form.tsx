@@ -14,6 +14,7 @@ import {
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
 import type { CategoryRecord } from '#/features/technologies/queries'
+import { api, getApiErrorMessage } from '#/lib/api-client'
 
 function slugify(text: string): string {
   return text
@@ -71,28 +72,14 @@ export function CategoryEditorForm({
         }
 
         const isEdit = mode === 'edit' && initialData?.id
-        const targetUrl = '/api/categories'
-        const method = isEdit ? 'PUT' : 'POST'
-        const body = isEdit
-          ? JSON.stringify({ id: initialData.id, ...payload })
-          : JSON.stringify(payload)
-
-        const res = await fetch(targetUrl, {
-          method,
-          headers: { 'Content-Type': 'application/json' },
-          body,
+        await api('/api/categories', {
+          method: isEdit ? 'PUT' : 'POST',
+          body: isEdit ? { id: initialData.id, ...payload } : payload,
         })
-
-        const result: { error?: string } = await res.json()
-        if (!res.ok) {
-          throw new Error(result.error ?? 'Gagal menyimpan kategori.')
-        }
 
         void navigate({ to: '/dashboard/stack' })
       } catch (caught) {
-        setError(
-          caught instanceof Error ? caught.message : 'Terjadi kesalahan.',
-        )
+        setError(getApiErrorMessage(caught, 'Gagal menyimpan kategori.'))
       } finally {
         setIsSaving(false)
       }
@@ -113,17 +100,14 @@ export function CategoryEditorForm({
     setIsDeleting(true)
 
     try {
-      const res = await fetch(`/api/categories?id=${initialData.id}`, {
+      await api('/api/categories', {
         method: 'DELETE',
+        query: { id: initialData.id },
       })
-      const result: { error?: string } = await res.json()
-      if (!res.ok) {
-        throw new Error(result.error ?? 'Gagal menghapus kategori.')
-      }
 
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : 'Terjadi kesalahan.')
+      setError(getApiErrorMessage(caught, 'Gagal menghapus kategori.'))
     } finally {
       setIsDeleting(false)
     }

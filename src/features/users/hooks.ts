@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
+import { api } from '#/lib/api-client'
 import type { UserRecord, UserWithSessionCount } from './queries'
 
 // ---------------------------------------------------------------------------
@@ -30,10 +31,8 @@ export function useCurrentSession() {
   return useQuery({
     queryKey: userQueryKeys.session(),
     queryFn: async (): Promise<SessionUser | null> => {
-      const res = await fetch('/api/auth/get-session')
-      if (!res.ok) return null
-      const data: SessionResponse = await res.json()
-      return data.user ?? null
+      const res = await api<SessionResponse>('/api/auth/get-session').catch(() => null)
+      return res?.user ?? null
     },
     staleTime: 1000 * 60 * 5, // 5 min – session doesn't change often
   })
@@ -47,13 +46,8 @@ export function useUsers() {
   return useQuery({
     queryKey: userQueryKeys.list(),
     queryFn: async (): Promise<UserWithSessionCount[]> => {
-      const res = await fetch('/api/users')
-      const json: { data?: UserWithSessionCount[]; error?: string } =
-        await res.json()
-      if (!res.ok) {
-        throw new Error(json.error ?? 'Failed to fetch users')
-      }
-      return json.data ?? []
+      const res = await api<{ data?: UserWithSessionCount[] }>('/api/users')
+      return res.data ?? []
     },
   })
 }
@@ -66,15 +60,13 @@ export function useUser(id: string) {
   return useQuery({
     queryKey: userQueryKeys.detail(id),
     queryFn: async (): Promise<UserRecord> => {
-      const res = await fetch(`/api/users?id=${encodeURIComponent(id)}`)
-      const json: { data?: UserRecord; error?: string } = await res.json()
-      if (!res.ok) {
-        throw new Error(json.error ?? 'User not found')
-      }
-      if (!json.data) {
+      const res = await api<{ data?: UserRecord }>('/api/users', {
+        query: { id },
+      })
+      if (!res.data) {
         throw new Error('User not found')
       }
-      return json.data
+      return res.data
     },
   })
 }
@@ -94,17 +86,12 @@ export function useCreateUser() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (payload: CreateUserPayload): Promise<UserRecord> => {
-      const res = await fetch('/api/users', {
+      const res = await api<{ data?: UserRecord }>('/api/users', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: payload,
       })
-      const json: { data?: UserRecord; error?: string } = await res.json()
-      if (!res.ok) {
-        throw new Error(json.error ?? 'Failed to create user')
-      }
-      if (!json.data) throw new Error('Failed to create user')
-      return json.data
+      if (!res.data) throw new Error('Failed to create user')
+      return res.data
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: userQueryKeys.list() })
@@ -127,17 +114,12 @@ export function useUpdateUser() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (payload: UpdateUserPayload): Promise<UserRecord> => {
-      const res = await fetch('/api/users', {
+      const res = await api<{ data?: UserRecord }>('/api/users', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: payload,
       })
-      const json: { data?: UserRecord; error?: string } = await res.json()
-      if (!res.ok) {
-        throw new Error(json.error ?? 'Failed to update user')
-      }
-      if (!json.data) throw new Error('Failed to update user')
-      return json.data
+      if (!res.data) throw new Error('Failed to update user')
+      return res.data
     },
     onSuccess: (data) => {
       void queryClient.invalidateQueries({ queryKey: userQueryKeys.list() })
@@ -156,14 +138,10 @@ export function useDeleteUser() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (userId: string): Promise<void> => {
-      const res = await fetch(
-        `/api/users?id=${encodeURIComponent(userId)}`,
-        { method: 'DELETE' },
-      )
-      const json: { error?: string } = await res.json()
-      if (!res.ok) {
-        throw new Error(json.error ?? 'Failed to delete user')
-      }
+      await api<void>('/api/users', {
+        method: 'DELETE',
+        query: { id: userId },
+      })
     },
     onSuccess: (_data, userId) => {
       void queryClient.invalidateQueries({ queryKey: userQueryKeys.list() })
@@ -184,15 +162,10 @@ interface ResetPasswordPayload {
 export function useResetPassword() {
   return useMutation({
     mutationFn: async (payload: ResetPasswordPayload): Promise<void> => {
-      const res = await fetch('/api/users/reset-password', {
+      await api<void>('/api/users/reset-password', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: payload,
       })
-      const json: { error?: string } = await res.json()
-      if (!res.ok) {
-        throw new Error(json.error ?? 'Failed to reset password')
-      }
     },
   })
 }

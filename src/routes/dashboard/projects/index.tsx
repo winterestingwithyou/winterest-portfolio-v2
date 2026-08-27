@@ -18,6 +18,7 @@ import {
   TableRow,
 } from '#/components/ui/table'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { api, getApiErrorMessage } from '#/lib/api-client'
 
 type ProjectRow = {
   id: string
@@ -49,21 +50,13 @@ function DashboardProjects() {
     setError(null)
 
     try {
-      const response = await fetch('/api/projects')
-      const result: {
+      const result = await api<{
         data?: ProjectRow[]
-        error?: string
-      } = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.error ?? copy.projects.loadError)
-      }
+      }>('/api/projects')
 
       setProjects(result.data ?? [])
     } catch (caught) {
-      setError(
-        caught instanceof Error ? caught.message : copy.projects.loadError,
-      )
+      setError(getApiErrorMessage(caught, copy.projects.loadError))
     } finally {
       setIsLoading(false)
     }
@@ -74,22 +67,15 @@ function DashboardProjects() {
       setError(null)
 
       try {
-        const response = await fetch(`/api/projects/${project.id}`, {
+        await api(`/api/projects/${project.id}`, {
           method: 'DELETE',
         })
-        const result: { error?: string } = await response.json()
-
-        if (!response.ok) {
-          throw new Error(result.error ?? copy.projects.deleteError)
-        }
 
         setProjects((current) =>
           current.filter((item) => item.id !== project.id),
         )
       } catch (caught) {
-        setError(
-          caught instanceof Error ? caught.message : copy.projects.deleteError,
-        )
+        setError(getApiErrorMessage(caught, copy.projects.deleteError))
       }
     },
     [copy.projects.deleteError],

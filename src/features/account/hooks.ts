@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { userQueryKeys } from '#/features/users/hooks'
+import { api } from '#/lib/api-client'
 
 import type { AccountProfile } from './queries'
 import type { ChangePasswordInput, UpdateProfileInput } from './validation'
@@ -14,15 +15,11 @@ export function useAccountProfile() {
   return useQuery({
     queryKey: accountQueryKeys.profile(),
     queryFn: async (): Promise<AccountProfile> => {
-      const res = await fetch('/api/account')
-      const json: { data?: AccountProfile; error?: string } = await res.json()
-      if (!res.ok) {
-        throw new Error(json.error ?? 'Failed to fetch account profile')
-      }
-      if (!json.data) {
+      const res = await api<{ data?: AccountProfile }>('/api/account')
+      if (!res.data) {
         throw new Error('Account profile not found')
       }
-      return json.data
+      return res.data
     },
   })
 }
@@ -31,19 +28,14 @@ export function useUpdateAccountProfile() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async (payload: UpdateProfileInput): Promise<AccountProfile> => {
-      const res = await fetch('/api/account', {
+      const res = await api<{ data?: AccountProfile }>('/api/account', {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: payload,
       })
-      const json: { data?: AccountProfile; error?: string } = await res.json()
-      if (!res.ok) {
-        throw new Error(json.error ?? 'Failed to update profile')
-      }
-      if (!json.data) {
+      if (!res.data) {
         throw new Error('Failed to update profile')
       }
-      return json.data
+      return res.data
     },
     onSuccess: (data) => {
       void queryClient.invalidateQueries({ queryKey: accountQueryKeys.profile() })
@@ -59,15 +51,10 @@ export function useUpdateAccountProfile() {
 export function useChangeAccountPassword() {
   return useMutation({
     mutationFn: async (payload: ChangePasswordInput): Promise<void> => {
-      const res = await fetch('/api/account/password', {
+      await api<void>('/api/account/password', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: payload,
       })
-      const json: { error?: string } = await res.json()
-      if (!res.ok) {
-        throw new Error(json.error ?? 'Failed to change password')
-      }
     },
   })
 }

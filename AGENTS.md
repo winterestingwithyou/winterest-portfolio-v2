@@ -100,6 +100,7 @@ Content/data/auth:
 - Drizzle ORM
 - Cloudflare D1 for database
 - Better Auth for authentication
+- ofetch for universal HTTP client requests
 - T3Env for environment validation
 - Paraglide/Inlang for i18n
 - Content Collections for file-based content when appropriate
@@ -926,6 +927,21 @@ For form actions/mutations:
 - Do not trust client validation.
 - Use optimistic UI only after server behavior is correct.
 - Show clear success/error states.
+
+### Mandatory ofetch Standard for HTTP Requests
+
+All HTTP client requests across the codebase **MUST** use `ofetch` instead of native `fetch`.
+
+Rules:
+
+- **No Native `fetch`**: Do **NOT** use browser native `window.fetch()` or `fetch()` in React components, TanStack Query hooks, TanStack Form handlers, or route loaders.
+- **Centralized Client**: Always import and use `api` from `#/lib/api-client` (which is configured via `$fetch.create({ retry: 0 })`).
+- **Automatic Serialization & Query Params**:
+  - Pass plain objects directly in `body: payload` (do NOT manually `JSON.stringify` or manually set `Content-Type: application/json`).
+  - Pass query parameters using `query: { key: value }` (do NOT manually construct query strings via template literals).
+  - For file uploads / multipart data, pass `FormData` in `body: formData` (`ofetch` handles boundary headers automatically).
+- **Standardized Error Handling**: Use `getApiErrorMessage(error, fallback)` from `#/lib/api-client` to safely extract server error messages from `FetchError.data?.error` or `FetchError.data?.message`.
+- **CLI & Node Scripts**: In backend/CLI scripts (e.g. `src/db/seed-cli.ts`, `src/db/create-owner-cli.ts`), import and use `ofetch` from `'ofetch'` directly.
 
 ## Database Rules
 

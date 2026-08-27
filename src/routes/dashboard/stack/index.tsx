@@ -25,6 +25,7 @@ import type {
   CategoryRecord,
   TechnologyWithCategories,
 } from '#/features/technologies/queries'
+import { api, getApiErrorMessage } from '#/lib/api-client'
 
 export const Route = createFileRoute('/dashboard/stack/')({
   component: DashboardStackPage,
@@ -45,18 +46,15 @@ function DashboardStackPage() {
     setIsLoading(true)
     setError(null)
     try {
-      const [catRes, techRes] = await Promise.all([
-        fetch('/api/categories'),
-        fetch('/api/technologies'),
+      const [catJson, techJson] = await Promise.all([
+        api<{ data?: CategoryRecord[] }>('/api/categories'),
+        api<{ data?: TechnologyWithCategories[] }>('/api/technologies'),
       ])
-      const catJson: { data?: CategoryRecord[] } = await catRes.json()
-      const techJson: { data?: TechnologyWithCategories[] } =
-        await techRes.json()
 
       setCategories(catJson.data ?? [])
       setTechnologies(techJson.data ?? [])
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Gagal memuat data stack.')
+      setError(getApiErrorMessage(err, 'Gagal memuat data stack.'))
     } finally {
       setIsLoading(false)
     }
@@ -71,11 +69,10 @@ function DashboardStackPage() {
       return
     setError(null)
     try {
-      const res = await fetch(`/api/categories?id=${id}`, { method: 'DELETE' })
-      if (!res.ok) throw new Error('Gagal menghapus kategori.')
+      await api('/api/categories', { method: 'DELETE', query: { id } })
       await loadData()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Gagal menghapus kategori.')
+      setError(getApiErrorMessage(err, 'Gagal menghapus kategori.'))
     }
   }
 
@@ -84,15 +81,13 @@ function DashboardStackPage() {
       return
     setError(null)
     try {
-      const res = await fetch(`/api/technologies?id=${id}`, {
+      await api('/api/technologies', {
         method: 'DELETE',
+        query: { id },
       })
-      if (!res.ok) throw new Error('Gagal menghapus teknologi.')
       await loadData()
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : 'Gagal menghapus teknologi.',
-      )
+      setError(getApiErrorMessage(err, 'Gagal menghapus teknologi.'))
     }
   }
 

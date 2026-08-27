@@ -20,6 +20,7 @@ import type {
   CategoryRecord,
   TechnologyWithCategories,
 } from '#/features/technologies/queries'
+import { api, getApiErrorMessage } from '#/lib/api-client'
 
 function slugify(text: string): string {
   return text
@@ -70,8 +71,7 @@ export function TechnologyEditorForm({
   useEffect(() => {
     async function loadCategories() {
       try {
-        const res = await fetch('/api/categories')
-        const json: { data?: CategoryRecord[] } = await res.json()
+        const json = await api<{ data?: CategoryRecord[] }>('/api/categories')
         setCategories(json.data ?? [])
       } catch (err) {
         console.error('Failed to load categories', err)
@@ -111,28 +111,14 @@ export function TechnologyEditorForm({
         }
 
         const isEdit = mode === 'edit' && initialData?.id
-        const targetUrl = '/api/technologies'
-        const method = isEdit ? 'PUT' : 'POST'
-        const body = isEdit
-          ? JSON.stringify({ id: initialData.id, ...payload })
-          : JSON.stringify(payload)
-
-        const res = await fetch(targetUrl, {
-          method,
-          headers: { 'Content-Type': 'application/json' },
-          body,
+        await api('/api/technologies', {
+          method: isEdit ? 'PUT' : 'POST',
+          body: isEdit ? { id: initialData.id, ...payload } : payload,
         })
-
-        const result: { error?: string } = await res.json()
-        if (!res.ok) {
-          throw new Error(result.error ?? 'Gagal menyimpan teknologi.')
-        }
 
         void navigate({ to: '/dashboard/stack' })
       } catch (caught) {
-        setError(
-          caught instanceof Error ? caught.message : 'Terjadi kesalahan.',
-        )
+        setError(getApiErrorMessage(caught, 'Gagal menyimpan teknologi.'))
       } finally {
         setIsSaving(false)
       }
@@ -153,17 +139,14 @@ export function TechnologyEditorForm({
     setIsDeleting(true)
 
     try {
-      const res = await fetch(`/api/technologies?id=${initialData.id}`, {
+      await api('/api/technologies', {
         method: 'DELETE',
+        query: { id: initialData.id },
       })
-      const result: { error?: string } = await res.json()
-      if (!res.ok) {
-        throw new Error(result.error ?? 'Gagal menghapus teknologi.')
-      }
 
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : 'Terjadi kesalahan.')
+      setError(getApiErrorMessage(caught, 'Gagal menghapus teknologi.'))
     } finally {
       setIsDeleting(false)
     }

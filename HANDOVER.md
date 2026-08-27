@@ -44,6 +44,17 @@ Last updated: 2026-08-27
 
 - Centralized `drizzle/scripts/reset.sql` dropping all tables cleanly without breaking migration replay.
 
+### 6. Full Migration to ofetch ($fetch) & Centralized API Client
+
+- Created centralized API client in `src/lib/api-client.ts` (`api = $fetch.create({ retry: 0 })`) with `getApiErrorMessage` extractor for structured `FetchError` parsing.
+- Replaced all native `fetch` occurrences across:
+  - Feature hooks: `src/features/users/hooks.ts`, `src/features/account/hooks.ts`, `src/features/media/hooks.ts`, `src/features/settings/hooks.ts`, `src/features/technologies/hooks.ts`.
+  - Feature forms: `src/features/dashboard/project-editor-form.tsx`, `src/features/technologies/category-editor-form.tsx`, `src/features/technologies/technology-editor-form.tsx`.
+  - Routes & loaders: `src/routes/login.tsx`, `src/routes/contact.tsx`, `src/routes/dashboard/projects/index.tsx`, `src/routes/dashboard/projects/$id.tsx`, `src/routes/dashboard/stack/index.tsx`, `src/routes/dashboard/stack/categories/$id.tsx`, `src/routes/dashboard/stack/technologies/$id.tsx`.
+  - Database CLI scripts: `src/db/seed-cli.ts`, `src/db/create-owner-cli.ts`.
+- Knowledge graph synchronized via `graphify update .`.
+
+
 ## Form Architecture & Refactoring State (Standardized)
 
 All forms across the application have been refactored to use:

@@ -5,6 +5,7 @@ import { config } from 'dotenv'
 import BetterSqliteDatabase from 'better-sqlite3'
 import { drizzle as drizzleBetterSqlite } from 'drizzle-orm/better-sqlite3'
 import { drizzle as drizzleSqliteProxy } from 'drizzle-orm/sqlite-proxy'
+import { ofetch } from 'ofetch'
 
 import * as schema from './schema'
 import { seedPortfolioData } from './seed'
@@ -51,20 +52,18 @@ async function seedRemote() {
 
   const db = drizzleSqliteProxy(
     async (sql, params) => {
-      const response = await fetch(endpoint, {
+      const payload = await ofetch<D1QueryResponse>(endpoint, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${apiToken}`,
-          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ sql, params }),
+        body: { sql, params },
       })
-      const payload = await response.json<D1QueryResponse>()
 
-      if (!response.ok || !payload.success) {
+      if (!payload.success) {
         const message =
           payload.errors?.map((error) => error.message).join('; ') ||
-          `Cloudflare D1 request failed with status ${response.status}.`
+          'Cloudflare D1 request failed.'
         throw new Error(message)
       }
 
