@@ -1,16 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { env as cfEnv } from 'cloudflare:workers'
 import { Resend } from 'resend'
-import { z } from 'zod'
 
+import { contactSchema } from '#/features/contact/validation'
 import { siteProfile } from '#/features/portfolio/data'
-
-const contactSchema = z.object({
-  name: z.string().trim().min(1, 'Name is required'),
-  email: z.string().trim().email('Invalid email address'),
-  subject: z.string().trim().optional(),
-  message: z.string().trim().min(1, 'Message is required'),
-})
 
 export const Route = createFileRoute('/api/contact')({
   server: {
@@ -18,7 +11,8 @@ export const Route = createFileRoute('/api/contact')({
       POST: async ({ request }) => {
         try {
           const body = await request.json()
-          const validation = contactSchema.safeParse(body)
+          const payload = typeof body === 'object' && body !== null ? { subject: '', ...body } : body
+          const validation = contactSchema.safeParse(payload)
 
           if (!validation.success) {
             const firstError =
