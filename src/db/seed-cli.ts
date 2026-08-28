@@ -1,12 +1,11 @@
-import { existsSync, readdirSync, statSync } from 'node:fs'
-import { join } from 'node:path'
-
 import { config } from 'dotenv'
 import BetterSqliteDatabase from 'better-sqlite3'
 import { drizzle as drizzleBetterSqlite } from 'drizzle-orm/better-sqlite3'
 import { drizzle as drizzleSqliteProxy } from 'drizzle-orm/sqlite-proxy'
 import { ofetch } from 'ofetch'
 
+import { findLocalD1Database, readEnv } from './cli-utils'
+import type { D1QueryResponse } from './cli-utils'
 import * as schema from './schema'
 import { seedPortfolioData } from './seed'
 import type { Database } from './index'
@@ -45,9 +44,9 @@ async function seedLocal() {
 }
 
 async function seedRemote() {
-  const accountId = readEnv('CLOUDFLARE_ACCOUNT_ID')
-  const databaseId = readEnv('CLOUDFLARE_D1_DATABASE_ID')
-  const apiToken = readEnv('CLOUDFLARE_D1_API_TOKEN')
+  const accountId = readEnv('CLOUDFLARE_ACCOUNT_ID', 'seeding')
+  const databaseId = readEnv('CLOUDFLARE_D1_DATABASE_ID', 'seeding')
+  const apiToken = readEnv('CLOUDFLARE_D1_API_TOKEN', 'seeding')
   const endpoint = `https://api.cloudflare.com/client/v4/accounts/${accountId}/d1/database/${databaseId}/query`
 
   const db = drizzleSqliteProxy(
@@ -79,34 +78,3 @@ async function seedRemote() {
   console.log(`Seeded remote D1 database: ${databaseId}`)
 }
 
-function readEnv(name: string) {
-  const value = process.env[name]
-  if (!value) {
-    throw new Error(`${name} is required for remote D1 seeding.`)
-  }
-
-  return value
-}
-
-function findLocalD1Database() {
-  const root = '.wrangler/state/v3/d1/miniflare-D1DatabaseObject'
-  if (!existsSync(root)) {
-    return null
-  }
-
-  return readdirSync(root)
-    .filter((file) => file.endsWith('.sqlite') && file !== 'metadata.sqlite')
-    .map((file) => join(root, file))
-    .filter((file) => statSync(file).isFile())
-    .sort((a, b) => statSync(b).mtimeMs - statSync(a).mtimeMs)[0]
-}
-
-type D1QueryResponse = {
-  success: boolean
-  result?: Array<{
-    results?: Array<Record<string, unknown>>
-  }>
-  errors?: Array<{
-    message: string
-  }>
-}

@@ -1,5 +1,3 @@
-import { existsSync, readdirSync, statSync } from 'node:fs'
-import { join } from 'node:path'
 import { stdin as input, stdout as output } from 'node:process'
 import { createInterface } from 'node:readline/promises'
 
@@ -11,6 +9,8 @@ import { drizzle as drizzleSqliteProxy } from 'drizzle-orm/sqlite-proxy'
 import { ofetch } from 'ofetch'
 
 import { hashPassword } from '../lib/auth/password'
+import { findLocalD1Database, readEnv } from './cli-utils'
+import type { D1QueryResponse } from './cli-utils'
 import type { Database } from './index'
 import * as schema from './schema'
 
@@ -267,38 +267,8 @@ async function checkAndPromptOwner(db: Database, targetDescription: string) {
   console.log('You can now log in at /login with these credentials.\n')
 }
 
-function readEnv(name: string) {
-  const value = process.env[name]
-  if (!value) {
-    throw new Error(`${name} is required for remote D1 execution.`)
-  }
-  return value
-}
-
-function findLocalD1Database() {
-  const root = '.wrangler/state/v3/d1/miniflare-D1DatabaseObject'
-  if (!existsSync(root)) {
-    return null
-  }
-
-  return readdirSync(root)
-    .filter((file) => file.endsWith('.sqlite') && file !== 'metadata.sqlite')
-    .map((file) => join(root, file))
-    .filter((file) => statSync(file).isFile())
-    .sort((a, b) => statSync(b).mtimeMs - statSync(a).mtimeMs)[0]
-}
-
-type D1QueryResponse = {
-  success: boolean
-  result?: Array<{
-    results?: Array<Record<string, unknown>>
-  }>
-  errors?: Array<{
-    message: string
-  }>
-}
-
 main().catch((err) => {
   console.error('\n❌ Failed to create owner:', err instanceof Error ? err.message : err)
   process.exit(1)
 })
+
