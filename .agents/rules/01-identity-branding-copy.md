@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Identity, Branding & Copywriting Rules
 
 ## Project Identity
@@ -43,8 +47,8 @@ Portfolio copy across public pages should sound:
 
 ### Good Direction References
 
-- *"I build practical web systems, developer tools, and experiments around modern fullstack architecture."*
-- *"Cloudflare-powered portfolio and CMS for long-term personal work."*
+- _"I build practical web systems, developer tools, and experiments around modern fullstack architecture."_
+- _"Cloudflare-powered portfolio and CMS for long-term personal work."_
 
 ---
 

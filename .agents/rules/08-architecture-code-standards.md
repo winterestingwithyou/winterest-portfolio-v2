@@ -1,8 +1,13 @@
+---
+trigger: always_on
+---
+
 # Architecture, Code Standards & Best Practices
 
 ## Current Project State & Evolution
 
 The repository was initialized from a TanStack Start template/resume example.
+
 - Replace starter resume design with custom portfolio platform design.
 - Remove starter/demo specific logic once replacement pages exist.
 - Prefer gradual, modular refactors over giant breaking rewrites.

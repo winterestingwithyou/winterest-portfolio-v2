@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Authentication, RBAC & Security Standards
 
 ## Better Auth Architecture
@@ -32,12 +36,14 @@ editor  - create, edit, and update content & media
 ```
 
 ### Authorization Rules:
+
 - Only `owner` can manage users and assign roles.
 - Only `owner` or `admin` can modify site settings.
 - `editor` can manage content (create/update projects, media) but cannot change security or user settings.
 - Public routes must only show published content; draft/private content requires dashboard authorization.
 
 ### First-User Bootstrap:
+
 - Initial registration is open only when zero users exist in the database.
 - The first registered user is automatically assigned the `owner` role.
 - Once an owner exists, open registration is disabled.

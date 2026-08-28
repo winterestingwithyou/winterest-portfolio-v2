@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Package Manager, Agent Commands & Behavior
 
 ## Package Manager
@@ -90,6 +94,7 @@ A task or feature is complete when:
 8. Relevant test cases pass if applicable (`bun run test`).
 
 For major tasks, report:
+
 - What changed
 - Files touched
 - Commands run

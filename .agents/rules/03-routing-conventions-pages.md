@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Routing Conventions & Active Page Responsibilities
 
 ## TanStack Router File-Based Routing

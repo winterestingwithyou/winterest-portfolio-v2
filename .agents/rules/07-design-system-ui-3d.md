@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Design System, UI Components, Animation & 3D Guidelines
 
 ## Aesthetic Direction
