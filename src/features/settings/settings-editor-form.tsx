@@ -1,9 +1,11 @@
 import { useForm } from '@tanstack/react-form'
+import { Link } from '@tanstack/react-router'
 import {
   AlertCircle,
   CheckCircle2,
   Globe,
   Loader2,
+  Mail,
   Palette,
   Save,
   Search,
@@ -35,7 +37,7 @@ type SettingsEditorFormProps = {
   canEdit: boolean
 }
 
-type SettingsTab = 'general' | 'visual' | 'social' | 'seo' | 'system'
+type SettingsTab = 'general' | 'visual' | 'contact' | 'seo' | 'system'
 
 export function SettingsEditorForm({
   initialData,
@@ -88,7 +90,7 @@ export function SettingsEditorForm({
   const tabs: Array<{ id: SettingsTab; label: string; icon: typeof Globe }> = [
     { id: 'general', label: settingsCopy.tabs.general, icon: Globe },
     { id: 'visual', label: settingsCopy.tabs.visual, icon: Palette },
-    { id: 'social', label: settingsCopy.tabs.social, icon: Share2 },
+    { id: 'contact', label: settingsCopy.tabs.contact, icon: Mail },
     { id: 'seo', label: settingsCopy.tabs.seo, icon: Search },
     { id: 'system', label: settingsCopy.tabs.system, icon: Sliders },
   ]
@@ -273,220 +275,33 @@ export function SettingsEditorForm({
           </div>
         )}
 
-        {/* Tab 3: Social & Contact */}
-        {activeTab === 'social' && (
+        {/* Tab 3: Contact Settings */}
+        {activeTab === 'contact' && (
           <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
+            {/* Notice Banner to Social Links */}
+            <div className="flex flex-col gap-3 rounded-lg border border-(--brand-orange)/30 bg-(--brand-orange-soft) p-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-start gap-3">
+                <Share2 className="mt-0.5 size-5 shrink-0 text-(--brand-orange-deep)" />
+                <div className="flex flex-col gap-0.5">
+                  <span className="font-bold text-xs text-(--brand-ink)">
+                    {settingsCopy.socialNotice}
+                  </span>
+                </div>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                asChild
+                className="shrink-0 border-(--brand-line) font-bold text-xs text-(--brand-ink) hover:bg-surface-strong"
+              >
+                <Link to="/dashboard/social">
+                  <Share2 className="mr-1.5 size-3.5 text-(--brand-orange)" />
+                  {settingsCopy.goToSocial}
+                </Link>
+              </Button>
+            </div>
+
             <FieldGroup>
-              {/* GitHub */}
-              <div className="grid gap-4 rounded-lg border border-(--brand-line) bg-muted/20 p-4 sm:grid-cols-2">
-                <form.Field name="githubUrl">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.githubUrl}</FieldLabel>
-                      <Input
-                        type="url"
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="https://github.com/username"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-                <form.Field name="githubName">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.githubName}</FieldLabel>
-                      <Input
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="e.g. Winterest | M. Adam Yudistira"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-              </div>
-
-              {/* LinkedIn */}
-              <div className="grid gap-4 rounded-lg border border-(--brand-line) bg-muted/20 p-4 sm:grid-cols-2">
-                <form.Field name="linkedinUrl">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.linkedinUrl}</FieldLabel>
-                      <Input
-                        type="url"
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="https://linkedin.com/in/username"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-                <form.Field name="linkedinName">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.linkedinName}</FieldLabel>
-                      <Input
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="e.g. M. Adam Yudistira"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-              </div>
-
-              {/* Twitter / X */}
-              <div className="grid gap-4 rounded-lg border border-(--brand-line) bg-muted/20 p-4 sm:grid-cols-2">
-                <form.Field name="twitterUrl">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.twitterUrl}</FieldLabel>
-                      <Input
-                        type="url"
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="https://twitter.com/username"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-                <form.Field name="twitterName">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.twitterName}</FieldLabel>
-                      <Input
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="e.g. @winterest"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-              </div>
-
-              {/* Facebook */}
-              <div className="grid gap-4 rounded-lg border border-(--brand-line) bg-muted/20 p-4 sm:grid-cols-2">
-                <form.Field name="facebookUrl">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.facebookUrl}</FieldLabel>
-                      <Input
-                        type="url"
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="https://facebook.com/username"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-                <form.Field name="facebookName">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.facebookName}</FieldLabel>
-                      <Input
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="e.g. Adam Winter"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-              </div>
-
-              {/* Instagram */}
-              <div className="grid gap-4 rounded-lg border border-(--brand-line) bg-muted/20 p-4 sm:grid-cols-2">
-                <form.Field name="instagramUrl">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.instagramUrl}</FieldLabel>
-                      <Input
-                        type="url"
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="https://instagram.com/username"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-                <form.Field name="instagramName">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.instagramName}</FieldLabel>
-                      <Input
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="e.g. Adam Y"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-              </div>
-
-              {/* TikTok */}
-              <div className="grid gap-4 rounded-lg border border-(--brand-line) bg-muted/20 p-4 sm:grid-cols-2">
-                <form.Field name="tiktokUrl">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.tiktokUrl}</FieldLabel>
-                      <Input
-                        type="url"
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="https://tiktok.com/@username"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-                <form.Field name="tiktokName">
-                  {(field) => (
-                    <Field>
-                      <FieldLabel>{settingsCopy.form.tiktokName}</FieldLabel>
-                      <Input
-                        disabled={!canEdit || isSaving}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="e.g. @winterest"
-                      />
-                      <FieldError errors={field.state.meta.errors} />
-                    </Field>
-                  )}
-                </form.Field>
-              </div>
-
               {/* Public Email */}
               <form.Field name="publicEmail">
                 {(field) => (
@@ -500,6 +315,9 @@ export function SettingsEditorForm({
                       onChange={(e) => field.handleChange(e.target.value)}
                       placeholder="yudistiraadam3@gmail.com"
                     />
+                    <FieldDescription>
+                      {settingsCopy.form.publicEmailDesc}
+                    </FieldDescription>
                     <FieldError errors={field.state.meta.errors} />
                   </Field>
                 )}
@@ -764,7 +582,7 @@ export function SettingsEditorForm({
                   </div>
 
                   <div className="mx-auto w-full max-w-lg overflow-hidden rounded-xl border border-(--brand-line) bg-(--surface-strong) shadow-md">
-                    <div className="aspect-[1200/630] w-full bg-linear-to-br from-neutral-800 to-neutral-900 relative overflow-hidden flex items-center justify-center">
+                    <div className="aspect-1200/630 w-full bg-linear-to-br from-neutral-800 to-neutral-900 relative overflow-hidden flex items-center justify-center">
                       {ogImageUrl ? (
                         <img
                           src={ogImageUrl}

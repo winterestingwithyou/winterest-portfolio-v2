@@ -4,15 +4,10 @@ import {
   AlertCircle,
   CheckCircle2,
   ExternalLink,
-  Facebook,
-  Github,
-  Instagram,
-  Linkedin,
   Loader2,
   MapPin,
   MessageSquare,
   Send,
-  Twitter,
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
@@ -27,11 +22,10 @@ import {
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
 import { Textarea } from '#/components/ui/textarea'
-import { TikTokIcon } from '#/components/ui/icons'
 import { contactSchema } from '#/features/contact/validation'
 import { getPublicCopy } from '#/features/portfolio/data'
-import { useSiteSettings } from '#/features/settings/hooks'
-import { defaultSiteSettings } from '#/features/settings/types'
+import { usePublicSocialLinks } from '#/features/social/hooks'
+import { platformMetaMap } from '#/features/social/types'
 import { api, getApiErrorMessage } from '#/lib/api-client'
 import {
   defaultViewport,
@@ -48,25 +42,7 @@ export const Route = createFileRoute('/contact')({
 
 function ContactPage() {
   const copy = getPublicCopy()
-  const { data: settings = defaultSiteSettings } = useSiteSettings()
-
-  const githubUrl = settings.githubUrl || ''
-  const githubName = settings.githubName || 'GitHub Profile'
-
-  const facebookUrl = settings.facebookUrl || ''
-  const facebookName = settings.facebookName || 'Facebook Profile'
-
-  const instagramUrl = settings.instagramUrl || ''
-  const instagramName = settings.instagramName || 'Instagram Profile'
-
-  const linkedinUrl = settings.linkedinUrl || ''
-  const linkedinName = settings.linkedinName || 'LinkedIn Profile'
-
-  const twitterUrl = settings.twitterUrl || ''
-  const twitterName = settings.twitterName || 'Twitter / X'
-
-  const tiktokUrl = settings.tiktokUrl || ''
-  const tiktokName = settings.tiktokName || 'TikTok'
+  const { data: socialLinks = [] } = usePublicSocialLinks()
 
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
@@ -146,223 +122,54 @@ function ContactPage() {
               </div>
 
               <div className="mt-4 grid gap-3">
-                {/* GitHub Block */}
-                {githubUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
-                        GitHub
-                      </span>
-                      <span className="text-xs font-bold text-(--brand-muted)">
-                        Public Profile
-                      </span>
-                    </div>
-                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
-                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
-                        <Github
-                          aria-hidden="true"
-                          className="size-5 shrink-0 text-(--brand-ink)"
-                        />
-                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
-                          {githubName}
-                        </span>
-                      </div>
-                      <a
-                        href={githubUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1 sm:gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
-                      >
-                        <ExternalLink
-                          aria-hidden="true"
-                          className="size-3.5 text-(--brand-muted)"
-                        />
-                        <span>Open</span>
-                      </a>
-                    </div>
-                  </div>
-                )}
+                {socialLinks.length === 0 ? (
+                  <p className="text-xs text-(--brand-muted) italic py-2">
+                    No public social links configured.
+                  </p>
+                ) : (
+                  socialLinks.map((item) => {
+                    const meta = platformMetaMap[item.platform]
+                    const IconComponent = meta.icon
 
-                {/* LinkedIn Block */}
-                {linkedinUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
-                        LinkedIn
-                      </span>
-                      <span className="text-xs font-bold text-(--brand-muted)">
-                        Professional Profile
-                      </span>
-                    </div>
-                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
-                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
-                        <Linkedin
-                          aria-hidden="true"
-                          className="size-5 shrink-0 text-(--brand-ink)"
-                        />
-                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
-                          {linkedinName}
-                        </span>
-                      </div>
-                      <a
-                        href={linkedinUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1 sm:gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                    return (
+                      <div
+                        key={item.id}
+                        className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0"
                       >
-                        <ExternalLink
-                          aria-hidden="true"
-                          className="size-3.5 text-(--brand-muted)"
-                        />
-                        <span>Open</span>
-                      </a>
-                    </div>
-                  </div>
-                )}
-
-                {/* Twitter / X Block */}
-                {twitterUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
-                        Twitter / X
-                      </span>
-                      <span className="text-xs font-bold text-(--brand-muted)">
-                        Social Profile
-                      </span>
-                    </div>
-                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
-                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
-                        <Twitter
-                          aria-hidden="true"
-                          className="size-5 shrink-0 text-(--brand-ink)"
-                        />
-                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
-                          {twitterName}
-                        </span>
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
+                            {meta.name}
+                          </span>
+                          <span className="text-xs font-bold text-(--brand-muted)">
+                            {item.accountName || `${meta.name} Profile`}
+                          </span>
+                        </div>
+                        <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
+                          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
+                            <IconComponent
+                              aria-hidden="true"
+                              className="size-5 shrink-0 text-(--brand-ink)"
+                            />
+                            <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
+                              {item.username || item.accountName || meta.name}
+                            </span>
+                          </div>
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1 sm:gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
+                          >
+                            <ExternalLink
+                              aria-hidden="true"
+                              className="size-3.5 text-(--brand-muted)"
+                            />
+                            <span>Open</span>
+                          </a>
+                        </div>
                       </div>
-                      <a
-                        href={twitterUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
-                      >
-                        <ExternalLink
-                          aria-hidden="true"
-                          className="size-3.5 text-(--brand-muted)"
-                        />
-                        <span>Open</span>
-                      </a>
-                    </div>
-                  </div>
-                )}
-
-                {/* Facebook Block */}
-                {facebookUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
-                        Facebook
-                      </span>
-                      <span className="text-xs font-bold text-(--brand-muted)">
-                        Social Profile
-                      </span>
-                    </div>
-                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
-                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
-                        <Facebook
-                          aria-hidden="true"
-                          className="size-5 shrink-0 text-(--brand-ink)"
-                        />
-                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
-                          {facebookName}
-                        </span>
-                      </div>
-                      <a
-                        href={facebookUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
-                      >
-                        <ExternalLink
-                          aria-hidden="true"
-                          className="size-3.5 text-(--brand-muted)"
-                        />
-                        <span>Open</span>
-                      </a>
-                    </div>
-                  </div>
-                )}
-
-                {/* Instagram Block */}
-                {instagramUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
-                        Instagram
-                      </span>
-                      <span className="text-xs font-bold text-(--brand-muted)">
-                        Photo & Media
-                      </span>
-                    </div>
-                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
-                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
-                        <Instagram
-                          aria-hidden="true"
-                          className="size-5 shrink-0 text-(--brand-ink)"
-                        />
-                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
-                          {instagramName}
-                        </span>
-                      </div>
-                      <a
-                        href={instagramUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
-                      >
-                        <ExternalLink
-                          aria-hidden="true"
-                          className="size-3.5 text-(--brand-muted)"
-                        />
-                        <span>Open</span>
-                      </a>
-                    </div>
-                  </div>
-                )}
-
-                {/* TikTok Block */}
-                {tiktokUrl && (
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4 w-full min-w-0">
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
-                        TikTok
-                      </span>
-                      <span className="text-xs font-bold text-(--brand-muted)">
-                        Short Videos
-                      </span>
-                    </div>
-                    <div className="mt-2 flex items-center justify-between gap-2 sm:gap-3 w-full min-w-0">
-                      <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1">
-                        <TikTokIcon className="size-5 shrink-0 text-(--brand-ink)" />
-                        <span className="text-xs sm:text-sm font-bold text-(--brand-ink) truncate">
-                          {tiktokName}
-                        </span>
-                      </div>
-                      <a
-                        href={tiktokUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex min-h-8 sm:min-h-9 shrink-0 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 sm:px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)"
-                      >
-                        <ExternalLink
-                          aria-hidden="true"
-                          className="size-3.5 text-(--brand-muted)"
-                        />
-                        <span>Open</span>
-                      </a>
-                    </div>
-                  </div>
+                    )
+                  })
                 )}
               </div>
             </motion.div>

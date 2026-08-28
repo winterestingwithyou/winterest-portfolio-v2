@@ -29,6 +29,7 @@ const breadcrumbMap: Record<string, string> = {
   technologies: 'Teknologi',
   categories: 'Kategori',
   media: 'Media',
+  social: 'Media Sosial',
   users: 'Pengguna',
   settings: 'Pengaturan',
   account: 'Akun',

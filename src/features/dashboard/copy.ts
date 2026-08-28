@@ -12,6 +12,7 @@ export const dashboardCopy = {
         writing: 'Writing',
         lab: 'Lab',
         media: 'Media',
+        social: 'Social Links',
         users: 'Users',
         settings: 'Settings',
         account: 'Account',
@@ -226,20 +227,74 @@ export const dashboardCopy = {
         resetError: 'Failed to reset password.',
       },
     },
+    social: {
+      title: 'Social Links',
+      description:
+        'Manage public social media links, developer profiles, and direct community channels.',
+      addLink: 'Add social link',
+      editLink: 'Edit social link',
+      dialogTitleNew: 'Add Social Media Link',
+      dialogTitleEdit: 'Edit Social Media Link',
+      dialogDescription:
+        'Configure profile URL, display name, and public visibility for this platform.',
+      emptyTitle: 'No social links configured yet',
+      emptyDescription:
+        'Add your GitHub, LinkedIn, X, or other social profiles to display them across public pages.',
+      form: {
+        platform: 'Platform',
+        platformPlaceholder: 'Select a platform',
+        username: 'Username / Handle',
+        usernamePlaceholder: 'e.g. username or @handle',
+        accountName: 'Display name',
+        accountNamePlaceholder: 'e.g. Winterest or Full Name',
+        url: 'Profile URL',
+        urlPlaceholder: 'https://...',
+        isEnabled: 'Visible on public site',
+        isEnabledDesc:
+          'Toggle whether this link is rendered on the public header, footer, and contact page.',
+        sortOrder: 'Display order',
+        sortOrderDesc: 'Lower numbers appear first (e.g. 0, 1, 2).',
+        save: 'Save link',
+        saving: 'Saving...',
+        cancel: 'Cancel',
+        delete: 'Delete link',
+        deleteConfirm: 'Are you sure you want to delete this social link?',
+        deleteConfirmDesc:
+          'This link will be removed immediately from your public profile.',
+      },
+      status: {
+        active: 'Active',
+        inactive: 'Hidden',
+      },
+      actions: {
+        openLink: 'Open URL',
+        edit: 'Edit',
+        delete: 'Delete',
+        toggleEnable: 'Toggle visibility',
+      },
+      feedback: {
+        created: 'Social link added successfully.',
+        updated: 'Social link updated successfully.',
+        deleted: 'Social link deleted successfully.',
+      },
+    },
     settings: {
       title: 'Settings',
       description:
-        'Manage site identity, social links, SEO defaults, and system preferences.',
+        'Manage site identity, contact email, SEO defaults, and system preferences.',
       accessDeniedTitle: 'Owner or Admin access only',
       accessDeniedDescription:
         'System settings are restricted to accounts with Owner or Admin roles.',
       tabs: {
         general: 'General',
         visual: 'Branding & Visual',
-        social: 'Social & Contact',
+        contact: 'Contact',
         seo: 'SEO & Meta',
         system: 'System',
       },
+      socialNotice:
+        'Social media links are now managed independently in the Social Links menu.',
+      goToSocial: 'Manage Social Links',
       form: {
         siteName: 'Site name',
         siteNameDesc: 'Public brand name (default: Winterest).',
@@ -251,19 +306,9 @@ export const dashboardCopy = {
         heroVisualUrl: 'Hero Visual / Mascot Image',
         heroVisualDesc:
           'Custom hero image or mascot for the homepage. Leave empty to use the default mascot.',
-        githubUrl: 'GitHub URL',
-        githubName: 'GitHub display name',
-        linkedinUrl: 'LinkedIn URL',
-        linkedinName: 'LinkedIn display name',
-        twitterUrl: 'Twitter / X URL',
-        twitterName: 'Twitter / X handle',
-        facebookUrl: 'Facebook URL',
-        facebookName: 'Facebook display name',
-        instagramUrl: 'Instagram URL',
-        instagramName: 'Instagram handle',
-        tiktokUrl: 'TikTok URL',
-        tiktokName: 'TikTok handle',
         publicEmail: 'Public contact email',
+        publicEmailDesc:
+          'Primary email address displayed for direct inquiries and contact channels.',
         metaLanguageEn: 'English (EN)',
         metaLanguageId: 'Indonesian (ID)',
         metaTitleEn: 'Default site title (English)',
@@ -381,6 +426,7 @@ export const dashboardCopy = {
         writing: 'Tulisan',
         lab: 'Lab',
         media: 'Media',
+        social: 'Media Sosial',
         users: 'Pengguna',
         settings: 'Pengaturan',
         account: 'Akun',
@@ -597,20 +643,74 @@ export const dashboardCopy = {
         resetError: 'Gagal mereset password.',
       },
     },
+    social: {
+      title: 'Media Sosial',
+      description:
+        'Kelola tautan media sosial publik, profil pengembang, dan kanal komunitas langsung.',
+      addLink: 'Tambah tautan sosial',
+      editLink: 'Edit tautan sosial',
+      dialogTitleNew: 'Tambah Tautan Media Sosial',
+      dialogTitleEdit: 'Edit Tautan Media Sosial',
+      dialogDescription:
+        'Atur URL profil, nama tampilan, dan visibilitas publik untuk platform ini.',
+      emptyTitle: 'Belum ada tautan media sosial',
+      emptyDescription:
+        'Tambahkan profil GitHub, LinkedIn, X, atau media sosial lainnya untuk ditampilkan di halaman publik.',
+      form: {
+        platform: 'Platform',
+        platformPlaceholder: 'Pilih platform',
+        username: 'Username / Handle',
+        usernamePlaceholder: 'cth. username atau @handle',
+        accountName: 'Nama tampilan',
+        accountNamePlaceholder: 'cth. Winterest atau Nama Lengkap',
+        url: 'URL Profil',
+        urlPlaceholder: 'https://...',
+        isEnabled: 'Tampilkan di situs publik',
+        isEnabledDesc:
+          'Aktifkan untuk menampilkan tautan ini di header, footer, dan halaman kontak publik.',
+        sortOrder: 'Urutan tampilan',
+        sortOrderDesc: 'Angka lebih kecil tampil lebih awal (cth. 0, 1, 2).',
+        save: 'Simpan tautan',
+        saving: 'Menyimpan...',
+        cancel: 'Batal',
+        delete: 'Hapus tautan',
+        deleteConfirm: 'Apakah kamu yakin ingin menghapus tautan sosial ini?',
+        deleteConfirmDesc:
+          'Tautan ini akan segera dihapus dari profil publik kamu.',
+      },
+      status: {
+        active: 'Aktif',
+        inactive: 'Disembunyikan',
+      },
+      actions: {
+        openLink: 'Buka URL',
+        edit: 'Edit',
+        delete: 'Hapus',
+        toggleEnable: 'Ubah visibilitas',
+      },
+      feedback: {
+        created: 'Tautan sosial berhasil ditambahkan.',
+        updated: 'Tautan sosial berhasil diperbarui.',
+        deleted: 'Tautan sosial berhasil dihapus.',
+      },
+    },
     settings: {
       title: 'Pengaturan',
       description:
-        'Kelola identitas situs, tautan sosial, preferensi SEO, dan pengaturan sistem.',
+        'Kelola identitas situs, email kontak, preferensi SEO, dan pengaturan sistem.',
       accessDeniedTitle: 'Akses Khusus Owner atau Admin',
       accessDeniedDescription:
         'Pengaturan sistem hanya dapat diakses oleh akun dengan role Owner atau Admin.',
       tabs: {
         general: 'Umum',
         visual: 'Branding & Visual',
-        social: 'Sosial & Kontak',
+        contact: 'Kontak',
         seo: 'SEO & Meta',
         system: 'Sistem',
       },
+      socialNotice:
+        'Tautan media sosial kini dikelola secara mandiri di menu Media Sosial.',
+      goToSocial: 'Kelola Media Sosial',
       form: {
         siteName: 'Nama situs',
         siteNameDesc: 'Nama brand publik (bawaan: Winterest).',
@@ -622,19 +722,9 @@ export const dashboardCopy = {
         heroVisualUrl: 'Gambar Hero Visual / Maskot',
         heroVisualDesc:
           'Gambar hero atau maskot custom untuk homepage. Kosongkan untuk menggunakan maskot bawaan.',
-        githubUrl: 'URL GitHub',
-        githubName: 'Nama tampilan GitHub',
-        linkedinUrl: 'URL LinkedIn',
-        linkedinName: 'Nama tampilan LinkedIn',
-        twitterUrl: 'URL Twitter / X',
-        twitterName: 'Handle Twitter / X',
-        facebookUrl: 'URL Facebook',
-        facebookName: 'Nama tampilan Facebook',
-        instagramUrl: 'URL Instagram',
-        instagramName: 'Nama/Handle Instagram',
-        tiktokUrl: 'URL TikTok',
-        tiktokName: 'Nama/Handle TikTok',
         publicEmail: 'Email kontak publik',
+        publicEmailDesc:
+          'Alamat email utama yang ditampilkan untuk saluran kontak dan pertanyaan langsung.',
         metaLanguageEn: 'Bahasa Inggris (EN)',
         metaLanguageId: 'Bahasa Indonesia (ID)',
         metaTitleEn: 'Judul situs bawaan (Bahasa Inggris)',

@@ -1,22 +1,19 @@
 import { Link } from '@tanstack/react-router'
-import { Facebook, Github, Instagram, Mail, Twitter } from 'lucide-react'
+import { Mail } from 'lucide-react'
 
-import { TikTokIcon } from '#/components/ui/icons'
 import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
 import { useSiteSettings } from '#/features/settings/hooks'
 import { defaultSiteSettings } from '#/features/settings/types'
+import { usePublicSocialLinks } from '#/features/social/hooks'
+import { platformMetaMap } from '#/features/social/types'
 
 export default function Footer() {
   const year = new Date().getFullYear()
   const copy = getPublicCopy()
   const { data: settings = defaultSiteSettings } = useSiteSettings()
+  const { data: socialLinks = [] } = usePublicSocialLinks()
 
   const siteName = settings.siteName || siteProfile.handle
-  const githubUrl = settings.githubUrl || ''
-  const facebookUrl = settings.facebookUrl || ''
-  const instagramUrl = settings.instagramUrl || ''
-  const twitterUrl = settings.twitterUrl || ''
-  const tiktokUrl = settings.tiktokUrl || ''
   const publicEmail = settings.publicEmail || ''
 
   return (
@@ -46,63 +43,30 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap gap-2">
-            {githubUrl && (
-              <a
-                href={githubUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="icon-link"
-              >
-                <span className="sr-only">GitHub</span>
-                <Github aria-hidden="true" className="size-4" />
-              </a>
-            )}
-            {facebookUrl && (
-              <a
-                href={facebookUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="icon-link"
-              >
-                <span className="sr-only">Facebook</span>
-                <Facebook aria-hidden="true" className="size-4" />
-              </a>
-            )}
-            {instagramUrl && (
-              <a
-                href={instagramUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="icon-link"
-              >
-                <span className="sr-only">Instagram</span>
-                <Instagram aria-hidden="true" className="size-4" />
-              </a>
-            )}
-            {twitterUrl && (
-              <a
-                href={twitterUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="icon-link"
-              >
-                <span className="sr-only">Twitter / X</span>
-                <Twitter aria-hidden="true" className="size-4" />
-              </a>
-            )}
-            {tiktokUrl && (
-              <a
-                href={tiktokUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="icon-link"
-              >
-                <span className="sr-only">TikTok</span>
-                <TikTokIcon className="size-4" />
-              </a>
-            )}
+            {socialLinks.map((item) => {
+              const meta = platformMetaMap[item.platform]
+              const IconComponent = meta.icon
+
+              return (
+                <a
+                  key={item.id}
+                  href={item.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-link"
+                  title={item.accountName || meta.name}
+                >
+                  <span className="sr-only">{meta.name}</span>
+                  <IconComponent className="size-4" />
+                </a>
+              )
+            })}
             {publicEmail && (
-              <a href={`mailto:${publicEmail}`} className="icon-link">
+              <a
+                href={`mailto:${publicEmail}`}
+                className="icon-link"
+                title={copy.footer.email}
+              >
                 <span className="sr-only">{copy.footer.email}</span>
                 <Mail aria-hidden="true" className="size-4" />
               </a>

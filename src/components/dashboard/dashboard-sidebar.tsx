@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   LogOut,
   Settings,
+  Share2,
   Sparkles,
   User,
   Users,
@@ -72,6 +73,12 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
       to: '/dashboard/media',
       label: copy.shell.nav.media,
       icon: Image,
+      exact: false,
+    },
+    {
+      to: '/dashboard/social',
+      label: copy.shell.nav.social,
+      icon: Share2,
       exact: false,
     },
   ]

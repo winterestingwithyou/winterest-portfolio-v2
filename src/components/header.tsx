@@ -3,7 +3,7 @@ import { Cloud, Github, LayoutDashboard, Mail, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { getPublicCopy } from '#/features/portfolio/data'
-import { useSiteSettings } from '#/features/settings/hooks'
+import { usePublicSocialLinks } from '#/features/social/hooks'
 import { authClient } from '#/lib/auth-client'
 import { cn } from '#/lib/utils'
 
@@ -28,8 +28,9 @@ const mobileNavItemBase = cn(
 
 export default function Header() {
   const copy = getPublicCopy()
-  const { data: settings } = useSiteSettings()
-  const githubUrl = settings?.githubUrl || ''
+  const { data: socialLinks = [] } = usePublicSocialLinks()
+  const githubLink = socialLinks.find((l) => l.platform === 'github')
+  const githubUrl = githubLink?.url || ''
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
@@ -76,7 +77,7 @@ export default function Header() {
             'bg-[linear-gradient(135deg,color-mix(in_srgb,var(--surface-strong)_88%,white),color-mix(in_srgb,var(--brand-orange-soft)_52%,transparent)),var(--surface-strong)]',
             'py-[0.3rem] pr-[0.9rem] pl-[0.35rem] text-(--brand-ink) no-underline',
             'shadow-[0_14px_34px_rgba(244,129,32,0.14),inset_0_1px_0_color-mix(in_srgb,white_70%,transparent)]',
-            'transition-[border-color,box-shadow,transform] duration-[180ms] ease-[ease]',
+            'transition-[border-color,box-shadow,transform] duration-180 ease-[ease]',
             "after:absolute after:inset-[0.2rem] after:rounded-[inherit] after:content-[''] after:opacity-[0.42] after:pointer-events-none",
             'after:bg-[linear-gradient(110deg,transparent_8%,rgba(255,255,255,0.32)_38%,transparent_62%)]',
             'hover:border-[color-mix(in_srgb,var(--brand-orange)_74%,white)] hover:-translate-y-px',
@@ -101,7 +102,7 @@ export default function Header() {
             <Cloud aria-hidden="true" className="size-4" />
             <Sparkles
               aria-hidden="true"
-              className="absolute -right-[0.18rem] -top-[0.12rem] size-3 text-[#fff6da] drop-shadow-[0_2px_5px_rgba(116,49,4,0.28)]"
+              className="absolute right-[-0.18rem] top-[-0.12rem] size-3 text-[#fff6da] drop-shadow-[0_2px_5px_rgba(116,49,4,0.28)]"
             />
           </span>
           {/* Brand name */}
@@ -155,7 +156,7 @@ export default function Header() {
               'border border-(--brand-line) text-(--brand-ink)',
               'bg-[linear-gradient(135deg,color-mix(in_srgb,var(--surface-strong)_86%,transparent),color-mix(in_srgb,var(--brand-orange-soft)_46%,transparent)),var(--surface-strong)]',
               'shadow-[0_12px_28px_rgba(42,26,10,0.08)]',
-              'transition-[border-color,box-shadow,transform] duration-[180ms] ease-[ease]',
+              'transition-[border-color,box-shadow,transform] duration-180 ease-[ease]',
               'hover:border-[color-mix(in_srgb,var(--brand-orange)_68%,white)] hover:shadow-[0_14px_36px_var(--brand-glow)]',
               mobileNavOpen &&
                 'border-[color-mix(in_srgb,var(--brand-orange)_68%,white)] shadow-[0_14px_36px_var(--brand-glow)] -translate-y-px',
@@ -171,15 +172,15 @@ export default function Header() {
               aria-hidden="true"
               className={cn(
                 'absolute h-0.5 w-4 rounded-full bg-current origin-center',
-                'transition-[opacity,transform] duration-[220ms] ease-[ease]',
-                mobileNavOpen ? 'rotate-45' : '-translate-y-[0.34rem]',
+                'transition-[opacity,transform] duration-220 ease-[ease]',
+                mobileNavOpen ? 'rotate-45' : 'translate-y-[-0.34rem]',
               )}
             />
             <span
               aria-hidden="true"
               className={cn(
                 'absolute h-0.5 w-4 rounded-full bg-current origin-center',
-                'transition-[opacity,transform] duration-[220ms] ease-[ease]',
+                'transition-[opacity,transform] duration-220 ease-[ease]',
                 mobileNavOpen ? 'scale-x-0 opacity-0' : 'scale-x-[0.78]',
               )}
             />
@@ -187,7 +188,7 @@ export default function Header() {
               aria-hidden="true"
               className={cn(
                 'absolute h-0.5 w-4 rounded-full bg-current origin-center',
-                'transition-[opacity,transform] duration-[220ms] ease-[ease]',
+                'transition-[opacity,transform] duration-220 ease-[ease]',
                 mobileNavOpen ? '-rotate-45' : 'translate-y-[0.34rem]',
               )}
             />
@@ -200,7 +201,7 @@ export default function Header() {
         id="mobile-navigation"
         className={cn(
           'page-wrap grid overflow-hidden md:hidden',
-          'transition-[grid-template-rows,opacity,transform] duration-[240ms] ease-[ease]',
+          'transition-[grid-template-rows,opacity,transform] duration-240 ease-[ease]',
           mobileNavOpen
             ? 'grid-rows-[1fr] opacity-100 translate-y-0'
             : 'grid-rows-[0fr] opacity-0 -translate-y-2',
@@ -209,9 +210,9 @@ export default function Header() {
       >
         <div
           className={cn(
-            'grid min-h-0 gap-[0.35rem] overflow-hidden border-t transition-all duration-[240ms]',
+            'grid min-h-0 gap-[0.35rem] overflow-hidden border-t transition-all duration-240',
             mobileNavOpen
-              ? 'border-(--brand-line) pt-[0.75rem] pb-[0.9rem]'
+              ? 'border-(--brand-line) pt-3 pb-[0.9rem]'
               : 'border-transparent py-0',
           )}
         >

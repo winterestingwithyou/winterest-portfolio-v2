@@ -29,7 +29,7 @@ import {
   siteProfile,
 } from '#/features/portfolio/data'
 import { getPublishedProjects } from '#/features/projects/public-loaders'
-import { useSiteSettings } from '#/features/settings/hooks'
+import { usePublicSocialLinks } from '#/features/social/hooks'
 import { getPublicUltimateStack } from '#/features/technologies/public-loaders'
 import {
   defaultViewport,
@@ -69,8 +69,9 @@ export const Route = createFileRoute('/')({
 
 function HomePage() {
   const copy = getPublicCopy()
-  const { data: settings } = useSiteSettings()
-  const githubUrl = settings?.githubUrl || ''
+  const { data: socialLinks = [] } = usePublicSocialLinks()
+  const githubLink = socialLinks.find((l) => l.platform === 'github')
+  const githubUrl = githubLink?.url || ''
 
   const { projects, ultimateTechs } = Route.useLoaderData()
   const { portfolioStats, enthusiasms } = getPortfolioContent()
