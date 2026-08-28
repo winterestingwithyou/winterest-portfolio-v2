@@ -14,8 +14,8 @@ Dokumen ini mencatat daftar temuan fungsi, tipe, schema, dan komponen yang terdu
 | **DUP-04** | Form / Utility | `slugify()` | `src/features/technologies/category-editor-form.tsx`<br>`src/features/technologies/technology-editor-form.tsx` | ✅ Completed | Dipindahkan ke `src/lib/utils.ts` |
 | **DUP-05** | Database Check | `isMissingTableError()` | `src/features/dashboard/loaders.ts`<br>`src/features/projects/public-loaders.ts` | ✅ Completed | Diekstrak ke `src/lib/db-utils.ts` |
 | **DUP-06** | Formatting | `formatDate()` & `formatBytes()` | `src/routes/dashboard/media.tsx`<br>`src/routes/projects/$slug.tsx` | ✅ Completed | Disatukan di `src/lib/utils.ts` |
-| **DUP-07** | API Error Handler | `handleApiError()` | `src/routes/api/projects/index.ts`<br>`src/routes/api/projects/$id.ts`<br>`src/routes/api/account/index.ts`<br>`src/routes/api/users/index.ts` | ⏳ Pending | Centralize ke `src/lib/api-response.ts` |
-| **DUP-08** | API Response | `json()` helper | `src/routes/api/projects/index.ts`<br>`src/routes/api/projects/$id.ts` | ⏳ Pending | Centralize ke `src/lib/api-response.ts` atau gunakan native `Response.json` |
+| **DUP-07** | API Error Handler | `handleApiError()` | `src/routes/api/projects/index.ts`<br>`src/routes/api/projects/$id.ts`<br>`src/routes/api/account/index.ts`<br>`src/routes/api/users/index.ts` | ✅ Completed | Disatukan di `src/lib/api-response.ts` |
+| **DUP-08** | API Response | `json()` helper | `src/routes/api/projects/index.ts`<br>`src/routes/api/projects/$id.ts` | ✅ Completed | Diganti `Response.json` & helper di `src/lib/api-response.ts` |
 | **DUP-09** | UI Icon | `TikTokIcon()` | `src/routes/contact.tsx`<br>`src/components/footer.tsx` | ⏳ Pending | Ekstrak ke `src/components/ui/icons.tsx` |
 | **DUP-10** | Validation Schema | `contactSchema` | `src/routes/contact.tsx`<br>`src/routes/api/contact.ts` | ⏳ Pending | Ekstrak ke `src/features/contact/validation.ts` |
 

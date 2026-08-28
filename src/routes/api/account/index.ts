@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { env } from 'cloudflare:workers'
-import { ZodError } from 'zod'
 
 import { getDb } from '#/db'
 import { getAccountProfile, updateAccountProfile } from '#/features/account/queries'
 import { updateProfileSchema } from '#/features/account/validation'
 import { requireDashboardUser } from '#/features/auth/session'
+import { handleApiError } from '#/lib/api-response'
 
 export const Route = createFileRoute('/api/account/')({
   server: {
@@ -43,27 +43,3 @@ export const Route = createFileRoute('/api/account/')({
   },
 })
 
-function handleApiError(error: unknown, fallbackMessage: string) {
-  if (error instanceof ZodError) {
-    const message = error.issues[0]?.message || 'Validation error.'
-    return Response.json(
-      {
-        error: message,
-        issues: error.issues,
-      },
-      { status: 422 },
-    )
-  }
-
-  if (error instanceof Error) {
-    if (
-      error.message.includes('already registered') ||
-      error.message.includes('not found')
-    ) {
-      return Response.json({ error: error.message }, { status: 400 })
-    }
-  }
-
-  console.error(error)
-  return Response.json({ error: fallbackMessage }, { status: 500 })
-}
