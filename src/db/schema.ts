@@ -20,6 +20,19 @@ export type ContentLocale = (typeof contentLocales)[number]
 export const userRoles = ['owner', 'admin', 'editor'] as const
 export type UserRole = (typeof userRoles)[number]
 
+export const socialPlatforms = [
+  'github',
+  'linkedin',
+  'x',
+  'instagram',
+  'facebook',
+  'tiktok',
+  'youtube',
+  'discord',
+  'telegram',
+] as const
+export type SocialPlatform = (typeof socialPlatforms)[number]
+
 const timestamps = {
   createdAt: integer('created_at', { mode: 'timestamp' })
     .notNull()
@@ -360,4 +373,26 @@ export const siteSettings = sqliteTable(
   },
   (table) => [index('site_settings_key_idx').on(table.key)],
 )
+
+export const socialLinks = sqliteTable(
+  'social_links',
+  {
+    id: text('id').primaryKey(),
+    platform: text('platform', { enum: socialPlatforms }).notNull(),
+    username: text('username'),
+    accountName: text('account_name'),
+    url: text('url').notNull(),
+    isEnabled: integer('is_enabled', { mode: 'boolean' })
+      .notNull()
+      .default(true),
+    sortOrder: integer('sort_order').notNull().default(0),
+    ...timestamps,
+  },
+  (table) => [
+    uniqueIndex('social_links_platform_unique').on(table.platform),
+    index('social_links_is_enabled_idx').on(table.isEnabled),
+    index('social_links_sort_order_idx').on(table.sortOrder),
+  ],
+)
+
 

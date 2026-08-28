@@ -7,13 +7,20 @@ import {
   projectTechnologies,
   projects,
   projectTranslations,
+  socialLinks,
   technologies,
   technologyCategories,
 } from './schema'
-import { categorySeeds, projectSeeds, technologySeeds } from './seed-data'
+import {
+  categorySeeds,
+  projectSeeds,
+  socialLinkSeeds,
+  technologySeeds,
+} from './seed-data'
 import type {
   CategorySeed,
   PortfolioProjectSeed,
+  SocialLinkSeed,
   TechnologySeed,
 } from './seed-data'
 
@@ -30,6 +37,10 @@ export async function seedPortfolioData(db: Database) {
 
   for (const project of projectSeeds) {
     await upsertProject(db, project, now)
+  }
+
+  for (const social of socialLinkSeeds) {
+    await upsertSocialLink(db, social, now)
   }
 }
 
@@ -215,3 +226,35 @@ async function upsertProject(
       .run()
   }
 }
+
+async function upsertSocialLink(
+  db: Database,
+  seed: SocialLinkSeed,
+  now: Date,
+) {
+  await db
+    .insert(socialLinks)
+    .values({
+      id: seed.id,
+      platform: seed.platform,
+      username: seed.username ?? null,
+      accountName: seed.accountName ?? null,
+      url: seed.url,
+      isEnabled: seed.isEnabled ?? true,
+      sortOrder: seed.sortOrder ?? 0,
+      updatedAt: now,
+    })
+    .onConflictDoUpdate({
+      target: socialLinks.platform,
+      set: {
+        username: seed.username ?? null,
+        accountName: seed.accountName ?? null,
+        url: seed.url,
+        isEnabled: seed.isEnabled ?? true,
+        sortOrder: seed.sortOrder ?? 0,
+        updatedAt: now,
+      },
+    })
+    .run()
+}
+

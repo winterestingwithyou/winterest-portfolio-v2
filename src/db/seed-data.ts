@@ -233,3 +233,62 @@ export const projectSeeds = [
     },
   },
 ] satisfies PortfolioProjectSeed[]
+
+export type SocialLinkSeed = {
+  id: string
+  platform:
+    | 'github'
+    | 'linkedin'
+    | 'x'
+    | 'instagram'
+    | 'facebook'
+    | 'tiktok'
+    | 'youtube'
+    | 'discord'
+    | 'telegram'
+  username?: string
+  accountName?: string
+  url: string
+  isEnabled?: boolean
+  sortOrder?: number
+}
+
+export const socialLinkSeeds: SocialLinkSeed[] = [
+  {
+    id: 'social-github',
+    platform: 'github',
+    username: 'winterestingwithyou',
+    accountName: 'Winterest',
+    url: 'https://github.com/winterestingwithyou',
+    isEnabled: true,
+    sortOrder: 1,
+  },
+  {
+    id: 'social-linkedin',
+    platform: 'linkedin',
+    username: 'winterest',
+    accountName: 'M. Adam Yudistira',
+    url: 'https://linkedin.com/in/winterest',
+    isEnabled: true,
+    sortOrder: 2,
+  },
+  {
+    id: 'social-x',
+    platform: 'x',
+    username: 'winterest',
+    accountName: '@winterest',
+    url: 'https://x.com/winterest',
+    isEnabled: true,
+    sortOrder: 3,
+  },
+  {
+    id: 'social-instagram',
+    platform: 'instagram',
+    username: 'winterest',
+    accountName: 'Adam Y',
+    url: 'https://instagram.com/winterest',
+    isEnabled: true,
+    sortOrder: 4,
+  },
+]
+

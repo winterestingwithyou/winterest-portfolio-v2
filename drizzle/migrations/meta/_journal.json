@@ -36,6 +36,13 @@
       "when": 1787554530624,
       "tag": "0004_add_site_settings",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1787938682801,
+      "tag": "0005_add_social_links_and_refactor_settings",
+      "breakpoints": true
     }
   ]
 }

@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS `technologies`;
 DROP TABLE IF EXISTS `categories`;
 DROP TABLE IF EXISTS `media`;
 DROP TABLE IF EXISTS `site_settings`;
+DROP TABLE IF EXISTS `social_links`;
 
 -- Legacy / Future Tables (if any)
 DROP TABLE IF EXISTS `lab_entry_translations`;
