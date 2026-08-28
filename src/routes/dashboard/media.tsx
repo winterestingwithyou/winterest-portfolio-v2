@@ -28,29 +28,11 @@ import { Input } from '#/components/ui/input'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { useDeleteMedia, useMediaList, useUploadMedia } from '#/features/media/hooks'
 import type { MediaRecord } from '#/features/media/queries'
+import { formatBytes, formatDate } from '#/lib/utils'
 
 export const Route = createFileRoute('/dashboard/media')({
   component: DashboardMediaPage,
 })
-
-function formatBytes(bytes: number): string {
-  if (bytes === 0) return '0 B'
-  const k = 1024
-  const sizes = ['B', 'KB', 'MB', 'GB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(1))} ${sizes[i]}`
-}
-
-function formatDate(date: Date | string | null): string {
-  if (!date) return ''
-  const d = new Date(date)
-  if (isNaN(d.getTime())) return ''
-  return d.toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  })
-}
 
 function DashboardMediaPage() {
   const copy = getDashboardCopy()

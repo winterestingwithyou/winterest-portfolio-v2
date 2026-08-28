@@ -16,6 +16,7 @@ import { Container } from '#/components/marketing/section'
 import { TechIcon } from '#/components/ui/tech-icon'
 import { getPublicCopy } from '#/features/portfolio/data'
 import { getPublishedProject } from '#/features/projects/public-loaders'
+import { formatDate } from '#/lib/utils'
 import { getLocale } from '#/paraglide/runtime'
 
 export const Route = createFileRoute('/projects/$slug')({
@@ -227,17 +228,6 @@ function ProjectDetailPage() {
       </Container>
     </main>
   )
-}
-
-function formatDate(dateInput?: Date | string | null): string {
-  if (!dateInput) return '-'
-  const d = dateInput instanceof Date ? dateInput : new Date(dateInput)
-  if (isNaN(d.getTime())) return '-'
-  return new Intl.DateTimeFormat('id-ID', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  }).format(d)
 }
 
 function MetaItem({

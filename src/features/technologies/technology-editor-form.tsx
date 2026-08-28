@@ -21,15 +21,7 @@ import type {
   TechnologyWithCategories,
 } from '#/features/technologies/queries'
 import { api, getApiErrorMessage } from '#/lib/api-client'
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-}
+import { slugify } from '#/lib/utils'
 
 const technologySchema = z.object({
   name: z.string().min(1, 'Nama teknologi wajib diisi.'),

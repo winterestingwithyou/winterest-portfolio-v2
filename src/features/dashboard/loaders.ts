@@ -2,6 +2,7 @@ import { createServerFn } from '@tanstack/react-start'
 import { getRequest } from '@tanstack/react-start/server'
 
 import type { ContentStatus } from '#/db/schema'
+import { isMissingTableError } from '#/lib/db-utils'
 
 type DashboardSummaryItem = {
   id: string
@@ -74,10 +75,6 @@ export const getDashboardSummary = createServerFn({ method: 'GET' }).handler(
     }
   },
 )
-
-function isMissingTableError(error: unknown) {
-  return error instanceof Error && error.message.includes('no such table')
-}
 
 async function getDashboardDb() {
   const [{ env }, { getDb }] = await Promise.all([

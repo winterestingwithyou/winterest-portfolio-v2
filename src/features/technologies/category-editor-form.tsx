@@ -15,15 +15,7 @@ import {
 import { Input } from '#/components/ui/input'
 import type { CategoryRecord } from '#/features/technologies/queries'
 import { api, getApiErrorMessage } from '#/lib/api-client'
-
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_-]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-}
+import { slugify } from '#/lib/utils'
 
 const categorySchema = z.object({
   name: z.string().min(1, 'Nama kategori wajib diisi.'),

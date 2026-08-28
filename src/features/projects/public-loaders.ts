@@ -2,6 +2,7 @@ import { createServerFn } from '@tanstack/react-start'
 
 import { contentLocales } from '#/db/schema'
 import type { ContentLocale } from '#/db/schema'
+import { isMissingTableError } from '#/lib/db-utils'
 
 export const getPublishedProjects = createServerFn({
   method: 'GET',
@@ -43,10 +44,6 @@ export const getPublishedProject = createServerFn({ method: 'GET' })
       throw error
     }
   })
-
-function isMissingTableError(error: unknown) {
-  return error instanceof Error && error.message.includes('no such table')
-}
 
 function normalizeLocale(locale: string | undefined): ContentLocale {
   return contentLocales.includes(locale as ContentLocale)
