@@ -33,7 +33,8 @@
     "db:list:remote": "wrangler d1 migrations list DB --remote",
     "db:push": "drizzle-kit push",
     "db:pull": "drizzle-kit pull",
-    "db:studio": "drizzle-kit studio",
+    "db:studio:local": "drizzle-kit studio --config=drizzle.local.config.ts",
+    "db:studio:remote": "drizzle-kit studio --config=drizzle.remote.config.ts",
     "cf-typegen": "wrangler types"
   },
   "dependencies": {

@@ -27,7 +27,8 @@ bun run db:generate
 bun run db:migrate
 bun run db:push
 bun run db:pull
-bun run db:studio
+bun run db:studio:local
+bun run db:studio:remote
 bun run cf-typegen
 ```
 
@@ -46,7 +47,8 @@ vite dev
 bun run db:migrate
 bun run db:push
 bun run db:pull
-bun run db:studio
+bun run db:studio:local
+bun run db:studio:remote
 ```
 
 ---

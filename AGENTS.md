@@ -57,7 +57,8 @@ vite dev
 bun run db:migrate
 bun run db:push
 bun run db:pull
-bun run db:studio
+bun run db:studio:local
+bun run db:studio:remote
 ```
 
 ---
