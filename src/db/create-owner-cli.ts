@@ -40,7 +40,7 @@ async function handleLocal() {
 
   if (!localDbPath) {
     throw new Error(
-      'Local D1 database was not found. Run local D1 migration first, or set D1_LOCAL_DB_PATH.',
+      'Local D1 database was not found. Please run local D1 migrations first (e.g. bun run db:migrate:local).',
     )
   }
 
