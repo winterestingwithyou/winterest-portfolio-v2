@@ -43,6 +43,21 @@ All HTTP client requests across the codebase **MUST** use `ofetch` instead of na
 
 ---
 
+## Mandatory TanStack Query Hooks Standard (No Direct `api` in Components)
+
+React components and page views **MUST NOT** invoke `api()` directly. All HTTP requests, server data fetching, and mutations **MUST** be encapsulated within custom hooks built with **TanStack Query** (`useQuery`, `useMutation`).
+
+### 1. No Direct `api` Calls in Components
+- Never call `api('/api/...')` directly inside React components, page views, section views, form components, or component event handlers.
+- All server communication must go through feature-level TanStack Query custom hooks located in `src/features/<feature>/hooks.ts` (or `src/features/<feature>/hooks/`).
+
+### 2. Standard Hook Structure
+- **Queries**: Wrap GET requests with `useQuery({ queryKey: [...], queryFn: ... })`.
+- **Mutations**: Wrap POST / PUT / PATCH / DELETE mutations with `useMutation({ mutationFn: ..., onSuccess: () => { queryClient.invalidateQueries(...) } })`.
+- Co-locate hooks within the relevant feature folder (e.g. `src/features/projects/hooks.ts`, `src/features/technologies/hooks.ts`, `src/features/users/hooks.ts`, `src/features/settings/hooks.ts`, `src/features/social/hooks.ts`, `src/features/account/hooks.ts`, `src/features/media/hooks.ts`).
+
+---
+
 ## Forms & Mutations with TanStack Form
 
 - Use **TanStack Form** paired with Zod schemas for all client form interactions.
@@ -50,3 +65,4 @@ All HTTP client requests across the codebase **MUST** use `ofetch` instead of na
 - Disable submit buttons during pending state to prevent duplicate submissions.
 - Always validate on the server—client validation is for UX only.
 - Show optimistic UI only after server behavior is confirmed correct.
+

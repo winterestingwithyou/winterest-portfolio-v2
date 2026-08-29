@@ -104,7 +104,7 @@ Use the existing stack as the default foundation:
 - **TypeScript-First**: Explicit type definitions for exported functions; avoid `any`.
 - **Clean React**: Keep components focused; avoid unnecessary `useEffect`; prefer derived state over duplicated state; avoid hydration mismatch patterns.
 - **State Management**:
-  - **Server State**: Use **TanStack Query** for cached server data. Co-locate query hooks in feature folders and invalidate queries after mutations.
+  - **Server State**: Use **TanStack Query** (`useQuery`, `useMutation`) for all server state and API interactions. Components **MUST NEVER** call `api()` directly; all API calls must be encapsulated within dedicated custom query and mutation hooks co-located in `src/features/<feature>/hooks.ts`. Always invalidate related queries upon successful mutations.
   - **Client State**: Use **TanStack Store** or React local state for UI state (e.g. modals, active drawer, command palette).
   - **Tables**: Use **TanStack Table** for dashboard data grids with sorting, filtering, and row actions.
 
