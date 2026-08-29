@@ -1,8 +1,10 @@
 import { useForm } from '@tanstack/react-form'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, Save, Trash2, Zap } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { z } from 'zod'
+
+import { useQuery } from '@tanstack/react-query'
 
 import { Button } from '#/components/ui/button'
 import { Checkbox } from '#/components/ui/checkbox'
@@ -16,11 +18,16 @@ import {
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
 import { TechIcon } from '#/components/ui/tech-icon'
+import {
+  useCreateTechnology,
+  useDeleteTechnology,
+  useUpdateTechnology,
+} from '#/features/technologies/hooks'
+import { categoryQueryOptions } from '#/features/technologies/query-options'
 import type {
-  CategoryRecord,
   TechnologyWithCategories,
 } from '#/features/technologies/queries'
-import { api, getApiErrorMessage } from '#/lib/api-client'
+import { getApiErrorMessage } from '#/lib/api-client'
 import { slugify } from '#/lib/utils'
 
 const technologySchema = z.object({
@@ -54,25 +61,16 @@ export function TechnologyEditorForm({
   initialData,
 }: TechnologyEditorFormProps) {
   const navigate = useNavigate()
-  const [categories, setCategories] = useState<CategoryRecord[]>([])
-  const [isLoadingCategories, setIsLoadingCategories] = useState(true)
+  const { data: categories = [], isLoading: isLoadingCategories } = useQuery(
+    categoryQueryOptions.list(),
+  )
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    async function loadCategories() {
-      try {
-        const json = await api<{ data?: CategoryRecord[] }>('/api/categories')
-        setCategories(json.data ?? [])
-      } catch (err) {
-        console.error('Failed to load categories', err)
-      } finally {
-        setIsLoadingCategories(false)
-      }
-    }
-    void loadCategories()
-  }, [])
+  const createMutation = useCreateTechnology()
+  const updateMutation = useUpdateTechnology(initialData?.id ?? '')
+  const deleteMutation = useDeleteTechnology()
 
   const form = useForm({
     defaultValues: {
@@ -102,11 +100,11 @@ export function TechnologyEditorForm({
           categoryIds: value.categoryIds,
         }
 
-        const isEdit = mode === 'edit' && initialData?.id
-        await api('/api/technologies', {
-          method: isEdit ? 'PUT' : 'POST',
-          body: isEdit ? { id: initialData.id, ...payload } : payload,
-        })
+        if (mode === 'edit' && initialData?.id) {
+          await updateMutation.mutateAsync(payload)
+        } else {
+          await createMutation.mutateAsync(payload)
+        }
 
         void navigate({ to: '/dashboard/stack' })
       } catch (caught) {
@@ -131,11 +129,7 @@ export function TechnologyEditorForm({
     setIsDeleting(true)
 
     try {
-      await api('/api/technologies', {
-        method: 'DELETE',
-        query: { id: initialData.id },
-      })
-
+      await deleteMutation.mutateAsync(initialData.id)
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
       setError(getApiErrorMessage(caught, 'Gagal menghapus teknologi.'))

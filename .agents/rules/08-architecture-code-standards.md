@@ -113,8 +113,8 @@ Use the existing stack as the default foundation:
   - **Atomic/Sub-Components**: Other small supporting components that are neither complete sections, forms, nor tables can reside directly under `src/features/<feature>/components/<comp-name>.tsx` (e.g. `src/features/about/components/glass-shard-card.tsx`).
 - **Feature Server vs Client Data Separation**:
   - **`queries.ts`**: Reserved strictly for server-side Drizzle ORM DB queries (called from API endpoints & server functions).
-  - **`query-options.ts`**: Reserved for client/loader TanStack Query `queryOptions({ queryKey, queryFn })` definitions.
-  - **`hooks.ts`**: Reserved for custom mutation hooks (`useMutation`) and client-side UI hooks.
+  - **`query-options.ts`**: Reserved for client/loader TanStack Query `queryOptions({ queryKey, queryFn })` definitions (consumed directly by components and route loaders).
+  - **`hooks.ts`**: Reserved strictly for custom mutation hooks (`useMutation`) and client-side UI hooks. Do NOT create `useQuery` / `useSuspenseQuery` wrapper hooks here.
 
 ---
 

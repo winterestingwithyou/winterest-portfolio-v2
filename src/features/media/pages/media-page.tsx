@@ -5,15 +5,17 @@ import { getDashboardCopy } from '#/features/dashboard/copy'
 import { MediaDeleteDialog } from '#/features/media/components/media-delete-dialog'
 import { MediaGallerySection } from '#/features/media/components/section/media-gallery-section'
 import { MediaUploadDropzone } from '#/features/media/components/section/media-upload-dropzone'
-import { useDeleteMedia, useMediaList, useUploadMedia } from '#/features/media/hooks'
+import { useDeleteMedia, useUploadMedia } from '#/features/media/hooks'
 import type { MediaRecord } from '#/features/media/queries'
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { mediaQueryOptions } from '../query-options'
 
 export function MediaPage() {
   const copy = getDashboardCopy()
   const [search, setSearch] = React.useState('')
   const [deletingMedia, setDeletingMedia] = React.useState<MediaRecord | null>(null)
 
-  const { data: mediaList = [], isLoading, error: loadError } = useMediaList(search)
+  const { data: mediaList = [], isLoading, error: loadError } = useSuspenseQuery(mediaQueryOptions.list(search))
   const uploadMutation = useUploadMedia()
   const deleteMutation = useDeleteMedia()
 

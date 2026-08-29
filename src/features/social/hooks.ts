@@ -1,45 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
+import { socialQueryKeys } from '#/features/social/query-options'
+import type { SocialLink, SocialLinkInput } from '#/features/social/types'
 import { api } from '#/lib/api-client'
-import type { SocialLink, SocialLinkInput } from './types'
-
-export const socialQueryKeys = {
-  all: ['social-links'] as const,
-  public: ['social-links', 'public'] as const,
-  detail: (id: string) => ['social-links', id] as const,
-}
-
-export function useSocialLinks(options?: {
-  enabled?: boolean
-  initialData?: SocialLink[]
-}) {
-  return useQuery<SocialLink[]>({
-    queryKey: socialQueryKeys.all,
-    enabled: options?.enabled ?? true,
-    initialData: options?.initialData,
-    queryFn: async () => {
-      const response = await api<{ data?: SocialLink[] }>('/api/social')
-      return response.data ?? []
-    },
-  })
-}
-
-export function usePublicSocialLinks(options?: {
-  enabled?: boolean
-  initialData?: SocialLink[]
-}) {
-  return useQuery<SocialLink[]>({
-    queryKey: socialQueryKeys.public,
-    enabled: options?.enabled ?? true,
-    initialData: options?.initialData,
-    queryFn: async () => {
-      const response = await api<{ data?: SocialLink[] }>('/api/social', {
-        query: { publicOnly: 'true' },
-      })
-      return response.data ?? []
-    },
-  })
-}
 
 export function useCreateSocialLink() {
   const queryClient = useQueryClient()
@@ -54,7 +17,6 @@ export function useCreateSocialLink() {
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: socialQueryKeys.all })
-      void queryClient.invalidateQueries({ queryKey: socialQueryKeys.public })
     },
   })
 }
@@ -78,7 +40,6 @@ export function useUpdateSocialLink() {
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: socialQueryKeys.all })
-      void queryClient.invalidateQueries({ queryKey: socialQueryKeys.public })
     },
   })
 }
@@ -95,7 +56,6 @@ export function useDeleteSocialLink() {
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: socialQueryKeys.all })
-      void queryClient.invalidateQueries({ queryKey: socialQueryKeys.public })
     },
   })
 }

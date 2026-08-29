@@ -161,7 +161,7 @@ export function UserEditorForm({
       setResetSuccess(false)
 
       await resetPasswordMutation
-        .mutateAsync({ id: initialData.id, newPassword: value.newPassword })
+        .mutateAsync({ id: initialData.id, password: value.newPassword })
         .then(() => {
           setResetSuccess(true)
           resetForm.reset()

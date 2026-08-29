@@ -1,17 +1,20 @@
+import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { Mail } from 'lucide-react'
 
 import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
-import { useSiteSettings } from '#/features/settings/hooks'
+import { settingsQueryOptions } from '#/features/settings/query-options'
 import { defaultSiteSettings } from '#/features/settings/types'
-import { usePublicSocialLinks } from '#/features/social/hooks'
+import { socialQueryOptions } from '#/features/social/query-options'
 import { platformMetaMap } from '#/features/social/types'
 
 export default function Footer() {
   const year = new Date().getFullYear()
   const copy = getPublicCopy()
-  const { data: settings = defaultSiteSettings } = useSiteSettings()
-  const { data: socialLinks = [] } = usePublicSocialLinks()
+  const { data: settings = defaultSiteSettings } = useQuery(
+    settingsQueryOptions.get(),
+  )
+  const { data: socialLinks = [] } = useQuery(socialQueryOptions.publicList())
 
   const siteName = settings.siteName || siteProfile.handle
   const publicEmail = settings.publicEmail || ''

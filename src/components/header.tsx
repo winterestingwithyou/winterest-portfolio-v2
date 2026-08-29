@@ -1,9 +1,10 @@
+import { useQuery } from '@tanstack/react-query'
 import { Link, useRouterState } from '@tanstack/react-router'
 import { Cloud, Github, LayoutDashboard, Mail, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { getPublicCopy } from '#/features/portfolio/data'
-import { usePublicSocialLinks } from '#/features/social/hooks'
+import { socialQueryOptions } from '#/features/social/query-options'
 import { authClient } from '#/lib/auth-client'
 import { cn } from '#/lib/utils'
 
@@ -28,7 +29,7 @@ const mobileNavItemBase = cn(
 
 export default function Header() {
   const copy = getPublicCopy()
-  const { data: socialLinks = [] } = usePublicSocialLinks()
+  const { data: socialLinks = [] } = useQuery(socialQueryOptions.publicList())
   const githubLink = socialLinks.find((l) => l.platform === 'github')
   const githubUrl = githubLink?.url || ''
   const [mobileNavOpen, setMobileNavOpen] = useState(false)

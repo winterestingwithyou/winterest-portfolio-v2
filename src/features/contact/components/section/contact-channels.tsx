@@ -1,8 +1,9 @@
+import { useQuery } from '@tanstack/react-query'
 import { ExternalLink, MapPin, MessageSquare } from 'lucide-react'
 import { motion } from 'motion/react'
 
 import type { getPublicCopy } from '#/features/portfolio/data'
-import { usePublicSocialLinks } from '#/features/social/hooks'
+import { socialQueryOptions } from '#/features/social/query-options'
 import { platformMetaMap } from '#/features/social/types'
 import { staggerContainer, staggerItem } from '#/lib/motion'
 
@@ -11,7 +12,7 @@ type ContactChannelsProps = {
 }
 
 export function ContactChannels({ copy }: ContactChannelsProps) {
-  const { data: socialLinks = [] } = usePublicSocialLinks()
+  const { data: socialLinks = [] } = useQuery(socialQueryOptions.publicList())
 
   return (
     <motion.div

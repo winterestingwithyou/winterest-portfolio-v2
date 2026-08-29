@@ -47,10 +47,10 @@ All HTTP client requests across the codebase **MUST** use `ofetch` instead of na
 
 React components and page views **MUST NOT** invoke `api()` directly. All HTTP requests, data fetching, and mutations **MUST** be organized using **TanStack Query** (`queryOptions` and `useMutation`).
 
-### 1. Separation of DB Queries vs TanStack Query Options
+### 1. Separation of DB Queries vs TanStack Query Options vs Mutation Hooks
 - **`src/features/<feature>/queries.ts`**: Reserved strictly for **Server-Side Drizzle ORM Database Queries** (used by server functions and API route handlers). Never put client-side HTTP queries in this file.
-- **`src/features/<feature>/query-options.ts`**: Reserved for **TanStack Query `queryOptions` Definitions** (used by TanStack Router loaders and React components via `useSuspenseQuery` / `useQuery`).
-- **`src/features/<feature>/hooks.ts`**: Reserved for **Custom Mutation Hooks** (`useMutation`) and UI state hooks.
+- **`src/features/<feature>/query-options.ts`**: Reserved for **TanStack Query `queryOptions` Definitions** (used by TanStack Router loaders via `ensureQueryData` and React components directly via `useSuspenseQuery` / `useQuery`).
+- **`src/features/<feature>/hooks.ts`**: Reserved strictly for **Custom Mutation Hooks** (`useMutation`) and UI state hooks. **DO NOT** create `useQuery` or `useSuspenseQuery` wrapper functions here; components must invoke `useSuspenseQuery` or `useQuery` directly with `queryOptions`.
 
 ### 2. Standard `queryOptions` Pattern (`query-options.ts`)
 Always export query key factories and `queryOptions` objects instead of directly writing rigid `useQuery` hooks. This enables seamless use in TanStack Router route loaders, `useSuspenseQuery`, `usePrefetchQuery`, and standard `useQuery`.

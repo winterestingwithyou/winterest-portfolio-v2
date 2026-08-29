@@ -1,11 +1,9 @@
-import { Link } from '@tanstack/react-router'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { RefreshCw } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { TechnologyEditorForm } from '#/features/technologies/components/form/technology-editor-form'
-import type { TechnologyWithCategories } from '#/features/technologies/queries'
-import { api, getApiErrorMessage } from '#/lib/api-client'
+import { techQueryOptions } from '#/features/technologies/query-options'
 
 type DashboardTechnologyEditPageProps = {
   id: string
@@ -14,69 +12,30 @@ type DashboardTechnologyEditPageProps = {
 export function DashboardTechnologyEditPage({
   id,
 }: DashboardTechnologyEditPageProps) {
-  const [tech, setTech] = useState<TechnologyWithCategories | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  const loadTech = useCallback(async () => {
-    setIsLoading(true)
-    setError(null)
-    try {
-      const result = await api<{ data?: TechnologyWithCategories }>(
-        '/api/technologies',
-        { query: { id } },
-      )
-
-      if (!result.data) {
-        throw new Error('Teknologi tidak ditemukan.')
-      }
-
-      setTech(result.data)
-    } catch (caught) {
-      setError(getApiErrorMessage(caught, 'Gagal memuat data teknologi.'))
-    } finally {
-      setIsLoading(false)
-    }
-  }, [id])
-
-  useEffect(() => {
-    void loadTech()
-  }, [loadTech])
+  const { data: tech, refetch, isFetching } = useSuspenseQuery(
+    techQueryOptions.detail(id),
+  )
 
   return (
     <DashboardShell
-      title={tech ? `Edit ${tech.name}` : 'Edit Teknologi'}
+      title={`Edit ${tech.name}`}
       description="Perbarui informasi teknologi, icon, atau kategori terkait."
       actions={
         <button
           type="button"
-          onClick={loadTech}
+          onClick={() => void refetch()}
+          disabled={isFetching}
           className="inline-flex min-h-10 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
         >
-          <RefreshCw aria-hidden="true" className="size-4" />
+          <RefreshCw
+            aria-hidden="true"
+            className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
+          />
           Refresh
         </button>
       }
     >
-      {isLoading ? (
-        <div className="surface-card p-6 text-sm font-semibold text-(--brand-muted)">
-          Memuat data teknologi...
-        </div>
-      ) : error || !tech ? (
-        <div className="surface-card max-w-2xl p-6">
-          <p className="text-sm leading-7 text-(--brand-muted)">
-            {error ?? 'Data teknologi tidak tersedia.'}
-          </p>
-          <Link
-            to="/dashboard/stack"
-            className="mt-5 inline-flex min-h-10 items-center rounded-full bg-(--brand-orange) px-4 text-sm font-bold text-white no-underline"
-          >
-            Kembali
-          </Link>
-        </div>
-      ) : (
-        <TechnologyEditorForm mode="edit" initialData={tech} />
-      )}
+      <TechnologyEditorForm mode="edit" initialData={tech} />
     </DashboardShell>
   )
 }

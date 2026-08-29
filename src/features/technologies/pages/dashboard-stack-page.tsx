@@ -1,56 +1,55 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { FolderTree, Layers, Plus, RefreshCw } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { DashboardCategoriesTable } from '#/features/technologies/components/table/dashboard-categories-table'
 import { DashboardTechTable } from '#/features/technologies/components/table/dashboard-tech-table'
-import type {
-  CategoryRecord,
-  TechnologyWithCategories,
-} from '#/features/technologies/queries'
-import { api, getApiErrorMessage } from '#/lib/api-client'
+import {
+  useDeleteCategory,
+  useDeleteTechnology,
+} from '#/features/technologies/hooks'
+import {
+  categoryQueryOptions,
+  techQueryOptions,
+} from '#/features/technologies/query-options'
+import { getApiErrorMessage } from '#/lib/api-client'
 
 type ActiveTab = 'technologies' | 'categories'
 
 export function DashboardStackPage() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('technologies')
-  const [categories, setCategories] = useState<CategoryRecord[]>([])
-  const [technologies, setTechnologies] = useState<TechnologyWithCategories[]>(
-    [],
-  )
-  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const loadData = useCallback(async () => {
-    setIsLoading(true)
+  const {
+    data: categories,
+    refetch: refetchCategories,
+    isFetching: isFetchingCategories,
+  } = useSuspenseQuery(categoryQueryOptions.list())
+
+  const {
+    data: technologies,
+    refetch: refetchTechnologies,
+    isFetching: isFetchingTechnologies,
+  } = useSuspenseQuery(techQueryOptions.list())
+
+  const deleteCategoryMutation = useDeleteCategory()
+  const deleteTechMutation = useDeleteTechnology()
+
+  const isFetching = isFetchingCategories || isFetchingTechnologies
+
+  const loadData = async () => {
     setError(null)
-    try {
-      const [catJson, techJson] = await Promise.all([
-        api<{ data?: CategoryRecord[] }>('/api/categories'),
-        api<{ data?: TechnologyWithCategories[] }>('/api/technologies'),
-      ])
-
-      setCategories(catJson.data ?? [])
-      setTechnologies(techJson.data ?? [])
-    } catch (err) {
-      setError(getApiErrorMessage(err, 'Gagal memuat data stack.'))
-    } finally {
-      setIsLoading(false)
-    }
-  }, [])
-
-  useEffect(() => {
-    void loadData()
-  }, [loadData])
+    await Promise.all([refetchCategories(), refetchTechnologies()])
+  }
 
   const handleDeleteCategory = async (id: string, name: string) => {
     if (!confirm(`Apakah Anda yakin ingin menghapus kategori "${name}"?`))
       return
     setError(null)
     try {
-      await api('/api/categories', { method: 'DELETE', query: { id } })
-      await loadData()
+      await deleteCategoryMutation.mutateAsync(id)
     } catch (err) {
       setError(getApiErrorMessage(err, 'Gagal menghapus kategori.'))
     }
@@ -61,11 +60,7 @@ export function DashboardStackPage() {
       return
     setError(null)
     try {
-      await api('/api/technologies', {
-        method: 'DELETE',
-        query: { id },
-      })
-      await loadData()
+      await deleteTechMutation.mutateAsync(id)
     } catch (err) {
       setError(getApiErrorMessage(err, 'Gagal menghapus teknologi.'))
     }
@@ -79,10 +74,13 @@ export function DashboardStackPage() {
         <div className="flex items-center gap-3">
           <button
             type="button"
-            onClick={loadData}
+            onClick={() => void loadData()}
+            disabled={isFetching}
             className="inline-flex min-h-10 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
           >
-            <RefreshCw className="size-4" />
+            <RefreshCw
+              className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
+            />
             Refresh
           </button>
           {activeTab === 'technologies' ? (
@@ -144,13 +142,13 @@ export function DashboardStackPage() {
           <DashboardTechTable
             technologies={technologies}
             categories={categories}
-            isLoading={isLoading}
+            isLoading={false}
             onDeleteTech={handleDeleteTech}
           />
         ) : (
           <DashboardCategoriesTable
             categories={categories}
-            isLoading={isLoading}
+            isLoading={false}
             onDeleteCategory={handleDeleteCategory}
           />
         )}

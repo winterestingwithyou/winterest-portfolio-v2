@@ -1,25 +1,15 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
 
+import type { MediaRecord } from '#/features/media/queries'
+import {
+  mediaQueryKeys,
+} from '#/features/media/query-options'
 import { api } from '#/lib/api-client'
-import type { MediaRecord } from './queries'
 
-export const mediaQueryKeys = {
-  all: ['media'] as const,
-  list: (search?: string) => [...mediaQueryKeys.all, 'list', { search }] as const,
-  detail: (id: string) => [...mediaQueryKeys.all, 'detail', id] as const,
-}
-
-export function useMediaList(search?: string) {
-  return useQuery({
-    queryKey: mediaQueryKeys.list(search),
-    queryFn: async (): Promise<MediaRecord[]> => {
-      const res = await api<{ data?: MediaRecord[] }>('/api/media', {
-        query: search?.trim() ? { search: search.trim() } : undefined,
-      })
-      return res.data ?? []
-    },
-  })
-}
+export { mediaQueryKeys }
 
 export type UploadMediaPayload = {
   file: File
@@ -49,7 +39,7 @@ export function useUploadMedia() {
       return res.data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: mediaQueryKeys.all })
+      void queryClient.invalidateQueries({ queryKey: mediaQueryKeys.all })
     },
   })
 }
@@ -66,7 +56,7 @@ export function useDeleteMedia() {
       return res.success ?? true
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: mediaQueryKeys.all })
+      void queryClient.invalidateQueries({ queryKey: mediaQueryKeys.all })
     },
   })
 }

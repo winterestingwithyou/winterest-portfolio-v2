@@ -1,33 +1,20 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { userQueryKeys } from '#/features/users/hooks'
+import type { AccountProfile } from '#/features/account/queries'
+import { accountQueryKeys } from '#/features/account/query-options'
+import type {
+  ChangePasswordInput,
+  UpdateProfileInput,
+} from '#/features/account/validation'
+import { userQueryKeys } from '#/features/users/query-options'
 import { api } from '#/lib/api-client'
-
-import type { AccountProfile } from './queries'
-import type { ChangePasswordInput, UpdateProfileInput } from './validation'
-
-export const accountQueryKeys = {
-  all: ['account'] as const,
-  profile: () => [...accountQueryKeys.all, 'profile'] as const,
-}
-
-export function useAccountProfile() {
-  return useQuery({
-    queryKey: accountQueryKeys.profile(),
-    queryFn: async (): Promise<AccountProfile> => {
-      const res = await api<{ data?: AccountProfile }>('/api/account')
-      if (!res.data) {
-        throw new Error('Account profile not found')
-      }
-      return res.data
-    },
-  })
-}
 
 export function useUpdateAccountProfile() {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: async (payload: UpdateProfileInput): Promise<AccountProfile> => {
+    mutationFn: async (
+      payload: UpdateProfileInput,
+    ): Promise<AccountProfile> => {
       const res = await api<{ data?: AccountProfile }>('/api/account', {
         method: 'PUT',
         body: payload,
@@ -38,7 +25,9 @@ export function useUpdateAccountProfile() {
       return res.data
     },
     onSuccess: (data) => {
-      void queryClient.invalidateQueries({ queryKey: accountQueryKeys.profile() })
+      void queryClient.invalidateQueries({
+        queryKey: accountQueryKeys.profile(),
+      })
       void queryClient.invalidateQueries({ queryKey: userQueryKeys.session() })
       void queryClient.invalidateQueries({ queryKey: userQueryKeys.list() })
       void queryClient.invalidateQueries({

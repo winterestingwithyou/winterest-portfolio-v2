@@ -6,7 +6,8 @@ import { useRef, useState } from 'react'
 import type { TurnstileRef } from '#/components/ui/turnstile'
 import { TurnstileWidget } from '#/components/ui/turnstile'
 import type { AuthCopy } from '#/features/auth/content/auth-copy'
-import { api, getApiErrorMessage } from '#/lib/api-client'
+import { useSignIn } from '#/features/auth/hooks'
+import { getApiErrorMessage } from '#/lib/api-client'
 
 type LoginFormProps = {
   copy: AuthCopy
@@ -15,14 +16,13 @@ type LoginFormProps = {
 
 export function LoginForm({ copy, redirectTo }: LoginFormProps) {
   const navigate = useNavigate()
-  const [isPending, setIsPending] = useState(false)
+  const signInMutation = useSignIn()
   const [error, setError] = useState<string | null>(null)
   const [turnstileToken, setTurnstileToken] = useState('')
   const turnstileRef = useRef<TurnstileRef>(null)
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setIsPending(true)
     setError(null)
 
     const formData = new FormData(event.currentTarget)
@@ -35,21 +35,12 @@ export function LoginForm({ copy, redirectTo }: LoginFormProps) {
     }
 
     try {
-      await api('/api/auth/sign-in/email', {
-        method: 'POST',
-        headers: {
-          'cf-turnstile-response': turnstileToken,
-        },
-        body: payload,
-      })
-
+      await signInMutation.mutateAsync(payload)
       await navigate({ to: redirectTo ?? '/dashboard' })
     } catch (caught) {
       setError(getApiErrorMessage(caught, copy.errors.signin))
       turnstileRef.current?.reset()
       setTurnstileToken('')
-    } finally {
-      setIsPending(false)
     }
   }
 
@@ -104,11 +95,11 @@ export function LoginForm({ copy, redirectTo }: LoginFormProps) {
 
       <button
         type="submit"
-        disabled={isPending}
+        disabled={signInMutation.isPending}
         className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-black text-white shadow-[0_18px_44px_var(--brand-glow)] transition hover:-translate-y-px hover:shadow-[0_22px_54px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:min-h-12"
       >
         <KeyRound aria-hidden="true" className="size-4" />
-        {isPending ? copy.submit.pending : copy.submit.signin}
+        {signInMutation.isPending ? copy.submit.pending : copy.submit.signin}
       </button>
     </form>
   )

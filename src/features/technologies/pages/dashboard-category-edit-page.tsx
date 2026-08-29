@@ -1,11 +1,9 @@
-import { Link } from '@tanstack/react-router'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { RefreshCw } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { CategoryEditorForm } from '#/features/technologies/components/form/category-editor-form'
-import type { CategoryRecord } from '#/features/technologies/queries'
-import { api, getApiErrorMessage } from '#/lib/api-client'
+import { categoryQueryOptions } from '#/features/technologies/query-options'
 
 type DashboardCategoryEditPageProps = {
   id: string
@@ -14,68 +12,30 @@ type DashboardCategoryEditPageProps = {
 export function DashboardCategoryEditPage({
   id,
 }: DashboardCategoryEditPageProps) {
-  const [category, setCategory] = useState<CategoryRecord | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  const loadCategory = useCallback(async () => {
-    setIsLoading(true)
-    setError(null)
-    try {
-      const result = await api<{ data?: CategoryRecord }>('/api/categories', {
-        query: { id },
-      })
-
-      if (!result.data) {
-        throw new Error('Kategori tidak ditemukan.')
-      }
-
-      setCategory(result.data)
-    } catch (caught) {
-      setError(getApiErrorMessage(caught, 'Gagal memuat data kategori.'))
-    } finally {
-      setIsLoading(false)
-    }
-  }, [id])
-
-  useEffect(() => {
-    void loadCategory()
-  }, [loadCategory])
+  const { data: category, refetch, isFetching } = useSuspenseQuery(
+    categoryQueryOptions.detail(id),
+  )
 
   return (
     <DashboardShell
-      title={category ? `Edit ${category.name}` : 'Edit Kategori'}
+      title={`Edit ${category.name}`}
       description="Perbarui informasi kategori teknologi."
       actions={
         <button
           type="button"
-          onClick={loadCategory}
+          onClick={() => void refetch()}
+          disabled={isFetching}
           className="inline-flex min-h-10 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
         >
-          <RefreshCw aria-hidden="true" className="size-4" />
+          <RefreshCw
+            aria-hidden="true"
+            className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
+          />
           Refresh
         </button>
       }
     >
-      {isLoading ? (
-        <div className="surface-card p-6 text-sm font-semibold text-(--brand-muted)">
-          Memuat data kategori...
-        </div>
-      ) : error || !category ? (
-        <div className="surface-card max-w-2xl p-6">
-          <p className="text-sm leading-7 text-(--brand-muted)">
-            {error ?? 'Data kategori tidak tersedia.'}
-          </p>
-          <Link
-            to="/dashboard/stack"
-            className="mt-5 inline-flex min-h-10 items-center rounded-full bg-(--brand-orange) px-4 text-sm font-bold text-white no-underline"
-          >
-            Kembali
-          </Link>
-        </div>
-      ) : (
-        <CategoryEditorForm mode="edit" initialData={category} />
-      )}
+      <CategoryEditorForm mode="edit" initialData={category} />
     </DashboardShell>
   )
 }

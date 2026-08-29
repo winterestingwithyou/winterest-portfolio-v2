@@ -1,58 +1,32 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { Plus, RefreshCw } from 'lucide-react'
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { DashboardProjectsTable } from '#/features/projects/components/table/dashboard-projects-table'
 import type { ProjectRow } from '#/features/projects/components/table/dashboard-projects-table-features'
-import { api, getApiErrorMessage } from '#/lib/api-client'
+import { useDeleteProject } from '#/features/projects/hooks'
+import { projectQueryOptions } from '#/features/projects/query-options'
+import { getApiErrorMessage } from '#/lib/api-client'
 
 export function DashboardProjectsPage() {
   const copy = getDashboardCopy()
-  const [projects, setProjects] = useState<ProjectRow[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const { data: projects, refetch, isFetching } = useSuspenseQuery(
+    projectQueryOptions.list(),
+  )
+  const deleteMutation = useDeleteProject()
   const [error, setError] = useState<string | null>(null)
 
-  const loadProjects = useCallback(async () => {
-    setIsLoading(true)
+  const handleDelete = async (project: ProjectRow) => {
     setError(null)
-
     try {
-      const result = await api<{
-        data?: ProjectRow[]
-      }>('/api/projects')
-
-      setProjects(result.data ?? [])
+      await deleteMutation.mutateAsync(project.id)
     } catch (caught) {
-      setError(getApiErrorMessage(caught, copy.projects.loadError))
-    } finally {
-      setIsLoading(false)
+      setError(getApiErrorMessage(caught, copy.projects.deleteError))
     }
-  }, [copy.projects.loadError])
-
-  const deleteProject = useCallback(
-    async (project: ProjectRow) => {
-      setError(null)
-
-      try {
-        await api(`/api/projects/${project.id}`, {
-          method: 'DELETE',
-        })
-
-        setProjects((current) =>
-          current.filter((item) => item.id !== project.id),
-        )
-      } catch (caught) {
-        setError(getApiErrorMessage(caught, copy.projects.deleteError))
-      }
-    },
-    [copy.projects.deleteError],
-  )
-
-  useEffect(() => {
-    void loadProjects()
-  }, [loadProjects])
+  }
 
   return (
     <DashboardShell
@@ -62,10 +36,14 @@ export function DashboardProjectsPage() {
         <>
           <button
             type="button"
-            onClick={loadProjects}
+            onClick={() => void refetch()}
+            disabled={isFetching}
             className="inline-flex min-h-10 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
           >
-            <RefreshCw aria-hidden="true" className="size-4" />
+            <RefreshCw
+              aria-hidden="true"
+              className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
+            />
             {copy.common.refresh}
           </button>
           <Link
@@ -85,11 +63,7 @@ export function DashboardProjectsPage() {
       ) : null}
 
       <section className="surface-card overflow-hidden">
-        {isLoading ? (
-          <div className="p-6 text-sm font-semibold text-(--brand-muted)">
-            {copy.projects.loading}
-          </div>
-        ) : projects.length === 0 ? (
+        {projects.length === 0 ? (
           <div className="p-6">
             <h2 className="text-xl font-semibold text-(--brand-ink)">
               {copy.projects.emptyTitle}
@@ -102,7 +76,7 @@ export function DashboardProjectsPage() {
           <DashboardProjectsTable
             copy={copy}
             projects={projects}
-            onDeleteProject={deleteProject}
+            onDeleteProject={handleDelete}
           />
         )}
       </section>

@@ -19,9 +19,10 @@ import { Input } from '#/components/ui/input'
 import { Textarea } from '#/components/ui/textarea'
 import type { TurnstileRef } from '#/components/ui/turnstile'
 import { TurnstileWidget } from '#/components/ui/turnstile'
+import { useSubmitContact } from '#/features/contact/hooks'
 import { contactSchema } from '#/features/contact/validation'
 import type { getPublicCopy } from '#/features/portfolio/data'
-import { api, getApiErrorMessage } from '#/lib/api-client'
+import { getApiErrorMessage } from '#/lib/api-client'
 import { scaleIn } from '#/lib/motion'
 
 type ContactFormProps = {
@@ -30,6 +31,7 @@ type ContactFormProps = {
 
 export function ContactForm({ copy }: ContactFormProps) {
   const turnstileRef = useRef<TurnstileRef>(null)
+  const submitMutation = useSubmitContact()
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
   >('idle')
@@ -51,10 +53,7 @@ export function ContactForm({ copy }: ContactFormProps) {
       setErrorMessage(null)
 
       try {
-        await api<{ success?: boolean }>('/api/contact', {
-          method: 'POST',
-          body: value,
-        })
+        await submitMutation.mutateAsync(value)
 
         setStatus('success')
         form.reset()

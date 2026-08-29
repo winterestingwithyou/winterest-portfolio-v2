@@ -8,7 +8,7 @@ import {
   Save,
   Trash2,
 } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { z } from 'zod'
 
 import { Button } from '#/components/ui/button'
@@ -32,9 +32,16 @@ import {
 import { TechIcon } from '#/components/ui/tech-icon'
 import { Textarea } from '#/components/ui/textarea'
 import { ImageUploader } from '#/components/media/image-uploader'
-import { useTechnologies } from '#/features/technologies/hooks'
-import { api, getApiErrorMessage } from '#/lib/api-client'
+import { useQuery } from '@tanstack/react-query'
+
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import {
+  useCreateProject,
+  useDeleteProject,
+  useUpdateProject,
+} from '#/features/projects/hooks'
+import { techQueryOptions } from '#/features/technologies/query-options'
+import { getApiErrorMessage } from '#/lib/api-client'
 
 type ProjectFormInitial = {
   id?: string
@@ -163,19 +170,13 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
   const [isPending, setIsPending] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const { data: availableTechnologies = [] } = useTechnologies()
+  const { data: availableTechnologies = [] } = useQuery(
+    techQueryOptions.list(),
+  )
 
-  const endpoint = useMemo(() => {
-    if (mode === 'edit' && project?.id) {
-      return `/api/projects/${project.id}`
-    }
-
-    if (mode === 'edit' && project?.slug) {
-      return `/api/projects/${project.slug}`
-    }
-
-    return '/api/projects'
-  }, [mode, project?.id, project?.slug])
+  const createMutation = useCreateProject()
+  const updateMutation = useUpdateProject(project?.id ?? '')
+  const deleteMutation = useDeleteProject()
 
   const form = useForm({
     defaultValues: {
@@ -211,22 +212,27 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         visibility: value.visibility,
         repoVisibility: value.repoVisibility,
         featured: value.featured,
-        coverImage: value.coverImage.trim() || null,
-        repoUrl: value.repoUrl.trim() || null,
-        demoUrl: value.demoUrl.trim() || null,
-        productionUrl: value.productionUrl.trim() || null,
-        startedAt: value.startedAt || undefined,
-        completedAt: value.completedAt || undefined,
-        publishedAt: value.publishedAt || undefined,
+        coverImage: value.coverImage.trim() || undefined,
+        repoUrl: value.repoUrl.trim() || undefined,
+        demoUrl: value.demoUrl.trim() || undefined,
+        productionUrl: value.productionUrl.trim() || undefined,
+        startedAt: value.startedAt ? new Date(value.startedAt) : undefined,
+        completedAt: value.completedAt
+          ? new Date(value.completedAt)
+          : undefined,
+        publishedAt: value.publishedAt
+          ? new Date(value.publishedAt)
+          : undefined,
         technologyIds: value.technologyIds,
         translations: value.translations,
       }
 
       try {
-        await api(endpoint, {
-          method: mode === 'create' ? 'POST' : 'PATCH',
-          body: payload,
-        })
+        if (mode === 'create') {
+          await createMutation.mutateAsync(payload)
+        } else {
+          await updateMutation.mutateAsync(payload)
+        }
 
         setMessage(
           mode === 'create'
@@ -243,13 +249,13 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
   })
 
   async function handleDelete() {
-    if (mode !== 'edit') {
+    if (mode !== 'edit' || !project?.id) {
       return
     }
 
     if (
       !confirm(
-        `Apakah Anda yakin ingin menghapus project "${project?.title ?? project?.slug}"?`,
+        `Apakah Anda yakin ingin menghapus project "${project.title || project.slug}"?`,
       )
     ) {
       return
@@ -260,8 +266,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
     setMessage(null)
 
     try {
-      await api(endpoint, { method: 'DELETE' })
-
+      await deleteMutation.mutateAsync(project.id)
       await navigate({ to: '/dashboard/projects' })
     } catch (caught) {
       setError(getApiErrorMessage(caught, copy.projects.deleteSaveError))

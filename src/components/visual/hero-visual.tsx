@@ -1,7 +1,8 @@
+import { useQuery } from '@tanstack/react-query'
 import { Code2 } from 'lucide-react'
 import { motion } from 'motion/react'
 
-import { useSiteSettings } from '#/features/settings/hooks'
+import { settingsQueryOptions } from '#/features/settings/query-options'
 import { easeOutCubic, scaleIn, staggerContainer } from '#/lib/motion'
 import { cn } from '#/lib/utils'
 
@@ -58,7 +59,7 @@ const techItems = [
 ] as const
 
 export function HeroVisual({ className }: { className?: string } = {}) {
-  const { data: settings } = useSiteSettings()
+  const { data: settings } = useQuery(settingsQueryOptions.get())
   const mascotSrc = settings?.heroVisualUrl || '/assets/characters/winterest.png'
 
   return (

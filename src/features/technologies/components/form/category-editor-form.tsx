@@ -13,8 +13,13 @@ import {
   FieldLabel,
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
+import {
+  useCreateCategory,
+  useDeleteCategory,
+  useUpdateCategory,
+} from '#/features/technologies/hooks'
 import type { CategoryRecord } from '#/features/technologies/queries'
-import { api, getApiErrorMessage } from '#/lib/api-client'
+import { getApiErrorMessage } from '#/lib/api-client'
 import { slugify } from '#/lib/utils'
 
 const categorySchema = z.object({
@@ -43,6 +48,10 @@ export function CategoryEditorForm({
   const [isDeleting, setIsDeleting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const createMutation = useCreateCategory()
+  const updateMutation = useUpdateCategory(initialData?.id ?? '')
+  const deleteMutation = useDeleteCategory()
+
   const form = useForm({
     defaultValues: {
       name: initialData?.name ?? '',
@@ -63,11 +72,11 @@ export function CategoryEditorForm({
           sortOrder: Number(value.sortOrder),
         }
 
-        const isEdit = mode === 'edit' && initialData?.id
-        await api('/api/categories', {
-          method: isEdit ? 'PUT' : 'POST',
-          body: isEdit ? { id: initialData.id, ...payload } : payload,
-        })
+        if (mode === 'edit' && initialData?.id) {
+          await updateMutation.mutateAsync(payload)
+        } else {
+          await createMutation.mutateAsync(payload)
+        }
 
         void navigate({ to: '/dashboard/stack' })
       } catch (caught) {
@@ -92,11 +101,7 @@ export function CategoryEditorForm({
     setIsDeleting(true)
 
     try {
-      await api('/api/categories', {
-        method: 'DELETE',
-        query: { id: initialData.id },
-      })
-
+      await deleteMutation.mutateAsync(initialData.id)
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
       setError(getApiErrorMessage(caught, 'Gagal menghapus kategori.'))

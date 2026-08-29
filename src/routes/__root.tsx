@@ -11,8 +11,11 @@ import Header from '../components/header'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
+import { useQuery } from '@tanstack/react-query'
+import type { QueryClient } from '@tanstack/react-query'
+
 import { SetupRequiredScreen } from '#/components/system/setup-required'
-import { useSiteSettings } from '#/features/settings/hooks'
+import { settingsQueryOptions } from '#/features/settings/query-options'
 import { getPublicSiteSettings } from '#/features/settings/server-functions'
 import { defaultSiteSettings } from '#/features/settings/types'
 import { getSystemStatus } from '#/features/system/server-functions'
@@ -20,7 +23,6 @@ import { getLocale } from '#/paraglide/runtime'
 
 import appCss from '../styles.css?url'
 
-import type { QueryClient } from '@tanstack/react-query'
 import { TooltipProvider } from '#/components/ui/tooltip'
 
 interface MyRouterContext {
@@ -156,7 +158,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   })
-  const { data: settings } = useSiteSettings({
+  const { data: settings } = useQuery({
+    ...settingsQueryOptions.get(),
     enabled: Boolean(systemStatus.hasOwner),
     initialData: siteSettings,
   })
@@ -190,7 +193,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body className="font-sans antialiased wrap-anywhere selection:bg-[rgba(244,129,32,0.22)]">
         <TooltipProvider>
-          {settings?.maintenanceMode && usesAppChrome && (
+          {settings.maintenanceMode && usesAppChrome && (
             <div className="bg-amber-500 text-slate-950 font-bold px-4 py-2 text-center text-xs border-b border-amber-600 shadow-xs z-50 relative">
               ⚠️ Maintenance Mode Enabled — Site is currently undergoing updates.
             </div>

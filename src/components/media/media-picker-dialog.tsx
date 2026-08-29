@@ -8,6 +8,8 @@ import {
   UploadCloud,
 } from 'lucide-react'
 
+import { useQuery } from '@tanstack/react-query'
+
 import { Button } from '#/components/ui/button'
 import {
   Dialog,
@@ -19,7 +21,8 @@ import {
 } from '#/components/ui/dialog'
 import { Input } from '#/components/ui/input'
 import { getDashboardCopy } from '#/features/dashboard/copy'
-import { useMediaList, useUploadMedia } from '#/features/media/hooks'
+import { useUploadMedia } from '#/features/media/hooks'
+import { mediaQueryOptions } from '#/features/media/query-options'
 import type { MediaRecord } from '#/features/media/queries'
 
 export type MediaPickerDialogProps = {
@@ -40,7 +43,9 @@ export function MediaPickerDialog({
   const [selectedId, setSelectedId] = React.useState<string | null>(null)
   const fileInputRef = React.useRef<HTMLInputElement>(null)
 
-  const { data: mediaList = [], isLoading } = useMediaList(search)
+  const { data: mediaList = [], isLoading } = useQuery(
+    mediaQueryOptions.list(search),
+  )
   const uploadMutation = useUploadMedia()
 
   // Reset selected when dialog opens

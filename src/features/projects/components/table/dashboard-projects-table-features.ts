@@ -8,7 +8,7 @@ export type ProjectRow = {
   featured: boolean
   category: string
   availableLocales: Array<'en' | 'id'>
-  updatedAt?: string
+  updatedAt?: Date | string | null
 }
 
 export function formatLocales(locales: readonly ('en' | 'id')[]) {
