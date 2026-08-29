@@ -36,13 +36,16 @@ export default function Header() {
     select: (state) => state.location.pathname,
   })
   const navItems = [
+    { href: '/', label: copy.nav.home },
     { href: '/about', label: copy.nav.about },
     { href: '/projects', label: copy.nav.projects },
     { href: '/stack', label: copy.nav.stack },
     { href: '/contact', label: copy.nav.contact },
   ] as const
-  const activeNavIndex = navItems.findIndex(
-    (item) => pathname === item.href || pathname.startsWith(`${item.href}/`),
+  const activeNavIndex = navItems.findIndex((item) =>
+    item.href === '/'
+      ? pathname === '/'
+      : pathname === item.href || pathname.startsWith(`${item.href}/`),
   )
 
   useEffect(() => {
@@ -218,7 +221,9 @@ export default function Header() {
         >
           {navItems.map((item) => {
             const isActive =
-              pathname === item.href || pathname.startsWith(`${item.href}/`)
+              item.href === '/'
+                ? pathname === '/'
+                : pathname === item.href || pathname.startsWith(`${item.href}/`)
 
             return (
               <Link

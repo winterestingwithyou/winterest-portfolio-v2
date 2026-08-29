@@ -257,6 +257,7 @@ const idTimeline = [
 export const publicCopy = {
   en: {
     nav: {
+      home: 'Home',
       about: 'About',
       projects: 'Projects',
       stack: 'Stack',
@@ -402,6 +403,7 @@ export const publicCopy = {
   },
   id: {
     nav: {
+      home: 'Beranda',
       about: 'Tentang',
       projects: 'Project',
       stack: 'Stack',
