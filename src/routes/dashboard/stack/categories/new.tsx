@@ -1,19 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { DashboardShell } from '#/components/dashboard/dashboard-shell'
-import { CategoryEditorForm } from '#/features/technologies/components/form/category-editor-form'
+import { DashboardCategoryNewPage } from '#/features/technologies/pages/dashboard-category-new-page'
 
 export const Route = createFileRoute('/dashboard/stack/categories/new')({
-  component: DashboardCategoryNew,
+  component: DashboardCategoryNewPage,
 })
-
-function DashboardCategoryNew() {
-  return (
-    <DashboardShell
-      title="Tambah Kategori Baru"
-      description="Tambahkan kategori baru untuk mengelompokkan teknologi."
-    >
-      <CategoryEditorForm mode="create" />
-    </DashboardShell>
-  )
-}

@@ -88,10 +88,14 @@ Use the existing stack as the default foundation:
     styles.css
   ```
 - **Feature `pages/` Convention**: If a feature renders a dedicated page view, create a `pages/` directory inside `src/features/<feature>/` (e.g. `src/features/about/pages/about-page.tsx`, `src/features/auth/pages/login-page.tsx`, `src/features/home/pages/home-page.tsx`, `src/features/contact/pages/contact-page.tsx`). The corresponding route file in `src/routes/` acts strictly as a thin route gateway that manages routing configuration (`loader`, `beforeLoad`, `validateSearch`, `head`) and imports/mounts the page component from `src/features/<feature>/pages/`.
-- **Feature `section/` & `form/` Component Grouping Convention**:
+- **Feature `section/`, `form/`, & `table/` Component Grouping Convention**:
   - **Section Components**: If a component represents a visual section of a feature's page view, store it under `src/features/<feature>/components/section/<comp-name>.tsx` (e.g. `src/features/about/components/section/about-hero.tsx`, `src/features/home/components/section/home-hero.tsx`).
   - **Form Components**: If a component is an interactive form or handles data input/mutations, store it under `src/features/<feature>/components/form/<comp-name>.tsx` (e.g. `src/features/auth/components/form/login-form.tsx`, `src/features/contact/components/form/contact-form.tsx`).
-  - **Atomic/Sub-Components**: Other small supporting components that are neither complete sections nor forms can reside directly under `src/features/<feature>/components/<comp-name>.tsx` (e.g. `src/features/about/components/glass-shard-card.tsx`).
+  - **Table Components**: All tabular data components **MUST** use **TanStack Table** (`@tanstack/react-table`) following shadcn data-table modular conventions:
+    - Main table component: `src/features/<feature>/components/table/<comp-name>-table.tsx` (e.g. `dashboard-projects-table.tsx`).
+    - Column definitions: `src/features/<feature>/components/table/<comp-name>-table-columns.tsx` (e.g. `dashboard-projects-table-columns.tsx`).
+    - Table features / state / helpers: `src/features/<feature>/components/table/<comp-name>-table-features.ts` (e.g. `dashboard-projects-table-features.ts`).
+  - **Atomic/Sub-Components**: Other small supporting components that are neither complete sections, forms, nor tables can reside directly under `src/features/<feature>/components/<comp-name>.tsx` (e.g. `src/features/about/components/glass-shard-card.tsx`).
 
 ---
 

@@ -42,12 +42,12 @@ import { getDashboardCopy } from '#/features/dashboard/copy'
 import {
   useChangeAccountPassword,
   useUpdateAccountProfile,
-} from './hooks'
-import type { AccountProfile } from './queries'
+} from '#/features/account/hooks'
+import type { AccountProfile } from '#/features/account/queries'
 import {
   changePasswordSchema,
   updateProfileSchema,
-} from './validation'
+} from '#/features/account/validation'
 
 type AccountTab = 'profile' | 'security' | 'sessions'
 

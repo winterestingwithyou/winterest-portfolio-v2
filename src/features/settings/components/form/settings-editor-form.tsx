@@ -28,9 +28,9 @@ import { Input } from '#/components/ui/input'
 import { Textarea } from '#/components/ui/textarea'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 
-import { useUpdateSiteSettings } from './hooks'
-import type { SiteSettingsInput } from './types'
-import { siteSettingsSchema } from './types'
+import { useUpdateSiteSettings } from '#/features/settings/hooks'
+import type { SiteSettingsInput } from '#/features/settings/types'
+import { siteSettingsSchema } from '#/features/settings/types'
 
 type SettingsEditorFormProps = {
   initialData: SiteSettingsInput

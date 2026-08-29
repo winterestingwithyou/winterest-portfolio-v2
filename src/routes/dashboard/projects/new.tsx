@@ -1,22 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { DashboardShell } from '#/components/dashboard/dashboard-shell'
-import { getDashboardCopy } from '#/features/dashboard/copy'
-import { ProjectEditorForm } from '#/features/projects/components/form/project-editor-form'
+import { DashboardProjectNewPage } from '#/features/projects/pages/dashboard-project-new-page'
 
 export const Route = createFileRoute('/dashboard/projects/new')({
-  component: DashboardProjectNew,
+  component: DashboardProjectNewPage,
 })
-
-function DashboardProjectNew() {
-  const copy = getDashboardCopy()
-
-  return (
-    <DashboardShell
-      title={copy.projects.newTitle}
-      description={copy.projects.newDescription}
-    >
-      <ProjectEditorForm mode="create" />
-    </DashboardShell>
-  )
-}
