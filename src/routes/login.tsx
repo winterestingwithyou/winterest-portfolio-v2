@@ -4,7 +4,6 @@ import {
   Cloud,
   KeyRound,
   LogIn,
-  ShieldCheck,
   Sparkles,
 } from 'lucide-react'
 import type { FormEvent } from 'react'
@@ -24,85 +23,79 @@ type LoginSearch = {
 
 const authCopy = {
   en: {
-    metaTitle: 'Login | Winterest',
-    metaDescription: 'Private Winterest dashboard access.',
+    metaTitle: 'Sign In | Winterest Portfolio',
+    metaDescription:
+      'Sign in to manage portfolio content, media assets, site settings, and publishing workflows.',
+    brandName: 'Winterest',
     backHome: 'Back to portfolio',
-    eyebrow: 'Winterest private access',
-    title: 'A private space for Winterest.',
+    eyebrow: 'Dashboard Access',
+    title: 'Sign in to manage your portfolio.',
     description:
-      'A simple entry point for maintaining the stories, work, and notes behind the portfolio.',
-    noteTitle: 'Personal access only',
-    note: 'This area is reserved for Winterest, so the public site can stay clean, focused, and easy to explore.',
+      'A central workspace to manage portfolio content, media assets, site configurations, and publishing workflows.',
+    formTitle: 'Account sign in',
+    formSubtitle: 'Enter your credentials to continue',
     fields: {
       email: 'Email',
       password: 'Password',
     },
     placeholders: {
-      email: 'you@example.com',
-      password: 'Your password',
+      email: 'name@example.com',
+      password: 'Enter your password',
     },
     submit: {
-      signin: 'Enter dashboard',
-      pending: 'Checking...',
+      signin: 'Sign in',
+      pending: 'Signing in...',
     },
     errors: {
-      signin: 'Sign in failed. Check your email and password.',
-      request: 'Auth request failed.',
+      signin: 'Invalid email or password. Please check your credentials.',
+      request: 'Authentication request failed. Please try again.',
     },
-    highlights: [
-      'Focused workspace',
-      'Calm publishing flow',
-      'Portfolio upkeep',
-    ],
   },
   id: {
-    metaTitle: 'Login | Winterest',
-    metaDescription: 'Akses dashboard privat Winterest.',
+    metaTitle: 'Masuk | Winterest Portfolio',
+    metaDescription:
+      'Masuk untuk mengelola konten portfolio, aset media, pengaturan situs, dan alur publikasi.',
+    brandName: 'Winterest Portfolio',
     backHome: 'Kembali ke portfolio',
-    eyebrow: 'Akses privat Winterest',
-    title: 'Ruang privat untuk Winterest.',
+    eyebrow: 'Akses Dashboard',
+    title: 'Masuk untuk mengelola portfolio.',
     description:
-      'Tempat sederhana untuk merapikan cerita, karya, dan catatan yang hidup di balik portfolio.',
-    noteTitle: 'Akses personal',
-    note: 'Area ini disiapkan untuk Winterest, agar halaman publik tetap rapi, fokus, dan nyaman dijelajahi.',
+      'Workspace terpusat untuk mengelola konten portfolio, aset media, konfigurasi situs, dan alur publikasi.',
+    formTitle: 'Masuk ke akun',
+    formSubtitle: 'Masukkan kredensial kamu untuk melanjutkan',
     fields: {
       email: 'Email',
-      password: 'Password',
+      password: 'Kata sandi',
     },
     placeholders: {
-      email: 'kamu@example.com',
-      password: 'Password kamu',
+      email: 'nama@example.com',
+      password: 'Masukkan kata sandi',
     },
     submit: {
-      signin: 'Masuk dashboard',
-      pending: 'Memeriksa...',
+      signin: 'Masuk',
+      pending: 'Memproses...',
     },
     errors: {
-      signin: 'Gagal masuk. Periksa kembali email dan password.',
-      request: 'Request auth gagal.',
+      signin: 'Email atau kata sandi salah. Silakan periksa kembali.',
+      request: 'Permintaan autentikasi gagal. Silakan coba lagi.',
     },
-    highlights: [
-      'Workspace fokus',
-      'Alur publikasi tenang',
-      'Perawatan portfolio',
-    ],
   },
 } satisfies Record<
   'en' | 'id',
   {
     metaTitle: string
     metaDescription: string
+    brandName: string
     backHome: string
     eyebrow: string
     title: string
     description: string
-    noteTitle: string
-    note: string
+    formTitle: string
+    formSubtitle: string
     fields: Record<'email' | 'password', string>
     placeholders: Record<'email' | 'password', string>
     submit: { signin: string; pending: string }
     errors: { signin: string; request: string }
-    highlights: string[]
   }
 >
 
@@ -183,15 +176,15 @@ function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_10%_12%,color-mix(in_srgb,var(--brand-orange)_24%,transparent),transparent_28rem),radial-gradient(circle_at_86%_78%,color-mix(in_srgb,var(--brand-orange-deep)_20%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-cream)_92%,white),color-mix(in_srgb,var(--brand-orange-soft)_42%,var(--brand-cream)))] text-(--brand-ink) dark:bg-[radial-gradient(circle_at_12%_14%,color-mix(in_srgb,var(--brand-orange)_22%,transparent),transparent_28rem),radial-gradient(circle_at_84%_76%,color-mix(in_srgb,var(--brand-orange-deep)_28%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-dark)_96%,black),color-mix(in_srgb,#24170d_72%,var(--brand-dark)))]">
-      <div className="mx-auto min-h-screen w-full max-w-296 px-3 py-3 sm:px-6 sm:py-6 lg:px-8">
+    <main className="min-h-screen bg-[radial-gradient(circle_at_10%_12%,color-mix(in_srgb,var(--brand-orange)_24%,transparent),transparent_28rem),radial-gradient(circle_at_86%_78%,color-mix(in_srgb,var(--brand-orange-deep)_20%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-cream)_92%,white),color-mix(in_srgb,var(--brand-orange-soft)_42%,var(--brand-cream)))] text-(--brand-ink) lg:h-screen lg:overflow-hidden dark:bg-[radial-gradient(circle_at_12%_14%,color-mix(in_srgb,var(--brand-orange)_22%,transparent),transparent_28rem),radial-gradient(circle_at_84%_76%,color-mix(in_srgb,var(--brand-orange-deep)_28%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-dark)_96%,black),color-mix(in_srgb,#24170d_72%,var(--brand-dark)))]">
+      <div className="mx-auto flex min-h-screen w-full max-w-296 flex-col justify-between px-5 py-4 sm:px-6 sm:py-6 lg:h-full lg:min-h-0 lg:px-8 lg:py-6">
         <header
-          className="flex items-start justify-between gap-4 sm:items-center"
+          className="flex items-center justify-between gap-4"
           aria-label="Authentication navigation"
         >
           <a
             href="/"
-            className="inline-flex min-h-9 items-center gap-2 rounded-full border border-(--brand-line) bg-[color-mix(in_srgb,var(--surface-strong)_88%,transparent)] px-3 text-xs font-extrabold text-(--brand-ink) no-underline shadow-[0_14px_36px_rgba(42,26,10,0.08)] transition hover:-translate-y-px hover:border-(--brand-orange) hover:text-(--brand-orange-deep) sm:min-h-10 sm:text-sm"
+            className="inline-flex min-h-9 items-center gap-2 rounded-full border border-(--brand-line) bg-[color-mix(in_srgb,var(--surface-strong)_88%,transparent)] px-3.5 text-xs font-extrabold text-(--brand-ink) no-underline shadow-[0_14px_36px_rgba(42,26,10,0.08)] transition hover:-translate-y-px hover:border-(--brand-orange) hover:text-(--brand-orange-deep) sm:min-h-10 sm:text-sm"
           >
             <ArrowLeft aria-hidden="true" className="size-4" />
             {copy.backHome}
@@ -202,64 +195,38 @@ function LoginPage() {
           </div>
         </header>
 
-        <section className="grid min-h-[calc(100vh-5rem)] items-center gap-8 py-9 sm:py-12 lg:grid-cols-[minmax(0,1.12fr)_minmax(22rem,0.88fr)] lg:gap-16 lg:py-20">
-          <div className="grid gap-4">
-            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[color-mix(in_srgb,var(--brand-orange)_38%,transparent)] bg-[color-mix(in_srgb,var(--surface-strong)_72%,transparent)] py-1 pr-3 pl-1 text-sm font-black text-(--brand-ink) shadow-[0_18px_44px_var(--brand-glow)]">
+        <section className="my-auto grid items-center gap-8 py-8 sm:py-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(22rem,0.85fr)] lg:gap-12 lg:py-0">
+          <div className="grid gap-3 sm:gap-4">
+            <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[color-mix(in_srgb,var(--brand-orange)_38%,transparent)] bg-[color-mix(in_srgb,var(--surface-strong)_72%,transparent)] py-1 pr-3 pl-1 text-xs font-black text-(--brand-ink) shadow-[0_18px_44px_var(--brand-glow)] sm:text-sm">
               <span className="brand-mark">
                 <Cloud aria-hidden="true" className="size-4" />
                 <Sparkles aria-hidden="true" className="brand-spark size-3" />
               </span>
-              <span>Winterest</span>
+              <span>{copy.brandName}</span>
             </div>
             <p className="eyebrow">{copy.eyebrow}</p>
-            <h1 className="max-w-2xl text-[clamp(2rem,9vw,3rem)] leading-none font-black text-(--brand-ink) sm:text-[clamp(2.2rem,5vw,4rem)]">
+            <h1 className="max-w-2xl text-2xl font-black leading-tight text-(--brand-ink) sm:text-3xl lg:text-4xl xl:text-[2.75rem]">
               {copy.title}
             </h1>
-            <p className="max-w-xl text-base leading-8 text-(--brand-muted) sm:text-lg">
+            <p className="max-w-xl text-sm leading-relaxed text-(--brand-muted) sm:text-base sm:leading-7">
               {copy.description}
             </p>
-
-            <div className="grid max-w-xl gap-3 rounded-2xl border border-[color-mix(in_srgb,var(--brand-orange)_28%,transparent)] bg-[color-mix(in_srgb,var(--surface-strong)_72%,transparent)] p-4 shadow-[0_18px_52px_rgba(42,26,10,0.08)] sm:grid-cols-[auto_1fr]">
-              <ShieldCheck
-                aria-hidden="true"
-                className="mt-0.5 size-5 text-(--brand-orange-deep)"
-              />
-              <div>
-                <strong className="block text-sm text-(--brand-ink)">
-                  {copy.noteTitle}
-                </strong>
-                <span className="mt-1 block text-sm leading-7 text-(--brand-muted)">
-                  {copy.note}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex flex-wrap gap-2 pt-1">
-              {copy.highlights.map((highlight) => (
-                <span
-                  key={highlight}
-                  className="rounded-full border border-[color-mix(in_srgb,var(--brand-orange)_30%,transparent)] bg-[color-mix(in_srgb,var(--surface-strong)_64%,transparent)] px-3 py-1.5 text-xs font-extrabold text-(--brand-muted)"
-                >
-                  {highlight}
-                </span>
-              ))}
-            </div>
           </div>
 
           <form
             onSubmit={handleSubmit}
-            className="grid gap-4 rounded-[1.25rem] border border-[color-mix(in_srgb,var(--brand-orange)_28%,var(--brand-line))] bg-[linear-gradient(145deg,color-mix(in_srgb,var(--surface-strong)_96%,transparent),color-mix(in_srgb,var(--brand-orange-soft)_28%,transparent)),var(--surface-strong)] p-4 shadow-[0_28px_80px_rgba(42,26,10,0.16),inset_0_1px_0_color-mix(in_srgb,white_42%,transparent)] sm:p-5"
+            className="grid gap-3.5 rounded-[1.25rem] border border-[color-mix(in_srgb,var(--brand-orange)_28%,var(--brand-line))] bg-[linear-gradient(145deg,color-mix(in_srgb,var(--surface-strong)_96%,transparent),color-mix(in_srgb,var(--brand-orange-soft)_28%,transparent)),var(--surface-strong)] p-4 shadow-[0_28px_80px_rgba(42,26,10,0.16),inset_0_1px_0_color-mix(in_srgb,white_42%,transparent)] sm:gap-4 sm:p-5"
           >
-            <div className="flex items-center gap-2 border-b border-(--brand-line) pb-3">
+            <div className="flex items-center gap-2 border-b border-(--brand-line) pb-2.5 sm:pb-3">
               <div className="flex size-8 items-center justify-center rounded-lg bg-(--brand-orange-soft) text-(--brand-orange-deep)">
                 <LogIn className="size-4" />
               </div>
               <div>
                 <h2 className="text-sm font-extrabold text-(--brand-ink)">
-                  {copy.submit.signin}
+                  {copy.formTitle}
                 </h2>
                 <p className="text-xs text-(--brand-muted)">
-                  {copy.noteTitle}
+                  {copy.formSubtitle}
                 </p>
               </div>
             </div>
@@ -280,12 +247,12 @@ function LoginPage() {
             />
 
             {error ? (
-              <p className="rounded-[0.9rem] border border-[color-mix(in_srgb,#ef4444_38%,transparent)] bg-[color-mix(in_srgb,#ef4444_12%,transparent)] px-3.5 py-3 text-sm font-bold text-red-700 dark:text-red-200">
+              <p className="rounded-[0.9rem] border border-[color-mix(in_srgb,#ef4444_38%,transparent)] bg-[color-mix(in_srgb,#ef4444_12%,transparent)] px-3.5 py-2.5 text-xs font-bold text-red-700 sm:text-sm dark:text-red-200">
                 {error}
               </p>
             ) : null}
 
-            <div className="w-full py-1">
+            <div className="w-full py-0.5">
               <TurnstileWidget
                 ref={turnstileRef}
                 action="login"
@@ -299,7 +266,7 @@ function LoginPage() {
             <button
               type="submit"
               disabled={isPending}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-black text-white shadow-[0_18px_44px_var(--brand-glow)] transition hover:-translate-y-px hover:shadow-[0_22px_54px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-black text-white shadow-[0_18px_44px_var(--brand-glow)] transition hover:-translate-y-px hover:shadow-[0_22px_54px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:min-h-12"
             >
               <KeyRound aria-hidden="true" className="size-4" />
               {isPending ? copy.submit.pending : copy.submit.signin}
