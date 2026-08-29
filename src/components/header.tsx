@@ -117,13 +117,13 @@ export default function Header() {
         {/* Desktop nav */}
         <div className="hidden items-center md:flex">
           <GooeyNav
-            items={[...navItems]}
+            items={navItems}
             initialActiveIndex={activeNavIndex}
-            particleCount={20}
-            particleDistances={[34, 8]}
-            particleR={200}
+            particleCount={15}
+            particleDistances={[75, 12]}
+            particleR={100}
+            animationTime={600}
             timeVariance={300}
-            colors={[1, 1, 1, 2, 1, 2]}
           />
         </div>
 
