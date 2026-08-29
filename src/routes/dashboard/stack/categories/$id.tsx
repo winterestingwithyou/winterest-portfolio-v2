@@ -3,7 +3,7 @@ import { RefreshCw } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
-import { CategoryEditorForm } from '#/features/technologies/category-editor-form'
+import { CategoryEditorForm } from '#/features/technologies/components/form/category-editor-form'
 import type { CategoryRecord } from '#/features/technologies/queries'
 import { api, getApiErrorMessage } from '#/lib/api-client'
 

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
-import { ProjectEditorForm } from '#/features/dashboard/project-editor-form'
+import { ProjectEditorForm } from '#/features/projects/components/form/project-editor-form'
 import { api, getApiErrorMessage } from '#/lib/api-client'
 
 type ProjectRecord = {

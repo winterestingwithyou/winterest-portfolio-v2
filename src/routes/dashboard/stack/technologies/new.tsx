@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
-import { TechnologyEditorForm } from '#/features/technologies/technology-editor-form'
+import { TechnologyEditorForm } from '#/features/technologies/components/form/technology-editor-form'
 
 export const Route = createFileRoute('/dashboard/stack/technologies/new')({
   component: DashboardTechnologyNew,

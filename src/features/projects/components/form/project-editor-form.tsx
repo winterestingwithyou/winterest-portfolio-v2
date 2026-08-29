@@ -34,7 +34,7 @@ import { Textarea } from '#/components/ui/textarea'
 import { ImageUploader } from '#/components/media/image-uploader'
 import { useTechnologies } from '#/features/technologies/hooks'
 import { api, getApiErrorMessage } from '#/lib/api-client'
-import { getDashboardCopy } from './copy'
+import { getDashboardCopy } from '../../../dashboard/copy'
 
 type ProjectFormInitial = {
   id?: string

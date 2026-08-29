@@ -156,9 +156,8 @@ export default function GooeyNav({
 
       <nav
         className={cn(
-          'relative inline-flex items-center rounded-full',
+          'relative inline-flex items-center rounded-full p-1',
           'bg-[linear-gradient(135deg,color-mix(in_srgb,var(--surface-strong)_85%,transparent),color-mix(in_srgb,var(--brand-orange-soft)_25%,transparent)),var(--surface-strong)]',
-          'p-1 shadow-[0_10px_28px_rgba(42,26,10,0.06)] backdrop-blur-md',
           className,
         )}
         onMouseLeave={() => setHoveredIndex(null)}

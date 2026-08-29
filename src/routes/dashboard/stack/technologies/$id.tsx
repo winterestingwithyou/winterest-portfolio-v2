@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import type { TechnologyWithCategories } from '#/features/technologies/queries'
-import { TechnologyEditorForm } from '#/features/technologies/technology-editor-form'
+import { TechnologyEditorForm } from '#/features/technologies/components/form/technology-editor-form'
 import { api, getApiErrorMessage } from '#/lib/api-client'
 
 export const Route = createFileRoute('/dashboard/stack/technologies/$id')({

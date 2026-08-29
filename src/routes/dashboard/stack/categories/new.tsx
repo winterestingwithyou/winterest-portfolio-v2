@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
-import { CategoryEditorForm } from '#/features/technologies/category-editor-form'
+import { CategoryEditorForm } from '#/features/technologies/components/form/category-editor-form'
 
 export const Route = createFileRoute('/dashboard/stack/categories/new')({
   component: DashboardCategoryNew,
