@@ -57,21 +57,36 @@ Use the existing stack as the default foundation:
       media/           # Media queries, upload helpers, grid
         components/
         pages/
+        query-options.ts # TanStack Query options
+        hooks.ts         # Mutation hooks
       projects/        # Projects queries, validation, editor forms, case study
         components/
         pages/
+        queries.ts       # Server-side Drizzle DB queries
+        query-options.ts # TanStack Query options
+        hooks.ts         # Mutation hooks
       settings/        # Site settings queries & actions
         components/
         pages/
+        query-options.ts # TanStack Query options
+        hooks.ts         # Mutation hooks
       social/          # Social links queries, hooks, types
         components/
         pages/
+        query-options.ts # TanStack Query options
+        hooks.ts         # Mutation hooks
       technologies/    # Tech stack queries, categories, technology management
         components/
         pages/
+        queries.ts       # Server-side Drizzle DB queries
+        query-options.ts # TanStack Query options
+        hooks.ts         # Mutation hooks
       users/           # User management queries & forms
         components/
         pages/
+        queries.ts       # Server-side Drizzle DB queries
+        query-options.ts # TanStack Query options
+        hooks.ts         # Mutation hooks
     lib/
       api-client.ts    # Centralized ofetch client & error handler
       auth/            # Better Auth client & server config
@@ -96,6 +111,10 @@ Use the existing stack as the default foundation:
     - Column definitions: `src/features/<feature>/components/table/<comp-name>-table-columns.tsx` (e.g. `dashboard-projects-table-columns.tsx`).
     - Table features / state / helpers: `src/features/<feature>/components/table/<comp-name>-table-features.ts` (e.g. `dashboard-projects-table-features.ts`).
   - **Atomic/Sub-Components**: Other small supporting components that are neither complete sections, forms, nor tables can reside directly under `src/features/<feature>/components/<comp-name>.tsx` (e.g. `src/features/about/components/glass-shard-card.tsx`).
+- **Feature Server vs Client Data Separation**:
+  - **`queries.ts`**: Reserved strictly for server-side Drizzle ORM DB queries (called from API endpoints & server functions).
+  - **`query-options.ts`**: Reserved for client/loader TanStack Query `queryOptions({ queryKey, queryFn })` definitions.
+  - **`hooks.ts`**: Reserved for custom mutation hooks (`useMutation`) and client-side UI hooks.
 
 ---
 
@@ -104,7 +123,7 @@ Use the existing stack as the default foundation:
 - **TypeScript-First**: Explicit type definitions for exported functions; avoid `any`.
 - **Clean React**: Keep components focused; avoid unnecessary `useEffect`; prefer derived state over duplicated state; avoid hydration mismatch patterns.
 - **State Management**:
-  - **Server State**: Use **TanStack Query** (`useQuery`, `useMutation`) for all server state and API interactions. Components **MUST NEVER** call `api()` directly; all API calls must be encapsulated within dedicated custom query and mutation hooks co-located in `src/features/<feature>/hooks.ts`. Always invalidate related queries upon successful mutations.
+  - **Server State**: Use **TanStack Query** with `queryOptions` (`src/features/<feature>/query-options.ts`) for data fetching in route loaders and components (`useSuspenseQuery` / `useQuery`), and custom mutation hooks (`src/features/<feature>/hooks.ts`) for actions (`useMutation`). Components **MUST NEVER** invoke `api()` directly. Always invalidate related query keys after mutations.
   - **Client State**: Use **TanStack Store** or React local state for UI state (e.g. modals, active drawer, command palette).
   - **Tables**: Use **TanStack Table** for dashboard data grids with sorting, filtering, and row actions.
 
