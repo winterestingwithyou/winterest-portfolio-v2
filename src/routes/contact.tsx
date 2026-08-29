@@ -10,7 +10,7 @@ import {
   Send,
 } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { Button } from '#/components/ui/button'
@@ -22,6 +22,8 @@ import {
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
 import { Textarea } from '#/components/ui/textarea'
+import type { TurnstileRef } from '#/components/ui/turnstile'
+import { TurnstileWidget } from '#/components/ui/turnstile'
 import { contactSchema } from '#/features/contact/validation'
 import { getPublicCopy } from '#/features/portfolio/data'
 import { usePublicSocialLinks } from '#/features/social/hooks'
@@ -43,6 +45,7 @@ export const Route = createFileRoute('/contact')({
 function ContactPage() {
   const copy = getPublicCopy()
   const { data: socialLinks = [] } = usePublicSocialLinks()
+  const turnstileRef = useRef<TurnstileRef>(null)
 
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
@@ -55,6 +58,7 @@ function ContactPage() {
       email: '',
       subject: '',
       message: '',
+      turnstileToken: '',
     },
     validators: {
       onSubmit: contactSchema,
@@ -71,10 +75,12 @@ function ContactPage() {
 
         setStatus('success')
         form.reset()
+        turnstileRef.current?.reset()
       } catch (err: unknown) {
         console.error('Failed to send contact message:', err)
         setStatus('error')
         setErrorMessage(getApiErrorMessage(err, copy.contact.sendErrorTitle))
+        turnstileRef.current?.reset()
       }
     },
   })
@@ -405,6 +411,23 @@ function ContactPage() {
                           </Field>
                         )
                       }}
+                    />
+
+                    {/* Turnstile Bot Verification */}
+                    <form.Field
+                      name="turnstileToken"
+                      children={(field) => (
+                        <div className="w-full pt-1">
+                          <TurnstileWidget
+                            ref={turnstileRef}
+                            action="contact"
+                            className="w-full"
+                            onSuccess={(token) => field.handleChange(token)}
+                            onError={() => field.handleChange('')}
+                            onExpire={() => field.handleChange('')}
+                          />
+                        </div>
+                      )}
                     />
                   </FieldGroup>
 

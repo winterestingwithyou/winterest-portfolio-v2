@@ -4,6 +4,7 @@ import { Resend } from 'resend'
 
 import { contactSchema } from '#/features/contact/validation'
 import { siteProfile } from '#/features/portfolio/data'
+import { verifyTurnstileToken } from '#/lib/turnstile'
 
 export const Route = createFileRoute('/api/contact')({
   server: {
@@ -11,7 +12,10 @@ export const Route = createFileRoute('/api/contact')({
       POST: async ({ request }) => {
         try {
           const body = await request.json()
-          const payload = typeof body === 'object' && body !== null ? { subject: '', ...body } : body
+          const payload =
+            typeof body === 'object' && body !== null
+              ? { subject: '', turnstileToken: '', ...body }
+              : body
           const validation = contactSchema.safeParse(payload)
 
           if (!validation.success) {
@@ -20,7 +24,24 @@ export const Route = createFileRoute('/api/contact')({
             return Response.json({ error: firstError }, { status: 400 })
           }
 
-          const { name, email, subject, message } = validation.data
+          const { name, email, subject, message, turnstileToken } = validation.data
+
+          // Canonical Turnstile verification
+          const verification = await verifyTurnstileToken({
+            token:
+              turnstileToken ||
+              request.headers.get('cf-turnstile-response') ||
+              '',
+            action: 'contact',
+            request,
+          })
+
+          if (!verification.success) {
+            return Response.json(
+              { error: verification.error || 'Security challenge failed.' },
+              { status: 403 },
+            )
+          }
 
           // Retrieve API key from Cloudflare Workers bindings or process environment
           const envDict = (typeof cfEnv !== 'undefined' ? cfEnv : {}) as Record<

@@ -8,10 +8,12 @@ import {
   Sparkles,
 } from 'lucide-react'
 import type { FormEvent } from 'react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import ParaglideLocaleSwitcher from '#/components/locale-switcher.tsx'
 import ThemeToggle from '#/components/theme-toggle'
+import type { TurnstileRef } from '#/components/ui/turnstile'
+import { TurnstileWidget } from '#/components/ui/turnstile'
 import { getDashboardSession } from '#/features/auth/server-functions'
 import { api, getApiErrorMessage } from '#/lib/api-client'
 import { getLocale } from '#/paraglide/runtime'
@@ -144,6 +146,8 @@ function LoginPage() {
   const copy = getCopy()
   const [isPending, setIsPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [turnstileToken, setTurnstileToken] = useState('')
+  const turnstileRef = useRef<TurnstileRef>(null)
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -156,17 +160,23 @@ function LoginPage() {
       password: String(formData.get('password') ?? ''),
       callbackURL: redirectTo ?? '/dashboard',
       rememberMe: true,
+      turnstileToken,
     }
 
     try {
       await api('/api/auth/sign-in/email', {
         method: 'POST',
+        headers: {
+          'cf-turnstile-response': turnstileToken,
+        },
         body: payload,
       })
 
       await navigate({ to: redirectTo ?? '/dashboard' })
     } catch (caught) {
       setError(getApiErrorMessage(caught, copy.errors.signin))
+      turnstileRef.current?.reset()
+      setTurnstileToken('')
     } finally {
       setIsPending(false)
     }
@@ -274,6 +284,17 @@ function LoginPage() {
                 {error}
               </p>
             ) : null}
+
+            <div className="w-full py-1">
+              <TurnstileWidget
+                ref={turnstileRef}
+                action="login"
+                className="w-full"
+                onSuccess={setTurnstileToken}
+                onError={() => setTurnstileToken('')}
+                onExpire={() => setTurnstileToken('')}
+              />
+            </div>
 
             <button
               type="submit"

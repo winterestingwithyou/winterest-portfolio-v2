@@ -54,6 +54,25 @@ Last updated: 2026-08-27
   - Database CLI scripts: `src/db/seed-cli.ts`, `src/db/create-owner-cli.ts`.
 - Knowledge graph synchronized via `graphify update .`.
 
+### 7. End-to-End Cloudflare Turnstile Bot Protection Integration
+
+- Integrated Cloudflare Turnstile on public-facing forms (**Contact Form** and **Login Form**).
+- Reusable UI Widget (`src/components/ui/turnstile.tsx`):
+  - Dynamic Turnstile explicit loader (`https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit`).
+  - Supports `auto`, `light`, `dark` themes with native theme synchronization.
+  - Exposes imperative `reset()` method via `TurnstileRef` to enforce the single-use token lifecycle upon failed submission or form resets.
+- Canonical Server-Side Siteverify Helper (`src/lib/turnstile.ts`):
+  - Uses `ofetch` and `FetchError` exclusively for challenge verification requests adhering strictly to `.agents/rules/04-server-api-ofetch.md`.
+  - Validates token presence, format, and length (<= 2048 chars).
+  - Validates secret key and hostname allowlist (`TURNSTILE_HOSTNAMES`, defaults to `localhost,127.0.0.1`).
+  - Passes client IP (`cf-connecting-ip` / `x-forwarded-for`) and action (`contact`, `login`).
+  - Defaults to official Cloudflare test dummy keys in dev mode (`1x00000000000000000000AA` / `1x00000000000000000000000000000000UNASSIGNED`).
+- Protected endpoints:
+  - `POST /api/contact` (`src/routes/api/contact.ts`): Siteverify check before Resend email dispatch.
+  - `POST /api/auth/sign-in/email` (`src/routes/api/auth/$.ts`): Intercepted pre-check before Better Auth credential evaluation.
+- Full Vitest coverage added in `src/lib/turnstile.test.ts` (8 test scenarios).
+- Knowledge graph synchronized via `graphify update .`.
+
 
 ## Form Architecture & Refactoring State (Standardized)
 

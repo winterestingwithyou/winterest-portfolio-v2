@@ -9,6 +9,7 @@ describe('contact validation', () => {
       email: 'adam@example.com',
       subject: 'Collaboration Inquiry',
       message: 'Halo, saya tertarik untuk berkolaborasi dalam proyek ini.',
+      turnstileToken: 'test_token',
     }
 
     const parsed = contactSchema.parse(valid)
@@ -16,6 +17,7 @@ describe('contact validation', () => {
     expect(parsed.email).toBe('adam@example.com')
     expect(parsed.subject).toBe('Collaboration Inquiry')
     expect(parsed.message).toBe('Halo, saya tertarik untuk berkolaborasi dalam proyek ini.')
+    expect(parsed.turnstileToken).toBe('test_token')
   })
 
   it('rejects empty name', () => {
@@ -25,6 +27,7 @@ describe('contact validation', () => {
         email: 'adam@example.com',
         subject: '',
         message: 'Halo, saya tertarik untuk berkolaborasi.',
+        turnstileToken: '',
       }),
     ).toThrow('Nama wajib diisi.')
   })
@@ -36,6 +39,7 @@ describe('contact validation', () => {
         email: 'invalid-email',
         subject: '',
         message: 'Halo, saya tertarik untuk berkolaborasi.',
+        turnstileToken: '',
       }),
     ).toThrow('Format email tidak valid.')
   })
@@ -47,6 +51,7 @@ describe('contact validation', () => {
         email: 'adam@example.com',
         subject: '',
         message: 'Hi',
+        turnstileToken: '',
       }),
     ).toThrow('Pesan minimal 10 karakter.')
   })

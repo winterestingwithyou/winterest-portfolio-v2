@@ -8,6 +8,8 @@ export const env = createEnv({
     RESEND_API_KEY: z.string().min(1).optional(),
     RESEND_FROM_EMAIL: z.string().min(1).optional(),
     RESEND_TO_EMAIL: z.string().min(1).optional(),
+    TURNSTILE_SECRET_KEY: z.string().min(1).optional(),
+    TURNSTILE_HOSTNAMES: z.string().optional(),
   },
 
   /**
@@ -19,6 +21,7 @@ export const env = createEnv({
   client: {
     VITE_APP_TITLE: z.string().min(1).optional(),
     VITE_PUBLIC_APP_URL: z.url().optional(),
+    VITE_TURNSTILE_SITE_KEY: z.string().min(1).optional(),
   },
 
   /**
