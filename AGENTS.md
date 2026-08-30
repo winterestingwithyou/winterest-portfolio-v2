@@ -39,8 +39,10 @@ Guidelines are modularly organized in [`.agents/rules/`](file:///d:/winterest-pr
 5. **[05-database-cloudflare.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/05-database-cloudflare.md)**: Cloudflare D1/Workers edge runtime, `schema.ts` as Single Source of Truth, and mandatory `reset.sql` maintenance.
 6. **[06-auth-security-rbac.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/06-auth-security-rbac.md)**: Better Auth cookie sessions, PBKDF2 edge password hashing, RBAC (`owner`, `admin`, `editor`), and secrets security.
 7. **[07-design-system-ui-3d.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/07-design-system-ui-3d.md)**: Design tokens, Tailwind CSS v4 variable syntax, animations, and 3D progressive enhancement.
-8. **[08-architecture-code-standards.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/08-architecture-code-standards.md)**: Feature-based kebab-case architecture, code style, state management, testing, and things to avoid.
-9. **[graphify.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/graphify.md)**: Knowledge graph query and update rules.
+8. **[08-feature-architecture-structure.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/08-feature-architecture-structure.md)**: Feature-based kebab-case architecture, directory layout, section/form/table component conventions.
+9. **[09-copywriting-data-standards.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/09-copywriting-data-standards.md)**: Feature-scoped `copy.ts` vs static `data.ts`, i18n helpers, global layout copy, and future CMS fallback contract.
+10. **[10-code-quality-testing.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/10-code-quality-testing.md)**: TypeScript & Clean React, state management, Vitest testing, Git standards, and things to avoid.
+11. **[graphify.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/graphify.md)**: Knowledge graph query and update rules.
 
 ---
 
