@@ -47,7 +47,7 @@ Portfolio copy across public pages should sound:
 
 ### Good Direction References
 
-- _"I build practical web systems, developer tools, and experiments around modern fullstack architecture."_
+- _"I build practical web systems and developer tools around modern fullstack architecture."_
 - _"Cloudflare-powered portfolio and CMS for long-term personal work."_
 
 ---

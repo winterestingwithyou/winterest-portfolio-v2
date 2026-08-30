@@ -8,7 +8,7 @@ Built with **TanStack Start**, **React 19**, and **Cloudflare Workers**, featuri
 
 ## Features & Direction
 
-- **Public Portfolio**: Projects, interactive Dev Lab, technical writing/devlog, tech stack showcase, contact page, and resume.
+- **Public Portfolio**: Projects gallery, tech stack showcase, developer journey, contact page, and resume.
 - **CMS Dashboard**: Content management for projects, technologies, categories, site settings, and team accounts.
 - **Strict 1-Owner Model**: Single owner architecture with RBAC (`owner`, `admin`, `editor`). Public signup is disabled; admins and editors are managed privately from the dashboard.
 - **Built-in Setup Guard**: Two-stage initialization guard that displays dedicated terminal instructions on the web UI if database migrations or the owner account are pending.
@@ -167,18 +167,16 @@ bun run db:generate         # Generate new SQL migration file from src/db/schema
 - **Roles**:
   - `owner`: Full access to the platform, user management (promoting/demoting admins and editors), site settings, and content management. Exactly 1 owner account permitted.
   - `admin`: Content management, media uploads, and site settings.
-  - `editor`: Create, edit, and manage portfolio content (projects, writing, lab, stack).
+  - `editor`: Create, edit, and manage portfolio content (projects, stack).
 - **Public Signup Disabled**: All team accounts are invited and created privately by the owner via `/dashboard/users`.
 
 ---
 
 ## Routes Structure
 
-- `/` — Homepage Hero, Featured Projects, Lab Showcase, Tech Stack highlights
+- `/` — Homepage Hero, Featured Projects, Tech Stack highlights
 - `/about` — Developer journey, timeline, principles, and workflow
 - `/projects` & `/projects/$slug` — Case studies and portfolio projects
-- `/lab` & `/lab/$slug` — Interactive dev experiments and UI demos
-- `/writing` & `/writing/$slug` — Articles, learning notes, and devlogs
 - `/stack` — Technology stack and tooling showcase
 - `/contact` — Contact details and social links
 - `/resume` — Clean, printable resume view
