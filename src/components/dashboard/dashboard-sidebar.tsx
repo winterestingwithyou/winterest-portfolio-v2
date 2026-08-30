@@ -13,6 +13,7 @@ import {
   Users,
 } from 'lucide-react'
 
+import { Avatar, AvatarFallback, AvatarImage } from '#/components/ui/avatar'
 import { Button } from '#/components/ui/button'
 import {
   Popover,
@@ -42,6 +43,7 @@ type DashboardSidebarProps = {
     name?: string | null
     email?: string | null
     role?: string | null
+    image?: string | null
   } | null
 }
 
@@ -261,11 +263,17 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
                   tooltip={user?.email || 'Winterest Owner'}
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
-                  <div className="flex size-8 shrink-0 items-center justify-center rounded-full border border-(--brand-line) bg-(--brand-orange-soft) text-xs font-extrabold text-(--brand-orange-deep)">
-                    {user?.name?.[0]?.toUpperCase() ||
-                      user?.email?.[0]?.toUpperCase() ||
-                      'W'}
-                  </div>
+                  <Avatar className="size-8 shrink-0 border border-(--brand-line)">
+                    <AvatarImage
+                      src={user?.image ?? undefined}
+                      alt={user?.name || user?.email || 'User avatar'}
+                    />
+                    <AvatarFallback className="bg-(--brand-orange-soft) text-xs font-extrabold text-(--brand-orange-deep)">
+                      {user?.name?.[0]?.toUpperCase() ||
+                        user?.email?.[0]?.toUpperCase() ||
+                        'W'}
+                    </AvatarFallback>
+                  </Avatar>
                   <div className="flex min-w-0 flex-col text-left text-xs leading-tight group-data-[collapsible=icon]:hidden">
                     <span className="truncate font-semibold text-sidebar-foreground">
                       {user?.name ||
@@ -285,11 +293,17 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
               >
                 <div className="flex flex-col gap-2">
                   <div className="flex items-center gap-2.5 border-b border-(--brand-line) pb-2">
-                    <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-(--brand-orange-soft) text-xs font-extrabold text-(--brand-orange-deep)">
-                      {user?.name?.[0]?.toUpperCase() ||
-                        user?.email?.[0]?.toUpperCase() ||
-                        'W'}
-                    </div>
+                    <Avatar className="size-8 shrink-0">
+                      <AvatarImage
+                        src={user?.image ?? undefined}
+                        alt={user?.name || user?.email || 'User avatar'}
+                      />
+                      <AvatarFallback className="bg-(--brand-orange-soft) text-xs font-extrabold text-(--brand-orange-deep)">
+                        {user?.name?.[0]?.toUpperCase() ||
+                          user?.email?.[0]?.toUpperCase() ||
+                          'W'}
+                      </AvatarFallback>
+                    </Avatar>
                     <div className="flex min-w-0 flex-col">
                       <span className="truncate text-xs font-bold text-(--brand-ink)">
                         {user?.name || 'Winterest Owner'}
