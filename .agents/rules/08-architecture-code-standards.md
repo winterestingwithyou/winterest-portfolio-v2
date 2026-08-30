@@ -39,32 +39,57 @@ Use the existing stack as the default foundation:
       dashboard/       # Admin-specific UI elements
       visual/          # Mascot and graphics
     features/
-      about/           # About page components, timeline, values, copy/data
+      about/           # About page components, timeline, principles
         components/
         pages/
+        copy.ts        # Localized UI copy (en/id)
+        data.ts        # Static structured datasets (journey, favorites, etc.)
+      account/         # User account & profile management
+        components/
+        pages/
+        query-options.ts
+        hooks.ts
+        validation.ts
       auth/            # Better Auth hooks, session management, login forms
         components/
         pages/
+        copy.ts        # Localized auth copy (en/id)
+        hooks.ts
+        server-functions.ts
       contact/         # Contact forms, channels, validation
         components/
         pages/
+        copy.ts        # Localized contact copy (en/id)
+        hooks.ts
+        validation.ts
       dashboard/       # Dashboard overview widgets & state
         components/
         pages/
+        copy.ts        # Localized dashboard copy (en/id)
+        loaders.ts
       home/            # Homepage hero, stats, marquee, sections
         components/
         pages/
+        copy.ts        # Localized home copy (en/id)
       media/           # Media queries, upload helpers, grid
         components/
         pages/
         query-options.ts # TanStack Query options
         hooks.ts         # Mutation hooks
+        validation.ts
+      portfolio/       # Global portfolio layout copy & base profile data
+        components/
+        pages/
+        copy.ts        # Global layout copy (Navbar, Footer, 404, Resume)
+        data.ts        # Global siteProfile, base resume stats
       projects/        # Projects queries, validation, editor forms, project details
         components/
         pages/
+        copy.ts        # Localized projects copy (en/id)
         queries.ts       # Server-side Drizzle DB queries
         query-options.ts # TanStack Query options
         hooks.ts         # Mutation hooks
+        validation.ts
       settings/        # Site settings queries & actions
         components/
         pages/
@@ -75,9 +100,14 @@ Use the existing stack as the default foundation:
         pages/
         query-options.ts # TanStack Query options
         hooks.ts         # Mutation hooks
+      system/          # System setup, migrations, owner creation
+        components/
+        copy.ts        # Localized system setup copy (en/id)
+        server-functions.ts
       technologies/    # Tech stack queries, categories, technology management
         components/
         pages/
+        copy.ts        # Localized tech stack copy (en/id)
         queries.ts       # Server-side Drizzle DB queries
         query-options.ts # TanStack Query options
         hooks.ts         # Mutation hooks
@@ -87,6 +117,7 @@ Use the existing stack as the default foundation:
         queries.ts       # Server-side Drizzle DB queries
         query-options.ts # TanStack Query options
         hooks.ts         # Mutation hooks
+        validation.ts
     lib/
       api-client.ts    # Centralized ofetch client & error handler
       auth/            # Better Auth client & server config
@@ -115,6 +146,46 @@ Use the existing stack as the default foundation:
   - **`queries.ts`**: Reserved strictly for server-side Drizzle ORM DB queries (called from API endpoints & server functions).
   - **`query-options.ts`**: Reserved for client/loader TanStack Query `queryOptions({ queryKey, queryFn })` definitions (consumed directly by components and route loaders).
   - **`hooks.ts`**: Reserved strictly for custom mutation hooks (`useMutation`) and client-side UI hooks. Do NOT create `useQuery` / `useSuspenseQuery` wrapper hooks here.
+
+---
+
+## Feature Copywriting & UI Text Standards (`copy.ts` vs `data.ts`)
+
+To ensure clean separation of concerns, high modularity, and readiness for future CMS capabilities:
+
+### 1. `copy.ts` (UI Copy & Localized Strings)
+- Every feature that has user-facing text, section headings, badges, form labels, tooltips, or action messages **MUST** place its localized strings in `src/features/<feature>/copy.ts`.
+- Format copy as a typed object supporting `en` and `id` translations, and export a helper `get<Feature>Copy()` using Paraglide's `getLocale()`:
+  ```ts
+  import { getLocale } from '#/paraglide/runtime'
+
+  export const homeCopy = {
+    en: {
+      hero: { eyebrow: '...', title: '...' },
+    },
+    id: {
+      hero: { eyebrow: '...', title: '...' },
+    },
+  } as const
+
+  export function getHomeCopy() {
+    const locale = getLocale() === 'id' ? 'id' : 'en'
+    return homeCopy[locale]
+  }
+  ```
+- **Direct Placement**: Always place `copy.ts` directly in the root of the feature directory (`src/features/<feature>/copy.ts`). Do NOT create unnecessary nested directories (e.g., avoid `src/features/auth/content/auth-copy.ts`).
+
+### 2. `data.ts` (Static Structured Datasets)
+- Reserved strictly for static structured domain datasets, collections, or global metadata (e.g. `siteProfile` in `src/features/portfolio/data.ts`, `journeySteps` / `kpopFavorites` in `src/features/about/data.ts`).
+- Do NOT dump general page UI copywriting into `data.ts`.
+
+### 3. Global & Layout Copy
+- Global layout copywriting that spans multiple routes (Navbar, Footer, 404 Not Found, Resume overview) **MUST** be stored in `src/features/portfolio/copy.ts`.
+- Global identity and base developer profile metadata (`siteProfile`) remains in `src/features/portfolio/data.ts`.
+
+### 4. CMS Fallback & Evolution Contract
+- For pages intended to be CMS-driven in the future (such as Home and About), `copy.ts` serves as the **contract and default fallback value** (`cmsData?.title ?? defaultCopy.title`).
+- This guarantees the application never breaks if the database is empty or unmigrated, and keeps static UI labels (e.g. button texts, placeholders) cleanly separated from dynamic CMS content.
 
 ---
 
@@ -173,3 +244,5 @@ Use the existing stack as the default foundation:
 - Do **NOT** use unsafe markdown rendering (`dangerouslySetInnerHTML` without sanitization).
 - Do **NOT** create exact copies of copyrighted characters.
 - Do **NOT** make the dashboard overly animated or distracting.
+- Do **NOT** create monolithic copy files (e.g. dumping all pages' copy into a single file).
+- Do **NOT** put UI copy in random subdirectories (e.g. avoid `src/features/auth/content/auth-copy.ts`; use `src/features/auth/copy.ts`).

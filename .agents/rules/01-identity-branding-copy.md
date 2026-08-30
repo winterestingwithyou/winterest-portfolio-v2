@@ -52,6 +52,15 @@ Portfolio copy across public pages should sound:
 
 ---
 
+## Feature Copywriting Structure (`copy.ts`)
+
+- **Colocation**: Every feature stores its localized copywriting (`en` and `id`) in `src/features/<feature>/copy.ts` (e.g. `src/features/home/copy.ts`, `src/features/projects/copy.ts`).
+- **Global Layout Copy**: Shared navigation and footer copy belongs in `src/features/portfolio/copy.ts`.
+- **Static Datasets**: Static domain collections / datasets belong in `src/features/<feature>/data.ts` (e.g. `siteProfile` in `src/features/portfolio/data.ts`).
+- **No Monoliths**: Avoid monolithic data files storing copy for unrelated pages.
+
+---
+
 ## SEO & Metadata Expectations
 
 Each public page should have:
