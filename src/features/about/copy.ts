@@ -163,7 +163,7 @@ export const aboutCopy = {
       eyebrow: '04 / MY JOURNEY',
       title: 'How my engineering mindset developed over time.',
       subtitle:
-        'My growth as a developer is not just a list of languages learned, but a transformation in how I think about building software.',
+        'My growth as a developer is not just a list of tools learned, but a clear evolution in how I think about building reliable software.',
       currentStageTitle: 'Current Stage',
       growthFocusTitle: 'Personal Growth Focus',
       steps: [
@@ -172,51 +172,171 @@ export const aboutCopy = {
           title: 'First Contact with Programming',
           tagline: 'The spark of creation',
           description:
-            'Encountered programming at the start of university. Explored Python, JavaScript, HTML, CSS, and PHP with the simple excitement: "Programming lets me build apps!"',
+            'Encountered programming at the start of university. Explored Python, JavaScript, HTML, CSS, and PHP with the excitement of turning ideas into functional software.',
           highlights: ['Python', 'JavaScript', 'HTML/CSS', 'PHP'],
         },
         {
           year: '2024',
-          title: 'Semester 2 "Tugas Besar" Projects',
-          tagline: 'Realizing projects are achievable',
+          title: 'Academic Project Foundations',
+          tagline: 'Proving complex software is achievable',
           description:
-            'Tackled substantial university projects seriously. Discovered that building complex software from scratch is not impossible when approached with a structured process.',
+            'In my 2nd semester of university, I tackled academic projects seriously, building fullstack web apps and structured databases without relying on external shortcuts.',
           highlights: [
-            'Fullstack Apps',
+            'Fullstack Basics',
             'Database Design',
             'System Scaffolding',
           ],
         },
         {
-          year: 'Early 2025',
-          title: 'The IMPHNEN Turning Point',
+          year: 'Late 2024',
+          title: 'Standalone Java Desktop Architecture',
+          tagline: 'Building complete systems from scratch',
+          description:
+            'During my 3rd semester, I engineered a complete Java desktop application with a clean UI and solid business logic from scratch, earning top commendation from course lecturers before AI coding agents became standard.',
+          highlights: ['Java', 'Desktop App', 'OOP Architecture', 'UI Design'],
+        },
+        {
+          year: 'Early Jan 2025',
+          title: 'The IMPHNEN Community Turning Point',
           tagline: 'Expanding horizons beyond academia',
           description:
-            'Joined the Facebook developer community "IMPHNEN" (Ingin Menjadi Programmer handal Namun Enggan NGoding). Seeing skilled engineers share real-world practices inspired me to go far beyond university curriculum.',
+            'Joined the IMPHNEN developer community on Facebook in early January 2025. Watching experienced engineers share real-world practices sparked a habit of deep, self-driven learning beyond university curriculum.',
           highlights: [
-            'Community Learning',
-            'Self-Driven Deep Dives',
-            'Motivation Boost',
+            'Developer Community',
+            'Self-Driven Learning',
+            'Engineering Mindset',
           ],
         },
         {
-          year: '2025 - Present',
-          title: 'Going Deeper into Architecture & Infra',
-          tagline: 'Exploring the full software lifecycle',
+          year: 'Mar - Apr 2025',
+          title: 'Advanced Java Desktop System',
+          tagline: 'Refining precision and structure',
           description:
-            'Expanded focus to backend systems, Cloudflare edge runtimes, infrastructure, CI/CD pipelines, database optimization, and software architecture.',
+            'In my 4th semester, I delivered an advanced desktop Java system with refined UI and structured architecture, solidifying core object-oriented principles and academic recognition.',
+          highlights: ['Java Swing/JavaFX', 'Advanced OOP', 'Desktop UX'],
+        },
+        {
+          year: 'May 2025',
+          title: 'Modern Web Sprint and First Portfolio',
+          tagline: 'Rapid self-taught exploration',
+          description:
+            'Utilized post-semester break to explore modern frontend frameworks, Tailwind CSS, Laravel backend concepts, and successfully published my first personal portfolio.',
           highlights: [
-            'Cloud Runtimes',
-            'Edge Architecture',
-            'DevOps & CI/CD',
-            'Quality & Testing',
+            'React',
+            'Vue',
+            'Tailwind CSS',
+            'Laravel',
+            'First Portfolio',
+          ],
+        },
+        {
+          year: 'Jun - Aug 2025',
+          title: 'Multi-Tier Telemetry Internship',
+          tagline: 'Hands-on enterprise problem solving',
+          description:
+            'Built a customer satisfaction and network telemetry analytics platform during an engineering internship. Implemented a 2-frontend, 1-backend, 1-database architecture deployed across multi-cloud PaaS with NestJS and React Router v7.',
+          highlights: [
+            'NestJS',
+            'React Router v7',
+            'Multi-Service PaaS',
+            'Telemetry and Analytics',
+            'Clean Code',
+          ],
+        },
+        {
+          year: 'Sept - Oct 2025',
+          title: 'ECO-RAPID and 3rd Place SINERGI FEST',
+          tagline: 'Civic tech and edge deployment',
+          description:
+            'Co-developed ECO-RAPID, an environmental issue reporting portal. Explored Cloudflare edge deployments, Cloudinary asset storage, and Gmail API integration, winning 3rd place in the SINERGI FEST Web Development Competition organized by BEM KM Fasilkom UNSRI.',
+          highlights: [
+            'Cloudflare Edge',
+            'Gmail API',
+            'Cloudinary',
+            '3rd Place SINERGI FEST',
+          ],
+        },
+        {
+          year: 'Oct - Nov 2025',
+          title: 'Team Leadership, E-Commerce and AI Workflows',
+          tagline: 'Managing workflows and modern tooling',
+          description:
+            'Led team development for a Bagisto-based open-source e-commerce platform and collaborative projects. Established Git branch workflows, pull request reviews, CI pipelines, and integrated AI coding agents into daily development.',
+          highlights: [
+            'Team Lead and Git Flow',
+            'GraphQL',
+            'Next.js',
+            'Bagisto SaaS',
+            'AI Agent Workflow',
+          ],
+        },
+        {
+          year: 'Nov - Dec 2025',
+          title: '1st Place City Innovation Award',
+          tagline: 'Iterating toward real-world impact',
+          description:
+            'Iterated and refined ECO-RAPID for the 2025 Palembang City Innovation Competition, winning 1st Place in the Community Category.',
+          highlights: [
+            '1st Place Winner',
+            'Civic Tech',
+            'Production Iteration',
+          ],
+        },
+        {
+          year: 'Dec 2025',
+          title: 'Gaming Community Tooling and SEO Optimization',
+          tagline: 'High organic engagement',
+          description:
+            'Built specialized web utility tools for the Growtopia gaming community during semester break, optimizing search metadata to achieve a 20% to 25% organic click-through rate.',
+          highlights: [
+            'SEO Optimization',
+            'Community Tooling',
+            'High CTR (20-25%)',
+          ],
+        },
+        {
+          year: 'Jan - May 2026',
+          title: 'Bachelor Thesis: Campus SSO Microservices',
+          tagline: 'Centralized authentication architecture',
+          description:
+            'Engineered a centralized Single Sign-On (SSO) microservice platform for the faculty thesis. Architected a monorepo containing 1 frontend, 2 backends, 2 databases, and 1 docs frontend with RPC communication and automated CI/CD.',
+          highlights: [
+            'Single Sign-On (SSO)',
+            'Microservices and RPC',
+            'Monorepo',
+            'CI/CD and Agile',
+          ],
+        },
+        {
+          year: 'Jun - Jul 2026',
+          title: 'Client-Side Campus Administrative Suite',
+          tagline: 'Solving student administrative friction',
+          description:
+            'Addressed graduation administrative friction by engineering four zero-database client-side tools with React Router v7: Pembuat Dokumen Syarat Proposal, Guide Pengajuan Kompre, UNSRI Repository Guide with file maker, and Roadmap Yudisium & Wisuda Fasilkom UNSRI. These solutions helped dozens of graduating peers navigate document submissions smoothly.',
+          highlights: [
+            'React Router v7',
+            'Client-Side Architecture',
+            'Campus Administrative Tools',
+          ],
+        },
+        {
+          year: 'Aug 2026 - Present',
+          title: 'Career Refinement, Project Planning and Flagship Portfolio',
+          tagline: 'Long-term engineering direction',
+          description:
+            'Focusing on personal developer tooling, polishing CV and LinkedIn presence, mapping out architectures for upcoming software projects, and building the flagship Winterest portfolio platform with TanStack Start and Cloudflare Workers.',
+          highlights: [
+            'Career Polish',
+            'Project Planning',
+            'TanStack Start',
+            'Cloudflare Workers',
           ],
         },
       ],
       currentStage:
-        'Currently in a deeper-learning stage: mastering how production software is analyzed, designed, tested, deployed, and improved.',
+        'Post-graduate focus: mastering fullstack edge systems, refining professional presence, and designing deliberate, future-proof software architectures.',
       softSkillsFocus:
-        'Beside technical growth, I am actively working on improving communication, social skills, and leadership.',
+        'Balancing deep technical architecture with communication, technical writing, mentoring, and collaborative team leadership.',
     },
     values: {
       eyebrow: '05 / ENGINEERING VALUES',
@@ -654,7 +774,7 @@ export const aboutCopy = {
       eyebrow: '04 / PERJALANANKU',
       title: 'Bagaimana cara berpikirku berkembang dari waktu ke waktu.',
       subtitle:
-        'Perkembanganku sebagai developer bukan sekadar daftar bahasa yang dipelajari, tapi transformasi dalam cara berpikir saat membangun software.',
+        'Perkembanganku sebagai developer bukan sekadar daftar tools yang dipelajari, tapi transformasi nyata dalam cara berpikir saat membangun perangkat lunak yang andal.',
       currentStageTitle: 'Fase Saat Ini',
       growthFocusTitle: 'Fokus Pengembangan Diri',
       steps: [
@@ -668,10 +788,10 @@ export const aboutCopy = {
         },
         {
           year: '2024',
-          title: 'Tugas Besar Kuliah Semester 2+',
+          title: 'Fondasi Project Akademis',
           tagline: 'Menyadari project besar itu sangat bisa dibuat',
           description:
-            'Mengerjakan tugas besar perkuliahan dengan serius. Menyadarai bahwa membangun aplikasi kompleks dari nol itu tidak mustahil jika dikerjakan dengan alur yang jelas.',
+            'Di semester 2 perkuliahan, aku mengerjakan tugas besar dengan serius, membangun aplikasi fullstack dan desain database terstruktur dari nol dengan alur kerja yang jelas.',
           highlights: [
             'Aplikasi Fullstack',
             'Desain Database',
@@ -679,11 +799,24 @@ export const aboutCopy = {
           ],
         },
         {
-          year: 'Awal 2025',
+          year: 'Akhir 2024',
+          title: 'Aplikasi Desktop Java Mandiri',
+          tagline: 'Membangun sistem utuh dari nol',
+          description:
+            'Pada semester 3, aku membangun aplikasi desktop Java mandiri dengan antarmuka rapi dan logika fungsional lengkap dari nol, meraih apresiasi tinggi dari dosen pengampu di era sebelum AI coding agent.',
+          highlights: [
+            'Java',
+            'Aplikasi Desktop',
+            'Arsitektur OOP',
+            'Desain UI',
+          ],
+        },
+        {
+          year: 'Awal Jan 2025',
           title: 'Titik Balik Komunitas IMPHNEN',
           tagline: 'Membuka wawasan di luar kurikulum kampus',
           description:
-            'Bergabung dengan komunitas Facebook "IMPHNEN" (Ingin Menjadi Programmer handal Namun Enggan NGoding). Melihat praktisi dan programmer jago berbagi ilmu mendorongku untuk eksplorasi mandiri secara lebih mendalam.',
+            'Bergabung dengan komunitas programmer IMPHNEN di Facebook pada awal Januari 2025. Melihat diskusi para praktisi industri memicu eksplorasi mandiri yang jauh melampaui kurikulum kampus.',
           highlights: [
             'Belajar Komunitas',
             'Eksplorasi Mandiri',
@@ -691,23 +824,135 @@ export const aboutCopy = {
           ],
         },
         {
-          year: '2025 - Sekarang',
-          title: 'Pendalaman Arsitektur & Infrastruktur',
-          tagline: 'Mengeksplorasi seluruh siklus hidup software',
+          year: 'Mar - Apr 2025',
+          title: 'Project Desktop Java Lanjutan',
+          tagline: 'Menjaga presisi dan struktur kode',
           description:
-            'Memperluas fokus ke sistem backend, edge runtime Cloudflare, infrastruktur, pipeline CI/CD, optimasi database, dan arsitektur perangkat lunak.',
+            'Pada semester 4, aku menyelesaikan project desktop Java lanjutan dengan ketelitian tinggi pada antarmuka dan alur data, kembali meraih pengakuan akademis terbaik dari dosen.',
+          highlights: ['Java Swing/JavaFX', 'OOP Lanjutan', 'UX Desktop'],
+        },
+        {
+          year: 'Mei 2025',
+          title: 'Eksplorasi Web Modern & Portofolio Pertama',
+          tagline: 'Sprint belajar mandiri pasca-semester',
+          description:
+            'Memanfaatkan jeda libur semester untuk mendalami ekosistem web modern: React, Vue, Tailwind CSS, konsep backend Laravel, serta merilis portofolio web pertama.',
           highlights: [
-            'Cloud Runtimes',
-            'Arsitektur Edge',
-            'DevOps & CI/CD',
-            'Quality & Testing',
+            'React',
+            'Vue',
+            'Tailwind CSS',
+            'Laravel',
+            'Portofolio Pertama',
+          ],
+        },
+        {
+          year: 'Jun - Agu 2025',
+          title: 'Magang Telemetri Multi-Tier',
+          tagline: 'Menyelesaikan masalah nyata industri',
+          description:
+            'Membangun platform kuesioner kepuasan pelanggan dan telemetri jaringan saat magang. Merancang arsitektur 2-frontend, 1-backend, 1-database dengan NestJS dan React Router v7 yang dideploy di berbagai platform PaaS.',
+          highlights: [
+            'NestJS',
+            'React Router v7',
+            'Multi-Service PaaS',
+            'Telemetri & Analitik',
+            'Clean Code',
+          ],
+        },
+        {
+          year: 'Sep - Okt 2025',
+          title: 'ECO-RAPID & Juara 3 SINERGI FEST',
+          tagline: 'Civic tech dan deployment edge',
+          description:
+            'Mengembangkan ECO-RAPID, platform pelaporan masalah lingkungan warga. Mendalami deployment edge Cloudflare, integrasi Cloudinary, dan Gmail API, meraih Juara 3 pada kompetisi web development SINERGI FEST oleh BEM KM Fasilkom UNSRI.',
+          highlights: [
+            'Cloudflare Edge',
+            'Gmail API',
+            'Cloudinary',
+            'Juara 3 SINERGI FEST',
+          ],
+        },
+        {
+          year: 'Okt - Nov 2025',
+          title: 'Kepemimpinan Tim, E-Commerce & AI Workflow',
+          tagline: 'Manajemen workflow dan kolaborasi modern',
+          description:
+            'Memimpin tim dalam project e-commerce berbasis open-source Bagisto dan side-project kolaboratif. Menerapkan alur Git branch, review pull request, pipeline CI, serta mulai mengadopsi AI coding agent dalam alur kerja harian.',
+          highlights: [
+            'Team Lead & Git Flow',
+            'GraphQL',
+            'Next.js',
+            'Bagisto SaaS',
+            'AI Agent Workflow',
+          ],
+        },
+        {
+          year: 'Nov - Des 2025',
+          title: 'Juara 1 Lomba Inovasi Kota Palembang',
+          tagline: 'Iterasi menuju dampak nyata',
+          description:
+            'Melanjutkan pengembangan dan menyempurnakan ECO-RAPID untuk Lomba Inovasi Kota Palembang 2025, berhasil meraih Juara 1 Kategori Masyarakat.',
+          highlights: [
+            'Juara 1 Inovasi',
+            'Civic Tech',
+            'Iterasi Produksi',
+          ],
+        },
+        {
+          year: 'Des 2025',
+          title: 'Utility Komunitas Game & Optimasi SEO',
+          tagline: 'Trafik organik dan CTR tinggi',
+          description:
+            'Membangun web utility untuk komunitas pemain game Growtopia di masa libur semester, mengoptimasi SEO hingga mencapai Click-Through Rate (CTR) organik 20% sampai 25%.',
+          highlights: [
+            'Optimasi SEO',
+            'Tooling Komunitas',
+            'CTR Tinggi (20-25%)',
+          ],
+        },
+        {
+          year: 'Jan - Mei 2026',
+          title: 'Tugas Akhir: Microservice SSO Kampus',
+          tagline: 'Arsitektur autentikasi terpusat',
+          description:
+            'Mengerjakan Tugas Akhir dengan merancang sistem Single Sign-On (SSO) terpusat untuk kampus. Membangun arsitektur microservice monorepo (1 FE, 2 BE, 2 DB, 1 FE dokumentasi) dengan protokol RPC dan pipeline CI/CD mandiri.',
+          highlights: [
+            'Single Sign-On (SSO)',
+            'Microservices & RPC',
+            'Monorepo',
+            'CI/CD & Agile',
+          ],
+        },
+        {
+          year: 'Jun - Jul 2026',
+          title: 'Rangkaian Utility Administrasi Kampus',
+          tagline: 'Menyelesaikan hambatan birokrasi mahasiswa',
+          description:
+            'Mengatasi kendala birokrasi pasca-sidang dengan membangun empat web tools client-side tanpa database berbasis React Router v7: Pembuat Dokumen Syarat Proposal, Guide Pengajuan Kompre, UNSRI Repository Guide with file maker, dan Roadmap Yudisium & Wisuda Fasilkom UNSRI. Rangkaian tools ini membantu puluhan rekan mahasiswa menyelesaikan berkas kelulusan.',
+          highlights: [
+            'React Router v7',
+            'Arsitektur Client-Side',
+            'Tooling Administrasi Kampus',
+          ],
+        },
+        {
+          year: 'Agu 2026 - Sekarang',
+          title: 'Pematangan Karir, Rencana Project & Portofolio Utama',
+          tagline: 'Arah rekayasa jangka panjang',
+          description:
+            'Fokus membangun tooling produktivitas mandiri, menyempurnakan CV dan profil LinkedIn, merancang arsitektur project masa depan, serta mengembangkan platform portofolio Winterest dengan TanStack Start dan Cloudflare Workers.',
+          highlights: [
+            'Pematangan Karir',
+            'Perencanaan Project',
+            'TanStack Start',
+            'Cloudflare Workers',
           ],
         },
       ],
       currentStage:
-        'Saat ini berada di fase belajar mendalam: mendalami bagaimana software serius dianalisis, dirancang, diuji, dideploy, dan ditingkatkan.',
+        'Fase pasca-kelulusan: mendalami sistem fullstack edge, menyempurnakan reputasi profesional, dan merancang arsitektur perangkat lunak yang berjangka panjang.',
       softSkillsFocus:
-        'Di luar keterampilan teknis, aku juga aktif mengasah kemampuan komunikasi, relasi sosial, dan kepemimpinan.',
+        'Menyeimbangkan kedalaman arsitektur teknis dengan komunikasi, penulisan teknis, mentoring, dan kepemimpinan tim kolaboratif.',
     },
     values: {
       eyebrow: '05 / HAL-HAL YANG KU-PEDULIKAN',
