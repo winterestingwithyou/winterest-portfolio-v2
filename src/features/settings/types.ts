@@ -28,7 +28,7 @@ export const defaultSiteSettings: SiteSettingsInput = {
   siteName: 'Winterest',
   siteTagline: 'Personal Portfolio Platform',
   siteDescription:
-    'Personal platform, CMS dashboard, and developer lab for Winterest.',
+    'Personal developer platform, portfolio, and CMS dashboard for Winterest.',
   defaultLocale: 'en',
   publicEmail: '',
   metaTitleEn: 'Winterest Portfolio',

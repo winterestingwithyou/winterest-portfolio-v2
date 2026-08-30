@@ -59,7 +59,7 @@ Use the existing stack as the default foundation:
         pages/
         query-options.ts # TanStack Query options
         hooks.ts         # Mutation hooks
-      projects/        # Projects queries, validation, editor forms, case study
+      projects/        # Projects queries, validation, editor forms, project details
         components/
         pages/
         queries.ts       # Server-side Drizzle DB queries

@@ -46,7 +46,7 @@ src/routes/
   stack.tsx            # Tech stack catalog, categorized tools, rationale
   projects/
     index.tsx          # Filterable project gallery (by stack/category/status)
-    $slug.tsx          # In-depth project case study (problem, goal, role, architecture, metrics)
+    $slug.tsx          # In-depth project details (problem, goal, role, architecture, metrics)
   dashboard/
     route.tsx          # Dashboard shell layout & server auth guard
     index.tsx          # Overview analytics, quick stats, content health
@@ -90,8 +90,8 @@ src/routes/
 
 - **`/` (Homepage)**: Strong hero section, short personal intro, featured projects, tech stack highlights, contact CTA, subtle character/mascot visual, Cloudflare+Bun atmosphere.
 - **`/about`**: Personal developer journey, academic/project background, areas of interest, timeline, core principles, tools and workflow.
-- **`/projects`**: Project index with filters by stack, category, and status; featured projects; project cards linking to GitHub, demo, and case study.
-- **`/projects/$slug`**: Project detail/case study covering problem, goal, role, stack, architecture, screenshots, key features, challenges, results, and live links.
+- **`/projects`**: Project index with filters by stack, category, and status; featured projects; project cards linking to GitHub, demo, and details.
+- **`/projects/$slug`**: Project detail view covering problem, goal, role, stack, architecture, screenshots, key features, challenges, results, and live links.
 - **`/stack`**: Interactive tech stack catalog with favorite tools, categorization, usage notes, and rationale.
 - **`/contact`**: Direct communication channels, contact form, GitHub, LinkedIn, social links.
 - **`/resume`**: Clean, printable resume format suitable for professional review.

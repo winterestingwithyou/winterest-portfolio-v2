@@ -9,8 +9,6 @@ export const dashboardCopy = {
         overview: 'Overview',
         projects: 'Projects',
         stack: 'Tech Stack',
-        writing: 'Writing',
-        lab: 'Lab',
         media: 'Media',
         social: 'Social Links',
         users: 'Users',
@@ -33,16 +31,14 @@ export const dashboardCopy = {
       },
       chartTitle: 'Content mix',
       chartDescription:
-        'A quick read of how the portfolio is balanced across projects, writing, and experiments.',
+        'A quick read of portfolio content status across projects and media assets.',
       activityTitle: 'Recent focus',
       activityDescription:
-        'Use this view to spot what needs writing, polishing, or publishing next.',
+        'Use this view to spot what needs polishing or publishing next.',
       quickTitle: 'Quick actions',
       quickDescription:
         'Jump into the places that keep the public portfolio moving.',
       projects: 'Review projects',
-      writing: 'Draft writing',
-      lab: 'Capture lab notes',
       media: 'Organize media',
       states: {
         published: 'Published',
@@ -77,7 +73,7 @@ export const dashboardCopy = {
     projects: {
       title: 'Projects',
       description:
-        'Manage the work shown in the portfolio: case studies, highlights, and publishing status.',
+        'Manage the work shown in the portfolio: project details, highlights, and publishing status.',
       new: 'New project',
       project: 'Project',
       loading: 'Loading projects...',
@@ -96,30 +92,6 @@ export const dashboardCopy = {
         'Update the story, links, and publishing state for this portfolio entry.',
       loadingEntry: 'Loading project...',
       notFound: 'Project not found.',
-    },
-    writing: {
-      title: 'Writing',
-      description:
-        'Manage articles, devlogs, notes, and longer thoughts before they go public.',
-      new: 'New article',
-      newTitle: 'New writing',
-      newDescription: 'Start a draft for notes, devlogs, or essays.',
-      editTitle: 'Edit writing',
-      editDescription: 'Update this writing draft and its publishing state.',
-      loadingEntry: 'Loading writing...',
-      notFound: 'Writing not found.',
-    },
-    lab: {
-      title: 'Lab',
-      description:
-        'Manage experiments, small demos, rough notes, and ideas that may become larger work.',
-      new: 'New lab entry',
-      newTitle: 'New lab entry',
-      newDescription: 'Capture an experiment while the idea is still fresh.',
-      editTitle: 'Edit lab entry',
-      editDescription: 'Update this experiment and its publishing state.',
-      loadingEntry: 'Loading lab entry...',
-      notFound: 'Lab entry not found.',
     },
     media: {
       title: 'Media Library',
@@ -408,7 +380,7 @@ export const dashboardCopy = {
       language: 'Language',
       repositoryUrl: 'Repository URL',
       demoUrl: 'Demo URL',
-      caseStudyUrl: 'Case study URL',
+      caseStudyUrl: 'Detail / Article URL',
       coverImageUrl: 'Cover image URL',
       featured: 'Featured project',
       content: 'Content',
@@ -423,8 +395,6 @@ export const dashboardCopy = {
         overview: 'Ringkasan',
         projects: 'Project',
         stack: 'Tech Stack',
-        writing: 'Tulisan',
-        lab: 'Lab',
         media: 'Media',
         social: 'Media Sosial',
         users: 'Pengguna',
@@ -447,16 +417,14 @@ export const dashboardCopy = {
       },
       chartTitle: 'Komposisi konten',
       chartDescription:
-        'Gambaran cepat tentang keseimbangan portfolio antara project, tulisan, dan eksperimen.',
+        'Gambaran cepat status konten portfolio antara project dan aset media.',
       activityTitle: 'Fokus terbaru',
       activityDescription:
-        'Gunakan tampilan ini untuk melihat apa yang perlu ditulis, dipoles, atau dipublish berikutnya.',
+        'Gunakan tampilan ini untuk melihat apa yang perlu dipoles atau dipublish berikutnya.',
       quickTitle: 'Aksi cepat',
       quickDescription:
         'Masuk ke area yang menjaga portfolio publik tetap bergerak.',
       projects: 'Review project',
-      writing: 'Tulis draft',
-      lab: 'Catat lab',
       media: 'Rapikan media',
       states: {
         published: 'Published',
@@ -491,7 +459,7 @@ export const dashboardCopy = {
     projects: {
       title: 'Project',
       description:
-        'Kelola karya yang tampil di portfolio: case study, highlight, dan status publish.',
+        'Kelola karya yang tampil di portfolio: detail project, highlight, dan status publish.',
       new: 'Project baru',
       project: 'Project',
       loading: 'Memuat project...',
@@ -510,30 +478,6 @@ export const dashboardCopy = {
         'Perbarui cerita, link, dan status publish untuk entry portfolio ini.',
       loadingEntry: 'Memuat project...',
       notFound: 'Project tidak ditemukan.',
-    },
-    writing: {
-      title: 'Tulisan',
-      description:
-        'Kelola artikel, devlog, catatan, dan pemikiran panjang sebelum tampil publik.',
-      new: 'Tulisan baru',
-      newTitle: 'Tulisan baru',
-      newDescription: 'Mulai draft untuk catatan, devlog, atau esai.',
-      editTitle: 'Edit tulisan',
-      editDescription: 'Perbarui draft tulisan dan status publish-nya.',
-      loadingEntry: 'Memuat tulisan...',
-      notFound: 'Tulisan tidak ditemukan.',
-    },
-    lab: {
-      title: 'Lab',
-      description:
-        'Kelola eksperimen, demo kecil, catatan kasar, dan ide yang mungkin tumbuh menjadi karya lebih besar.',
-      new: 'Entry lab baru',
-      newTitle: 'Entry lab baru',
-      newDescription: 'Catat eksperimen saat idenya masih segar.',
-      editTitle: 'Edit entry lab',
-      editDescription: 'Perbarui eksperimen dan status publish-nya.',
-      loadingEntry: 'Memuat entry lab...',
-      notFound: 'Entry lab tidak ditemukan.',
     },
     media: {
       title: 'Media Library',
@@ -825,7 +769,7 @@ export const dashboardCopy = {
       language: 'Bahasa',
       repositoryUrl: 'URL repository',
       demoUrl: 'URL demo',
-      caseStudyUrl: 'URL case study',
+      caseStudyUrl: 'URL Detail / Artikel',
       coverImageUrl: 'URL cover image',
       featured: 'Project pilihan',
       content: 'Konten',

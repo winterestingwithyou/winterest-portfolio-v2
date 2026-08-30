@@ -176,7 +176,7 @@ bun run db:generate         # Generate new SQL migration file from src/db/schema
 
 - `/` — Homepage Hero, Featured Projects, Tech Stack highlights
 - `/about` — Developer journey, timeline, principles, and workflow
-- `/projects` & `/projects/$slug` — Case studies and portfolio projects
+- `/projects` & `/projects/$slug` — Project gallery and project details
 - `/stack` — Technology stack and tooling showcase
 - `/contact` — Contact details and social links
 - `/resume` — Clean, printable resume view

@@ -477,7 +477,7 @@ export function SettingsEditorForm({
                             value={field.state.value}
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
-                            placeholder="Projects, experiments, and practical fullstack web work..."
+                            placeholder="Projects, developer tools, and practical fullstack web work..."
                           />
                           <FieldDescription>
                             {settingsCopy.form.ogDescriptionDesc}
@@ -540,7 +540,7 @@ export function SettingsEditorForm({
                             value={field.state.value}
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
-                            placeholder="Project, eksperimen, dan karya web fullstack praktis..."
+                            placeholder="Project, developer tools, dan karya web fullstack praktis..."
                           />
                           <FieldDescription>
                             {settingsCopy.form.ogDescriptionDesc}

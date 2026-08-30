@@ -582,20 +582,6 @@
     top: 1rem;
   }
 
-  .signal-preview--writing {
-    background:
-      radial-gradient(
-        circle at 76% 18%,
-        color-mix(in srgb, #ffd08a 28%, transparent),
-        transparent 30%
-      ),
-      linear-gradient(
-        145deg,
-        color-mix(in srgb, var(--brand-dark) 88%, transparent),
-        color-mix(in srgb, #3f2f25 72%, var(--brand-orange) 28%)
-      );
-  }
-
   .signal-preview--stack {
     background:
       linear-gradient(rgba(255, 183, 106, 0.08) 1px, transparent 1px),

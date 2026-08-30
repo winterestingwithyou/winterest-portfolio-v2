@@ -11,7 +11,7 @@ export const siteProfile = {
   intro:
     "I'm Adam — a CS student from Sriwijaya who builds web apps, open source tools, and occasional side projects. Online, I go by Winterest.",
   longIntro:
-    'I study Computer Science at Universitas Sriwijaya and spend most of my free time building things for the web. This site is my public home for projects, experiments, devlogs, and the work I want people to actually see.',
+    'I study Computer Science at Universitas Sriwijaya and spend most of my free time building things for the web. This site is my public home for projects, developer tools, and the work I want people to actually see.',
   repoUrl: 'https://github.com/winterestingwithyou/winterest-portfolio-v2',
   contactEmail: 'hello@winterest.tech',
 }
@@ -136,19 +136,19 @@ export const timeline = [
     period: 'Now',
     title: 'Personal portfolio foundation',
     description:
-      'Shaping the site around who I am, what I build, and how people can explore my projects, notes, and experiments.',
+      'Shaping the site around who I am, what I build, and how people can explore my projects, developer tools, and technical work.',
   },
   {
     period: 'Next',
     title: 'Content workflow and dashboard',
     description:
-      'Turning project, writing, and lab content into an owner-managed workflow with drafts, published entries, and cleaner editing screens.',
+      'Turning portfolio content into an owner-managed workflow with drafts, published entries, and cleaner editing screens.',
   },
   {
     period: 'Later',
-    title: 'Richer writing, media, and visual identity',
+    title: 'Richer media and visual identity',
     description:
-      'Improving long-form content, media handling, language support, and lightweight character visuals without making the site feel heavy.',
+      'Improving media handling, language support, and lightweight character visuals without making the site feel heavy.',
   },
 ] as const
 
@@ -238,19 +238,19 @@ const idTimeline = [
     period: 'Sekarang',
     title: 'Fondasi portfolio personal',
     description:
-      'Membentuk situs di sekitar siapa Winterest, apa yang dibangun, dan bagaimana orang bisa menjelajahi project, catatan, dan eksperimen.',
+      'Membentuk situs di sekitar siapa Winterest, apa yang dibangun, dan bagaimana orang bisa menjelajahi project, developer tools, dan karya teknisnya.',
   },
   {
     period: 'Berikutnya',
     title: 'Workflow konten dan dashboard',
     description:
-      'Mengubah konten project, writing, dan lab menjadi workflow owner-managed dengan draft, published entry, dan layar editing yang lebih bersih.',
+      'Mengubah konten portfolio menjadi workflow owner-managed dengan draft, published entry, dan layar editing yang lebih bersih.',
   },
   {
     period: 'Nanti',
-    title: 'Writing, media, dan visual identity yang lebih kaya',
+    title: 'Media dan visual identity yang lebih kaya',
     description:
-      'Memperbaiki konten panjang, media handling, dukungan bahasa, dan visual karakter ringan tanpa membuat situs terasa berat.',
+      'Memperbaiki media handling, dukungan bahasa, dan visual karakter ringan tanpa membuat situs terasa berat.',
   },
 ] as const
 
@@ -299,7 +299,7 @@ export const publicCopy = {
       title: 'A closer look at Winterest, the developer behind this space.',
       intro:
         'I build online as Winterest. I enjoy turning ideas into practical web systems: interfaces that feel calm, backend flows that stay understandable, and tools that make future work easier.',
-      body: 'Winterest is my public home for that process. It gathers project case studies, technical notes, experiments, and a little visual personality so the site can show both the finished work and the thinking behind it.',
+      body: 'Winterest is my public home for that process. It gathers featured projects, technical highlights, and a little visual personality so the site can show both the finished work and the thinking behind it.',
       journeyEyebrow: 'Journey',
       journeyTitle: 'What this space is becoming.',
       principlesTitle: 'The values I want this work to carry.',
@@ -315,7 +315,7 @@ export const publicCopy = {
         'I am still preparing the project stories for this page. Check back soon for more detailed work notes.',
       remote: 'git remote',
       sourceTitle:
-        'Follow the source behind Winterest and the experiments around it.',
+        'Follow the source code and development behind Winterest.',
       repository: 'Repository',
     },
     stack: {
@@ -363,7 +363,7 @@ export const publicCopy = {
       description:
         'Fullstack web developer focused on practical web systems, calm interfaces, and maintainable fullstack workflows.',
       longIntro:
-        'I work around modern web architecture, edge-friendly apps, and developer tooling. Winterest is my public home for case studies, notes, experiments, and the systems I keep improving over time.',
+        'I work around modern web architecture, edge-friendly apps, and developer tooling. Winterest is my public home for web systems, developer tools, and the projects I keep improving over time.',
       selectedWork: 'Selected Work',
       direction: 'Current Direction',
       stack: 'Stack',
@@ -384,7 +384,7 @@ export const publicCopy = {
     },
     projectDetail: {
       notFound: 'Project not found',
-      notFoundTitle: 'This case study does not exist yet.',
+      notFoundTitle: 'This project does not exist yet.',
       back: 'Back to projects',
       projects: 'Projects',
       status: 'Status',
@@ -444,7 +444,7 @@ export const publicCopy = {
       title: 'Mengenal Winterest, developer di balik ruang ini.',
       intro:
         'Aku membangun online sebagai Winterest. Aku suka mengubah ide menjadi sistem web praktis: interface yang terasa tenang, alur backend yang tetap mudah dipahami, dan tools yang membuat pekerjaan berikutnya lebih mudah.',
-      body: 'Winterest adalah rumah publik untuk proses itu. Isinya case study project, catatan teknis, eksperimen, dan sedikit visual personality agar situs ini bisa menunjukkan hasil akhir sekaligus cara berpikir di baliknya.',
+      body: 'Winterest adalah rumah publik untuk proses itu. Isinya project unggulan, sorotan teknis, dan sedikit visual personality agar situs ini bisa menunjukkan hasil akhir sekaligus cara berpikir di baliknya.',
       journeyEyebrow: 'Perjalanan',
       journeyTitle: 'Arah berkembangnya ruang ini.',
       principlesTitle: 'Nilai yang ingin kubawa ke pekerjaan ini.',
@@ -460,7 +460,7 @@ export const publicCopy = {
         'Aku masih menyiapkan cerita project untuk halaman ini. Nanti akan ada catatan kerja yang lebih lengkap di sini.',
       remote: 'git remote',
       sourceTitle:
-        'Ikuti source di balik Winterest dan eksperimen di sekitarnya.',
+        'Ikuti source code dan perkembangan di balik Winterest.',
       repository: 'Repository',
     },
     stack: {
@@ -509,7 +509,7 @@ export const publicCopy = {
       description:
         'Fullstack web developer yang fokus pada sistem web praktis, interface yang tenang, dan workflow fullstack yang mudah dirawat.',
       longIntro:
-        'Aku bekerja di sekitar arsitektur web modern, aplikasi edge-friendly, dan developer tooling. Winterest adalah rumah publikku untuk case study, catatan, eksperimen, dan sistem yang terus kuperbaiki dari waktu ke waktu.',
+        'Aku bekerja di sekitar arsitektur web modern, aplikasi edge-friendly, dan developer tooling. Winterest adalah rumah publikku untuk sistem web, developer tools, dan project yang terus kuperbaiki dari waktu ke waktu.',
       selectedWork: 'Karya Pilihan',
       direction: 'Arah Saat Ini',
       stack: 'Stack',
@@ -530,7 +530,7 @@ export const publicCopy = {
     },
     projectDetail: {
       notFound: 'Project tidak ditemukan',
-      notFoundTitle: 'Case study ini belum ada.',
+      notFoundTitle: 'Project ini belum ada.',
       back: 'Kembali ke project',
       projects: 'Project',
       status: 'Status',

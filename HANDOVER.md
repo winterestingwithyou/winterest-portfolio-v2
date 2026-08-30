@@ -182,8 +182,8 @@ Status: Done enough for current iteration.
 
 Implemented:
 
-- Public pages for about, projects, lab, writing, stack, contact, resume.
-- Project/detail, lab/detail, writing/detail routes exist.
+- Public pages for about, projects, stack, contact, resume.
+- Project and detail routes exist.
 - Public empty states were rewritten to be user-friendly rather than CMS-instructional.
 - Public content copy was revised to use Winterest identity more strongly.
 
@@ -202,14 +202,14 @@ Implemented:
 - Migrations moved to `drizzle/migrations`.
 - Reset scripts moved to `drizzle/scripts`.
 - CMS dashboard shell.
-- CRUD foundations for projects, writing, lab, and media.
+- CRUD foundations for projects, tech stack, and media.
 - Public portfolio data now reads from DB-backed loaders instead of only hardcoded dummy data.
 - Seed scripts exist for local/remote.
 - Content translations model added for multilingual content.
 
 Important architecture decision:
 
-- Projects, writing, and lab entries are not “one locale at a time”.
+- Projects and content entities are not “one locale at a time”.
 - Each content entity should have translations for every supported locale (`en`, `id` now, extensible later).
 - Public data should display the translation matching the selected locale.
 
@@ -235,18 +235,15 @@ Implemented:
 - Dashboard link appears in navbar only when authenticated.
 - Login page has dedicated aesthetic auth layout with language & theme popovers.
 
-### Phase 5: Writing, Lab, Media
+### Phase 5: Media and Asset Management
 
 Status: Implemented & Integrated with Cloudflare R2.
 
 Implemented:
 
-- Writing CRUD.
-- Lab CRUD.
 - Media Library and Cloudflare R2 upload/streaming handler fully implemented.
 - Reusable `ImageUploader` and `MediaPickerDialog` components integrated into `project-editor-form.tsx`.
-- Writing/lab public routes read DB-backed published content.
-- Migration `0002_add_writing_lab_media.sql` exists.
+- Scope simplified: Lab and writing modules sunsetted in favor of dedicated Projects, Stack, and Media workflows.
 
 Needs polish:
 
@@ -376,7 +373,7 @@ Dev server was not run due project rule.
    - Check login layout on mobile and dark mode.
 
 6. Content/assets.
-   - Replace placeholders with real projects, writing, lab entries, and images.
+   - Replace placeholders with real projects, tech stack tools, and images.
    - Keep assets optimized and Cloudflare-friendly.
 
 ## Current User Preferences Learned
