@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowLeft, Sparkles } from 'lucide-react'
 
 import { Container } from '#/components/marketing/section'
-import { getPublicCopy } from '#/features/portfolio/data'
+import { getProjectsCopy } from '#/features/projects/copy'
 import { ProjectDetailHero } from '#/features/projects/components/section/project-detail-hero'
 import { ProjectDetailSidebar } from '#/features/projects/components/section/project-detail-sidebar'
 import type { getPublishedProject } from '#/features/projects/public-loaders'
@@ -12,22 +12,22 @@ type ProjectDetailPageProps = {
 }
 
 export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
-  const copy = getPublicCopy()
+  const copy = getProjectsCopy()
 
   if (!project) {
     return (
       <main className="px-4 py-20">
         <Container>
           <div className="surface-card max-w-2xl p-8">
-            <p className="eyebrow mb-3">{copy.projectDetail.notFound}</p>
+            <p className="eyebrow mb-3">{copy.detail.notFound}</p>
             <h1 className="text-3xl font-semibold text-(--brand-ink)">
-              {copy.projectDetail.notFoundTitle}
+              {copy.detail.notFoundTitle}
             </h1>
             <Link
               to="/projects"
               className="mt-6 inline-flex text-sm font-bold text-(--brand-orange-deep) no-underline"
             >
-              {copy.projectDetail.back}
+              {copy.detail.back}
             </Link>
           </div>
         </Container>
@@ -44,7 +44,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
           className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-(--brand-orange-deep) no-underline transition hover:-translate-x-1"
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
-          {copy.projectDetail.projects}
+          {copy.detail.projects}
         </Link>
 
         {/* Hero Section */}

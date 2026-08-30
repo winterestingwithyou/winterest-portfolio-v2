@@ -2,13 +2,13 @@ import { useQuery } from '@tanstack/react-query'
 import { ExternalLink, MapPin, MessageSquare } from 'lucide-react'
 import { motion } from 'motion/react'
 
-import type { getPublicCopy } from '#/features/portfolio/data'
+import type { getContactCopy } from '#/features/contact/copy'
 import { socialQueryOptions } from '#/features/social/query-options'
 import { platformMetaMap } from '#/features/social/types'
 import { staggerContainer, staggerItem } from '#/lib/motion'
 
 type ContactChannelsProps = {
-  copy: ReturnType<typeof getPublicCopy>['contact']
+  copy: ReturnType<typeof getContactCopy>['direct']
 }
 
 export function ContactChannels({ copy }: ContactChannelsProps) {
@@ -29,10 +29,10 @@ export function ContactChannels({ copy }: ContactChannelsProps) {
           </div>
           <div className="min-w-0 flex-1">
             <h2 className="truncate text-lg font-bold text-(--brand-ink)">
-              {copy.directTitle}
+              {copy.title}
             </h2>
             <p className="truncate text-xs text-(--brand-muted)">
-              {copy.directSubtitle}
+              {copy.subtitle}
             </p>
           </div>
         </div>

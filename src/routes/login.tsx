@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
-import { getAuthCopy } from '#/features/auth/content/auth-copy'
+import { getAuthCopy } from '#/features/auth/copy'
 import { LoginPage } from '#/features/auth/pages/login-page'
 import { getDashboardSession } from '#/features/auth/server-functions'
 

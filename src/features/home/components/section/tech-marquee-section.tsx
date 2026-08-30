@@ -4,12 +4,12 @@ import { motion } from 'motion/react'
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { Marquee } from '#/components/ui/marquee'
 import { TechIcon } from '#/components/ui/tech-icon'
-import type { getPublicCopy } from '#/features/portfolio/data'
+import type { getHomeCopy } from '#/features/home/copy'
 import type { getPublicUltimateStack } from '#/features/technologies/public-loaders'
 import { defaultViewport, fadeIn, fadeUp } from '#/lib/motion'
 
 type TechMarqueeSectionProps = {
-  copy: ReturnType<typeof getPublicCopy>
+  copy: ReturnType<typeof getHomeCopy>
   ultimateTechs: Awaited<ReturnType<typeof getPublicUltimateStack>>
 }
 
@@ -28,9 +28,9 @@ export function TechMarqueeSection({
       <Container>
         <motion.div variants={fadeUp}>
           <SectionHeader
-            eyebrow={copy.stack.ultimateEyebrow}
-            title={copy.home.stackTitle}
-            description={copy.home.stackDescription}
+            eyebrow={copy.marquee.eyebrow}
+            title={copy.marquee.title}
+            description={copy.marquee.description}
           />
         </motion.div>
       </Container>
@@ -84,10 +84,10 @@ export function TechMarqueeSection({
             className="surface-card mx-auto max-w-xl p-8 text-center"
           >
             <h3 className="text-xl font-bold text-(--brand-ink)">
-              {copy.home.emptyUltimateTitle}
+              {copy.marquee.emptyUltimateTitle}
             </h3>
             <p className="mt-2 text-sm text-(--brand-muted)">
-              {copy.home.emptyUltimateDescription}
+              {copy.marquee.emptyUltimateDescription}
             </p>
           </motion.div>
         </Container>

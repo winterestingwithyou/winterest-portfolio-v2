@@ -5,7 +5,7 @@ import { useRef, useState } from 'react'
 
 import type { TurnstileRef } from '#/components/ui/turnstile'
 import { TurnstileWidget } from '#/components/ui/turnstile'
-import type { AuthCopy } from '#/features/auth/content/auth-copy'
+import type { AuthCopy } from '#/features/auth/copy'
 import { useSignIn } from '#/features/auth/hooks'
 import { getApiErrorMessage } from '#/lib/api-client'
 

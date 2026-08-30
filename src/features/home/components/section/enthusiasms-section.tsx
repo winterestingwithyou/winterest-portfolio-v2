@@ -12,7 +12,7 @@ import {
 import { motion } from 'motion/react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
-import type { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
+import type { getHomeCopy } from '#/features/home/copy'
 import { defaultViewport, fadeUp } from '#/lib/motion'
 
 const ENTHUSIASM_ICONS = {
@@ -28,14 +28,16 @@ const ENTHUSIASM_ICONS = {
 } as const
 
 type EnthusiasmsSectionProps = {
-  copy: ReturnType<typeof getPublicCopy>
-  enthusiasms: ReturnType<typeof getPortfolioContent>['enthusiasms']
+  copy: ReturnType<typeof getHomeCopy>
+  enthusiasms?: ReturnType<typeof getHomeCopy>['enthusiasms']['items']
 }
 
 export function EnthusiasmsSection({
   copy,
   enthusiasms,
 }: EnthusiasmsSectionProps) {
+  const items = enthusiasms ?? copy.enthusiasms.items
+
   return (
     <section className="px-4 py-14">
       <Container>
@@ -46,14 +48,14 @@ export function EnthusiasmsSection({
           variants={fadeUp}
         >
           <SectionHeader
-            eyebrow={copy.home.enthusiasmsEyebrow}
-            title={copy.home.enthusiasmsTitle}
-            description={copy.home.enthusiasmsDescription}
+            eyebrow={copy.enthusiasms.eyebrow}
+            title={copy.enthusiasms.title}
+            description={copy.enthusiasms.description}
           />
         </motion.div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {enthusiasms.map((item) => {
+          {items.map((item) => {
             const Icon = ENTHUSIASM_ICONS[item.iconName]
 
             return (

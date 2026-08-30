@@ -1,6 +1,6 @@
 import { Cloud, Sparkles } from 'lucide-react'
 
-import type { AuthCopy } from '#/features/auth/content/auth-copy'
+import type { AuthCopy } from '#/features/auth/copy'
 
 type LoginHeroPanelProps = {
   copy: AuthCopy

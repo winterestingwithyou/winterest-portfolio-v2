@@ -2,7 +2,7 @@ import { motion } from 'motion/react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { ProjectCard } from '#/components/portfolio/project-card'
-import { getPublicCopy } from '#/features/portfolio/data'
+import { getProjectsCopy } from '#/features/projects/copy'
 import type { getPublishedProjects } from '#/features/projects/public-loaders'
 import {
   fadeIn,
@@ -16,7 +16,7 @@ type ProjectsListPageProps = {
 }
 
 export function ProjectsListPage({ projects }: ProjectsListPageProps) {
-  const copy = getPublicCopy()
+  const copy = getProjectsCopy()
 
   return (
     <main className="px-4 py-14 sm:py-20">
@@ -24,19 +24,19 @@ export function ProjectsListPage({ projects }: ProjectsListPageProps) {
         <motion.div initial="hidden" animate="visible" variants={fadeIn}>
           <motion.div variants={fadeUp}>
             <SectionHeader
-              eyebrow={copy.projects.eyebrow}
-              title={copy.projects.title}
-              description={copy.projects.description}
+              eyebrow={copy.list.eyebrow}
+              title={copy.list.title}
+              description={copy.list.description}
             />
           </motion.div>
 
           {projects.length === 0 ? (
             <motion.div variants={fadeUp} className="surface-card p-6">
               <h2 className="text-2xl font-semibold text-(--brand-ink)">
-                {copy.projects.emptyTitle}
+                {copy.list.emptyTitle}
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-7 text-(--brand-muted)">
-                {copy.projects.emptyDescription}
+                {copy.list.emptyDescription}
               </p>
             </motion.div>
           ) : (

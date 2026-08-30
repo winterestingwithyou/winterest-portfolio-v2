@@ -1,9 +1,6 @@
 import { Container, SectionHeader } from '#/components/marketing/section'
-import {
-  getPortfolioContent,
-  getPublicCopy,
-  siteProfile,
-} from '#/features/portfolio/data'
+import { getPortfolioCopy } from '#/features/portfolio/copy'
+import { siteProfile } from '#/features/portfolio/data'
 import type { getPublishedProjects } from '#/features/projects/public-loaders'
 import type { getPublicStackData } from '#/features/technologies/public-loaders'
 
@@ -13,8 +10,8 @@ type ResumePageProps = {
 }
 
 export function ResumePage({ projects, categories }: ResumePageProps) {
-  const copy = getPublicCopy()
-  const { timeline } = getPortfolioContent()
+  const copy = getPortfolioCopy()
+  const timeline = copy.timeline
 
   return (
     <main className="px-4 py-14 print:bg-white sm:py-20">

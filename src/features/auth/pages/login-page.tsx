@@ -4,7 +4,7 @@ import ParaglideLocaleSwitcher from '#/components/locale-switcher.tsx'
 import ThemeToggle from '#/components/theme-toggle'
 import { LoginForm } from '#/features/auth/components/form/login-form'
 import { LoginHeroPanel } from '#/features/auth/components/section/login-hero-panel'
-import { getAuthCopy } from '#/features/auth/content/auth-copy'
+import { getAuthCopy } from '#/features/auth/copy'
 
 type LoginPageProps = {
   redirectTo?: string

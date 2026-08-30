@@ -3,7 +3,7 @@ import { Link, useRouterState } from '@tanstack/react-router'
 import { Cloud, Github, LayoutDashboard, Mail, Sparkles } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
-import { getPublicCopy } from '#/features/portfolio/data'
+import { getPortfolioCopy } from '#/features/portfolio/copy'
 import { socialQueryOptions } from '#/features/social/query-options'
 import { authClient } from '#/lib/auth-client'
 import { cn } from '#/lib/utils'
@@ -28,7 +28,7 @@ const mobileNavItemBase = cn(
 )
 
 export default function Header() {
-  const copy = getPublicCopy()
+  const copy = getPortfolioCopy()
   const { data: socialLinks = [] } = useQuery(socialQueryOptions.publicList())
   const githubLink = socialLinks.find((l) => l.platform === 'github')
   const githubUrl = githubLink?.url || ''

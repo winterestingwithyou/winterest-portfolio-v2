@@ -4,12 +4,12 @@ import { motion } from 'motion/react'
 import { Container } from '#/components/marketing/section'
 import { Marquee } from '#/components/ui/marquee'
 import { TechIcon } from '#/components/ui/tech-icon'
-import type { getPublicCopy } from '#/features/portfolio/data'
+import type { getTechnologiesCopy } from '#/features/technologies/copy'
 import type { getPublicStackData } from '#/features/technologies/public-loaders'
 import { defaultViewport, fadeIn, fadeUp, scaleIn } from '#/lib/motion'
 
 type UltimateStackSectionProps = {
-  copy: ReturnType<typeof getPublicCopy>['stack']
+  copy: ReturnType<typeof getTechnologiesCopy>['ultimate']
   ultimateTechs: Awaited<ReturnType<typeof getPublicStackData>>['ultimateTechs']
 }
 

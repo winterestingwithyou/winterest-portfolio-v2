@@ -2,7 +2,8 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { Mail } from 'lucide-react'
 
-import { getPublicCopy, siteProfile } from '#/features/portfolio/data'
+import { getPortfolioCopy } from '#/features/portfolio/copy'
+import { siteProfile } from '#/features/portfolio/data'
 import { settingsQueryOptions } from '#/features/settings/query-options'
 import { defaultSiteSettings } from '#/features/settings/types'
 import { socialQueryOptions } from '#/features/social/query-options'
@@ -10,7 +11,7 @@ import { platformMetaMap } from '#/features/social/types'
 
 export default function Footer() {
   const year = new Date().getFullYear()
-  const copy = getPublicCopy()
+  const copy = getPortfolioCopy()
   const { data: settings = defaultSiteSettings } = useQuery(
     settingsQueryOptions.get(),
   )

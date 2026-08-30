@@ -19,14 +19,14 @@ import { Input } from '#/components/ui/input'
 import { Textarea } from '#/components/ui/textarea'
 import type { TurnstileRef } from '#/components/ui/turnstile'
 import { TurnstileWidget } from '#/components/ui/turnstile'
+import type { getContactCopy } from '#/features/contact/copy'
 import { useSubmitContact } from '#/features/contact/hooks'
 import { contactSchema } from '#/features/contact/validation'
-import type { getPublicCopy } from '#/features/portfolio/data'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { scaleIn } from '#/lib/motion'
 
 type ContactFormProps = {
-  copy: ReturnType<typeof getPublicCopy>['contact']
+  copy: ReturnType<typeof getContactCopy>['form']
 }
 
 export function ContactForm({ copy }: ContactFormProps) {
@@ -111,10 +111,10 @@ export function ContactForm({ copy }: ContactFormProps) {
           >
             <div>
               <h2 className="text-xl font-bold text-(--brand-ink)">
-                {copy.formTitle}
+                {copy.title}
               </h2>
               <p className="mt-1 text-xs text-(--brand-muted)">
-                {copy.formSubtitle}
+                {copy.subtitle}
               </p>
             </div>
 

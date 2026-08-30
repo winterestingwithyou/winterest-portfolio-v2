@@ -6,7 +6,7 @@ import { routeTree } from './routeTree.gen'
 
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 import { getContext } from './integrations/tanstack-query/root-provider'
-import { getPublicCopy } from './features/portfolio/data'
+import { getPortfolioCopy } from './features/portfolio/copy'
 
 export function getRouter() {
   const context = getContext()
@@ -26,7 +26,7 @@ export function getRouter() {
 }
 
 function NotFoundPage() {
-  const copy = getPublicCopy()
+  const copy = getPortfolioCopy()
 
   return (
     <main className="px-4 py-20">

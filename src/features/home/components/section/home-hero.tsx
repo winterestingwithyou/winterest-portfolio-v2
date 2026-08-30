@@ -9,7 +9,8 @@ import { useState } from 'react'
 
 import { Container } from '#/components/marketing/section'
 import { HeroVisual } from '#/components/visual/hero-visual'
-import type { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
+import type { getHomeCopy } from '#/features/home/copy'
+import { portfolioStats as defaultPortfolioStats } from '#/features/portfolio/data'
 import {
   fadeUp,
   staggerContainer,
@@ -17,12 +18,16 @@ import {
 } from '#/lib/motion'
 
 type HomeHeroProps = {
-  copy: ReturnType<typeof getPublicCopy>
+  copy: ReturnType<typeof getHomeCopy>
   githubUrl: string
-  portfolioStats: ReturnType<typeof getPortfolioContent>['portfolioStats']
+  portfolioStats?: typeof defaultPortfolioStats
 }
 
-export function HomeHero({ copy, githubUrl, portfolioStats }: HomeHeroProps) {
+export function HomeHero({
+  copy,
+  githubUrl,
+  portfolioStats = defaultPortfolioStats,
+}: HomeHeroProps) {
   const [cvNotice, setCvNotice] = useState(false)
 
   const handleDownloadCv = (e: React.MouseEvent) => {
@@ -46,25 +51,25 @@ export function HomeHero({ copy, githubUrl, portfolioStats }: HomeHeroProps) {
           className="order-2 lg:order-1"
         >
           <motion.p variants={fadeUp} className="eyebrow mb-5">
-            {copy.home.eyebrow}
+            {copy.hero.eyebrow}
           </motion.p>
           <motion.h1
             variants={fadeUp}
             className="max-w-4xl text-5xl font-semibold leading-[1.02] tracking-tight text-(--brand-ink) sm:text-6xl lg:text-7xl"
           >
-            {copy.home.title}
+            {copy.hero.title}
           </motion.h1>
           <motion.p
             variants={fadeUp}
             className="mt-6 max-w-xl text-lg leading-8 text-(--brand-ink)"
           >
-            {copy.home.intro}
+            {copy.hero.intro}
           </motion.p>
           <motion.p
             variants={fadeUp}
             className="mt-3 max-w-xl text-base leading-7 text-(--brand-muted)"
           >
-            {copy.home.introSuffix}
+            {copy.hero.introSuffix}
           </motion.p>
 
           <motion.div
@@ -75,7 +80,7 @@ export function HomeHero({ copy, githubUrl, portfolioStats }: HomeHeroProps) {
               to="/projects"
               className="inline-flex min-h-11 items-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-bold text-white no-underline shadow-[0_18px_48px_var(--brand-glow)] transition hover:-translate-y-0.5"
             >
-              {copy.home.viewProjects}
+              {copy.hero.viewProjects}
               <ArrowRight aria-hidden="true" className="size-4" />
             </Link>
             {githubUrl && (
@@ -99,12 +104,12 @@ export function HomeHero({ copy, githubUrl, portfolioStats }: HomeHeroProps) {
                   aria-hidden="true"
                   className="size-4 text-(--brand-orange)"
                 />
-                {copy.home.downloadCv}
+                {copy.hero.downloadCv}
               </button>
 
               {cvNotice ? (
                 <div className="absolute left-0 top-full z-20 mt-2.5 w-max max-w-xs rounded-xl border border-orange-300/30 bg-(--brand-dark) px-3.5 py-2.5 text-xs font-semibold text-[#fff7ec] shadow-xl backdrop-blur-md animate-in fade-in slide-in-from-top-1">
-                  {copy.home.cvNotAvailable}
+                  {copy.hero.cvNotAvailable}
                 </div>
               ) : null}
             </div>

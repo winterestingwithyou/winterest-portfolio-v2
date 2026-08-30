@@ -5,7 +5,8 @@ import { FeaturedProjectsSection } from '#/features/home/components/section/feat
 import { HomeCtaSection } from '#/features/home/components/section/home-cta-section'
 import { HomeHero } from '#/features/home/components/section/home-hero'
 import { TechMarqueeSection } from '#/features/home/components/section/tech-marquee-section'
-import { getPortfolioContent, getPublicCopy } from '#/features/portfolio/data'
+import { getHomeCopy } from '#/features/home/copy'
+import { portfolioStats } from '#/features/portfolio/data'
 import type { getPublishedProjects } from '#/features/projects/public-loaders'
 import { socialQueryOptions } from '#/features/social/query-options'
 import type { getPublicUltimateStack } from '#/features/technologies/public-loaders'
@@ -16,11 +17,10 @@ type HomePageProps = {
 }
 
 export function HomePage({ projects, ultimateTechs }: HomePageProps) {
-  const copy = getPublicCopy()
+  const copy = getHomeCopy()
   const { data: socialLinks = [] } = useQuery(socialQueryOptions.publicList())
   const githubLink = socialLinks.find((l) => l.platform === 'github')
   const githubUrl = githubLink?.url || ''
-  const { portfolioStats, enthusiasms } = getPortfolioContent()
 
   return (
     <main>
@@ -30,7 +30,7 @@ export function HomePage({ projects, ultimateTechs }: HomePageProps) {
         portfolioStats={portfolioStats}
       />
       <FeaturedProjectsSection copy={copy} projects={projects} />
-      <EnthusiasmsSection copy={copy} enthusiasms={enthusiasms} />
+      <EnthusiasmsSection copy={copy} />
       <TechMarqueeSection copy={copy} ultimateTechs={ultimateTechs} />
       <HomeCtaSection copy={copy} />
     </main>
