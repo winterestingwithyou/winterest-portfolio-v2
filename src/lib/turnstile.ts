@@ -69,11 +69,7 @@ export async function verifyTurnstileToken(
 
   const rawHostnames =
     expectedHostnames ||
-    (
-      envDict.TURNSTILE_HOSTNAMES ||
-      process.env.TURNSTILE_HOSTNAMES ||
-      'localhost,127.0.0.1'
-    )
+    (envDict.TURNSTILE_HOSTNAMES || process.env.TURNSTILE_HOSTNAMES || '')
       .split(',')
       .map((h) => h.trim().toLowerCase())
       .filter(Boolean)
@@ -121,8 +117,20 @@ export async function verifyTurnstileToken(
       }
     }
 
-    // Verify hostname match if hostname was returned and allowed hostnames configured
-    if (data.hostname && allowedHostnamesSet.size > 0) {
+    // Verify hostname match if hostname was returned
+    if (data.hostname) {
+      if (allowedHostnamesSet.size === 0) {
+        console.error(
+          'TURNSTILE_HOSTNAMES is not configured in environment variables.',
+        )
+        return {
+          success: false,
+          error:
+            'Security challenge configuration error: TURNSTILE_HOSTNAMES is not configured.',
+          errorCodes: ['missing-hostnames-config'],
+        }
+      }
+
       const returnedHostname = data.hostname.toLowerCase()
       if (!allowedHostnamesSet.has(returnedHostname)) {
         console.warn(

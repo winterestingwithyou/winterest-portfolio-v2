@@ -3,10 +3,7 @@ import { env } from 'cloudflare:workers'
 
 import { getDb } from '#/db'
 import { requireDashboardUser } from '#/features/auth/session'
-import {
-  deleteMediaRecord,
-  getMediaRecordById,
-} from '#/features/media/queries'
+import { deleteMediaRecord, getMediaRecordById } from '#/features/media/queries'
 
 export const Route = createFileRoute('/api/media/$id')({
   server: {
@@ -20,15 +17,16 @@ export const Route = createFileRoute('/api/media/$id')({
           const media = await getMediaRecordById(db, params.id)
 
           if (!media) {
-            return Response.json(
-              { error: 'Media not found.' },
-              { status: 404 },
-            )
+            return Response.json({ error: 'Media not found.' }, { status: 404 })
           }
 
           // If the media was stored in R2, delete the object
-          if (media.url.startsWith('/api/media/file/')) {
-            const key = media.url.replace('/api/media/file/', '')
+          const marker = '/api/media/file/'
+          if (media.url.includes(marker)) {
+            const rawKey = media.url.slice(
+              media.url.indexOf(marker) + marker.length,
+            )
+            const key = decodeURIComponent(rawKey)
             if (key) {
               await env.MEDIA_BUCKET.delete(key)
             }

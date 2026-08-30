@@ -4,6 +4,19 @@ import { getAuthCopy } from '#/features/auth/copy'
 import { LoginPage } from '#/features/auth/pages/login-page'
 import { getDashboardSession } from '#/features/auth/server-functions'
 
+export function getSafeRedirect(url?: unknown): string {
+  if (typeof url !== 'string' || !url) return '/dashboard'
+  const trimmed = url.trim()
+  if (
+    !trimmed.startsWith('/') ||
+    trimmed.startsWith('//') ||
+    trimmed.includes('\\')
+  ) {
+    return '/dashboard'
+  }
+  return trimmed
+}
+
 type LoginSearch = {
   redirectTo?: string
 }
@@ -11,13 +24,15 @@ type LoginSearch = {
 export const Route = createFileRoute('/login')({
   validateSearch: (search: Record<string, unknown>): LoginSearch => ({
     redirectTo:
-      typeof search.redirectTo === 'string' ? search.redirectTo : undefined,
+      typeof search.redirectTo === 'string'
+        ? getSafeRedirect(search.redirectTo)
+        : undefined,
   }),
   beforeLoad: async ({ search }) => {
     const user = await getDashboardSession()
 
     if (user) {
-      throw redirect({ to: search.redirectTo ?? '/dashboard' })
+      throw redirect({ to: getSafeRedirect(search.redirectTo) })
     }
   },
   head: () => {

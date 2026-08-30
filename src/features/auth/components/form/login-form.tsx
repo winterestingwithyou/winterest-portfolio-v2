@@ -9,6 +9,8 @@ import type { AuthCopy } from '#/features/auth/copy'
 import { useSignIn } from '#/features/auth/hooks'
 import { getApiErrorMessage } from '#/lib/api-client'
 
+import { getSafeRedirect } from '#/routes/login'
+
 type LoginFormProps = {
   copy: AuthCopy
   redirectTo?: string
@@ -25,18 +27,19 @@ export function LoginForm({ copy, redirectTo }: LoginFormProps) {
     event.preventDefault()
     setError(null)
 
+    const safeRedirect = getSafeRedirect(redirectTo)
     const formData = new FormData(event.currentTarget)
     const payload = {
       email: String(formData.get('email') ?? ''),
       password: String(formData.get('password') ?? ''),
-      callbackURL: redirectTo ?? '/dashboard',
+      callbackURL: safeRedirect,
       rememberMe: true,
       turnstileToken,
     }
 
     try {
       await signInMutation.mutateAsync(payload)
-      await navigate({ to: redirectTo ?? '/dashboard' })
+      await navigate({ to: safeRedirect })
     } catch (caught) {
       setError(getApiErrorMessage(caught, copy.errors.signin))
       turnstileRef.current?.reset()

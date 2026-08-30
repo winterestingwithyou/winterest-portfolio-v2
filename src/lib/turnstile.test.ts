@@ -92,10 +92,32 @@ describe('verifyTurnstileToken', () => {
     const result = await verifyTurnstileToken({
       token: 'valid_token',
       action: 'contact',
+      expectedHostnames: ['localhost'],
     })
 
     expect(result.success).toBe(false)
     expect(result.errorCodes).toContain('action-mismatch')
+  })
+
+  it('fails when hostname is returned but no allowed hostnames are configured', async () => {
+    globalThis.fetch = vi.fn().mockResolvedValue(
+      new Response(
+        JSON.stringify({
+          success: true,
+          action: 'contact',
+          hostname: 'localhost',
+        }),
+        { status: 200, headers: { 'Content-Type': 'application/json' } },
+      ),
+    )
+
+    const result = await verifyTurnstileToken({
+      token: 'valid_token',
+      action: 'contact',
+    })
+
+    expect(result.success).toBe(false)
+    expect(result.errorCodes).toContain('missing-hostnames-config')
   })
 
   it('fails when hostname does not match allowed hostnames', async () => {
@@ -121,9 +143,9 @@ describe('verifyTurnstileToken', () => {
   })
 
   it('handles upstream HTTP error responses gracefully', async () => {
-    globalThis.fetch = vi.fn().mockResolvedValue(
-      new Response('Internal Server Error', { status: 500 }),
-    )
+    globalThis.fetch = vi
+      .fn()
+      .mockResolvedValue(new Response('Internal Server Error', { status: 500 }))
 
     const result = await verifyTurnstileToken({
       token: 'valid_token',
