@@ -195,7 +195,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <TooltipProvider>
           {settings.maintenanceMode && usesAppChrome && (
             <div className="bg-amber-500 text-slate-950 font-bold px-4 py-2 text-center text-xs border-b border-amber-600 shadow-xs z-50 relative">
-              ⚠️ Maintenance Mode Enabled — Site is currently undergoing updates.
+              ⚠️ Maintenance Mode Enabled — Site is currently undergoing
+              updates.
             </div>
           )}
           {usesAppChrome ? <Header /> : null}

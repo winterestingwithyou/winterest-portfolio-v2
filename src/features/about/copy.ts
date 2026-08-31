@@ -892,11 +892,7 @@ export const aboutCopy = {
           tagline: 'Iterasi menuju dampak nyata',
           description:
             'Melanjutkan pengembangan dan menyempurnakan ECO-RAPID untuk Lomba Inovasi Kota Palembang 2025, berhasil meraih Juara 1 Kategori Masyarakat.',
-          highlights: [
-            'Juara 1 Inovasi',
-            'Civic Tech',
-            'Iterasi Produksi',
-          ],
+          highlights: ['Juara 1 Inovasi', 'Civic Tech', 'Iterasi Produksi'],
         },
         {
           year: 'Des 2025',
@@ -1277,4 +1273,3 @@ export function getAboutCopy() {
 
 export const aboutData = aboutCopy
 export const getAboutData = getAboutCopy
-

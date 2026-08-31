@@ -73,7 +73,6 @@ Last updated: 2026-08-27
 - Full Vitest coverage added in `src/lib/turnstile.test.ts` (8 test scenarios).
 - Knowledge graph synchronized via `graphify update .`.
 
-
 ## Form Architecture & Refactoring State (Standardized)
 
 All forms across the application have been refactored to use:

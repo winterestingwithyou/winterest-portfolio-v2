@@ -60,7 +60,8 @@ const techItems = [
 
 export function HeroVisual({ className }: { className?: string } = {}) {
   const { data: settings } = useQuery(settingsQueryOptions.get())
-  const mascotSrc = settings?.heroVisualUrl || '/assets/characters/winterest.png'
+  const mascotSrc =
+    settings?.heroVisualUrl || '/assets/characters/winterest.png'
 
   return (
     <motion.figure

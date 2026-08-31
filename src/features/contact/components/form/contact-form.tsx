@@ -1,10 +1,5 @@
 import { useForm } from '@tanstack/react-form'
-import {
-  AlertCircle,
-  CheckCircle2,
-  Loader2,
-  Send,
-} from 'lucide-react'
+import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useRef, useState } from 'react'
 

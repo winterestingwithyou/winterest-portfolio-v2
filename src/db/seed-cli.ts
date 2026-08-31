@@ -77,4 +77,3 @@ async function seedRemote() {
 
   console.log(`Seeded remote D1 database: ${databaseId}`)
 }
-

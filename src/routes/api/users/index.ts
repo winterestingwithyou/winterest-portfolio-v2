@@ -10,10 +10,7 @@ import {
   listUsers,
   updateUser,
 } from '#/features/users/queries'
-import {
-  createUserSchema,
-  updateUserSchema,
-} from '#/features/users/validation'
+import { createUserSchema, updateUserSchema } from '#/features/users/validation'
 import { handleApiError } from '#/lib/api-response'
 
 export const Route = createFileRoute('/api/users/')({
@@ -103,4 +100,3 @@ export const Route = createFileRoute('/api/users/')({
     },
   },
 })
-

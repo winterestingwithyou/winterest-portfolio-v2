@@ -2,7 +2,6 @@ import { useForm } from '@tanstack/react-form'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, Save, Trash2 } from 'lucide-react'
 import { useState } from 'react'
-import { z } from 'zod'
 
 import { Button } from '#/components/ui/button'
 import {
@@ -22,17 +21,7 @@ import type { CategoryRecord } from '#/features/technologies/queries'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { slugify } from '#/lib/utils'
 
-const categorySchema = z.object({
-  name: z.string().min(1, 'Nama kategori wajib diisi.'),
-  slug: z
-    .string()
-    .min(1, 'Slug URL wajib diisi.')
-    .regex(
-      /^[a-z0-9-]+$/,
-      'Slug hanya boleh berisi huruf kecil, angka, dan tanda hubung (-).',
-    ),
-  sortOrder: z.number(),
-})
+import { categorySchema } from '#/features/technologies/validation'
 
 type CategoryEditorFormProps = {
   mode: 'create' | 'edit'
@@ -165,9 +154,7 @@ export function CategoryEditorForm({
                     aria-invalid={isInvalid}
                     className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
                   />
-                  {isInvalid && (
-                    <FieldError errors={field.state.meta.errors} />
-                  )}
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
               )
             }}
@@ -194,9 +181,7 @@ export function CategoryEditorForm({
                     aria-invalid={isInvalid}
                     className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
                   />
-                  {isInvalid && (
-                    <FieldError errors={field.state.meta.errors} />
-                  )}
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
               )
             }}
@@ -219,19 +204,16 @@ export function CategoryEditorForm({
                     type="number"
                     value={field.state.value}
                     onBlur={field.handleBlur}
-                    onChange={(e) =>
-                      field.handleChange(Number(e.target.value))
-                    }
+                    onChange={(e) => field.handleChange(Number(e.target.value))}
                     placeholder="1"
                     aria-invalid={isInvalid}
                     className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
                   />
                   <FieldDescription>
-                    Angka lebih kecil akan ditampilkan lebih awal pada daftar kategori.
+                    Angka lebih kecil akan ditampilkan lebih awal pada daftar
+                    kategori.
                   </FieldDescription>
-                  {isInvalid && (
-                    <FieldError errors={field.state.meta.errors} />
-                  )}
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
               )
             }}

@@ -4,12 +4,7 @@ import { Container, SectionHeader } from '#/components/marketing/section'
 import { ProjectCard } from '#/components/portfolio/project-card'
 import { getProjectsCopy } from '#/features/projects/copy'
 import type { getPublishedProjects } from '#/features/projects/public-loaders'
-import {
-  fadeIn,
-  fadeUp,
-  staggerContainer,
-  staggerItem,
-} from '#/lib/motion'
+import { fadeIn, fadeUp, staggerContainer, staggerItem } from '#/lib/motion'
 
 type ProjectsListPageProps = {
   projects: Awaited<ReturnType<typeof getPublishedProjects>>

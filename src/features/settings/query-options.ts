@@ -13,7 +13,9 @@ export const settingsQueryOptions = {
     queryOptions({
       queryKey: settingsQueryKeys.all,
       queryFn: async (): Promise<SiteSettingsInput> => {
-        const response = await api<{ data?: SiteSettingsInput }>('/api/settings')
+        const response = await api<{ data?: SiteSettingsInput }>(
+          '/api/settings',
+        )
         return response.data ?? defaultSiteSettings
       },
     }),

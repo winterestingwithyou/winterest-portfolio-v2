@@ -208,7 +208,6 @@
     text-transform: uppercase;
   }
 
-
   .brand-mark {
     position: relative;
     z-index: 1;
@@ -234,7 +233,6 @@
     color: #fff6da;
     filter: drop-shadow(0 2px 5px rgba(116, 49, 4, 0.28));
   }
-
 
   .nav-link,
   .footer-link {

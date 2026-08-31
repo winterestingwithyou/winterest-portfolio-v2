@@ -26,7 +26,10 @@ export const Route = createFileRoute('/api/projects/$id')({
           const project = await getDashboardProjectByIdOrSlug(db, params.id)
 
           if (!project) {
-            return Response.json({ error: 'Project not found.' }, { status: 404 })
+            return Response.json(
+              { error: 'Project not found.' },
+              { status: 404 },
+            )
           }
 
           return Response.json({ data: project })
@@ -48,7 +51,10 @@ export const Route = createFileRoute('/api/projects/$id')({
           const project = await updateProject(db, params.id, input)
 
           if (!project) {
-            return Response.json({ error: 'Project not found.' }, { status: 404 })
+            return Response.json(
+              { error: 'Project not found.' },
+              { status: 404 },
+            )
           }
 
           return Response.json({ data: project })
@@ -68,7 +74,10 @@ export const Route = createFileRoute('/api/projects/$id')({
           const deleted = await deleteProject(db, params.id)
 
           if (!deleted) {
-            return Response.json({ error: 'Project not found.' }, { status: 404 })
+            return Response.json(
+              { error: 'Project not found.' },
+              { status: 404 },
+            )
           }
 
           return Response.json({ data: { deleted: true } })
@@ -79,4 +88,3 @@ export const Route = createFileRoute('/api/projects/$id')({
     },
   },
 })
-

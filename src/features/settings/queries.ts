@@ -6,7 +6,9 @@ import { siteSettings } from '#/db/schema'
 import type { SiteSettingsInput } from './types'
 import { defaultSiteSettings } from './types'
 
-export async function getSiteSettings(db: Database): Promise<SiteSettingsInput> {
+export async function getSiteSettings(
+  db: Database,
+): Promise<SiteSettingsInput> {
   try {
     const records = await db.select().from(siteSettings).all()
     const map = new Map<string, string>()
@@ -31,8 +33,7 @@ export async function getSiteSettings(db: Database): Promise<SiteSettingsInput> 
         map.get('metaTitleEn') ??
         map.get('metaTitle') ??
         defaultSiteSettings.metaTitleEn,
-      metaTitleId:
-        map.get('metaTitleId') ?? defaultSiteSettings.metaTitleId,
+      metaTitleId: map.get('metaTitleId') ?? defaultSiteSettings.metaTitleId,
       metaDescriptionEn:
         map.get('metaDescriptionEn') ??
         map.get('metaDescription') ??
@@ -55,7 +56,8 @@ export async function getSiteSettings(db: Database): Promise<SiteSettingsInput> 
     }
   } catch (error) {
     const isMissingTable =
-      error instanceof Error && error.message.toLowerCase().includes('no such table')
+      error instanceof Error &&
+      error.message.toLowerCase().includes('no such table')
     if (!isMissingTable) {
       console.error('Failed to read site_settings table:', error)
     }

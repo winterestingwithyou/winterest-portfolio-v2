@@ -48,14 +48,18 @@ describe('api-response', () => {
     })
 
     it('handles UNIQUE constraint on slug with 409 status', async () => {
-      const res = handleApiError(new Error('UNIQUE constraint failed: projects.slug'))
+      const res = handleApiError(
+        new Error('UNIQUE constraint failed: projects.slug'),
+      )
       expect(res.status).toBe(409)
       const body = await getJson<ErrorPayload>(res)
       expect(body.error).toContain('slug already exists')
     })
 
     it('handles UNIQUE constraint on email with 400 status', async () => {
-      const res = handleApiError(new Error('UNIQUE constraint failed: user.email'))
+      const res = handleApiError(
+        new Error('UNIQUE constraint failed: user.email'),
+      )
       expect(res.status).toBe(400)
       const body = await getJson<ErrorPayload>(res)
       expect(body.error).toContain('Email already registered')
@@ -76,7 +80,10 @@ describe('api-response', () => {
     })
 
     it('handles unknown error with 500 status and fallback message', async () => {
-      const res = handleApiError(new Error('Unexpected network failure'), 'Failed to process request.')
+      const res = handleApiError(
+        new Error('Unexpected network failure'),
+        'Failed to process request.',
+      )
       expect(res.status).toBe(500)
       const body = await getJson<ErrorPayload>(res)
       expect(body.error).toBe('Failed to process request.')

@@ -3,10 +3,7 @@ import { env } from 'cloudflare:workers'
 
 import { getDb } from '#/db'
 import { requireDashboardUser } from '#/features/auth/session'
-import {
-  createMediaRecord,
-  listMediaRecords,
-} from '#/features/media/queries'
+import { createMediaRecord, listMediaRecords } from '#/features/media/queries'
 import {
   ALLOWED_MIME_TYPES,
   MAX_FILE_SIZE_BYTES,

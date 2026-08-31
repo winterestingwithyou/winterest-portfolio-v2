@@ -12,9 +12,11 @@ type DashboardTechnologyEditPageProps = {
 export function DashboardTechnologyEditPage({
   id,
 }: DashboardTechnologyEditPageProps) {
-  const { data: tech, refetch, isFetching } = useSuspenseQuery(
-    techQueryOptions.detail(id),
-  )
+  const {
+    data: tech,
+    refetch,
+    isFetching,
+  } = useSuspenseQuery(techQueryOptions.detail(id))
 
   return (
     <DashboardShell

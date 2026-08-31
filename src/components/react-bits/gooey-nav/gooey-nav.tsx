@@ -49,8 +49,7 @@ const getXY = (
   pointIndex: number,
   totalPoints: number,
 ): [number, number] => {
-  const angle =
-    ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180)
+  const angle = ((360 + noise(8)) / totalPoints) * pointIndex * (Math.PI / 180)
   return [distance * Math.cos(angle), distance * Math.sin(angle)]
 }
 
@@ -77,17 +76,18 @@ export default function GooeyNav({
 
     return Array.from({ length: particleCount }, (_, i) => {
       const rotate = noise(particleR / 10)
-      const start = getXY(particleDistances[0], particleCount - i, particleCount)
+      const start = getXY(
+        particleDistances[0],
+        particleCount - i,
+        particleCount,
+      )
       const end = getXY(
         particleDistances[1] + noise(7),
         particleCount - i,
         particleCount,
       )
       const duration =
-        Math.max(
-          400,
-          animationTime * 1.6 + noise(timeVariance * 1.6),
-        ) / 1000
+        Math.max(400, animationTime * 1.6 + noise(timeVariance * 1.6)) / 1000
       const colorIndex = colors[i % colors.length] % colorPalette.length
 
       return {
@@ -100,7 +100,10 @@ export default function GooeyNav({
         scale: 1 + noise(0.3),
         color: colorPalette[colorIndex] || colorPalette[0],
         size: 16 + Math.random() * 6,
-        rotate: rotate > 0 ? (rotate + particleR / 20) * 10 : (rotate - particleR / 20) * 10,
+        rotate:
+          rotate > 0
+            ? (rotate + particleR / 20) * 10
+            : (rotate - particleR / 20) * 10,
       }
     })
   }

@@ -13,9 +13,15 @@ import { mediaQueryOptions } from '../query-options'
 export function MediaPage() {
   const copy = getDashboardCopy()
   const [search, setSearch] = React.useState('')
-  const [deletingMedia, setDeletingMedia] = React.useState<MediaRecord | null>(null)
+  const [deletingMedia, setDeletingMedia] = React.useState<MediaRecord | null>(
+    null,
+  )
 
-  const { data: mediaList = [], isLoading, error: loadError } = useSuspenseQuery(mediaQueryOptions.list(search))
+  const {
+    data: mediaList = [],
+    isLoading,
+    error: loadError,
+  } = useSuspenseQuery(mediaQueryOptions.list(search))
   const uploadMutation = useUploadMedia()
   const deleteMutation = useDeleteMedia()
 

@@ -206,7 +206,10 @@ export function MediaPickerDialog({
                     </div>
 
                     <div className="p-2.5">
-                      <p className="truncate text-xs font-semibold text-(--brand-ink)" title={item.filename}>
+                      <p
+                        className="truncate text-xs font-semibold text-(--brand-ink)"
+                        title={item.filename}
+                      >
                         {item.filename}
                       </p>
                       <p className="mt-0.5 text-[11px] text-(--brand-muted)">

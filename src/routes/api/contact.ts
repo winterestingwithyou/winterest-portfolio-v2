@@ -24,7 +24,8 @@ export const Route = createFileRoute('/api/contact')({
             return Response.json({ error: firstError }, { status: 400 })
           }
 
-          const { name, email, subject, message, turnstileToken } = validation.data
+          const { name, email, subject, message, turnstileToken } =
+            validation.data
 
           // Canonical Turnstile verification
           const verification = await verifyTurnstileToken({

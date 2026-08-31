@@ -29,7 +29,10 @@ export function MediaDeleteDialog({
   onConfirm,
 }: MediaDeleteDialogProps) {
   return (
-    <Dialog open={Boolean(deletingMedia)} onOpenChange={(open) => !open && onClose()}>
+    <Dialog
+      open={Boolean(deletingMedia)}
+      onOpenChange={(open) => !open && onClose()}
+    >
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-rose-600">

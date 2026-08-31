@@ -24,7 +24,8 @@ export const systemSetupCopy = {
       refreshingButton: 'Checking Database...',
       copyCommand: 'Copy command',
       copiedCommand: 'Copied!',
-      freshTip: 'Tip: You can also run bun run db:fresh:local to reset and apply all migrations cleanly.',
+      freshTip:
+        'Tip: You can also run bun run db:fresh:local to reset and apply all migrations cleanly.',
     },
     owner: {
       badge: 'Setup Required',
@@ -74,7 +75,8 @@ export const systemSetupCopy = {
       refreshingButton: 'Memeriksa Database...',
       copyCommand: 'Salin perintah',
       copiedCommand: 'Tersalin!',
-      freshTip: 'Tips: Anda juga dapat menjalankan bun run db:fresh:local untuk reset dan migrasi bersih.',
+      freshTip:
+        'Tips: Anda juga dapat menjalankan bun run db:fresh:local untuk reset dan migrasi bersih.',
     },
     owner: {
       badge: 'Perlu Tindakan',

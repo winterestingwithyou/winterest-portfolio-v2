@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { env } from 'cloudflare:workers'
+import { z } from 'zod'
 
 import { getDb } from '#/db'
 import { requireDashboardUser } from '#/features/auth/session'
@@ -10,7 +11,8 @@ import {
   listCategories,
   updateCategory,
 } from '#/features/technologies/queries'
-import type { CategoryInput } from '#/features/technologies/queries'
+import { categoryInputSchema } from '#/features/technologies/validation'
+import { handleApiError } from '#/lib/api-response'
 
 export const Route = createFileRoute('/api/categories')({
   server: {
@@ -35,11 +37,7 @@ export const Route = createFileRoute('/api/categories')({
           const items = await listCategories(db)
           return Response.json({ data: items })
         } catch (error) {
-          console.error(error)
-          return Response.json(
-            { error: 'Failed to fetch categories.' },
-            { status: 500 },
-          )
+          return handleApiError(error, 'Failed to fetch categories.')
         }
       },
       POST: async ({ request }) => {
@@ -47,23 +45,14 @@ export const Route = createFileRoute('/api/categories')({
           const user = await requireDashboardUser(request)
           if (user instanceof Response) return user
 
-          const body: CategoryInput = await request.json()
-          if (!body.name || !body.slug) {
-            return Response.json(
-              { error: 'Name and slug are required.' },
-              { status: 400 },
-            )
-          }
+          const body = await request.json()
+          const input = categoryInputSchema.parse(body)
 
           const db = getDb(env.DB)
-          const item = await createCategory(db, body)
-          return Response.json({ data: item })
+          const item = await createCategory(db, input)
+          return Response.json({ data: item }, { status: 201 })
         } catch (error) {
-          console.error(error)
-          return Response.json(
-            { error: 'Failed to create category.' },
-            { status: 500 },
-          )
+          return handleApiError(error, 'Failed to create category.')
         }
       },
       PUT: async ({ request }) => {
@@ -71,16 +60,13 @@ export const Route = createFileRoute('/api/categories')({
           const user = await requireDashboardUser(request)
           if (user instanceof Response) return user
 
-          const body: CategoryInput & { id: string } = await request.json()
-          if (!body.id || !body.name || !body.slug) {
-            return Response.json(
-              { error: 'ID, name, and slug are required.' },
-              { status: 400 },
-            )
-          }
+          const body = await request.json()
+          const input = categoryInputSchema
+            .extend({ id: z.string().min(1, 'Category ID is required.') })
+            .parse(body)
 
           const db = getDb(env.DB)
-          const item = await updateCategory(db, body.id, body)
+          const item = await updateCategory(db, input.id, input)
           if (!item) {
             return Response.json(
               { error: 'Category not found.' },
@@ -89,11 +75,7 @@ export const Route = createFileRoute('/api/categories')({
           }
           return Response.json({ data: item })
         } catch (error) {
-          console.error(error)
-          return Response.json(
-            { error: 'Failed to update category.' },
-            { status: 500 },
-          )
+          return handleApiError(error, 'Failed to update category.')
         }
       },
       DELETE: async ({ request }) => {
@@ -117,11 +99,7 @@ export const Route = createFileRoute('/api/categories')({
           }
           return Response.json({ success: true })
         } catch (error) {
-          console.error(error)
-          return Response.json(
-            { error: 'Failed to delete category.' },
-            { status: 500 },
-          )
+          return handleApiError(error, 'Failed to delete category.')
         }
       },
     },

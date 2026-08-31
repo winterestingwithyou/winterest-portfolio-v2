@@ -250,4 +250,3 @@ export const journeyTracerVariant = (delay = 0.4): Variants => ({
     },
   },
 })
-

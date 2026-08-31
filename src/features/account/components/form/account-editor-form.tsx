@@ -77,10 +77,7 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
   const profileError = updateProfileMutation.error?.message ?? null
   const passwordError = changePasswordMutation.error?.message ?? null
 
-  const roleBadges: Record<
-    UserRole,
-    { label: string; className: string }
-  > = {
+  const roleBadges: Record<UserRole, { label: string; className: string }> = {
     owner: {
       label: userCopy.roles.owner,
       className:
@@ -152,17 +149,16 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
     { id: 'sessions', label: accountCopy.sessionsTitle, icon: ShieldCheck },
   ]
 
-  const createdDate = new Date(profile.createdAt).toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
+  const createdDate = new Date(profile.createdAt).toLocaleDateString(
+    undefined,
+    {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    },
+  )
 
-  const userInitial = (
-    profile.name[0] ||
-    profile.email[0] ||
-    'W'
-  ).toUpperCase()
+  const userInitial = (profile.name[0] || profile.email[0] || 'W').toUpperCase()
 
   const currentRoleBadge = roleBadges[profile.role]
   const currentRoleDescription = roleDescriptions[profile.role]
@@ -182,10 +178,7 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
                 <h2 className="text-xl font-bold tracking-tight text-(--brand-ink)">
                   {profile.name}
                 </h2>
-                <Badge
-                  variant="outline"
-                  className={currentRoleBadge.className}
-                >
+                <Badge variant="outline" className={currentRoleBadge.className}>
                   <Sparkles className="size-3" />
                   {currentRoleBadge.label}
                 </Badge>
@@ -456,7 +449,9 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
                         />
                         <button
                           type="button"
-                          onClick={() => setShowCurrentPassword((prev) => !prev)}
+                          onClick={() =>
+                            setShowCurrentPassword((prev) => !prev)
+                          }
                           className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                           tabIndex={-1}
                         >
@@ -497,7 +492,9 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
                             value={field.state.value}
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
-                            placeholder={accountCopy.form.newPasswordPlaceholder}
+                            placeholder={
+                              accountCopy.form.newPasswordPlaceholder
+                            }
                             aria-invalid={isInvalid}
                             className="pl-9 pr-10"
                           />

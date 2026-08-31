@@ -4,7 +4,10 @@ import { ZodError } from 'zod'
 
 import { getDb } from '#/db'
 import { requireSettingsUser } from '#/features/auth/session'
-import { getSiteSettings, updateSiteSettings } from '#/features/settings/queries'
+import {
+  getSiteSettings,
+  updateSiteSettings,
+} from '#/features/settings/queries'
 import { siteSettingsSchema } from '#/features/settings/types'
 
 export const Route = createFileRoute('/api/settings')({

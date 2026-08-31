@@ -7,7 +7,10 @@ export const mediaQueryKeys = {
   all: ['media'] as const,
   lists: () => [...mediaQueryKeys.all, 'list'] as const,
   list: (search?: string) =>
-    [...mediaQueryKeys.lists(), { search: search?.trim() || undefined }] as const,
+    [
+      ...mediaQueryKeys.lists(),
+      { search: search?.trim() || undefined },
+    ] as const,
   details: () => [...mediaQueryKeys.all, 'detail'] as const,
   detail: (id: string) => [...mediaQueryKeys.details(), id] as const,
 }

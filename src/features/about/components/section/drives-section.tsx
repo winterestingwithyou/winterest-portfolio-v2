@@ -1,11 +1,4 @@
-import {
-  Award,
-  Compass,
-  Flame,
-  Sparkles,
-  TrendingUp,
-  Zap,
-} from 'lucide-react'
+import { Award, Compass, Flame, Sparkles, TrendingUp, Zap } from 'lucide-react'
 import { motion } from 'motion/react'
 
 import { SectionHeader } from '#/components/marketing/section'

@@ -1,12 +1,7 @@
-import {
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import type { MediaRecord } from '#/features/media/queries'
-import {
-  mediaQueryKeys,
-} from '#/features/media/query-options'
+import { mediaQueryKeys } from '#/features/media/query-options'
 import { api } from '#/lib/api-client'
 
 export { mediaQueryKeys }

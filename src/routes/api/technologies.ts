@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { env } from 'cloudflare:workers'
+import { z } from 'zod'
 
 import { getDb } from '#/db'
 import { requireDashboardUser } from '#/features/auth/session'
@@ -10,7 +11,8 @@ import {
   listTechnologies,
   updateTechnology,
 } from '#/features/technologies/queries'
-import type { TechnologyInput } from '#/features/technologies/queries'
+import { technologyInputSchema } from '#/features/technologies/validation'
+import { handleApiError } from '#/lib/api-response'
 
 export const Route = createFileRoute('/api/technologies')({
   server: {
@@ -35,11 +37,7 @@ export const Route = createFileRoute('/api/technologies')({
           const items = await listTechnologies(db)
           return Response.json({ data: items })
         } catch (error) {
-          console.error(error)
-          return Response.json(
-            { error: 'Failed to fetch technologies.' },
-            { status: 500 },
-          )
+          return handleApiError(error, 'Failed to fetch technologies.')
         }
       },
       POST: async ({ request }) => {
@@ -47,26 +45,17 @@ export const Route = createFileRoute('/api/technologies')({
           const user = await requireDashboardUser(request)
           if (user instanceof Response) return user
 
-          const body: TechnologyInput = await request.json()
-          if (!body.name || !body.slug) {
-            return Response.json(
-              { error: 'Name and slug are required.' },
-              { status: 400 },
-            )
-          }
+          const body = await request.json()
+          const input = technologyInputSchema.parse(body)
 
           const db = getDb(env.DB)
           const item = await createTechnology(db, {
-            ...body,
-            categoryIds: body.categoryIds,
+            ...input,
+            categoryIds: input.categoryIds,
           })
-          return Response.json({ data: item })
+          return Response.json({ data: item }, { status: 201 })
         } catch (error) {
-          console.error(error)
-          return Response.json(
-            { error: 'Failed to create technology.' },
-            { status: 500 },
-          )
+          return handleApiError(error, 'Failed to create technology.')
         }
       },
       PUT: async ({ request }) => {
@@ -74,18 +63,15 @@ export const Route = createFileRoute('/api/technologies')({
           const user = await requireDashboardUser(request)
           if (user instanceof Response) return user
 
-          const body: TechnologyInput & { id: string } = await request.json()
-          if (!body.id || !body.name || !body.slug) {
-            return Response.json(
-              { error: 'ID, name, and slug are required.' },
-              { status: 400 },
-            )
-          }
+          const body = await request.json()
+          const input = technologyInputSchema
+            .extend({ id: z.string().min(1, 'Technology ID is required.') })
+            .parse(body)
 
           const db = getDb(env.DB)
-          const item = await updateTechnology(db, body.id, {
-            ...body,
-            categoryIds: body.categoryIds,
+          const item = await updateTechnology(db, input.id, {
+            ...input,
+            categoryIds: input.categoryIds,
           })
           if (!item) {
             return Response.json(
@@ -95,11 +81,7 @@ export const Route = createFileRoute('/api/technologies')({
           }
           return Response.json({ data: item })
         } catch (error) {
-          console.error(error)
-          return Response.json(
-            { error: 'Failed to update technology.' },
-            { status: 500 },
-          )
+          return handleApiError(error, 'Failed to update technology.')
         }
       },
       DELETE: async ({ request }) => {
@@ -123,11 +105,7 @@ export const Route = createFileRoute('/api/technologies')({
           }
           return Response.json({ success: true })
         } catch (error) {
-          console.error(error)
-          return Response.json(
-            { error: 'Failed to delete technology.' },
-            { status: 500 },
-          )
+          return handleApiError(error, 'Failed to delete technology.')
         }
       },
     },

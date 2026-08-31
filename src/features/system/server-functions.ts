@@ -31,8 +31,7 @@ export const getSystemStatus = createServerFn({ method: 'GET' }).handler(
         isMigrated: true,
       }
     } catch (error) {
-      const message =
-        error instanceof Error ? error.message : String(error)
+      const message = error instanceof Error ? error.message : String(error)
 
       const isMissingTable =
         (error instanceof Error && error.message.includes('no such table')) ||

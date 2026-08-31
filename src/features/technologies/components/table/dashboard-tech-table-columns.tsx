@@ -3,9 +3,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { Edit3, ExternalLink, Trash2, Zap } from 'lucide-react'
 
 import { TechIcon } from '#/components/ui/tech-icon'
-import type {
-  TechnologyWithCategories,
-} from '#/features/technologies/components/table/dashboard-tech-table-features'
+import type { TechnologyWithCategories } from '#/features/technologies/components/table/dashboard-tech-table-features'
 
 const columnHelper = createColumnHelper<TechnologyWithCategories>()
 

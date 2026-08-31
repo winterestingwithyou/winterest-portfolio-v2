@@ -59,11 +59,7 @@ export async function getUserById(
   db: Database,
   id: string,
 ): Promise<UserRecord | null> {
-  const record = await db
-    .select()
-    .from(user)
-    .where(eq(user.id, id))
-    .get()
+  const record = await db.select().from(user).where(eq(user.id, id)).get()
 
   return record ?? null
 }
@@ -173,7 +169,9 @@ export async function updateUser(
 
   // Enforce 1 owner rule: Cannot demote the sole owner
   if (targetUser.role === 'owner' && input.role !== 'owner') {
-    throw new Error('Cannot change owner role: the portfolio must have exactly one owner.')
+    throw new Error(
+      'Cannot change owner role: the portfolio must have exactly one owner.',
+    )
   }
 
   const updatedUser = await db

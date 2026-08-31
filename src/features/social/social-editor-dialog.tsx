@@ -32,11 +32,7 @@ import { getDashboardCopy } from '#/features/dashboard/copy'
 
 import { useCreateSocialLink, useUpdateSocialLink } from './hooks'
 import type { SocialLink, SocialPlatform } from './types'
-import {
-  platformMetaMap,
-  socialLinkSchema,
-  socialPlatforms,
-} from './types'
+import { platformMetaMap, socialLinkSchema, socialPlatforms } from './types'
 
 type SocialEditorDialogProps = {
   open: boolean
@@ -113,9 +109,7 @@ export function SocialEditorDialog({
         {/* Modal Header */}
         <DialogHeader className="shrink-0 border-b border-(--brand-line) bg-surface/50 p-5 sm:p-6">
           <DialogTitle className="text-base sm:text-lg">
-            {isEditing
-              ? socialCopy.dialogTitleEdit
-              : socialCopy.dialogTitleNew}
+            {isEditing ? socialCopy.dialogTitleEdit : socialCopy.dialogTitleNew}
           </DialogTitle>
           <DialogDescription className="text-xs sm:text-sm text-(--brand-muted)">
             {socialCopy.dialogDescription}
@@ -178,11 +172,7 @@ export function SocialEditorDialog({
                               !isEditing && existingPlatforms.includes(p)
 
                             return (
-                              <SelectItem
-                                key={p}
-                                value={p}
-                                disabled={isTaken}
-                              >
+                              <SelectItem key={p} value={p} disabled={isTaken}>
                                 <PlatformIcon className="size-4 shrink-0 text-(--brand-muted)" />
                                 <span>{meta.name}</span>
                                 {isTaken && (

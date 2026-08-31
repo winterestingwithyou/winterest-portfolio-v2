@@ -394,5 +394,3 @@ export const socialLinks = sqliteTable(
     index('social_links_sort_order_idx').on(table.sortOrder),
   ],
 )
-
-

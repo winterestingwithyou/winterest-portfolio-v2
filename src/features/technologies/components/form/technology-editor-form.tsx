@@ -2,7 +2,6 @@ import { useForm } from '@tanstack/react-form'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, Save, Trash2, Zap } from 'lucide-react'
 import { useState } from 'react'
-import { z } from 'zod'
 
 import { useQuery } from '@tanstack/react-query'
 
@@ -24,32 +23,11 @@ import {
   useUpdateTechnology,
 } from '#/features/technologies/hooks'
 import { categoryQueryOptions } from '#/features/technologies/query-options'
-import type {
-  TechnologyWithCategories,
-} from '#/features/technologies/queries'
+import type { TechnologyWithCategories } from '#/features/technologies/queries'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { slugify } from '#/lib/utils'
 
-const technologySchema = z.object({
-  name: z.string().min(1, 'Nama teknologi wajib diisi.'),
-  slug: z
-    .string()
-    .min(1, 'Slug URL wajib diisi.')
-    .regex(
-      /^[a-z0-9-]+$/,
-      'Slug hanya boleh berisi huruf kecil, angka, dan tanda hubung (-).',
-    ),
-  icon: z.string(),
-  color: z.string(),
-  url: z.string().refine(
-    (val) => !val || z.string().url().safeParse(val).success,
-    {
-      message: 'Format URL tidak valid.',
-    },
-  ),
-  isUltimate: z.boolean(),
-  categoryIds: z.array(z.string()),
-})
+import { technologySchema } from '#/features/technologies/validation'
 
 type TechnologyEditorFormProps = {
   mode: 'create' | 'edit'
@@ -287,13 +265,14 @@ export function TechnologyEditorForm({
                   field.state.meta.isTouched && !field.state.meta.isValid
                 return (
                   <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Warna Hex / CSS</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>
+                      Warna Hex / CSS
+                    </FieldLabel>
                     <div className="flex items-center gap-3">
                       <input
                         type="color"
                         value={
-                          field.state.value &&
-                          field.state.value.startsWith('#')
+                          field.state.value && field.state.value.startsWith('#')
                             ? field.state.value
                             : '#61DAFB'
                         }
@@ -342,9 +321,7 @@ export function TechnologyEditorForm({
                     aria-invalid={isInvalid}
                     className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
                   />
-                  {isInvalid && (
-                    <FieldError errors={field.state.meta.errors} />
-                  )}
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
               )
             }}
@@ -371,8 +348,8 @@ export function TechnologyEditorForm({
                         Ultimate Tech Stack
                       </FieldLabel>
                       <FieldDescription>
-                        Tampilkan di bagian paling atas halaman Stack dan Marquee
-                        Homepage.
+                        Tampilkan di bagian paling atas halaman Stack dan
+                        Marquee Homepage.
                       </FieldDescription>
                     </FieldContent>
                   </div>
@@ -419,10 +396,7 @@ export function TechnologyEditorForm({
                                 field.state.value.filter((id) => id !== cat.id),
                               )
                             } else {
-                              field.handleChange([
-                                ...field.state.value,
-                                cat.id,
-                              ])
+                              field.handleChange([...field.state.value, cat.id])
                             }
                           }}
                           className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${

@@ -31,7 +31,9 @@ export function DashboardUsersMetrics({
         value={ownerCount}
       />
       <MetricCard
-        icon={<ShieldCheck className="size-4 text-purple-600 dark:text-purple-400" />}
+        icon={
+          <ShieldCheck className="size-4 text-purple-600 dark:text-purple-400" />
+        }
         label={copy.roles.admin}
         value={adminCount}
       />

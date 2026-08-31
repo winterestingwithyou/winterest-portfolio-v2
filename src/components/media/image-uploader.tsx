@@ -163,7 +163,9 @@ export function ImageUploader({
       {/* Main Preview / Upload Box */}
       {displayUrl ? (
         <div className="relative group overflow-hidden rounded-2xl border border-(--brand-line) bg-(--surface-card) shadow-xs">
-          <div className={`relative w-full overflow-hidden bg-black/5 ${aspectClass}`}>
+          <div
+            className={`relative w-full overflow-hidden bg-black/5 ${aspectClass}`}
+          >
             <img
               src={displayUrl}
               alt="Project Cover"

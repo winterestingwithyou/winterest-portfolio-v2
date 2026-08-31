@@ -1,9 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import {
-  ArrowRight,
-  FileText,
-  Github,
-} from 'lucide-react'
+import { ArrowRight, FileText, Github } from 'lucide-react'
 import { motion } from 'motion/react'
 import { useState } from 'react'
 
@@ -11,11 +7,7 @@ import { Container } from '#/components/marketing/section'
 import { HeroVisual } from '#/components/visual/hero-visual'
 import type { getHomeCopy } from '#/features/home/copy'
 import { portfolioStats as defaultPortfolioStats } from '#/features/portfolio/data'
-import {
-  fadeUp,
-  staggerContainer,
-  staggerItemScale,
-} from '#/lib/motion'
+import { fadeUp, staggerContainer, staggerItemScale } from '#/lib/motion'
 
 type HomeHeroProps = {
   copy: ReturnType<typeof getHomeCopy>

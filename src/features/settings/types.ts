@@ -5,10 +5,7 @@ export const siteSettingsSchema = z.object({
   siteTagline: z.string(),
   siteDescription: z.string(),
   defaultLocale: z.enum(['en', 'id']),
-  publicEmail: z
-    .string()
-    .email('Invalid email address.')
-    .or(z.literal('')),
+  publicEmail: z.string().email('Invalid email address.').or(z.literal('')),
   metaTitleEn: z.string().min(1, 'Title is required.'),
   metaTitleId: z.string().min(1, 'Judul wajib diisi.'),
   metaDescriptionEn: z.string(),

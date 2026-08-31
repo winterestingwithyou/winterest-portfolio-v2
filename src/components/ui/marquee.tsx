@@ -69,11 +69,7 @@ export function Marquee({
             isHovered && pauseOnHover
               ? false
               : {
-                  x: vertical
-                    ? 0
-                    : reverse
-                      ? ['-100%', '0%']
-                      : ['0%', '-100%'],
+                  x: vertical ? 0 : reverse ? ['-100%', '0%'] : ['0%', '-100%'],
                   y: !vertical
                     ? 0
                     : reverse

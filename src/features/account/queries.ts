@@ -99,10 +99,7 @@ export async function changeAccountPassword(
     .select()
     .from(account)
     .where(
-      and(
-        eq(account.userId, userId),
-        eq(account.providerId, 'credential'),
-      ),
+      and(eq(account.userId, userId), eq(account.providerId, 'credential')),
     )
     .get()
 

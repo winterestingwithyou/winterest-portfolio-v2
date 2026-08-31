@@ -1,9 +1,4 @@
-import {
-  CheckCircle2,
-  ExternalLink,
-  Github,
-  Globe,
-} from 'lucide-react'
+import { CheckCircle2, ExternalLink, Github, Globe } from 'lucide-react'
 
 import type { getPublishedProject } from '#/features/projects/public-loaders'
 

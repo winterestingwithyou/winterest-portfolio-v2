@@ -48,11 +48,13 @@ All HTTP client requests across the codebase **MUST** use `ofetch` instead of na
 React components and page views **MUST NOT** invoke `api()` directly. All HTTP requests, data fetching, and mutations **MUST** be organized using **TanStack Query** (`queryOptions` and `useMutation`).
 
 ### 1. Separation of DB Queries vs TanStack Query Options vs Mutation Hooks
+
 - **`src/features/<feature>/queries.ts`**: Reserved strictly for **Server-Side Drizzle ORM Database Queries** (used by server functions and API route handlers). Never put client-side HTTP queries in this file.
 - **`src/features/<feature>/query-options.ts`**: Reserved for **TanStack Query `queryOptions` Definitions** (used by TanStack Router loaders via `ensureQueryData` and React components directly via `useSuspenseQuery` / `useQuery`).
 - **`src/features/<feature>/hooks.ts`**: Reserved strictly for **Custom Mutation Hooks** (`useMutation`) and UI state hooks. **DO NOT** create `useQuery` or `useSuspenseQuery` wrapper functions here; components must invoke `useSuspenseQuery` or `useQuery` directly with `queryOptions`.
 
 ### 2. Standard `queryOptions` Pattern (`query-options.ts`)
+
 Always export query key factories and `queryOptions` objects instead of directly writing rigid `useQuery` hooks. This enables seamless use in TanStack Router route loaders, `useSuspenseQuery`, `usePrefetchQuery`, and standard `useQuery`.
 
 ```ts
@@ -63,7 +65,8 @@ import type { ProjectRecord } from './types'
 export const projectQueryKeys = {
   all: ['projects'] as const,
   lists: () => [...projectQueryKeys.all, 'list'] as const,
-  list: (filter?: { category?: string }) => [...projectQueryKeys.lists(), filter] as const,
+  list: (filter?: { category?: string }) =>
+    [...projectQueryKeys.lists(), filter] as const,
   details: () => [...projectQueryKeys.all, 'detail'] as const,
   detail: (id: string) => [...projectQueryKeys.details(), id] as const,
 }
@@ -73,7 +76,9 @@ export const projectQueryOptions = {
     queryOptions({
       queryKey: projectQueryKeys.list(filter),
       queryFn: async (): Promise<ProjectRecord[]> => {
-        const res = await api<{ data?: ProjectRecord[] }>('/api/projects', { query: filter })
+        const res = await api<{ data?: ProjectRecord[] }>('/api/projects', {
+          query: filter,
+        })
         return res.data ?? []
       },
     }),
@@ -90,6 +95,7 @@ export const projectQueryOptions = {
 ```
 
 ### 3. Route Loader & Component Consumption Pattern
+
 In TanStack Router route definitions, prefetch/ensure data in the route `loader`, and consume via `useSuspenseQuery` in the component:
 
 ```tsx
@@ -109,6 +115,7 @@ export function DashboardProjectEditPage() {
 ```
 
 ### 4. Custom Mutation Hooks (`hooks.ts`)
+
 Encapsulate all mutations (`POST`, `PUT`, `PATCH`, `DELETE`) within custom mutation hooks and invalidate the corresponding query keys defined in `query-options.ts`:
 
 ```ts
@@ -137,5 +144,3 @@ export function useCreateProject() {
 - Disable submit buttons during pending state to prevent duplicate submissions.
 - Always validate on the server—client validation is for UX only.
 - Show optimistic UI only after server behavior is confirmed correct.
-
-

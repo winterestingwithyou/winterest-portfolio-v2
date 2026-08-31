@@ -429,7 +429,9 @@ export function SettingsEditorForm({
                     <form.Field name="metaTitleEn">
                       {(field) => (
                         <Field>
-                          <FieldLabel>{settingsCopy.form.metaTitleEn}</FieldLabel>
+                          <FieldLabel>
+                            {settingsCopy.form.metaTitleEn}
+                          </FieldLabel>
                           <Input
                             disabled={!canEdit || isSaving}
                             value={field.state.value}
@@ -470,7 +472,9 @@ export function SettingsEditorForm({
                     <form.Field name="ogDescriptionEn">
                       {(field) => (
                         <Field>
-                          <FieldLabel>{settingsCopy.form.ogDescriptionEn}</FieldLabel>
+                          <FieldLabel>
+                            {settingsCopy.form.ogDescriptionEn}
+                          </FieldLabel>
                           <Textarea
                             rows={3}
                             disabled={!canEdit || isSaving}
@@ -492,7 +496,9 @@ export function SettingsEditorForm({
                     <form.Field name="metaTitleId">
                       {(field) => (
                         <Field>
-                          <FieldLabel>{settingsCopy.form.metaTitleId}</FieldLabel>
+                          <FieldLabel>
+                            {settingsCopy.form.metaTitleId}
+                          </FieldLabel>
                           <Input
                             disabled={!canEdit || isSaving}
                             value={field.state.value}
@@ -533,7 +539,9 @@ export function SettingsEditorForm({
                     <form.Field name="ogDescriptionId">
                       {(field) => (
                         <Field>
-                          <FieldLabel>{settingsCopy.form.ogDescriptionId}</FieldLabel>
+                          <FieldLabel>
+                            {settingsCopy.form.ogDescriptionId}
+                          </FieldLabel>
                           <Textarea
                             rows={3}
                             disabled={!canEdit || isSaving}

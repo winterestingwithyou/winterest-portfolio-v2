@@ -1,10 +1,4 @@
-import {
-  Facebook,
-  Github,
-  Instagram,
-  Linkedin,
-  Youtube,
-} from 'lucide-react'
+import { Facebook, Github, Instagram, Linkedin, Youtube } from 'lucide-react'
 import type { ComponentType } from 'react'
 import { z } from 'zod'
 

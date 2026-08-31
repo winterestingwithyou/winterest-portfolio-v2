@@ -5,7 +5,9 @@ import type { getDashboardSummary } from '#/features/dashboard/loaders'
 
 type RecentActivitySectionProps = {
   copy: ReturnType<typeof getDashboardCopy>
-  recentProjects: Awaited<ReturnType<typeof getDashboardSummary>>['recentProjects']
+  recentProjects: Awaited<
+    ReturnType<typeof getDashboardSummary>
+  >['recentProjects']
 }
 
 export function RecentActivitySection({

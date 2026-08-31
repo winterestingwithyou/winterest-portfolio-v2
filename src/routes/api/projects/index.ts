@@ -47,4 +47,3 @@ export const Route = createFileRoute('/api/projects/')({
     },
   },
 })
-

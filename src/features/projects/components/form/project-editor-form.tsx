@@ -116,15 +116,16 @@ function getTranslation(
   const translation = project?.translations?.[locale]
 
   return {
-    title: translation?.title ?? (locale === 'en' ? project?.title ?? '' : ''),
+    title:
+      translation?.title ?? (locale === 'en' ? (project?.title ?? '') : ''),
     summary:
-      translation?.summary ?? (locale === 'en' ? project?.summary ?? '' : ''),
+      translation?.summary ?? (locale === 'en' ? (project?.summary ?? '') : ''),
     description:
       translation?.description ??
-      (locale === 'en' ? project?.description ?? '' : ''),
+      (locale === 'en' ? (project?.description ?? '') : ''),
     category:
       translation?.category ??
-      (locale === 'en' ? project?.category ?? 'Project' : 'Project'),
+      (locale === 'en' ? (project?.category ?? 'Project') : 'Project'),
   }
 }
 
@@ -170,9 +171,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
   const [isPending, setIsPending] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
-  const { data: availableTechnologies = [] } = useQuery(
-    techQueryOptions.list(),
-  )
+  const { data: availableTechnologies = [] } = useQuery(techQueryOptions.list())
 
   const createMutation = useCreateProject()
   const updateMutation = useUpdateProject(project?.id ?? '')

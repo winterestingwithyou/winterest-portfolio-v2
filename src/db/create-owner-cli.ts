@@ -19,13 +19,17 @@ config({ path: ['.env.local', '.env'] })
 const target = process.argv[2] ?? 'local'
 
 if (target !== 'local' && target !== 'remote') {
-  console.error('Usage: bun run create-owner:local or bun run create-owner:remote')
+  console.error(
+    'Usage: bun run create-owner:local or bun run create-owner:remote',
+  )
   process.exit(1)
 }
 
 async function main() {
   console.log(`\n========================================`)
-  console.log(`🚀 Winterest Portfolio - Create Owner Account (${target.toUpperCase()})`)
+  console.log(
+    `🚀 Winterest Portfolio - Create Owner Account (${target.toUpperCase()})`,
+  )
   console.log(`========================================\n`)
 
   if (target === 'local') {
@@ -48,7 +52,10 @@ async function handleLocal() {
   const db = drizzleBetterSqlite(sqlite, { schema })
 
   try {
-    await checkAndPromptOwner(db as unknown as Database, `Local D1 (${localDbPath})`)
+    await checkAndPromptOwner(
+      db as unknown as Database,
+      `Local D1 (${localDbPath})`,
+    )
   } finally {
     sqlite.close()
   }
@@ -84,7 +91,10 @@ async function handleRemote() {
     { schema },
   )
 
-  await checkAndPromptOwner(db as unknown as Database, `Remote D1 (${databaseId})`)
+  await checkAndPromptOwner(
+    db as unknown as Database,
+    `Remote D1 (${databaseId})`,
+  )
 }
 
 function promptPassword(promptText: string): Promise<string> {
@@ -166,10 +176,14 @@ async function checkAndPromptOwner(db: Database, targetDescription: string) {
 
   if (existingOwners.length > 0) {
     console.log(`ℹ️  Target Database: ${targetDescription}`)
-    console.error(`\n❌ Error: An owner account already exists in this database:`)
+    console.error(
+      `\n❌ Error: An owner account already exists in this database:`,
+    )
     console.error(`   Name : ${existingOwners[0].name}`)
     console.error(`   Email: ${existingOwners[0].email}`)
-    console.error(`\nOnly 1 owner account is permitted in the Winterest portfolio.\n`)
+    console.error(
+      `\nOnly 1 owner account is permitted in the Winterest portfolio.\n`,
+    )
     process.exit(1)
   }
 
@@ -180,7 +194,9 @@ async function checkAndPromptOwner(db: Database, targetDescription: string) {
 
   try {
     // 1. Name
-    const nameInput = await rl.question('Enter Owner Name [default: Winterest]: ')
+    const nameInput = await rl.question(
+      'Enter Owner Name [default: Winterest]: ',
+    )
     name = nameInput.trim() || 'Winterest'
 
     // 2. Email
@@ -188,7 +204,9 @@ async function checkAndPromptOwner(db: Database, targetDescription: string) {
       const emailInput = await rl.question('Enter Owner Email: ')
       const trimmed = emailInput.trim().toLowerCase()
       if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
-        console.log('⚠️  Please enter a valid email address (e.g. you@example.com).')
+        console.log(
+          '⚠️  Please enter a valid email address (e.g. you@example.com).',
+        )
         continue
       }
 
@@ -200,7 +218,9 @@ async function checkAndPromptOwner(db: Database, targetDescription: string) {
         .get()
 
       if (existingUser) {
-        console.log(`⚠️  The email "${trimmed}" is already registered. Please choose another email.`)
+        console.log(
+          `⚠️  The email "${trimmed}" is already registered. Please choose another email.`,
+        )
         continue
       }
 
@@ -213,7 +233,9 @@ async function checkAndPromptOwner(db: Database, targetDescription: string) {
   // 3. Password with masked asterisk input and confirmation
   let password = ''
   while (!password) {
-    const passInput = await promptPassword('Enter Owner Password (minimum 8 characters): ')
+    const passInput = await promptPassword(
+      'Enter Owner Password (minimum 8 characters): ',
+    )
     if (!passInput || passInput.length < 8) {
       console.log('⚠️  Password must be at least 8 characters long.')
       continue
@@ -268,7 +290,9 @@ async function checkAndPromptOwner(db: Database, targetDescription: string) {
 }
 
 main().catch((err) => {
-  console.error('\n❌ Failed to create owner:', err instanceof Error ? err.message : err)
+  console.error(
+    '\n❌ Failed to create owner:',
+    err instanceof Error ? err.message : err,
+  )
   process.exit(1)
 })
-

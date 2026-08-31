@@ -2,7 +2,10 @@ import { createFileRoute } from '@tanstack/react-router'
 import { env } from 'cloudflare:workers'
 
 import { getDb } from '#/db'
-import { getAccountProfile, updateAccountProfile } from '#/features/account/queries'
+import {
+  getAccountProfile,
+  updateAccountProfile,
+} from '#/features/account/queries'
 import { updateProfileSchema } from '#/features/account/validation'
 import { requireDashboardUser } from '#/features/auth/session'
 import { handleApiError } from '#/lib/api-response'
@@ -42,4 +45,3 @@ export const Route = createFileRoute('/api/account/')({
     },
   },
 })
-

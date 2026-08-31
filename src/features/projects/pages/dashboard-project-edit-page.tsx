@@ -14,9 +14,11 @@ export function DashboardProjectEditPage({
   id,
 }: DashboardProjectEditPageProps) {
   const copy = getDashboardCopy()
-  const { data: project, refetch, isFetching } = useSuspenseQuery(
-    projectQueryOptions.detail(id),
-  )
+  const {
+    data: project,
+    refetch,
+    isFetching,
+  } = useSuspenseQuery(projectQueryOptions.detail(id))
 
   return (
     <DashboardShell

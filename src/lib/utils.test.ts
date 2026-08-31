@@ -6,7 +6,9 @@ import { formatBytes, formatDate, slugify } from './utils'
 describe('utility functions', () => {
   describe('slugify', () => {
     it('converts strings into clean URL slugs', () => {
-      expect(slugify('Next.js & Cloudflare Workers')).toBe('nextjs-cloudflare-workers')
+      expect(slugify('Next.js & Cloudflare Workers')).toBe(
+        'nextjs-cloudflare-workers',
+      )
       expect(slugify('  Hello World!  ')).toBe('hello-world')
       expect(slugify('React 19 & TypeScript')).toBe('react-19-typescript')
       expect(slugify('---leading-trailing---')).toBe('leading-trailing')
@@ -41,7 +43,9 @@ describe('utility functions', () => {
 
   describe('isMissingTableError', () => {
     it('returns true when error message contains no such table', () => {
-      expect(isMissingTableError(new Error('D1_ERROR: no such table: projects'))).toBe(true)
+      expect(
+        isMissingTableError(new Error('D1_ERROR: no such table: projects')),
+      ).toBe(true)
     })
 
     it('returns false for other errors', () => {

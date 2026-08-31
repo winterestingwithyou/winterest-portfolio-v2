@@ -35,10 +35,7 @@ export function DashboardTechTable({
   isLoading,
   onDeleteTech,
 }: DashboardTechTableProps) {
-  const categoryMap = useMemo(
-    () => getCategoryMap(categories),
-    [categories],
-  )
+  const categoryMap = useMemo(() => getCategoryMap(categories), [categories])
 
   const columns = useMemo(
     () => getTechColumns({ categoryMap, onDeleteTech }),

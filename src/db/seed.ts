@@ -227,11 +227,7 @@ async function upsertProject(
   }
 }
 
-async function upsertSocialLink(
-  db: Database,
-  seed: SocialLinkSeed,
-  now: Date,
-) {
+async function upsertSocialLink(db: Database, seed: SocialLinkSeed, now: Date) {
   await db
     .insert(socialLinks)
     .values({
@@ -257,4 +253,3 @@ async function upsertSocialLink(
     })
     .run()
 }
-

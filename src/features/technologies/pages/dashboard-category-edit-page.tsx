@@ -12,9 +12,11 @@ type DashboardCategoryEditPageProps = {
 export function DashboardCategoryEditPage({
   id,
 }: DashboardCategoryEditPageProps) {
-  const { data: category, refetch, isFetching } = useSuspenseQuery(
-    categoryQueryOptions.detail(id),
-  )
+  const {
+    data: category,
+    refetch,
+    isFetching,
+  } = useSuspenseQuery(categoryQueryOptions.detail(id))
 
   return (
     <DashboardShell

@@ -30,10 +30,7 @@ export function OverviewPage({ summary }: OverviewPageProps) {
         </Link>
       }
     >
-      <OverviewMetricsSection
-        copy={copy.overview.metrics}
-        summary={summary}
-      />
+      <OverviewMetricsSection copy={copy.overview.metrics} summary={summary} />
 
       <div className="mt-6 grid gap-5 lg:grid-cols-[1fr_0.85fr]">
         <ContentMixSection copy={copy} summary={summary} />

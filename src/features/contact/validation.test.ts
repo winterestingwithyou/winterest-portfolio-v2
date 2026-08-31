@@ -16,7 +16,9 @@ describe('contact validation', () => {
     expect(parsed.name).toBe('Adam Yudistira')
     expect(parsed.email).toBe('adam@example.com')
     expect(parsed.subject).toBe('Collaboration Inquiry')
-    expect(parsed.message).toBe('Halo, saya tertarik untuk berkolaborasi dalam proyek ini.')
+    expect(parsed.message).toBe(
+      'Halo, saya tertarik untuk berkolaborasi dalam proyek ini.',
+    )
     expect(parsed.turnstileToken).toBe('test_token')
   })
 

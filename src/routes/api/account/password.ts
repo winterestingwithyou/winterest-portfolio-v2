@@ -28,4 +28,3 @@ export const Route = createFileRoute('/api/account/password')({
     },
   },
 })
-

@@ -13,9 +13,11 @@ import { getApiErrorMessage } from '#/lib/api-client'
 
 export function DashboardProjectsPage() {
   const copy = getDashboardCopy()
-  const { data: projects, refetch, isFetching } = useSuspenseQuery(
-    projectQueryOptions.list(),
-  )
+  const {
+    data: projects,
+    refetch,
+    isFetching,
+  } = useSuspenseQuery(projectQueryOptions.list())
   const deleteMutation = useDeleteProject()
   const [error, setError] = useState<string | null>(null)
 

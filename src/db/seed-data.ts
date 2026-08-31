@@ -291,4 +291,3 @@ export const socialLinkSeeds: SocialLinkSeed[] = [
     sortOrder: 4,
   },
 ]
-

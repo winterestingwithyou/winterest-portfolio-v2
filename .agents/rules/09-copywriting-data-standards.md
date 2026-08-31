@@ -14,6 +14,7 @@ To ensure clean encapsulation, high modularity, and readiness for future CMS cap
 
 - Every feature that has user-facing text, section headings, badges, form labels, tooltips, or action messages **MUST** place its localized strings directly in `src/features/<feature>/copy.ts`.
 - Format copy as a typed object supporting `en` and `id` translations, and export a helper `get<Feature>Copy()` using Paraglide's `getLocale()`:
+
   ```ts
   import { getLocale } from '#/paraglide/runtime'
 
@@ -31,6 +32,7 @@ To ensure clean encapsulation, high modularity, and readiness for future CMS cap
     return homeCopy[locale]
   }
   ```
+
 - **Direct Placement**: Always place `copy.ts` directly in the root of the feature directory (`src/features/<feature>/copy.ts`). Do NOT create unnecessary nested directories (e.g., avoid `src/features/auth/content/auth-copy.ts`).
 
 ---

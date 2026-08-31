@@ -77,4 +77,3 @@ export async function requireSettingsUser(
 
   return user
 }
-

@@ -3,11 +3,8 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { Edit3, Sparkles, Trash2 } from 'lucide-react'
 
 import type { getDashboardCopy } from '#/features/dashboard/copy'
-import {
-  formatLocales
-  
-} from '#/features/projects/components/table/dashboard-projects-table-features'
-import type {ProjectRow} from '#/features/projects/components/table/dashboard-projects-table-features';
+import { formatLocales } from '#/features/projects/components/table/dashboard-projects-table-features'
+import type { ProjectRow } from '#/features/projects/components/table/dashboard-projects-table-features'
 
 const columnHelper = createColumnHelper<ProjectRow>()
 

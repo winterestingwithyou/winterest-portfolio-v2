@@ -8,10 +8,7 @@ export type { UserWithSessionCount }
 
 export function getRoleBadges(
   copy: ReturnType<typeof getDashboardCopy>['users'],
-): Record<
-  UserRole,
-  { label: string; className: string; icon: typeof Shield }
-> {
+): Record<UserRole, { label: string; className: string; icon: typeof Shield }> {
   return {
     owner: {
       label: copy.roles.owner,

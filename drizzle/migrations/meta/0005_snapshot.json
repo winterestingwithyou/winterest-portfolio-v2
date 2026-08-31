@@ -104,17 +104,12 @@
       "indexes": {
         "account_user_id_idx": {
           "name": "account_user_id_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         },
         "account_provider_account_idx": {
           "name": "account_provider_account_idx",
-          "columns": [
-            "provider_id",
-            "account_id"
-          ],
+          "columns": ["provider_id", "account_id"],
           "isUnique": false
         }
       },
@@ -123,12 +118,8 @@
           "name": "account_user_id_user_id_fk",
           "tableFrom": "account",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -189,16 +180,12 @@
       "indexes": {
         "categories_slug_unique": {
           "name": "categories_slug_unique",
-          "columns": [
-            "slug"
-          ],
+          "columns": ["slug"],
           "isUnique": true
         },
         "categories_sort_order_idx": {
           "name": "categories_sort_order_idx",
-          "columns": [
-            "sort_order"
-          ],
+          "columns": ["sort_order"],
           "isUnique": false
         }
       },
@@ -287,16 +274,12 @@
       "indexes": {
         "media_filename_idx": {
           "name": "media_filename_idx",
-          "columns": [
-            "filename"
-          ],
+          "columns": ["filename"],
           "isUnique": false
         },
         "media_mime_type_idx": {
           "name": "media_mime_type_idx",
-          "columns": [
-            "mime_type"
-          ],
+          "columns": ["mime_type"],
           "isUnique": false
         }
       },
@@ -326,16 +309,12 @@
       "indexes": {
         "project_technologies_project_id_idx": {
           "name": "project_technologies_project_id_idx",
-          "columns": [
-            "project_id"
-          ],
+          "columns": ["project_id"],
           "isUnique": false
         },
         "project_technologies_technology_id_idx": {
           "name": "project_technologies_technology_id_idx",
-          "columns": [
-            "technology_id"
-          ],
+          "columns": ["technology_id"],
           "isUnique": false
         }
       },
@@ -344,12 +323,8 @@
           "name": "project_technologies_project_id_projects_id_fk",
           "tableFrom": "project_technologies",
           "tableTo": "projects",
-          "columnsFrom": [
-            "project_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -357,22 +332,15 @@
           "name": "project_technologies_technology_id_technologies_id_fk",
           "tableFrom": "project_technologies",
           "tableTo": "technologies",
-          "columnsFrom": [
-            "technology_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["technology_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "project_technologies_pk": {
-          "columns": [
-            "project_id",
-            "technology_id"
-          ],
+          "columns": ["project_id", "technology_id"],
           "name": "project_technologies_pk"
         }
       },
@@ -445,9 +413,7 @@
       "indexes": {
         "project_translations_locale_idx": {
           "name": "project_translations_locale_idx",
-          "columns": [
-            "locale"
-          ],
+          "columns": ["locale"],
           "isUnique": false
         }
       },
@@ -456,22 +422,15 @@
           "name": "project_translations_project_id_projects_id_fk",
           "tableFrom": "project_translations",
           "tableTo": "projects",
-          "columnsFrom": [
-            "project_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "project_translations_pk": {
-          "columns": [
-            "project_id",
-            "locale"
-          ],
+          "columns": ["project_id", "locale"],
           "name": "project_translations_pk"
         }
       },
@@ -625,37 +584,27 @@
       "indexes": {
         "projects_slug_unique": {
           "name": "projects_slug_unique",
-          "columns": [
-            "slug"
-          ],
+          "columns": ["slug"],
           "isUnique": true
         },
         "projects_status_idx": {
           "name": "projects_status_idx",
-          "columns": [
-            "status"
-          ],
+          "columns": ["status"],
           "isUnique": false
         },
         "projects_visibility_idx": {
           "name": "projects_visibility_idx",
-          "columns": [
-            "visibility"
-          ],
+          "columns": ["visibility"],
           "isUnique": false
         },
         "projects_featured_idx": {
           "name": "projects_featured_idx",
-          "columns": [
-            "featured"
-          ],
+          "columns": ["featured"],
           "isUnique": false
         },
         "projects_published_at_idx": {
           "name": "projects_published_at_idx",
-          "columns": [
-            "published_at"
-          ],
+          "columns": ["published_at"],
           "isUnique": false
         }
       },
@@ -729,16 +678,12 @@
       "indexes": {
         "session_token_unique": {
           "name": "session_token_unique",
-          "columns": [
-            "token"
-          ],
+          "columns": ["token"],
           "isUnique": true
         },
         "session_user_id_idx": {
           "name": "session_user_id_idx",
-          "columns": [
-            "user_id"
-          ],
+          "columns": ["user_id"],
           "isUnique": false
         }
       },
@@ -747,12 +692,8 @@
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -798,9 +739,7 @@
       "indexes": {
         "site_settings_key_idx": {
           "name": "site_settings_key_idx",
-          "columns": [
-            "key"
-          ],
+          "columns": ["key"],
           "isUnique": false
         }
       },
@@ -883,23 +822,17 @@
       "indexes": {
         "social_links_platform_unique": {
           "name": "social_links_platform_unique",
-          "columns": [
-            "platform"
-          ],
+          "columns": ["platform"],
           "isUnique": true
         },
         "social_links_is_enabled_idx": {
           "name": "social_links_is_enabled_idx",
-          "columns": [
-            "is_enabled"
-          ],
+          "columns": ["is_enabled"],
           "isUnique": false
         },
         "social_links_sort_order_idx": {
           "name": "social_links_sort_order_idx",
-          "columns": [
-            "sort_order"
-          ],
+          "columns": ["sort_order"],
           "isUnique": false
         }
       },
@@ -981,16 +914,12 @@
       "indexes": {
         "technologies_slug_unique": {
           "name": "technologies_slug_unique",
-          "columns": [
-            "slug"
-          ],
+          "columns": ["slug"],
           "isUnique": true
         },
         "technologies_is_ultimate_idx": {
           "name": "technologies_is_ultimate_idx",
-          "columns": [
-            "is_ultimate"
-          ],
+          "columns": ["is_ultimate"],
           "isUnique": false
         }
       },
@@ -1020,16 +949,12 @@
       "indexes": {
         "technology_categories_technology_id_idx": {
           "name": "technology_categories_technology_id_idx",
-          "columns": [
-            "technology_id"
-          ],
+          "columns": ["technology_id"],
           "isUnique": false
         },
         "technology_categories_category_id_idx": {
           "name": "technology_categories_category_id_idx",
-          "columns": [
-            "category_id"
-          ],
+          "columns": ["category_id"],
           "isUnique": false
         }
       },
@@ -1038,12 +963,8 @@
           "name": "technology_categories_technology_id_technologies_id_fk",
           "tableFrom": "technology_categories",
           "tableTo": "technologies",
-          "columnsFrom": [
-            "technology_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["technology_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1051,22 +972,15 @@
           "name": "technology_categories_category_id_categories_id_fk",
           "tableFrom": "technology_categories",
           "tableTo": "categories",
-          "columnsFrom": [
-            "category_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["category_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "technology_categories_pk": {
-          "columns": [
-            "technology_id",
-            "category_id"
-          ],
+          "columns": ["technology_id", "category_id"],
           "name": "technology_categories_pk"
         }
       },
@@ -1140,16 +1054,12 @@
       "indexes": {
         "user_email_unique": {
           "name": "user_email_unique",
-          "columns": [
-            "email"
-          ],
+          "columns": ["email"],
           "isUnique": true
         },
         "user_role_idx": {
           "name": "user_role_idx",
-          "columns": [
-            "role"
-          ],
+          "columns": ["role"],
           "isUnique": false
         }
       },
@@ -1209,9 +1119,7 @@
       "indexes": {
         "verification_identifier_idx": {
           "name": "verification_identifier_idx",
-          "columns": [
-            "identifier"
-          ],
+          "columns": ["identifier"],
           "isUnique": false
         }
       },

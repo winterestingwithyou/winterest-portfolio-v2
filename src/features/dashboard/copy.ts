@@ -122,7 +122,8 @@ export const dashboardCopy = {
       browseFiles: 'Browse files',
       changeImage: 'Change image',
       removeImage: 'Remove image',
-      coverImageRecommended: 'Recommended aspect ratio: 16:9 or 21:9 (min. 1200x675px).',
+      coverImageRecommended:
+        'Recommended aspect ratio: 16:9 or 21:9 (min. 1200x675px).',
       directUpload: 'Upload image',
       orPasteUrl: 'Or enter image URL manually',
     },
@@ -165,7 +166,8 @@ export const dashboardCopy = {
         owner: 'Owner',
         admin: 'Admin',
         editor: 'Editor',
-        ownerDesc: 'Full access to users, roles, settings, and all CMS content.',
+        ownerDesc:
+          'Full access to users, roles, settings, and all CMS content.',
         adminDesc: 'Manage content, media, and dashboard settings.',
         editorDesc: 'Create and edit portfolio content.',
       },
@@ -289,14 +291,14 @@ export const dashboardCopy = {
           'Primary title used on the homepage and default search engine results.',
         metaDescriptionEn: 'Default SEO description (English)',
         metaDescriptionId: 'Default SEO description (Indonesian)',
-        metaDescriptionDesc:
-          'Summary shown in search engine snippet results.',
+        metaDescriptionDesc: 'Summary shown in search engine snippet results.',
         ogDescriptionEn: 'OpenGraph description (English)',
         ogDescriptionId: 'OpenGraph description (Indonesian)',
         ogDescriptionDesc:
           'Social share description for Twitter/X, LinkedIn, Discord, and WhatsApp.',
         metaTitleTemplate: 'Meta title template',
-        metaTitleTemplateDesc: 'Template for browser tab title (e.g. %s | Winterest).',
+        metaTitleTemplateDesc:
+          'Template for browser tab title (e.g. %s | Winterest).',
         faviconUrl: 'Favicon / Browser Icon',
         faviconDesc:
           'Small icon displayed in browser tabs and bookmarks (PNG, SVG, or ICO).',
@@ -358,7 +360,8 @@ export const dashboardCopy = {
       },
       sessions: {
         currentSessionTitle: 'Current Active Browser Session',
-        currentSessionDesc: 'Encrypted and secure active session on this device.',
+        currentSessionDesc:
+          'Encrypted and secure active session on this device.',
         activeBadge: 'Active',
         securityTipsTitle: 'Account Security Tips',
         securityTip1:
@@ -508,7 +511,8 @@ export const dashboardCopy = {
       browseFiles: 'Pilih file',
       changeImage: 'Ganti gambar',
       removeImage: 'Hapus gambar',
-      coverImageRecommended: 'Rasio aspek yang disarankan: 16:9 atau 21:9 (min. 1200x675px).',
+      coverImageRecommended:
+        'Rasio aspek yang disarankan: 16:9 atau 21:9 (min. 1200x675px).',
       directUpload: 'Unggah gambar',
       orPasteUrl: 'Atau masukkan URL gambar manual',
     },
@@ -684,7 +688,8 @@ export const dashboardCopy = {
         ogDescriptionDesc:
           'Deskripsi kartu share media sosial (Twitter/X, LinkedIn, Discord, WhatsApp).',
         metaTitleTemplate: 'Template judul meta',
-        metaTitleTemplateDesc: 'Format judul tab browser (cth. %s | Winterest).',
+        metaTitleTemplateDesc:
+          'Format judul tab browser (cth. %s | Winterest).',
         faviconUrl: 'Favicon / Ikon Browser',
         faviconDesc:
           'Ikon kecil yang ditampilkan pada tab browser dan bookmark (PNG, SVG, atau ICO).',
@@ -693,7 +698,8 @@ export const dashboardCopy = {
           'Gambar banner (disarankan 1200x630px) saat tautan situs dibagikan ke media sosial.',
         socialPreviewTitle: 'Pratinjau Kartu Share Medsos',
         maintenanceMode: 'Mode pemeliharaan',
-        maintenanceModeDesc: 'Tampilkan pesan pemeliharaan untuk pengunjung publik.',
+        maintenanceModeDesc:
+          'Tampilkan pesan pemeliharaan untuk pengunjung publik.',
         saveChanges: 'Simpan pengaturan',
         saving: 'Menyimpan pengaturan...',
       },

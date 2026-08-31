@@ -1,9 +1,4 @@
-import {
-  Brain,
-  Lightbulb,
-  Sparkles,
-  Terminal,
-} from 'lucide-react'
+import { Brain, Lightbulb, Sparkles, Terminal } from 'lucide-react'
 import { motion } from 'motion/react'
 
 import type { getAboutData } from '#/features/about/data'

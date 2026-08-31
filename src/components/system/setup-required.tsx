@@ -24,8 +24,7 @@ export function SetupRequiredScreen({ status }: { status: SystemStatus }) {
   const [copied, setCopied] = useState(false)
   const [isRefreshing, setIsRefreshing] = useState(false)
 
-  const command =
-    activeTab === 'local' ? copy.commandLocal : copy.commandRemote
+  const command = activeTab === 'local' ? copy.commandLocal : copy.commandRemote
 
   const handleCopy = async () => {
     try {
@@ -136,8 +135,12 @@ export function SetupRequiredScreen({ status }: { status: SystemStatus }) {
           <div className="p-5 sm:p-6">
             <div className="group relative flex items-center justify-between rounded-xl border border-zinc-700/50 bg-zinc-900 px-4 py-3.5 font-mono text-xs sm:text-sm text-zinc-100 shadow-inner">
               <div className="flex items-center gap-3 overflow-x-auto">
-                <span className="select-none font-bold text-(--brand-orange)">$</span>
-                <span className="font-semibold text-emerald-400">{command}</span>
+                <span className="select-none font-bold text-(--brand-orange)">
+                  $
+                </span>
+                <span className="font-semibold text-emerald-400">
+                  {command}
+                </span>
               </div>
 
               <button
@@ -187,12 +190,11 @@ export function SetupRequiredScreen({ status }: { status: SystemStatus }) {
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) px-8 text-sm font-black text-white shadow-[0_18px_44px_var(--brand-glow)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_54px_var(--brand-glow)] disabled:opacity-60"
               >
                 <RefreshCw
-                  className={cn(
-                    'size-4',
-                    isRefreshing && 'animate-spin',
-                  )}
+                  className={cn('size-4', isRefreshing && 'animate-spin')}
                 />
-                <span>{isRefreshing ? copy.refreshingButton : copy.refreshButton}</span>
+                <span>
+                  {isRefreshing ? copy.refreshingButton : copy.refreshButton}
+                </span>
               </button>
             </div>
           </div>

@@ -194,9 +194,7 @@ export function UserEditorForm({
       })
   }
 
-  const availableRoles: UserRole[] = isOwner
-    ? ['owner']
-    : ['admin', 'editor']
+  const availableRoles: UserRole[] = isOwner ? ['owner'] : ['admin', 'editor']
 
   return (
     <div className="mx-auto max-w-3xl space-y-8 pb-12">
@@ -414,7 +412,8 @@ export function UserEditorForm({
                           {roleDescriptions.owner}
                         </p>
                         <p className="mt-2 text-[0.7rem] font-semibold text-(--brand-orange-deep)">
-                          Role Owner bersifat tetap untuk akun utama portfolio ini dan tidak dapat diubah.
+                          Role Owner bersifat tetap untuk akun utama portfolio
+                          ini dan tidak dapat diubah.
                         </p>
                       </div>
                     ) : (
