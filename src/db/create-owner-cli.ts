@@ -5,12 +5,13 @@ import { config } from 'dotenv'
 import BetterSqliteDatabase from 'better-sqlite3'
 import { eq } from 'drizzle-orm'
 import { drizzle as drizzleBetterSqlite } from 'drizzle-orm/better-sqlite3'
-import { drizzle as drizzleSqliteProxy } from 'drizzle-orm/sqlite-proxy'
-import { ofetch } from 'ofetch'
 
 import { hashPassword } from '../lib/auth/password'
-import { findLocalD1Database, readEnv } from './cli-utils'
-import type { D1QueryResponse } from './cli-utils'
+import {
+  createRemoteD1Database,
+  findLocalD1Database,
+  readEnv,
+} from './cli-utils'
 import type { Database } from './index'
 import * as schema from './schema'
 
@@ -62,39 +63,10 @@ async function handleLocal() {
 }
 
 async function handleRemote() {
-  const accountId = readEnv('CLOUDFLARE_ACCOUNT_ID')
   const databaseId = readEnv('CLOUDFLARE_D1_DATABASE_ID')
-  const apiToken = readEnv('CLOUDFLARE_D1_API_TOKEN')
-  const endpoint = `https://api.cloudflare.com/client/v4/accounts/${accountId}/d1/database/${databaseId}/query`
+  const db = createRemoteD1Database()
 
-  const db = drizzleSqliteProxy(
-    async (sql, params) => {
-      const payload = await ofetch<D1QueryResponse>(endpoint, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${apiToken}`,
-        },
-        body: { sql, params },
-      })
-
-      if (!payload.success) {
-        const message =
-          payload.errors?.map((error) => error.message).join('; ') ||
-          'Cloudflare D1 request failed.'
-        throw new Error(message)
-      }
-
-      return {
-        rows: payload.result?.flatMap((result) => result.results ?? []) ?? [],
-      }
-    },
-    { schema },
-  )
-
-  await checkAndPromptOwner(
-    db as unknown as Database,
-    `Remote D1 (${databaseId})`,
-  )
+  await checkAndPromptOwner(db, `Remote D1 (${databaseId})`)
 }
 
 function promptPassword(promptText: string): Promise<string> {
