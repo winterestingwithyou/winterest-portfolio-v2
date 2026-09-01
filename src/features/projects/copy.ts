@@ -2,6 +2,11 @@ import { getLocale } from '#/paraglide/runtime'
 
 export const projectsCopy = {
   en: {
+    meta: {
+      title: 'Projects',
+      description:
+        'A collection of projects built to solve real problems, academic tasks, and technical explorations by Winterest.',
+    },
     list: {
       eyebrow: 'Projects',
       title: 'Projects',
@@ -35,6 +40,11 @@ export const projectsCopy = {
     },
   },
   id: {
+    meta: {
+      title: 'Project',
+      description:
+        'Koleksi proyek yang dibuat berdasarkan masalah nyata, tugas akademik, dan eksplorasi teknis oleh Winterest.',
+    },
     list: {
       eyebrow: 'Project',
       title: 'Daftar Project',

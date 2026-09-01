@@ -127,6 +127,14 @@ export const dashboardCopy = {
       directUpload: 'Upload image',
       orPasteUrl: 'Or enter image URL manually',
     },
+    stack: {
+      title: 'Tech Stack',
+      description: 'Manage technologies and skill categories.',
+      newCategory: 'New Category',
+      editCategory: 'Edit Category',
+      newTechnology: 'New Technology',
+      editTechnology: 'Edit Technology',
+    },
     users: {
       title: 'Users',
       description:
@@ -283,22 +291,30 @@ export const dashboardCopy = {
         publicEmail: 'Public contact email',
         publicEmailDesc:
           'Primary email address displayed for direct inquiries and contact channels.',
+        homepageSeoHeading: 'Homepage SEO (Landing Page)',
+        homepageSeoDesc:
+          'Configure the browser tab title and description specifically for the homepage (/).',
         metaLanguageEn: 'English (EN)',
         metaLanguageId: 'Indonesian (ID)',
-        metaTitleEn: 'Default site title (English)',
-        metaTitleId: 'Default site title (Indonesian)',
+        metaTitleEn: 'Homepage Meta Title (English)',
+        metaTitleId: 'Homepage Meta Title (Indonesian)',
         metaTitleDesc:
-          'Primary title used on the homepage and default search engine results.',
-        metaDescriptionEn: 'Default SEO description (English)',
-        metaDescriptionId: 'Default SEO description (Indonesian)',
+          'Browser tab title and search snippet title specifically for the Homepage.',
+        metaDescriptionEn: 'Homepage SEO description (English)',
+        metaDescriptionId: 'Homepage SEO description (Indonesian)',
         metaDescriptionDesc: 'Summary shown in search engine snippet results.',
         ogDescriptionEn: 'OpenGraph description (English)',
         ogDescriptionId: 'OpenGraph description (Indonesian)',
         ogDescriptionDesc:
           'Social share description for Twitter/X, LinkedIn, Discord, and WhatsApp.',
-        metaTitleTemplate: 'Meta title template',
+        subpageSeoHeading: 'Sub-page Title Template',
+        subpageSeoDesc:
+          'Configure how titles for all sub-pages (e.g. /about, /projects, /contact, /dashboard) are formatted.',
+        metaTitleTemplate: 'Title template for sub-pages',
         metaTitleTemplateDesc:
-          'Template for browser tab title (e.g. %s | Winterest).',
+          'Template for browser tab title where %s represents the page name (e.g. %s | Winterest).',
+        templatePreviewLabel: 'Live title preview:',
+        templatePreviewExample: 'About | Winterest',
         faviconUrl: 'Favicon / Browser Icon',
         faviconDesc:
           'Small icon displayed in browser tabs and bookmarks (PNG, SVG, or ICO).',
@@ -516,6 +532,15 @@ export const dashboardCopy = {
       directUpload: 'Unggah gambar',
       orPasteUrl: 'Atau masukkan URL gambar manual',
     },
+    stack: {
+      title: 'Tech Stack',
+      description:
+        'Kelola daftar teknologi dan kategori keahlian yang ditampilkan pada portfolio.',
+      newCategory: 'Kategori Baru',
+      editCategory: 'Edit Kategori',
+      newTechnology: 'Teknologi Baru',
+      editTechnology: 'Edit Teknologi',
+    },
     users: {
       title: 'Pengguna',
       description:
@@ -673,23 +698,31 @@ export const dashboardCopy = {
         publicEmail: 'Email kontak publik',
         publicEmailDesc:
           'Alamat email utama yang ditampilkan untuk saluran kontak dan pertanyaan langsung.',
+        homepageSeoHeading: 'SEO Halaman Beranda',
+        homepageSeoDesc:
+          'Atur judul tab browser dan deskripsi khusus untuk halaman beranda utama (/).',
         metaLanguageEn: 'Bahasa Inggris (EN)',
         metaLanguageId: 'Bahasa Indonesia (ID)',
-        metaTitleEn: 'Judul situs bawaan (Bahasa Inggris)',
-        metaTitleId: 'Judul situs bawaan (Bahasa Indonesia)',
+        metaTitleEn: 'Judul Meta Beranda (Bahasa Inggris)',
+        metaTitleId: 'Judul Meta Beranda (Bahasa Indonesia)',
         metaTitleDesc:
-          'Judul utama yang digunakan pada homepage dan hasil pencarian mesin pencari.',
-        metaDescriptionEn: 'Deskripsi SEO bawaan (Bahasa Inggris)',
-        metaDescriptionId: 'Deskripsi SEO bawaan (Bahasa Indonesia)',
+          'Judul tab browser dan snippet pencarian khusus untuk Halaman Beranda.',
+        metaDescriptionEn: 'Deskripsi SEO Beranda (Bahasa Inggris)',
+        metaDescriptionId: 'Deskripsi SEO Beranda (Bahasa Indonesia)',
         metaDescriptionDesc:
-          'Ringkasan yang ditampilkan pada cuplikan hasil mesin pencari.',
+          'Ringkasan yang ditampilkan pada cuplikan hasil mesin pencari untuk beranda.',
         ogDescriptionEn: 'Deskripsi OpenGraph (Bahasa Inggris)',
         ogDescriptionId: 'Deskripsi OpenGraph (Bahasa Indonesia)',
         ogDescriptionDesc:
           'Deskripsi kartu share media sosial (Twitter/X, LinkedIn, Discord, WhatsApp).',
-        metaTitleTemplate: 'Template judul meta',
+        subpageSeoHeading: 'Template Format Judul Halaman Turunan',
+        subpageSeoDesc:
+          'Atur format judul browser untuk seluruh halaman turunan (seperti /about, /projects, /contact, /dashboard).',
+        metaTitleTemplate: 'Template format judul meta',
         metaTitleTemplateDesc:
-          'Format judul tab browser (cth. %s | Winterest).',
+          'Format judul tab browser di mana %s akan diganti dengan nama halaman (cth. %s | Winterest).',
+        templatePreviewLabel: 'Pratinjau format judul:',
+        templatePreviewExample: 'Tentang | Winterest',
         faviconUrl: 'Favicon / Ikon Browser',
         faviconDesc:
           'Ikon kecil yang ditampilkan pada tab browser dan bookmark (PNG, SVG, atau ICO).',

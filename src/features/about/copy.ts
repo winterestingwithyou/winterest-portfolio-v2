@@ -41,6 +41,11 @@ export type GenshinChar = {
 
 export const aboutCopy = {
   en: {
+    meta: {
+      title: 'About',
+      description:
+        'A deeper look into who I am — personal developer journey, principles, workflow, and technical mindset of Winterest (M. Adam Yudistira).',
+    },
     hero: {
       eyebrow: '01 / WHO AM I',
       title: 'A deeper look into who I am.',
@@ -651,6 +656,11 @@ export const aboutCopy = {
     },
   },
   id: {
+    meta: {
+      title: 'Tentang',
+      description:
+        'Mengenal lebih dalam tentang diriku — perjalanan developer, prinsip, alur kerja, dan mindset teknis Winterest (M. Adam Yudistira).',
+    },
     hero: {
       eyebrow: '01 / SIAPA AKU',
       title: 'Mengenal lebih dalam tentang diriku.',

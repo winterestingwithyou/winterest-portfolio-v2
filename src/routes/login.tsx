@@ -3,6 +3,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 import { getAuthCopy } from '#/features/auth/copy'
 import { LoginPage } from '#/features/auth/pages/login-page'
 import { getDashboardSession } from '#/features/auth/server-functions'
+import { createRouteMeta } from '#/lib/metadata'
 
 export function getSafeRedirect(url?: unknown): string {
   if (typeof url !== 'string' || !url) return '/dashboard'
@@ -17,16 +18,9 @@ export function getSafeRedirect(url?: unknown): string {
   return trimmed
 }
 
-type LoginSearch = {
-  redirectTo?: string
-}
-
 export const Route = createFileRoute('/login')({
-  validateSearch: (search: Record<string, unknown>): LoginSearch => ({
-    redirectTo:
-      typeof search.redirectTo === 'string'
-        ? getSafeRedirect(search.redirectTo)
-        : undefined,
+  validateSearch: (search: Record<string, unknown>) => ({
+    redirectTo: typeof search.redirectTo === 'string' ? search.redirectTo : '',
   }),
   beforeLoad: async ({ search }) => {
     const user = await getDashboardSession()
@@ -35,20 +29,13 @@ export const Route = createFileRoute('/login')({
       throw redirect({ to: getSafeRedirect(search.redirectTo) })
     }
   },
-  head: () => {
+  head: ({ matches }) => {
     const copy = getAuthCopy()
-
-    return {
-      meta: [
-        {
-          title: copy.metaTitle,
-        },
-        {
-          name: 'description',
-          content: copy.metaDescription,
-        },
-      ],
-    }
+    return createRouteMeta({
+      matches,
+      title: copy.metaTitle,
+      description: copy.metaDescription,
+    })
   },
   component: LoginRouteComponent,
 })

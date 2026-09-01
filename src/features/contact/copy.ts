@@ -2,6 +2,11 @@ import { getLocale } from '#/paraglide/runtime'
 
 export const contactCopy = {
   en: {
+    meta: {
+      title: 'Contact',
+      description:
+        'Have a project idea, question, or opportunity? Reach out directly via social channels or send a direct message to Winterest.',
+    },
     page: {
       eyebrow: 'Contact',
       title: "Let's connect.",
@@ -38,6 +43,11 @@ export const contactCopy = {
     },
   },
   id: {
+    meta: {
+      title: 'Kontak',
+      description:
+        'Punya ide proyek, pertanyaan, atau peluang kerja sama? Hubungi Winterest langsung via media sosial atau kirim pesan formulir.',
+    },
     page: {
       eyebrow: 'Kontak',
       title: 'Mari terhubung.',

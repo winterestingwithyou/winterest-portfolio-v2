@@ -31,6 +31,7 @@ import { getDashboardCopy } from '#/features/dashboard/copy'
 import { useUpdateSiteSettings } from '#/features/settings/hooks'
 import type { SiteSettingsInput } from '#/features/settings/types'
 import { siteSettingsSchema } from '#/features/settings/types'
+import { formatMetaTitle } from '#/lib/metadata'
 
 type SettingsEditorFormProps = {
   initialData: SiteSettingsInput
@@ -360,41 +361,18 @@ export function SettingsEditorForm({
                     )}
                   </form.Field>
                 </div>
-
-                <div className="border-t border-(--brand-line) pt-4">
-                  <form.Field name="metaTitleTemplate">
-                    {(field) => (
-                      <Field>
-                        <FieldLabel>
-                          {settingsCopy.form.metaTitleTemplate}
-                        </FieldLabel>
-                        <Input
-                          disabled={!canEdit || isSaving}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder="%s | Winterest"
-                        />
-                        <FieldDescription>
-                          {settingsCopy.form.metaTitleTemplateDesc}
-                        </FieldDescription>
-                        <FieldError errors={field.state.meta.errors} />
-                      </Field>
-                    )}
-                  </form.Field>
-                </div>
               </FieldGroup>
             </div>
 
-            {/* Multilingual Text Meta */}
+            {/* Homepage SEO */}
             <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
               <div className="flex flex-wrap items-center justify-between gap-4 border-b border-(--brand-line) pb-4">
                 <div>
                   <h3 className="font-bold text-sm text-(--brand-ink)">
-                    Multilingual SEO & OpenGraph Content
+                    {settingsCopy.form.homepageSeoHeading}
                   </h3>
                   <p className="text-xs text-(--brand-muted) mt-0.5">
-                    Customize title and descriptions per language.
+                    {settingsCopy.form.homepageSeoDesc}
                   </p>
                 </div>
                 <div className="flex rounded-lg border border-(--brand-line) bg-muted/40 p-1">
@@ -559,6 +537,54 @@ export function SettingsEditorForm({
                     </form.Field>
                   </>
                 )}
+              </FieldGroup>
+            </div>
+
+            {/* Sub-page Title Template */}
+            <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
+              <div>
+                <h3 className="font-bold text-sm text-(--brand-ink)">
+                  {settingsCopy.form.subpageSeoHeading}
+                </h3>
+                <p className="text-xs text-(--brand-muted) mt-0.5">
+                  {settingsCopy.form.subpageSeoDesc}
+                </p>
+              </div>
+
+              <FieldGroup>
+                <form.Field name="metaTitleTemplate">
+                  {(field) => (
+                    <Field>
+                      <FieldLabel>
+                        {settingsCopy.form.metaTitleTemplate}
+                      </FieldLabel>
+                      <Input
+                        disabled={!canEdit || isSaving}
+                        value={field.state.value}
+                        onBlur={field.handleBlur}
+                        onChange={(e) => field.handleChange(e.target.value)}
+                        placeholder="%s | Winterest"
+                      />
+                      <FieldDescription>
+                        {settingsCopy.form.metaTitleTemplateDesc}
+                      </FieldDescription>
+                      <FieldError errors={field.state.meta.errors} />
+
+                      {/* Live Template Preview */}
+                      <div className="mt-2 flex items-center gap-2 rounded-md border border-(--brand-line) bg-(--surface-strong) px-3 py-2 text-xs">
+                        <span className="font-mono text-(--brand-muted)">
+                          {settingsCopy.form.templatePreviewLabel}
+                        </span>
+                        <span className="font-mono font-semibold text-(--brand-orange-deep)">
+                          {formatMetaTitle(
+                            metaLangTab === 'id' ? 'Tentang' : 'About',
+                            field.state.value || '%s | Winterest',
+                          )}
+                        </span>
+                      </div>
+                    </Field>
+                  )}
+                </form.Field>
               </FieldGroup>
             </div>
 

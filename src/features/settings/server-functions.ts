@@ -14,7 +14,8 @@ export const getPublicSiteSettings = createServerFn({ method: 'GET' }).handler(
 
       const db = getDb(env.DB)
       return await getSiteSettings(db)
-    } catch {
+    } catch (error) {
+      console.error('[getPublicSiteSettings Error]', error)
       return defaultSiteSettings
     }
   },

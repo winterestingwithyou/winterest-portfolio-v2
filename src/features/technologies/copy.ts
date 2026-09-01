@@ -2,6 +2,11 @@ import { getLocale } from '#/paraglide/runtime'
 
 export const technologiesCopy = {
   en: {
+    meta: {
+      title: 'Tech Stack',
+      description:
+        'Catalog of tools, runtimes, frameworks, and databases powering Winterest applications.',
+    },
     page: {
       eyebrow: 'Stack',
       title: 'Tech Stack that I use',
@@ -16,6 +21,11 @@ export const technologiesCopy = {
     },
   },
   id: {
+    meta: {
+      title: 'Tech Stack',
+      description:
+        'Katalog alat, runtime, framework, dan database yang menopang aplikasi web produksi Winterest.',
+    },
     page: {
       eyebrow: 'Stack',
       title: 'Tech Stack yang kupakai',

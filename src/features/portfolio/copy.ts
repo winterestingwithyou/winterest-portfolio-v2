@@ -24,6 +24,11 @@ export const portfolioCopy = {
       home: 'Back home',
     },
     resume: {
+      meta: {
+        title: 'Resume',
+        description:
+          'Printable, clean professional resume of M. Adam Yudistira (Winterest) — Education, skills, projects, and background.',
+      },
       eyebrow: 'Resume',
       description:
         'Fullstack web developer focused on practical web systems, calm interfaces, and maintainable fullstack workflows.',
@@ -77,6 +82,11 @@ export const portfolioCopy = {
       home: 'Kembali ke beranda',
     },
     resume: {
+      meta: {
+        title: 'Resume',
+        description:
+          'Resume profesional M. Adam Yudistira (Winterest) — Pendidikan, keahlian, proyek, dan latar belakang teknis.',
+      },
       eyebrow: 'Resume',
       description:
         'Fullstack web developer yang fokus pada sistem web praktis, interface yang tenang, dan workflow fullstack yang mudah dirawat.',

@@ -30,7 +30,7 @@ export type AuthCopy = {
 
 export const authCopy: Record<'en' | 'id', AuthCopy> = {
   en: {
-    metaTitle: 'Sign In | Winterest Portfolio',
+    metaTitle: 'Sign In',
     metaDescription:
       'Sign in to manage portfolio content, media assets, site settings, and publishing workflows.',
     brandName: 'Winterest',
@@ -59,10 +59,10 @@ export const authCopy: Record<'en' | 'id', AuthCopy> = {
     },
   },
   id: {
-    metaTitle: 'Masuk | Winterest Portfolio',
+    metaTitle: 'Masuk',
     metaDescription:
       'Masuk untuk mengelola konten portfolio, aset media, pengaturan situs, dan alur publikasi.',
-    brandName: 'Winterest Portfolio',
+    brandName: 'Winterest',
     backHome: 'Kembali ke portfolio',
     eyebrow: 'Akses Dashboard',
     title: 'Masuk untuk mengelola portfolio.',

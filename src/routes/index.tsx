@@ -3,6 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { HomePage } from '#/features/home/pages/home-page'
 import { getPublishedProjects } from '#/features/projects/public-loaders'
 import { getPublicUltimateStack } from '#/features/technologies/public-loaders'
+import { createRouteMeta } from '#/lib/metadata'
 import { getLocale } from '#/paraglide/runtime'
 
 export const Route = createFileRoute('/')({
@@ -15,6 +16,7 @@ export const Route = createFileRoute('/')({
 
     return { projects, ultimateTechs }
   },
+  head: ({ matches }) => createRouteMeta({ matches, isHome: true }),
   component: HomeRouteComponent,
 })
 
