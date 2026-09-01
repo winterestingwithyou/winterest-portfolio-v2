@@ -27,12 +27,45 @@ describe('api-client', () => {
       expect(message).toBe('Invalid credentials provided.')
     })
 
-    it('falls back to FetchError.message when data payload is empty', () => {
+    it('falls back to FetchError.message when data payload is empty and message is clean', () => {
       const fetchError = new FetchError('Network timeout occurred')
       fetchError.data = null
 
       const message = getApiErrorMessage(fetchError)
       expect(message).toBe('Network timeout occurred')
+    })
+
+    it('suppresses raw ofetch HTTP debug lines and returns fallback', () => {
+      const fetchError = new FetchError(
+        '[POST] "/api/auth/sign-in/email": 500 Internal Server Error',
+      )
+      fetchError.status = 500
+      fetchError.data = null
+
+      const message = getApiErrorMessage(fetchError, 'Gagal masuk akun.')
+      expect(message).toBe('Gagal masuk akun.')
+    })
+
+    it('extracts nested error.message object from response data', () => {
+      const fetchError = new FetchError('Request failed with status code 400')
+      fetchError.data = { error: { message: 'Kata sandi tidak sesuai.' } }
+
+      const message = getApiErrorMessage(fetchError)
+      expect(message).toBe('Kata sandi tidak sesuai.')
+    })
+
+    it('suppresses server-side crash traces like # SERVER_ERROR and returns fallback', () => {
+      const fetchError = new FetchError(
+        '[POST] "/api/auth/sign-in/email": 500 Internal Server Error',
+      )
+      fetchError.status = 500
+      fetchError.data = {
+        message:
+          '# SERVER_ERROR: NotSupportedError: Pbkdf2 failed: iteration counts above 100000 are not supported (requested 120000).',
+      }
+
+      const message = getApiErrorMessage(fetchError, 'Gagal masuk akun.')
+      expect(message).toBe('Gagal masuk akun.')
     })
 
     it('extracts message from a standard Error instance', () => {

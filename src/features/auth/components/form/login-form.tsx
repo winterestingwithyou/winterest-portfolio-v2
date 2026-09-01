@@ -7,13 +7,25 @@ import type { TurnstileRef } from '#/components/ui/turnstile'
 import { TurnstileWidget } from '#/components/ui/turnstile'
 import type { AuthCopy } from '#/features/auth/copy'
 import { useSignIn } from '#/features/auth/hooks'
-import { getApiErrorMessage } from '#/lib/api-client'
+import { FetchError, getApiErrorMessage } from '#/lib/api-client'
 
 import { getSafeRedirect } from '#/routes/login'
 
 type LoginFormProps = {
   copy: AuthCopy
   redirectTo?: string
+}
+
+function getLoginErrorMessage(caught: unknown, copy: AuthCopy): string {
+  if (caught instanceof FetchError) {
+    if (caught.status === 400 || caught.status === 401) {
+      return copy.errors.signin
+    }
+    if (caught.status && caught.status >= 500) {
+      return copy.errors.request
+    }
+  }
+  return getApiErrorMessage(caught, copy.errors.signin)
 }
 
 export function LoginForm({ copy, redirectTo }: LoginFormProps) {
@@ -41,7 +53,7 @@ export function LoginForm({ copy, redirectTo }: LoginFormProps) {
       await signInMutation.mutateAsync(payload)
       await navigate({ to: safeRedirect })
     } catch (caught) {
-      setError(getApiErrorMessage(caught, copy.errors.signin))
+      setError(getLoginErrorMessage(caught, copy))
       turnstileRef.current?.reset()
       setTurnstileToken('')
     }

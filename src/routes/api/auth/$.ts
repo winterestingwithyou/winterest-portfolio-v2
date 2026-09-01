@@ -5,7 +5,20 @@ import { verifyTurnstileToken } from '#/lib/turnstile'
 export const Route = createFileRoute('/api/auth/$')({
   server: {
     handlers: {
-      GET: ({ request }) => auth.handler(request),
+      GET: async ({ request }) => {
+        try {
+          return await auth.handler(request)
+        } catch (error) {
+          console.error('[api/auth] GET handler error:', error)
+          return Response.json(
+            {
+              error: 'Authentication request failed.',
+              message: 'Authentication request failed.',
+            },
+            { status: 500 },
+          )
+        }
+      },
       POST: async ({ request }) => {
         const url = new URL(request.url)
 
@@ -51,7 +64,18 @@ export const Route = createFileRoute('/api/auth/$')({
           }
         }
 
-        return auth.handler(request)
+        try {
+          return await auth.handler(request)
+        } catch (error) {
+          console.error('[api/auth] POST handler error:', error)
+          return Response.json(
+            {
+              error: 'Authentication request failed.',
+              message: 'Authentication request failed.',
+            },
+            { status: 500 },
+          )
+        }
       },
     },
   },

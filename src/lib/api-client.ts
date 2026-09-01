@@ -14,17 +14,87 @@ export const api = $fetch.create({
   },
 })
 
+function isRawFetchErrorMessage(msg: string): boolean {
+  if (!msg) return false
+  if (/^\[(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)\]/i.test(msg)) {
+    return true
+  }
+  if (
+    msg.startsWith('# SERVER_ERROR') ||
+    msg.toLowerCase().includes('internal server error')
+  ) {
+    return true
+  }
+  if (msg.includes('<!DOCTYPE') || msg.includes('<html')) {
+    return true
+  }
+  return false
+}
+
+function extractMessageFromData(data: unknown): string | null {
+  if (!data || typeof data !== 'object') {
+    return null
+  }
+  const obj = data as Record<string, unknown>
+
+  if (typeof obj.error === 'string' && obj.error.trim()) {
+    const candidate = obj.error.trim()
+    if (!isRawFetchErrorMessage(candidate)) return candidate
+  } else if (
+    obj.error &&
+    typeof obj.error === 'object' &&
+    typeof (obj.error as Record<string, unknown>).message === 'string'
+  ) {
+    const candidate = (
+      (obj.error as Record<string, unknown>).message as string
+    ).trim()
+    if (!isRawFetchErrorMessage(candidate)) return candidate
+  }
+
+  if (typeof obj.message === 'string' && obj.message.trim()) {
+    const candidate = obj.message.trim()
+    if (!isRawFetchErrorMessage(candidate)) return candidate
+  }
+
+  return null
+}
+
 export function getApiErrorMessage(
   error: unknown,
   fallback = 'Terjadi kesalahan pada server.',
 ): string {
   if (error instanceof FetchError) {
-    const data = error.data as ApiResponse<unknown> | undefined
-    return data?.error || data?.message || error.message || fallback
+    const dataMessage = extractMessageFromData(error.data)
+
+    if (dataMessage) {
+      if (error.status && error.status >= 500) {
+        if (isRawFetchErrorMessage(dataMessage)) {
+          return fallback
+        }
+      }
+      return dataMessage
+    }
+
+    // On 500 server errors without safe explicit user message, always use fallback
+    if (error.status && error.status >= 500) {
+      return fallback
+    }
+
+    // Suppress raw ofetch status lines (e.g. "[POST] /url: 500 Internal Server Error")
+    if (error.message && !isRawFetchErrorMessage(error.message)) {
+      return error.message
+    }
+
+    return fallback
   }
+
   if (error instanceof Error) {
-    return error.message
+    if (isRawFetchErrorMessage(error.message)) {
+      return fallback
+    }
+    return error.message || fallback
   }
+
   return fallback
 }
 

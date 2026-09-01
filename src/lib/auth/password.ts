@@ -1,6 +1,7 @@
 const HASH_VERSION = 'pbkdf2-v1'
 const HASH_ALGORITHM = 'SHA-256'
-const HASH_ITERATIONS = 120_000
+export const HASH_ITERATIONS = 100_000
+export const MAX_PBKDF2_ITERATIONS = 100_000
 const SALT_BYTES = 16
 const KEY_BYTES = 32
 
@@ -37,11 +38,23 @@ export async function verifyPassword({
     return false
   }
 
-  const salt = base64UrlDecode(saltValue)
-  const expected = base64UrlDecode(keyValue)
-  const actual = await derivePasswordKey(password, salt, iterations)
+  if (iterations > MAX_PBKDF2_ITERATIONS) {
+    console.warn(
+      `[auth/password] PBKDF2 iterations (${iterations}) exceed runtime maximum (${MAX_PBKDF2_ITERATIONS}). Verification rejected.`,
+    )
+    return false
+  }
 
-  return timingSafeEqual(actual, expected)
+  try {
+    const salt = base64UrlDecode(saltValue)
+    const expected = base64UrlDecode(keyValue)
+    const actual = await derivePasswordKey(password, salt, iterations)
+
+    return timingSafeEqual(actual, expected)
+  } catch (error) {
+    console.error('[auth/password] Failed to verify password:', error)
+    return false
+  }
 }
 
 async function derivePasswordKey(
