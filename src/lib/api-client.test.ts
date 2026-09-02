@@ -1,7 +1,8 @@
 import { FetchError } from 'ofetch'
 import { describe, expect, it } from 'vitest'
 
-import { api, getApiErrorMessage, getServerBaseUrl } from './api-client'
+import { env as mockEnv } from '#/test/cloudflare-workers-mock'
+import { api, getApiErrorMessage, getBaseUrl } from './api-client'
 
 describe('api-client', () => {
   describe('api instance', () => {
@@ -10,27 +11,27 @@ describe('api-client', () => {
     })
   })
 
-  describe('getServerBaseUrl', () => {
-    it('returns normalized URL from process.env.PUBLIC_APP_URL when present', async () => {
-      const original = process.env.PUBLIC_APP_URL
+  describe('getBaseUrl', () => {
+    it('returns normalized URL from cloudflare:workers env when present', async () => {
+      const original = mockEnv.PUBLIC_APP_URL
       try {
-        process.env.PUBLIC_APP_URL = 'http://localhost:3000///'
-        const url = await getServerBaseUrl()
+        mockEnv.PUBLIC_APP_URL = 'http://localhost:3000///'
+        const url = await getBaseUrl()
         expect(url).toBe('http://localhost:3000')
       } finally {
-        process.env.PUBLIC_APP_URL = original
+        mockEnv.PUBLIC_APP_URL = original
       }
     })
 
-    it('throws explicit error when PUBLIC_APP_URL is missing', async () => {
-      const original = process.env.PUBLIC_APP_URL
+    it('throws explicit error when PUBLIC_APP_URL is missing on server', async () => {
+      const original = mockEnv.PUBLIC_APP_URL
       try {
-        delete (process.env as Record<string, string | undefined>).PUBLIC_APP_URL
-        await expect(getServerBaseUrl()).rejects.toThrow(
+        delete mockEnv.PUBLIC_APP_URL
+        await expect(getBaseUrl()).rejects.toThrow(
           '[api-client] Missing PUBLIC_APP_URL environment variable on server.',
         )
       } finally {
-        process.env.PUBLIC_APP_URL = original
+        mockEnv.PUBLIC_APP_URL = original
       }
     })
   })

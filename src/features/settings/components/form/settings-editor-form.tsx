@@ -28,6 +28,7 @@ import { Input } from '#/components/ui/input'
 import { Textarea } from '#/components/ui/textarea'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 
+import { getBaseUrl } from '#/lib/api-client'
 import { useUpdateSiteSettings } from '#/features/settings/hooks'
 import type { SiteSettingsInput } from '#/features/settings/types'
 import { siteSettingsSchema } from '#/features/settings/types'
@@ -56,9 +57,7 @@ export function SettingsEditorForm({
   const saveError = updateMutation.error?.message ?? null
 
   const previewAppUrl = (() => {
-    const rawUrl =
-      import.meta.env.VITE_PUBLIC_APP_URL ||
-      (typeof window !== 'undefined' ? window.location.origin : '')
+    const rawUrl = getBaseUrl() as string
     try {
       if (rawUrl) {
         return (

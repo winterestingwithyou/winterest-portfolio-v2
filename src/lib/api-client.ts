@@ -8,7 +8,19 @@ export type ApiResponse<T = unknown> = {
   success?: boolean
 }
 
-export const getServerBaseUrl = createIsomorphicFn()
+/**
+ * Resolves the application base URL without a trailing slash.
+ *
+ * Isomorphic behavior:
+ * - Server (SSR): Resolves `PUBLIC_APP_URL` strictly from Cloudflare Workers runtime (`cloudflare:workers`).
+ *   Throws an explicit error if missing.
+ * - Client (Browser): Resolves `VITE_PUBLIC_APP_URL` with fallback to `window.location.origin`.
+ *
+ * Usage:
+ * - On Server (SSR / Server Functions): `const baseUrl = await getBaseUrl()`
+ * - On Client (React Components / Hooks): `const baseUrl = getBaseUrl() as string`
+ */
+export const getBaseUrl = createIsomorphicFn()
   .server(async () => {
     let appUrl: string | undefined
 
@@ -18,22 +30,23 @@ export const getServerBaseUrl = createIsomorphicFn()
         appUrl = env.PUBLIC_APP_URL
       }
     } catch {
-      // Outside Cloudflare Workers runtime (e.g. Node/Bun test/script)
-    }
-
-    if (!appUrl && typeof process !== 'undefined') {
-      appUrl = process.env.PUBLIC_APP_URL
+      // Outside Cloudflare Workers runtime
     }
 
     if (!appUrl) {
       throw new Error(
-        '[api-client] Missing PUBLIC_APP_URL environment variable on server. Please configure PUBLIC_APP_URL in your environment.',
+        '[api-client] Missing PUBLIC_APP_URL environment variable on server. Please configure PUBLIC_APP_URL in your Cloudflare Workers environment.',
       )
     }
 
     return appUrl.replace(/\/+$/, '')
   })
-  .client(() => '')
+  .client(() => {
+    const url =
+      import.meta.env.VITE_PUBLIC_APP_URL ||
+      (typeof window !== 'undefined' ? window.location.origin : '')
+    return url.replace(/\/+$/, '')
+  })
 
 const getServerCookie = createIsomorphicFn()
   .server(async () => {
@@ -59,7 +72,7 @@ export const api = $fetch.create({
         request.startsWith('/') &&
         !options.baseURL
       ) {
-        options.baseURL = await getServerBaseUrl()
+        options.baseURL = await getBaseUrl()
       }
 
       const cookie = await getServerCookie()

@@ -24,6 +24,7 @@ import { getDashboardCopy } from '#/features/dashboard/copy'
 import { useUploadMedia } from '#/features/media/hooks'
 import { mediaQueryOptions } from '#/features/media/query-options'
 import type { MediaRecord } from '#/features/media/queries'
+import { getBaseUrl } from '#/lib/api-client'
 
 export type MediaPickerDialogProps = {
   open: boolean
@@ -60,10 +61,7 @@ export function MediaPickerDialog({
     if (media.url.startsWith('http://') || media.url.startsWith('https://')) {
       return media
     }
-    const baseUrl = (
-      import.meta.env.VITE_PUBLIC_APP_URL ||
-      (typeof window !== 'undefined' ? window.location.origin : '')
-    ).replace(/\/+$/, '')
+    const baseUrl = getBaseUrl() as string
     return {
       ...media,
       url: `${baseUrl}${media.url.startsWith('/') ? '' : '/'}${media.url}`,

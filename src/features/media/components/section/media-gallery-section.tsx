@@ -12,6 +12,7 @@ import { Button } from '#/components/ui/button'
 import { Input } from '#/components/ui/input'
 import type { getDashboardCopy } from '#/features/dashboard/copy'
 import type { MediaRecord } from '#/features/media/queries'
+import { getBaseUrl } from '#/lib/api-client'
 import { formatBytes, formatDate } from '#/lib/utils'
 
 type MediaGallerySectionProps = {
@@ -37,10 +38,7 @@ export function MediaGallerySection({
 
   const handleCopyUrl = async (item: MediaRecord) => {
     try {
-      const baseUrl = (
-        import.meta.env.VITE_PUBLIC_APP_URL ||
-        (typeof window !== 'undefined' ? window.location.origin : '')
-      ).replace(/\/+$/, '')
+      const baseUrl = getBaseUrl() as string
       const fullUrl = item.url.startsWith('http')
         ? item.url
         : `${baseUrl}${item.url.startsWith('/') ? '' : '/'}${item.url}`

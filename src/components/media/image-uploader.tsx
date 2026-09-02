@@ -13,6 +13,7 @@ import { Button } from '#/components/ui/button'
 import { Input } from '#/components/ui/input'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { useUploadMedia } from '#/features/media/hooks'
+import { getBaseUrl } from '#/lib/api-client'
 import { MediaPickerDialog } from './media-picker-dialog'
 
 export type ImageUploaderProps = {
@@ -89,10 +90,7 @@ export function ImageUploader({
   const processFileUpload = async (file: File) => {
     try {
       const uploaded = await uploadMutation.mutateAsync({ file })
-      const baseUrl = (
-        import.meta.env.VITE_PUBLIC_APP_URL ||
-        (typeof window !== 'undefined' ? window.location.origin : '')
-      ).replace(/\/+$/, '')
+      const baseUrl = getBaseUrl() as string
       const fullUrl = uploaded.url.startsWith('http')
         ? uploaded.url
         : `${baseUrl}${uploaded.url.startsWith('/') ? '' : '/'}${uploaded.url}`
@@ -111,10 +109,7 @@ export function ImageUploader({
     setIsManualUrl(false)
   }
 
-  const baseUrl = (
-    import.meta.env.VITE_PUBLIC_APP_URL ||
-    (typeof window !== 'undefined' ? window.location.origin : '')
-  ).replace(/\/+$/, '')
+  const baseUrl = getBaseUrl() as string
   const displayUrl = value
     ? value.startsWith('http')
       ? value
