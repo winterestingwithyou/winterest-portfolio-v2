@@ -36,9 +36,27 @@ import {
 import { categoryQueryOptions } from '#/features/technologies/query-options'
 import type { TechnologyWithCategories } from '#/features/technologies/queries'
 import { getApiErrorMessage } from '#/lib/api-client'
-import { slugify } from '#/lib/utils'
+import { cn, slugify } from '#/lib/utils'
 import { getLocale } from '#/paraglide/runtime'
 import { getTechnologyFormSchema } from '#/features/technologies/validation'
+
+const SIMPLE_ICONS_PREFIX = 'https://cdn.simpleicons.org/'
+
+function parseInitialIcon(icon?: string | null): {
+  source: 'simpleicons' | 'custom'
+  value: string
+} {
+  if (!icon) {
+    return { source: 'simpleicons', value: '' }
+  }
+  if (icon.startsWith(SIMPLE_ICONS_PREFIX)) {
+    return {
+      source: 'simpleicons',
+      value: icon.slice(SIMPLE_ICONS_PREFIX.length),
+    }
+  }
+  return { source: 'custom', value: icon }
+}
 
 type TechnologyEditorFormProps = {
   mode: 'create' | 'edit'
@@ -56,6 +74,10 @@ export function TechnologyEditorForm({
   const { data: categories = [], isLoading: isLoadingCategories } = useQuery(
     categoryQueryOptions.list(),
   )
+  const initialIcon = parseInitialIcon(initialData?.icon)
+  const [iconSource, setIconSource] = useState<'simpleicons' | 'custom'>(
+    initialIcon.source,
+  )
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -69,7 +91,7 @@ export function TechnologyEditorForm({
     defaultValues: {
       name: initialData?.name ?? '',
       slug: initialData?.slug ?? '',
-      icon: initialData?.icon ?? '',
+      icon: initialIcon.value,
       color: initialData?.color ?? '',
       url: initialData?.url ?? '',
       isUltimate: initialData?.isUltimate ?? false,
@@ -83,10 +105,24 @@ export function TechnologyEditorForm({
       setIsSaving(true)
 
       try {
+        let finalIcon: string | null = null
+        const trimmedIcon = value.icon.trim()
+        if (trimmedIcon) {
+          if (iconSource === 'simpleicons') {
+            const cleanSlug = trimmedIcon.replace(
+              /^https:\/\/cdn\.simpleicons\.org\//,
+              '',
+            )
+            finalIcon = cleanSlug ? `${SIMPLE_ICONS_PREFIX}${cleanSlug}` : null
+          } else {
+            finalIcon = trimmedIcon
+          }
+        }
+
         const payload = {
           name: value.name.trim(),
           slug: value.slug.trim(),
-          icon: value.icon.trim() || null,
+          icon: finalIcon,
           color: value.color.trim() || null,
           url: value.url.trim() || null,
           isUltimate: value.isUltimate,
@@ -107,6 +143,26 @@ export function TechnologyEditorForm({
       }
     },
   })
+
+  const handleSourceChange = (newSource: 'simpleicons' | 'custom') => {
+    if (newSource === iconSource) return
+    setIconSource(newSource)
+    const currentVal = form.getFieldValue('icon').trim()
+    if (newSource === 'simpleicons') {
+      if (currentVal.startsWith(SIMPLE_ICONS_PREFIX)) {
+        form.setFieldValue('icon', currentVal.slice(SIMPLE_ICONS_PREFIX.length))
+      }
+    } else {
+      if (
+        currentVal &&
+        !currentVal.startsWith('http://') &&
+        !currentVal.startsWith('https://') &&
+        !currentVal.startsWith('/')
+      ) {
+        form.setFieldValue('icon', `${SIMPLE_ICONS_PREFIX}${currentVal}`)
+      }
+    }
+  }
 
   const handleDelete = async () => {
     if (!initialData?.id) return
@@ -226,11 +282,53 @@ export function TechnologyEditorForm({
               children={(field) => {
                 const isInvalid =
                   field.state.meta.isTouched && !field.state.meta.isValid
+                const rawVal = field.state.value.trim()
+                const currentPreviewUrl =
+                  iconSource === 'simpleicons'
+                    ? rawVal
+                      ? `${SIMPLE_ICONS_PREFIX}${rawVal.replace(
+                          /^https:\/\/cdn\.simpleicons\.org\//,
+                          '',
+                        )}`
+                      : null
+                    : rawVal || null
+
                 return (
                   <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>
-                      {formCopy.icon}
-                    </FieldLabel>
+                    <div className="flex items-center justify-between gap-2">
+                      <FieldLabel htmlFor={field.name}>
+                        {iconSource === 'simpleicons'
+                          ? formCopy.simpleIconsSlug
+                          : formCopy.customIconUrl}
+                      </FieldLabel>
+                      <div className="inline-flex rounded-lg border border-(--brand-line) bg-(--surface-strong) p-0.5 text-xs font-semibold">
+                        <button
+                          type="button"
+                          onClick={() => handleSourceChange('simpleicons')}
+                          className={cn(
+                            'rounded-md px-2.5 py-0.5 transition cursor-pointer',
+                            iconSource === 'simpleicons'
+                              ? 'bg-(--brand-orange) text-white shadow-xs'
+                              : 'text-(--brand-muted) hover:text-(--brand-ink)',
+                          )}
+                        >
+                          {formCopy.iconSourceSimple}
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handleSourceChange('custom')}
+                          className={cn(
+                            'rounded-md px-2.5 py-0.5 transition cursor-pointer',
+                            iconSource === 'custom'
+                              ? 'bg-(--brand-orange) text-white shadow-xs'
+                              : 'text-(--brand-muted) hover:text-(--brand-ink)',
+                          )}
+                        >
+                          {formCopy.iconSourceCustom}
+                        </button>
+                      </div>
+                    </div>
+
                     <div className="flex items-center gap-3">
                       <div className="grid size-11 shrink-0 place-items-center rounded-xl border border-(--brand-line) bg-(--surface-strong)">
                         <form.Subscribe
@@ -240,7 +338,7 @@ export function TechnologyEditorForm({
                           ]}
                           children={([currentName, currentColor]) => (
                             <TechIcon
-                              src={field.state.value}
+                              src={currentPreviewUrl}
                               name={currentName}
                               color={currentColor}
                               className="size-6"
@@ -253,13 +351,42 @@ export function TechnologyEditorForm({
                         name={field.name}
                         value={field.state.value}
                         onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder={formCopy.iconPlaceholder}
+                        onChange={(e) => {
+                          let val = e.target.value
+                          if (
+                            iconSource === 'simpleicons' &&
+                            val.startsWith(SIMPLE_ICONS_PREFIX)
+                          ) {
+                            val = val.slice(SIMPLE_ICONS_PREFIX.length)
+                          }
+                          field.handleChange(val)
+                        }}
+                        placeholder={
+                          iconSource === 'simpleicons'
+                            ? formCopy.simpleIconsSlugPlaceholder
+                            : formCopy.customIconUrlPlaceholder
+                        }
                         aria-invalid={isInvalid}
-                        className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
+                        className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
                       />
                     </div>
-                    <FieldDescription>{formCopy.iconDesc}</FieldDescription>
+                    <FieldDescription>
+                      {iconSource === 'simpleicons' ? (
+                        <>
+                          {formCopy.simpleIconsDesc}{' '}
+                          <a
+                            href="https://simpleicons.org"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            className="font-semibold text-(--brand-orange-deep) underline hover:opacity-80"
+                          >
+                            simpleicons.org
+                          </a>
+                        </>
+                      ) : (
+                        formCopy.customIconDesc
+                      )}
+                    </FieldDescription>
                     {isInvalid && (
                       <FieldError errors={field.state.meta.errors} />
                     )}
