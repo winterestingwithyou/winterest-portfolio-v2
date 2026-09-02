@@ -83,15 +83,27 @@ export const technologyInputSchema = z.object({
       /^[a-z0-9-]+$/,
       'Slug may only contain lowercase letters, numbers, and hyphens (-).',
     ),
-  icon: z.string().trim().default(''),
-  color: z.string().trim().default(''),
+  icon: z
+    .string()
+    .trim()
+    .nullable()
+    .optional()
+    .transform((val) => (val ? val : null)),
+  color: z
+    .string()
+    .trim()
+    .nullable()
+    .optional()
+    .transform((val) => (val ? val : null)),
   url: z
     .string()
     .trim()
+    .nullable()
+    .optional()
     .refine((val) => !val || z.string().url().safeParse(val).success, {
       message: 'Invalid URL format.',
     })
-    .default(''),
+    .transform((val) => (val ? val : null)),
   isUltimate: z.boolean().default(false),
   categoryIds: z.array(z.string()).default([]),
 })

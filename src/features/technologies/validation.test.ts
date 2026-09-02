@@ -104,7 +104,7 @@ describe('technologies validation', () => {
       expect(result.success).toBe(true)
     })
 
-    it('defaults optional fields in input schema to empty strings / defaults', () => {
+    it('defaults optional fields in input schema to null / defaults', () => {
       const result = technologyInputSchema.safeParse({
         name: 'Bun',
         slug: 'bun',
@@ -112,15 +112,32 @@ describe('technologies validation', () => {
 
       expect(result.success).toBe(true)
       if (result.success) {
-        expect(result.data.icon).toBe('')
-        expect(result.data.color).toBe('')
-        expect(result.data.url).toBe('')
+        expect(result.data.icon).toBe(null)
+        expect(result.data.color).toBe(null)
+        expect(result.data.url).toBe(null)
         expect(result.data.isUltimate).toBe(false)
         expect(result.data.categoryIds).toEqual([])
       }
     })
 
-    it('accepts empty URL string without error', () => {
+    it('accepts explicit null for optional fields (icon, color, url)', () => {
+      const result = technologyInputSchema.safeParse({
+        name: 'Node.js',
+        slug: 'nodejs',
+        icon: null,
+        color: null,
+        url: null,
+      })
+
+      expect(result.success).toBe(true)
+      if (result.success) {
+        expect(result.data.icon).toBe(null)
+        expect(result.data.color).toBe(null)
+        expect(result.data.url).toBe(null)
+      }
+    })
+
+    it('accepts empty URL string and normalizes to null', () => {
       const result = technologyInputSchema.safeParse({
         name: 'TypeScript',
         slug: 'typescript',
@@ -128,6 +145,9 @@ describe('technologies validation', () => {
       })
 
       expect(result.success).toBe(true)
+      if (result.success) {
+        expect(result.data.url).toBe(null)
+      }
     })
 
     it('rejects malformed URL format when provided', () => {
