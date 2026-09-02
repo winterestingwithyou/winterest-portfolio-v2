@@ -7,6 +7,7 @@ import {
 import { Plus } from 'lucide-react'
 import { useMemo } from 'react'
 
+import { getDashboardCopy } from '#/features/dashboard/copy'
 import {
   Table,
   TableBody,
@@ -29,9 +30,12 @@ export function DashboardCategoriesTable({
   isLoading,
   onDeleteCategory,
 }: DashboardCategoriesTableProps) {
+  const copy = getDashboardCopy()
+  const tableCopy = copy.stack.categoriesTable
+
   const columns = useMemo(
-    () => getCategoryColumns({ onDeleteCategory }),
-    [onDeleteCategory],
+    () => getCategoryColumns({ copy, onDeleteCategory }),
+    [copy, onDeleteCategory],
   )
 
   const table = useReactTable({
@@ -43,7 +47,7 @@ export function DashboardCategoriesTable({
   if (isLoading) {
     return (
       <div className="p-6 text-sm font-semibold text-(--brand-muted)">
-        Memuat daftar kategori...
+        {tableCopy.loading}
       </div>
     )
   }
@@ -51,13 +55,13 @@ export function DashboardCategoriesTable({
   if (categories.length === 0) {
     return (
       <div className="p-8 text-center">
-        <p className="text-sm text-(--brand-muted)">Belum ada kategori.</p>
+        <p className="text-sm text-(--brand-muted)">{tableCopy.empty}</p>
         <Link
           to="/dashboard/stack/categories/new"
           className="mt-4 inline-flex items-center gap-2 rounded-full bg-(--brand-orange) px-4 py-2 text-xs font-bold text-white no-underline"
         >
           <Plus className="size-3.5" />
-          Tambah Kategori Pertama
+          {tableCopy.addFirst}
         </Link>
       </div>
     )

@@ -10,7 +10,7 @@ export const Route = createFileRoute('/dashboard/stack/categories/new')({
     return createRouteMeta({
       matches,
       title: `${copy.stack.newCategory} · Dashboard`,
-      description: copy.stack.description,
+      description: copy.stack.newCategoryDesc,
     })
   },
   component: DashboardCategoryNewPage,

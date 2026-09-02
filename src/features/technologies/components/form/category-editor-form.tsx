@@ -12,6 +12,7 @@ import {
   FieldLabel,
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
+import { getDashboardCopy } from '#/features/dashboard/copy'
 import {
   useCreateCategory,
   useDeleteCategory,
@@ -21,7 +22,8 @@ import type { CategoryRecord } from '#/features/technologies/queries'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { slugify } from '#/lib/utils'
 
-import { categorySchema } from '#/features/technologies/validation'
+import { getLocale } from '#/paraglide/runtime'
+import { getCategoryFormSchema } from '#/features/technologies/validation'
 
 type CategoryEditorFormProps = {
   mode: 'create' | 'edit'
@@ -32,6 +34,9 @@ export function CategoryEditorForm({
   mode,
   initialData,
 }: CategoryEditorFormProps) {
+  const copy = getDashboardCopy()
+  const formCopy = copy.stack.categoryForm
+  const locale = getLocale() === 'id' ? 'id' : 'en'
   const navigate = useNavigate()
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -48,7 +53,7 @@ export function CategoryEditorForm({
       sortOrder: initialData?.sortOrder ?? 0,
     },
     validators: {
-      onSubmit: categorySchema,
+      onSubmit: getCategoryFormSchema(locale),
     },
     onSubmit: async ({ value }) => {
       setError(null)
@@ -69,7 +74,7 @@ export function CategoryEditorForm({
 
         void navigate({ to: '/dashboard/stack' })
       } catch (caught) {
-        setError(getApiErrorMessage(caught, 'Gagal menyimpan kategori.'))
+        setError(getApiErrorMessage(caught, formCopy.saveError))
       } finally {
         setIsSaving(false)
       }
@@ -78,11 +83,7 @@ export function CategoryEditorForm({
 
   const handleDelete = async () => {
     if (!initialData?.id) return
-    if (
-      !confirm(
-        `Apakah Anda yakin ingin menghapus kategori "${initialData.name}"?`,
-      )
-    ) {
+    if (!confirm(formCopy.deleteConfirm(initialData.name))) {
       return
     }
 
@@ -93,7 +94,7 @@ export function CategoryEditorForm({
       await deleteMutation.mutateAsync(initialData.id)
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
-      setError(getApiErrorMessage(caught, 'Gagal menghapus kategori.'))
+      setError(getApiErrorMessage(caught, formCopy.deleteError))
     } finally {
       setIsDeleting(false)
     }
@@ -115,7 +116,7 @@ export function CategoryEditorForm({
           className="inline-flex items-center gap-2 text-sm font-bold text-(--brand-orange-deep) no-underline hover:-translate-x-0.5 transition"
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
-          Kembali ke Stack Management
+          {copy.stack.actions.backToStack}
         </Link>
       </div>
 
@@ -136,7 +137,7 @@ export function CategoryEditorForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <FieldLabel htmlFor={field.name}>
-                    Nama Kategori <span className="text-red-500">*</span>
+                    {formCopy.name} <span className="text-red-500">*</span>
                   </FieldLabel>
                   <Input
                     id={field.name}
@@ -150,7 +151,7 @@ export function CategoryEditorForm({
                         form.setFieldValue('slug', slugify(val))
                       }
                     }}
-                    placeholder="e.g. Frontend"
+                    placeholder={formCopy.namePlaceholder}
                     aria-invalid={isInvalid}
                     className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
                   />
@@ -169,7 +170,7 @@ export function CategoryEditorForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <FieldLabel htmlFor={field.name}>
-                    Slug URL <span className="text-red-500">*</span>
+                    {formCopy.slug} <span className="text-red-500">*</span>
                   </FieldLabel>
                   <Input
                     id={field.name}
@@ -177,7 +178,7 @@ export function CategoryEditorForm({
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="e.g. frontend"
+                    placeholder={formCopy.slugPlaceholder}
                     aria-invalid={isInvalid}
                     className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
                   />
@@ -196,7 +197,7 @@ export function CategoryEditorForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <FieldLabel htmlFor={field.name}>
-                    Urutan Tampil (Sort Order)
+                    {formCopy.sortOrder}
                   </FieldLabel>
                   <Input
                     id={field.name}
@@ -205,14 +206,11 @@ export function CategoryEditorForm({
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(Number(e.target.value))}
-                    placeholder="1"
+                    placeholder={formCopy.sortOrderPlaceholder}
                     aria-invalid={isInvalid}
                     className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
                   />
-                  <FieldDescription>
-                    Angka lebih kecil akan ditampilkan lebih awal pada daftar
-                    kategori.
-                  </FieldDescription>
+                  <FieldDescription>{formCopy.sortOrderDesc}</FieldDescription>
                   {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
               )
@@ -232,7 +230,7 @@ export function CategoryEditorForm({
             className="gap-2 rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
           >
             <Trash2 className="size-4" />
-            {isDeleting ? 'Hapus...' : 'Hapus Kategori'}
+            {isDeleting ? formCopy.deleting : formCopy.delete}
           </Button>
         ) : (
           <div />
@@ -245,7 +243,7 @@ export function CategoryEditorForm({
             asChild
             className="rounded-full border-(--brand-line) font-bold text-(--brand-ink) hover:bg-surface-soft"
           >
-            <Link to="/dashboard/stack">Batal</Link>
+            <Link to="/dashboard/stack">{formCopy.cancel}</Link>
           </Button>
 
           <Button
@@ -254,7 +252,7 @@ export function CategoryEditorForm({
             className="gap-2 rounded-full bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) font-bold text-white shadow-md hover:opacity-90 disabled:opacity-50"
           >
             <Save className="size-4" />
-            {isSaving ? 'Menyimpan...' : 'Simpan Kategori'}
+            {isSaving ? formCopy.saving : formCopy.save}
           </Button>
         </div>
       </div>

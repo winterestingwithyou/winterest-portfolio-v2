@@ -7,6 +7,7 @@ import {
 import { Plus } from 'lucide-react'
 import { useMemo } from 'react'
 
+import { getDashboardCopy } from '#/features/dashboard/copy'
 import {
   Table,
   TableBody,
@@ -35,11 +36,13 @@ export function DashboardTechTable({
   isLoading,
   onDeleteTech,
 }: DashboardTechTableProps) {
+  const copy = getDashboardCopy()
+  const tableCopy = copy.stack.techTable
   const categoryMap = useMemo(() => getCategoryMap(categories), [categories])
 
   const columns = useMemo(
-    () => getTechColumns({ categoryMap, onDeleteTech }),
-    [categoryMap, onDeleteTech],
+    () => getTechColumns({ copy, categoryMap, onDeleteTech }),
+    [copy, categoryMap, onDeleteTech],
   )
 
   const table = useReactTable({
@@ -51,7 +54,7 @@ export function DashboardTechTable({
   if (isLoading) {
     return (
       <div className="p-6 text-sm font-semibold text-(--brand-muted)">
-        Memuat daftar teknologi...
+        {tableCopy.loading}
       </div>
     )
   }
@@ -59,13 +62,13 @@ export function DashboardTechTable({
   if (technologies.length === 0) {
     return (
       <div className="p-8 text-center">
-        <p className="text-sm text-(--brand-muted)">Belum ada teknologi.</p>
+        <p className="text-sm text-(--brand-muted)">{tableCopy.empty}</p>
         <Link
           to="/dashboard/stack/technologies/new"
           className="mt-4 inline-flex items-center gap-2 rounded-full bg-(--brand-orange) px-4 py-2 text-xs font-bold text-white no-underline"
         >
           <Plus className="size-3.5" />
-          Tambah Teknologi Pertama
+          {tableCopy.addFirst}
         </Link>
       </div>
     )

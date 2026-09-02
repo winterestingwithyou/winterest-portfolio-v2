@@ -14,11 +14,14 @@ import {
   categoryQueryOptions,
   techQueryOptions,
 } from '#/features/technologies/query-options'
+import { getDashboardCopy } from '#/features/dashboard/copy'
 import { getApiErrorMessage } from '#/lib/api-client'
 
 type ActiveTab = 'technologies' | 'categories'
 
 export function DashboardStackPage() {
+  const copy = getDashboardCopy()
+  const stackCopy = copy.stack
   const [activeTab, setActiveTab] = useState<ActiveTab>('technologies')
   const [error, setError] = useState<string | null>(null)
 
@@ -45,31 +48,29 @@ export function DashboardStackPage() {
   }
 
   const handleDeleteCategory = async (id: string, name: string) => {
-    if (!confirm(`Apakah Anda yakin ingin menghapus kategori "${name}"?`))
-      return
+    if (!confirm(stackCopy.deleteCategoryConfirm(name))) return
     setError(null)
     try {
       await deleteCategoryMutation.mutateAsync(id)
     } catch (err) {
-      setError(getApiErrorMessage(err, 'Gagal menghapus kategori.'))
+      setError(getApiErrorMessage(err, stackCopy.deleteCategoryError))
     }
   }
 
   const handleDeleteTech = async (id: string, name: string) => {
-    if (!confirm(`Apakah Anda yakin ingin menghapus teknologi "${name}"?`))
-      return
+    if (!confirm(stackCopy.deleteTechConfirm(name))) return
     setError(null)
     try {
       await deleteTechMutation.mutateAsync(id)
     } catch (err) {
-      setError(getApiErrorMessage(err, 'Gagal menghapus teknologi.'))
+      setError(getApiErrorMessage(err, stackCopy.deleteTechError))
     }
   }
 
   return (
     <DashboardShell
-      title="Tech Stack & Skills"
-      description="Kelola daftar teknologi dan kategori keahlian yang ditampilkan pada portfolio."
+      title={stackCopy.heading}
+      description={stackCopy.subheading}
       actions={
         <div className="flex items-center gap-3">
           <button
@@ -81,7 +82,7 @@ export function DashboardStackPage() {
             <RefreshCw
               className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
             />
-            Refresh
+            {copy.common.refresh}
           </button>
           {activeTab === 'technologies' ? (
             <Link
@@ -89,7 +90,7 @@ export function DashboardStackPage() {
               className="inline-flex min-h-10 items-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
             >
               <Plus className="size-4" />
-              Tambah Teknologi
+              {stackCopy.actions.addTechnology}
             </Link>
           ) : (
             <Link
@@ -97,7 +98,7 @@ export function DashboardStackPage() {
               className="inline-flex min-h-10 items-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
             >
               <Plus className="size-4" />
-              Tambah Kategori
+              {stackCopy.actions.addCategory}
             </Link>
           )}
         </div>
@@ -115,7 +116,7 @@ export function DashboardStackPage() {
           }`}
         >
           <Layers className="size-4" />
-          Teknologi ({technologies.length})
+          {stackCopy.tabs.technologies} ({technologies.length})
         </button>
         <button
           type="button"
@@ -127,7 +128,7 @@ export function DashboardStackPage() {
           }`}
         >
           <FolderTree className="size-4" />
-          Kategori ({categories.length})
+          {stackCopy.tabs.categories} ({categories.length})
         </button>
       </div>
 

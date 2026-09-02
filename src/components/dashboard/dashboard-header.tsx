@@ -22,20 +22,6 @@ type DashboardHeaderProps = {
   } | null
 }
 
-const breadcrumbMap: Record<string, string> = {
-  dashboard: 'Dashboard',
-  projects: 'Proyek',
-  stack: 'Tech Stack',
-  technologies: 'Teknologi',
-  categories: 'Kategori',
-  media: 'Media',
-  social: 'Media Sosial',
-  users: 'Pengguna',
-  settings: 'Pengaturan',
-  account: 'Akun',
-  new: 'Tambah Baru',
-}
-
 export function DashboardHeader({ user }: DashboardHeaderProps) {
   const copy = getDashboardCopy()
   const location = useLocation()
@@ -44,7 +30,10 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
   const breadcrumbs = pathSegments.map((segment, index) => {
     const url = `/${pathSegments.slice(0, index + 1).join('/')}`
     const isId = segment.length > 20 || /^\d+$/.test(segment)
-    const label = isId ? 'Edit' : breadcrumbMap[segment] || segment
+    const breadcrumbLabels = copy.shell.breadcrumbs as Record<string, string>
+    const label = isId
+      ? breadcrumbLabels.edit || 'Edit'
+      : breadcrumbLabels[segment] || segment
 
     return { label, url, isLast: index === pathSegments.length - 1 }
   })

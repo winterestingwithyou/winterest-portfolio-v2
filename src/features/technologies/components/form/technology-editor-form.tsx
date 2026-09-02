@@ -17,6 +17,7 @@ import {
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
 import { TechIcon } from '#/components/ui/tech-icon'
+import { getDashboardCopy } from '#/features/dashboard/copy'
 import {
   useCreateTechnology,
   useDeleteTechnology,
@@ -27,7 +28,8 @@ import type { TechnologyWithCategories } from '#/features/technologies/queries'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { slugify } from '#/lib/utils'
 
-import { technologySchema } from '#/features/technologies/validation'
+import { getLocale } from '#/paraglide/runtime'
+import { getTechnologyFormSchema } from '#/features/technologies/validation'
 
 type TechnologyEditorFormProps = {
   mode: 'create' | 'edit'
@@ -38,6 +40,9 @@ export function TechnologyEditorForm({
   mode,
   initialData,
 }: TechnologyEditorFormProps) {
+  const copy = getDashboardCopy()
+  const formCopy = copy.stack.techForm
+  const locale = getLocale() === 'id' ? 'id' : 'en'
   const navigate = useNavigate()
   const { data: categories = [], isLoading: isLoadingCategories } = useQuery(
     categoryQueryOptions.list(),
@@ -61,7 +66,7 @@ export function TechnologyEditorForm({
       categoryIds: initialData?.categoryIds ?? [],
     },
     validators: {
-      onSubmit: technologySchema,
+      onSubmit: getTechnologyFormSchema(locale),
     },
     onSubmit: async ({ value }) => {
       setError(null)
@@ -86,7 +91,7 @@ export function TechnologyEditorForm({
 
         void navigate({ to: '/dashboard/stack' })
       } catch (caught) {
-        setError(getApiErrorMessage(caught, 'Gagal menyimpan teknologi.'))
+        setError(getApiErrorMessage(caught, formCopy.saveError))
       } finally {
         setIsSaving(false)
       }
@@ -95,11 +100,7 @@ export function TechnologyEditorForm({
 
   const handleDelete = async () => {
     if (!initialData?.id) return
-    if (
-      !confirm(
-        `Apakah Anda yakin ingin menghapus teknologi "${initialData.name}"?`,
-      )
-    ) {
+    if (!confirm(formCopy.deleteConfirm(initialData.name))) {
       return
     }
 
@@ -110,7 +111,7 @@ export function TechnologyEditorForm({
       await deleteMutation.mutateAsync(initialData.id)
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
-      setError(getApiErrorMessage(caught, 'Gagal menghapus teknologi.'))
+      setError(getApiErrorMessage(caught, formCopy.deleteError))
     } finally {
       setIsDeleting(false)
     }
@@ -132,7 +133,7 @@ export function TechnologyEditorForm({
           className="inline-flex items-center gap-2 text-sm font-bold text-(--brand-orange-deep) no-underline hover:-translate-x-0.5 transition"
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
-          Kembali ke Stack Management
+          {copy.stack.actions.backToStack}
         </Link>
       </div>
 
@@ -154,7 +155,7 @@ export function TechnologyEditorForm({
                 return (
                   <Field data-invalid={isInvalid}>
                     <FieldLabel htmlFor={field.name}>
-                      Nama Teknologi <span className="text-red-500">*</span>
+                      {formCopy.name} <span className="text-red-500">*</span>
                     </FieldLabel>
                     <Input
                       id={field.name}
@@ -168,7 +169,7 @@ export function TechnologyEditorForm({
                           form.setFieldValue('slug', slugify(val))
                         }
                       }}
-                      placeholder="e.g. React"
+                      placeholder={formCopy.namePlaceholder}
                       aria-invalid={isInvalid}
                       className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
                     />
@@ -188,7 +189,7 @@ export function TechnologyEditorForm({
                 return (
                   <Field data-invalid={isInvalid}>
                     <FieldLabel htmlFor={field.name}>
-                      Slug URL <span className="text-red-500">*</span>
+                      {formCopy.slug} <span className="text-red-500">*</span>
                     </FieldLabel>
                     <Input
                       id={field.name}
@@ -196,7 +197,7 @@ export function TechnologyEditorForm({
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="e.g. react"
+                      placeholder={formCopy.slugPlaceholder}
                       aria-invalid={isInvalid}
                       className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
                     />
@@ -218,7 +219,9 @@ export function TechnologyEditorForm({
                   field.state.meta.isTouched && !field.state.meta.isValid
                 return (
                   <Field data-invalid={isInvalid}>
-                    <FieldLabel htmlFor={field.name}>Icon URL</FieldLabel>
+                    <FieldLabel htmlFor={field.name}>
+                      {formCopy.icon}
+                    </FieldLabel>
                     <div className="flex items-center gap-3">
                       <div className="grid size-11 shrink-0 place-items-center rounded-xl border border-(--brand-line) bg-(--surface-strong)">
                         <form.Subscribe
@@ -242,14 +245,12 @@ export function TechnologyEditorForm({
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="https://... atau /assets/..."
+                        placeholder={formCopy.iconPlaceholder}
                         aria-invalid={isInvalid}
                         className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
                       />
                     </div>
-                    <FieldDescription>
-                      Masukkan URL gambar icon (SVG/PNG/WebP).
-                    </FieldDescription>
+                    <FieldDescription>{formCopy.iconDesc}</FieldDescription>
                     {isInvalid && (
                       <FieldError errors={field.state.meta.errors} />
                     )}
@@ -266,7 +267,7 @@ export function TechnologyEditorForm({
                 return (
                   <Field data-invalid={isInvalid}>
                     <FieldLabel htmlFor={field.name}>
-                      Warna Hex / CSS
+                      {formCopy.color}
                     </FieldLabel>
                     <div className="flex items-center gap-3">
                       <input
@@ -285,7 +286,7 @@ export function TechnologyEditorForm({
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="#61DAFB"
+                        placeholder={formCopy.colorPlaceholder}
                         aria-invalid={isInvalid}
                         className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
                       />
@@ -308,7 +309,7 @@ export function TechnologyEditorForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <FieldLabel htmlFor={field.name}>
-                    Official Website URL
+                    {formCopy.websiteUrl}
                   </FieldLabel>
                   <Input
                     id={field.name}
@@ -317,7 +318,7 @@ export function TechnologyEditorForm({
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="https://react.dev"
+                    placeholder={formCopy.websiteUrlPlaceholder}
                     aria-invalid={isInvalid}
                     className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
                   />
@@ -345,11 +346,10 @@ export function TechnologyEditorForm({
                         htmlFor={field.name}
                         className="font-bold text-sm text-(--brand-ink) cursor-pointer"
                       >
-                        Ultimate Tech Stack
+                        {formCopy.ultimateTitle}
                       </FieldLabel>
                       <FieldDescription>
-                        Tampilkan di bagian paling atas halaman Stack dan
-                        Marquee Homepage.
+                        {formCopy.ultimateDesc}
                       </FieldDescription>
                     </FieldContent>
                   </div>
@@ -372,15 +372,14 @@ export function TechnologyEditorForm({
             name="categoryIds"
             children={(field) => (
               <Field>
-                <FieldLabel>Kategori Teknologi</FieldLabel>
+                <FieldLabel>{formCopy.categoriesTitle}</FieldLabel>
                 {isLoadingCategories ? (
                   <p className="text-xs text-(--brand-muted)">
-                    Memuat kategori...
+                    {formCopy.categoriesLoading}
                   </p>
                 ) : categories.length === 0 ? (
                   <p className="text-xs text-(--brand-muted)">
-                    Belum ada kategori. Silakan buat kategori baru terlebih
-                    dahulu.
+                    {formCopy.noCategories}
                   </p>
                 ) : (
                   <div className="flex flex-wrap gap-2 pt-1">
@@ -428,7 +427,7 @@ export function TechnologyEditorForm({
             className="gap-2 rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
           >
             <Trash2 className="size-4" />
-            {isDeleting ? 'Hapus...' : 'Hapus Teknologi'}
+            {isDeleting ? formCopy.deleting : formCopy.delete}
           </Button>
         ) : (
           <div />
@@ -441,7 +440,7 @@ export function TechnologyEditorForm({
             asChild
             className="rounded-full border-(--brand-line) font-bold text-(--brand-ink) hover:bg-surface-soft"
           >
-            <Link to="/dashboard/stack">Batal</Link>
+            <Link to="/dashboard/stack">{formCopy.cancel}</Link>
           </Button>
 
           <Button
@@ -450,7 +449,7 @@ export function TechnologyEditorForm({
             className="gap-2 rounded-full bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) font-bold text-white shadow-md hover:opacity-90 disabled:opacity-50"
           >
             <Save className="size-4" />
-            {isSaving ? 'Menyimpan...' : 'Simpan Teknologi'}
+            {isSaving ? formCopy.saving : formCopy.save}
           </Button>
         </div>
       </div>

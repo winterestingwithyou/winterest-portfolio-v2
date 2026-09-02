@@ -3,23 +3,28 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { Edit3, ExternalLink, Trash2, Zap } from 'lucide-react'
 
 import { TechIcon } from '#/components/ui/tech-icon'
+import type { getDashboardCopy } from '#/features/dashboard/copy'
 import type { TechnologyWithCategories } from '#/features/technologies/components/table/dashboard-tech-table-features'
 
 const columnHelper = createColumnHelper<TechnologyWithCategories>()
 
 type CreateTechColumnsOptions = {
+  copy: ReturnType<typeof getDashboardCopy>
   categoryMap: Map<string, string>
   onDeleteTech: (id: string, name: string) => Promise<void>
 }
 
 export function getTechColumns({
+  copy,
   categoryMap,
   onDeleteTech,
 }: CreateTechColumnsOptions) {
+  const tableCopy = copy.stack.techTable
+
   return [
     columnHelper.display({
       id: 'icon',
-      header: () => <span className="w-12">Icon</span>,
+      header: () => <span className="w-12">{tableCopy.columns.icon}</span>,
       cell: (info) => {
         const tech = info.row.original
         return (
@@ -35,7 +40,7 @@ export function getTechColumns({
       },
     }),
     columnHelper.accessor('name', {
-      header: 'Nama',
+      header: tableCopy.columns.name,
       cell: (info) => {
         const tech = info.row.original
         return (
@@ -56,7 +61,7 @@ export function getTechColumns({
       },
     }),
     columnHelper.accessor('slug', {
-      header: 'Slug',
+      header: tableCopy.columns.slug,
       cell: (info) => (
         <span className="font-mono text-xs text-(--brand-muted)">
           {info.getValue()}
@@ -64,7 +69,7 @@ export function getTechColumns({
       ),
     }),
     columnHelper.accessor('isUltimate', {
-      header: 'Ultimate',
+      header: tableCopy.columns.ultimate,
       cell: (info) => {
         const isUltimate = info.getValue()
         if (isUltimate) {
@@ -79,7 +84,7 @@ export function getTechColumns({
       },
     }),
     columnHelper.accessor('categoryIds', {
-      header: 'Kategori',
+      header: tableCopy.columns.categories,
       cell: (info) => {
         const categoryIds = info.getValue()
         return (
@@ -98,7 +103,9 @@ export function getTechColumns({
     }),
     columnHelper.display({
       id: 'actions',
-      header: () => <div className="text-right">Aksi</div>,
+      header: () => (
+        <div className="text-right">{tableCopy.columns.actions}</div>
+      ),
       cell: (info) => {
         const tech = info.row.original
         return (
@@ -107,7 +114,7 @@ export function getTechColumns({
               to="/dashboard/stack/technologies/$id"
               params={{ id: tech.id }}
               className="inline-flex size-8 items-center justify-center rounded-lg border border-(--brand-line) bg-(--surface-strong) text-(--brand-ink) transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
-              title="Edit Technology"
+              title={tableCopy.tooltips.edit}
             >
               <Edit3 className="size-4" />
             </Link>
@@ -115,7 +122,7 @@ export function getTechColumns({
               type="button"
               onClick={() => void onDeleteTech(tech.id, tech.name)}
               className="inline-flex size-8 items-center justify-center rounded-lg border border-red-500/20 bg-red-500/10 text-red-500 transition hover:bg-red-500 hover:text-white"
-              title="Delete Technology"
+              title={tableCopy.tooltips.delete}
             >
               <Trash2 className="size-4" />
             </button>

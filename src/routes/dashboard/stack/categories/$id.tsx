@@ -13,7 +13,7 @@ export const Route = createFileRoute('/dashboard/stack/categories/$id')({
     return createRouteMeta({
       matches,
       title: `${copy.stack.editCategory} · Dashboard`,
-      description: copy.stack.description,
+      description: copy.stack.editCategoryDesc,
     })
   },
   component: DashboardCategoryEditRouteComponent,

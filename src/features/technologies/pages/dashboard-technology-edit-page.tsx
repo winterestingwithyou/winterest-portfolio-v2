@@ -2,6 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { RefreshCw } from 'lucide-react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
+import { getDashboardCopy } from '#/features/dashboard/copy'
 import { TechnologyEditorForm } from '#/features/technologies/components/form/technology-editor-form'
 import { techQueryOptions } from '#/features/technologies/query-options'
 
@@ -12,6 +13,7 @@ type DashboardTechnologyEditPageProps = {
 export function DashboardTechnologyEditPage({
   id,
 }: DashboardTechnologyEditPageProps) {
+  const copy = getDashboardCopy()
   const {
     data: tech,
     refetch,
@@ -20,8 +22,8 @@ export function DashboardTechnologyEditPage({
 
   return (
     <DashboardShell
-      title={`Edit ${tech.name}`}
-      description="Perbarui informasi teknologi, icon, atau kategori terkait."
+      title={`${copy.stack.editTechnology}: ${tech.name}`}
+      description={copy.stack.editTechnologyDesc}
       actions={
         <button
           type="button"
@@ -33,7 +35,7 @@ export function DashboardTechnologyEditPage({
             aria-hidden="true"
             className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
           />
-          Refresh
+          {copy.common.refresh}
         </button>
       }
     >
