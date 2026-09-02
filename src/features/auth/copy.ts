@@ -18,6 +18,15 @@ export type AuthCopy = {
     email: string
     password: string
   }
+  validation: {
+    emailRequired: string
+    emailInvalid: string
+    passwordRequired: string
+  }
+  passwordToggle: {
+    show: string
+    hide: string
+  }
   submit: {
     signin: string
     pending: string
@@ -49,6 +58,15 @@ export const authCopy: Record<'en' | 'id', AuthCopy> = {
       email: 'name@example.com',
       password: 'Enter your password',
     },
+    validation: {
+      emailRequired: 'Email is required.',
+      emailInvalid: 'Please enter a valid email address.',
+      passwordRequired: 'Password is required.',
+    },
+    passwordToggle: {
+      show: 'Show password',
+      hide: 'Hide password',
+    },
     submit: {
       signin: 'Sign in',
       pending: 'Signing in...',
@@ -77,6 +95,15 @@ export const authCopy: Record<'en' | 'id', AuthCopy> = {
     placeholders: {
       email: 'nama@example.com',
       password: 'Masukkan kata sandi',
+    },
+    validation: {
+      emailRequired: 'Email wajib diisi.',
+      emailInvalid: 'Format email tidak valid.',
+      passwordRequired: 'Kata sandi wajib diisi.',
+    },
+    passwordToggle: {
+      show: 'Tampilkan kata sandi',
+      hide: 'Sembunyikan kata sandi',
     },
     submit: {
       signin: 'Masuk',
