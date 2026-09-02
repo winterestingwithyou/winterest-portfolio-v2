@@ -19,6 +19,9 @@ function isRawFetchErrorMessage(msg: string): boolean {
   if (/^\[(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS)\]/i.test(msg)) {
     return true
   }
+  if (/^request failed with status code/i.test(msg)) {
+    return true
+  }
   if (
     msg.startsWith('# SERVER_ERROR') ||
     msg.toLowerCase().includes('internal server error')
@@ -26,6 +29,14 @@ function isRawFetchErrorMessage(msg: string): boolean {
     return true
   }
   if (msg.includes('<!DOCTYPE') || msg.includes('<html')) {
+    return true
+  }
+  // Detect raw Zod or runtime validation debug errors
+  if (
+    /^Invalid input: expected/i.test(msg) ||
+    /expected .+, received .+/i.test(msg) ||
+    /received undefined/i.test(msg)
+  ) {
     return true
   }
   return false
@@ -64,15 +75,12 @@ export function getApiErrorMessage(
   fallback = 'Terjadi kesalahan pada server.',
 ): string {
   if (error instanceof FetchError) {
-    const dataMessage = extractMessageFromData(error.data)
-
-    if (dataMessage) {
-      if (error.status && error.status >= 500) {
-        if (isRawFetchErrorMessage(dataMessage)) {
-          return fallback
-        }
+    if (error.data && typeof error.data === 'object') {
+      const dataMessage = extractMessageFromData(error.data)
+      if (dataMessage && !isRawFetchErrorMessage(dataMessage)) {
+        return dataMessage
       }
-      return dataMessage
+      return fallback
     }
 
     // On 500 server errors without safe explicit user message, always use fallback

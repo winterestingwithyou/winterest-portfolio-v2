@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { env } from 'cloudflare:workers'
-import { z } from 'zod'
 
 import { getDb } from '#/db'
 import { requireDashboardUser } from '#/features/auth/session'
@@ -63,13 +62,20 @@ export const Route = createFileRoute('/api/technologies')({
           const user = await requireDashboardUser(request)
           if (user instanceof Response) return user
 
+          const url = new URL(request.url)
+          const id = url.searchParams.get('id')
+          if (!id) {
+            return Response.json(
+              { error: 'Technology ID is required.' },
+              { status: 400 },
+            )
+          }
+
           const body = await request.json()
-          const input = technologyInputSchema
-            .extend({ id: z.string().min(1, 'Technology ID is required.') })
-            .parse(body)
+          const input = technologyInputSchema.parse(body)
 
           const db = getDb(env.DB)
-          const item = await updateTechnology(db, input.id, {
+          const item = await updateTechnology(db, id, {
             ...input,
             categoryIds: input.categoryIds,
           })

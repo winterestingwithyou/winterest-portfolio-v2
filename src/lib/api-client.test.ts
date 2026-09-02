@@ -68,6 +68,28 @@ describe('api-client', () => {
       expect(message).toBe('Gagal masuk akun.')
     })
 
+    it('suppresses raw Zod validation errors like expected string, received undefined and returns fallback', () => {
+      const fetchError = new FetchError('Request failed with status code 422')
+      fetchError.status = 422
+      fetchError.data = {
+        error: 'Invalid input: expected string, received undefined',
+        issues: [
+          {
+            expected: 'string',
+            code: 'invalid_type',
+            path: ['id'],
+            message: 'Invalid input: expected string, received undefined',
+          },
+        ],
+      }
+
+      const message = getApiErrorMessage(
+        fetchError,
+        'Gagal memperbarui kategori.',
+      )
+      expect(message).toBe('Gagal memperbarui kategori.')
+    })
+
     it('extracts message from a standard Error instance', () => {
       const standardError = new Error('Database connection failed')
       const message = getApiErrorMessage(standardError)

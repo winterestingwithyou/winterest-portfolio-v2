@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { z, ZodError } from 'zod'
 
-import { handleApiError, jsonResponse } from './api-response'
+import { formatZodErrorMessage, handleApiError, jsonResponse } from './api-response'
 
 type ErrorPayload = {
   error: string
@@ -38,6 +38,25 @@ describe('api-response', () => {
       const body = await getJson<ErrorPayload>(res)
       expect(body.error).toBe('Name required')
       expect(Array.isArray(body.issues)).toBe(true)
+    })
+
+    it('humanizes raw Zod missing field / invalid_type error', async () => {
+      const schema = z.object({ id: z.string() })
+      let zodErr: unknown
+      try {
+        schema.parse({})
+      } catch (err) {
+        zodErr = err
+      }
+
+      expect(zodErr).toBeInstanceOf(ZodError)
+      const res = handleApiError(zodErr)
+      expect(res.status).toBe(422)
+      const body = await getJson<ErrorPayload>(res)
+      expect(body.error).toBe('Field "id" is required.')
+      expect(formatZodErrorMessage(zodErr as ZodError)).toBe(
+        'Field "id" is required.',
+      )
     })
 
     it('handles missing table error with 503 status', async () => {

@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { env } from 'cloudflare:workers'
-import { z } from 'zod'
 
 import { getDb } from '#/db'
 import { requireDashboardUser } from '#/features/auth/session'
@@ -60,13 +59,20 @@ export const Route = createFileRoute('/api/categories')({
           const user = await requireDashboardUser(request)
           if (user instanceof Response) return user
 
+          const url = new URL(request.url)
+          const id = url.searchParams.get('id')
+          if (!id) {
+            return Response.json(
+              { error: 'Category ID is required.' },
+              { status: 400 },
+            )
+          }
+
           const body = await request.json()
-          const input = categoryInputSchema
-            .extend({ id: z.string().min(1, 'Category ID is required.') })
-            .parse(body)
+          const input = categoryInputSchema.parse(body)
 
           const db = getDb(env.DB)
-          const item = await updateCategory(db, input.id, input)
+          const item = await updateCategory(db, id, input)
           if (!item) {
             return Response.json(
               { error: 'Category not found.' },
