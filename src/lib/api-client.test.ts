@@ -1,12 +1,37 @@
 import { FetchError } from 'ofetch'
 import { describe, expect, it } from 'vitest'
 
-import { api, getApiErrorMessage } from './api-client'
+import { api, getApiErrorMessage, getServerBaseUrl } from './api-client'
 
 describe('api-client', () => {
   describe('api instance', () => {
     it('is defined as an ofetch client', () => {
       expect(typeof api).toBe('function')
+    })
+  })
+
+  describe('getServerBaseUrl', () => {
+    it('returns normalized URL from process.env.PUBLIC_APP_URL when present', async () => {
+      const original = process.env.PUBLIC_APP_URL
+      try {
+        process.env.PUBLIC_APP_URL = 'http://localhost:3000///'
+        const url = await getServerBaseUrl()
+        expect(url).toBe('http://localhost:3000')
+      } finally {
+        process.env.PUBLIC_APP_URL = original
+      }
+    })
+
+    it('throws explicit error when PUBLIC_APP_URL is missing', async () => {
+      const original = process.env.PUBLIC_APP_URL
+      try {
+        delete (process.env as Record<string, string | undefined>).PUBLIC_APP_URL
+        await expect(getServerBaseUrl()).rejects.toThrow(
+          '[api-client] Missing PUBLIC_APP_URL environment variable on server.',
+        )
+      } finally {
+        process.env.PUBLIC_APP_URL = original
+      }
     })
   })
 

@@ -1,4 +1,5 @@
 import { $fetch, FetchError } from 'ofetch'
+import { createIsomorphicFn } from '@tanstack/react-start'
 
 export type ApiResponse<T = unknown> = {
   data?: T
@@ -7,10 +8,69 @@ export type ApiResponse<T = unknown> = {
   success?: boolean
 }
 
+export const getServerBaseUrl = createIsomorphicFn()
+  .server(async () => {
+    let appUrl: string | undefined
+
+    try {
+      const { env } = await import('cloudflare:workers')
+      if (env.PUBLIC_APP_URL) {
+        appUrl = env.PUBLIC_APP_URL
+      }
+    } catch {
+      // Outside Cloudflare Workers runtime (e.g. Node/Bun test/script)
+    }
+
+    if (!appUrl && typeof process !== 'undefined') {
+      appUrl = process.env.PUBLIC_APP_URL
+    }
+
+    if (!appUrl) {
+      throw new Error(
+        '[api-client] Missing PUBLIC_APP_URL environment variable on server. Please configure PUBLIC_APP_URL in your environment.',
+      )
+    }
+
+    return appUrl.replace(/\/+$/, '')
+  })
+  .client(() => '')
+
+const getServerCookie = createIsomorphicFn()
+  .server(async () => {
+    try {
+      const { getRequest } = await import('@tanstack/react-start/server')
+      const req = getRequest()
+      return req.headers.get('cookie') || null
+    } catch {
+      return null
+    }
+  })
+  .client(() => null)
+
 export const api = $fetch.create({
   retry: 0,
   headers: {
     Accept: 'application/json',
+  },
+  async onRequest({ request, options }) {
+    if (typeof window === 'undefined') {
+      if (
+        typeof request === 'string' &&
+        request.startsWith('/') &&
+        !options.baseURL
+      ) {
+        options.baseURL = await getServerBaseUrl()
+      }
+
+      const cookie = await getServerCookie()
+      if (cookie) {
+        const headers = new Headers(options.headers)
+        if (!headers.has('cookie')) {
+          headers.set('cookie', cookie)
+        }
+        options.headers = headers
+      }
+    }
   },
 })
 

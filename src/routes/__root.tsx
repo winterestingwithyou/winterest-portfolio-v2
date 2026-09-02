@@ -1,9 +1,12 @@
 import {
   HeadContent,
+  Link,
   Scripts,
   createRootRouteWithContext,
+  useRouter,
   useRouterState,
 } from '@tanstack/react-router'
+import type { ErrorComponentProps } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import Footer from '../components/footer'
@@ -13,6 +16,7 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import { useQuery } from '@tanstack/react-query'
 import type { QueryClient } from '@tanstack/react-query'
+import { AlertCircle, AlertTriangle } from 'lucide-react'
 
 import { SetupRequiredScreen } from '#/components/system/setup-required'
 import { settingsQueryOptions } from '#/features/settings/query-options'
@@ -151,7 +155,50 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
     }
   },
   shellComponent: RootDocument,
+  errorComponent: RootErrorComponent,
 })
+
+function RootErrorComponent({ error, reset }: ErrorComponentProps) {
+  const router = useRouter()
+  const isId = getLocale() === 'id'
+
+  return (
+    <div className="flex min-h-screen flex-col items-center justify-center p-4 text-center">
+      <div className="surface-card max-w-md p-8 shadow-lg">
+        <div className="mb-4 inline-flex size-14 items-center justify-center rounded-2xl bg-red-500/10 text-red-500">
+          <AlertCircle className="size-7" aria-hidden="true" />
+        </div>
+        <h1 className="text-2xl font-bold text-(--brand-ink)">
+          {isId ? 'Terjadi Kesalahan' : 'An Unexpected Error Occurred'}
+        </h1>
+        <p className="mt-2 text-sm text-(--brand-muted)">
+          {error.message ||
+            (isId
+              ? 'Aplikasi mengalami kendala saat memuat data.'
+              : 'The application encountered an issue loading data.')}
+        </p>
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={() => {
+              reset()
+              void router.invalidate()
+            }}
+            className="inline-flex min-h-10 cursor-pointer items-center rounded-xl bg-(--brand-orange) px-4 text-sm font-semibold text-white transition hover:opacity-90"
+          >
+            {isId ? 'Coba Lagi' : 'Try Again'}
+          </button>
+          <Link
+            to="/"
+            className="inline-flex min-h-10 items-center rounded-xl border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-semibold text-(--brand-ink) no-underline transition hover:bg-(--surface-muted)"
+          >
+            {isId ? 'Ke Beranda' : 'Go Home'}
+          </Link>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   const { systemStatus, siteSettings } = Route.useLoaderData()
@@ -194,9 +241,11 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body className="font-sans antialiased wrap-anywhere selection:bg-[rgba(244,129,32,0.22)]">
         <TooltipProvider>
           {settings.maintenanceMode && usesAppChrome && (
-            <div className="bg-amber-500 text-slate-950 font-bold px-4 py-2 text-center text-xs border-b border-amber-600 shadow-xs z-50 relative">
-              ⚠️ Maintenance Mode Enabled — Site is currently undergoing
-              updates.
+            <div className="bg-amber-500 text-slate-950 font-bold px-4 py-2 text-center text-xs border-b border-amber-600 shadow-xs z-50 relative flex items-center justify-center gap-1.5">
+              <AlertTriangle className="size-3.5 shrink-0" aria-hidden="true" />
+              <span>
+                Maintenance Mode Enabled — Site is currently undergoing updates.
+              </span>
             </div>
           )}
           {usesAppChrome ? <Header /> : null}
