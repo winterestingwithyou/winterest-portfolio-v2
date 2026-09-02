@@ -17,6 +17,16 @@ import {
 import { useState } from 'react'
 import { z } from 'zod'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '#/components/ui/alert-dialog'
 import { Button } from '#/components/ui/button'
 import {
   Field,
@@ -54,6 +64,7 @@ export function UserEditorForm({
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [resetSuccess, setResetSuccess] = useState(false)
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
 
   const isSelf = Boolean(currentUserId && initialData?.id === currentUserId)
   const isOwner = initialData?.role === 'owner'
@@ -173,24 +184,16 @@ export function UserEditorForm({
   })
 
   const handleDelete = async () => {
-    if (!initialData?.id) return
-    if (isOwner) {
-      alert('Akun Owner tidak dapat dihapus.')
-      return
-    }
-    if (isSelf) {
-      alert(userCopy.form.selfDeleteWarning)
-      return
-    }
-    if (!confirm(userCopy.form.deleteConfirm)) return
+    if (!initialData?.id || isOwner || isSelf) return
 
     await deleteMutation
       .mutateAsync(initialData.id)
       .then(() => {
+        setIsDeleteDialogOpen(false)
         void navigate({ to: '/dashboard/users' })
       })
       .catch(() => {
-        // error displayed from mutation.error
+        setIsDeleteDialogOpen(false)
       })
   }
 
@@ -213,18 +216,51 @@ export function UserEditorForm({
         </Button>
 
         {mode === 'edit' && initialData && !isOwner && (
-          <Button
-            type="button"
-            variant="destructive"
-            size="sm"
-            onClick={() => void handleDelete()}
-            disabled={isDeleting || isSaving || isSelf}
-            className="gap-2 bg-red-600 font-semibold text-white hover:bg-red-700 disabled:opacity-50"
-            title={isSelf ? userCopy.form.selfDeleteWarning : undefined}
-          >
-            <Trash2 className="size-4" />
-            {isDeleting ? copy.common.delete + '...' : userCopy.form.deleteUser}
-          </Button>
+          <>
+            <Button
+              type="button"
+              variant="destructive"
+              size="sm"
+              onClick={() => setIsDeleteDialogOpen(true)}
+              disabled={isDeleting || isSaving || isSelf}
+              className="gap-2 bg-red-600 font-semibold text-white hover:bg-red-700 disabled:opacity-50"
+              title={isSelf ? userCopy.form.selfDeleteWarning : undefined}
+            >
+              <Trash2 className="size-4" />
+              {isDeleting ? copy.common.delete + '...' : userCopy.form.deleteUser}
+            </Button>
+
+            <AlertDialog
+              open={isDeleteDialogOpen}
+              onOpenChange={setIsDeleteDialogOpen}
+            >
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    {userCopy.form.deleteUser}
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {userCopy.form.deleteConfirm}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={isDeleting}>
+                    {copy.common.cancel}
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    variant="destructive"
+                    disabled={isDeleting}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      void handleDelete()
+                    }}
+                  >
+                    {isDeleting ? copy.common.saving : userCopy.form.deleteUser}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </>
         )}
       </div>
 

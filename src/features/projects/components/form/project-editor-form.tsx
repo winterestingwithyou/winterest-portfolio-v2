@@ -11,6 +11,16 @@ import {
 import { useState } from 'react'
 import { z } from 'zod'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '#/components/ui/alert-dialog'
 import { Button } from '#/components/ui/button'
 import { Checkbox } from '#/components/ui/checkbox'
 import {
@@ -169,6 +179,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
   const copy = getDashboardCopy()
   const navigate = useNavigate()
   const [isPending, setIsPending] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const { data: availableTechnologies = [] } = useQuery(techQueryOptions.list())
@@ -252,23 +263,17 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
       return
     }
 
-    if (
-      !confirm(
-        `Apakah Anda yakin ingin menghapus project "${project.title || project.slug}"?`,
-      )
-    ) {
-      return
-    }
-
     setIsPending(true)
     setError(null)
     setMessage(null)
 
     try {
       await deleteMutation.mutateAsync(project.id)
+      setIsDeleteDialogOpen(false)
       await navigate({ to: '/dashboard/projects' })
     } catch (caught) {
       setError(getApiErrorMessage(caught, copy.projects.deleteSaveError))
+      setIsDeleteDialogOpen(false)
     } finally {
       setIsPending(false)
     }
@@ -855,17 +860,55 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
 
       {/* Form Action Footer */}
       <div className="flex items-center justify-between gap-4 pt-4 border-t border-(--brand-line)">
-        {mode === 'edit' ? (
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={() => void handleDelete()}
-            disabled={isPending}
-            className="gap-2 rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
-          >
-            <Trash2 className="size-4" />
-            {isPending ? copy.common.delete + '...' : copy.common.delete}
-          </Button>
+        {mode === 'edit' && project ? (
+          <>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => setIsDeleteDialogOpen(true)}
+              disabled={isPending}
+              className="gap-2 rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
+            >
+              <Trash2 className="size-4" />
+              {isPending ? copy.common.delete + '...' : copy.common.delete}
+            </Button>
+
+            <AlertDialog
+              open={isDeleteDialogOpen}
+              onOpenChange={setIsDeleteDialogOpen}
+            >
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>
+                    {copy.projects.deleteTitle}
+                  </AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {copy.projects.deleteConfirm(
+                      project.translations?.en?.title ||
+                        project.translations?.id?.title ||
+                        project.slug ||
+                        '',
+                    )}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={isPending}>
+                    {copy.common.cancel}
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    variant="destructive"
+                    disabled={isPending}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      void handleDelete()
+                    }}
+                  >
+                    {isPending ? copy.common.saving : copy.common.delete}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </>
         ) : (
           <div />
         )}

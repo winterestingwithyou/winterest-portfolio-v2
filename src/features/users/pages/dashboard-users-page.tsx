@@ -1,7 +1,18 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { Plus, RefreshCw } from 'lucide-react'
+import { useState } from 'react'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '#/components/ui/alert-dialog'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { Button } from '#/components/ui/button'
 import { getDashboardCopy } from '#/features/dashboard/copy'
@@ -26,17 +37,31 @@ export function DashboardUsersPage() {
 
   const { data: currentUser } = useSuspenseQuery(sessionQueryOptions.current())
   const deleteMutation = useDeleteUser()
+  const [userToDelete, setUserToDelete] = useState<UserWithSessionCount | null>(null)
+  const [warningNotice, setWarningNotice] = useState<string | null>(null)
+  const [errorNotice, setErrorNotice] = useState<string | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const handleDeleteUser = async (targetUser: UserWithSessionCount) => {
     if (currentUser?.id === targetUser.id) {
-      alert(userCopy.form.selfDeleteWarning)
+      setWarningNotice(userCopy.form.selfDeleteWarning)
       return
     }
-    if (!confirm(userCopy.form.deleteConfirm)) return
+    setUserToDelete(targetUser)
+  }
 
-    await deleteMutation.mutateAsync(targetUser.id).catch((err: unknown) => {
-      alert(err instanceof Error ? err.message : userCopy.feedback.deleteError)
-    })
+  const confirmDeleteUser = async () => {
+    if (!userToDelete) return
+    setIsDeleting(true)
+    setErrorNotice(null)
+    try {
+      await deleteMutation.mutateAsync(userToDelete.id)
+      setUserToDelete(null)
+    } catch (err: unknown) {
+      setErrorNotice(err instanceof Error ? err.message : userCopy.feedback.deleteError)
+    } finally {
+      setIsDeleting(false)
+    }
   }
 
   // Calculate metrics
@@ -110,6 +135,68 @@ export function DashboardUsersPage() {
           )}
         </div>
       </div>
+
+      {errorNotice ? (
+        <div className="mt-4 rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-sm font-semibold text-red-700 dark:text-red-200">
+          {errorNotice}
+        </div>
+      ) : null}
+
+      {/* Delete User Confirmation Dialog */}
+      <AlertDialog
+        open={Boolean(userToDelete)}
+        onOpenChange={(open) => !open && setUserToDelete(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {userCopy.form.deleteUser}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {userToDelete
+                ? `${userCopy.form.deleteConfirm} (${userToDelete.name || userToDelete.email})`
+                : ''}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>
+              {copy.common.cancel}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              variant="destructive"
+              disabled={isDeleting}
+              onClick={(e) => {
+                e.preventDefault()
+                void confirmDeleteUser()
+              }}
+            >
+              {isDeleting ? copy.common.saving : userCopy.form.deleteUser}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Warning Notice Dialog */}
+      <AlertDialog
+        open={Boolean(warningNotice)}
+        onOpenChange={(open) => !open && setWarningNotice(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {copy.common.notice}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {warningNotice}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setWarningNotice(null)}>
+              OK
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </DashboardShell>
   )
 }

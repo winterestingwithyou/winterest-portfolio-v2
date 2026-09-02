@@ -3,6 +3,16 @@ import { Link, useNavigate } from '@tanstack/react-router'
 import { ArrowLeft, Save, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '#/components/ui/alert-dialog'
 import { Button } from '#/components/ui/button'
 import {
   Field,
@@ -21,7 +31,6 @@ import {
 import type { CategoryRecord } from '#/features/technologies/queries'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { slugify } from '#/lib/utils'
-
 import { getLocale } from '#/paraglide/runtime'
 import { getCategoryFormSchema } from '#/features/technologies/validation'
 
@@ -40,6 +49,7 @@ export function CategoryEditorForm({
   const navigate = useNavigate()
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const createMutation = useCreateCategory()
@@ -83,18 +93,17 @@ export function CategoryEditorForm({
 
   const handleDelete = async () => {
     if (!initialData?.id) return
-    if (!confirm(formCopy.deleteConfirm(initialData.name))) {
-      return
-    }
 
     setError(null)
     setIsDeleting(true)
 
     try {
       await deleteMutation.mutateAsync(initialData.id)
+      setIsDeleteDialogOpen(false)
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
       setError(getApiErrorMessage(caught, formCopy.deleteError))
+      setIsDeleteDialogOpen(false)
     } finally {
       setIsDeleting(false)
     }
@@ -222,16 +231,47 @@ export function CategoryEditorForm({
       {/* Form Action Footer */}
       <div className="flex items-center justify-between gap-4 pt-2">
         {mode === 'edit' && initialData ? (
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={() => void handleDelete()}
-            disabled={isDeleting || isSaving}
-            className="gap-2 rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
-          >
-            <Trash2 className="size-4" />
-            {isDeleting ? formCopy.deleting : formCopy.delete}
-          </Button>
+          <>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => setIsDeleteDialogOpen(true)}
+              disabled={isDeleting || isSaving}
+              className="gap-2 rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
+            >
+              <Trash2 className="size-4" />
+              {isDeleting ? formCopy.deleting : formCopy.delete}
+            </Button>
+
+            <AlertDialog
+              open={isDeleteDialogOpen}
+              onOpenChange={setIsDeleteDialogOpen}
+            >
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>{formCopy.delete}</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {formCopy.deleteConfirm(initialData.name)}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={isDeleting}>
+                    {formCopy.cancel}
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    variant="destructive"
+                    disabled={isDeleting}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      void handleDelete()
+                    }}
+                  >
+                    {isDeleting ? formCopy.deleting : formCopy.delete}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </>
         ) : (
           <div />
         )}

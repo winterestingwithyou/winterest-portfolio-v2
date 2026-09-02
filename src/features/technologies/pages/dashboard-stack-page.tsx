@@ -3,6 +3,16 @@ import { Link } from '@tanstack/react-router'
 import { FolderTree, Layers, Plus, RefreshCw } from 'lucide-react'
 import { useState } from 'react'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '#/components/ui/alert-dialog'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { DashboardCategoriesTable } from '#/features/technologies/components/table/dashboard-categories-table'
 import { DashboardTechTable } from '#/features/technologies/components/table/dashboard-tech-table'
@@ -24,6 +34,15 @@ export function DashboardStackPage() {
   const stackCopy = copy.stack
   const [activeTab, setActiveTab] = useState<ActiveTab>('technologies')
   const [error, setError] = useState<string | null>(null)
+  const [categoryToDelete, setCategoryToDelete] = useState<{
+    id: string
+    name: string
+  } | null>(null)
+  const [techToDelete, setTechToDelete] = useState<{
+    id: string
+    name: string
+  } | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const {
     data: categories,
@@ -48,22 +67,38 @@ export function DashboardStackPage() {
   }
 
   const handleDeleteCategory = async (id: string, name: string) => {
-    if (!confirm(stackCopy.deleteCategoryConfirm(name))) return
-    setError(null)
-    try {
-      await deleteCategoryMutation.mutateAsync(id)
-    } catch (err) {
-      setError(getApiErrorMessage(err, stackCopy.deleteCategoryError))
-    }
+    setCategoryToDelete({ id, name })
   }
 
   const handleDeleteTech = async (id: string, name: string) => {
-    if (!confirm(stackCopy.deleteTechConfirm(name))) return
+    setTechToDelete({ id, name })
+  }
+
+  const confirmDeleteCategory = async () => {
+    if (!categoryToDelete) return
     setError(null)
+    setIsDeleting(true)
     try {
-      await deleteTechMutation.mutateAsync(id)
+      await deleteCategoryMutation.mutateAsync(categoryToDelete.id)
+      setCategoryToDelete(null)
+    } catch (err) {
+      setError(getApiErrorMessage(err, stackCopy.deleteCategoryError))
+    } finally {
+      setIsDeleting(false)
+    }
+  }
+
+  const confirmDeleteTech = async () => {
+    if (!techToDelete) return
+    setError(null)
+    setIsDeleting(true)
+    try {
+      await deleteTechMutation.mutateAsync(techToDelete.id)
+      setTechToDelete(null)
     } catch (err) {
       setError(getApiErrorMessage(err, stackCopy.deleteTechError))
+    } finally {
+      setIsDeleting(false)
     }
   }
 
@@ -154,6 +189,74 @@ export function DashboardStackPage() {
           />
         )}
       </div>
+
+      {/* Delete Category Confirmation Dialog */}
+      <AlertDialog
+        open={Boolean(categoryToDelete)}
+        onOpenChange={(open) => !open && setCategoryToDelete(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {stackCopy.categoryForm.delete}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {categoryToDelete
+                ? stackCopy.deleteCategoryConfirm(categoryToDelete.name)
+                : ''}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>
+              {copy.common.cancel}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              variant="destructive"
+              disabled={isDeleting}
+              onClick={(e) => {
+                e.preventDefault()
+                void confirmDeleteCategory()
+              }}
+            >
+              {isDeleting ? copy.common.saving : copy.common.delete}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Delete Technology Confirmation Dialog */}
+      <AlertDialog
+        open={Boolean(techToDelete)}
+        onOpenChange={(open) => !open && setTechToDelete(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {stackCopy.techForm.delete}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {techToDelete
+                ? stackCopy.deleteTechConfirm(techToDelete.name)
+                : ''}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>
+              {copy.common.cancel}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              variant="destructive"
+              disabled={isDeleting}
+              onClick={(e) => {
+                e.preventDefault()
+                void confirmDeleteTech()
+              }}
+            >
+              {isDeleting ? copy.common.saving : copy.common.delete}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </DashboardShell>
   )
 }

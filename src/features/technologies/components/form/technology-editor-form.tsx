@@ -5,6 +5,16 @@ import { useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '#/components/ui/alert-dialog'
 import { Button } from '#/components/ui/button'
 import { Checkbox } from '#/components/ui/checkbox'
 import {
@@ -27,7 +37,6 @@ import { categoryQueryOptions } from '#/features/technologies/query-options'
 import type { TechnologyWithCategories } from '#/features/technologies/queries'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { slugify } from '#/lib/utils'
-
 import { getLocale } from '#/paraglide/runtime'
 import { getTechnologyFormSchema } from '#/features/technologies/validation'
 
@@ -49,6 +58,7 @@ export function TechnologyEditorForm({
   )
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const createMutation = useCreateTechnology()
@@ -100,18 +110,17 @@ export function TechnologyEditorForm({
 
   const handleDelete = async () => {
     if (!initialData?.id) return
-    if (!confirm(formCopy.deleteConfirm(initialData.name))) {
-      return
-    }
 
     setError(null)
     setIsDeleting(true)
 
     try {
       await deleteMutation.mutateAsync(initialData.id)
+      setIsDeleteDialogOpen(false)
       void navigate({ to: '/dashboard/stack' })
     } catch (caught) {
       setError(getApiErrorMessage(caught, formCopy.deleteError))
+      setIsDeleteDialogOpen(false)
     } finally {
       setIsDeleting(false)
     }
@@ -419,16 +428,47 @@ export function TechnologyEditorForm({
       {/* Form Action Footer */}
       <div className="flex items-center justify-between gap-4 pt-2">
         {mode === 'edit' && initialData ? (
-          <Button
-            type="button"
-            variant="destructive"
-            onClick={() => void handleDelete()}
-            disabled={isDeleting || isSaving}
-            className="gap-2 rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
-          >
-            <Trash2 className="size-4" />
-            {isDeleting ? formCopy.deleting : formCopy.delete}
-          </Button>
+          <>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => setIsDeleteDialogOpen(true)}
+              disabled={isDeleting || isSaving}
+              className="gap-2 rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
+            >
+              <Trash2 className="size-4" />
+              {isDeleting ? formCopy.deleting : formCopy.delete}
+            </Button>
+
+            <AlertDialog
+              open={isDeleteDialogOpen}
+              onOpenChange={setIsDeleteDialogOpen}
+            >
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>{formCopy.delete}</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    {formCopy.deleteConfirm(initialData.name)}
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel disabled={isDeleting}>
+                    {formCopy.cancel}
+                  </AlertDialogCancel>
+                  <AlertDialogAction
+                    variant="destructive"
+                    disabled={isDeleting}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      void handleDelete()
+                    }}
+                  >
+                    {isDeleting ? formCopy.deleting : formCopy.delete}
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </>
         ) : (
           <div />
         )}

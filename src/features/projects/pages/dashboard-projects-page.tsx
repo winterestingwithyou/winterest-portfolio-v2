@@ -3,6 +3,16 @@ import { Link } from '@tanstack/react-router'
 import { Plus, RefreshCw } from 'lucide-react'
 import { useState } from 'react'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '#/components/ui/alert-dialog'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { DashboardProjectsTable } from '#/features/projects/components/table/dashboard-projects-table'
@@ -20,13 +30,24 @@ export function DashboardProjectsPage() {
   } = useSuspenseQuery(projectQueryOptions.list())
   const deleteMutation = useDeleteProject()
   const [error, setError] = useState<string | null>(null)
+  const [projectToDelete, setProjectToDelete] = useState<ProjectRow | null>(null)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const handleDelete = async (project: ProjectRow) => {
+    setProjectToDelete(project)
+  }
+
+  const confirmDeleteProject = async () => {
+    if (!projectToDelete) return
     setError(null)
+    setIsDeleting(true)
     try {
-      await deleteMutation.mutateAsync(project.id)
+      await deleteMutation.mutateAsync(projectToDelete.id)
+      setProjectToDelete(null)
     } catch (caught) {
       setError(getApiErrorMessage(caught, copy.projects.deleteError))
+    } finally {
+      setIsDeleting(false)
     }
   }
 
@@ -82,6 +103,40 @@ export function DashboardProjectsPage() {
           />
         )}
       </section>
+
+      {/* Delete Project Confirmation Dialog */}
+      <AlertDialog
+        open={Boolean(projectToDelete)}
+        onOpenChange={(open) => !open && setProjectToDelete(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {copy.projects.deleteTitle}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {projectToDelete
+                ? copy.projects.deleteConfirm(projectToDelete.title)
+                : ''}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={isDeleting}>
+              {copy.common.cancel}
+            </AlertDialogCancel>
+            <AlertDialogAction
+              variant="destructive"
+              disabled={isDeleting}
+              onClick={(e) => {
+                e.preventDefault()
+                void confirmDeleteProject()
+              }}
+            >
+              {isDeleting ? copy.common.saving : copy.common.delete}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </DashboardShell>
   )
 }

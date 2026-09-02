@@ -84,6 +84,7 @@ export const dashboardCopy = {
       createDraft: 'Create draft',
       saveChanges: 'Save changes',
       cancel: 'Cancel',
+      notice: 'Notice',
     },
     projects: {
       title: 'Projects',
@@ -99,6 +100,9 @@ export const dashboardCopy = {
       deleteError: 'Failed to delete project.',
       saveError: 'Project save failed.',
       deleteSaveError: 'Project delete failed.',
+      deleteTitle: 'Delete Project',
+      deleteConfirm: (title: string) =>
+        `Are you sure you want to delete project "${title}"? This action cannot be undone.`,
       newTitle: 'New project',
       newDescription:
         'Create a draft project and refine it before it appears on the public site.',
@@ -608,6 +612,7 @@ export const dashboardCopy = {
       createDraft: 'Buat draft',
       saveChanges: 'Simpan perubahan',
       cancel: 'Batal',
+      notice: 'Pemberitahuan',
     },
     projects: {
       title: 'Project',
@@ -623,6 +628,9 @@ export const dashboardCopy = {
       deleteError: 'Gagal menghapus project.',
       saveError: 'Gagal menyimpan project.',
       deleteSaveError: 'Gagal menghapus project.',
+      deleteTitle: 'Hapus Project',
+      deleteConfirm: (title: string) =>
+        `Apakah Anda yakin ingin menghapus project "${title}"? Tindakan ini tidak dapat dibatalkan.`,
       newTitle: 'Project baru',
       newDescription:
         'Buat draft project dan poles sebelum tampil di situs publik.',

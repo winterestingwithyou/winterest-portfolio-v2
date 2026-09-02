@@ -1,14 +1,15 @@
 import { AlertCircle, Loader2, Trash2 } from 'lucide-react'
 
-import { Button } from '#/components/ui/button'
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '#/components/ui/dialog'
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '#/components/ui/alert-dialog'
 import type { getDashboardCopy } from '#/features/dashboard/copy'
 import type { MediaRecord } from '#/features/media/queries'
 import { formatBytes } from '#/lib/utils'
@@ -29,47 +30,53 @@ export function MediaDeleteDialog({
   onConfirm,
 }: MediaDeleteDialogProps) {
   return (
-    <Dialog
+    <AlertDialog
       open={Boolean(deletingMedia)}
       onOpenChange={(open) => !open && onClose()}
     >
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-rose-600">
+      <AlertDialogContent className="sm:max-w-md">
+        <AlertDialogHeader>
+          <AlertDialogTitle className="flex items-center gap-2 text-rose-600">
             <AlertCircle className="size-5" />
             {copy.common.delete}
-          </DialogTitle>
-          <DialogDescription className="pt-2">
+          </AlertDialogTitle>
+          <AlertDialogDescription className="pt-2">
             {copy.media.deleteConfirm}
-          </DialogDescription>
-        </DialogHeader>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
 
         {deletingMedia ? (
-          <div className="my-2 flex items-center gap-3 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3">
+          <div className="my-2 flex w-full min-w-0 max-w-full items-center gap-3 overflow-hidden rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3">
             <img
               src={deletingMedia.url}
               alt={deletingMedia.filename}
-              className="size-12 rounded-lg border border-(--brand-line) object-cover"
+              className="size-12 shrink-0 rounded-lg border border-(--brand-line) object-cover"
             />
-            <div className="overflow-hidden">
-              <p className="truncate text-xs font-bold text-(--brand-ink)">
+            <div className="min-w-0 flex-1 overflow-hidden">
+              <p
+                className="truncate text-xs font-bold text-(--brand-ink)"
+                title={deletingMedia.filename}
+              >
                 {deletingMedia.filename}
               </p>
-              <p className="font-mono text-[11px] text-(--brand-muted)">
+              <p className="truncate font-mono text-[11px] text-(--brand-muted)">
                 {formatBytes(deletingMedia.size)}
               </p>
             </div>
           </div>
         ) : null}
 
-        <DialogFooter className="gap-2">
-          <Button type="button" variant="outline" onClick={onClose}>
+        <AlertDialogFooter className="gap-2">
+          <AlertDialogCancel disabled={isDeleting} onClick={onClose}>
             {copy.common.back}
-          </Button>
-          <Button
-            type="button"
+          </AlertDialogCancel>
+          <AlertDialogAction
+            variant="destructive"
             disabled={isDeleting}
-            onClick={onConfirm}
+            onClick={(e) => {
+              e.preventDefault()
+              void onConfirm()
+            }}
             className="gap-1.5 bg-rose-600 text-white hover:bg-rose-700"
           >
             {isDeleting ? (
@@ -78,9 +85,9 @@ export function MediaDeleteDialog({
               <Trash2 className="size-4" />
             )}
             {copy.common.delete}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
