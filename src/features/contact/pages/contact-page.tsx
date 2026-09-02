@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
 
-import { Container, SectionHeader } from '#/components/marketing/section'
+import { SectionHeader } from '#/components/marketing/section'
 import { ContactForm } from '#/features/contact/components/form/contact-form'
 import { ContactChannels } from '#/features/contact/components/section/contact-channels'
 import { getContactCopy } from '#/features/contact/copy'
@@ -10,8 +10,8 @@ export function ContactPage() {
   const copy = getContactCopy()
 
   return (
-    <main className="overflow-x-clip px-4 py-12 sm:py-16">
-      <Container className="max-w-5xl">
+    <main className="overflow-x-clip py-12 sm:py-16">
+      <div className="mx-auto w-full max-w-5xl px-3 sm:px-6 lg:px-8">
         <motion.div initial="hidden" animate="visible" variants={fadeUp}>
           <SectionHeader
             eyebrow={copy.page.eyebrow}
@@ -30,7 +30,7 @@ export function ContactPage() {
           <ContactChannels copy={copy.direct} />
           <ContactForm copy={copy.form} />
         </motion.div>
-      </Container>
+      </div>
     </main>
   )
 }

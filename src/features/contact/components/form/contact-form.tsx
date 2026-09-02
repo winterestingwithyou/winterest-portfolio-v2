@@ -1,5 +1,13 @@
 import { useForm } from '@tanstack/react-form'
-import { AlertCircle, CheckCircle2, Loader2, Send } from 'lucide-react'
+import {
+  AlertCircle,
+  CheckCircle2,
+  Loader2,
+  Mail,
+  Send,
+  Tag,
+  User,
+} from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useRef, useState } from 'react'
 
@@ -58,6 +66,7 @@ export function ContactForm({ copy }: ContactFormProps) {
         setStatus('error')
         setErrorMessage(getApiErrorMessage(err, copy.sendErrorTitle))
         turnstileRef.current?.reset()
+        form.setFieldValue('turnstileToken', '')
       }
     },
   })
@@ -65,7 +74,7 @@ export function ContactForm({ copy }: ContactFormProps) {
   return (
     <motion.div
       variants={scaleIn}
-      className="surface-card w-full min-w-0 max-w-full overflow-hidden p-4 sm:p-6 md:p-8"
+      className="grid gap-3.5 rounded-[1.25rem] border border-[color-mix(in_srgb,var(--brand-orange)_28%,var(--brand-line))] bg-[linear-gradient(145deg,color-mix(in_srgb,var(--surface-strong)_96%,transparent),color-mix(in_srgb,var(--brand-orange-soft)_28%,transparent)),var(--surface-strong)] p-3.5 shadow-[0_28px_80px_rgba(42,26,10,0.16),inset_0_1px_0_color-mix(in_srgb,white_42%,transparent)] sm:gap-4 sm:p-5"
     >
       <AnimatePresence mode="wait">
         {status === 'success' ? (
@@ -102,31 +111,32 @@ export function ContactForm({ copy }: ContactFormProps) {
               e.stopPropagation()
               void form.handleSubmit()
             }}
-            className="grid gap-5"
+            className="flex w-full min-w-0 max-w-full flex-col gap-3.5 sm:gap-4"
           >
-            <div>
-              <h2 className="text-xl font-bold text-(--brand-ink)">
-                {copy.title}
-              </h2>
-              <p className="mt-1 text-xs text-(--brand-muted)">
-                {copy.subtitle}
-              </p>
+            <div className="flex items-center gap-2.5 border-b border-(--brand-line) pb-2.5 sm:pb-3">
+              <div className="flex size-8.5 items-center justify-center rounded-xl bg-(--brand-orange-soft) text-(--brand-orange-deep)">
+                <Send className="size-4" />
+              </div>
+              <div>
+                <h2 className="text-sm font-extrabold text-(--brand-ink)">
+                  {copy.title}
+                </h2>
+                <p className="text-xs text-(--brand-muted)">{copy.subtitle}</p>
+              </div>
             </div>
 
             {status === 'error' && (
-              <div className="flex items-start gap-3 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-red-600 dark:text-red-400">
-                <AlertCircle className="mt-0.5 size-5 shrink-0" />
-                <div className="text-xs">
-                  <p className="font-bold">{copy.sendErrorTitle}</p>
-                  <p className="mt-0.5 opacity-90">
-                    {errorMessage || copy.sendErrorTitle}
-                  </p>
-                </div>
+              <div
+                role="alert"
+                className="flex items-center gap-2.5 rounded-[0.9rem] border border-[color-mix(in_srgb,#ef4444_38%,transparent)] bg-[color-mix(in_srgb,#ef4444_12%,transparent)] px-3.5 py-2 text-xs font-bold text-red-700 sm:text-sm dark:text-red-200"
+              >
+                <AlertCircle className="size-4 shrink-0" />
+                <span>{errorMessage || copy.sendErrorTitle}</span>
               </div>
             )}
 
-            <FieldGroup className="w-full min-w-0 max-w-full">
-              <div className="grid w-full min-w-0 max-w-full gap-4 sm:grid-cols-2">
+            <FieldGroup className="gap-3 sm:gap-3.5">
+              <div className="grid w-full min-w-0 max-w-full gap-3 sm:grid-cols-2 sm:gap-3.5">
                 {/* Name */}
                 <form.Field
                   name="name"
@@ -134,29 +144,32 @@ export function ContactForm({ copy }: ContactFormProps) {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid
                     return (
-                      <Field
-                        data-invalid={isInvalid}
-                        className="w-full min-w-0 max-w-full"
-                      >
+                      <Field data-invalid={isInvalid} className="gap-1">
                         <FieldLabel
                           htmlFor={field.name}
-                          className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                          className="text-xs font-bold text-(--brand-ink) sm:text-sm"
                         >
                           {copy.name}
                         </FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          type="text"
-                          disabled={status === 'loading'}
-                          autoComplete="name"
-                          placeholder={copy.namePlaceholder}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          className="h-11 w-full min-w-0 max-w-full rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
-                        />
+                        <div className="relative">
+                          <User
+                            aria-hidden="true"
+                            className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-(--brand-muted)"
+                          />
+                          <Input
+                            id={field.name}
+                            name={field.name}
+                            type="text"
+                            disabled={status === 'loading'}
+                            autoComplete="name"
+                            placeholder={copy.namePlaceholder}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={isInvalid}
+                            className="h-10.5 rounded-[0.85rem] border-(--brand-line) bg-[color-mix(in_srgb,var(--surface-strong)_86%,transparent)] pl-10 pr-3.5 text-sm font-semibold text-(--brand-ink) placeholder:text-[color-mix(in_srgb,var(--brand-muted)_72%,transparent)] focus-visible:border-(--brand-orange) focus-visible:ring-(--brand-orange)/20 sm:h-11"
+                          />
+                        </div>
                         {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
                         )}
@@ -172,29 +185,32 @@ export function ContactForm({ copy }: ContactFormProps) {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid
                     return (
-                      <Field
-                        data-invalid={isInvalid}
-                        className="w-full min-w-0 max-w-full"
-                      >
+                      <Field data-invalid={isInvalid} className="gap-1">
                         <FieldLabel
                           htmlFor={field.name}
-                          className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                          className="text-xs font-bold text-(--brand-ink) sm:text-sm"
                         >
                           {copy.email}
                         </FieldLabel>
-                        <Input
-                          id={field.name}
-                          name={field.name}
-                          type="email"
-                          disabled={status === 'loading'}
-                          autoComplete="email"
-                          placeholder={copy.emailPlaceholder}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                          aria-invalid={isInvalid}
-                          className="h-11 w-full min-w-0 max-w-full rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
-                        />
+                        <div className="relative">
+                          <Mail
+                            aria-hidden="true"
+                            className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-(--brand-muted)"
+                          />
+                          <Input
+                            id={field.name}
+                            name={field.name}
+                            type="email"
+                            disabled={status === 'loading'}
+                            autoComplete="email"
+                            placeholder={copy.emailPlaceholder}
+                            value={field.state.value}
+                            onBlur={field.handleBlur}
+                            onChange={(e) => field.handleChange(e.target.value)}
+                            aria-invalid={isInvalid}
+                            className="h-10.5 rounded-[0.85rem] border-(--brand-line) bg-[color-mix(in_srgb,var(--surface-strong)_86%,transparent)] pl-10 pr-3.5 text-sm font-semibold text-(--brand-ink) placeholder:text-[color-mix(in_srgb,var(--brand-muted)_72%,transparent)] focus-visible:border-(--brand-orange) focus-visible:ring-(--brand-orange)/20 sm:h-11"
+                          />
+                        </div>
                         {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
                         )}
@@ -211,28 +227,31 @@ export function ContactForm({ copy }: ContactFormProps) {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid
                   return (
-                    <Field
-                      data-invalid={isInvalid}
-                      className="w-full min-w-0 max-w-full"
-                    >
+                    <Field data-invalid={isInvalid} className="gap-1">
                       <FieldLabel
                         htmlFor={field.name}
-                        className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                        className="text-xs font-bold text-(--brand-ink) sm:text-sm"
                       >
                         {copy.subject}
                       </FieldLabel>
-                      <Input
-                        id={field.name}
-                        name={field.name}
-                        type="text"
-                        disabled={status === 'loading'}
-                        placeholder={copy.subjectPlaceholder}
-                        value={field.state.value}
-                        onBlur={field.handleBlur}
-                        onChange={(e) => field.handleChange(e.target.value)}
-                        aria-invalid={isInvalid}
-                        className="h-11 w-full min-w-0 max-w-full rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
-                      />
+                      <div className="relative">
+                        <Tag
+                          aria-hidden="true"
+                          className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-(--brand-muted)"
+                        />
+                        <Input
+                          id={field.name}
+                          name={field.name}
+                          type="text"
+                          disabled={status === 'loading'}
+                          placeholder={copy.subjectPlaceholder}
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(e) => field.handleChange(e.target.value)}
+                          aria-invalid={isInvalid}
+                          className="h-10.5 rounded-[0.85rem] border-(--brand-line) bg-[color-mix(in_srgb,var(--surface-strong)_86%,transparent)] pl-10 pr-3.5 text-sm font-semibold text-(--brand-ink) placeholder:text-[color-mix(in_srgb,var(--brand-muted)_72%,transparent)] focus-visible:border-(--brand-orange) focus-visible:ring-(--brand-orange)/20 sm:h-11"
+                        />
+                      </div>
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
                       )}
@@ -248,13 +267,10 @@ export function ContactForm({ copy }: ContactFormProps) {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid
                   return (
-                    <Field
-                      data-invalid={isInvalid}
-                      className="w-full min-w-0 max-w-full"
-                    >
+                    <Field data-invalid={isInvalid} className="gap-1">
                       <FieldLabel
                         htmlFor={field.name}
-                        className="text-xs font-bold uppercase tracking-wider text-(--brand-ink)"
+                        className="text-xs font-bold text-(--brand-ink) sm:text-sm"
                       >
                         {copy.message}
                       </FieldLabel>
@@ -262,13 +278,13 @@ export function ContactForm({ copy }: ContactFormProps) {
                         id={field.name}
                         name={field.name}
                         disabled={status === 'loading'}
-                        rows={5}
+                        rows={4}
                         placeholder={copy.messagePlaceholder}
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
                         aria-invalid={isInvalid}
-                        className="min-h-28 w-full min-w-0 max-w-full rounded-xl border-(--brand-line) bg-(--surface-strong) text-sm"
+                        className="min-h-24 rounded-[0.85rem] border-(--brand-line) bg-[color-mix(in_srgb,var(--surface-strong)_86%,transparent)] p-3 text-sm font-semibold text-(--brand-ink) placeholder:text-[color-mix(in_srgb,var(--brand-muted)_72%,transparent)] focus-visible:border-(--brand-orange) focus-visible:ring-(--brand-orange)/20"
                       />
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
@@ -277,47 +293,36 @@ export function ContactForm({ copy }: ContactFormProps) {
                   )
                 }}
               />
-
-              {/* Turnstile Bot Verification */}
-              <form.Field
-                name="turnstileToken"
-                children={(field) => (
-                  <div className="w-full pt-1">
-                    <TurnstileWidget
-                      ref={turnstileRef}
-                      action="contact"
-                      className="w-full"
-                      onSuccess={(token) => field.handleChange(token)}
-                      onError={() => field.handleChange('')}
-                      onExpire={() => field.handleChange('')}
-                    />
-                  </div>
-                )}
-              />
             </FieldGroup>
 
-            <div className="pt-2">
-              <Button
-                type="submit"
-                disabled={status === 'loading'}
-                className="min-h-11 w-full gap-2 rounded-full bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) font-bold text-white shadow-[0_12px_32px_var(--brand-glow)] transition hover:opacity-95 hover:shadow-[0_18px_48px_var(--brand-glow)] disabled:opacity-60"
-              >
-                {status === 'loading' ? (
-                  <>
-                    <Loader2
-                      aria-hidden="true"
-                      className="size-4 animate-spin"
-                    />
-                    <span>{copy.sending}</span>
-                  </>
-                ) : (
-                  <>
-                    <Send aria-hidden="true" className="size-4" />
-                    <span>{copy.send}</span>
-                  </>
-                )}
-              </Button>
+            <div className="w-full">
+              <TurnstileWidget
+                ref={turnstileRef}
+                action="contact"
+                className="w-full"
+                onSuccess={(token) => form.setFieldValue('turnstileToken', token)}
+                onError={() => form.setFieldValue('turnstileToken', '')}
+                onExpire={() => form.setFieldValue('turnstileToken', '')}
+              />
             </div>
+
+            <Button
+              type="submit"
+              disabled={status === 'loading'}
+              className="inline-flex min-h-10.5 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-black text-white shadow-[0_18px_44px_var(--brand-glow)] transition hover:-translate-y-px hover:bg-(--brand-orange-deep) hover:shadow-[0_22px_54px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:min-h-11.5"
+            >
+              {status === 'loading' ? (
+                <>
+                  <Loader2 aria-hidden="true" className="size-4 animate-spin" />
+                  <span>{copy.sending}</span>
+                </>
+              ) : (
+                <>
+                  <Send aria-hidden="true" className="size-4" />
+                  <span>{copy.send}</span>
+                </>
+              )}
+            </Button>
           </form>
         )}
       </AnimatePresence>
