@@ -8,7 +8,14 @@ import {
 } from '#/features/technologies/query-options'
 import { createRouteMeta } from '#/lib/metadata'
 
+export type DashboardStackSearch = {
+  tab?: 'technologies' | 'categories'
+}
+
 export const Route = createFileRoute('/dashboard/stack/')({
+  validateSearch: (search): DashboardStackSearch => ({
+    tab: search.tab === 'categories' ? 'categories' : undefined,
+  }),
   loader: async ({ context: { queryClient } }) => {
     await Promise.all([
       queryClient.ensureQueryData(categoryQueryOptions.list()),

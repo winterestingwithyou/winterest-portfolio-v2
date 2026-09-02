@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { FolderTree, Layers, Plus, RefreshCw } from 'lucide-react'
 import { useState } from 'react'
 
@@ -32,7 +32,20 @@ type ActiveTab = 'technologies' | 'categories'
 export function DashboardStackPage() {
   const copy = getDashboardCopy()
   const stackCopy = copy.stack
-  const [activeTab, setActiveTab] = useState<ActiveTab>('technologies')
+  const search = useSearch({ from: '/dashboard/stack/' })
+  const navigate = useNavigate({ from: '/dashboard/stack/' })
+  const activeTab: ActiveTab =
+    search.tab === 'categories' ? 'categories' : 'technologies'
+
+  const handleTabChange = (nextTab: ActiveTab) => {
+    void navigate({
+      search: (prev) => ({
+        ...prev,
+        tab: nextTab === 'categories' ? 'categories' : undefined,
+      }),
+      replace: true,
+    })
+  }
   const [error, setError] = useState<string | null>(null)
   const [categoryToDelete, setCategoryToDelete] = useState<{
     id: string
@@ -143,7 +156,7 @@ export function DashboardStackPage() {
       <div className="mb-6 flex border-b border-(--brand-line)">
         <button
           type="button"
-          onClick={() => setActiveTab('technologies')}
+          onClick={() => handleTabChange('technologies')}
           className={`flex items-center gap-2 border-b-2 px-6 py-3 text-sm font-bold transition ${
             activeTab === 'technologies'
               ? 'border-(--brand-orange) text-(--brand-orange-deep)'
@@ -155,7 +168,7 @@ export function DashboardStackPage() {
         </button>
         <button
           type="button"
-          onClick={() => setActiveTab('categories')}
+          onClick={() => handleTabChange('categories')}
           className={`flex items-center gap-2 border-b-2 px-6 py-3 text-sm font-bold transition ${
             activeTab === 'categories'
               ? 'border-(--brand-orange) text-(--brand-orange-deep)'

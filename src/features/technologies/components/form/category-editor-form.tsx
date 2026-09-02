@@ -82,7 +82,10 @@ export function CategoryEditorForm({
           await createMutation.mutateAsync(payload)
         }
 
-        void navigate({ to: '/dashboard/stack' })
+        void navigate({
+          to: '/dashboard/stack',
+          search: { tab: 'categories' },
+        })
       } catch (caught) {
         setError(getApiErrorMessage(caught, formCopy.saveError))
       } finally {
@@ -100,7 +103,10 @@ export function CategoryEditorForm({
     try {
       await deleteMutation.mutateAsync(initialData.id)
       setIsDeleteDialogOpen(false)
-      void navigate({ to: '/dashboard/stack' })
+      void navigate({
+        to: '/dashboard/stack',
+        search: { tab: 'categories' },
+      })
     } catch (caught) {
       setError(getApiErrorMessage(caught, formCopy.deleteError))
       setIsDeleteDialogOpen(false)
@@ -122,6 +128,7 @@ export function CategoryEditorForm({
       <div className="flex items-center justify-between gap-4">
         <Link
           to="/dashboard/stack"
+          search={{ tab: 'categories' }}
           className="inline-flex items-center gap-2 text-sm font-bold text-(--brand-orange-deep) no-underline hover:-translate-x-0.5 transition"
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
@@ -283,7 +290,9 @@ export function CategoryEditorForm({
             asChild
             className="rounded-full border-(--brand-line) font-bold text-(--brand-ink) hover:bg-surface-soft"
           >
-            <Link to="/dashboard/stack">{formCopy.cancel}</Link>
+            <Link to="/dashboard/stack" search={{ tab: 'categories' }}>
+              {formCopy.cancel}
+            </Link>
           </Button>
 
           <Button
