@@ -28,6 +28,7 @@ trigger: always_on
 
 - Add and maintain tests for critical business logic using **Vitest**.
 - Prioritize tests for: auth helpers, role guards, slug utilities, Zod validation schemas, database query helpers, and dashboard mutations.
+- **Cloudflare Workers Mocking in Tests**: When testing code that depends on Cloudflare Workers environment variables or bindings (`env`), always import the mock directly from `src/test/cloudflare-workers-mock.ts` (e.g. `import { env as mockEnv } from '#/test/cloudflare-workers-mock'`). Avoid importing `'cloudflare:workers'` directly in test files to mutate env bindings, because the TypeScript compiler (`tsc`) checks the rigid `Env` interface from `worker-configuration.d.ts` rather than the test mock, leading to typing conflicts.
 - Run `bun run typecheck`, `bun run lint`, and `bun run test` before finalizing tasks.
 
 ---
@@ -61,3 +62,4 @@ trigger: always_on
 - Do **NOT** make the dashboard overly animated or distracting.
 - Do **NOT** create monolithic copy files (e.g. dumping all pages' copy into a single file).
 - Do **NOT** put UI copy in random subdirectories (e.g. avoid `src/features/auth/content/auth-copy.ts`; use `src/features/auth/copy.ts`).
+- Do **NOT** import `cloudflare:workers` directly in test files to mutate env bindings; use `src/test/cloudflare-workers-mock.ts` instead.
