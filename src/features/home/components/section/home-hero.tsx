@@ -7,20 +7,27 @@ import { Container } from '#/components/marketing/section'
 import { HeroVisual } from '#/components/visual/hero-visual'
 import type { getHomeCopy } from '#/features/home/copy'
 import { portfolioStats as defaultPortfolioStats } from '#/features/portfolio/data'
+import type { SiteSettingsInput } from '#/features/settings/types'
+import { resolveActiveCv } from '#/features/settings/types'
 import { fadeUp, staggerContainer, staggerItemScale } from '#/lib/motion'
+import { getLocale } from '#/paraglide/runtime'
 
 type HomeHeroProps = {
   copy: ReturnType<typeof getHomeCopy>
   githubUrl: string
   portfolioStats?: typeof defaultPortfolioStats
+  settings?: SiteSettingsInput | null
 }
 
 export function HomeHero({
   copy,
   githubUrl,
   portfolioStats = defaultPortfolioStats,
+  settings,
 }: HomeHeroProps) {
   const [cvNotice, setCvNotice] = useState(false)
+  const locale = getLocale()
+  const activeCvUrl = resolveActiveCv(locale, settings)
 
   const handleDownloadCv = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -86,25 +93,40 @@ export function HomeHero({
                 GitHub
               </a>
             )}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={handleDownloadCv}
-                className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-5 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
+            {activeCvUrl ? (
+              <a
+                href={activeCvUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-5 text-sm font-bold text-(--brand-ink) no-underline transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
               >
                 <FileText
                   aria-hidden="true"
                   className="size-4 text-(--brand-orange)"
                 />
                 {copy.hero.downloadCv}
-              </button>
+              </a>
+            ) : (
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={handleDownloadCv}
+                  className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-5 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
+                >
+                  <FileText
+                    aria-hidden="true"
+                    className="size-4 text-(--brand-orange)"
+                  />
+                  {copy.hero.downloadCv}
+                </button>
 
-              {cvNotice ? (
-                <div className="absolute left-0 top-full z-20 mt-2.5 w-max max-w-xs rounded-xl border border-orange-300/30 bg-(--brand-dark) px-3.5 py-2.5 text-xs font-semibold text-[#fff7ec] shadow-xl backdrop-blur-md animate-in fade-in slide-in-from-top-1">
-                  {copy.hero.cvNotAvailable}
-                </div>
-              ) : null}
-            </div>
+                {cvNotice ? (
+                  <div className="absolute left-0 top-full z-20 mt-2.5 w-max max-w-xs rounded-xl border border-orange-300/30 bg-(--brand-dark) px-3.5 py-2.5 text-xs font-semibold text-[#fff7ec] shadow-xl backdrop-blur-md animate-in fade-in slide-in-from-top-1">
+                    {copy.hero.cvNotAvailable}
+                  </div>
+                ) : null}
+              </div>
+            )}
           </motion.div>
 
           <motion.div

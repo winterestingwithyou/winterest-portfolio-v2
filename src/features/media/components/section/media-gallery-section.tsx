@@ -2,6 +2,7 @@ import {
   Check,
   Copy,
   ExternalLink,
+  FileText,
   Image as ImageIcon,
   Search,
   Trash2,
@@ -25,6 +26,8 @@ type MediaGallerySectionProps = {
   onDeleteSelect: (item: MediaRecord) => void
 }
 
+type AssetFilter = 'all' | 'image' | 'document'
+
 export function MediaGallerySection({
   copy,
   mediaList,
@@ -35,6 +38,33 @@ export function MediaGallerySection({
   onDeleteSelect,
 }: MediaGallerySectionProps) {
   const [copiedId, setCopiedId] = React.useState<string | null>(null)
+  const [activeTab, setActiveTab] = React.useState<AssetFilter>('all')
+
+  const imageCount = React.useMemo(
+    () => mediaList.filter((m) => m.mimeType.startsWith('image/')).length,
+    [mediaList],
+  )
+  const documentCount = React.useMemo(
+    () =>
+      mediaList.filter(
+        (m) =>
+          m.mimeType === 'application/pdf' || !m.mimeType.startsWith('image/'),
+      ).length,
+    [mediaList],
+  )
+
+  const filteredList = React.useMemo(() => {
+    if (activeTab === 'image') {
+      return mediaList.filter((m) => m.mimeType.startsWith('image/'))
+    }
+    if (activeTab === 'document') {
+      return mediaList.filter(
+        (m) =>
+          m.mimeType === 'application/pdf' || !m.mimeType.startsWith('image/'),
+      )
+    }
+    return mediaList
+  }, [mediaList, activeTab])
 
   const handleCopyUrl = async (item: MediaRecord) => {
     try {
@@ -75,6 +105,52 @@ export function MediaGallerySection({
         </div>
       </div>
 
+      {/* Asset Filter Tabs */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+        <button
+          type="button"
+          onClick={() => setActiveTab('all')}
+          className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+            activeTab === 'all'
+              ? 'bg-(--brand-orange) text-white shadow-xs'
+              : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'
+          }`}
+        >
+          {copy.media.tabAll}
+          <span className="opacity-80 font-mono text-[11px]">
+            ({mediaList.length})
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('image')}
+          className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+            activeTab === 'image'
+              ? 'bg-(--brand-orange) text-white shadow-xs'
+              : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'
+          }`}
+        >
+          {copy.media.tabImages}
+          <span className="opacity-80 font-mono text-[11px]">
+            ({imageCount})
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('document')}
+          className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+            activeTab === 'document'
+              ? 'bg-(--brand-orange) text-white shadow-xs'
+              : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'
+          }`}
+        >
+          {copy.media.tabDocuments}
+          <span className="opacity-80 font-mono text-[11px]">
+            ({documentCount})
+          </span>
+        </button>
+      </div>
+
       {/* Error state */}
       {loadError ? (
         <div className="surface-card p-6 text-center text-rose-500">
@@ -99,13 +175,21 @@ export function MediaGallerySection({
             </div>
           ))}
         </div>
-      ) : mediaList.length === 0 ? (
+      ) : filteredList.length === 0 ? (
         <div className="surface-card flex flex-col items-center justify-center p-12 text-center">
           <div className="mb-3 grid size-12 place-items-center rounded-2xl bg-(--brand-orange-soft) text-(--brand-orange-deep)">
-            <ImageIcon className="size-6" />
+            {activeTab === 'document' ? (
+              <FileText className="size-6" />
+            ) : (
+              <ImageIcon className="size-6" />
+            )}
           </div>
           <h4 className="text-base font-bold text-(--brand-ink)">
-            {search.trim() ? copy.media.noImagesFound : copy.media.emptyTitle}
+            {search.trim()
+              ? copy.media.noImagesFound
+              : activeTab === 'document'
+                ? copy.media.noDocumentsFound
+                : copy.media.emptyTitle}
           </h4>
           <p className="mt-1 max-w-sm text-sm text-(--brand-muted)">
             {copy.media.emptyDescription}
@@ -113,33 +197,57 @@ export function MediaGallerySection({
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {mediaList.map((item) => {
+          {filteredList.map((item) => {
             const isCopied = copiedId === item.id
+            const isPdf =
+              item.mimeType === 'application/pdf' ||
+              !item.mimeType.startsWith('image/')
 
             return (
               <article
                 key={item.id}
                 className="surface-card group relative flex flex-col justify-between overflow-hidden transition duration-300 hover:border-(--brand-orange) hover:shadow-md"
               >
-                {/* Thumbnail Image */}
-                <div className="relative aspect-video w-full overflow-hidden border-b border-(--brand-line) bg-black/5">
-                  <img
-                    src={item.url}
-                    alt={item.alt || item.filename}
-                    className="size-full object-cover transition duration-300 group-hover:scale-105"
-                    loading="lazy"
-                  />
+                {/* Thumbnail / Document Box */}
+                {isPdf ? (
+                  <div className="relative aspect-video w-full overflow-hidden border-b border-(--brand-line) bg-rose-500/5 flex flex-col items-center justify-center p-4">
+                    <div className="grid size-12 place-items-center rounded-2xl bg-rose-500/10 text-rose-600 border border-rose-500/20 shadow-xs transition group-hover:scale-110">
+                      <FileText className="size-6" />
+                    </div>
+                    <span className="mt-2.5 max-w-[85%] truncate text-xs font-semibold text-(--brand-ink)">
+                      {item.filename}
+                    </span>
 
-                  {/* Top Badges */}
-                  <div className="pointer-events-none absolute top-2.5 right-2.5 left-2.5 flex items-center justify-between">
-                    <span className="rounded-md border border-white/20 bg-black/60 px-2 py-0.5 font-mono text-[10px] font-semibold text-white backdrop-blur-md">
-                      {formatBytes(item.size)}
-                    </span>
-                    <span className="rounded-md border border-white/20 bg-black/60 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase text-white backdrop-blur-md">
-                      {item.mimeType.replace('image/', '')}
-                    </span>
+                    {/* Top Badges */}
+                    <div className="pointer-events-none absolute top-2.5 right-2.5 left-2.5 flex items-center justify-between">
+                      <span className="rounded-md border border-white/20 bg-black/60 px-2 py-0.5 font-mono text-[10px] font-semibold text-white backdrop-blur-md">
+                        {formatBytes(item.size)}
+                      </span>
+                      <span className="rounded-md border border-rose-500/30 bg-rose-600/90 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase text-white backdrop-blur-md">
+                        PDF
+                      </span>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="relative aspect-video w-full overflow-hidden border-b border-(--brand-line) bg-black/5">
+                    <img
+                      src={item.url}
+                      alt={item.alt || item.filename}
+                      className="size-full object-cover transition duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+
+                    {/* Top Badges */}
+                    <div className="pointer-events-none absolute top-2.5 right-2.5 left-2.5 flex items-center justify-between">
+                      <span className="rounded-md border border-white/20 bg-black/60 px-2 py-0.5 font-mono text-[10px] font-semibold text-white backdrop-blur-md">
+                        {formatBytes(item.size)}
+                      </span>
+                      <span className="rounded-md border border-white/20 bg-black/60 px-2 py-0.5 font-mono text-[10px] font-semibold uppercase text-white backdrop-blur-md">
+                        {item.mimeType.replace('image/', '')}
+                      </span>
+                    </div>
+                  </div>
+                )}
 
                 {/* Metadata Body */}
                 <div className="flex-1 p-4">

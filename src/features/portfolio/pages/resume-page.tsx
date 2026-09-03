@@ -1,17 +1,28 @@
+import { ExternalLink, FileText } from 'lucide-react'
+
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { getPortfolioCopy } from '#/features/portfolio/copy'
 import { siteProfile } from '#/features/portfolio/data'
 import type { getPublishedProjects } from '#/features/projects/public-loaders'
+import type { SiteSettingsInput } from '#/features/settings/types'
+import { resolveActiveCv } from '#/features/settings/types'
 import type { getPublicStackData } from '#/features/technologies/public-loaders'
+import { getLocale } from '#/paraglide/runtime'
 
 type ResumePageProps = {
   projects: Awaited<ReturnType<typeof getPublishedProjects>>
   categories: Awaited<ReturnType<typeof getPublicStackData>>['categories']
+  settings?: SiteSettingsInput
 }
 
-export function ResumePage({ projects, categories }: ResumePageProps) {
+export function ResumePage({
+  projects,
+  categories,
+  settings,
+}: ResumePageProps) {
   const copy = getPortfolioCopy()
   const timeline = copy.timeline
+  const activeCvUrl = resolveActiveCv(getLocale(), settings)
 
   return (
     <main className="px-4 py-14 print:bg-white sm:py-20">
@@ -39,6 +50,20 @@ export function ResumePage({ projects, categories }: ResumePageProps) {
               <p className="font-semibold">{siteProfile.location}</p>
               <p className="text-(--brand-muted)">{siteProfile.contactEmail}</p>
               <p className="text-(--brand-muted)">{siteProfile.repoUrl}</p>
+              {activeCvUrl && (
+                <div className="mt-3 border-t border-(--brand-line) pt-3 print:hidden">
+                  <a
+                    href={activeCvUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 font-bold text-xs text-(--brand-orange-deep) hover:underline"
+                  >
+                    <FileText className="size-3.5 text-(--brand-orange)" />
+                    {copy.resume.downloadPdf}
+                    <ExternalLink className="size-3" />
+                  </a>
+                </div>
+              )}
             </div>
           </section>
 

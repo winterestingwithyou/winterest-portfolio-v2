@@ -1,25 +1,40 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  ALLOWED_DOC_TYPES,
+  ALLOWED_IMAGE_TYPES,
   ALLOWED_MIME_TYPES,
   MAX_FILE_SIZE_BYTES,
+  getAssetType,
   mediaQuerySchema,
   mediaUploadSchema,
 } from './validation'
 
 describe('media validation', () => {
-  describe('constants', () => {
+  describe('constants & asset type detection', () => {
     it('defines the correct max file size of 10MB', () => {
       expect(MAX_FILE_SIZE_BYTES).toBe(10 * 1024 * 1024)
     })
 
     it('contains expected standard image mime types', () => {
-      expect(ALLOWED_MIME_TYPES).toContain('image/jpeg')
-      expect(ALLOWED_MIME_TYPES).toContain('image/png')
-      expect(ALLOWED_MIME_TYPES).toContain('image/webp')
-      expect(ALLOWED_MIME_TYPES).toContain('image/gif')
-      expect(ALLOWED_MIME_TYPES).toContain('image/svg+xml')
-      expect(ALLOWED_MIME_TYPES).toContain('image/avif')
+      expect(ALLOWED_IMAGE_TYPES).toContain('image/jpeg')
+      expect(ALLOWED_IMAGE_TYPES).toContain('image/png')
+      expect(ALLOWED_IMAGE_TYPES).toContain('image/webp')
+      expect(ALLOWED_IMAGE_TYPES).toContain('image/gif')
+      expect(ALLOWED_IMAGE_TYPES).toContain('image/svg+xml')
+      expect(ALLOWED_IMAGE_TYPES).toContain('image/avif')
+    })
+
+    it('contains PDF document mime type in allowed types', () => {
+      expect(ALLOWED_DOC_TYPES).toContain('application/pdf')
+      expect(ALLOWED_MIME_TYPES).toContain('application/pdf')
+    })
+
+    it('correctly classifies assets using getAssetType', () => {
+      expect(getAssetType('image/png')).toBe('image')
+      expect(getAssetType('image/webp')).toBe('image')
+      expect(getAssetType('application/pdf')).toBe('document')
+      expect(getAssetType('application/zip')).toBe('other')
     })
   })
 

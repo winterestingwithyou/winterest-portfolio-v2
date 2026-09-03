@@ -3,6 +3,9 @@ import { Link } from '@tanstack/react-router'
 import {
   AlertCircle,
   CheckCircle2,
+  ExternalLink,
+  FileText,
+  FolderOpen,
   Globe,
   Loader2,
   Mail,
@@ -11,10 +14,12 @@ import {
   Search,
   Share2,
   Sliders,
+  Trash2,
 } from 'lucide-react'
 import { useState } from 'react'
 
 import { ImageUploader } from '#/components/media/image-uploader'
+import { MediaPickerDialog } from '#/components/media/media-picker-dialog'
 import { Button } from '#/components/ui/button'
 import { Checkbox } from '#/components/ui/checkbox'
 import {
@@ -51,6 +56,8 @@ export function SettingsEditorForm({
   const [activeTab, setActiveTab] = useState<SettingsTab>('general')
   const [metaLangTab, setMetaLangTab] = useState<'en' | 'id'>('en')
   const [successMessage, setSuccessMessage] = useState<string | null>(null)
+  const [enCvPickerOpen, setEnCvPickerOpen] = useState(false)
+  const [idCvPickerOpen, setIdCvPickerOpen] = useState(false)
 
   const updateMutation = useUpdateSiteSettings()
   const isSaving = updateMutation.isPending
@@ -272,6 +279,241 @@ export function SettingsEditorForm({
                 )}
               </form.Field>
             </FieldGroup>
+
+            {/* Section: Curriculum Vitae / Resume Documents */}
+            <div className="border-t border-(--brand-line) pt-6">
+              <div className="mb-4">
+                <div className="flex items-center gap-2">
+                  <FileText className="size-4 text-(--brand-orange)" />
+                  <h3 className="text-sm font-bold text-(--brand-ink)">
+                    {settingsCopy.form.cvHeading}
+                  </h3>
+                </div>
+                <p className="mt-1 text-xs text-(--brand-muted)">
+                  {settingsCopy.form.cvHeadingDesc}
+                </p>
+              </div>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                {/* English CV Slot */}
+                <form.Field name="cvEnUrl">
+                  {(field) => {
+                    const hasFile = Boolean(
+                      field.state.value && field.state.value.trim(),
+                    )
+                    const fileName = hasFile
+                      ? field.state.value.split('/').pop() || 'Resume-EN.pdf'
+                      : null
+
+                    return (
+                      <div className="surface-card flex flex-col justify-between rounded-xl border border-(--brand-line) p-4 transition hover:border-(--brand-orange)/50">
+                        <div>
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="flex items-center gap-1.5 text-xs font-semibold text-(--brand-ink)">
+                              <span className="text-sm">🇺🇸</span>
+                              {settingsCopy.form.cvEnLabel}
+                            </span>
+                            {hasFile ? (
+                              <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-600">
+                                {settingsCopy.form.cvStatusActive}
+                              </span>
+                            ) : (
+                              <span className="rounded-full border border-(--brand-line) bg-(--surface-strong) px-2.5 py-0.5 text-[11px] font-medium text-(--brand-muted)">
+                                {settingsCopy.form.cvStatusEmpty}
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-1.5 text-xs leading-relaxed text-(--brand-muted)">
+                            {settingsCopy.form.cvEnDesc}
+                          </p>
+
+                          {hasFile ? (
+                            <div className="mt-3 flex items-center gap-2.5 rounded-lg border border-rose-500/20 bg-rose-500/5 p-2.5">
+                              <FileText className="size-5 shrink-0 text-rose-600" />
+                              <div className="min-w-0 flex-1">
+                                <p className="truncate text-xs font-semibold text-(--brand-ink)">
+                                  {fileName}
+                                </p>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="mt-3 rounded-lg border border-dashed border-(--brand-line) p-3 text-center">
+                              <p className="text-xs text-(--brand-muted)">
+                                {settingsCopy.form.noCvUploaded}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-(--brand-line) pt-3">
+                          {hasFile ? (
+                            <>
+                              <a
+                                href={field.state.value}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface-strong) px-2.5 text-xs font-semibold text-(--brand-ink) transition hover:border-(--brand-orange)"
+                              >
+                                <ExternalLink className="size-3 text-(--brand-orange)" />
+                                {copy.media.preview}
+                              </a>
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setEnCvPickerOpen(true)}
+                                className="h-8 gap-1.5 text-xs font-semibold"
+                              >
+                                <FolderOpen className="size-3" />
+                                {settingsCopy.form.changeCvPdf}
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => field.handleChange('')}
+                                className="h-8 px-2 text-xs font-semibold text-rose-500 hover:bg-rose-500/10 hover:text-rose-600"
+                                title={settingsCopy.form.removeCvPdf}
+                              >
+                                <Trash2 className="size-3.5" />
+                              </Button>
+                            </>
+                          ) : (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setEnCvPickerOpen(true)}
+                              className="w-full gap-2 border-(--brand-line) text-xs font-semibold text-(--brand-orange-deep) hover:border-(--brand-orange)"
+                            >
+                              <FolderOpen className="size-3.5" />
+                              {settingsCopy.form.selectCvPdf}
+                            </Button>
+                          )}
+                        </div>
+
+                        <MediaPickerDialog
+                          open={enCvPickerOpen}
+                          onOpenChange={setEnCvPickerOpen}
+                          onSelect={(media) => field.handleChange(media.url)}
+                          currentUrl={field.state.value}
+                          accept="document"
+                        />
+                      </div>
+                    )
+                  }}
+                </form.Field>
+
+                {/* Indonesian CV Slot */}
+                <form.Field name="cvIdUrl">
+                  {(field) => {
+                    const hasFile = Boolean(
+                      field.state.value && field.state.value.trim(),
+                    )
+                    const fileName = hasFile
+                      ? field.state.value.split('/').pop() || 'Resume-ID.pdf'
+                      : null
+
+                    return (
+                      <div className="surface-card flex flex-col justify-between rounded-xl border border-(--brand-line) p-4 transition hover:border-(--brand-orange)/50">
+                        <div>
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="flex items-center gap-1.5 text-xs font-semibold text-(--brand-ink)">
+                              <span className="text-sm">🇮🇩</span>
+                              {settingsCopy.form.cvIdLabel}
+                            </span>
+                            {hasFile ? (
+                              <span className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-600">
+                                {settingsCopy.form.cvStatusActive}
+                              </span>
+                            ) : (
+                              <span className="rounded-full bg-blue-500/10 px-2.5 py-0.5 text-[11px] font-medium text-blue-600 dark:text-blue-400">
+                                {settingsCopy.form.cvStatusUsingEn}
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-1.5 text-xs leading-relaxed text-(--brand-muted)">
+                            {settingsCopy.form.cvIdDesc}
+                          </p>
+
+                          {hasFile ? (
+                            <div className="mt-3 flex items-center gap-2.5 rounded-lg border border-rose-500/20 bg-rose-500/5 p-2.5">
+                              <FileText className="size-5 shrink-0 text-rose-600" />
+                              <div className="min-w-0 flex-1">
+                                <p className="truncate text-xs font-semibold text-(--brand-ink)">
+                                  {fileName}
+                                </p>
+                              </div>
+                            </div>
+                          ) : (
+                            <div className="mt-3 rounded-lg border border-dashed border-(--brand-line) p-3 text-center">
+                              <p className="text-xs text-(--brand-muted)">
+                                {settingsCopy.form.cvFallbackActive}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-(--brand-line) pt-3">
+                          {hasFile ? (
+                            <>
+                              <a
+                                href={field.state.value}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface-strong) px-2.5 text-xs font-semibold text-(--brand-ink) transition hover:border-(--brand-orange)"
+                              >
+                                <ExternalLink className="size-3 text-(--brand-orange)" />
+                                {copy.media.preview}
+                              </a>
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setIdCvPickerOpen(true)}
+                                className="h-8 gap-1.5 text-xs font-semibold"
+                              >
+                                <FolderOpen className="size-3" />
+                                {settingsCopy.form.changeCvPdf}
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => field.handleChange('')}
+                                className="h-8 px-2 text-xs font-semibold text-rose-500 hover:bg-rose-500/10 hover:text-rose-600"
+                                title={settingsCopy.form.removeCvPdf}
+                              >
+                                <Trash2 className="size-3.5" />
+                              </Button>
+                            </>
+                          ) : (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => setIdCvPickerOpen(true)}
+                              className="w-full gap-2 border-(--brand-line) text-xs font-semibold text-(--brand-orange-deep) hover:border-(--brand-orange)"
+                            >
+                              <FolderOpen className="size-3.5" />
+                              {settingsCopy.form.selectCvPdf}
+                            </Button>
+                          )}
+                        </div>
+
+                        <MediaPickerDialog
+                          open={idCvPickerOpen}
+                          onOpenChange={setIdCvPickerOpen}
+                          onSelect={(media) => field.handleChange(media.url)}
+                          currentUrl={field.state.value}
+                          accept="document"
+                        />
+                      </div>
+                    )
+                  }}
+                </form.Field>
+              </div>
+            </div>
           </div>
         )}
 

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {
   Check,
+  FileText,
   Image as ImageIcon,
   Loader2,
   Plus,
@@ -31,6 +32,7 @@ export type MediaPickerDialogProps = {
   onOpenChange: (open: boolean) => void
   onSelect: (media: MediaRecord) => void
   currentUrl?: string | null
+  accept?: 'all' | 'image' | 'document'
 }
 
 export function MediaPickerDialog({
@@ -38,6 +40,7 @@ export function MediaPickerDialog({
   onOpenChange,
   onSelect,
   currentUrl,
+  accept = 'all',
 }: MediaPickerDialogProps) {
   const copy = getDashboardCopy()
   const [search, setSearch] = React.useState('')
@@ -49,13 +52,26 @@ export function MediaPickerDialog({
   )
   const uploadMutation = useUploadMedia()
 
+  const filteredMediaList = React.useMemo(() => {
+    if (accept === 'image') {
+      return mediaList.filter((m) => m.mimeType.startsWith('image/'))
+    }
+    if (accept === 'document') {
+      return mediaList.filter(
+        (m) =>
+          m.mimeType === 'application/pdf' || !m.mimeType.startsWith('image/'),
+      )
+    }
+    return mediaList
+  }, [mediaList, accept])
+
   // Reset selected when dialog opens
   React.useEffect(() => {
     if (open) {
-      const match = mediaList.find((m) => m.url === currentUrl)
+      const match = filteredMediaList.find((m) => m.url === currentUrl)
       setSelectedId(match ? match.id : null)
     }
-  }, [open, currentUrl, mediaList])
+  }, [open, currentUrl, filteredMediaList])
 
   const normalizeMedia = (media: MediaRecord): MediaRecord => {
     if (media.url.startsWith('http://') || media.url.startsWith('https://')) {
@@ -119,7 +135,13 @@ export function MediaPickerDialog({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml,image/avif"
+            accept={
+              accept === 'document'
+                ? 'application/pdf'
+                : accept === 'image'
+                  ? 'image/png,image/jpeg,image/webp,image/gif,image/svg+xml,image/avif'
+                  : 'image/png,image/jpeg,image/webp,image/gif,image/svg+xml,image/avif,application/pdf'
+            }
             className="hidden"
             onChange={handleFileChange}
           />
@@ -136,7 +158,9 @@ export function MediaPickerDialog({
             ) : (
               <Plus className="size-4" />
             )}
-            {copy.media.directUpload}
+            {accept === 'document'
+              ? copy.media.uploadDocButton
+              : copy.media.directUpload}
           </Button>
         </div>
 
@@ -152,13 +176,19 @@ export function MediaPickerDialog({
             <div className="grid size-full place-items-center py-12">
               <Loader2 className="size-6 animate-spin text-(--brand-orange)" />
             </div>
-          ) : mediaList.length === 0 ? (
+          ) : filteredMediaList.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <div className="grid size-12 place-items-center rounded-2xl bg-(--brand-orange-soft) text-(--brand-orange-deep) mb-3">
-                <ImageIcon className="size-6" />
+                {accept === 'document' ? (
+                  <FileText className="size-6" />
+                ) : (
+                  <ImageIcon className="size-6" />
+                )}
               </div>
               <p className="text-sm font-semibold text-(--brand-ink)">
-                {copy.media.noImagesFound}
+                {accept === 'document'
+                  ? copy.media.noDocumentsFound
+                  : copy.media.noImagesFound}
               </p>
               <p className="text-xs text-(--brand-muted) mt-1">
                 {copy.media.emptyDescription}
@@ -171,13 +201,19 @@ export function MediaPickerDialog({
                 onClick={() => fileInputRef.current?.click()}
               >
                 <UploadCloud className="size-4" />
-                {copy.media.directUpload}
+                {accept === 'document'
+                  ? copy.media.uploadDocButton
+                  : copy.media.directUpload}
               </Button>
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-              {mediaList.map((item) => {
+              {filteredMediaList.map((item) => {
                 const isSelected = item.id === selectedId
+                const isPdf =
+                  item.mimeType === 'application/pdf' ||
+                  !item.mimeType.startsWith('image/')
+
                 return (
                   <button
                     key={item.id}
@@ -189,19 +225,35 @@ export function MediaPickerDialog({
                         : 'border-(--brand-line) bg-(--surface-card) hover:border-(--brand-orange)/60'
                     }`}
                   >
-                    <div className="relative aspect-video w-full overflow-hidden bg-black/5">
-                      <img
-                        src={item.url}
-                        alt={item.alt || item.filename}
-                        className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        loading="lazy"
-                      />
-                      {isSelected ? (
-                        <div className="absolute right-2 top-2 grid size-6 place-items-center rounded-full bg-(--brand-orange) text-white shadow-md">
-                          <Check className="size-3.5 stroke-3" />
+                    {isPdf ? (
+                      <div className="relative aspect-video w-full overflow-hidden bg-rose-500/5 flex flex-col items-center justify-center p-3">
+                        <div className="grid size-10 place-items-center rounded-xl bg-rose-500/10 text-rose-600 border border-rose-500/20 shadow-xs">
+                          <FileText className="size-5" />
                         </div>
-                      ) : null}
-                    </div>
+                        <span className="mt-1.5 font-mono text-[10px] font-bold text-rose-600 uppercase">
+                          PDF
+                        </span>
+                        {isSelected ? (
+                          <div className="absolute right-2 top-2 grid size-6 place-items-center rounded-full bg-(--brand-orange) text-white shadow-md">
+                            <Check className="size-3.5 stroke-3" />
+                          </div>
+                        ) : null}
+                      </div>
+                    ) : (
+                      <div className="relative aspect-video w-full overflow-hidden bg-black/5">
+                        <img
+                          src={item.url}
+                          alt={item.alt || item.filename}
+                          className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                        {isSelected ? (
+                          <div className="absolute right-2 top-2 grid size-6 place-items-center rounded-full bg-(--brand-orange) text-white shadow-md">
+                            <Check className="size-3.5 stroke-3" />
+                          </div>
+                        ) : null}
+                      </div>
+                    )}
 
                     <div className="p-2.5">
                       <p
@@ -236,7 +288,9 @@ export function MediaPickerDialog({
             onClick={handleConfirm}
             className="gap-2 bg-(--brand-orange) text-white hover:bg-(--brand-orange-deep)"
           >
-            {copy.media.useSelectedImage}
+            {accept === 'document'
+              ? copy.media.useSelectedFile
+              : copy.media.useSelectedImage}
           </Button>
         </DialogFooter>
       </DialogContent>

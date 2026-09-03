@@ -67,23 +67,28 @@ export const Route = createFileRoute('/api/media/')({
           ) {
             return Response.json(
               {
-                error: `Invalid file type: ${mimeType}. Allowed formats: JPG, PNG, WebP, GIF, SVG, AVIF.`,
+                error: `Invalid file type: ${mimeType}. Allowed formats: JPG, PNG, WebP, GIF, SVG, AVIF, PDF.`,
               },
               { status: 400 },
             )
           }
 
-          const originalName = file.name || 'image.png'
-          const ext = originalName.split('.').pop()?.toLowerCase() || 'png'
+          const isPdf = mimeType === 'application/pdf'
+          const originalName =
+            file.name || (isPdf ? 'document.pdf' : 'image.png')
+          const ext =
+            originalName.split('.').pop()?.toLowerCase() ||
+            (isPdf ? 'pdf' : 'png')
           const rawBaseName = originalName.replace(/\.[^/.]+$/, '')
           const cleanBaseName =
             rawBaseName
               .toLowerCase()
               .replace(/[^a-z0-9]+/g, '-')
-              .replace(/^-+|-+$/g, '') || 'image'
+              .replace(/^-+|-+$/g, '') || (isPdf ? 'document' : 'image')
 
           const uniquePrefix = `${Date.now()}-${crypto.randomUUID().slice(0, 8)}`
-          const key = `projects/${uniquePrefix}-${cleanBaseName}.${ext}`
+          const folder = isPdf ? 'documents' : 'projects'
+          const key = `${folder}/${uniquePrefix}-${cleanBaseName}.${ext}`
 
           const arrayBuffer = await file.arrayBuffer()
 

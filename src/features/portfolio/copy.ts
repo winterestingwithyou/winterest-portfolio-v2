@@ -37,6 +37,8 @@ export const portfolioCopy = {
       selectedWork: 'Selected Work',
       direction: 'Current Direction',
       stack: 'Stack',
+      downloadPdf: 'Download Official PDF',
+      viewPdf: 'View Official PDF',
     },
     timeline: [
       {
@@ -95,6 +97,8 @@ export const portfolioCopy = {
       selectedWork: 'Karya Pilihan',
       direction: 'Arah Saat Ini',
       stack: 'Stack',
+      downloadPdf: 'Unduh PDF Resmi',
+      viewPdf: 'Lihat PDF Resmi',
     },
     timeline: [
       {

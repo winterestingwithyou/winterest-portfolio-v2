@@ -121,7 +121,7 @@ export const dashboardCopy = {
         'Upload your first project image or visual asset to get started.',
       uploadTitle: 'Upload New Media',
       uploadDesc:
-        'Drag & drop or select an image file (PNG, JPG, WebP, GIF, SVG, AVIF up to 10MB).',
+        'Drag & drop or select image files (PNG, JPG, WebP, GIF, SVG, AVIF) or PDF documents up to 10MB.',
       uploading: 'Uploading image...',
       uploadSuccess: 'Media asset uploaded successfully.',
       uploadError: 'Failed to upload media asset.',
@@ -145,6 +145,16 @@ export const dashboardCopy = {
         'Recommended aspect ratio: 16:9 or 21:9 (min. 1200x675px).',
       directUpload: 'Upload image',
       orPasteUrl: 'Or enter image URL manually',
+      tabAll: 'All Assets',
+      tabImages: 'Images',
+      tabDocuments: 'Documents (PDF)',
+      pdfBadge: 'PDF',
+      document: 'Document',
+      openPdf: 'Preview PDF',
+      useSelectedFile: 'Use Selected File',
+      noDocumentsFound: 'No PDF documents found.',
+      dropToUploadDoc: 'Drop PDF document here to upload',
+      uploadDocButton: 'Upload PDF',
     },
     stack: {
       title: 'Tech Stack & Skills',
@@ -421,6 +431,24 @@ export const dashboardCopy = {
         heroVisualUrl: 'Hero Visual / Mascot Image',
         heroVisualDesc:
           'Custom hero image or mascot for the homepage. Leave empty to use the default mascot.',
+        cvHeading: 'Curriculum Vitae (CV)',
+        cvHeadingDesc:
+          'Upload your latest CV in PDF format. Visitors can view and download this file directly from the homepage and resume.',
+        cvEnLabel: 'English Version',
+        cvEnDesc:
+          'Shown to international visitors, and used as the default if the Indonesian version is not added.',
+        cvIdLabel: 'Indonesian Version',
+        cvIdDesc:
+          'Shown when visitors browse in Indonesian. If left empty, your English CV is used automatically.',
+        cvFallbackActive:
+          'Not uploaded yet. Visitors will see your English CV automatically.',
+        cvStatusActive: 'Active',
+        cvStatusEmpty: 'Not uploaded',
+        cvStatusUsingEn: 'Using English CV',
+        selectCvPdf: 'Choose PDF File',
+        changeCvPdf: 'Change File',
+        removeCvPdf: 'Remove',
+        noCvUploaded: 'No PDF file selected yet.',
         publicEmail: 'Public contact email',
         publicEmailDesc:
           'Primary email address displayed for direct inquiries and contact channels.',
@@ -659,7 +687,7 @@ export const dashboardCopy = {
         'Unggah gambar project atau aset visual pertama kamu untuk memulai.',
       uploadTitle: 'Unggah Media Baru',
       uploadDesc:
-        'Tarik & lepas atau pilih file gambar (PNG, JPG, WebP, GIF, SVG, AVIF maks 10MB).',
+        'Tarik & lepas atau pilih file gambar (PNG, JPG, WebP, GIF, SVG, AVIF) atau dokumen PDF hingga 10MB.',
       uploading: 'Mengunggah gambar...',
       uploadSuccess: 'Aset media berhasil diunggah.',
       uploadError: 'Gagal mengunggah aset media.',
@@ -683,6 +711,16 @@ export const dashboardCopy = {
         'Rasio aspek yang disarankan: 16:9 atau 21:9 (min. 1200x675px).',
       directUpload: 'Unggah gambar',
       orPasteUrl: 'Atau masukkan URL gambar manual',
+      tabAll: 'Semua Aset',
+      tabImages: 'Gambar',
+      tabDocuments: 'Dokumen (PDF)',
+      pdfBadge: 'PDF',
+      document: 'Dokumen',
+      openPdf: 'Pratinjau PDF',
+      useSelectedFile: 'Gunakan File Terpilih',
+      noDocumentsFound: 'Belum ada dokumen PDF yang diunggah.',
+      dropToUploadDoc: 'Lepaskan berkas PDF di sini untuk mengunggah',
+      uploadDocButton: 'Unggah PDF',
     },
     stack: {
       title: 'Tech Stack & Keahlian',
@@ -963,6 +1001,24 @@ export const dashboardCopy = {
         heroVisualUrl: 'Gambar Hero Visual / Maskot',
         heroVisualDesc:
           'Gambar hero atau maskot custom untuk homepage. Kosongkan untuk menggunakan maskot bawaan.',
+        cvHeading: 'Curriculum Vitae (CV)',
+        cvHeadingDesc:
+          'Unggah berkas CV terbaru dalam format PDF. Berkas ini yang akan diunduh pengunjung dari tombol di halaman utama dan resume.',
+        cvEnLabel: 'Versi Bahasa Inggris',
+        cvEnDesc:
+          'Ditampilkan untuk pengunjung internasional, sekaligus jadi pilihan bawaan jika versi Indonesia belum diunggah.',
+        cvIdLabel: 'Versi Bahasa Indonesia',
+        cvIdDesc:
+          'Ditampilkan saat pengunjung membuka situs dalam Bahasa Indonesia. Jika kosong, situs otomatis memakai versi Inggris.',
+        cvFallbackActive:
+          'Belum diunggah. Pengunjung akan otomatis diarahkan ke versi Inggris.',
+        cvStatusActive: 'Aktif',
+        cvStatusEmpty: 'Belum ada',
+        cvStatusUsingEn: 'Memakai versi Inggris',
+        selectCvPdf: 'Pilih Berkas PDF',
+        changeCvPdf: 'Ganti Berkas',
+        removeCvPdf: 'Hapus',
+        noCvUploaded: 'Belum ada berkas PDF yang dipilih.',
         publicEmail: 'Email kontak publik',
         publicEmailDesc:
           'Alamat email utama yang ditampilkan untuk saluran kontak dan pertanyaan langsung.',

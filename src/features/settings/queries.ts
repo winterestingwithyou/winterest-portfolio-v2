@@ -50,6 +50,8 @@ export async function getSiteSettings(
       ogImageUrl: map.get('ogImageUrl') ?? defaultSiteSettings.ogImageUrl,
       heroVisualUrl:
         map.get('heroVisualUrl') ?? defaultSiteSettings.heroVisualUrl,
+      cvEnUrl: map.get('cvEnUrl') ?? defaultSiteSettings.cvEnUrl,
+      cvIdUrl: map.get('cvIdUrl') ?? defaultSiteSettings.cvIdUrl,
       maintenanceMode: map.has('maintenanceMode')
         ? map.get('maintenanceMode') === 'true'
         : defaultSiteSettings.maintenanceMode,
@@ -87,6 +89,8 @@ export async function updateSiteSettings(
     { key: 'faviconUrl', value: input.faviconUrl.trim() },
     { key: 'ogImageUrl', value: input.ogImageUrl.trim() },
     { key: 'heroVisualUrl', value: input.heroVisualUrl.trim() },
+    { key: 'cvEnUrl', value: input.cvEnUrl.trim() },
+    { key: 'cvIdUrl', value: input.cvIdUrl.trim() },
     { key: 'maintenanceMode', value: String(input.maintenanceMode) },
   ]
 

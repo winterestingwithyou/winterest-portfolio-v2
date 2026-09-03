@@ -16,6 +16,8 @@ export const siteSettingsSchema = z.object({
   faviconUrl: z.string().or(z.literal('')),
   ogImageUrl: z.string().or(z.literal('')),
   heroVisualUrl: z.string().or(z.literal('')),
+  cvEnUrl: z.string().or(z.literal('')),
+  cvIdUrl: z.string().or(z.literal('')),
   maintenanceMode: z.boolean(),
 })
 
@@ -38,5 +40,26 @@ export const defaultSiteSettings: SiteSettingsInput = {
   faviconUrl: '',
   ogImageUrl: '',
   heroVisualUrl: '',
+  cvEnUrl: '',
+  cvIdUrl: '',
   maintenanceMode: false,
+}
+
+/**
+ * Resolves the appropriate CV URL based on active locale with fallback.
+ * If user is on 'id', prefer cvIdUrl -> fallback to cvEnUrl.
+ * If user is on 'en', prefer cvEnUrl -> fallback to cvIdUrl.
+ */
+export function resolveActiveCv(
+  locale: string,
+  settings?: { cvEnUrl?: string | null; cvIdUrl?: string | null } | null,
+): string | null {
+  if (!settings) return null
+  const en = settings.cvEnUrl?.trim() || null
+  const id = settings.cvIdUrl?.trim() || null
+
+  if (locale === 'id') {
+    return id || en || null
+  }
+  return en || id || null
 }

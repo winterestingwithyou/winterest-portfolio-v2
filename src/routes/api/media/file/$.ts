@@ -59,6 +59,18 @@ export const Route = createFileRoute('/api/media/file/$')({
             headers.set('x-frame-options', 'DENY')
           }
 
+          const isPdf =
+            contentType.includes('pdf') || key.toLowerCase().endsWith('.pdf')
+          if (isPdf) {
+            headers.set('content-type', 'application/pdf')
+            const rawFilename = key.split('/').pop() || 'document.pdf'
+            const cleanDisplayName = rawFilename.replace(/^\d+-[a-f0-9]+-/, '')
+            headers.set(
+              'content-disposition',
+              `inline; filename="${encodeURIComponent(cleanDisplayName)}"`,
+            )
+          }
+
           return new Response(object.body, {
             headers,
           })

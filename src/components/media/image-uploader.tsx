@@ -303,6 +303,7 @@ export function ImageUploader({
         onOpenChange={setPickerOpen}
         onSelect={(media) => onChange(media.url)}
         currentUrl={value}
+        accept="image"
       />
     </div>
   )

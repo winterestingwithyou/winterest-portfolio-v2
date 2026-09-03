@@ -78,7 +78,7 @@ export function MediaUploadDropzone({
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml,image/avif"
+        accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml,image/avif,application/pdf"
         className="hidden"
         onChange={handleFileChange}
       />
