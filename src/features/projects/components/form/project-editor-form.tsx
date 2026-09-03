@@ -1,4 +1,5 @@
 import { useForm } from '@tanstack/react-form'
+import { useQuery } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import {
   AlertCircle,
@@ -10,7 +11,6 @@ import {
   Trash2,
 } from 'lucide-react'
 import { useState } from 'react'
-import { z } from 'zod'
 
 import {
   AlertDialog,
@@ -24,6 +24,7 @@ import {
 } from '#/components/ui/alert-dialog'
 import { Button } from '#/components/ui/button'
 import { Checkbox } from '#/components/ui/checkbox'
+import { DatePicker } from '#/components/ui/date-picker'
 import {
   Field,
   FieldContent,
@@ -43,18 +44,18 @@ import {
 import { TechIcon } from '#/components/ui/tech-icon'
 import { Textarea } from '#/components/ui/textarea'
 import { ImageUploader } from '#/components/media/image-uploader'
-import { useQuery } from '@tanstack/react-query'
-
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import {
   useCreateProject,
   useDeleteProject,
   useUpdateProject,
 } from '#/features/projects/hooks'
+import { getProjectFormSchema } from '#/features/projects/validation'
 import { techQueryOptions } from '#/features/technologies/query-options'
 import { TechnologyCreateDialog } from '#/features/technologies/components/form/technology-create-dialog'
 import type { TechnologyWithCategories } from '#/features/technologies/queries'
 import { getApiErrorMessage } from '#/lib/api-client'
+import { getLocale } from '#/paraglide/runtime'
 
 type ProjectFormInitial = {
   id?: string
@@ -99,17 +100,6 @@ type ProjectEditorFormProps = {
   project?: ProjectFormInitial
 }
 
-const statusOptions = [
-  { value: 'draft', label: 'Draft' },
-  { value: 'published', label: 'Published' },
-  { value: 'archived', label: 'Archived' },
-] as const
-
-const visibilityOptions = [
-  { value: 'public', label: 'Public' },
-  { value: 'private', label: 'Private' },
-] as const
-
 const localeOptions = [
   { value: 'en' as const, label: 'English', flag: '🇬🇧' },
   { value: 'id' as const, label: 'Indonesia', flag: '🇮🇩' },
@@ -142,44 +132,10 @@ function getTranslation(
   }
 }
 
-const projectSchema = z.object({
-  slug: z
-    .string()
-    .min(1, 'Slug wajib diisi.')
-    .regex(
-      /^[a-z0-9-]+$/,
-      'Slug hanya boleh berisi huruf kecil, angka, dan tanda hubung (-).',
-    ),
-  status: z.enum(['draft', 'published', 'archived'] as const),
-  visibility: z.enum(['public', 'private'] as const),
-  repoVisibility: z.enum(['public', 'private'] as const),
-  featured: z.boolean(),
-  coverImage: z.string(),
-  repoUrl: z.string(),
-  demoUrl: z.string(),
-  productionUrl: z.string(),
-  startedAt: z.string(),
-  completedAt: z.string(),
-  publishedAt: z.string(),
-  technologyIds: z.array(z.string()),
-  translations: z.object({
-    en: z.object({
-      title: z.string().min(1, 'Title (English) wajib diisi.'),
-      summary: z.string().min(1, 'Summary (English) wajib diisi.'),
-      description: z.string().min(1, 'Description (English) wajib diisi.'),
-      category: z.string().min(1, 'Category (English) wajib diisi.'),
-    }),
-    id: z.object({
-      title: z.string().min(1, 'Judul (Indonesia) wajib diisi.'),
-      summary: z.string().min(1, 'Ringkasan (Indonesia) wajib diisi.'),
-      description: z.string().min(1, 'Deskripsi (Indonesia) wajib diisi.'),
-      category: z.string().min(1, 'Kategori (Indonesia) wajib diisi.'),
-    }),
-  }),
-})
-
 export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
   const copy = getDashboardCopy()
+  const locale = getLocale() === 'id' ? 'id' : 'en'
+  const formCopy = copy.projects.form
   const navigate = useNavigate()
   const [isPending, setIsPending] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -191,6 +147,17 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
   const createMutation = useCreateProject()
   const updateMutation = useUpdateProject(project?.id ?? '')
   const deleteMutation = useDeleteProject()
+
+  const statusOptions = [
+    { value: 'draft' as const, label: formCopy.statusDraft },
+    { value: 'published' as const, label: formCopy.statusPublished },
+    { value: 'archived' as const, label: formCopy.statusArchived },
+  ]
+
+  const visibilityOptions = [
+    { value: 'public' as const, label: formCopy.visibilityPublic },
+    { value: 'private' as const, label: formCopy.visibilityPrivate },
+  ]
 
   const form = useForm({
     defaultValues: {
@@ -213,7 +180,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
       },
     },
     validators: {
-      onSubmit: projectSchema,
+      onSubmit: getProjectFormSchema(locale),
     },
     onSubmit: async ({ value }) => {
       setIsPending(true)
@@ -348,10 +315,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         <div className="surface-card space-y-6 p-6 sm:p-8">
           <div className="border-b border-(--brand-line) pb-4">
             <h2 className="text-lg font-bold text-(--brand-ink)">
-              Pengaturan Utama Project
+              {formCopy.mainSettingsTitle}
             </h2>
             <p className="text-xs text-(--brand-muted)">
-              Slug URL, status publikasi, dan pengaturan visibilitas.
+              {formCopy.mainSettingsDesc}
             </p>
           </div>
 
@@ -366,7 +333,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                   return (
                     <Field data-invalid={isInvalid}>
                       <FieldLabel htmlFor={field.name}>
-                        {copy.form.slug} <span className="text-red-500">*</span>
+                        {formCopy.slug} <span className="text-red-500">*</span>
                       </FieldLabel>
                       <Input
                         id={field.name}
@@ -374,7 +341,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                         value={field.state.value}
                         onBlur={field.handleBlur}
                         onChange={(e) => field.handleChange(e.target.value)}
-                        placeholder="e.g. cloud-analytics-platform"
+                        placeholder={formCopy.slugPlaceholder}
                         aria-invalid={isInvalid}
                         className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
                       />
@@ -391,7 +358,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 children={(field) => (
                   <Field>
                     <FieldLabel htmlFor={field.name}>
-                      {copy.form.status}
+                      {formCopy.status}
                     </FieldLabel>
                     <Select
                       name={field.name}
@@ -406,7 +373,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                         id={field.name}
                         className="h-11 w-full rounded-xl border-(--brand-line) bg-surface text-sm"
                       >
-                        <SelectValue placeholder="Pilih status" />
+                        <SelectValue placeholder={formCopy.statusPlaceholder} />
                       </SelectTrigger>
                       <SelectContent>
                         {statusOptions.map((opt) => (
@@ -425,7 +392,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 children={(field) => (
                   <Field>
                     <FieldLabel htmlFor={field.name}>
-                      Visibilitas Project
+                      {formCopy.visibility}
                     </FieldLabel>
                     <Select
                       name={field.name}
@@ -438,7 +405,9 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                         id={field.name}
                         className="h-11 w-full rounded-xl border-(--brand-line) bg-surface text-sm"
                       >
-                        <SelectValue placeholder="Pilih visibilitas" />
+                        <SelectValue
+                          placeholder={formCopy.visibilityPlaceholder}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         {visibilityOptions.map((opt) => (
@@ -460,7 +429,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 children={(field) => (
                   <Field>
                     <FieldLabel htmlFor={field.name}>
-                      Visibilitas Repository
+                      {formCopy.repoVisibility}
                     </FieldLabel>
                     <Select
                       name={field.name}
@@ -473,7 +442,9 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                         id={field.name}
                         className="h-11 w-full rounded-xl border-(--brand-line) bg-surface text-sm"
                       >
-                        <SelectValue placeholder="Pilih visibilitas repository" />
+                        <SelectValue
+                          placeholder={formCopy.repoVisibilityPlaceholder}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         {visibilityOptions.map((opt) => (
@@ -497,8 +468,8 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       <ImageUploader
                         value={field.state.value}
                         onChange={(url) => field.handleChange(url ?? '')}
-                        label={copy.form.coverImageUrl}
-                        description={copy.media.coverImageRecommended}
+                        label={formCopy.coverImage}
+                        description={formCopy.coverImageDesc}
                         aspectRatio="wide"
                       />
                       {isInvalid && (
@@ -517,7 +488,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 children={(field) => (
                   <Field>
                     <FieldLabel htmlFor={field.name}>
-                      {copy.form.repositoryUrl}
+                      {formCopy.repoUrl}
                     </FieldLabel>
                     <Input
                       id={field.name}
@@ -525,7 +496,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="https://github.com/..."
+                      placeholder={formCopy.repoUrlPlaceholder}
                       className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm font-mono"
                     />
                   </Field>
@@ -537,7 +508,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 children={(field) => (
                   <Field>
                     <FieldLabel htmlFor={field.name}>
-                      {copy.form.demoUrl}
+                      {formCopy.demoUrl}
                     </FieldLabel>
                     <Input
                       id={field.name}
@@ -545,7 +516,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="https://preview.example.com"
+                      placeholder={formCopy.demoUrlPlaceholder}
                       className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm font-mono"
                     />
                   </Field>
@@ -557,7 +528,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 children={(field) => (
                   <Field>
                     <FieldLabel htmlFor={field.name}>
-                      URL Production / Live Site
+                      {formCopy.productionUrl}
                     </FieldLabel>
                     <Input
                       id={field.name}
@@ -565,7 +536,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="https://example.com"
+                      placeholder={formCopy.productionUrlPlaceholder}
                       className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm font-mono"
                     />
                   </Field>
@@ -579,15 +550,18 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 name="startedAt"
                 children={(field) => (
                   <Field>
-                    <FieldLabel htmlFor={field.name}>Tanggal Mulai</FieldLabel>
-                    <Input
-                      type="date"
+                    <FieldLabel htmlFor={field.name}>
+                      {formCopy.startedAt}
+                    </FieldLabel>
+                    <DatePicker
                       id={field.name}
-                      name={field.name}
                       value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
+                      onChange={(date) =>
+                        field.handleChange(date ? formatDateForInput(date) : '')
+                      }
+                      placeholder={formCopy.startedAtPlaceholder}
+                      clearLabel={formCopy.clearDate}
+                      locale={locale}
                     />
                   </Field>
                 )}
@@ -598,16 +572,17 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 children={(field) => (
                   <Field>
                     <FieldLabel htmlFor={field.name}>
-                      Tanggal Selesai
+                      {formCopy.completedAt}
                     </FieldLabel>
-                    <Input
-                      type="date"
+                    <DatePicker
                       id={field.name}
-                      name={field.name}
                       value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
+                      onChange={(date) =>
+                        field.handleChange(date ? formatDateForInput(date) : '')
+                      }
+                      placeholder={formCopy.completedAtPlaceholder}
+                      clearLabel={formCopy.clearDate}
+                      locale={locale}
                     />
                   </Field>
                 )}
@@ -618,16 +593,17 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 children={(field) => (
                   <Field>
                     <FieldLabel htmlFor={field.name}>
-                      Tanggal Publish
+                      {formCopy.publishedAt}
                     </FieldLabel>
-                    <Input
-                      type="date"
+                    <DatePicker
                       id={field.name}
-                      name={field.name}
                       value={field.state.value}
-                      onBlur={field.handleBlur}
-                      onChange={(e) => field.handleChange(e.target.value)}
-                      className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
+                      onChange={(date) =>
+                        field.handleChange(date ? formatDateForInput(date) : '')
+                      }
+                      placeholder={formCopy.publishedAtPlaceholder}
+                      clearLabel={formCopy.clearDate}
+                      locale={locale}
                     />
                   </Field>
                 )}
@@ -638,7 +614,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
             <form.Field
               name="featured"
               children={(field) => (
-                <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4">
+                <div className="rounded-xl border border-(--brand-line) bg-surface-strong p-4">
                   <Field
                     orientation="horizontal"
                     className="justify-between items-center cursor-pointer"
@@ -648,11 +624,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                         htmlFor={field.name}
                         className="font-bold text-sm text-(--brand-ink) cursor-pointer"
                       >
-                        {copy.form.featured}
+                        {formCopy.featuredTitle}
                       </FieldLabel>
                       <FieldDescription>
-                        Tampilkan di deretan project unggulan (Featured
-                        Projects) pada homepage.
+                        {formCopy.featuredDesc}
                       </FieldDescription>
                     </FieldContent>
                     <Checkbox
@@ -760,11 +735,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 <div>
                   <h3 className="text-base font-bold text-(--brand-ink) flex items-center gap-2">
                     <Globe className="size-4 text-(--brand-orange)" />
-                    Konten ({label})
+                    {formCopy.contentHeading(label)}
                   </h3>
                   <p className="text-xs text-(--brand-muted)">
-                    Informasi judul, kategori, ringkasan, dan deskripsi dalam
-                    bahasa {label}.
+                    {formCopy.contentDesc(label)}
                   </p>
                 </div>
               </div>
@@ -780,7 +754,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       return (
                         <Field data-invalid={isInvalid}>
                           <FieldLabel htmlFor={field.name}>
-                            {copy.form.title} ({label}){' '}
+                            {formCopy.title} ({label}){' '}
                             <span className="text-red-500">*</span>
                           </FieldLabel>
                           <Input
@@ -789,7 +763,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                             value={field.state.value}
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
-                            placeholder={`Judul project (${label})`}
+                            placeholder={formCopy.titlePlaceholder(label)}
                             aria-invalid={isInvalid}
                             className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
                           />
@@ -810,7 +784,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       return (
                         <Field data-invalid={isInvalid}>
                           <FieldLabel htmlFor={field.name}>
-                            {copy.form.category} ({label}){' '}
+                            {formCopy.category} ({label}){' '}
                             <span className="text-red-500">*</span>
                           </FieldLabel>
                           <Input
@@ -819,7 +793,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                             value={field.state.value}
                             onBlur={field.handleBlur}
                             onChange={(e) => field.handleChange(e.target.value)}
-                            placeholder={`Kategori (${label}) e.g. Fullstack Web App`}
+                            placeholder={formCopy.categoryPlaceholder(label)}
                             aria-invalid={isInvalid}
                             className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
                           />
@@ -841,7 +815,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     return (
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor={field.name}>
-                          {copy.form.summary} ({label}){' '}
+                          {formCopy.summary} ({label}){' '}
                           <span className="text-red-500">*</span>
                         </FieldLabel>
                         <Input
@@ -850,7 +824,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder={`Ringkasan singkat project (${label})`}
+                          placeholder={formCopy.summaryPlaceholder(label)}
                           aria-invalid={isInvalid}
                           className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
                         />
@@ -871,7 +845,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     return (
                       <Field data-invalid={isInvalid}>
                         <FieldLabel htmlFor={field.name}>
-                          {copy.form.description} ({label}){' '}
+                          {formCopy.description} ({label}){' '}
                           <span className="text-red-500">*</span>
                         </FieldLabel>
                         <Textarea
@@ -881,7 +855,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                           value={field.state.value}
                           onBlur={field.handleBlur}
                           onChange={(e) => field.handleChange(e.target.value)}
-                          placeholder={`Deskripsi lengkap project (${label}). Mendukung format markdown...`}
+                          placeholder={formCopy.descriptionPlaceholder(label)}
                           aria-invalid={isInvalid}
                           className="min-h-32 rounded-xl border-(--brand-line) bg-surface text-sm leading-relaxed"
                         />
@@ -909,7 +883,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 className="gap-2 rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
               >
                 <Trash2 className="size-4" />
-                {isPending ? copy.common.delete + '...' : copy.common.delete}
+                {isPending ? copy.common.saving : copy.common.delete}
               </Button>
 
               <AlertDialog

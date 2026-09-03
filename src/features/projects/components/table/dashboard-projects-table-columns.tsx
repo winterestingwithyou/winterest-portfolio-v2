@@ -17,9 +17,11 @@ export function getProjectColumns({
   copy,
   onDeleteProject,
 }: CreateProjectColumnsOptions) {
+  const tableCopy = copy.projects.table
+
   return [
     columnHelper.accessor('title', {
-      header: copy.projects.project,
+      header: tableCopy.project,
       cell: (info) => {
         const project = info.row.original
         return (
@@ -36,15 +38,19 @@ export function getProjectColumns({
       },
     }),
     columnHelper.accessor('status', {
-      header: copy.common.status,
-      cell: (info) => <StatusBadge value={info.getValue()} />,
+      header: tableCopy.status,
+      cell: (info) => (
+        <StatusBadge value={info.getValue()} tableCopy={tableCopy} />
+      ),
     }),
     columnHelper.accessor('featured', {
-      header: copy.common.featured,
-      cell: (info) => <FeaturedBadge value={info.getValue()} />,
+      header: tableCopy.featured,
+      cell: (info) => (
+        <FeaturedBadge value={info.getValue()} tableCopy={tableCopy} />
+      ),
     }),
     columnHelper.accessor('availableLocales', {
-      header: copy.common.language,
+      header: tableCopy.language,
       cell: (info) => (
         <span className="whitespace-nowrap text-xs font-medium text-(--brand-muted)">
           {formatLocales(info.getValue())}
@@ -52,15 +58,22 @@ export function getProjectColumns({
       ),
     }),
     columnHelper.accessor('visibility', {
-      header: copy.common.visibility,
-      cell: (info) => (
-        <span className="whitespace-nowrap text-xs font-medium capitalize text-(--brand-muted)">
-          {info.getValue()}
-        </span>
-      ),
+      header: tableCopy.visibility,
+      cell: (info) => {
+        const val = info.getValue()
+        const label =
+          val === 'public'
+            ? tableCopy.visibilityPublic
+            : tableCopy.visibilityPrivate
+        return (
+          <span className="whitespace-nowrap text-xs font-medium text-(--brand-muted)">
+            {label}
+          </span>
+        )
+      },
     }),
     columnHelper.accessor('category', {
-      header: copy.common.category,
+      header: tableCopy.category,
       cell: (info) => (
         <span className="whitespace-nowrap text-xs font-medium text-(--brand-muted)">
           {info.getValue()}
@@ -71,7 +84,7 @@ export function getProjectColumns({
       id: 'actions',
       header: () => (
         <div className="whitespace-nowrap text-right font-bold">
-          {copy.common.actions}
+          {tableCopy.actions}
         </div>
       ),
       cell: (info) => {
@@ -81,7 +94,7 @@ export function getProjectColumns({
             <Link
               to="/dashboard/projects/$id"
               params={{ id: project.id }}
-              className="inline-grid size-9 place-items-center rounded-lg border border-(--brand-line) bg-(--surface-strong) text-(--brand-ink) transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
+              className="inline-grid size-9 place-items-center rounded-lg border border-(--brand-line) bg-surface-strong text-(--brand-ink) transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
               title={`${copy.common.edit} ${project.title}`}
             >
               <span className="sr-only">
@@ -107,13 +120,26 @@ export function getProjectColumns({
   ]
 }
 
-function StatusBadge({ value }: { value: ProjectRow['status'] }) {
+type TableCopy = ReturnType<typeof getDashboardCopy>['projects']['table']
+
+function StatusBadge({
+  value,
+  tableCopy,
+}: {
+  value: ProjectRow['status']
+  tableCopy: TableCopy
+}) {
   const isPublished = value === 'published'
   const isDraft = value === 'draft'
+  const label = isPublished
+    ? tableCopy.statusPublished
+    : isDraft
+      ? tableCopy.statusDraft
+      : tableCopy.statusArchived
 
   return (
     <span
-      className={`inline-flex items-center whitespace-nowrap rounded-full px-3 py-1 text-xs font-bold capitalize ${
+      className={`inline-flex items-center whitespace-nowrap rounded-full px-3 py-1 text-xs font-bold ${
         isPublished
           ? 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
           : isDraft
@@ -121,23 +147,29 @@ function StatusBadge({ value }: { value: ProjectRow['status'] }) {
             : 'border border-zinc-500/30 bg-zinc-500/10 text-zinc-600 dark:text-zinc-400'
       }`}
     >
-      {value}
+      {label}
     </span>
   )
 }
 
-function FeaturedBadge({ value }: { value: boolean }) {
+function FeaturedBadge({
+  value,
+  tableCopy,
+}: {
+  value: boolean
+  tableCopy: TableCopy
+}) {
   if (value) {
     return (
       <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-orange-500/30 bg-orange-500/10 px-3 py-1 font-mono text-xs font-bold text-orange-600 dark:text-orange-400">
         <Sparkles className="size-3.5 fill-orange-500 text-orange-500" />
-        Featured
+        {tableCopy.featuredBadge}
       </span>
     )
   }
   return (
     <span className="whitespace-nowrap font-mono text-xs text-(--brand-muted)">
-      Standard
+      {tableCopy.standardBadge}
     </span>
   )
 }
