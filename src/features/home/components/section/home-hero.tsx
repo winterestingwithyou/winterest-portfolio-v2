@@ -69,10 +69,10 @@ export function HomeHero({
             className="mt-8 flex flex-wrap items-center gap-3"
           >
             <Link
-              to="/projects"
+              to="/about"
               className="inline-flex min-h-11 items-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-bold text-white no-underline shadow-[0_18px_48px_var(--brand-glow)] transition hover:-translate-y-0.5"
             >
-              {copy.hero.viewProjects}
+              {copy.hero.aboutMe}
               <ArrowRight aria-hidden="true" className="size-4" />
             </Link>
             {githubUrl && (

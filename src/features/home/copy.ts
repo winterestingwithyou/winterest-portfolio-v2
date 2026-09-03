@@ -10,6 +10,7 @@ export const homeCopy = {
       introSuffix: 'Everything about me is here!',
       downloadCv: 'Download CV',
       cvNotAvailable: 'CV is not available at the moment.',
+      aboutMe: 'About Me',
       viewProjects: 'See my other works',
     },
     featured: {
@@ -97,7 +98,7 @@ export const homeCopy = {
     cta: {
       title:
         'Open to collaborations, side projects, and good conversations about coding stuff.',
-      contact: 'Say hi',
+      contact: 'Contact me',
     },
   },
   id: {
@@ -109,6 +110,7 @@ export const homeCopy = {
       introSuffix: 'Semua tentangku ada disini!',
       downloadCv: 'Unduh CV',
       cvNotAvailable: 'CV belum tersedia untuk saat ini.',
+      aboutMe: 'Tentang Saya',
       viewProjects: 'Lihat Projekku lainnya',
     },
     featured: {
@@ -196,7 +198,7 @@ export const homeCopy = {
     cta: {
       title:
         'Terbuka untuk kolaborasi, side project, dan ngobrol tentang ngoding.',
-      contact: 'Sapa aku',
+      contact: 'Hubungi saya',
     },
   },
 } as const
