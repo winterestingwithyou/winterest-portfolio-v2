@@ -1,6 +1,6 @@
 import { useForm } from '@tanstack/react-form'
 import { Link, useNavigate } from '@tanstack/react-router'
-import { ArrowLeft, Save, Trash2, Zap } from 'lucide-react'
+import { ArrowLeft, Plus, Save, Trash2, Zap } from 'lucide-react'
 import { useState } from 'react'
 
 import { useQuery } from '@tanstack/react-query'
@@ -34,7 +34,11 @@ import {
   useUpdateTechnology,
 } from '#/features/technologies/hooks'
 import { categoryQueryOptions } from '#/features/technologies/query-options'
-import type { TechnologyWithCategories } from '#/features/technologies/queries'
+import type {
+  CategoryRecord,
+  TechnologyWithCategories,
+} from '#/features/technologies/queries'
+import { CategoryCreateDialog } from './category-create-dialog'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { cn, slugify } from '#/lib/utils'
 import { getLocale } from '#/paraglide/runtime'
@@ -81,6 +85,7 @@ export function TechnologyEditorForm({
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+  const [isCategoryDialogOpen, setIsCategoryDialogOpen] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const createMutation = useCreateTechnology()
@@ -182,15 +187,23 @@ export function TechnologyEditorForm({
     }
   }
 
+  const handleCategoryCreated = (newCategory: CategoryRecord) => {
+    const currentCategoryIds = form.getFieldValue('categoryIds')
+    if (!currentCategoryIds.includes(newCategory.id)) {
+      form.setFieldValue('categoryIds', [...currentCategoryIds, newCategory.id])
+    }
+  }
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        void form.handleSubmit()
-      }}
-      className="w-full space-y-6"
-    >
+    <>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          void form.handleSubmit()
+        }}
+        className="w-full space-y-6"
+      >
       {/* Header Actions */}
       <div className="flex items-center justify-between gap-4">
         <Link
@@ -508,15 +521,38 @@ export function TechnologyEditorForm({
             name="categoryIds"
             children={(field) => (
               <Field>
-                <FieldLabel>{formCopy.categoriesTitle}</FieldLabel>
+                <div className="flex items-center justify-between gap-2">
+                  <FieldLabel>{formCopy.categoriesTitle}</FieldLabel>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="xs"
+                    onClick={() => setIsCategoryDialogOpen(true)}
+                    className="h-7 cursor-pointer gap-1.5 rounded-full border border-(--brand-line) bg-card px-3 text-xs font-semibold text-(--brand-orange-deep) shadow-2xs transition-all hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)/20 hover:text-(--brand-orange)"
+                  >
+                    <Plus className="size-3.5 text-(--brand-orange)" />
+                    {formCopy.addCategoryBtn}
+                  </Button>
+                </div>
                 {isLoadingCategories ? (
                   <p className="text-xs text-(--brand-muted)">
                     {formCopy.categoriesLoading}
                   </p>
                 ) : categories.length === 0 ? (
-                  <p className="text-xs text-(--brand-muted)">
-                    {formCopy.noCategories}
-                  </p>
+                  <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-(--brand-line) bg-(--brand-orange-soft)/5 p-6 text-center">
+                    <p className="mb-3 text-xs text-(--brand-muted)">
+                      {formCopy.noCategories}
+                    </p>
+                    <Button
+                      type="button"
+                      size="sm"
+                      onClick={() => setIsCategoryDialogOpen(true)}
+                      className="h-9 cursor-pointer gap-1.5 rounded-full bg-(--brand-orange) px-4 text-xs font-bold text-white shadow-xs transition hover:bg-(--brand-orange-deep)"
+                    >
+                      <Plus className="size-3.5" />
+                      {formCopy.addCategoryEmpty}
+                    </Button>
+                  </div>
                 ) : (
                   <div className="flex flex-wrap gap-2 pt-1">
                     {categories.map((cat) => {
@@ -534,11 +570,12 @@ export function TechnologyEditorForm({
                               field.handleChange([...field.state.value, cat.id])
                             }
                           }}
-                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
+                          className={cn(
+                            'inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer select-none',
                             isSelected
-                              ? 'bg-(--brand-orange) text-white shadow-sm'
-                              : 'border border-(--brand-line) bg-(--surface-strong) text-(--brand-muted) hover:border-(--brand-orange)'
-                          }`}
+                              ? 'bg-(--brand-orange) text-white shadow-xs'
+                              : 'border border-(--brand-line) bg-card text-(--brand-muted) hover:border-(--brand-orange)/60 hover:text-(--brand-ink)',
+                          )}
                         >
                           {cat.name}
                         </button>
@@ -621,5 +658,13 @@ export function TechnologyEditorForm({
         </div>
       </div>
     </form>
-  )
+
+    <CategoryCreateDialog
+      open={isCategoryDialogOpen}
+      onOpenChange={setIsCategoryDialogOpen}
+      defaultSortOrder={categories.length}
+      onSuccess={handleCategoryCreated}
+    />
+  </>
+)
 }

@@ -267,6 +267,11 @@ export const dashboardCopy = {
         categoriesTitle: 'Technology Categories',
         categoriesLoading: 'Loading categories...',
         noCategories: 'No categories yet. Please create a category first.',
+        addCategoryBtn: 'New Category',
+        addCategoryEmpty: 'Create your first category',
+        quickAddTitle: 'Create New Category',
+        quickAddDescription:
+          'Add a new category quickly without leaving the technology editor.',
         save: 'Save Technology',
         saving: 'Saving...',
         delete: 'Delete Technology',
@@ -836,6 +841,11 @@ export const dashboardCopy = {
         categoriesLoading: 'Memuat kategori...',
         noCategories:
           'Belum ada kategori. Silakan buat kategori baru terlebih dahulu.',
+        addCategoryBtn: 'Kategori Baru',
+        addCategoryEmpty: 'Buat kategori pertama',
+        quickAddTitle: 'Buat Kategori Baru',
+        quickAddDescription:
+          'Tambah kategori baru dengan cepat tanpa meninggalkan editor teknologi.',
         save: 'Simpan Teknologi',
         saving: 'Menyimpan...',
         delete: 'Hapus Teknologi',
