@@ -278,10 +278,10 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
                     <span className="truncate font-semibold text-sidebar-foreground">
                       {user?.name ||
                         user?.email?.split('@')[0] ||
-                        'Winterest Owner'}
+                        'Owner'}
                     </span>
                     <span className="truncate text-[0.7rem] text-sidebar-foreground/70">
-                      {user?.email || 'owner@winterest.tech'}
+                      {user?.email || 'user@example.com'}
                     </span>
                   </div>
                 </SidebarMenuButton>
@@ -301,15 +301,15 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
                       <AvatarFallback className="bg-(--brand-orange-soft) text-xs font-extrabold text-(--brand-orange-deep)">
                         {user?.name?.[0]?.toUpperCase() ||
                           user?.email?.[0]?.toUpperCase() ||
-                          'W'}
+                          'U'}
                       </AvatarFallback>
                     </Avatar>
                     <div className="flex min-w-0 flex-col">
                       <span className="truncate text-xs font-bold text-(--brand-ink)">
-                        {user?.name || 'Winterest Owner'}
+                        {user?.name || 'Owner'}
                       </span>
                       <span className="truncate text-[0.7rem] text-(--brand-muted)">
-                        {user?.email || 'owner@winterest.tech'}
+                        {user?.email || 'user@example.com'}
                       </span>
                     </div>
                   </div>

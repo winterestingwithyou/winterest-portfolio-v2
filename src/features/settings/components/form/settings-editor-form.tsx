@@ -68,7 +68,7 @@ export function SettingsEditorForm({
     } catch {
       return rawUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '')
     }
-    return 'winterest.tech'
+    return 'example.com'
   })()
 
   const form = useForm({
@@ -313,7 +313,7 @@ export function SettingsEditorForm({
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="yudistiraadam3@gmail.com"
+                      placeholder="user@example.com"
                     />
                     <FieldDescription>
                       {settingsCopy.form.publicEmailDesc}

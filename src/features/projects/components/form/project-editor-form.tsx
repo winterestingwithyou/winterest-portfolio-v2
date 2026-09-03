@@ -362,7 +362,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       value={field.state.value}
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
-                      placeholder="e.g. winterest-portfolio"
+                      placeholder="e.g. cloud-analytics-platform"
                       aria-invalid={isInvalid}
                       className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
                     />
@@ -533,7 +533,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="https://preview.domain.com"
+                    placeholder="https://preview.example.com"
                     className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm font-mono"
                   />
                 </Field>
@@ -553,7 +553,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     value={field.state.value}
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
-                    placeholder="https://domain.com"
+                    placeholder="https://example.com"
                     className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm font-mono"
                   />
                 </Field>

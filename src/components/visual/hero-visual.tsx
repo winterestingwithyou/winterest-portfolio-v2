@@ -3,6 +3,7 @@ import { Code2 } from 'lucide-react'
 import { motion } from 'motion/react'
 
 import { settingsQueryOptions } from '#/features/settings/query-options'
+import { siteProfile } from '#/features/portfolio/data'
 import { easeOutCubic, scaleIn, staggerContainer } from '#/lib/motion'
 import { cn } from '#/lib/utils'
 
@@ -149,10 +150,10 @@ export function HeroVisual({ className }: { className?: string } = {}) {
         </div>
         <div className="grid gap-1.5 font-mono text-[0.72rem] leading-5 text-orange-50">
           <span>
-            <span className="text-orange-300">realname</span>: M. Adam Yudistira
+            <span className="text-orange-300">realname</span>: {siteProfile.fullName}
           </span>
           <span>
-            <span className="text-orange-300">nickname</span>: Winterest
+            <span className="text-orange-300">nickname</span>: {siteProfile.name}
           </span>
           <span>
             <span className="text-orange-300">stack</span>: Bun, TypeScript,

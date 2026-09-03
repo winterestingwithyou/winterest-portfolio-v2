@@ -99,14 +99,14 @@ export function DashboardHeader({ user }: DashboardHeaderProps) {
                 <div className="flex size-8 items-center justify-center rounded-full bg-(--brand-orange-soft) font-bold text-xs text-(--brand-orange-deep)">
                   {user?.name?.[0]?.toUpperCase() ||
                     user?.email?.[0]?.toUpperCase() ||
-                    'W'}
+                    'U'}
                 </div>
                 <div className="flex min-w-0 flex-col">
                   <span className="truncate text-xs font-bold text-(--brand-ink)">
-                    {user?.name || 'Winterest Owner'}
+                    {user?.name || 'Owner'}
                   </span>
                   <span className="truncate text-[0.7rem] text-(--brand-muted)">
-                    {user?.email || 'owner@winterest.tech'}
+                    {user?.email || 'user@example.com'}
                   </span>
                 </div>
               </div>

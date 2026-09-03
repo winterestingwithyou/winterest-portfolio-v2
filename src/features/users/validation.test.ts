@@ -10,14 +10,14 @@ describe('users validation', () => {
   it('validates user creation payload properly', () => {
     const valid = {
       name: 'Winterest',
-      email: 'owner@winterest.tech',
+      email: 'user@example.com',
       password: 'password123',
       role: 'owner',
     }
 
     const parsed = createUserSchema.parse(valid)
     expect(parsed.name).toBe('Winterest')
-    expect(parsed.email).toBe('owner@winterest.tech')
+    expect(parsed.email).toBe('user@example.com')
     expect(parsed.role).toBe('owner')
 
     // Password too short
