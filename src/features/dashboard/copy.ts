@@ -111,6 +111,11 @@ export const dashboardCopy = {
         'Update the story, links, and publishing state for this portfolio entry.',
       loadingEntry: 'Loading project...',
       notFound: 'Project not found.',
+      technologiesTitle: 'Associated Technologies',
+      technologiesLoading: 'Loading technologies...',
+      noTechnologies: 'No technologies found in Stack Management yet.',
+      addTechnologyBtn: 'New Technology',
+      addTechnologyEmpty: 'Create your first technology',
     },
     media: {
       title: 'Media Library',
@@ -272,6 +277,9 @@ export const dashboardCopy = {
         quickAddTitle: 'Create New Category',
         quickAddDescription:
           'Add a new category quickly without leaving the technology editor.',
+        quickAddTechTitle: 'Create New Technology',
+        quickAddTechDescription:
+          'Add a new technology quickly without leaving the project editor.',
         save: 'Save Technology',
         saving: 'Saving...',
         delete: 'Delete Technology',
@@ -682,6 +690,11 @@ export const dashboardCopy = {
         'Perbarui cerita, link, dan status publish untuk entry portfolio ini.',
       loadingEntry: 'Memuat project...',
       notFound: 'Project tidak ditemukan.',
+      technologiesTitle: 'Teknologi Terkait',
+      technologiesLoading: 'Memuat teknologi...',
+      noTechnologies: 'Belum ada data teknologi di Stack Management.',
+      addTechnologyBtn: 'Tambah Teknologi',
+      addTechnologyEmpty: 'Tambah teknologi pertama',
     },
     media: {
       title: 'Media Library',
@@ -846,6 +859,9 @@ export const dashboardCopy = {
         quickAddTitle: 'Buat Kategori Baru',
         quickAddDescription:
           'Tambah kategori baru dengan cepat tanpa meninggalkan editor teknologi.',
+        quickAddTechTitle: 'Tambah Teknologi Baru',
+        quickAddTechDescription:
+          'Tambah teknologi baru dengan cepat tanpa meninggalkan editor project.',
         save: 'Simpan Teknologi',
         saving: 'Menyimpan...',
         delete: 'Hapus Teknologi',
