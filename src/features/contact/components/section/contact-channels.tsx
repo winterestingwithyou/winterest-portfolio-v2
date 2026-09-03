@@ -46,6 +46,12 @@ export function ContactChannels({ copy }: ContactChannelsProps) {
             socialLinks.map((item) => {
               const meta = platformMetaMap[item.platform]
               const IconComponent = meta.icon
+              const handle = item.username
+                ? item.username.startsWith('@')
+                  ? item.username
+                  : `@${item.username}`
+                : null
+              const displayName = item.accountName || item.username || meta.name
 
               return (
                 <div
@@ -56,9 +62,11 @@ export function ContactChannels({ copy }: ContactChannelsProps) {
                     <span className="text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
                       {meta.name}
                     </span>
-                    <span className="text-xs font-bold text-(--brand-muted)">
-                      {item.accountName || `${meta.name} Profile`}
-                    </span>
+                    {handle && (
+                      <span className="truncate font-mono text-xs text-(--brand-muted)">
+                        {handle}
+                      </span>
+                    )}
                   </div>
                   <div className="mt-2 flex w-full min-w-0 items-center justify-between gap-2 sm:gap-3">
                     <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-2.5">
@@ -67,7 +75,7 @@ export function ContactChannels({ copy }: ContactChannelsProps) {
                         className="size-5 shrink-0 text-(--brand-ink)"
                       />
                       <span className="truncate text-xs font-bold text-(--brand-ink) sm:text-sm">
-                        {item.username || item.accountName || meta.name}
+                        {displayName}
                       </span>
                     </div>
                     <a
