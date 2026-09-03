@@ -103,3 +103,4 @@ For major tasks, report:
 - Commands not run and why
 - Known limitations
 - Recommended next steps
+- Ready-to-use Conventional Commit message suggestions (provide detailed multi-line, single-line, and concise options with git commit commands)
