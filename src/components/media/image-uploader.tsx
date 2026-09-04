@@ -117,16 +117,16 @@ export function ImageUploader({
     : ''
 
   return (
-    <div className="space-y-3">
+    <div className="w-full min-w-0 max-w-full space-y-3">
       {label ? (
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="text-sm font-semibold text-(--brand-ink)">
             {label}
           </span>
           <button
             type="button"
             onClick={() => setIsManualUrl(!isManualUrl)}
-            className="inline-flex items-center gap-1.5 text-xs text-(--brand-muted) hover:text-(--brand-orange-deep) transition focus:outline-hidden"
+            className="inline-flex shrink-0 items-center gap-1.5 text-xs text-(--brand-muted) hover:text-(--brand-orange-deep) transition focus:outline-hidden"
           >
             <LinkIcon className="size-3.5" />
             {isManualUrl ? copy.media.directUpload : copy.media.orPasteUrl}
@@ -136,7 +136,7 @@ export function ImageUploader({
 
       {/* Manual URL Input view */}
       {isManualUrl ? (
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row gap-2">
           <Input
             type="url"
             value={manualUrlInput}
@@ -148,7 +148,7 @@ export function ImageUploader({
             type="button"
             size="sm"
             onClick={handleManualApply}
-            className="bg-(--brand-orange) text-white hover:bg-(--brand-orange-deep)"
+            className="shrink-0 whitespace-nowrap bg-(--brand-orange) text-white hover:bg-(--brand-orange-deep)"
           >
             Apply
           </Button>
@@ -157,17 +157,17 @@ export function ImageUploader({
 
       {/* Main Preview / Upload Box */}
       {displayUrl ? (
-        <div className="relative group overflow-hidden rounded-2xl border border-(--brand-line) bg-(--surface-card) shadow-xs">
+        <div className="relative group w-full min-w-0 max-w-full overflow-hidden rounded-2xl border border-(--brand-line) bg-(--surface-card) shadow-xs">
           <div
-            className={`relative w-full overflow-hidden bg-black/5 ${aspectClass}`}
+            className={`relative w-full max-w-full overflow-hidden bg-black/5 ${aspectClass}`}
           >
             <img
               src={displayUrl}
               alt="Project Cover"
               className="size-full object-cover"
             />
-            {/* Overlay action bar on hover */}
-            <div className="absolute inset-0 bg-black/50 opacity-0 backdrop-blur-xs transition duration-200 group-hover:opacity-100 flex items-center justify-center gap-3">
+            {/* Overlay action bar on hover (desktop only) */}
+            <div className="absolute inset-0 bg-black/50 opacity-0 backdrop-blur-xs transition duration-200 group-hover:opacity-100 hidden sm:flex items-center justify-center gap-3">
               <Button
                 type="button"
                 variant="outline"
@@ -200,24 +200,38 @@ export function ImageUploader({
             </div>
           </div>
 
-          <div className="flex items-center justify-between p-3 border-t border-(--brand-line) bg-(--surface-strong)/50 text-xs text-(--brand-muted)">
-            <span className="truncate max-w-85 font-mono" title={displayUrl}>
-              {displayUrl}
-            </span>
-            <div className="flex items-center gap-2">
+          <div className="flex w-full min-w-0 max-w-full flex-col gap-2.5 p-3 sm:flex-row sm:items-center sm:justify-between border-t border-(--brand-line) bg-(--surface-strong)/50 text-xs text-(--brand-muted)">
+            <div className="flex w-full min-w-0 items-center justify-between sm:justify-start gap-2">
+              <span className="block min-w-0 flex-1 truncate font-mono text-[11px]" title={displayUrl}>
+                {displayUrl}
+              </span>
+              <a
+                href={displayUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex size-6 shrink-0 items-center justify-center rounded-md text-(--brand-muted) hover:text-(--brand-ink) hover:bg-surface-soft transition"
+                title="Open in new tab"
+              >
+                <ExternalLink className="size-3.5" />
+              </a>
+            </div>
+
+            <div className="flex w-full sm:w-auto items-center justify-between sm:justify-end gap-2 border-t border-(--brand-line)/60 pt-2 sm:border-t-0 sm:pt-0 shrink-0">
               <button
                 type="button"
                 onClick={() => setPickerOpen(true)}
-                className="text-(--brand-orange-deep) font-semibold hover:underline"
+                className="inline-flex min-h-[36px] sm:min-h-8 items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold text-(--brand-orange-deep) hover:bg-(--brand-orange-soft) whitespace-nowrap transition"
               >
+                <FolderOpen className="size-3.5" />
                 {copy.media.selectFromLibrary}
               </button>
-              <span>•</span>
+              <span className="hidden sm:inline text-(--brand-line)">•</span>
               <button
                 type="button"
                 onClick={() => onChange(null)}
-                className="text-rose-500 hover:underline"
+                className="inline-flex min-h-[36px] sm:min-h-8 items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold text-rose-500 hover:bg-rose-500/10 whitespace-nowrap transition"
               >
+                <Trash2 className="size-3.5" />
                 {copy.common.delete}
               </button>
             </div>
@@ -228,7 +242,7 @@ export function ImageUploader({
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className={`relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition-colors ${
+          className={`relative flex w-full min-w-0 max-w-full flex-col items-center justify-center rounded-2xl border-2 border-dashed p-4 sm:p-6 text-center transition-colors ${
             isDragging
               ? 'border-(--brand-orange) bg-(--brand-orange-soft)/30'
               : 'border-(--brand-line) bg-(--surface-card)/60 hover:border-(--brand-orange)/50 hover:bg-(--surface-card)'
@@ -264,17 +278,17 @@ export function ImageUploader({
             {description || copy.media.uploadDesc}
           </p>
 
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5">
+          <div className="mt-4 flex flex-col sm:flex-row w-full max-w-full items-center justify-center gap-2">
             <Button
               type="button"
               variant="outline"
               size="sm"
               disabled={uploadMutation.isPending}
               onClick={() => fileInputRef.current?.click()}
-              className="gap-2 border-(--brand-line) shadow-xs"
+              className="w-full sm:w-auto min-h-10 max-w-full justify-center gap-2 border-(--brand-line) shadow-xs shrink sm:shrink-0 text-xs sm:text-sm"
             >
-              <UploadCloud className="size-4" />
-              {copy.media.browseFiles}
+              <UploadCloud className="size-4 shrink-0" />
+              <span className="truncate">{copy.media.browseFiles}</span>
             </Button>
 
             <Button
@@ -282,10 +296,10 @@ export function ImageUploader({
               variant="outline"
               size="sm"
               onClick={() => setPickerOpen(true)}
-              className="gap-2 border-(--brand-line) text-(--brand-orange-deep) shadow-xs"
+              className="w-full sm:w-auto min-h-10 max-w-full justify-center gap-2 border-(--brand-line) text-(--brand-orange-deep) shadow-xs shrink sm:shrink-0 text-xs sm:text-sm"
             >
-              <FolderOpen className="size-4" />
-              {copy.media.selectFromLibrary}
+              <FolderOpen className="size-4 shrink-0" />
+              <span className="truncate">{copy.media.selectFromLibrary}</span>
             </Button>
           </div>
 

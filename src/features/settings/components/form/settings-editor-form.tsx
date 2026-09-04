@@ -103,7 +103,7 @@ export function SettingsEditorForm({
   ]
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-6 w-full min-w-0 max-w-full">
       {!canEdit && (
         <div className="flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-900 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-200">
           <AlertCircle className="mt-0.5 size-5 shrink-0 text-amber-600 dark:text-amber-400" />
@@ -133,7 +133,7 @@ export function SettingsEditorForm({
       )}
 
       {/* Navigation Tabs */}
-      <div className="flex items-center gap-1 overflow-x-auto border-b border-(--brand-line) no-scrollbar scroll-smooth">
+      <div className="flex items-center gap-1 overflow-x-auto border-b border-(--brand-line) no-scrollbar scroll-smooth w-full min-w-0 max-w-full">
         {tabs.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
@@ -161,7 +161,7 @@ export function SettingsEditorForm({
           e.stopPropagation()
           void form.handleSubmit()
         }}
-        className="flex flex-col gap-6"
+        className="flex flex-col gap-6 w-full min-w-0 max-w-full"
       >
         {/* Tab 1: General Settings */}
         {activeTab === 'general' && (
@@ -265,17 +265,19 @@ export function SettingsEditorForm({
 
         {/* Tab 2: Branding & Visual */}
         {activeTab === 'visual' && (
-          <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
-            <FieldGroup>
+          <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-4 sm:p-6 shadow-xs w-full min-w-0 max-w-full">
+            <FieldGroup className="w-full min-w-0 max-w-full">
               <form.Field name="heroVisualUrl">
                 {(field) => (
-                  <ImageUploader
-                    label={settingsCopy.form.heroVisualUrl}
-                    description={settingsCopy.form.heroVisualDesc}
-                    value={field.state.value}
-                    onChange={(val) => field.handleChange(val ?? '')}
-                    aspectRatio="wide"
-                  />
+                  <div className="w-full min-w-0 max-w-full">
+                    <ImageUploader
+                      label={settingsCopy.form.heroVisualUrl}
+                      description={settingsCopy.form.heroVisualDesc}
+                      value={field.state.value}
+                      onChange={(val) => field.handleChange(val ?? '')}
+                      aspectRatio="wide"
+                    />
+                  </div>
                 )}
               </form.Field>
             </FieldGroup>
@@ -570,35 +572,39 @@ export function SettingsEditorForm({
 
         {/* Tab 4: SEO Settings */}
         {activeTab === 'seo' && (
-          <div className="grid gap-8">
+          <div className="grid gap-8 w-full min-w-0 max-w-full">
             {/* Visual Meta (Favicon & OpenGraph Image) */}
-            <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-6 shadow-xs">
+            <div className="grid gap-6 rounded-xl border border-(--brand-line) bg-card p-4 sm:p-6 shadow-xs w-full min-w-0 max-w-full">
               <h3 className="font-bold text-sm text-(--brand-ink)">
                 Visual Meta & Social Asset
               </h3>
-              <FieldGroup>
-                <div className="grid gap-6 md:grid-cols-2">
+              <FieldGroup className="w-full min-w-0 max-w-full">
+                <div className="grid gap-6 md:grid-cols-2 w-full min-w-0 max-w-full">
                   <form.Field name="faviconUrl">
                     {(field) => (
-                      <ImageUploader
-                        label={settingsCopy.form.faviconUrl}
-                        description={settingsCopy.form.faviconDesc}
-                        value={field.state.value}
-                        onChange={(val) => field.handleChange(val ?? '')}
-                        aspectRatio="square"
-                      />
+                      <div className="w-full min-w-0 max-w-full">
+                        <ImageUploader
+                          label={settingsCopy.form.faviconUrl}
+                          description={settingsCopy.form.faviconDesc}
+                          value={field.state.value}
+                          onChange={(val) => field.handleChange(val ?? '')}
+                          aspectRatio="square"
+                        />
+                      </div>
                     )}
                   </form.Field>
 
                   <form.Field name="ogImageUrl">
                     {(field) => (
-                      <ImageUploader
-                        label={settingsCopy.form.ogImageUrl}
-                        description={settingsCopy.form.ogImageDesc}
-                        value={field.state.value}
-                        onChange={(val) => field.handleChange(val ?? '')}
-                        aspectRatio="wide"
-                      />
+                      <div className="w-full min-w-0 max-w-full">
+                        <ImageUploader
+                          label={settingsCopy.form.ogImageUrl}
+                          description={settingsCopy.form.ogImageDesc}
+                          value={field.state.value}
+                          onChange={(val) => field.handleChange(val ?? '')}
+                          aspectRatio="wide"
+                        />
+                      </div>
                     )}
                   </form.Field>
                 </div>

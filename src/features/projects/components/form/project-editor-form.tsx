@@ -265,10 +265,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
           e.stopPropagation()
           void form.handleSubmit()
         }}
-        className="space-y-8 pb-12"
+        className="space-y-8 pb-12 w-full min-w-0 max-w-full"
       >
         {/* Top action bar */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between w-full min-w-0 max-w-full">
           <Button
             variant="outline"
             size="sm"
@@ -298,21 +298,21 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
 
         {/* Alerts */}
         {error && (
-          <div className="flex items-center gap-3 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm font-medium text-red-600 dark:text-red-400">
+          <div className="flex items-center gap-3 rounded-xl border border-red-500/20 bg-red-500/10 p-4 text-sm font-medium text-red-600 dark:text-red-400 w-full min-w-0 max-w-full">
             <AlertCircle className="size-5 shrink-0" />
-            <span>{error}</span>
+            <span className="break-words min-w-0 flex-1">{error}</span>
           </div>
         )}
 
         {message && (
-          <div className="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm font-medium text-emerald-600 dark:text-emerald-400">
+          <div className="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-4 text-sm font-medium text-emerald-600 dark:text-emerald-400 w-full min-w-0 max-w-full">
             <CheckCircle2 className="size-5 shrink-0" />
-            <span>{message}</span>
+            <span className="break-words min-w-0 flex-1">{message}</span>
           </div>
         )}
 
         {/* Main Settings Card */}
-        <div className="surface-card space-y-6 p-6 sm:p-8">
+        <div className="surface-card space-y-6 p-4 sm:p-8 w-full min-w-0 max-w-full">
           <div className="border-b border-(--brand-line) pb-4">
             <h2 className="text-lg font-bold text-(--brand-ink)">
               {formCopy.mainSettingsTitle}
@@ -322,16 +322,16 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
             </p>
           </div>
 
-          <FieldGroup>
-            {/* Slug, Status, Visibility Grid */}
-            <div className="grid gap-6 md:grid-cols-3">
+          <FieldGroup className="w-full min-w-0 max-w-full">
+            {/* Slug, Status, Visibility & Repo Visibility Grid */}
+            <div className="grid w-full min-w-0 max-w-full gap-6 sm:grid-cols-2 lg:grid-cols-4">
               <form.Field
                 name="slug"
                 children={(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid
                   return (
-                    <Field data-invalid={isInvalid}>
+                    <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
                       <FieldLabel htmlFor={field.name}>
                         {formCopy.slug} <span className="text-red-500">*</span>
                       </FieldLabel>
@@ -343,7 +343,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                         onChange={(e) => field.handleChange(e.target.value)}
                         placeholder={formCopy.slugPlaceholder}
                         aria-invalid={isInvalid}
-                        className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm"
+                        className="h-11 font-mono rounded-xl border-(--brand-line) bg-surface text-sm w-full min-w-0"
                       />
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
@@ -356,7 +356,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               <form.Field
                 name="status"
                 children={(field) => (
-                  <Field>
+                  <Field className="w-full min-w-0 max-w-full">
                     <FieldLabel htmlFor={field.name}>
                       {formCopy.status}
                     </FieldLabel>
@@ -371,7 +371,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     >
                       <SelectTrigger
                         id={field.name}
-                        className="h-11 w-full rounded-xl border-(--brand-line) bg-surface text-sm"
+                        className="h-11 w-full rounded-xl border-(--brand-line) bg-surface text-sm min-w-0"
                       >
                         <SelectValue placeholder={formCopy.statusPlaceholder} />
                       </SelectTrigger>
@@ -390,7 +390,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               <form.Field
                 name="visibility"
                 children={(field) => (
-                  <Field>
+                  <Field className="w-full min-w-0 max-w-full">
                     <FieldLabel htmlFor={field.name}>
                       {formCopy.visibility}
                     </FieldLabel>
@@ -403,7 +403,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     >
                       <SelectTrigger
                         id={field.name}
-                        className="h-11 w-full rounded-xl border-(--brand-line) bg-surface text-sm"
+                        className="h-11 w-full rounded-xl border-(--brand-line) bg-surface text-sm min-w-0"
                       >
                         <SelectValue
                           placeholder={formCopy.visibilityPlaceholder}
@@ -420,14 +420,11 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                   </Field>
                 )}
               />
-            </div>
 
-            {/* Repo Visibility & Cover Image */}
-            <div className="grid gap-6 md:grid-cols-2">
               <form.Field
                 name="repoVisibility"
                 children={(field) => (
-                  <Field>
+                  <Field className="w-full min-w-0 max-w-full">
                     <FieldLabel htmlFor={field.name}>
                       {formCopy.repoVisibility}
                     </FieldLabel>
@@ -440,7 +437,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     >
                       <SelectTrigger
                         id={field.name}
-                        className="h-11 w-full rounded-xl border-(--brand-line) bg-surface text-sm"
+                        className="h-11 w-full rounded-xl border-(--brand-line) bg-surface text-sm min-w-0"
                       >
                         <SelectValue
                           placeholder={formCopy.repoVisibilityPlaceholder}
@@ -457,14 +454,17 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                   </Field>
                 )}
               />
+            </div>
 
+            {/* Cover Image Dedicated Full-Width Container */}
+            <div className="w-full min-w-0 max-w-full pt-1">
               <form.Field
                 name="coverImage"
                 children={(field) => {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid
                   return (
-                    <Field data-invalid={isInvalid} className="md:col-span-2">
+                    <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
                       <ImageUploader
                         value={field.state.value}
                         onChange={(url) => field.handleChange(url ?? '')}
@@ -482,11 +482,11 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
             </div>
 
             {/* URLs Grid */}
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid w-full min-w-0 max-w-full gap-6 md:grid-cols-3">
               <form.Field
                 name="repoUrl"
                 children={(field) => (
-                  <Field>
+                  <Field className="w-full min-w-0 max-w-full">
                     <FieldLabel htmlFor={field.name}>
                       {formCopy.repoUrl}
                     </FieldLabel>
@@ -497,7 +497,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       placeholder={formCopy.repoUrlPlaceholder}
-                      className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm font-mono"
+                      className="h-11 w-full min-w-0 rounded-xl border-(--brand-line) bg-surface text-sm font-mono"
                     />
                   </Field>
                 )}
@@ -506,7 +506,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               <form.Field
                 name="demoUrl"
                 children={(field) => (
-                  <Field>
+                  <Field className="w-full min-w-0 max-w-full">
                     <FieldLabel htmlFor={field.name}>
                       {formCopy.demoUrl}
                     </FieldLabel>
@@ -517,7 +517,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       placeholder={formCopy.demoUrlPlaceholder}
-                      className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm font-mono"
+                      className="h-11 w-full min-w-0 rounded-xl border-(--brand-line) bg-surface text-sm font-mono"
                     />
                   </Field>
                 )}
@@ -526,7 +526,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               <form.Field
                 name="productionUrl"
                 children={(field) => (
-                  <Field>
+                  <Field className="w-full min-w-0 max-w-full">
                     <FieldLabel htmlFor={field.name}>
                       {formCopy.productionUrl}
                     </FieldLabel>
@@ -537,7 +537,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       onBlur={field.handleBlur}
                       onChange={(e) => field.handleChange(e.target.value)}
                       placeholder={formCopy.productionUrlPlaceholder}
-                      className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm font-mono"
+                      className="h-11 w-full min-w-0 rounded-xl border-(--brand-line) bg-surface text-sm font-mono"
                     />
                   </Field>
                 )}
@@ -545,11 +545,11 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
             </div>
 
             {/* Dates Grid */}
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid w-full min-w-0 max-w-full gap-6 md:grid-cols-3">
               <form.Field
                 name="startedAt"
                 children={(field) => (
-                  <Field>
+                  <Field className="w-full min-w-0 max-w-full">
                     <FieldLabel htmlFor={field.name}>
                       {formCopy.startedAt}
                     </FieldLabel>
@@ -570,7 +570,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               <form.Field
                 name="completedAt"
                 children={(field) => (
-                  <Field>
+                  <Field className="w-full min-w-0 max-w-full">
                     <FieldLabel htmlFor={field.name}>
                       {formCopy.completedAt}
                     </FieldLabel>
@@ -591,7 +591,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               <form.Field
                 name="publishedAt"
                 children={(field) => (
-                  <Field>
+                  <Field className="w-full min-w-0 max-w-full">
                     <FieldLabel htmlFor={field.name}>
                       {formCopy.publishedAt}
                     </FieldLabel>
@@ -724,11 +724,11 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         </div>
 
         {/* Multilingual Translation Cards */}
-        <div className="space-y-6">
+        <div className="space-y-6 w-full min-w-0 max-w-full">
           {localeOptions.map(({ value: langCode, label, flag }) => (
             <div
               key={langCode}
-              className="surface-card space-y-6 p-6 sm:p-8 border-l-4 border-l-(--brand-orange)"
+              className="surface-card space-y-6 p-4 sm:p-8 w-full min-w-0 max-w-full border-l-4 border-l-(--brand-orange)"
             >
               <div className="flex items-center gap-2.5 border-b border-(--brand-line) pb-4">
                 <span className="text-lg">{flag}</span>
@@ -743,8 +743,8 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 </div>
               </div>
 
-              <FieldGroup>
-                <div className="grid gap-6 md:grid-cols-2">
+              <FieldGroup className="w-full min-w-0 max-w-full">
+                <div className="grid w-full min-w-0 max-w-full gap-6 md:grid-cols-2">
                   {/* Title */}
                   <form.Field
                     name={`translations.${langCode}.title`}
@@ -752,7 +752,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       const isInvalid =
                         field.state.meta.isTouched && !field.state.meta.isValid
                       return (
-                        <Field data-invalid={isInvalid}>
+                        <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
                           <FieldLabel htmlFor={field.name}>
                             {formCopy.title} ({label}){' '}
                             <span className="text-red-500">*</span>
@@ -765,7 +765,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                             onChange={(e) => field.handleChange(e.target.value)}
                             placeholder={formCopy.titlePlaceholder(label)}
                             aria-invalid={isInvalid}
-                            className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
+                            className="h-11 w-full min-w-0 rounded-xl border-(--brand-line) bg-surface text-sm"
                           />
                           {isInvalid && (
                             <FieldError errors={field.state.meta.errors} />
@@ -782,7 +782,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       const isInvalid =
                         field.state.meta.isTouched && !field.state.meta.isValid
                       return (
-                        <Field data-invalid={isInvalid}>
+                        <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
                           <FieldLabel htmlFor={field.name}>
                             {formCopy.category} ({label}){' '}
                             <span className="text-red-500">*</span>
@@ -795,7 +795,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                             onChange={(e) => field.handleChange(e.target.value)}
                             placeholder={formCopy.categoryPlaceholder(label)}
                             aria-invalid={isInvalid}
-                            className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
+                            className="h-11 w-full min-w-0 rounded-xl border-(--brand-line) bg-surface text-sm"
                           />
                           {isInvalid && (
                             <FieldError errors={field.state.meta.errors} />
@@ -813,7 +813,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid
                     return (
-                      <Field data-invalid={isInvalid}>
+                      <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
                         <FieldLabel htmlFor={field.name}>
                           {formCopy.summary} ({label}){' '}
                           <span className="text-red-500">*</span>
@@ -826,7 +826,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                           onChange={(e) => field.handleChange(e.target.value)}
                           placeholder={formCopy.summaryPlaceholder(label)}
                           aria-invalid={isInvalid}
-                          className="h-11 rounded-xl border-(--brand-line) bg-surface text-sm"
+                          className="h-11 w-full min-w-0 rounded-xl border-(--brand-line) bg-surface text-sm"
                         />
                         {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
@@ -843,7 +843,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid
                     return (
-                      <Field data-invalid={isInvalid}>
+                      <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
                         <FieldLabel htmlFor={field.name}>
                           {formCopy.description} ({label}){' '}
                           <span className="text-red-500">*</span>
@@ -857,7 +857,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                           onChange={(e) => field.handleChange(e.target.value)}
                           placeholder={formCopy.descriptionPlaceholder(label)}
                           aria-invalid={isInvalid}
-                          className="min-h-32 rounded-xl border-(--brand-line) bg-surface text-sm leading-relaxed"
+                          className="min-h-32 w-full min-w-0 rounded-xl border-(--brand-line) bg-surface text-sm leading-relaxed"
                         />
                         {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />
@@ -872,7 +872,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         </div>
 
         {/* Form Action Footer */}
-        <div className="flex flex-col-reverse gap-3 pt-6 border-t border-(--brand-line) sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col-reverse gap-3 pt-6 border-t border-(--brand-line) sm:flex-row sm:items-center sm:justify-between w-full min-w-0 max-w-full">
           {mode === 'edit' && project ? (
             <>
               <Button

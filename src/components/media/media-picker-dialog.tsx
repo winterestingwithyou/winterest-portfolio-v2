@@ -113,14 +113,14 @@ export function MediaPickerDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[85vh] sm:max-w-3xl flex flex-col p-6 overflow-hidden">
+      <DialogContent className="max-h-[90vh] sm:max-w-3xl flex flex-col p-4 sm:p-6 overflow-hidden">
         <DialogHeader>
           <DialogTitle>{copy.media.selectFromLibrary}</DialogTitle>
           <DialogDescription>{copy.media.description}</DialogDescription>
         </DialogHeader>
 
         {/* Action Header: Search + Upload Quick Button */}
-        <div className="flex items-center gap-3 pt-2">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-(--brand-muted)" />
             <Input
@@ -151,7 +151,7 @@ export function MediaPickerDialog({
             variant="outline"
             disabled={uploadMutation.isPending}
             onClick={() => fileInputRef.current?.click()}
-            className="shrink-0 gap-2"
+            className="w-full sm:w-auto shrink-0 justify-center gap-2 whitespace-nowrap"
           >
             {uploadMutation.isPending ? (
               <Loader2 className="size-4 animate-spin text-(--brand-orange-deep)" />
@@ -274,11 +274,12 @@ export function MediaPickerDialog({
         </div>
 
         {/* Dialog Footer */}
-        <DialogFooter className="pt-2">
+        <DialogFooter className="flex flex-col-reverse sm:flex-row gap-2 pt-2">
           <Button
             type="button"
             variant="outline"
             onClick={() => onOpenChange(false)}
+            className="w-full sm:w-auto"
           >
             {copy.common.back}
           </Button>
@@ -286,7 +287,7 @@ export function MediaPickerDialog({
             type="button"
             disabled={!selectedId}
             onClick={handleConfirm}
-            className="gap-2 bg-(--brand-orange) text-white hover:bg-(--brand-orange-deep)"
+            className="w-full sm:w-auto gap-2 bg-(--brand-orange) text-white hover:bg-(--brand-orange-deep)"
           >
             {accept === 'document'
               ? copy.media.useSelectedFile
