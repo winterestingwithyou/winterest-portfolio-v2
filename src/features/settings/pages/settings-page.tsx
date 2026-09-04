@@ -33,7 +33,7 @@ export function SettingsPage() {
           size="sm"
           onClick={() => void refetch()}
           disabled={isFetching}
-          className="text-xs"
+          className="shrink-0 text-xs whitespace-nowrap"
         >
           <RefreshCw
             className={`mr-2 size-3.5 ${isFetching ? 'animate-spin' : ''}`}

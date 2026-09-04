@@ -133,7 +133,7 @@ export function SettingsEditorForm({
       )}
 
       {/* Navigation Tabs */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-(--brand-line) pb-2">
+      <div className="flex items-center gap-1 overflow-x-auto border-b border-(--brand-line) no-scrollbar scroll-smooth">
         {tabs.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
@@ -142,10 +142,10 @@ export function SettingsEditorForm({
               key={tab.id}
               type="button"
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 rounded-md px-3.5 py-2 text-xs font-bold transition-all ${
+              className={`flex min-h-[44px] shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-xs font-semibold whitespace-nowrap transition-colors sm:text-sm ${
                 isActive
-                  ? 'bg-(--brand-orange-soft) text-(--brand-orange-deep) shadow-xs'
-                  : 'text-muted-foreground hover:bg-accent hover:text-foreground'
+                  ? 'border-(--brand-orange) text-(--brand-orange-deep) dark:text-(--brand-orange)'
+                  : 'border-transparent text-muted-foreground hover:border-muted hover:text-foreground'
               }`}
             >
               <Icon className="size-4" />
