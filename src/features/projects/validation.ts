@@ -61,9 +61,9 @@ export function getProjectFormSchema(locale: 'en' | 'id' = 'id') {
           ? 'Slug hanya boleh berisi huruf kecil, angka, dan tanda hubung (-).'
           : 'Slug may only contain lowercase letters, numbers, and hyphens (-).',
       ),
-    status: z.enum(['draft', 'published', 'archived'] as const),
-    visibility: z.enum(['public', 'private'] as const),
-    repoVisibility: z.enum(['public', 'private'] as const),
+    status: z.enum(contentStatuses),
+    visibility: z.enum(contentVisibilities),
+    repoVisibility: z.enum(contentVisibilities),
     featured: z.boolean(),
     coverImage: z.string(),
     repoUrl: z.string(),

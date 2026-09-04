@@ -22,12 +22,23 @@ export function slugify(text: string): string {
  * Format Date objects, ISO strings, or timestamps into formatted date strings safely
  */
 export function formatDate(
-  dateInput?: Date | string | null,
+  dateInput?: Date | string | number | null,
   options?: Intl.DateTimeFormatOptions,
   locale = 'id-ID',
 ): string {
   if (!dateInput) return '-'
-  const date = dateInput instanceof Date ? dateInput : new Date(dateInput)
+  let date: Date
+  if (dateInput instanceof Date) {
+    date = dateInput
+  } else if (
+    typeof dateInput === 'string' &&
+    /^\d{4}-\d{2}-\d{2}$/.test(dateInput.trim())
+  ) {
+    const [year, month, day] = dateInput.trim().split('-').map(Number)
+    date = new Date(year, month - 1, day)
+  } else {
+    date = new Date(dateInput)
+  }
   if (isNaN(date.getTime())) return '-'
   return new Intl.DateTimeFormat(locale, {
     day: 'numeric',

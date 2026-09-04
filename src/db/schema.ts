@@ -8,7 +8,12 @@ import {
   uniqueIndex,
 } from 'drizzle-orm/sqlite-core'
 
-export const contentStatuses = ['draft', 'published', 'archived'] as const
+export const contentStatuses = [
+  'draft',
+  'in_progress',
+  'published',
+  'archived',
+] as const
 export type ContentStatus = (typeof contentStatuses)[number]
 
 export const contentVisibilities = ['public', 'private'] as const

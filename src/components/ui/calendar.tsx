@@ -65,22 +65,22 @@ function Calendar({
           defaultClassNames.month_caption,
         ),
         dropdowns: cn(
-          'flex h-(--cell-size) w-full items-center justify-center gap-1.5 text-sm font-medium',
+          'flex h-(--cell-size) w-full items-center justify-center gap-1.5 text-xs font-semibold',
           defaultClassNames.dropdowns,
         ),
         dropdown_root: cn(
-          'relative rounded-md border border-input shadow-xs has-focus:border-ring has-focus:ring-[3px] has-focus:ring-ring/50',
+          'relative inline-flex items-center rounded-lg border border-(--brand-line) bg-surface/80 px-2 py-1 text-xs font-medium shadow-2xs transition-colors hover:bg-surface hover:border-(--brand-orange)/50 focus-within:border-(--brand-orange) focus-within:ring-2 focus-within:ring-(--brand-orange)/20 cursor-pointer',
           defaultClassNames.dropdown_root,
         ),
         dropdown: cn(
-          'absolute inset-0 bg-popover opacity-0',
+          'absolute inset-0 z-10 size-full cursor-pointer opacity-0 text-(--brand-ink) bg-(--surface-card)',
           defaultClassNames.dropdown,
         ),
         caption_label: cn(
-          'font-medium select-none',
+          'font-semibold select-none text-(--brand-ink)',
           captionLayout === 'label'
             ? 'text-sm'
-            : 'flex h-8 items-center gap-1 rounded-md pr-1 pl-2 text-sm [&>svg]:size-3.5 [&>svg]:text-muted-foreground',
+            : 'flex items-center gap-1 text-xs [&>svg]:size-3.5 [&>svg]:text-(--brand-muted)',
           defaultClassNames.caption_label,
         ),
         month_grid: cn('w-full border-collapse', defaultClassNames.month_grid),

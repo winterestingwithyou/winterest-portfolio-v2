@@ -1,9 +1,11 @@
+import type { ContentStatus } from '#/db/schema'
+
 export type ProjectRow = {
   id: string
   slug: string
   title: string
   summary: string
-  status: 'draft' | 'published' | 'archived'
+  status: ContentStatus
   visibility: 'public' | 'private'
   featured: boolean
   category: string

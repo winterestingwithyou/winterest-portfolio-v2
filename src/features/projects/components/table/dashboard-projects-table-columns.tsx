@@ -131,20 +131,25 @@ function StatusBadge({
 }) {
   const isPublished = value === 'published'
   const isDraft = value === 'draft'
+  const isInProgress = value === 'in_progress'
   const label = isPublished
     ? tableCopy.statusPublished
     : isDraft
       ? tableCopy.statusDraft
-      : tableCopy.statusArchived
+      : isInProgress
+        ? tableCopy.statusInProgress
+        : tableCopy.statusArchived
 
   return (
     <span
       className={`inline-flex items-center whitespace-nowrap rounded-full px-3 py-1 text-xs font-bold ${
         isPublished
           ? 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
-          : isDraft
-            ? 'border border-(--brand-orange)/30 bg-(--brand-orange-soft) text-(--brand-orange-deep)'
-            : 'border border-zinc-500/30 bg-zinc-500/10 text-zinc-600 dark:text-zinc-400'
+          : isInProgress
+            ? 'border border-sky-500/30 bg-sky-500/10 text-sky-600 dark:text-sky-400'
+            : isDraft
+              ? 'border border-(--brand-orange)/30 bg-(--brand-orange-soft) text-(--brand-orange-deep)'
+              : 'border border-zinc-500/30 bg-zinc-500/10 text-zinc-600 dark:text-zinc-400'
       }`}
     >
       {label}

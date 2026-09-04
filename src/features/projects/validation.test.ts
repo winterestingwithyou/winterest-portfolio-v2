@@ -2,27 +2,27 @@ import { describe, expect, it } from 'vitest'
 
 import { getProjectFormSchema, projectInputSchema } from './validation'
 
-describe('projectInputSchema', () => {
-  const baseValidProject = {
-    slug: 'my-awesome-project',
-    status: 'draft' as const,
-    visibility: 'public' as const,
-    repoVisibility: 'public' as const,
-    featured: false,
-    translations: {
-      en: {
-        title: 'My Awesome Project',
-        summary: 'A short English summary for the project.',
-        category: 'Project',
-      },
-      id: {
-        title: 'Project Keren Saya',
-        summary: 'Ringkasan singkat bahasa Indonesia untuk project.',
-        category: 'Project',
-      },
+const baseValidProject = {
+  slug: 'my-awesome-project',
+  status: 'draft' as const,
+  visibility: 'public' as const,
+  repoVisibility: 'public' as const,
+  featured: false,
+  translations: {
+    en: {
+      title: 'My Awesome Project',
+      summary: 'A short English summary for the project.',
+      category: 'Project',
     },
-  }
+    id: {
+      title: 'Project Keren Saya',
+      summary: 'Ringkasan singkat bahasa Indonesia untuk project.',
+      category: 'Project',
+    },
+  },
+}
 
+describe('projectInputSchema', () => {
   it('accepts full absolute HTTP URLs (localhost / dev)', () => {
     const localUrl =
       'http://localhost:3000/api/media/file/projects/1787766478212-3b2e374d-screenshot.jpg'
@@ -194,5 +194,20 @@ describe('getProjectFormSchema', () => {
         'Slug may only contain lowercase letters, numbers, and hyphens (-).',
       )
     }
+  })
+
+  it('accepts in_progress status in schema and form validation', () => {
+    const inputResult = projectInputSchema.safeParse({
+      ...baseValidProject,
+      status: 'in_progress',
+    })
+    expect(inputResult.success).toBe(true)
+
+    const formResult = getProjectFormSchema('en').safeParse({
+      ...validFormPayload,
+      status: 'in_progress',
+      completedAt: '',
+    })
+    expect(formResult.success).toBe(true)
   })
 })

@@ -73,9 +73,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
               <span />
             )}
 
-            <span className="inline-flex items-center gap-1 rounded-full border border-(--brand-line) bg-(--surface-card)/90 px-2.5 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-(--brand-muted) shadow-xs backdrop-blur-md">
-              {project.status}
-            </span>
+            {project.status === 'in_progress' ? (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 px-2.5 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 shadow-xs backdrop-blur-md">
+                <span className="size-1.5 rounded-full bg-sky-500 animate-pulse" />
+                In Progress
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 rounded-full border border-(--brand-line) bg-(--surface-card)/90 px-2.5 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-(--brand-muted) shadow-xs backdrop-blur-md">
+                {project.status}
+              </span>
+            )}
           </div>
         </div>
 

@@ -112,7 +112,10 @@ export async function listPublishedProjects(db: Database) {
     .select()
     .from(projects)
     .where(
-      and(eq(projects.status, 'published'), eq(projects.visibility, 'public')),
+      and(
+        inArray(projects.status, ['published', 'in_progress']),
+        eq(projects.visibility, 'public'),
+      ),
     )
     .orderBy(desc(projects.featured), desc(projects.updatedAt))
     .all()
@@ -126,7 +129,10 @@ export async function listPublishedPublicProjects(
     .select()
     .from(projects)
     .where(
-      and(eq(projects.status, 'published'), eq(projects.visibility, 'public')),
+      and(
+        inArray(projects.status, ['published', 'in_progress']),
+        eq(projects.visibility, 'public'),
+      ),
     )
     .orderBy(desc(projects.featured), desc(projects.updatedAt))
     .all()
@@ -190,7 +196,7 @@ async function getPublishedProjectBySlug(db: Database, slug: string) {
     .where(
       and(
         eq(projects.slug, slug),
-        eq(projects.status, 'published'),
+        inArray(projects.status, ['published', 'in_progress']),
         eq(projects.visibility, 'public'),
       ),
     )

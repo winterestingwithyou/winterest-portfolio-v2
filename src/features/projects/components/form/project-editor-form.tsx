@@ -24,7 +24,7 @@ import {
 } from '#/components/ui/alert-dialog'
 import { Button } from '#/components/ui/button'
 import { Checkbox } from '#/components/ui/checkbox'
-import { DatePicker } from '#/components/ui/date-picker'
+import { DatePicker, formatDateToIso } from '#/components/ui/date-picker'
 import {
   Field,
   FieldContent,
@@ -54,6 +54,7 @@ import { getProjectFormSchema } from '#/features/projects/validation'
 import { techQueryOptions } from '#/features/technologies/query-options'
 import { TechnologyCreateDialog } from '#/features/technologies/components/form/technology-create-dialog'
 import type { TechnologyWithCategories } from '#/features/technologies/queries'
+import type { ContentStatus } from '#/db/schema'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { getLocale } from '#/paraglide/runtime'
 
@@ -63,7 +64,7 @@ type ProjectFormInitial = {
   title?: string | null
   summary?: string | null
   description?: string | null
-  status?: 'draft' | 'published' | 'archived' | null
+  status?: ContentStatus | null
   visibility?: 'public' | 'private' | null
   repoVisibility?: 'public' | 'private' | null
   featured?: boolean | null
@@ -106,10 +107,18 @@ const localeOptions = [
 ] as const
 
 function formatDateForInput(date?: Date | string | null): string {
-  if (!date) return ''
-  const d = new Date(date)
-  if (isNaN(d.getTime())) return ''
-  return d.toISOString().split('T')[0]
+  return formatDateToIso(date)
+}
+
+function parseDateForPayload(val?: string | null): Date | undefined {
+  if (!val || val.trim() === '') return undefined
+  const trimmed = val.trim()
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    const [year, month, day] = trimmed.split('-').map(Number)
+    return new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0))
+  }
+  const d = new Date(trimmed)
+  return isNaN(d.getTime()) ? undefined : d
 }
 
 function getTranslation(
@@ -150,6 +159,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
 
   const statusOptions = [
     { value: 'draft' as const, label: formCopy.statusDraft },
+    { value: 'in_progress' as const, label: formCopy.statusInProgress },
     { value: 'published' as const, label: formCopy.statusPublished },
     { value: 'archived' as const, label: formCopy.statusArchived },
   ]
@@ -197,13 +207,9 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         repoUrl: value.repoUrl.trim() || undefined,
         demoUrl: value.demoUrl.trim() || undefined,
         productionUrl: value.productionUrl.trim() || undefined,
-        startedAt: value.startedAt ? new Date(value.startedAt) : undefined,
-        completedAt: value.completedAt
-          ? new Date(value.completedAt)
-          : undefined,
-        publishedAt: value.publishedAt
-          ? new Date(value.publishedAt)
-          : undefined,
+        startedAt: parseDateForPayload(value.startedAt),
+        completedAt: parseDateForPayload(value.completedAt),
+        publishedAt: parseDateForPayload(value.publishedAt),
         technologyIds: value.technologyIds,
         translations: value.translations,
       }
@@ -331,7 +337,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid
                   return (
-                    <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
+                    <Field
+                      data-invalid={isInvalid}
+                      className="w-full min-w-0 max-w-full"
+                    >
                       <FieldLabel htmlFor={field.name}>
                         {formCopy.slug} <span className="text-red-500">*</span>
                       </FieldLabel>
@@ -364,9 +373,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       name={field.name}
                       value={field.state.value}
                       onValueChange={(val) =>
-                        field.handleChange(
-                          val as 'draft' | 'published' | 'archived',
-                        )
+                        field.handleChange(val as ContentStatus)
                       }
                     >
                       <SelectTrigger
@@ -464,7 +471,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid
                   return (
-                    <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
+                    <Field
+                      data-invalid={isInvalid}
+                      className="w-full min-w-0 max-w-full"
+                    >
                       <ImageUploader
                         value={field.state.value}
                         onChange={(url) => field.handleChange(url ?? '')}
@@ -555,11 +565,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     </FieldLabel>
                     <DatePicker
                       id={field.name}
+                      name={field.name}
                       value={field.state.value}
-                      onChange={(date) =>
-                        field.handleChange(date ? formatDateForInput(date) : '')
-                      }
-                      placeholder={formCopy.startedAtPlaceholder}
+                      onChange={(_, iso) => field.handleChange(iso)}
+                      placeholder="DD/MM/YYYY"
                       clearLabel={formCopy.clearDate}
                       locale={locale}
                     />
@@ -576,11 +585,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     </FieldLabel>
                     <DatePicker
                       id={field.name}
+                      name={field.name}
                       value={field.state.value}
-                      onChange={(date) =>
-                        field.handleChange(date ? formatDateForInput(date) : '')
-                      }
-                      placeholder={formCopy.completedAtPlaceholder}
+                      onChange={(_, iso) => field.handleChange(iso)}
+                      placeholder="DD/MM/YYYY"
                       clearLabel={formCopy.clearDate}
                       locale={locale}
                     />
@@ -597,11 +605,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     </FieldLabel>
                     <DatePicker
                       id={field.name}
+                      name={field.name}
                       value={field.state.value}
-                      onChange={(date) =>
-                        field.handleChange(date ? formatDateForInput(date) : '')
-                      }
-                      placeholder={formCopy.publishedAtPlaceholder}
+                      onChange={(_, iso) => field.handleChange(iso)}
+                      placeholder="DD/MM/YYYY"
                       clearLabel={formCopy.clearDate}
                       locale={locale}
                     />
@@ -752,7 +759,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       const isInvalid =
                         field.state.meta.isTouched && !field.state.meta.isValid
                       return (
-                        <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
+                        <Field
+                          data-invalid={isInvalid}
+                          className="w-full min-w-0 max-w-full"
+                        >
                           <FieldLabel htmlFor={field.name}>
                             {formCopy.title} ({label}){' '}
                             <span className="text-red-500">*</span>
@@ -782,7 +792,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       const isInvalid =
                         field.state.meta.isTouched && !field.state.meta.isValid
                       return (
-                        <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
+                        <Field
+                          data-invalid={isInvalid}
+                          className="w-full min-w-0 max-w-full"
+                        >
                           <FieldLabel htmlFor={field.name}>
                             {formCopy.category} ({label}){' '}
                             <span className="text-red-500">*</span>
@@ -813,7 +826,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid
                     return (
-                      <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
+                      <Field
+                        data-invalid={isInvalid}
+                        className="w-full min-w-0 max-w-full"
+                      >
                         <FieldLabel htmlFor={field.name}>
                           {formCopy.summary} ({label}){' '}
                           <span className="text-red-500">*</span>
@@ -843,7 +859,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                     const isInvalid =
                       field.state.meta.isTouched && !field.state.meta.isValid
                     return (
-                      <Field data-invalid={isInvalid} className="w-full min-w-0 max-w-full">
+                      <Field
+                        data-invalid={isInvalid}
+                        className="w-full min-w-0 max-w-full"
+                      >
                         <FieldLabel htmlFor={field.name}>
                           {formCopy.description} ({label}){' '}
                           <span className="text-red-500">*</span>

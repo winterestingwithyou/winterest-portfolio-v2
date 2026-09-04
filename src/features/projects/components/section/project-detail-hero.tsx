@@ -18,10 +18,17 @@ export function ProjectDetailHero({ project }: ProjectDetailHeroProps) {
           <span className="rounded-full bg-(--brand-orange-soft) px-3.5 py-1 font-mono text-xs font-bold uppercase text-(--brand-orange-deep)">
             {project.category}
           </span>
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--surface-strong) px-3 py-1 text-xs font-semibold text-(--brand-muted)">
-            <CheckCircle2 className="size-3.5 text-emerald-500" />
-            {project.status}
-          </span>
+          {project.status === 'in_progress' ? (
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-1 font-mono text-xs font-semibold text-sky-600 dark:text-sky-400">
+              <span className="size-1.5 rounded-full bg-sky-500 animate-pulse" />
+              In Progress
+            </span>
+          ) : (
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--surface-strong) px-3 py-1 text-xs font-semibold text-(--brand-muted)">
+              <CheckCircle2 className="size-3.5 text-emerald-500" />
+              {project.status}
+            </span>
+          )}
         </div>
 
         <h1 className="mt-4 text-3xl font-extrabold tracking-tight text-(--brand-ink) sm:text-5xl">
