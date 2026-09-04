@@ -286,7 +286,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               type="button"
               variant="destructive"
               size="sm"
-              onClick={() => void handleDelete()}
+              onClick={() => setIsDeleteDialogOpen(true)}
               disabled={isPending}
               className="gap-2 bg-red-600 font-semibold text-white hover:bg-red-700 disabled:opacity-50"
             >
@@ -872,7 +872,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         </div>
 
         {/* Form Action Footer */}
-        <div className="flex items-center justify-between gap-4 pt-4 border-t border-(--brand-line)">
+        <div className="flex flex-col-reverse gap-3 pt-6 border-t border-(--brand-line) sm:flex-row sm:items-center sm:justify-between">
           {mode === 'edit' && project ? (
             <>
               <Button
@@ -880,7 +880,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 variant="destructive"
                 onClick={() => setIsDeleteDialogOpen(true)}
                 disabled={isPending}
-                className="gap-2 rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
+                className="w-full sm:w-auto min-h-11 sm:min-h-9 gap-2 rounded-xl sm:rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
               >
                 <Trash2 className="size-4" />
                 {isPending ? copy.common.saving : copy.common.delete}
@@ -923,15 +923,15 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               </AlertDialog>
             </>
           ) : (
-            <div />
+            <div className="hidden sm:block" />
           )}
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
             <Button
               type="button"
               variant="outline"
               asChild
-              className="rounded-full border-(--brand-line) font-bold text-(--brand-ink) hover:bg-surface-soft"
+              className="w-full sm:w-auto min-h-11 sm:min-h-9 order-2 sm:order-1 rounded-xl sm:rounded-full border-(--brand-line) font-bold text-(--brand-ink) hover:bg-surface-soft"
             >
               <Link to="/dashboard/projects">{copy.common.back}</Link>
             </Button>
@@ -939,7 +939,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
             <Button
               type="submit"
               disabled={isPending}
-              className="gap-2 rounded-full bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) px-6 font-bold text-white shadow-md hover:opacity-90 disabled:opacity-50"
+              className="w-full sm:w-auto min-h-11 sm:min-h-9 order-1 sm:order-2 gap-2 rounded-xl sm:rounded-full bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) px-6 font-bold text-white shadow-md hover:opacity-90 disabled:opacity-50"
             >
               <Save className="size-4" />
               {isPending
