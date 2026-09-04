@@ -120,12 +120,12 @@ export function DashboardStackPage() {
       title={stackCopy.heading}
       description={stackCopy.subheading}
       actions={
-        <div className="flex items-center gap-3">
+        <div className="flex w-full flex-wrap items-center gap-2.5 sm:w-auto">
           <button
             type="button"
             onClick={() => void loadData()}
             disabled={isFetching}
-            className="inline-flex min-h-10 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
+            className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold whitespace-nowrap text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
           >
             <RefreshCw
               className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
@@ -135,7 +135,7 @@ export function DashboardStackPage() {
           {activeTab === 'technologies' ? (
             <Link
               to="/dashboard/stack/technologies/new"
-              className="inline-flex min-h-10 items-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
+              className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold whitespace-nowrap text-white no-underline transition hover:-translate-y-0.5"
             >
               <Plus className="size-4" />
               {stackCopy.actions.addTechnology}
@@ -143,7 +143,7 @@ export function DashboardStackPage() {
           ) : (
             <Link
               to="/dashboard/stack/categories/new"
-              className="inline-flex min-h-10 items-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
+              className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold whitespace-nowrap text-white no-underline transition hover:-translate-y-0.5"
             >
               <Plus className="size-4" />
               {stackCopy.actions.addCategory}
@@ -153,11 +153,11 @@ export function DashboardStackPage() {
       }
     >
       {/* Tab Switcher */}
-      <div className="mb-6 flex border-b border-(--brand-line)">
+      <div className="mb-6 flex items-center gap-1 overflow-x-auto border-b border-(--brand-line) no-scrollbar scroll-smooth">
         <button
           type="button"
           onClick={() => handleTabChange('technologies')}
-          className={`flex items-center gap-2 border-b-2 px-6 py-3 text-sm font-bold transition ${
+          className={`flex min-h-[44px] shrink-0 items-center gap-2 border-b-2 px-6 py-3 text-sm font-bold whitespace-nowrap transition ${
             activeTab === 'technologies'
               ? 'border-(--brand-orange) text-(--brand-orange-deep)'
               : 'border-transparent text-(--brand-muted) hover:text-(--brand-ink)'
@@ -169,7 +169,7 @@ export function DashboardStackPage() {
         <button
           type="button"
           onClick={() => handleTabChange('categories')}
-          className={`flex items-center gap-2 border-b-2 px-6 py-3 text-sm font-bold transition ${
+          className={`flex min-h-[44px] shrink-0 items-center gap-2 border-b-2 px-6 py-3 text-sm font-bold whitespace-nowrap transition ${
             activeTab === 'categories'
               ? 'border-(--brand-orange) text-(--brand-orange-deep)'
               : 'border-transparent text-(--brand-muted) hover:text-(--brand-ink)'

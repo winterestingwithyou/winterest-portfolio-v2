@@ -79,13 +79,13 @@ export function DashboardUsersPage() {
       title={userCopy.title}
       description={userCopy.description}
       actions={
-        <div className="flex items-center gap-2">
+        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
           <Button
             variant="outline"
             size="sm"
             onClick={() => void refetch()}
             disabled={isFetching}
-            className="gap-2 border-(--brand-line) font-semibold text-(--brand-ink) hover:bg-surface-soft"
+            className="shrink-0 gap-2 border-(--brand-line) font-semibold whitespace-nowrap text-(--brand-ink) hover:bg-surface-soft"
           >
             <RefreshCw
               className={`size-3.5 ${isFetching ? 'animate-spin' : ''}`}
@@ -96,7 +96,7 @@ export function DashboardUsersPage() {
           <Button
             asChild
             size="sm"
-            className="gap-2 rounded-xl bg-(--brand-orange) font-bold text-white shadow-xs hover:bg-(--brand-orange-deep)"
+            className="shrink-0 gap-2 rounded-xl bg-(--brand-orange) font-bold whitespace-nowrap text-white shadow-xs hover:bg-(--brand-orange-deep)"
           >
             <Link to="/dashboard/users/new">
               <Plus className="size-4" />

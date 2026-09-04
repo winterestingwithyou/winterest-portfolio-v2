@@ -106,11 +106,11 @@ export function MediaGallerySection({
       </div>
 
       {/* Asset Filter Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1.5 pt-0.5 no-scrollbar scroll-smooth">
         <button
           type="button"
           onClick={() => setActiveTab('all')}
-          className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+          className={`inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold whitespace-nowrap transition ${
             activeTab === 'all'
               ? 'bg-(--brand-orange) text-white shadow-xs'
               : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'
@@ -124,7 +124,7 @@ export function MediaGallerySection({
         <button
           type="button"
           onClick={() => setActiveTab('image')}
-          className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+          className={`inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold whitespace-nowrap transition ${
             activeTab === 'image'
               ? 'bg-(--brand-orange) text-white shadow-xs'
               : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'
@@ -138,7 +138,7 @@ export function MediaGallerySection({
         <button
           type="button"
           onClick={() => setActiveTab('document')}
-          className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+          className={`inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold whitespace-nowrap transition ${
             activeTab === 'document'
               ? 'bg-(--brand-orange) text-white shadow-xs'
               : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'

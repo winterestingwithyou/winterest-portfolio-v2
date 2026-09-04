@@ -211,7 +211,7 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
       </Card>
 
       {/* Tabs Navigation */}
-      <div className="flex border-b border-(--brand-line)">
+      <div className="flex items-center gap-1 overflow-x-auto border-b border-(--brand-line) no-scrollbar scroll-smooth">
         {tabs.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
@@ -224,7 +224,7 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
                 setProfileSuccess(null)
                 setPasswordSuccess(null)
               }}
-              className={`flex items-center gap-2 border-b-2 px-4 py-3 text-xs font-semibold transition-colors ${
+              className={`flex min-h-[44px] shrink-0 items-center gap-2 border-b-2 px-4 py-3 text-xs font-semibold whitespace-nowrap transition-colors sm:text-sm ${
                 isActive
                   ? 'border-(--brand-orange) text-(--brand-orange-deep) dark:text-(--brand-orange)'
                   : 'border-transparent text-muted-foreground hover:border-muted hover:text-foreground'

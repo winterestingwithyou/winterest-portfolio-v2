@@ -27,7 +27,7 @@ export function DashboardShell({
           ) : null}
         </div>
         {actions ? (
-          <div className="flex flex-wrap items-center gap-2.5 shrink-0">
+          <div className="flex w-full flex-wrap items-center gap-2.5 sm:w-auto sm:shrink-0">
             {actions}
           </div>
         ) : null}

@@ -61,7 +61,7 @@ export function DashboardProjectsPage() {
             type="button"
             onClick={() => void refetch()}
             disabled={isFetching}
-            className="inline-flex min-h-10 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
+            className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-strong) px-4 text-sm font-bold whitespace-nowrap text-(--brand-ink) transition hover:-translate-y-0.5 hover:border-(--brand-orange)"
           >
             <RefreshCw
               aria-hidden="true"
@@ -71,7 +71,7 @@ export function DashboardProjectsPage() {
           </button>
           <Link
             to="/dashboard/projects/new"
-            className="inline-flex min-h-10 items-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5"
+            className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold whitespace-nowrap text-white no-underline transition hover:-translate-y-0.5"
           >
             <Plus aria-hidden="true" className="size-4" />
             {copy.projects.new}
