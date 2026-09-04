@@ -31,14 +31,20 @@ import { platformMetaMap } from './types'
 type SocialListProps = {
   items: SocialLink[]
   canEdit: boolean
+  createDialogOpen?: boolean
+  onCreateDialogOpenChange?: (open: boolean) => void
 }
 
-export function SocialList({ items, canEdit }: SocialListProps) {
+export function SocialList({
+  items,
+  canEdit,
+  createDialogOpen = false,
+  onCreateDialogOpenChange,
+}: SocialListProps) {
   const copy = getDashboardCopy()
   const socialCopy = copy.social
 
-  const [dialogOpen, setDialogOpen] = useState(false)
-  const [selectedLink, setSelectedLink] = useState<SocialLink | null>(null)
+  const [editLink, setEditLink] = useState<SocialLink | null>(null)
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false)
   const [linkToDelete, setLinkToDelete] = useState<SocialLink | null>(null)
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null)
@@ -48,14 +54,22 @@ export function SocialList({ items, canEdit }: SocialListProps) {
 
   const existingPlatforms: SocialPlatform[] = items.map((i) => i.platform)
 
+  const isDialogOpen = createDialogOpen || Boolean(editLink)
+
+  const handleDialogOpenChange = (open: boolean) => {
+    if (!open) {
+      setEditLink(null)
+      onCreateDialogOpenChange?.(false)
+    }
+  }
+
   const handleOpenCreate = () => {
-    setSelectedLink(null)
-    setDialogOpen(true)
+    setEditLink(null)
+    onCreateDialogOpenChange?.(true)
   }
 
   const handleOpenEdit = (link: SocialLink) => {
-    setSelectedLink(link)
-    setDialogOpen(true)
+    setEditLink(link)
   }
 
   const handleOpenDelete = (link: SocialLink) => {
@@ -92,28 +106,6 @@ export function SocialList({ items, canEdit }: SocialListProps) {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Header with Title and Add Button */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 className="text-xl font-bold text-(--brand-ink)">
-            {socialCopy.title}
-          </h2>
-          <p className="text-xs text-(--brand-muted)">
-            {socialCopy.description}
-          </p>
-        </div>
-
-        {canEdit && (
-          <Button
-            onClick={handleOpenCreate}
-            className="gap-2 bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) font-bold text-white shadow-xs hover:opacity-95"
-          >
-            <Plus className="size-4" />
-            <span>{socialCopy.addLink}</span>
-          </Button>
-        )}
-      </div>
-
       {/* Feedback Message */}
       {feedbackMessage && (
         <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-900 dark:border-emerald-900/50 dark:bg-emerald-950/30 dark:text-emerald-200">
@@ -146,7 +138,7 @@ export function SocialList({ items, canEdit }: SocialListProps) {
           )}
         </div>
       ) : (
-        <div className="grid gap-3">
+        <div className="grid gap-3 min-w-0 w-full">
           {items.map((item) => {
             const meta = platformMetaMap[item.platform]
             const IconComponent = meta.icon
@@ -157,45 +149,56 @@ export function SocialList({ items, canEdit }: SocialListProps) {
             return (
               <div
                 key={item.id}
-                className="group relative flex flex-col gap-4 rounded-xl border border-(--brand-line) bg-card p-4 shadow-xs transition hover:border-(--brand-orange)/40 sm:flex-row sm:items-center sm:justify-between"
+                className="group relative flex flex-col gap-3.5 rounded-xl border border-(--brand-line) bg-card p-3.5 sm:p-4 shadow-xs transition hover:border-(--brand-orange)/40 sm:flex-row sm:items-center sm:justify-between min-w-0 w-full"
               >
                 {/* Left: Platform Icon & Details */}
-                <div className="flex min-w-0 flex-1 items-center gap-3.5">
+                <div className="flex min-w-0 flex-1 items-start sm:items-center gap-3">
                   <div className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-(--brand-line) bg-(--surface-strong) text-(--brand-ink) shadow-2xs">
                     <IconComponent className="size-5" />
                   </div>
 
-                  <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-bold text-sm text-(--brand-ink)">
+                  <div className="flex min-w-0 flex-1 flex-col gap-1">
+                    <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 min-w-0">
+                      <span className="font-bold text-sm text-(--brand-ink) shrink-0">
                         {meta.name}
                       </span>
                       <span
-                        className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-bold ${meta.badgeBg} ${meta.badgeText} ${meta.badgeBorder}`}
+                        className={`inline-flex max-w-[130px] sm:max-w-xs truncate items-center rounded-md border px-2 py-0.5 text-[10px] font-bold ${meta.badgeBg} ${meta.badgeText} ${meta.badgeBorder}`}
+                        title={item.accountName || meta.name}
                       >
                         {item.accountName || meta.name}
                       </span>
                       <Badge
                         variant={item.isEnabled ? 'default' : 'secondary'}
-                        className="text-[10px]"
+                        className="text-[10px] shrink-0"
                       >
                         {item.isEnabled
                           ? socialCopy.status.active
                           : socialCopy.status.inactive}
                       </Badge>
-                      <span className="text-[10px] text-(--brand-muted) font-mono">
+                      <span className="text-[10px] text-(--brand-muted) font-mono shrink-0">
                         #{item.sortOrder}
                       </span>
                     </div>
 
-                    <div className="flex flex-wrap items-center gap-2 text-xs text-(--brand-muted)">
+                    <div className="flex min-w-0 items-center gap-1.5 text-xs text-(--brand-muted)">
                       {item.username && (
-                        <span className="font-medium text-(--brand-ink)/80">
-                          {item.username}
-                        </span>
+                        <>
+                          <span className="truncate font-medium text-(--brand-ink)/80 max-w-[100px] sm:max-w-[160px] shrink-0">
+                            {item.username}
+                          </span>
+                          <span
+                            aria-hidden="true"
+                            className="shrink-0 text-(--brand-muted)/60"
+                          >
+                            &bull;
+                          </span>
+                        </>
                       )}
-                      {item.username && <span>&bull;</span>}
-                      <span className="truncate max-w-xs font-mono text-[11px]">
+                      <span
+                        className="min-w-0 flex-1 truncate font-mono text-[11px]"
+                        title={item.url}
+                      >
                         {item.url}
                       </span>
                     </div>
@@ -203,15 +206,15 @@ export function SocialList({ items, canEdit }: SocialListProps) {
                 </div>
 
                 {/* Right: Quick Actions */}
-                <div className="flex flex-wrap items-center gap-2 border-t border-(--brand-line)/60 pt-3 sm:border-t-0 sm:pt-0">
+                <div className="flex items-center justify-between sm:justify-end gap-2 border-t border-(--brand-line)/60 pt-2.5 sm:border-t-0 sm:pt-0 shrink-0 w-full sm:w-auto">
                   {/* Quick Toggle Visible */}
-                  <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 py-1.5 text-xs text-(--brand-ink) hover:bg-accent">
+                  <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-(--brand-line) bg-(--surface) px-2.5 py-1.5 text-xs text-(--brand-ink) hover:bg-accent select-none">
                     <Checkbox
                       checked={item.isEnabled}
                       disabled={!canEdit || isUpdatingThis}
                       onCheckedChange={() => handleToggleEnable(item)}
                     />
-                    <span className="text-[11px] font-semibold select-none">
+                    <span className="text-[11px] font-semibold">
                       {isUpdatingThis ? (
                         <Loader2 className="size-3 animate-spin" />
                       ) : item.isEnabled ? (
@@ -222,42 +225,45 @@ export function SocialList({ items, canEdit }: SocialListProps) {
                     </span>
                   </label>
 
-                  {/* Open Link */}
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex size-8 items-center justify-center rounded-lg border border-(--brand-line) bg-(--surface) text-(--brand-muted) hover:border-(--brand-orange) hover:bg-(--brand-orange-soft) hover:text-(--brand-orange-deep)"
-                    title={socialCopy.actions.openLink}
-                  >
-                    <ExternalLink className="size-3.5" />
-                  </a>
-
-                  {/* Edit */}
-                  {canEdit && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleOpenEdit(item)}
-                      className="size-8 p-0 text-(--brand-ink) hover:bg-(--brand-orange-soft) hover:text-(--brand-orange-deep)"
-                      title={socialCopy.actions.edit}
+                  {/* Action Buttons Group */}
+                  <div className="flex items-center gap-1.5">
+                    {/* Open Link */}
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex size-8 items-center justify-center rounded-lg border border-(--brand-line) bg-(--surface) text-(--brand-muted) hover:border-(--brand-orange) hover:bg-(--brand-orange-soft) hover:text-(--brand-orange-deep) transition"
+                      title={socialCopy.actions.openLink}
                     >
-                      <Pencil className="size-3.5" />
-                    </Button>
-                  )}
+                      <ExternalLink className="size-3.5" />
+                    </a>
 
-                  {/* Delete */}
-                  {canEdit && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleOpenDelete(item)}
-                      className="size-8 p-0 text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/30"
-                      title={socialCopy.actions.delete}
-                    >
-                      <Trash2 className="size-3.5" />
-                    </Button>
-                  )}
+                    {/* Edit */}
+                    {canEdit && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleOpenEdit(item)}
+                        className="size-8 p-0 text-(--brand-ink) hover:bg-(--brand-orange-soft) hover:text-(--brand-orange-deep)"
+                        title={socialCopy.actions.edit}
+                      >
+                        <Pencil className="size-3.5" />
+                      </Button>
+                    )}
+
+                    {/* Delete */}
+                    {canEdit && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleOpenDelete(item)}
+                        className="size-8 p-0 text-red-600 hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/30"
+                        title={socialCopy.actions.delete}
+                      >
+                        <Trash2 className="size-3.5" />
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </div>
             )
@@ -267,9 +273,9 @@ export function SocialList({ items, canEdit }: SocialListProps) {
 
       {/* Editor Modal Dialog */}
       <SocialEditorDialog
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-        socialLink={selectedLink}
+        open={isDialogOpen}
+        onOpenChange={handleDialogOpenChange}
+        socialLink={editLink}
         existingPlatforms={existingPlatforms}
       />
 

@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { RefreshCw } from 'lucide-react'
+import { Plus, RefreshCw } from 'lucide-react'
+import { useState } from 'react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { Button } from '#/components/ui/button'
@@ -12,6 +13,8 @@ import { sessionQueryOptions } from '#/features/users/query-options'
 export function SocialPage() {
   const copy = getDashboardCopy()
   const socialCopy = copy.social
+
+  const [createDialogOpen, setCreateDialogOpen] = useState(false)
 
   const { data: currentUser } = useSuspenseQuery(sessionQueryOptions.current())
   const {
@@ -28,21 +31,39 @@ export function SocialPage() {
       title={socialCopy.title}
       description={socialCopy.description}
       actions={
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => void refetch()}
-          disabled={isFetching}
-          className="text-xs"
-        >
-          <RefreshCw
-            className={`mr-2 size-3.5 ${isFetching ? 'animate-spin' : ''}`}
-          />
-          {copy.common.refresh}
-        </Button>
+        <div className="flex flex-wrap items-center gap-2.5">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => void refetch()}
+            disabled={isFetching}
+            className="text-xs"
+          >
+            <RefreshCw
+              className={`mr-2 size-3.5 ${isFetching ? 'animate-spin' : ''}`}
+            />
+            {copy.common.refresh}
+          </Button>
+
+          {canEdit && (
+            <Button
+              size="sm"
+              onClick={() => setCreateDialogOpen(true)}
+              className="gap-2 bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) text-xs font-bold text-white shadow-xs hover:opacity-95"
+            >
+              <Plus className="size-3.5" />
+              <span>{socialCopy.addLink}</span>
+            </Button>
+          )}
+        </div>
       }
     >
-      <SocialList items={socialLinks} canEdit={canEdit} />
+      <SocialList
+        items={socialLinks}
+        canEdit={canEdit}
+        createDialogOpen={createDialogOpen}
+        onCreateDialogOpenChange={setCreateDialogOpen}
+      />
     </DashboardShell>
   )
 }
