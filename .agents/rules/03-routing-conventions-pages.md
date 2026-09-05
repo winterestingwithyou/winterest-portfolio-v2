@@ -30,6 +30,8 @@ The project uses TanStack Router file-based routing with strict folder-based org
 - API/server routes must validate input with Zod.
 - Do not expose admin-only data in public route loaders.
 - Prefer meaningful route names over generic names.
+- Sitemap registration: Every new static public route must be registered in `STATIC_PUBLIC_ROUTES` (`src/features/portfolio/sitemap.ts`). Private routes (`/dashboard/*`, `/login`, `/api/*`) must remain excluded.
+- Literal dot route naming: Server routes requiring literal dot extensions (such as `/sitemap.xml`) must use TanStack Router's bracket escaping syntax `sitemap[.]xml.ts` with `createFileRoute('/sitemap.xml')`.
 
 ---
 
@@ -43,6 +45,7 @@ src/routes/
   contact.tsx          # Contact form, direct channels, social links
   login.tsx            # Auth login portal for dashboard access
   resume.tsx           # Printable, clean, professional resume
+  sitemap[.]xml.ts     # Dynamic sitemap XML for public routes & live projects
   stack.tsx            # Tech stack catalog, categorized tools, rationale
   projects/
     index.tsx          # Filterable project gallery (by stack/category/status)
