@@ -6,7 +6,7 @@ import {
   parseDisplayDate,
   parseValueToDate,
   toDisplayString,
-} from './date-picker'
+} from '../date-picker'
 
 describe('DatePicker date utilities', () => {
   describe('formatToDateMask', () => {

@@ -150,10 +150,12 @@ export function HeroVisual({ className }: { className?: string } = {}) {
         </div>
         <div className="grid gap-1.5 font-mono text-[0.72rem] leading-5 text-orange-50">
           <span>
-            <span className="text-orange-300">realname</span>: {siteProfile.fullName}
+            <span className="text-orange-300">realname</span>:{' '}
+            {siteProfile.fullName}
           </span>
           <span>
-            <span className="text-orange-300">nickname</span>: {siteProfile.name}
+            <span className="text-orange-300">nickname</span>:{' '}
+            {siteProfile.name}
           </span>
           <span>
             <span className="text-orange-300">stack</span>: Bun, TypeScript,

@@ -28,6 +28,17 @@ trigger: always_on
 
 - Add and maintain tests for critical business logic using **Vitest**.
 - Prioritize tests for: auth helpers, role guards, slug utilities, Zod validation schemas, database query helpers, and dashboard mutations.
+- **Unit & Component Test Organization (`__tests__/`)**:
+  - Every unit, validation, schema, and component test **MUST** reside in a dedicated `__tests__/` subfolder within its feature or shared module:
+    - Feature tests: `src/features/<feature>/__tests__/<name>.test.ts(x)`
+    - Shared library tests: `src/lib/__tests__/<name>.test.ts` (or `src/lib/<submodule>/__tests__/`)
+    - UI primitive tests: `src/components/ui/__tests__/<name>.test.tsx`
+    - Database utility tests: `src/db/__tests__/<name>.test.ts`
+  - Do **NOT** scatter `*.test.ts` files directly in feature root directories alongside production code.
+- **Test Infrastructure (`src/test/`)**:
+  - The `src/test/` directory is reserved strictly for shared test harnesses, setup, and mock utilities (e.g. `src/test/cloudflare-workers-mock.ts`, shared render helpers, factories). It does not contain test runners.
+- **Integration & E2E Testing (Repository Root)**:
+  - If multi-feature integration tests (e.g. Miniflare D1 worker runtime queries) or end-to-end tests (e.g. Playwright browser flows) are added, they must reside at the repository root in `tests/integration/` or `tests/e2e/`, never inside `src/features/`.
 - **Cloudflare Workers Mocking in Tests**: When testing code that depends on Cloudflare Workers environment variables or bindings (`env`), always import the mock directly from `src/test/cloudflare-workers-mock.ts` (e.g. `import { env as mockEnv } from '#/test/cloudflare-workers-mock'`). Avoid importing `'cloudflare:workers'` directly in test files to mutate env bindings, because the TypeScript compiler (`tsc`) checks the rigid `Env` interface from `worker-configuration.d.ts` rather than the test mock, leading to typing conflicts.
 - Run `bun run typecheck`, `bun run lint`, and `bun run test` before finalizing tasks.
 
@@ -62,4 +73,5 @@ trigger: always_on
 - Do **NOT** make the dashboard overly animated or distracting.
 - Do **NOT** create monolithic copy files (e.g. dumping all pages' copy into a single file).
 - Do **NOT** put UI copy in random subdirectories (e.g. avoid `src/features/auth/content/auth-copy.ts`; use `src/features/auth/copy.ts`).
+- Do **NOT** scatter test files directly in feature root directories; always place unit/component tests in their dedicated `__tests__/` subfolder.
 - Do **NOT** import `cloudflare:workers` directly in test files to mutate env bindings; use `src/test/cloudflare-workers-mock.ts` instead.

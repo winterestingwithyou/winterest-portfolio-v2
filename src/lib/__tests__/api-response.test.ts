@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest'
 import { z, ZodError } from 'zod'
 
-import { formatZodErrorMessage, handleApiError, jsonResponse } from './api-response'
+import {
+  formatZodErrorMessage,
+  handleApiError,
+  jsonResponse,
+} from '../api-response'
 
 type ErrorPayload = {
   error: string

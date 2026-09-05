@@ -81,14 +81,17 @@ Each public page should have:
 The application generates a dynamic `sitemap.xml` on-demand via Cloudflare Workers (`src/routes/sitemap[.]xml.ts`) and enforces strict crawl rules in `public/robots.txt`.
 
 ### 1. Adding New Public Routes
+
 - **Single Source of Truth**: The catalog of static public routes is defined in `STATIC_PUBLIC_ROUTES` inside `src/features/portfolio/sitemap.ts`.
 - **Mandatory Registration**: When introducing a new static public route (e.g. `/blog`, `/experience`), you **MUST** register its path in `STATIC_PUBLIC_ROUTES` with appropriate `priority` (`0.1` to `1.0`) and `changefreq` (`weekly` / `monthly`).
-- **Update Tests**: Update `src/features/portfolio/sitemap.test.ts` to assert inclusion of the new route.
+- **Update Tests**: Update `src/features/portfolio/__tests__/sitemap.test.ts` to assert inclusion of the new route.
 
 ### 2. Adding New Dynamic Content Entities (CMS / D1)
+
 - When introducing new publicly accessible dynamic content collections from D1 (e.g. articles, case studies), integrate their public query and slugs into `generateSitemapXml()` with valid `lastmod` dates derived from `updatedAt` or `publishedAt`.
 
 ### 3. Strict Exclusion of Private & Auth Routes
+
 - **Forbidden from Sitemap**: Never include `/login`, `/dashboard/*`, or `/api/*` in `sitemap.xml`.
 - **Robots.txt Protection**: Keep private and sensitive routes explicitly disallowed in `public/robots.txt`:
   ```txt
@@ -98,4 +101,3 @@ The application generates a dynamic `sitemap.xml` on-demand via Cloudflare Worke
   Disallow: /api/
   ```
 - **HTML Head Discovery**: Always preserve `<link rel="sitemap" type="application/xml" href="/sitemap.xml" />` in `src/routes/__root.tsx`.
-

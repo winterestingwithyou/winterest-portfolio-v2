@@ -37,7 +37,9 @@ export function DashboardUsersPage() {
 
   const { data: currentUser } = useSuspenseQuery(sessionQueryOptions.current())
   const deleteMutation = useDeleteUser()
-  const [userToDelete, setUserToDelete] = useState<UserWithSessionCount | null>(null)
+  const [userToDelete, setUserToDelete] = useState<UserWithSessionCount | null>(
+    null,
+  )
   const [warningNotice, setWarningNotice] = useState<string | null>(null)
   const [errorNotice, setErrorNotice] = useState<string | null>(null)
   const [isDeleting, setIsDeleting] = useState(false)
@@ -58,7 +60,9 @@ export function DashboardUsersPage() {
       await deleteMutation.mutateAsync(userToDelete.id)
       setUserToDelete(null)
     } catch (err: unknown) {
-      setErrorNotice(err instanceof Error ? err.message : userCopy.feedback.deleteError)
+      setErrorNotice(
+        err instanceof Error ? err.message : userCopy.feedback.deleteError,
+      )
     } finally {
       setIsDeleting(false)
     }
@@ -149,9 +153,7 @@ export function DashboardUsersPage() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              {userCopy.form.deleteUser}
-            </AlertDialogTitle>
+            <AlertDialogTitle>{userCopy.form.deleteUser}</AlertDialogTitle>
             <AlertDialogDescription>
               {userToDelete
                 ? `${userCopy.form.deleteConfirm} (${userToDelete.name || userToDelete.email})`
@@ -183,12 +185,8 @@ export function DashboardUsersPage() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              {copy.common.notice}
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              {warningNotice}
-            </AlertDialogDescription>
+            <AlertDialogTitle>{copy.common.notice}</AlertDialogTitle>
+            <AlertDialogDescription>{warningNotice}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction onClick={() => setWarningNotice(null)}>

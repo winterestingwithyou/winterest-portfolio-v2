@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { changePasswordSchema, updateProfileSchema } from './validation'
+import { changePasswordSchema, updateProfileSchema } from '../validation'
 
 describe('account validation', () => {
   describe('updateProfileSchema', () => {

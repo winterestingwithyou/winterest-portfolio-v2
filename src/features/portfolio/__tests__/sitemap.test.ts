@@ -6,7 +6,7 @@ import {
   escapeXml,
   formatLastmod,
   generateSitemapXml,
-} from './sitemap'
+} from '../sitemap'
 
 describe('sitemap generator', () => {
   describe('escapeXml', () => {

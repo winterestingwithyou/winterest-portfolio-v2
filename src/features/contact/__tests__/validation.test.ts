@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { contactSchema } from './validation'
+import { contactSchema } from '../validation'
 
 describe('contact validation', () => {
   it('validates a valid contact form submission', () => {

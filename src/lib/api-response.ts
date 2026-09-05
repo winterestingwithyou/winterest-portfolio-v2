@@ -28,8 +28,7 @@ export function formatZodErrorMessage(error: ZodError): string {
       rawMessage.includes('received undefined'))
 
   if (isRawZodMessage) {
-    const field =
-      firstIssue.path.length > 0 ? firstIssue.path.join('.') : null
+    const field = firstIssue.path.length > 0 ? firstIssue.path.join('.') : null
 
     const isMissingField =
       rawMessage.includes('received undefined') || rawMessage === 'Required'

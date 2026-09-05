@@ -8,7 +8,7 @@ import {
   getAssetType,
   mediaQuerySchema,
   mediaUploadSchema,
-} from './validation'
+} from '../validation'
 
 describe('media validation', () => {
   describe('constants & asset type detection', () => {

@@ -5,7 +5,7 @@ import {
   categorySchema,
   technologyInputSchema,
   technologySchema,
-} from './validation'
+} from '../validation'
 
 describe('technologies validation', () => {
   describe('categorySchema & categoryInputSchema', () => {

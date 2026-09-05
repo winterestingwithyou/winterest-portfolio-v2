@@ -210,9 +210,7 @@ export function DashboardStackPage() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              {stackCopy.categoryForm.delete}
-            </AlertDialogTitle>
+            <AlertDialogTitle>{stackCopy.categoryForm.delete}</AlertDialogTitle>
             <AlertDialogDescription>
               {categoryToDelete
                 ? stackCopy.deleteCategoryConfirm(categoryToDelete.name)
@@ -244,9 +242,7 @@ export function DashboardStackPage() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              {stackCopy.techForm.delete}
-            </AlertDialogTitle>
+            <AlertDialogTitle>{stackCopy.techForm.delete}</AlertDialogTitle>
             <AlertDialogDescription>
               {techToDelete
                 ? stackCopy.deleteTechConfirm(techToDelete.name)

@@ -227,7 +227,9 @@ export function UserEditorForm({
               title={isSelf ? userCopy.form.selfDeleteWarning : undefined}
             >
               <Trash2 className="size-4" />
-              {isDeleting ? copy.common.delete + '...' : userCopy.form.deleteUser}
+              {isDeleting
+                ? copy.common.delete + '...'
+                : userCopy.form.deleteUser}
             </Button>
 
             <AlertDialog

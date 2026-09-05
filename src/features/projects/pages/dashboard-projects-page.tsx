@@ -30,7 +30,9 @@ export function DashboardProjectsPage() {
   } = useSuspenseQuery(projectQueryOptions.list())
   const deleteMutation = useDeleteProject()
   const [error, setError] = useState<string | null>(null)
-  const [projectToDelete, setProjectToDelete] = useState<ProjectRow | null>(null)
+  const [projectToDelete, setProjectToDelete] = useState<ProjectRow | null>(
+    null,
+  )
   const [isDeleting, setIsDeleting] = useState(false)
 
   const handleDelete = async (project: ProjectRow) => {
@@ -111,9 +113,7 @@ export function DashboardProjectsPage() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              {copy.projects.deleteTitle}
-            </AlertDialogTitle>
+            <AlertDialogTitle>{copy.projects.deleteTitle}</AlertDialogTitle>
             <AlertDialogDescription>
               {projectToDelete
                 ? copy.projects.deleteConfirm(projectToDelete.title)

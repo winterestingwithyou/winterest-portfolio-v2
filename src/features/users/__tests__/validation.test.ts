@@ -4,7 +4,7 @@ import {
   createUserSchema,
   resetPasswordSchema,
   updateUserSchema,
-} from './validation'
+} from '../validation'
 
 describe('users validation', () => {
   it('validates user creation payload properly', () => {

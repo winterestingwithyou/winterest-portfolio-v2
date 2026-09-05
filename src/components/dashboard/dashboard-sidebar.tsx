@@ -276,9 +276,7 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
                   </Avatar>
                   <div className="flex min-w-0 flex-col text-left text-xs leading-tight group-data-[collapsible=icon]:hidden">
                     <span className="truncate font-semibold text-sidebar-foreground">
-                      {user?.name ||
-                        user?.email?.split('@')[0] ||
-                        'Owner'}
+                      {user?.name || user?.email?.split('@')[0] || 'Owner'}
                     </span>
                     <span className="truncate text-[0.7rem] text-sidebar-foreground/70">
                       {user?.email || 'user@example.com'}

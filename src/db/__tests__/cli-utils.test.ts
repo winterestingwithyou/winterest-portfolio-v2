@@ -4,7 +4,7 @@ import {
   createRemoteD1Database,
   findLocalD1Database,
   readEnv,
-} from './cli-utils'
+} from '../cli-utils'
 
 vi.mock('ofetch', () => ({
   ofetch: vi.fn(),

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { isMissingTableError } from './db-utils'
-import { formatBytes, formatDate, slugify } from './utils'
+import { isMissingTableError } from '../db-utils'
+import { formatBytes, formatDate, slugify } from '../utils'
 
 describe('utility functions', () => {
   describe('slugify', () => {

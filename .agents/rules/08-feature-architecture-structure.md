@@ -38,6 +38,7 @@ The repository was initialized from a TanStack Start template/resume example.
       visual/          # Mascot and graphics
     features/
       <feature>/       # Self-contained domain modules (about, auth, contact, dashboard, home, media, portfolio, projects, settings, social, system, technologies, users)
+        __tests__/     # Feature unit & validation tests (e.g. validation.test.ts, sitemap.test.ts)
         components/
           section/     # Visual section components (e.g. home-hero.tsx)
           form/        # Form & interactive mutation components (e.g. login-form.tsx)
@@ -50,12 +51,14 @@ The repository was initialized from a TanStack Start template/resume example.
         hooks.ts       # Custom mutation hooks (useMutation)
         validation.ts  # Zod validation schemas
     lib/
+      __tests__/       # Shared library tests (api-client.test.ts, utils.test.ts, etc.)
       api-client.ts    # Centralized ofetch client & error handler
       auth/            # Better Auth client & server config
       db/              # Drizzle DB client instance
       env.ts           # T3Env environment validator
       utils.ts         # cn() utility
     db/
+      __tests__/       # Database CLI helper tests
       schema.ts        # Drizzle table schemas (Single Source of Truth)
       seed.ts          # Seed data generator
     routes/
@@ -83,6 +86,14 @@ The repository was initialized from a TanStack Start template/resume example.
   - Column definitions: `src/features/<feature>/components/table/<comp-name>-table-columns.tsx` (e.g. `dashboard-projects-table-columns.tsx`).
   - Table features / state / helpers: `src/features/<feature>/components/table/<comp-name>-table-features.ts` (e.g. `dashboard-projects-table-features.ts`).
 - **Atomic/Sub-Components**: Other small supporting components can reside directly under `src/features/<feature>/components/<comp-name>.tsx` (e.g. `src/features/about/components/glass-shard-card.tsx`).
+
+---
+
+## Feature Test Conventions (`__tests__/`)
+
+- **Subfolder Isolation**: Every feature stores all of its unit tests, schema tests, and component tests in a dedicated `__tests__/` subfolder at the root of the feature directory (e.g. `src/features/<feature>/__tests__/validation.test.ts`, `src/features/<feature>/__tests__/roles.test.ts`).
+- **No Scattered Root Tests**: Avoid placing `*.test.ts` directly in the feature root alongside runtime production code.
+- **Shared Module Tests**: Shared non-feature utilities and UI primitives follow the same subfolder convention (`src/lib/__tests__/`, `src/lib/auth/__tests__/`, `src/components/ui/__tests__/`, `src/db/__tests__/`).
 
 ---
 

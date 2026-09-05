@@ -1,8 +1,8 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, describe, expect, it } from 'vitest'
 
-import { Markdown } from './markdown'
-import { MarkdownTextarea } from './markdown-textarea'
+import { Markdown } from '../markdown'
+import { MarkdownTextarea } from '../markdown-textarea'
 
 afterEach(() => {
   cleanup()

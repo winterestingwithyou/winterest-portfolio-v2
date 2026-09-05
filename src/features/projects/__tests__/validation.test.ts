@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { getProjectFormSchema, projectInputSchema } from './validation'
+import { getProjectFormSchema, projectInputSchema } from '../validation'
 
 const baseValidProject = {
   slug: 'my-awesome-project',

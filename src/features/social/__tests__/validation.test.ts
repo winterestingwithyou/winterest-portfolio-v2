@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { socialLinkSchema } from './types'
+import { socialLinkSchema } from '../types'
 
 describe('socialLinkSchema', () => {
   it('validates a valid social link payload', () => {

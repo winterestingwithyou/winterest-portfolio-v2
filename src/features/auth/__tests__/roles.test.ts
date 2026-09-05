@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { canAccessDashboard, canManageUsers, toDashboardUser } from './roles'
+import { canAccessDashboard, canManageUsers, toDashboardUser } from '../roles'
 
 describe('auth roles', () => {
   it('allows dashboard access for content roles', () => {

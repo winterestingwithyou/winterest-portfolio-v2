@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { authCopy } from './copy'
-import { createLoginSchema, loginSchema } from './validation'
+import { authCopy } from '../copy'
+import { createLoginSchema, loginSchema } from '../validation'
 
 describe('auth validation', () => {
   describe('loginSchema (default)', () => {
@@ -74,7 +74,9 @@ describe('auth validation', () => {
       if (!emptyResult.success) {
         const issues = emptyResult.error.flatten().fieldErrors
         expect(issues.email?.[0]).toBe(authCopy.id.validation.emailRequired)
-        expect(issues.password?.[0]).toBe(authCopy.id.validation.passwordRequired)
+        expect(issues.password?.[0]).toBe(
+          authCopy.id.validation.passwordRequired,
+        )
       }
 
       const invalidEmailResult = idSchema.safeParse({

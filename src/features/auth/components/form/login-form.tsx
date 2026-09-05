@@ -139,9 +139,7 @@ export function LoginForm({ copy, redirectTo }: LoginFormProps) {
                     className="h-10.5 rounded-[0.85rem] border-(--brand-line) bg-[color-mix(in_srgb,var(--surface-strong)_86%,transparent)] pl-10 pr-3.5 text-sm font-semibold text-(--brand-ink) placeholder:text-[color-mix(in_srgb,var(--brand-muted)_72%,transparent)] focus-visible:border-(--brand-orange) focus-visible:ring-(--brand-orange)/20 sm:h-11"
                   />
                 </div>
-                {isInvalid && (
-                  <FieldError errors={field.state.meta.errors} />
-                )}
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
             )
           }}
@@ -196,9 +194,7 @@ export function LoginForm({ copy, redirectTo }: LoginFormProps) {
                     )}
                   </button>
                 </div>
-                {isInvalid && (
-                  <FieldError errors={field.state.meta.errors} />
-                )}
+                {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
             )
           }}

@@ -2,7 +2,7 @@ import { FetchError } from 'ofetch'
 import { describe, expect, it } from 'vitest'
 
 import { env as mockEnv } from '#/test/cloudflare-workers-mock'
-import { api, getApiErrorMessage, getBaseUrl } from './api-client'
+import { api, getApiErrorMessage, getBaseUrl } from '../api-client'
 
 describe('api-client', () => {
   describe('api instance', () => {

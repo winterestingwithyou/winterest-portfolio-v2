@@ -300,7 +300,9 @@ export function ContactForm({ copy }: ContactFormProps) {
                 ref={turnstileRef}
                 action="contact"
                 className="w-full"
-                onSuccess={(token) => form.setFieldValue('turnstileToken', token)}
+                onSuccess={(token) =>
+                  form.setFieldValue('turnstileToken', token)
+                }
                 onError={() => form.setFieldValue('turnstileToken', '')}
                 onExpire={() => form.setFieldValue('turnstileToken', '')}
               />

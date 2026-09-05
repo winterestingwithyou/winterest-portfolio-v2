@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { hashPassword, verifyPassword } from './password'
+import { hashPassword, verifyPassword } from '../password'
 
 describe('password hashing', () => {
   it('hashes and verifies a password with PBKDF2 metadata', async () => {

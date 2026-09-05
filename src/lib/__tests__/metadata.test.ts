@@ -5,7 +5,7 @@ import {
   createRouteMeta,
   formatMetaTitle,
   getRootSiteSettings,
-} from './metadata'
+} from '../metadata'
 
 describe('formatMetaTitle', () => {
   it('formats title using default template (%s | Winterest)', () => {

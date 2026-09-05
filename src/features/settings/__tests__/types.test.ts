@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { resolveActiveCv, siteSettingsSchema } from './types'
+import { resolveActiveCv, siteSettingsSchema } from '../types'
 
 describe('site settings & CV resolution', () => {
   describe('resolveActiveCv', () => {

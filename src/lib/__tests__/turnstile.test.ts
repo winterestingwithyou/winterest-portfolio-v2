@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { verifyTurnstileToken } from './turnstile'
+import { verifyTurnstileToken } from '../turnstile'
 
 describe('verifyTurnstileToken', () => {
   const originalFetch = globalThis.fetch
