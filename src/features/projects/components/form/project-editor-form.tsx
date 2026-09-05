@@ -42,7 +42,7 @@ import {
   SelectValue,
 } from '#/components/ui/select'
 import { TechIcon } from '#/components/ui/tech-icon'
-import { Textarea } from '#/components/ui/textarea'
+import { MarkdownTextarea } from '#/components/ui/markdown-textarea'
 import { ImageUploader } from '#/components/media/image-uploader'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import {
@@ -867,7 +867,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                           {formCopy.description} ({label}){' '}
                           <span className="text-red-500">*</span>
                         </FieldLabel>
-                        <Textarea
+                        <MarkdownTextarea
                           id={field.name}
                           name={field.name}
                           rows={6}
@@ -876,7 +876,8 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                           onChange={(e) => field.handleChange(e.target.value)}
                           placeholder={formCopy.descriptionPlaceholder(label)}
                           aria-invalid={isInvalid}
-                          className="min-h-32 w-full min-w-0 rounded-xl border-(--brand-line) bg-surface text-sm leading-relaxed"
+                          labels={formCopy.markdownEditor}
+                          className="min-h-36 w-full min-w-0 rounded-xl border-(--brand-line) bg-surface text-sm leading-relaxed"
                         />
                         {isInvalid && (
                           <FieldError errors={field.state.meta.errors} />

@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowLeft, Sparkles } from 'lucide-react'
 
 import { Container } from '#/components/marketing/section'
+import { Markdown } from '#/components/ui/markdown'
 import { getProjectsCopy } from '#/features/projects/copy'
 import { ProjectDetailHero } from '#/features/projects/components/section/project-detail-hero'
 import { ProjectDetailSidebar } from '#/features/projects/components/section/project-detail-sidebar'
@@ -57,17 +58,15 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
             <div className="mb-6 flex items-center gap-2 border-b border-(--brand-line) pb-4">
               <Sparkles className="size-5 text-(--brand-orange-deep)" />
               <h2 className="text-xl font-bold text-(--brand-ink)">
-                Deskripsi Project
+                {copy.detail.descriptionHeading}
               </h2>
             </div>
 
             {project.description ? (
-              <div className="prose prose-neutral dark:prose-invert max-w-none text-base leading-relaxed whitespace-pre-wrap text-(--brand-ink)">
-                {project.description}
-              </div>
+              <Markdown content={project.description} />
             ) : (
               <p className="text-sm italic text-(--brand-muted)">
-                Belum ada deskripsi lengkap untuk project ini.
+                {copy.detail.noDescription}
               </p>
             )}
           </div>

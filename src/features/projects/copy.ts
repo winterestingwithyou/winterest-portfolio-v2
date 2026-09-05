@@ -37,6 +37,8 @@ export const projectsCopy = {
       decisions: 'Key Decisions',
       nextSteps: 'Next Steps',
       result: 'Result',
+      descriptionHeading: 'Project Description',
+      noDescription: 'No full description available for this project yet.',
     },
   },
   id: {
@@ -75,6 +77,8 @@ export const projectsCopy = {
       decisions: 'Keputusan Kunci',
       nextSteps: 'Langkah Berikutnya',
       result: 'Hasil',
+      descriptionHeading: 'Deskripsi Project',
+      noDescription: 'Belum ada deskripsi lengkap untuk project ini.',
     },
   },
 } as const

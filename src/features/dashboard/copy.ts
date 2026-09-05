@@ -168,6 +168,14 @@ export const dashboardCopy = {
         description: 'Description',
         descriptionPlaceholder: (lang: string) =>
           `Full project description (${lang}). Supports markdown...`,
+        markdownEditor: {
+          write: 'Write',
+          preview: 'Preview',
+          emptyPreview: 'No description content to preview yet.',
+          helperText: 'Supports Markdown formatting',
+          copyCode: 'Copy code',
+          copiedCode: 'Copied!',
+        },
       },
       table: {
         project: 'Project',
@@ -818,6 +826,14 @@ export const dashboardCopy = {
         description: 'Deskripsi',
         descriptionPlaceholder: (lang: string) =>
           `Deskripsi lengkap project (${lang}). Mendukung format markdown...`,
+        markdownEditor: {
+          write: 'Tulis',
+          preview: 'Pratinjau',
+          emptyPreview: 'Belum ada konten deskripsi untuk dipratinjau.',
+          helperText: 'Mendukung format Markdown',
+          copyCode: 'Salin kode',
+          copiedCode: 'Tersalin!',
+        },
       },
       table: {
         project: 'Project',
