@@ -26,6 +26,9 @@ export const Route = createFileRoute('/api/social/')({
             return Response.json({ data: publicLinks })
           }
 
+          const authUser = await requireDashboardUser(request)
+          if (authUser instanceof Response) return authUser
+
           const links = await getSocialLinks(db)
           return Response.json({ data: links })
         } catch (error) {

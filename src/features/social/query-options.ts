@@ -30,4 +30,15 @@ export const socialQueryOptions = {
         return response.data ?? []
       },
     }),
+  detail: (id: string) =>
+    queryOptions({
+      queryKey: socialQueryKeys.detail(id),
+      queryFn: async (): Promise<SocialLink> => {
+        const response = await api<{ data?: SocialLink }>(`/api/social/${id}`)
+        if (!response.data) {
+          throw new Error('Social link not found.')
+        }
+        return response.data
+      },
+    }),
 }

@@ -15,8 +15,11 @@ import { socialLinkSchema } from '#/features/social/types'
 export const Route = createFileRoute('/api/social/$id')({
   server: {
     handlers: {
-      GET: async ({ params }) => {
+      GET: async ({ params, request }) => {
         try {
+          const authUser = await requireDashboardUser(request)
+          if (authUser instanceof Response) return authUser
+
           const db = getDb(env.DB)
           const socialLink = await getSocialLinkById(db, params.id)
 
