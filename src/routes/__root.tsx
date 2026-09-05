@@ -148,6 +148,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
           href: favicon,
         },
         {
+          rel: 'sitemap',
+          type: 'application/xml',
+          href: '/sitemap.xml',
+        },
+        {
           rel: 'stylesheet',
           href: appCss,
         },

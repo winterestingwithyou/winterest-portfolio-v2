@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StackRouteImport } from './routes/stack'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as DashboardRouteImport } from './routes/dashboard'
@@ -55,6 +56,11 @@ import { Route as ApiMediaFileSplatRouteImport } from './routes/api/media/file/$
 const StackRoute = StackRouteImport.update({
   id: '/stack',
   path: '/stack',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResumeRoute = ResumeRouteImport.update({
@@ -274,6 +280,7 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
   '/resume': typeof ResumeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stack': typeof StackRoute
   '/api/categories': typeof ApiCategoriesRoute
   '/api/contact': typeof ApiContactRoute
@@ -317,6 +324,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
   '/resume': typeof ResumeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stack': typeof StackRoute
   '/api/categories': typeof ApiCategoriesRoute
   '/api/contact': typeof ApiContactRoute
@@ -362,6 +370,7 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRoute
   '/resume': typeof ResumeRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/stack': typeof StackRoute
   '/api/categories': typeof ApiCategoriesRoute
   '/api/contact': typeof ApiContactRoute
@@ -408,6 +417,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/resume'
+    | '/sitemap.xml'
     | '/stack'
     | '/api/categories'
     | '/api/contact'
@@ -451,6 +461,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/login'
     | '/resume'
+    | '/sitemap.xml'
     | '/stack'
     | '/api/categories'
     | '/api/contact'
@@ -495,6 +506,7 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/login'
     | '/resume'
+    | '/sitemap.xml'
     | '/stack'
     | '/api/categories'
     | '/api/contact'
@@ -540,6 +552,7 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRouteWithChildren
   LoginRoute: typeof LoginRoute
   ResumeRoute: typeof ResumeRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StackRoute: typeof StackRoute
   ApiCategoriesRoute: typeof ApiCategoriesRoute
   ApiContactRoute: typeof ApiContactRoute
@@ -569,6 +582,13 @@ declare module '@tanstack/react-router' {
       path: '/stack'
       fullPath: '/stack'
       preLoaderRoute: typeof StackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/resume': {
@@ -910,6 +930,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRouteWithChildren,
   LoginRoute: LoginRoute,
   ResumeRoute: ResumeRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   StackRoute: StackRoute,
   ApiCategoriesRoute: ApiCategoriesRoute,
   ApiContactRoute: ApiContactRoute,
