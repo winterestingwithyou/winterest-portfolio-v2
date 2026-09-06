@@ -42,7 +42,8 @@ Guidelines are modularly organized in [`.agents/rules/`](file:///d:/winterest-pr
 8. **[08-feature-architecture-structure.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/08-feature-architecture-structure.md)**: Feature-based kebab-case architecture, directory layout, section/form/table component conventions.
 9. **[09-copywriting-data-standards.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/09-copywriting-data-standards.md)**: Feature-scoped `copy.ts` vs static `data.ts`, i18n helpers, global layout copy, and future CMS fallback contract.
 10. **[10-code-quality-testing.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/10-code-quality-testing.md)**: TypeScript & Clean React, state management, Vitest testing, Git standards, and things to avoid.
-11. **[graphify.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/graphify.md)**: Knowledge graph query and update rules.
+11. **[11-spec-driven-development.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/11-spec-driven-development.md)**: Spec directory structure, technical contracts, SDD lifecycle, and living documentation maintenance.
+12. **[graphify.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/graphify.md)**: Knowledge graph query and update rules.
 
 ---
 
@@ -75,3 +76,4 @@ bun run db:studio:remote
 - **CSS Syntax**: Tailwind CSS v4 variable syntax: `text-(--brand-ink)`, `bg-(--brand-orange-soft)`, `border-(--brand-line)`.
 - **Copywriting & Data**: Feature-scoped `copy.ts` for localized UI strings (`en`/`id`) and `data.ts` strictly for static structured datasets. Global layout copy in `src/features/portfolio/copy.ts`.
 - **File Naming**: Strict `kebab-case` for all project files and directories.
+- **Spec-Driven Development**: Maintain living specs in `specs/` (`specs/system/`, `specs/features/`, `specs/changes/`). Verify contracts against specifications before implementing non-trivial changes.
