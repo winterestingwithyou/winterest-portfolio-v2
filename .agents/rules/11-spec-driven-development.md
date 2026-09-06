@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Spec-Driven Development (SDD) & Living Documentation Standards
 
 ## Principles of SDD
@@ -81,6 +85,7 @@ When developing new capabilities or refactoring existing ones:
 ## Reverse-Spec & Maintenance Guidelines
 
 For existing features where documentation is missing or outdated:
+
 - Use `graphify query "<feature-name>"` or `HANDOVER.md` to map existing queries, components, and routes.
 - Create or update the living spec to document existing baseline behaviors before introducing modifications.
 - Keep specs concise and technical; avoid prose fluff and focus on technical contracts.
