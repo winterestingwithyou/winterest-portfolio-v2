@@ -160,6 +160,7 @@ src/
 2. **Out of Range Page Number**: Jika user memasukkan `?page=999` pada URL, UI secara otomatis mengoreksi tampilan ke halaman terakhir yang valid.
 3. **Debounce Race Conditions**: Pemanfaatan `use-debounce` (delay 300ms - 400ms) memastikan request tidak ditembakkan pada setiap ketukan tuts keyboard.
 4. **Single-Page Datasets**: Jika total item lebih kecil atau sama dengan ukuran per halaman (`total <= pageSize`), navigasi pagination disembunyikan secara visual namun status total item tetap ditampilkan.
+5. **Scroll Position Retention on Filter/Search**: Navigasi parameter pencarian dan filter (`q`, `category`, `status`, `type`) mempertahankan posisi scroll viewport user tanpa loncat ke atas (`resetScroll: false` dan `getScrollRestorationKey: (location) => location.pathname`).
 
 ---
 
@@ -172,4 +173,5 @@ src/
 - [x] `/dashboard/stack` mempaginasi tabel teknologi dan kategori masing-masing 10 baris per halaman.
 - [x] `/dashboard/media` memproses query limit/offset dan count di server D1 dengan 12 item per halaman.
 - [x] Semua rute target menyinkronkan state ke URL search params.
+- [x] Viewport scroll position dipertahankan saat filter atau pencarian diperbarui (diverifikasi via Playwright automation).
 - [x] `bun run typecheck`, `bun run lint`, dan `bun run test` lolos 100% tanpa error.

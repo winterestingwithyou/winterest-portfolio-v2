@@ -109,5 +109,6 @@ src/routes/dashboard/projects/$id.tsx   -> DashboardProjectEditPage -> ProjectEd
 - [x] Saving project updates `projects`, `project_translations`, and `project_technologies` atomically.
 - [x] Deleting project removes row and refreshes dashboard table.
 - [x] Dashboard projects table supports debounced search, status filter, and 10-row DataPagination.
+- [x] Viewport scroll position is preserved without jumping to top when filtering or searching (`resetScroll: false`).
 - [x] Validation schema passes Vitest suite ([`src/features/projects/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/projects/__tests__/validation.test.ts)).
 - [x] TypeScript check passes: `bun run typecheck`.

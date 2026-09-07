@@ -50,6 +50,7 @@ export function DashboardProjectsPage() {
         page: undefined,
       }),
       replace: true,
+      resetScroll: false,
     })
   }
 
@@ -64,6 +65,7 @@ export function DashboardProjectsPage() {
         page: undefined,
       }),
       replace: true,
+      resetScroll: false,
     })
   }
 
@@ -74,6 +76,7 @@ export function DashboardProjectsPage() {
         page: val > 1 ? val : undefined,
       }),
       replace: true,
+      resetScroll: false,
     })
   }
 

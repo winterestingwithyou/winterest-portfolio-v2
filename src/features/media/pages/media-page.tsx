@@ -49,6 +49,7 @@ export function MediaPage() {
         page: undefined, // Reset to page 1 on new search
       }),
       replace: true,
+      resetScroll: false,
     })
   }
 
@@ -60,6 +61,7 @@ export function MediaPage() {
         page: undefined, // Reset to page 1 on tab switch
       }),
       replace: true,
+      resetScroll: false,
     })
   }
 
@@ -70,6 +72,7 @@ export function MediaPage() {
         page: nextPage > 1 ? nextPage : undefined,
       }),
       replace: true,
+      resetScroll: false,
     })
   }
 

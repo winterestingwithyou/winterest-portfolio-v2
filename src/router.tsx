@@ -15,6 +15,7 @@ export function getRouter() {
     routeTree,
     context,
     scrollRestoration: true,
+    getScrollRestorationKey: (location) => location.pathname,
     defaultPreload: 'intent',
     defaultPreloadStaleTime: 0,
     defaultNotFoundComponent: NotFoundPage,

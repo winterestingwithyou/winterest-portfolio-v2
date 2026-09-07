@@ -75,6 +75,7 @@ export function ProjectsListPage({ projects }: ProjectsListPageProps) {
         page: undefined, // reset page to 1
       }),
       replace: true,
+      resetScroll: false,
     })
   }
 
@@ -86,6 +87,7 @@ export function ProjectsListPage({ projects }: ProjectsListPageProps) {
         page: undefined, // reset page to 1
       }),
       replace: true,
+      resetScroll: false,
     })
   }
 
@@ -96,6 +98,7 @@ export function ProjectsListPage({ projects }: ProjectsListPageProps) {
         page: newPage === 1 ? undefined : newPage,
       }),
       replace: true,
+      resetScroll: false,
     })
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
@@ -104,6 +107,7 @@ export function ProjectsListPage({ projects }: ProjectsListPageProps) {
     void navigate({
       search: () => ({}),
       replace: true,
+      resetScroll: false,
     })
   }
 

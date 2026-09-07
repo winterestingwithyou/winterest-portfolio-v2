@@ -51,6 +51,7 @@ export function DashboardStackPage() {
         page: undefined,
       }),
       replace: true,
+      resetScroll: false,
     })
   }
 
@@ -62,6 +63,7 @@ export function DashboardStackPage() {
         page: undefined,
       }),
       replace: true,
+      resetScroll: false,
     })
   }
 
@@ -73,6 +75,7 @@ export function DashboardStackPage() {
         page: undefined,
       }),
       replace: true,
+      resetScroll: false,
     })
   }
 
@@ -83,6 +86,7 @@ export function DashboardStackPage() {
         page: val > 1 ? val : undefined,
       }),
       replace: true,
+      resetScroll: false,
     })
   }
   const [error, setError] = useState<string | null>(null)
