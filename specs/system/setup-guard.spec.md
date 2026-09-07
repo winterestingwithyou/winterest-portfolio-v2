@@ -80,6 +80,7 @@ graph TD
 
 ### Stage 2: Owner Account Required
 
+- **Interactive Command**: `bun run create-owner` (TUI wizard powered by `@clack/prompts` with target selection)
 - **Local Command**: `bun run create-owner:local`
 - **Remote Command**: `bun run create-owner:remote`
 
@@ -97,7 +98,7 @@ graph TD
 
 - [ ] When D1 database has no tables, root layout renders Migration Required screen.
 - [ ] When D1 database has tables but 0 owners, root layout renders Owner Account Required screen.
-- [ ] Running `bun run create-owner:local` provisions an owner and unlocks the root layout upon refresh.
+- [ ] Running `bun run create-owner` or `bun run create-owner:local` provisions an owner and unlocks the root layout upon refresh.
 - [ ] Tab switching between Local and Remote updates command snippets correctly.
 - [ ] Copy button copies command snippet to clipboard.
 - [ ] TypeScript check passes: `bun run check`.

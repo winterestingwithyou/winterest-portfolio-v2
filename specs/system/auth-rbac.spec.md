@@ -22,7 +22,7 @@ The Authentication & RBAC system provides secure, edge-compatible authentication
 - **Strict 3-Tier RBAC**: Granular permission boundaries supporting `owner`, `admin`, and `editor`.
 - **Strict 1-Owner Model**: Only a single owner can exist in the system. The owner cannot be downgraded or deleted.
 - **Closed Public Registration**: Public self-registration is permanently disabled at the Better Auth hook level.
-- **Interactive CLI Owner Bootstrap**: The initial owner account is provisioned out-of-band via masked interactive CLI (`bun run create-owner:local` / `bun run create-owner:remote`).
+- **Interactive CLI Owner Bootstrap**: The initial owner account is provisioned out-of-band via an interactive `@clack/prompts` CLI with Zod validation schemas (`bun run create-owner` [with interactive target selection], `bun run create-owner:local`, or `bun run create-owner:remote`).
 - **Turnstile Bot Mitigation**: Sign-in endpoints are guarded by Cloudflare Turnstile token verification before credentials evaluation.
 
 ---
@@ -212,6 +212,31 @@ graph TD
 5. **Open Redirect Mitigation**:
    - `getSafeRedirect()` enforces that `redirectTo` starts with `/`, does not start with `//`, and contains no backslashes (`\`).
 
+### Owner Account Bootstrap CLI Architecture
+
+The initial owner account is provisioned out-of-band via an interactive CLI tool built on `@clack/prompts` and validated with Zod:
+
+- **CLI Entrypoint**: [`src/db/create-owner-cli.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/db/create-owner-cli.ts)
+- **Validation & Helpers**: [`src/db/create-owner-helpers.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/db/create-owner-helpers.ts)
+  - `ownerEmailSchema`: `z.string().trim().min(1).email()`
+  - `ownerPasswordSchema`: `z.string().min(8)`
+  - `createPasswordMatchSchema(expectedPassword)`: `z.string().min(1).refine(val === expectedPassword)`
+  - `validateOwnerEmail`, `validateOwnerPassword`, `validatePasswordMatch`: Wrapper functions executing `.safeParse()` for `@clack/prompts` validation integration
+  - `formatOwnerSummary`: Formats account summary display for the review card
+- **Unit Tests**: [`src/db/__tests__/create-owner.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/db/__tests__/create-owner.test.ts)
+- **CLI Commands**:
+  - `bun run create-owner`: Interactive wizard (prompts target database selection via `select()`)
+  - `bun run create-owner:local`: Direct provisioning to local Miniflare SQLite D1
+  - `bun run create-owner:remote`: Direct provisioning to Cloudflare production D1
+- **Workflow & Safeguards**:
+  1. _Target Selection_: Respects CLI argument (`local` | `remote`) or falls back to interactive Clack `select()`.
+  2. _Owner Invariant Gate_: Queries D1 for existing `role: 'owner'`. If found, displays details via `note()` and aborts with `cancel()`.
+  3. _Name Input_: Defaults to `'Winterest'`.
+  4. _Email Input_: Validates format with Zod and checks email uniqueness against D1.
+  5. _Password Input_: Masked with asterisk `*`, enforces minimum 8 characters via Zod, requires matching confirmation.
+  6. _Pre-Execution Review_: Shows summary card via `note()` and requires explicit `confirm()`.
+  7. _Storage_: Generates PBKDF2 Web Crypto hash and atomically inserts `user` (role: `owner`) and `account` (provider: `credential`).
+
 ---
 
 ## 8. Acceptance Criteria & Verification Checklist (Definition of Done)
@@ -219,6 +244,7 @@ graph TD
 - [ ] Web Crypto PBKDF2 hash & verify passes Vitest suite ([`src/lib/auth/__tests__/password.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/lib/auth/__tests__/password.test.ts)).
 - [ ] RBAC role permissions logic passes Vitest suite ([`src/features/auth/__tests__/roles.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/auth/__tests__/roles.test.ts)).
 - [ ] Login validation schemas pass Vitest suite ([`src/features/auth/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/auth/__tests__/validation.test.ts)).
+- [ ] Owner bootstrap Zod validation schemas and helpers pass Vitest suite ([`src/db/__tests__/create-owner.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/db/__tests__/create-owner.test.ts)).
 - [ ] Turnstile security challenge verification passes Vitest suite ([`src/lib/__tests__/turnstile.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/lib/__tests__/turnstile.test.ts)).
 - [ ] TypeScript check passes cleanly: `bun run check`.
 - [ ] Production build succeeds without errors: `bun run build`.
