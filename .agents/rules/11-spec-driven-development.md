@@ -86,6 +86,6 @@ When developing new capabilities or refactoring existing ones:
 
 For existing features where documentation is missing or outdated:
 
-- Use `graphify query "<feature-name>"` or `HANDOVER.md` to map existing queries, components, and routes.
+- Use `graphify query "<feature-name>"` to map existing queries, components, and routes.
 - Create or update the living spec to document existing baseline behaviors before introducing modifications.
 - Keep specs concise and technical; avoid prose fluff and focus on technical contracts.
