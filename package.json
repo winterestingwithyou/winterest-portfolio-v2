@@ -38,6 +38,7 @@
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
+    "@clack/prompts": "^1.7.0",
     "@cloudflare/vite-plugin": "^1.26.0",
     "@faker-js/faker": "^10.3.0",
     "@radix-ui/react-checkbox": "^1.2.2",
