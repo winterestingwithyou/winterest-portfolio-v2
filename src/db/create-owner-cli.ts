@@ -1,8 +1,18 @@
-import { stdin as input, stdout as output } from 'node:process'
-import { createInterface } from 'node:readline/promises'
-
-import { config } from 'dotenv'
+import {
+  cancel,
+  confirm,
+  intro,
+  isCancel,
+  log,
+  note,
+  outro,
+  password,
+  select,
+  spinner,
+  text,
+} from '@clack/prompts'
 import BetterSqliteDatabase from 'better-sqlite3'
+import { config } from 'dotenv'
 import { eq } from 'drizzle-orm'
 import { drizzle as drizzleBetterSqlite } from 'drizzle-orm/better-sqlite3'
 
@@ -12,130 +22,62 @@ import {
   findLocalD1Database,
   readEnv,
 } from './cli-utils'
+import {
+  formatOwnerSummary,
+  validateOwnerEmail,
+  validateOwnerPassword,
+  validatePasswordMatch,
+} from './create-owner-helpers'
 import type { Database } from './index'
 import * as schema from './schema'
 
 config({ path: ['.env.local', '.env'] })
 
-const target = process.argv[2] ?? 'local'
+type Target = 'local' | 'remote'
 
-if (target !== 'local' && target !== 'remote') {
-  console.error(
-    'Usage: bun run create-owner:local or bun run create-owner:remote',
-  )
-  process.exit(1)
-}
+async function resolveTarget(): Promise<Target> {
+  const argTarget = process.argv[2]?.trim().toLowerCase()
 
-async function main() {
-  console.log(`\n========================================`)
-  console.log(
-    `🚀 Winterest Portfolio - Create Owner Account (${target.toUpperCase()})`,
-  )
-  console.log(`========================================\n`)
-
-  if (target === 'local') {
-    await handleLocal()
-  } else {
-    await handleRemote()
-  }
-}
-
-async function handleLocal() {
-  const localDbPath = findLocalD1Database()
-
-  if (!localDbPath) {
-    throw new Error(
-      'Local D1 database was not found. Please run local D1 migrations first (e.g. bun run db:migrate:local).',
-    )
+  if (argTarget === 'local' || argTarget === 'remote') {
+    return argTarget
   }
 
-  const sqlite = new BetterSqliteDatabase(localDbPath)
-  const db = drizzleBetterSqlite(sqlite, { schema })
-
-  try {
-    await checkAndPromptOwner(
-      db as unknown as Database,
-      `Local D1 (${localDbPath})`,
-    )
-  } finally {
-    sqlite.close()
+  if (argTarget) {
+    log.error(`Invalid target "${argTarget}". Expected "local" or "remote".`)
+    process.exit(1)
   }
-}
 
-async function handleRemote() {
-  const databaseId = readEnv('CLOUDFLARE_D1_DATABASE_ID')
-  const db = createRemoteD1Database()
-
-  await checkAndPromptOwner(db, `Remote D1 (${databaseId})`)
-}
-
-function promptPassword(promptText: string): Promise<string> {
-  return new Promise((resolve) => {
-    output.write(promptText)
-
-    const isRaw = input.isRaw
-    if (input.isTTY) {
-      input.setRawMode(true)
-    }
-    input.resume()
-
-    let password = ''
-
-    const onData = (chunk: Buffer) => {
-      const str = chunk.toString('utf-8')
-
-      for (const char of str) {
-        switch (char) {
-          case '\r':
-          case '\n':
-            cleanup()
-            output.write('\n')
-            resolve(password)
-            return
-          case '\u0003':
-            // Ctrl+C
-            cleanup()
-            output.write('\n')
-            process.exit(130)
-            return
-          case '\u0004':
-            // Ctrl+D
-            cleanup()
-            output.write('\n')
-            resolve(password)
-            return
-          case '\u0008':
-          case '\x7f':
-            // Backspace / Delete
-            if (password.length > 0) {
-              password = password.slice(0, -1)
-              output.write('\b \b')
-            }
-            break
-          default:
-            if (char.charCodeAt(0) >= 32) {
-              password += char
-              output.write('*')
-            }
-            break
-        }
-      }
-    }
-
-    const cleanup = () => {
-      input.removeListener('data', onData)
-      if (input.isTTY) {
-        input.setRawMode(Boolean(isRaw))
-      }
-      input.pause()
-    }
-
-    input.on('data', onData)
+  const selectedTarget = await select({
+    message: 'Select target Cloudflare D1 database:',
+    options: [
+      {
+        value: 'local',
+        label: 'Local D1',
+        hint: 'Miniflare SQLite local state',
+      },
+      {
+        value: 'remote',
+        label: 'Remote D1',
+        hint: 'Cloudflare Production database',
+      },
+    ],
+    initialValue: 'local',
   })
+
+  if (isCancel(selectedTarget)) {
+    cancel('Operation cancelled.')
+    process.exit(0)
+  }
+
+  return selectedTarget as Target
 }
 
-async function checkAndPromptOwner(db: Database, targetDescription: string) {
-  // Check 1 owner rule
+async function runCreation(db: Database, targetDescription: string) {
+  const s = spinner()
+
+  // 1. Check existing owner rule (max 1 owner)
+  s.start(`Connecting to ${targetDescription} and checking owner status...`)
+
   const existingOwners = await db
     .select({
       id: schema.user.id,
@@ -146,90 +88,123 @@ async function checkAndPromptOwner(db: Database, targetDescription: string) {
     .where(eq(schema.user.role, 'owner'))
     .all()
 
+  s.stop('Database connection verified')
+
   if (existingOwners.length > 0) {
-    console.log(`ℹ️  Target Database: ${targetDescription}`)
-    console.error(
-      `\n❌ Error: An owner account already exists in this database:`,
+    note(
+      [
+        `Name  : ${existingOwners[0].name}`,
+        `Email : ${existingOwners[0].email}`,
+        ``,
+        `Only 1 owner account is permitted in the Winterest portfolio platform.`,
+        `If you need to regain access, use the password reset flow.`,
+      ].join('\n'),
+      'Existing Owner Account Found',
     )
-    console.error(`   Name : ${existingOwners[0].name}`)
-    console.error(`   Email: ${existingOwners[0].email}`)
-    console.error(
-      `\nOnly 1 owner account is permitted in the Winterest portfolio.\n`,
-    )
+    cancel('Owner creation aborted.')
     process.exit(1)
   }
 
-  const rl = createInterface({ input, output })
+  // 2. Prompt Name
+  const nameResult = await text({
+    message: 'Enter Owner Name:',
+    placeholder: 'Winterest',
+    defaultValue: 'Winterest',
+  })
 
-  let name = 'Winterest'
+  if (isCancel(nameResult)) {
+    cancel('Operation cancelled.')
+    process.exit(0)
+  }
+
+  const name = nameResult.trim() || 'Winterest'
+
+  // 3. Prompt Email with validation and DB uniqueness check
   let email = ''
+  while (!email) {
+    const emailResult = await text({
+      message: 'Enter Owner Email:',
+      placeholder: 'owner@winterest.dev',
+      validate: validateOwnerEmail,
+    })
 
-  try {
-    // 1. Name
-    const nameInput = await rl.question(
-      'Enter Owner Name [default: Winterest]: ',
-    )
-    name = nameInput.trim() || 'Winterest'
-
-    // 2. Email
-    while (!email) {
-      const emailInput = await rl.question('Enter Owner Email: ')
-      const trimmed = emailInput.trim().toLowerCase()
-      if (!trimmed || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
-        console.log(
-          '⚠️  Please enter a valid email address (e.g. you@example.com).',
-        )
-        continue
-      }
-
-      // Check if email already registered
-      const existingUser = await db
-        .select({ id: schema.user.id })
-        .from(schema.user)
-        .where(eq(schema.user.email, trimmed))
-        .get()
-
-      if (existingUser) {
-        console.log(
-          `⚠️  The email "${trimmed}" is already registered. Please choose another email.`,
-        )
-        continue
-      }
-
-      email = trimmed
+    if (isCancel(emailResult)) {
+      cancel('Operation cancelled.')
+      process.exit(0)
     }
-  } finally {
-    rl.close()
-  }
 
-  // 3. Password with masked asterisk input and confirmation
-  let password = ''
-  while (!password) {
-    const passInput = await promptPassword(
-      'Enter Owner Password (minimum 8 characters): ',
-    )
-    if (!passInput || passInput.length < 8) {
-      console.log('⚠️  Password must be at least 8 characters long.')
+    const trimmedEmail = emailResult.trim().toLowerCase()
+
+    const existingUser = await db
+      .select({ id: schema.user.id })
+      .from(schema.user)
+      .where(eq(schema.user.email, trimmedEmail))
+      .get()
+
+    if (existingUser) {
+      log.error(
+        `The email "${trimmedEmail}" is already registered. Please use another email.`,
+      )
       continue
     }
 
-    const confirmInput = await promptPassword('Confirm Owner Password: ')
-    if (passInput !== confirmInput) {
-      console.log('⚠️  Passwords do not match. Please try again.\n')
-      continue
-    }
-
-    password = passInput
+    email = trimmedEmail
   }
 
-  console.log('\n⏳ Creating owner account and hashing password...')
+  // 4. Prompt Password
+  const passwordResult = await password({
+    message: 'Enter Owner Password (minimum 8 characters):',
+    mask: '*',
+    validate: validateOwnerPassword,
+  })
+
+  if (isCancel(passwordResult)) {
+    cancel('Operation cancelled.')
+    process.exit(0)
+  }
+
+  const ownerPassword = passwordResult
+
+  // 5. Prompt Confirm Password
+  const confirmResult = await password({
+    message: 'Confirm Owner Password:',
+    mask: '*',
+    validate: (val) => validatePasswordMatch(ownerPassword, val),
+  })
+
+  if (isCancel(confirmResult)) {
+    cancel('Operation cancelled.')
+    process.exit(0)
+  }
+
+  // 6. Review & Final Confirmation
+  note(
+    formatOwnerSummary({
+      target: targetDescription,
+      name,
+      email,
+    }),
+    'Account Summary',
+  )
+
+  const shouldProceed = await confirm({
+    message: 'Create owner account with these details?',
+    initialValue: true,
+  })
+
+  if (isCancel(shouldProceed) || !shouldProceed) {
+    cancel('Owner creation cancelled.')
+    process.exit(0)
+  }
+
+  // 7. Execute Hashing & Insert
+  s.start('Hashing password and writing owner record...')
 
   const userId = crypto.randomUUID()
   const accountId = crypto.randomUUID()
   const now = new Date()
-  const hashedPassword = await hashPassword(password)
+  const hashedPassword = await hashPassword(ownerPassword)
 
-  // Insert user record
   await db.insert(schema.user).values({
     id: userId,
     name,
@@ -240,7 +215,6 @@ async function checkAndPromptOwner(db: Database, targetDescription: string) {
     updatedAt: now,
   })
 
-  // Insert Better Auth credential account record
   await db.insert(schema.account).values({
     id: accountId,
     accountId: userId,
@@ -251,20 +225,58 @@ async function checkAndPromptOwner(db: Database, targetDescription: string) {
     updatedAt: now,
   })
 
-  console.log('\n========================================')
-  console.log('✨ Owner account created successfully!')
-  console.log(`Target   : ${targetDescription}`)
-  console.log(`Name     : ${name}`)
-  console.log(`Email    : ${email}`)
-  console.log(`Role     : owner`)
-  console.log('========================================')
-  console.log('You can now log in at /login with these credentials.\n')
+  s.stop('Owner credentials saved')
+
+  // 8. Outro & Success Info
+  note(
+    [
+      `Owner   : ${name} <${email}>`,
+      `Target  : ${targetDescription}`,
+      `Status  : Active (owner)`,
+      ``,
+      `You can now log in at /login with these credentials.`,
+    ].join('\n'),
+    'Account Created Successfully',
+  )
+
+  outro('Winterest Portfolio owner setup completed.')
+}
+
+async function main() {
+  intro('Winterest Portfolio — Create Owner Account')
+
+  const target = await resolveTarget()
+
+  if (target === 'local') {
+    const localDbPath = findLocalD1Database()
+
+    if (!localDbPath) {
+      log.error(
+        'Local D1 database was not found. Please run local D1 migrations first (e.g. bun run db:migrate:local).',
+      )
+      cancel('Owner creation aborted.')
+      process.exit(1)
+    }
+
+    const sqlite = new BetterSqliteDatabase(localDbPath)
+    const db = drizzleBetterSqlite(sqlite, { schema })
+
+    try {
+      await runCreation(db as unknown as Database, `Local D1 (${localDbPath})`)
+    } finally {
+      sqlite.close()
+    }
+  } else {
+    const databaseId = readEnv('CLOUDFLARE_D1_DATABASE_ID', 'owner creation')
+    const db = createRemoteD1Database()
+
+    await runCreation(db, `Remote D1 (${databaseId})`)
+  }
 }
 
 main().catch((err) => {
-  console.error(
-    '\n❌ Failed to create owner:',
-    err instanceof Error ? err.message : err,
+  log.error(
+    `Failed to create owner: ${err instanceof Error ? err.message : String(err)}`,
   )
   process.exit(1)
 })
