@@ -1,29 +1,52 @@
 import { queryOptions } from '@tanstack/react-query'
 
-import type { MediaRecord } from '#/features/media/queries'
+import type { MediaPaginationMeta, MediaRecord } from '#/features/media/queries'
 import { api } from '#/lib/api-client'
+
+export type MediaQueryFilter = {
+  search?: string
+  type?: 'all' | 'image' | 'document'
+  page?: number
+  limit?: number
+}
+
+export type MediaResponse = {
+  data: MediaRecord[]
+  pagination: MediaPaginationMeta
+}
 
 export const mediaQueryKeys = {
   all: ['media'] as const,
   lists: () => [...mediaQueryKeys.all, 'list'] as const,
-  list: (search?: string) =>
+  list: (filter?: MediaQueryFilter) =>
     [
       ...mediaQueryKeys.lists(),
-      { search: search?.trim() || undefined },
+      {
+        search: filter?.search?.trim() || undefined,
+        type: filter?.type && filter.type !== 'all' ? filter.type : undefined,
+        page: filter?.page ?? 1,
+        limit: filter?.limit ?? 12,
+      },
     ] as const,
   details: () => [...mediaQueryKeys.all, 'detail'] as const,
   detail: (id: string) => [...mediaQueryKeys.details(), id] as const,
 }
 
 export const mediaQueryOptions = {
-  list: (search?: string) =>
+  list: (filter?: MediaQueryFilter) =>
     queryOptions({
-      queryKey: mediaQueryKeys.list(search),
-      queryFn: async (): Promise<MediaRecord[]> => {
-        const res = await api<{ data?: MediaRecord[] }>('/api/media', {
-          query: search?.trim() ? { search: search.trim() } : undefined,
+      queryKey: mediaQueryKeys.list(filter),
+      queryFn: async (): Promise<MediaResponse> => {
+        const queryParams: Record<string, string | number> = {}
+        if (filter?.search?.trim()) queryParams.search = filter.search.trim()
+        if (filter?.type && filter.type !== 'all')
+          queryParams.type = filter.type
+        if (filter?.page) queryParams.page = filter.page
+        if (filter?.limit) queryParams.limit = filter.limit
+
+        return api<MediaResponse>('/api/media', {
+          query: Object.keys(queryParams).length > 0 ? queryParams : undefined,
         })
-        return res.data ?? []
       },
     }),
 }

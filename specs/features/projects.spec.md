@@ -8,7 +8,7 @@
 | **Public Routes**    | [`/projects`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/projects/index.tsx), [`/projects/$slug`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/projects/$slug.tsx) |
 | **Dashboard Routes** | `/dashboard/projects`, `/dashboard/projects/new`, `/dashboard/projects/$id`                                                                                                                              |
 | **RBAC Permissions** | Public (Read Published), Editor/Admin/Owner (Full Management)                                                                                                                                            |
-| **Last Updated**     | 2026-09-06                                                                                                                                                                                               |
+| **Last Updated**     | 2026-09-07                                                                                                                                                                                               |
 
 ---
 
@@ -22,7 +22,8 @@ The Projects feature manages the portfolio's showcase projects and technical cas
 - **Relational Tech Association**: Projects link directly to entities in the `technologies` catalog via many-to-many join table.
 - **Status & Visibility Lifecycle**: Supports `draft`, `in_progress`, `published`, and `archived` states, as well as `public` and `private` visibility flags.
 - **Featured Pinning**: Ability to pin high-impact projects to the homepage hero section.
-- **Live Showcase & Filter**: Filter projects on `/projects` by stack tags, categories, and completion status.
+- **Live Showcase & Filter**: Filter projects on `/projects` by stack tags, categories (pill tabs), and debounced search, paginated at 9 projects per page with URL sync (`?q=...&category=...&page=...`).
+- **Dashboard Table Management**: TanStack Table on `/dashboard/projects` with client-side debounced search, status filter dropdown, row count indicators, and 10-row pagination synced to URL.
 - **Deep Slug Case Study**: `/projects/$slug` renders project overview, architecture diagram, challenges, live demo, and source code links.
 
 ---
@@ -60,8 +61,9 @@ The Projects feature manages the portfolio's showcase projects and technical cas
 ### Validation Schema ([`src/features/projects/validation.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/projects/validation.ts))
 
 - `projectInputSchema`:
-  - `slug`: URL-safe regex `/^[a-z0-9]+(?:-[a-z0-9]+)*$/`, 2-96 chars.
-  - `status`: `draft` | `in_progress` | `published` | `archived`.
+  - `slug`: kebab-case format.
+  - `status`: enum (`published`, `draft`, `in_progress`, `archived`).
+  - `visibility`: enum (`public`, `private`).
   - `translations`: `{ en: translationSchema, id: translationSchema }`.
   - `technologyIds`: Array of technology UUIDs.
 
@@ -73,11 +75,11 @@ The Projects feature manages the portfolio's showcase projects and technical cas
 
 ```txt
 Public:
-src/routes/projects/index.tsx -> ProjectsListPage (Filter bar, ProjectCard grid)
+src/routes/projects/index.tsx -> ProjectsListPage (Category pills, debounced SearchInput, 9-item ProjectCard grid, DataPagination)
 src/routes/projects/$slug.tsx -> ProjectDetailPage (Markdown body, tech badges, links sidebar)
 
 Dashboard:
-src/routes/dashboard/projects/index.tsx -> DashboardProjectsPage (TanStack Table, status filters)
+src/routes/dashboard/projects/index.tsx -> DashboardProjectsPage (DashboardProjectsTable, status filter, DataPagination)
 src/routes/dashboard/projects/new.tsx   -> DashboardProjectNewPage -> ProjectEditorForm
 src/routes/dashboard/projects/$id.tsx   -> DashboardProjectEditPage -> ProjectEditorForm
 ```
@@ -101,10 +103,11 @@ src/routes/dashboard/projects/$id.tsx   -> DashboardProjectEditPage -> ProjectEd
 
 ## 6. Acceptance Criteria & DoD Checklist
 
-- [ ] Public projects page renders filterable list of published projects only.
-- [ ] Project slug detail renders case study with active locale translation.
-- [ ] ProjectEditorForm validates bilingual fields and slug format before submission.
-- [ ] Saving project updates `projects`, `project_translations`, and `project_technologies` atomically.
-- [ ] Deleting project removes row and refreshes dashboard table.
-- [ ] Validation schema passes Vitest suite ([`src/features/projects/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/projects/__tests__/validation.test.ts)).
-- [ ] TypeScript check passes: `bun run check`.
+- [x] Public projects page renders filterable list of published projects with search, category pills, and 9-item pagination.
+- [x] Project slug detail renders case study with active locale translation.
+- [x] ProjectEditorForm validates bilingual fields and slug format before submission.
+- [x] Saving project updates `projects`, `project_translations`, and `project_technologies` atomically.
+- [x] Deleting project removes row and refreshes dashboard table.
+- [x] Dashboard projects table supports debounced search, status filter, and 10-row DataPagination.
+- [x] Validation schema passes Vitest suite ([`src/features/projects/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/projects/__tests__/validation.test.ts)).
+- [x] TypeScript check passes: `bun run typecheck`.

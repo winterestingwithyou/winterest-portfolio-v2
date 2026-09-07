@@ -30,7 +30,7 @@ specs/
 │   ├── portfolio.spec.md      # Global layout shell, resume, dynamic sitemap XML
 │   └── system.spec.md         # System setup status query, setup-required UI screens
 └── changes/                   # Proposed specifications & RFCs before implementation
-    └── YYYY-MM-[feature].md
+    └── 2026-09-search-filter-pagination.md # Search, Filter & Pagination across public & dashboard (Implemented)
 ```
 
 ---

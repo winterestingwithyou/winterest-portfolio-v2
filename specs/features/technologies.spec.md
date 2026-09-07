@@ -8,7 +8,7 @@
 | **Public Routes**    | [`/stack`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/stack.tsx)                          |
 | **Dashboard Routes** | `/dashboard/stack`, `/dashboard/stack/categories/*`, `/dashboard/stack/technologies/*`                        |
 | **RBAC Permissions** | Public (Read), Editor/Admin/Owner (Full Management)                                                           |
-| **Last Updated**     | 2026-09-06                                                                                                    |
+| **Last Updated**     | 2026-09-07                                                                                                    |
 
 ---
 
@@ -22,6 +22,8 @@ The Technologies feature manages Winterest's developer toolkit, categorized stac
 - **Ultimate Tech Flagging**: Technologies can be marked with `isUltimate: true` to feature prominently on the homepage marquee and flagship tool highlights.
 - **Categorized Public Catalog**: `/stack` displays all technologies grouped by category with custom brand icons, hex colors, and official URLs.
 - **Dual Dashboard Management**: `/dashboard/stack` provides separate tabbed TanStack Tables for Technologies and Categories, with inline creation dialogs and full CRUD forms.
+- **Table Search & Filter**: Instant client-side search across technology names, slugs, and documentation URLs, with category filter dropdown on the Technologies table.
+- **Table Pagination**: Client-side TanStack Table pagination (10 rows per page) integrated with Shadcn `DataPagination` and URL search parameters (`q`, `category`, `page`, `tab`).
 
 ---
 
@@ -82,10 +84,16 @@ src/routes/stack.tsx -> StackPage
 └── StackCategoriesSection (Grouped tech grids with TechIcon)
 
 Dashboard:
-src/routes/dashboard/stack/index.tsx -> DashboardStackPage
+src/routes/dashboard/stack/index.tsx (validateSearch: { tab?, q?, category?, page? }) -> DashboardStackPage
 ├── TabsList ("Technologies" / "Categories")
-├── DashboardTechTable (Table, Search filter, isUltimate badges)
-└── DashboardCategoriesTable (Table, Sort order, slug badges)
+├── DashboardTechTable
+│   ├── Table Toolbar (SearchInput, Category Select Dropdown, "New Technology" Action)
+│   ├── TanStack Table Body (Sorting, Filtering, Row selection)
+│   └── DataPagination (Showing X to Y of Z technologies, page links, prev/next)
+└── DashboardCategoriesTable
+    ├── Table Toolbar (SearchInput, "New Category" Action)
+    ├── TanStack Table Body (Sort order, slug badges)
+    └── DataPagination (Showing X to Y of Z categories, page links, prev/next)
 ```
 
 ### TanStack Query Keys & Options
@@ -107,10 +115,13 @@ src/routes/dashboard/stack/index.tsx -> DashboardStackPage
 
 ## 6. Acceptance Criteria & DoD Checklist
 
-- [ ] `/stack` renders categorized list of active tools with brand icons and colors.
-- [ ] Homepage tech marquee filters and renders tools with `isUltimate = true`.
-- [ ] Category form enforces URL-safe slug and unique validation.
-- [ ] Technology form allows multi-selecting categories and toggling `isUltimate`.
-- [ ] Deleting a technology cascades cleanly without orphaned join rows.
-- [ ] Validation schemas pass Vitest suite ([`src/features/technologies/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/technologies/__tests__/validation.test.ts)).
-- [ ] TypeScript check passes: `bun run check`.
+- [x] `/stack` renders categorized list of active tools with brand icons and colors.
+- [x] Homepage tech marquee filters and renders tools with `isUltimate = true`.
+- [x] Category form enforces URL-safe slug and unique validation.
+- [x] Technology form allows multi-selecting categories and toggling `isUltimate`.
+- [x] Deleting a technology cascades cleanly without orphaned join rows.
+- [x] Technologies table supports debounced search and category filtering with URL sync.
+- [x] Categories table supports debounced search with URL sync.
+- [x] Technologies and Categories tables paginate smoothly at 10 items per page with `DataPagination`.
+- [x] Validation schemas pass Vitest suite ([`src/features/technologies/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/technologies/__tests__/validation.test.ts)).
+- [x] TypeScript check passes: `bun run check`.

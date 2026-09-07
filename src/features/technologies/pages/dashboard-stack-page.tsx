@@ -37,11 +37,50 @@ export function DashboardStackPage() {
   const activeTab: ActiveTab =
     search.tab === 'categories' ? 'categories' : 'technologies'
 
+  const searchQuery = search.q ?? ''
+  const categoryFilter = search.category ?? 'all'
+  const currentPage = search.page ?? 1
+
   const handleTabChange = (nextTab: ActiveTab) => {
     void navigate({
       search: (prev) => ({
         ...prev,
         tab: nextTab === 'categories' ? 'categories' : undefined,
+        q: undefined,
+        category: undefined,
+        page: undefined,
+      }),
+      replace: true,
+    })
+  }
+
+  const handleSearchChange = (val: string) => {
+    void navigate({
+      search: (prev) => ({
+        ...prev,
+        q: val.trim() || undefined,
+        page: undefined,
+      }),
+      replace: true,
+    })
+  }
+
+  const handleCategoryChange = (val: string) => {
+    void navigate({
+      search: (prev) => ({
+        ...prev,
+        category: val !== 'all' ? val : undefined,
+        page: undefined,
+      }),
+      replace: true,
+    })
+  }
+
+  const handlePageChange = (val: number) => {
+    void navigate({
+      search: (prev) => ({
+        ...prev,
+        page: val > 1 ? val : undefined,
       }),
       replace: true,
     })
@@ -193,12 +232,22 @@ export function DashboardStackPage() {
             categories={categories}
             isLoading={false}
             onDeleteTech={handleDeleteTech}
+            search={searchQuery}
+            onSearchChange={handleSearchChange}
+            categoryFilter={categoryFilter}
+            onCategoryFilterChange={handleCategoryChange}
+            page={currentPage}
+            onPageChange={handlePageChange}
           />
         ) : (
           <DashboardCategoriesTable
             categories={categories}
             isLoading={false}
             onDeleteCategory={handleDeleteCategory}
+            search={searchQuery}
+            onSearchChange={handleSearchChange}
+            page={currentPage}
+            onPageChange={handlePageChange}
           />
         )}
       </div>

@@ -73,11 +73,25 @@ describe('media validation', () => {
   })
 
   describe('mediaQuerySchema', () => {
-    it('defaults limit to 50 when not provided', () => {
+    it('defaults limit to 12 and page to 1 when not provided', () => {
       const result = mediaQuerySchema.safeParse({})
       expect(result.success).toBe(true)
       if (result.success) {
-        expect(result.data.limit).toBe(50)
+        expect(result.data.limit).toBe(12)
+        expect(result.data.page).toBe(1)
+        expect(result.data.type).toBe('all')
+      }
+    })
+
+    it('parses type and page correctly', () => {
+      const result = mediaQuerySchema.safeParse({
+        type: 'image',
+        page: '2',
+      })
+      expect(result.success).toBe(true)
+      if (result.success) {
+        expect(result.data.type).toBe('image')
+        expect(result.data.page).toBe(2)
       }
     })
 

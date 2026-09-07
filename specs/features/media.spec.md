@@ -8,7 +8,7 @@
 | **Dashboard Routes**  | [`/dashboard/media`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/dashboard/media.tsx)                                                                                                                                                                                     |
 | **Shared Components** | [`src/components/media/image-uploader.tsx`](file:///d:/winterest-project/winterest-portfolio-v2/src/components/media/image-uploader.tsx), [`src/components/media/media-picker-dialog.tsx`](file:///d:/winterest-project/winterest-portfolio-v2/src/components/media/media-picker-dialog.tsx) |
 | **RBAC Permissions**  | Editor/Admin/Owner (Full Management)                                                                                                                                                                                                                                                         |
-| **Last Updated**      | 2026-09-06                                                                                                                                                                                                                                                                                   |
+| **Last Updated**      | 2026-09-07                                                                                                                                                                                                                                                                                   |
 
 ---
 
@@ -22,7 +22,8 @@ The Media Library feature provides unified asset ingestion and media management 
 - **Media Picker Modal**: Reusable dialog (`MediaPickerDialog`) enabling editors to select from existing uploads or upload new files inline without leaving form workflows.
 - **URL Fallback Mode**: Supports direct external image URLs alongside native Cloudflare R2 uploads.
 - **Asset Metadata Tracking**: Automatically captures filename, MIME type, file size in bytes, and custom accessibility `alt` text.
-- **Search & Filter**: Search media assets by filename or alt text in real-time.
+- **Server-Side Search & Type Filter**: Search media assets by filename or alt text in real-time, filtered by asset type (`all`, `image`, `document`) with URL parameter synchronization.
+- **Server-Side Pagination**: Efficient D1 `count()` and `LIMIT/OFFSET` pagination (default 12 assets/page) powered by Shadcn `DataPagination`.
 - **One-Click URL Copying**: Copy public asset URLs directly to the clipboard.
 
 ---
@@ -38,13 +39,25 @@ Interacts with Cloudflare R2 (`MEDIA_BUCKET`) and the `media` table in D1 (detai
 - `media.size`: Integer size in bytes.
 - `media.alt`: Optional accessible description.
 
+Queries execute a parallel `count()` query and paginated slice query:
+
+```ts
+export type PaginatedMediaResult = {
+  records: MediaRecord[]
+  total: number
+  page: number
+  limit: number
+  totalPages: number
+}
+```
+
 ---
 
 ## 3. Server & API Contracts
 
 ### Endpoints
 
-- `GET /api/media`: Query params `{ search?, limit? }`. Returns array of `MediaRecord`.
+- `GET /api/media`: Query params `{ search?, page?, limit?, type? }`. Returns `{ data: MediaRecord[], pagination: { page, limit, total, totalPages } }`.
 - `POST /api/media`: Multipart form-data with `file` and optional `alt`. Uploads to R2 and writes to D1.
 - `DELETE /api/media/:id`: Deletes object from R2 and removes record from D1.
 
@@ -52,6 +65,11 @@ Interacts with Cloudflare R2 (`MEDIA_BUCKET`) and the `media` table in D1 (detai
 
 - `MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024` (10MB).
 - `ALLOWED_MIME_TYPES`: JPG, PNG, WebP, GIF, SVG, AVIF, PDF.
+- `mediaQuerySchema`: Validates query parameters:
+  - `page`: Coerced integer >= 1 (default `1`).
+  - `limit`: Coerced integer min 1, max 100 (default `12`).
+  - `search`: Optional trimmed string.
+  - `type`: Enum `'all' | 'image' | 'document'` (default `'all'`).
 
 ---
 
@@ -60,11 +78,12 @@ Interacts with Cloudflare R2 (`MEDIA_BUCKET`) and the `media` table in D1 (detai
 ### Component Hierarchy
 
 ```txt
-src/routes/dashboard/media.tsx -> MediaPage
+src/routes/dashboard/media.tsx (validateSearch: { q?, type?, page? }) -> MediaPage
 ├── Upload Dropzone Area (Direct file drag or browse)
-├── Media Library Filter Bar (Search input, view toggles)
-└── Media Grid
-    └── MediaCard (Thumbnail, dimensions, size formatting, copy URL, delete button)
+├── Media Library Filter Bar (Debounced SearchInput, asset-type Tabs)
+├── Media Grid (12 items per page)
+│   └── MediaCard (Thumbnail, dimensions, size formatting, copy URL, delete button)
+└── DataPagination (Showing X to Y of Z assets, page links, prev/next)
 
 Form Integration:
 ProjectEditorForm / SettingsEditorForm
@@ -74,10 +93,10 @@ ProjectEditorForm / SettingsEditorForm
     └── MediaPickerDialog (Opens media grid modal for one-click selection)
 ```
 
-### TanStack Query & Hooks ([`src/features/media/hooks.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/media/hooks.ts))
+### TanStack Query & Hooks ([`src/features/media/hooks.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/media/hooks.ts) / [`query-options.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/media/query-options.ts))
 
-- `mediaQueryKeys.all`, `mediaQueryKeys.list(search)`
-- Query Option: `mediaQueryOptions.list(search)`
+- `mediaQueryKeys.all`, `mediaQueryKeys.list(filter?: MediaQueryInput)`
+- Query Option: `mediaQueryOptions.list(filter?: MediaQueryInput)`
 - Mutation Hooks:
   - `useUploadMedia()`: Sends `FormData` to `/api/media`, invalidates `mediaQueryKeys.all`.
   - `useDeleteMedia()`: Deletes via `/api/media/:id`, invalidates `mediaQueryKeys.all`.
@@ -94,10 +113,13 @@ ProjectEditorForm / SettingsEditorForm
 
 ## 6. Acceptance Criteria & DoD Checklist
 
-- [ ] Drag-and-drop file upload displays progress and updates media grid immediately.
-- [ ] Files exceeding 10MB are rejected with clear client-side error notification.
-- [ ] MediaPickerDialog allows selecting an existing image and populates form coverImage field.
-- [ ] Delete confirmation modal asks for user confirmation before removing asset.
-- [ ] Copy URL button copies full public asset streaming link to clipboard.
-- [ ] Validation schemas pass Vitest suite ([`src/features/media/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/media/__tests__/validation.test.ts)).
-- [ ] TypeScript check passes: `bun run check`.
+- [x] Drag-and-drop file upload displays progress and updates media grid immediately.
+- [x] Files exceeding 10MB are rejected with clear client-side error notification.
+- [x] MediaPickerDialog allows selecting an existing image and populates form coverImage field.
+- [x] Delete confirmation modal asks for user confirmation before removing asset.
+- [x] Copy URL button copies full public asset streaming link to clipboard.
+- [x] Server-side pagination (`LIMIT/OFFSET` + `count()`) returns paginated metadata and records.
+- [x] Asset-type filter toggles between all, images, and documents with URL query sync.
+- [x] Debounced search input filters by filename and alt text without excessive requests.
+- [x] Validation schemas pass Vitest suite ([`src/features/media/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/media/__tests__/validation.test.ts)).
+- [x] TypeScript check passes: `bun run check`.

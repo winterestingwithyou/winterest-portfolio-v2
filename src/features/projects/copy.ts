@@ -16,6 +16,13 @@ export const projectsCopy = {
       emptyTitle: 'No published projects yet.',
       emptyDescription:
         'I am still preparing the project stories for this page. Check back soon for more detailed work notes.',
+      allCategories: 'All',
+      searchPlaceholder: 'Search by title, technology, or keywords...',
+      noMatchingProjects: 'No projects match your search or filter criteria.',
+      noMatchingDescription:
+        'Try searching for different keywords or clear your current filter.',
+      resetFilters: 'Reset filters',
+      projects: 'projects',
       remote: 'git remote',
       sourceTitle: 'Follow the source code and development behind Winterest.',
       repository: 'Repository',
@@ -56,6 +63,15 @@ export const projectsCopy = {
       emptyTitle: 'Belum ada project yang dipublish.',
       emptyDescription:
         'Aku masih menyiapkan cerita project untuk halaman ini. Nanti akan ada catatan kerja yang lebih lengkap di sini.',
+      allCategories: 'Semua',
+      searchPlaceholder:
+        'Cari berdasarkan judul, teknologi, atau kata kunci...',
+      noMatchingProjects:
+        'Tidak ada project yang cocok dengan pencarian atau filter.',
+      noMatchingDescription:
+        'Coba cari dengan kata kunci lain atau bersihkan filter saat ini.',
+      resetFilters: 'Reset filter',
+      projects: 'project',
       remote: 'git remote',
       sourceTitle: 'Ikuti source code dan perkembangan di balik Winterest.',
       repository: 'Repository',

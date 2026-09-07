@@ -47,9 +47,14 @@ export function MediaPickerDialog({
   const [selectedId, setSelectedId] = React.useState<string | null>(null)
   const fileInputRef = React.useRef<HTMLInputElement>(null)
 
-  const { data: mediaList = [], isLoading } = useQuery(
-    mediaQueryOptions.list(search),
+  const { data: mediaResponse, isLoading } = useQuery(
+    mediaQueryOptions.list({
+      search,
+      type: accept !== 'all' ? accept : undefined,
+      limit: 60,
+    }),
   )
+  const mediaList = mediaResponse?.data ?? []
   const uploadMutation = useUploadMedia()
 
   const filteredMediaList = React.useMemo(() => {

@@ -40,6 +40,20 @@ export const portfolioCopy = {
       downloadPdf: 'Download Official PDF',
       viewPdf: 'View Official PDF',
     },
+    pagination: {
+      showing: 'Showing',
+      to: 'to',
+      of: 'of',
+      items: 'items',
+      previous: 'Previous',
+      next: 'Next',
+      page: 'Page',
+      morePages: 'More pages',
+      goToPreviousPage: 'Go to previous page',
+      goToNextPage: 'Go to next page',
+      goToPage: (p: number) => `Go to page ${p}`,
+      paginationNav: 'Pagination',
+    },
     timeline: [
       {
         period: 'Now',
@@ -99,6 +113,20 @@ export const portfolioCopy = {
       stack: 'Stack',
       downloadPdf: 'Unduh PDF Resmi',
       viewPdf: 'Lihat PDF Resmi',
+    },
+    pagination: {
+      showing: 'Menampilkan',
+      to: 'sampai',
+      of: 'dari',
+      items: 'item',
+      previous: 'Sebelumnya',
+      next: 'Berikutnya',
+      page: 'Halaman',
+      morePages: 'Halaman lainnya',
+      goToPreviousPage: 'Ke halaman sebelumnya',
+      goToNextPage: 'Ke halaman berikutnya',
+      goToPage: (p: number) => `Ke halaman ${p}`,
+      paginationNav: 'Navigasi halaman',
     },
     timeline: [
       {

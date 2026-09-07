@@ -21,13 +21,18 @@ export const Route = createFileRoute('/api/media/')({
           const url = new URL(request.url)
           const query = mediaQuerySchema.parse({
             search: url.searchParams.get('search') ?? undefined,
+            type: url.searchParams.get('type') ?? undefined,
+            page: url.searchParams.get('page') ?? undefined,
             limit: url.searchParams.get('limit') ?? undefined,
           })
 
           const db = getDb(env.DB)
-          const records = await listMediaRecords(db, query)
+          const result = await listMediaRecords(db, query)
 
-          return Response.json({ data: records })
+          return Response.json({
+            data: result.data,
+            pagination: result.pagination,
+          })
         } catch (error) {
           console.error('[API /api/media GET Error]', error)
           return Response.json(

@@ -1,29 +1,77 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
+import { useNavigate, useSearch } from '@tanstack/react-router'
 import * as React from 'react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { MediaDeleteDialog } from '#/features/media/components/media-delete-dialog'
 import { MediaGallerySection } from '#/features/media/components/section/media-gallery-section'
+import type { AssetFilter } from '#/features/media/components/section/media-gallery-section'
 import { MediaUploadDropzone } from '#/features/media/components/section/media-upload-dropzone'
 import { useDeleteMedia, useUploadMedia } from '#/features/media/hooks'
 import type { MediaRecord } from '#/features/media/queries'
-import { useSuspenseQuery } from '@tanstack/react-query'
-import { mediaQueryOptions } from '../query-options'
+import { mediaQueryOptions } from '#/features/media/query-options'
 
 export function MediaPage() {
   const copy = getDashboardCopy()
-  const [search, setSearch] = React.useState('')
+  const searchParams = useSearch({ from: '/dashboard/media' })
+  const navigate = useNavigate({ from: '/dashboard/media' })
+
+  const search = searchParams.q ?? ''
+  const activeTab: AssetFilter = searchParams.type ?? 'all'
+  const page = searchParams.page ?? 1
+
   const [deletingMedia, setDeletingMedia] = React.useState<MediaRecord | null>(
     null,
   )
 
   const {
-    data: mediaList = [],
+    data: mediaResponse,
     isLoading,
     error: loadError,
-  } = useSuspenseQuery(mediaQueryOptions.list(search))
+  } = useSuspenseQuery(
+    mediaQueryOptions.list({
+      search,
+      type: activeTab,
+      page,
+      limit: 12,
+    }),
+  )
+
   const uploadMutation = useUploadMedia()
   const deleteMutation = useDeleteMedia()
+
+  const handleSearchChange = (nextQuery: string) => {
+    void navigate({
+      search: (prev) => ({
+        ...prev,
+        q: nextQuery.trim() || undefined,
+        page: undefined, // Reset to page 1 on new search
+      }),
+      replace: true,
+    })
+  }
+
+  const handleTabChange = (nextTab: AssetFilter) => {
+    void navigate({
+      search: (prev) => ({
+        ...prev,
+        type: nextTab !== 'all' ? nextTab : undefined,
+        page: undefined, // Reset to page 1 on tab switch
+      }),
+      replace: true,
+    })
+  }
+
+  const handlePageChange = (nextPage: number) => {
+    void navigate({
+      search: (prev) => ({
+        ...prev,
+        page: nextPage > 1 ? nextPage : undefined,
+      }),
+      replace: true,
+    })
+  }
 
   const handleUpload = async (file: File) => {
     try {
@@ -60,11 +108,15 @@ export function MediaPage() {
 
         <MediaGallerySection
           copy={copy}
-          mediaList={mediaList}
+          mediaList={mediaResponse.data}
+          pagination={mediaResponse.pagination}
           isLoading={isLoading}
           loadError={loadError}
           search={search}
-          onSearchChange={setSearch}
+          onSearchChange={handleSearchChange}
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          onPageChange={handlePageChange}
           onDeleteSelect={setDeletingMedia}
         />
       </div>

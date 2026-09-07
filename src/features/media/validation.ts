@@ -42,7 +42,9 @@ export const mediaUploadSchema = z.object({
 
 export const mediaQuerySchema = z.object({
   search: z.string().trim().optional(),
-  limit: z.coerce.number().int().min(1).max(100).default(50),
+  type: z.enum(['all', 'image', 'document']).default('all'),
+  page: z.coerce.number().int().min(1).default(1),
+  limit: z.coerce.number().int().min(1).max(100).default(12),
 })
 
 export type MediaUploadInput = z.infer<typeof mediaUploadSchema>

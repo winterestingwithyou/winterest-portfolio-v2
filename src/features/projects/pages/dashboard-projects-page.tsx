@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { Plus, RefreshCw } from 'lucide-react'
 import { useState } from 'react'
 
@@ -23,6 +23,13 @@ import { getApiErrorMessage } from '#/lib/api-client'
 
 export function DashboardProjectsPage() {
   const copy = getDashboardCopy()
+  const searchParams = useSearch({ from: '/dashboard/projects/' })
+  const navigate = useNavigate({ from: '/dashboard/projects/' })
+
+  const search = searchParams.q ?? ''
+  const statusFilter = searchParams.status ?? 'all'
+  const page = searchParams.page ?? 1
+
   const {
     data: projects,
     refetch,
@@ -34,6 +41,41 @@ export function DashboardProjectsPage() {
     null,
   )
   const [isDeleting, setIsDeleting] = useState(false)
+
+  const handleSearchChange = (val: string) => {
+    void navigate({
+      search: (prev) => ({
+        ...prev,
+        q: val.trim() || undefined,
+        page: undefined,
+      }),
+      replace: true,
+    })
+  }
+
+  const handleStatusFilterChange = (val: string) => {
+    void navigate({
+      search: (prev) => ({
+        ...prev,
+        status:
+          val !== 'all'
+            ? (val as 'published' | 'in_progress' | 'draft')
+            : undefined,
+        page: undefined,
+      }),
+      replace: true,
+    })
+  }
+
+  const handlePageChange = (val: number) => {
+    void navigate({
+      search: (prev) => ({
+        ...prev,
+        page: val > 1 ? val : undefined,
+      }),
+      replace: true,
+    })
+  }
 
   const handleDelete = async (project: ProjectRow) => {
     setProjectToDelete(project)
@@ -102,6 +144,12 @@ export function DashboardProjectsPage() {
             copy={copy}
             projects={projects}
             onDeleteProject={handleDelete}
+            search={search}
+            onSearchChange={handleSearchChange}
+            statusFilter={statusFilter}
+            onStatusFilterChange={handleStatusFilterChange}
+            page={page}
+            onPageChange={handlePageChange}
           />
         )}
       </section>

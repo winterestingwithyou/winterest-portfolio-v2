@@ -85,6 +85,11 @@ export const dashboardCopy = {
       saveChanges: 'Save changes',
       cancel: 'Cancel',
       notice: 'Notice',
+      noResults: 'No results found.',
+      noResultsFilterDescription:
+        'Try adjusting your search or clearing active filters.',
+      resetFilter: 'Reset filter',
+      resetFilters: 'Reset filters',
     },
     projects: {
       title: 'Projects',
@@ -92,12 +97,15 @@ export const dashboardCopy = {
         'Manage the work shown in the portfolio: project details, highlights, and publishing status.',
       new: 'New project',
       project: 'Project',
+      projectsLabel: 'projects',
       loading: 'Loading projects...',
       emptyTitle: 'No projects yet.',
       emptyDescription:
         'Create the first draft when you are ready to shape a new portfolio entry.',
       loadError: 'Failed to load projects.',
       deleteError: 'Failed to delete project.',
+      searchPlaceholder: 'Search projects by title, category, or summary...',
+      noMatchingProjects: 'No matching projects found.',
       saveError: 'Project save failed.',
       deleteSaveError: 'Project delete failed.',
       deleteTitle: 'Delete Project',
@@ -218,6 +226,10 @@ export const dashboardCopy = {
       selectFromLibrary: 'Choose from Media Library',
       useSelectedImage: 'Use Selected Image',
       noImagesFound: 'No matching media assets found.',
+      noMatchingDescription:
+        'Try searching with different terms or select a different asset type.',
+      resetFilters: 'Reset filters',
+      assetsLabel: 'assets',
       totalMedia: 'Total assets',
       preview: 'Preview',
       dropToUpload: 'Drop image here to upload',
@@ -246,6 +258,10 @@ export const dashboardCopy = {
       heading: 'Tech Stack & Skills',
       subheading:
         'Manage technologies and skill categories displayed on the portfolio.',
+      technologiesLabel: 'technologies',
+      categoriesLabel: 'categories',
+      noMatchingTech: 'No matching technologies found.',
+      noMatchingCategories: 'No matching categories found.',
       newCategory: 'New Category',
       newCategoryDesc: 'Add a new category to group technologies and tools.',
       editCategory: 'Edit Category',
@@ -742,6 +758,11 @@ export const dashboardCopy = {
       saveChanges: 'Simpan perubahan',
       cancel: 'Batal',
       notice: 'Pemberitahuan',
+      noResults: 'Tidak ada hasil ditemukan.',
+      noResultsFilterDescription:
+        'Coba sesuaikan pencarian atau bersihkan filter yang aktif.',
+      resetFilter: 'Reset filter',
+      resetFilters: 'Reset filter',
     },
     projects: {
       title: 'Project',
@@ -749,12 +770,16 @@ export const dashboardCopy = {
         'Kelola karya yang tampil di portfolio: detail project, highlight, dan status publish.',
       new: 'Project baru',
       project: 'Project',
+      projectsLabel: 'project',
       loading: 'Memuat project...',
       emptyTitle: 'Belum ada project.',
       emptyDescription:
         'Buat draft pertama saat kamu siap membentuk entry portfolio baru.',
       loadError: 'Gagal memuat project.',
       deleteError: 'Gagal menghapus project.',
+      searchPlaceholder:
+        'Cari project berdasarkan judul, kategori, atau ringkasan...',
+      noMatchingProjects: 'Tidak ada project yang cocok.',
       saveError: 'Gagal menyimpan project.',
       deleteSaveError: 'Gagal menghapus project.',
       deleteTitle: 'Hapus Project',
@@ -876,6 +901,10 @@ export const dashboardCopy = {
       selectFromLibrary: 'Pilih dari Media Library',
       useSelectedImage: 'Gunakan Gambar Terpilih',
       noImagesFound: 'Tidak ada aset media yang cocok.',
+      noMatchingDescription:
+        'Coba cari dengan kata kunci lain atau pilih jenis aset yang berbeda.',
+      resetFilters: 'Reset filter',
+      assetsLabel: 'aset',
       totalMedia: 'Total aset',
       preview: 'Pratinjau',
       dropToUpload: 'Lepaskan gambar di sini untuk mengunggah',
@@ -904,6 +933,10 @@ export const dashboardCopy = {
       heading: 'Tech Stack & Keahlian',
       subheading:
         'Kelola daftar teknologi dan kategori keahlian yang ditampilkan pada portfolio.',
+      technologiesLabel: 'teknologi',
+      categoriesLabel: 'kategori',
+      noMatchingTech: 'Tidak ada teknologi yang cocok.',
+      noMatchingCategories: 'Tidak ada kategori yang cocok.',
       newCategory: 'Kategori Baru',
       newCategoryDesc:
         'Tambahkan kategori baru untuk mengelompokkan teknologi.',
