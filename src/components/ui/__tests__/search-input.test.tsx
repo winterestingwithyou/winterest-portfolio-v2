@@ -37,4 +37,34 @@ describe('SearchInput', () => {
     fireEvent.click(clearButton)
     expect(handleChange).toHaveBeenCalledWith('')
   })
+
+  it('preserves trailing spaces when user types and does not reset if external value matches trimmed', () => {
+    const handleChange = vi.fn()
+    const { rerender } = render(
+      <SearchInput
+        placeholder="Search..."
+        value="web"
+        onChange={handleChange}
+      />,
+    )
+
+    const input = screen.getByPlaceholderText('Search...')
+    expect((input as HTMLInputElement).value).toBe('web')
+
+    // Simulate typing a space: "web "
+    fireEvent.change(input, { target: { value: 'web ' } })
+    expect((input as HTMLInputElement).value).toBe('web ')
+
+    // Simulate parent re-rendering with trimmed value "web"
+    rerender(
+      <SearchInput
+        placeholder="Search..."
+        value="web"
+        onChange={handleChange}
+      />,
+    )
+
+    // Trailing space should still be preserved
+    expect((input as HTMLInputElement).value).toBe('web ')
+  })
 })

@@ -226,17 +226,23 @@ export function LoginForm({ copy, redirectTo }: LoginFormProps) {
         selector={(state) => [state.canSubmit, state.isSubmitting]}
         children={([canSubmit, isSubmitting]) => {
           const isPending = signInMutation.isPending || isSubmitting
+          const isReady = canSubmit && Boolean(turnstileToken) && !isPending
 
           return (
             <Button
               type="submit"
-              disabled={!canSubmit || isPending}
+              disabled={!isReady}
               className="inline-flex min-h-10.5 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-black text-white transition hover:-translate-y-px hover:bg-(--brand-orange-deep) disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:min-h-11.5"
             >
               {isPending ? (
                 <>
                   <Loader2 aria-hidden="true" className="size-4 animate-spin" />
                   <span>{copy.submit.pending}</span>
+                </>
+              ) : !turnstileToken && canSubmit ? (
+                <>
+                  <Loader2 aria-hidden="true" className="size-4 animate-spin" />
+                  <span>{copy.submit.verifyingSecurity}</span>
                 </>
               ) : (
                 <>

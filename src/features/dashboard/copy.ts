@@ -90,6 +90,11 @@ export const dashboardCopy = {
         'Try adjusting your search or clearing active filters.',
       resetFilter: 'Reset filter',
       resetFilters: 'Reset filters',
+      unsavedChangesTitle: 'Unsaved changes',
+      unsavedChangesDesc:
+        'You have unsaved changes. Are you sure you want to leave? Your changes will be lost.',
+      stay: 'Stay',
+      leave: 'Leave without saving',
     },
     projects: {
       title: 'Projects',
@@ -775,6 +780,11 @@ export const dashboardCopy = {
         'Coba sesuaikan pencarian atau bersihkan filter yang aktif.',
       resetFilter: 'Reset filter',
       resetFilters: 'Reset filter',
+      unsavedChangesTitle: 'Perubahan belum disimpan',
+      unsavedChangesDesc:
+        'Anda memiliki perubahan yang belum disimpan. Apakah Anda yakin ingin meninggalkan halaman ini? Perubahan Anda akan hilang.',
+      stay: 'Tetap di sini',
+      leave: 'Tinggalkan tanpa menyimpan',
     },
     projects: {
       title: 'Project',

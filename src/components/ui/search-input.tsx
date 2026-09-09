@@ -38,8 +38,10 @@ export function SearchInput({
 
   // Sync external value changes (e.g. from URL params or reset buttons)
   React.useEffect(() => {
-    setLocalValue(value)
-  }, [value])
+    if (localValue.trim() !== value.trim()) {
+      setLocalValue(value)
+    }
+  }, [value, localValue])
 
   const debouncedOnChange = useDebouncedCallback((val: string) => {
     onChange(val)
