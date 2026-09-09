@@ -30,18 +30,24 @@ export function SearchInput({
   clearAriaLabel,
 }: SearchInputProps) {
   const [localValue, setLocalValue] = React.useState(value)
+  const localValueRef = React.useRef(localValue)
 
   const isId = getLocale() === 'id'
   const effectivePlaceholder = placeholder ?? (isId ? 'Cari...' : 'Search...')
   const effectiveClearLabel =
     clearAriaLabel ?? (isId ? 'Hapus pencarian' : 'Clear search')
 
+  // Keep the ref in sync with state
+  React.useEffect(() => {
+    localValueRef.current = localValue
+  }, [localValue])
+
   // Sync external value changes (e.g. from URL params or reset buttons)
   React.useEffect(() => {
-    if (localValue.trim() !== value.trim()) {
+    if (localValueRef.current.trim() !== value.trim()) {
       setLocalValue(value)
     }
-  }, [value, localValue])
+  }, [value])
 
   const debouncedOnChange = useDebouncedCallback((val: string) => {
     onChange(val)

@@ -67,4 +67,29 @@ describe('SearchInput', () => {
     // Trailing space should still be preserved
     expect((input as HTMLInputElement).value).toBe('web ')
   })
+
+  it('does not swallow typed characters when parent has not yet received the debounced value', () => {
+    const handleChange = vi.fn()
+    render(
+      <SearchInput
+        placeholder="Search..."
+        value=""
+        onChange={handleChange}
+      />,
+    )
+
+    const input = screen.getByPlaceholderText('Search...')
+
+    // User types "hello" — the debounced onChange hasn't fired yet,
+    // so the external value prop is still "". The sync effect must
+    // NOT reset localValue back to "".
+    fireEvent.change(input, { target: { value: 'h' } })
+    expect((input as HTMLInputElement).value).toBe('h')
+
+    fireEvent.change(input, { target: { value: 'he' } })
+    expect((input as HTMLInputElement).value).toBe('he')
+
+    fireEvent.change(input, { target: { value: 'hel' } })
+    expect((input as HTMLInputElement).value).toBe('hel')
+  })
 })
