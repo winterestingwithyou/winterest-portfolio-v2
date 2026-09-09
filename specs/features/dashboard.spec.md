@@ -72,7 +72,7 @@ src/routes/dashboard.tsx (Dashboard Layout Shell)
    - `editor`: Access to Overview, Projects, Stack, Media, Social, Account.
    - `admin`: Above + Settings.
    - `owner`: Above + User Management (`/dashboard/users`).
-3. **Route Guard**: Direct access to `/dashboard/users/*` by non-owner roles is trapped in `beforeLoad` and redirected safely to `/dashboard`.
+3. **Route Guard**: Direct access to `/dashboard/users/*` by non-owner roles or `/dashboard/settings` by non-admin/owner roles is trapped in `beforeLoad` and redirected safely to `/dashboard`.
 
 ---
 

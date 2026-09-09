@@ -36,6 +36,11 @@ import {
   SidebarSeparator,
 } from '#/components/ui/sidebar'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import {
+  canManageSettings,
+  canManageUsers,
+  isUserRole,
+} from '#/features/auth/roles'
 import { authClient } from '#/lib/auth-client'
 
 type DashboardSidebarProps = {
@@ -109,10 +114,13 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
     },
   ]
 
-  const isOwner = user?.role === 'owner'
+  const role = isUserRole(user?.role) ? user.role : null
+  const canUsers = role ? canManageUsers(role) : false
+  const canSettings = role ? canManageSettings(role) : false
 
   const filteredSystemNav = systemNav.filter((item) => {
-    if (item.to === '/dashboard/users' && !isOwner) return false
+    if (item.to === '/dashboard/users' && !canUsers) return false
+    if (item.to === '/dashboard/settings' && !canSettings) return false
     return true
   })
 
