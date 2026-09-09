@@ -610,10 +610,29 @@
   }
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite !important;
+  transform-origin: center !important;
+}
+
+@utility animate-spin {
+  animation: spin 1s linear infinite !important;
+  transform-origin: center !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *:not(.animate-spin):not(.animate-spin *),
+  *:not(.animate-spin)::before,
+  *:not(.animate-spin)::after {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;

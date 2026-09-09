@@ -1,6 +1,10 @@
 import { queryOptions } from '@tanstack/react-query'
 
-import type { MediaPaginationMeta, MediaRecord } from '#/features/media/queries'
+import type {
+  MediaPaginationMeta,
+  MediaRecord,
+  MediaRecordWithUsage,
+} from '#/features/media/queries'
 import { api } from '#/lib/api-client'
 
 export type MediaQueryFilter = {
@@ -47,6 +51,16 @@ export const mediaQueryOptions = {
         return api<MediaResponse>('/api/media', {
           query: Object.keys(queryParams).length > 0 ? queryParams : undefined,
         })
+      },
+    }),
+  detail: (id: string) =>
+    queryOptions({
+      queryKey: mediaQueryKeys.detail(id),
+      queryFn: async (): Promise<MediaRecordWithUsage> => {
+        const res = await api<{ data: MediaRecordWithUsage }>(
+          `/api/media/${id}`,
+        )
+        return res.data
       },
     }),
 }

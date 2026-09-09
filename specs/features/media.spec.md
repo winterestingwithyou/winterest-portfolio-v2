@@ -58,8 +58,11 @@ export type PaginatedMediaResult = {
 ### Endpoints
 
 - `GET /api/media`: Query params `{ search?, page?, limit?, type? }`. Returns `{ data: MediaRecord[], pagination: { page, limit, total, totalPages } }`.
+- `GET /api/media/:id`: Returns `{ data: MediaRecordWithUsage }` with active usage summary across `site_settings`, `projects`, `technologies`, and `project_translations`.
 - `POST /api/media`: Multipart form-data with `file` and optional `alt`. Uploads to R2 and writes to D1.
-- `DELETE /api/media/:id`: Deletes object from R2 and removes record from D1.
+- `DELETE /api/media/:id`: Deletes object from R2 and removes record from D1. Protected by cascade guard:
+  - Without `?cascade=true`: returns `409 Conflict (MEDIA_IN_USE)` if active references exist in `site_settings`, `projects.coverImage`, or `technologies.icon`.
+  - With `?cascade=true`: atomically executes cascade nullify on D1 references before removing physical object from Cloudflare R2 and deleting D1 media record.
 
 ### Client Validation ([`src/features/media/validation.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/media/validation.ts))
 
@@ -70,6 +73,9 @@ export type PaginatedMediaResult = {
   - `limit`: Coerced integer min 1, max 100 (default `12`).
   - `search`: Optional trimmed string.
   - `type`: Enum `'all' | 'image' | 'document'` (default `'all'`).
+- `mediaDeleteQuerySchema`: Validates query parameter `?cascade=true|false`.
+- `mediaUsageSummarySchema`: Validates usage summary shape (`inUse`, `totalReferences`, `references`).
+- `mediaReferenceItemSchema`: Validates individual reference entries (`entityType`, `field`, `id`, `label`, `details?`).
 
 ---
 
@@ -83,7 +89,8 @@ src/routes/dashboard/media.tsx (validateSearch: { q?, type?, page? }) -> MediaPa
 ├── Media Library Filter Bar (Debounced SearchInput, asset-type Tabs)
 ├── Media Grid (12 items per page)
 │   └── MediaCard (Thumbnail, dimensions, size formatting, copy URL, delete button)
-└── DataPagination (Showing X to Y of Z assets, page links, prev/next)
+├── DataPagination (Showing X to Y of Z assets, page links, prev/next)
+└── MediaDeleteDialog (Active usage inspection, cascade warning banner, destructive confirmation)
 
 Form Integration:
 ProjectEditorForm / SettingsEditorForm
@@ -95,11 +102,13 @@ ProjectEditorForm / SettingsEditorForm
 
 ### TanStack Query & Hooks ([`src/features/media/hooks.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/media/hooks.ts) / [`query-options.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/media/query-options.ts))
 
-- `mediaQueryKeys.all`, `mediaQueryKeys.list(filter?: MediaQueryInput)`
-- Query Option: `mediaQueryOptions.list(filter?: MediaQueryInput)`
+- `mediaQueryKeys.all`, `mediaQueryKeys.list(filter?: MediaQueryInput)`, `mediaQueryKeys.detail(id: string)`
+- Query Options:
+  - `mediaQueryOptions.list(filter?: MediaQueryInput)`
+  - `mediaQueryOptions.detail(id: string)`: Fetches media detail with usage summary.
 - Mutation Hooks:
   - `useUploadMedia()`: Sends `FormData` to `/api/media`, invalidates `mediaQueryKeys.all`.
-  - `useDeleteMedia()`: Deletes via `/api/media/:id`, invalidates `mediaQueryKeys.all`.
+  - `useDeleteMedia()`: Deletes via `/api/media/:id` (with optional `cascade: true`), invalidates `mediaQueryKeys.all`, `settingsQueryKeys.all`, `projectQueryKeys.all`, and `techQueryKeys.all`.
 
 ---
 
@@ -108,6 +117,7 @@ ProjectEditorForm / SettingsEditorForm
 - **Role Requirement**: All upload, delete, and list operations require role `editor`, `admin`, or `owner`.
 - **Public Restriction**: Unauthenticated users cannot view media management screens or invoke management APIs (handled by `requireDashboardUser()`).
 - **Sanitization**: Uploaded filenames are sanitized and assigned randomized UUID prefixes to prevent overwrites and directory traversal.
+- **Cascade Safety**: Parameter validation and authorization enforce that only privileged dashboard users can trigger cascade nullification.
 
 ---
 
@@ -117,9 +127,14 @@ ProjectEditorForm / SettingsEditorForm
 - [x] Files exceeding 10MB are rejected with clear client-side error notification.
 - [x] MediaPickerDialog allows selecting an existing image and populates form coverImage field.
 - [x] Delete confirmation modal asks for user confirmation before removing asset.
+- [x] Endpoint `GET /api/media/$id` returns active usage summary across `site_settings`, `projects`, `technologies`, and markdown content.
+- [x] Endpoint `DELETE /api/media/$id` returns `409 Conflict (MEDIA_IN_USE)` when active references exist and `cascade=true` is not passed.
+- [x] Endpoint `DELETE /api/media/$id?cascade=true` atomically nullifies references across `site_settings`, `projects`, and `technologies` before deleting the file and record.
+- [x] `MediaDeleteDialog` visually warns user when media is in use with breakdown and cascade cleanup confirmation.
+- [x] Cross-feature TanStack Query caches (`media`, `site_settings`, `projects`, `technologies`) invalidate synchronously on deletion.
 - [x] Copy URL button copies full public asset streaming link to clipboard.
 - [x] Server-side pagination (`LIMIT/OFFSET` + `count()`) returns paginated metadata and records.
 - [x] Asset-type filter toggles between all, images, and documents with URL query sync.
 - [x] Debounced search input filters by filename and alt text without excessive requests.
-- [x] Validation schemas pass Vitest suite ([`src/features/media/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/media/__tests__/validation.test.ts)).
-- [x] TypeScript check passes: `bun run check`.
+- [x] Synchronization and validation tests pass Vitest suite (`validation.test.ts`, `sync.test.ts`).
+- [x] TypeScript check passes: `bun run check` / `bun run typecheck`.

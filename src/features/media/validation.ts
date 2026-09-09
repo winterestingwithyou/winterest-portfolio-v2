@@ -47,5 +47,37 @@ export const mediaQuerySchema = z.object({
   limit: z.coerce.number().int().min(1).max(100).default(12),
 })
 
+export const mediaReferenceTypeSchema = z.enum([
+  'site_settings',
+  'project_cover',
+  'project_content',
+  'technology_icon',
+])
+
+export const mediaReferenceItemSchema = z.object({
+  entityType: mediaReferenceTypeSchema,
+  field: z.string(),
+  id: z.string(),
+  label: z.string(),
+  details: z.string().optional(),
+})
+
+export const mediaUsageSummarySchema = z.object({
+  inUse: z.boolean(),
+  totalReferences: z.number().int().min(0),
+  references: z.array(mediaReferenceItemSchema),
+})
+
+export const mediaDeleteQuerySchema = z.object({
+  cascade: z
+    .enum(['true', 'false'])
+    .optional()
+    .transform((val) => val === 'true'),
+})
+
 export type MediaUploadInput = z.infer<typeof mediaUploadSchema>
 export type MediaQueryInput = z.infer<typeof mediaQuerySchema>
+export type MediaReferenceType = z.infer<typeof mediaReferenceTypeSchema>
+export type MediaReferenceItem = z.infer<typeof mediaReferenceItemSchema>
+export type MediaUsageSummary = z.infer<typeof mediaUsageSummarySchema>
+export type MediaDeleteQueryInput = z.infer<typeof mediaDeleteQuerySchema>

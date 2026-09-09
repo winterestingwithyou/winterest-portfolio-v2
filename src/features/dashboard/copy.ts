@@ -250,6 +250,18 @@ export const dashboardCopy = {
       noDocumentsFound: 'No PDF documents found.',
       dropToUploadDoc: 'Drop PDF document here to upload',
       uploadDocButton: 'Upload PDF',
+      usageWarningTitle: 'Asset Is Currently In Use',
+      usageWarningDesc:
+        'This asset is actively referenced by the following site components:',
+      usageAutoCleanNotice:
+        'Deleting this asset will automatically clear its references (Cascade Nullify) to prevent broken links or missing images on your live site.',
+      confirmDeleteAndClean: (count: number) =>
+        `Delete & Clear References (${count})`,
+      siteSettingsLabel: 'Site Settings',
+      projectCoverLabel: 'Project Cover',
+      techIconLabel: 'Technology Icon',
+      projectContentLabel: 'Project Content',
+      checkingUsage: 'Checking asset usage...',
     },
     stack: {
       title: 'Tech Stack & Skills',
@@ -925,6 +937,17 @@ export const dashboardCopy = {
       noDocumentsFound: 'Belum ada dokumen PDF yang diunggah.',
       dropToUploadDoc: 'Lepaskan berkas PDF di sini untuk mengunggah',
       uploadDocButton: 'Unggah PDF',
+      usageWarningTitle: 'Aset Ini Sedang Digunakan',
+      usageWarningDesc:
+        'Aset ini terpasang secara aktif pada komponen situs berikut:',
+      usageAutoCleanNotice:
+        'Menghapus aset ini akan secara otomatis mengosongkan referensinya (Cascade Nullify) agar halaman web terbebas dari gambar rusak (broken link).',
+      confirmDeleteAndClean: (count: number) => `Hapus & Bersihkan (${count})`,
+      siteSettingsLabel: 'Site Settings',
+      projectCoverLabel: 'Cover Proyek',
+      techIconLabel: 'Icon Teknologi',
+      projectContentLabel: 'Konten Proyek',
+      checkingUsage: 'Memeriksa penggunaan aset...',
     },
     stack: {
       title: 'Tech Stack & Keahlian',
