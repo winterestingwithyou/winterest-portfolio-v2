@@ -1,6 +1,7 @@
-import { ExternalLink, FileText } from 'lucide-react'
+import { ExternalLink, FileText, Printer } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
+import { Button } from '#/components/ui/button'
 import { getPortfolioCopy } from '#/features/portfolio/copy'
 import { siteProfile } from '#/features/portfolio/data'
 import type { getPublishedProjects } from '#/features/projects/public-loaders'
@@ -27,11 +28,28 @@ export function ResumePage({
   return (
     <main className="px-4 py-14 print:bg-white sm:py-20">
       <Container>
-        <SectionHeader
-          eyebrow={copy.resume.eyebrow}
-          title={siteProfile.name}
-          description={copy.resume.description}
-        />
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <SectionHeader
+            eyebrow={copy.resume.eyebrow}
+            title={siteProfile.name}
+            description={copy.resume.description}
+          />
+          <div className="mb-8 shrink-0 print:hidden">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.print()
+                }
+              }}
+              className="gap-2 rounded-full border-(--brand-line) text-sm font-bold text-(--brand-ink) hover:border-(--brand-orange)"
+            >
+              <Printer className="size-4 text-(--brand-orange)" />
+              <span>{copy.resume.printButton}</span>
+            </Button>
+          </div>
+        </div>
 
         <div className="surface-card p-6 print:border print:bg-white print:shadow-none sm:p-8">
           <section className="grid gap-6 border-b border-(--brand-line) pb-8 md:grid-cols-[1fr_auto] md:items-start">

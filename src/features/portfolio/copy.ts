@@ -39,6 +39,7 @@ export const portfolioCopy = {
       stack: 'Stack',
       downloadPdf: 'Download Official PDF',
       viewPdf: 'View Official PDF',
+      printButton: 'Print / Save PDF',
     },
     pagination: {
       showing: 'Showing',
@@ -113,6 +114,7 @@ export const portfolioCopy = {
       stack: 'Stack',
       downloadPdf: 'Unduh PDF Resmi',
       viewPdf: 'Lihat PDF Resmi',
+      printButton: 'Cetak / Simpan PDF',
     },
     pagination: {
       showing: 'Menampilkan',

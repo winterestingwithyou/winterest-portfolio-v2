@@ -1,5 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
+import { getDashboardSession } from '#/features/auth/server-functions'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { DashboardUserEditPage } from '#/features/users/pages/dashboard-user-edit-page'
 import {
@@ -9,6 +10,14 @@ import {
 import { createRouteMeta } from '#/lib/metadata'
 
 export const Route = createFileRoute('/dashboard/users/$id')({
+  beforeLoad: async () => {
+    const user = await getDashboardSession()
+    if (!user || user.role !== 'owner') {
+      throw redirect({
+        to: '/dashboard',
+      })
+    }
+  },
   loader: async ({ context: { queryClient }, params }) => {
     await Promise.all([
       queryClient.ensureQueryData(sessionQueryOptions.current()),

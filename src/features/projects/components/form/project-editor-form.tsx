@@ -735,7 +735,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
           {localeOptions.map(({ value: langCode, label, flag }) => (
             <div
               key={langCode}
-              className="surface-card space-y-6 p-4 sm:p-8 w-full min-w-0 max-w-full border-l-4 border-l-(--brand-orange)"
+              className="surface-card space-y-6 p-4 sm:p-8 w-full min-w-0 max-w-full"
             >
               <div className="flex items-center gap-2.5 border-b border-(--brand-line) pb-4">
                 <span className="text-lg">{flag}</span>

@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useRouter } from '@tanstack/react-router'
 import { ArrowLeft, Sparkles } from 'lucide-react'
 
 import { Container } from '#/components/marketing/section'
@@ -14,6 +14,15 @@ type ProjectDetailPageProps = {
 
 export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
   const copy = getProjectsCopy()
+  const router = useRouter()
+
+  const handleBack = () => {
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      window.history.back()
+    } else {
+      void router.navigate({ to: '/projects' })
+    }
+  }
 
   if (!project) {
     return (
@@ -28,7 +37,7 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
               to="/projects"
               className="mt-6 inline-flex text-sm font-bold text-(--brand-orange-deep) no-underline"
             >
-              {copy.detail.back}
+              {copy.detail.backToProjects}
             </Link>
           </div>
         </Container>
@@ -40,13 +49,14 @@ export function ProjectDetailPage({ project }: ProjectDetailPageProps) {
     <main className="px-4 py-12 sm:py-16">
       <Container>
         {/* Navigation back */}
-        <Link
-          to="/projects"
-          className="mb-8 inline-flex items-center gap-2 text-sm font-bold text-(--brand-orange-deep) no-underline transition hover:-translate-x-1"
+        <button
+          type="button"
+          onClick={handleBack}
+          className="mb-8 inline-flex cursor-pointer items-center gap-2 text-sm font-bold text-(--brand-orange-deep) no-underline transition hover:-translate-x-1"
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
-          {copy.detail.projects}
-        </Link>
+          <span>{copy.detail.backToProjects}</span>
+        </button>
 
         {/* Hero Section */}
         <ProjectDetailHero project={project} />

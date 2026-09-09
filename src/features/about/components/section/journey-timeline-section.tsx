@@ -74,7 +74,7 @@ export function JourneyTimelineSection({
           whileInView="visible"
           viewport={{ once: true, amount: 0.2, margin: '0px 0px -40px 0px' }}
           variants={fadeUp}
-          className="surface-card p-5 border-l-4 border-l-sky-500"
+          className="surface-card p-5"
         >
           <h4 className="text-sm font-bold text-(--brand-ink) flex items-center gap-2">
             <BookOpen className="size-4 text-sky-500" />
@@ -89,7 +89,7 @@ export function JourneyTimelineSection({
           whileInView="visible"
           viewport={{ once: true, amount: 0.2, margin: '0px 0px -40px 0px' }}
           variants={fadeUp}
-          className="surface-card p-5 border-l-4 border-l-emerald-500"
+          className="surface-card p-5"
         >
           <h4 className="text-sm font-bold text-(--brand-ink) flex items-center gap-2">
             <Users className="size-4 text-emerald-500" />

@@ -381,7 +381,7 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
                     {beyond.anime.summary}
                   </p>
 
-                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4 space-y-2 border-l-4 border-l-(--brand-orange)">
+                  <div className="rounded-xl border border-(--brand-line) bg-(--surface-strong) p-4 space-y-2">
                     <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
                       <Sparkles className="size-4 text-(--brand-orange)" />
                       <span>Domain Expansion & Tactical Battles</span>

@@ -8,6 +8,7 @@ import {
   Trash2,
   UploadCloud,
 } from 'lucide-react'
+import { motion } from 'motion/react'
 
 import { Button } from '#/components/ui/button'
 import { Input } from '#/components/ui/input'
@@ -263,7 +264,13 @@ export function ImageUploader({
             {uploadMutation.isPending ? (
               <Loader2 className="size-6 animate-spin" />
             ) : isDragging ? (
-              <UploadCloud className="size-6 animate-bounce" />
+              <motion.div
+                animate={{ scale: 1.1, y: -2 }}
+                transition={{ duration: 0.2, ease: 'easeOut' }}
+                className="flex items-center justify-center"
+              >
+                <UploadCloud className="size-6" />
+              </motion.div>
             ) : (
               <ImageIcon className="size-6" />
             )}

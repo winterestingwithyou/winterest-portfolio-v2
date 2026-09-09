@@ -2,7 +2,7 @@
 
 - **Feature ID**: `fix-dashboard-navigation-polish-ux`
 - **Date**: 2026-09-09
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - `/dashboard/*`
   - `/projects/$slug`
@@ -171,11 +171,11 @@ Audit UX terhadap dashboard admin CMS dan navigasi mendalam menemukan beberapa k
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] User dengan role `editor` tidak melihat menu `Users` di sidebar dashboard.
-- [ ] Mengakses langsung `/dashboard/users` sebagai `editor` dialihkan secara mulus ke `/dashboard` tanpa error boundary crash.
-- [ ] Membuka proyek dari hasil filter lalu menekan tombol kembali mempertahankan filter kategori dan kata kunci pencarian.
-- [ ] Tabel proyek kosong memiliki tombol CTA _"Buat Proyek Pertama"_.
-- [ ] Efek drag-and-drop file menggunakan transisi smooth tanpa icon membal (_bounce_).
-- [ ] Tidak ada lagi class `border-l-4` pada kartu terjemahan dan about.
-- [ ] Tombol cetak di halaman resume membuka dialog cetak native browser dan tersembunyi pada lembar hasil cetak.
-- [ ] Typecheck dan linting lulus (`bun run check`).
+- [x] User dengan role `editor` tidak melihat menu `Users` di sidebar dashboard.
+- [x] Mengakses langsung `/dashboard/users` sebagai `editor` dialihkan secara mulus ke `/dashboard` tanpa error boundary crash.
+- [x] Membuka proyek dari hasil filter lalu menekan tombol kembali mempertahankan filter kategori dan kata kunci pencarian.
+- [x] Tabel proyek kosong memiliki tombol CTA _"Buat Proyek Pertama"_.
+- [x] Efek drag-and-drop file menggunakan transisi smooth tanpa icon membal (_bounce_).
+- [x] Tidak ada lagi class `border-l-4` pada kartu terjemahan dan about.
+- [x] Tombol cetak di halaman resume membuka dialog cetak native browser dan tersembunyi pada lembar hasil cetak.
+- [x] Typecheck dan linting lulus (`bun run check`).

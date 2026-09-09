@@ -7,7 +7,7 @@
 | **Domain Module**    | [`src/features/settings/`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/settings)          |
 | **Dashboard Routes** | [`/dashboard/settings`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/dashboard/settings.tsx) |
 | **RBAC Permissions** | Owner & Admin Only                                                                                             |
-| **Last Updated**     | 2026-09-06                                                                                                     |
+| **Last Updated**     | 2026-09-09                                                                                                     |
 
 ---
 
@@ -57,13 +57,7 @@ export const siteSettings = sqliteTable('site_settings', {
 
 ### Validation ([`src/features/settings/types.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/settings/types.ts))
 
-- `siteSettingsSchema`:
-  - `siteName`: Required string.
-  - `defaultLocale`: `'en'` | `'id'`.
-  - `publicEmail`: Valid email or empty string.
-  - `metaTitleEn`, `metaTitleId`: Required localized titles.
-  - `faviconUrl`, `ogImageUrl`, `heroVisualUrl`, `cvEnUrl`, `cvIdUrl`: Sanitized URL strings.
-  - `maintenanceMode`: Boolean.
+- `siteSettingsSchema`: Comprehensive schema validating fields such as `siteName`, `contactEmail`, `defaultLocale`, `heroVisualUrl`, `cvPdfUrlEn`, `cvPdfUrlId`, `metaTitleEn`, `metaTitleId`, `metaDescriptionEn`, `metaDescriptionId`, `ogImageUrl`, `maintenanceMode`.
 
 ---
 
@@ -92,8 +86,9 @@ src/routes/dashboard/settings.tsx -> SettingsPage
 
 ## 5. Security & RBAC Rules
 
-- **Role Requirement**: Only `owner` and `admin` roles can mutate settings (`requireSettingsUser()`).
-- **Editor Restriction**: Accounts with role `editor` receive 403 Forbidden when attempting to access settings forms or endpoints.
+- **Role Requirement**: Only `owner` and `admin` roles can access and mutate settings (`requireSettingsUser()`).
+- **Sidebar Trimming**: The Settings menu item (`/dashboard/settings`) is completely hidden from `editor` accounts.
+- **Route Guard**: Direct access to `/dashboard/settings` by `editor` or unauthorized roles is trapped by `beforeLoad` and redirected safely to `/dashboard`.
 
 ---
 
@@ -102,6 +97,6 @@ src/routes/dashboard/settings.tsx -> SettingsPage
 - [ ] Updating site settings persists changes across tabs and survives page reloads.
 - [ ] Social card preview reflects typed titles and uploaded OG image in real-time.
 - [ ] `resolveActiveCv()` returns Indonesian CV on ID locale, falling back to English CV.
-- [ ] Non-admin accounts are blocked from accessing `/dashboard/settings`.
+- [x] Non-admin accounts are blocked from accessing `/dashboard/settings`.
 - [ ] Settings types and resolver pass Vitest suite ([`src/features/settings/__tests__/types.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/settings/__tests__/types.test.ts)).
 - [ ] TypeScript check passes: `bun run check`.
