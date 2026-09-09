@@ -1,7 +1,7 @@
 # RFC: Flat Precision Architecture & Visual Noise Reduction (Cloudflare + Bun Redesign)
 
 - **Feature ID**: `arch-flat-precision-redesign`
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Authors**: Winterest | M. Adam Yudistira
 - **Date**: 2026-09-09
 - **Target Routes**:
@@ -140,10 +140,10 @@ Mentransformasi portofolio menuju **Flat Precision Architecture**:
 
 ### Kriteria Selesai (Definition of Done)
 
-- [ ] Aturan resmi di `.agents/rules/07-design-system-ui-3d.md` dan `AGENTS.md` telah disinkronkan dengan standar Flat Precision.
-- [ ] Tidak ada lagi elemen kartu publik yang menggunakan `shadow-[...var(--brand-glow)]` atau `shadow-[...var(--brand-orange-soft)]`.
-- [ ] Seluruh bola blur dekoratif (`blur-2xl` / `blur-3xl`) pada kartu proyek dan komponen publik telah dihapus.
-- [ ] Tombol CTA utama (Hero, Contact) menggunakan warna oranye solid tanpa bayangan glow yang mengembang.
-- [ ] Kartu proyek pada `/projects` dan beranda menggunakan flat surface dengan border 1px hover highlight.
-- [ ] Mode terang (light) dan mode gelap (dark) diuji secara visual dan memiliki kontras yang tajam.
-- [ ] Pengecekan statis lulus tanpa error: `bun run check`, `bun run lint`, dan `bun run test`.
+- [x] Aturan resmi di `.agents/rules/07-design-system-ui-3d.md` dan `AGENTS.md` telah disinkronkan dengan standar Flat Precision.
+- [x] Tidak ada lagi elemen kartu publik yang menggunakan `shadow-[...var(--brand-glow)]` atau `shadow-[...var(--brand-orange-soft)]`.
+- [x] Seluruh bola blur dekoratif (`blur-2xl` / `blur-3xl`) pada kartu proyek dan komponen publik telah dihapus.
+- [x] Tombol CTA utama (Hero, Contact) menggunakan warna oranye solid tanpa bayangan glow yang mengembang.
+- [x] Kartu proyek pada `/projects` dan beranda menggunakan flat surface dengan border 1px hover highlight.
+- [x] Mode terang (light) dan mode gelap (dark) diuji secara visual dan memiliki kontras yang tajam.
+- [x] Pengecekan statis lulus tanpa error: `bun run check`, `bun run lint`, dan `bun run test`.

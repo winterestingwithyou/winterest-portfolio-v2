@@ -92,7 +92,7 @@ export function LoginForm({ copy, redirectTo }: LoginFormProps) {
         e.stopPropagation()
         void form.handleSubmit()
       }}
-      className="grid gap-3.5 rounded-[1.25rem] border border-[color-mix(in_srgb,var(--brand-orange)_28%,var(--brand-line))] bg-[linear-gradient(145deg,color-mix(in_srgb,var(--surface-strong)_96%,transparent),color-mix(in_srgb,var(--brand-orange-soft)_28%,transparent)),var(--surface-strong)] p-4 shadow-[0_28px_80px_rgba(42,26,10,0.16),inset_0_1px_0_color-mix(in_srgb,white_42%,transparent)] sm:gap-4 sm:p-5"
+      className="grid gap-3.5 rounded-2xl border border-(--brand-line) bg-card p-4 sm:gap-4 sm:p-6"
     >
       <div className="flex items-center gap-2.5 border-b border-(--brand-line) pb-2.5 sm:pb-3">
         <div className="flex size-8.5 items-center justify-center rounded-xl bg-(--brand-orange-soft) text-(--brand-orange-deep)">
@@ -231,7 +231,7 @@ export function LoginForm({ copy, redirectTo }: LoginFormProps) {
             <Button
               type="submit"
               disabled={!canSubmit || isPending}
-              className="inline-flex min-h-10.5 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-black text-white shadow-[0_18px_44px_var(--brand-glow)] transition hover:-translate-y-px hover:bg-(--brand-orange-deep) hover:shadow-[0_22px_54px_var(--brand-glow)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:min-h-11.5"
+              className="inline-flex min-h-10.5 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-black text-white transition hover:-translate-y-px hover:bg-(--brand-orange-deep) disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:min-h-11.5"
             >
               {isPending ? (
                 <>

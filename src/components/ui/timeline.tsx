@@ -100,7 +100,7 @@ export function Timeline({ data, className }: TimelineProps) {
               height: heightTransform,
               opacity: opacityTransform,
             }}
-            className="absolute inset-x-0 top-0 w-0.5 rounded-full bg-linear-to-b from-(--brand-orange) via-(--brand-orange) to-(--brand-orange-deep) shadow-[0_0_12px_var(--brand-orange)]"
+            className="absolute inset-x-0 top-0 w-0.5 rounded-full bg-linear-to-b from-(--brand-orange) via-(--brand-orange) to-(--brand-orange-deep)"
           />
         </div>
       </div>

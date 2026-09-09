@@ -15,7 +15,6 @@ import ThemeToggle from './theme-toggle'
 const iconLinkClasses = cn(
   'inline-grid size-9 place-items-center rounded-full',
   'border border-(--brand-line) bg-(--surface-strong) text-(--brand-ink) no-underline',
-  'shadow-[0_10px_28px_rgba(42,26,10,0.08)]',
   'transition-[background-color,border-color,color,transform] duration-[180ms] ease-[ease]',
   'hover:border-(--brand-orange) hover:text-(--brand-orange-deep) hover:-translate-y-px',
 )
@@ -80,18 +79,14 @@ export default function Header() {
             'rounded-full border border-[color-mix(in_srgb,var(--brand-orange)_34%,var(--brand-line))]',
             'bg-[linear-gradient(135deg,color-mix(in_srgb,var(--surface-strong)_88%,white),color-mix(in_srgb,var(--brand-orange-soft)_52%,transparent)),var(--surface-strong)]',
             'py-[0.3rem] pr-[0.9rem] pl-[0.35rem] text-(--brand-ink) no-underline',
-            'shadow-[0_14px_34px_rgba(244,129,32,0.14),inset_0_1px_0_color-mix(in_srgb,white_70%,transparent)]',
             'transition-[border-color,box-shadow,transform] duration-180 ease-[ease]',
             "after:absolute after:inset-[0.2rem] after:rounded-[inherit] after:content-[''] after:opacity-[0.42] after:pointer-events-none",
             'after:bg-[linear-gradient(110deg,transparent_8%,rgba(255,255,255,0.32)_38%,transparent_62%)]',
             'hover:border-[color-mix(in_srgb,var(--brand-orange)_74%,white)] hover:-translate-y-px',
-            'hover:shadow-[0_16px_44px_var(--brand-glow),inset_0_1px_0_color-mix(in_srgb,white_78%,transparent)]',
           )}
           activeProps={{
-            className: cn(
+            className:
               'border-[color-mix(in_srgb,var(--brand-orange)_74%,white)] -translate-y-px',
-              'shadow-[0_16px_44px_var(--brand-glow),inset_0_1px_0_color-mix(in_srgb,white_78%,transparent)]',
-            ),
           }}
         >
           {/* Brand mark */}
@@ -100,13 +95,12 @@ export default function Header() {
               'relative z-1 grid size-8 shrink-0 place-items-center rounded-full',
               'border border-[color-mix(in_srgb,white_42%,transparent)] text-white',
               'bg-[radial-gradient(circle_at_32%_24%,#ffd7a4_0_20%,transparent_22%),linear-gradient(145deg,#ff9d3e,var(--brand-orange)_58%,#c7520c)]',
-              'shadow-[0_10px_24px_rgba(244,129,32,0.34),inset_0_1px_0_rgba(255,255,255,0.36)]',
             )}
           >
             <Cloud aria-hidden="true" className="size-4" />
             <Sparkles
               aria-hidden="true"
-              className="absolute right-[-0.18rem] top-[-0.12rem] size-3 text-[#fff6da] drop-shadow-[0_2px_5px_rgba(116,49,4,0.28)]"
+              className="absolute right-[-0.18rem] top-[-0.12rem] size-3 text-[#fff6da]"
             />
           </span>
           {/* Brand name */}
@@ -157,13 +151,10 @@ export default function Header() {
             type="button"
             className={cn(
               'relative inline-grid size-[2.35rem] place-items-center rounded-full md:hidden',
-              'border border-(--brand-line) text-(--brand-ink)',
-              'bg-[linear-gradient(135deg,color-mix(in_srgb,var(--surface-strong)_86%,transparent),color-mix(in_srgb,var(--brand-orange-soft)_46%,transparent)),var(--surface-strong)]',
-              'shadow-[0_12px_28px_rgba(42,26,10,0.08)]',
-              'transition-[border-color,box-shadow,transform] duration-180 ease-[ease]',
-              'hover:border-[color-mix(in_srgb,var(--brand-orange)_68%,white)] hover:shadow-[0_14px_36px_var(--brand-glow)]',
-              mobileNavOpen &&
-                'border-[color-mix(in_srgb,var(--brand-orange)_68%,white)] shadow-[0_14px_36px_var(--brand-glow)] -translate-y-px',
+              'border border-(--brand-line) text-(--brand-ink) bg-card',
+              'transition-[border-color,transform] duration-180 ease-out',
+              'hover:border-(--brand-orange)',
+              mobileNavOpen && 'border-(--brand-orange) -translate-y-px',
             )}
             aria-expanded={mobileNavOpen}
             aria-controls="mobile-navigation"
@@ -232,8 +223,7 @@ export default function Header() {
                 to={item.href}
                 className={cn(
                   mobileNavItemBase,
-                  isActive &&
-                    'bg-(--brand-orange) text-white shadow-[0_14px_34px_var(--brand-glow)]',
+                  isActive && 'bg-(--brand-orange) text-white',
                 )}
                 tabIndex={mobileNavOpen ? 0 : -1}
                 onClick={() => setMobileNavOpen(false)}

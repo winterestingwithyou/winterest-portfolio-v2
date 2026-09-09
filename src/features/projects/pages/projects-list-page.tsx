@@ -145,8 +145,8 @@ export function ProjectsListPage({ projects }: ProjectsListPageProps) {
                       onClick={() => handleCategoryChange(cat)}
                       className={`inline-flex min-h-9 shrink-0 items-center gap-2 rounded-full px-4 py-1.5 text-xs font-semibold whitespace-nowrap transition cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-(--brand-orange) ${
                         isSelected
-                          ? 'bg-(--brand-orange) text-white shadow-xs'
-                          : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/60'
+                          ? 'bg-(--brand-orange) text-white'
+                          : 'border border-(--brand-line) bg-card text-(--brand-ink) hover:border-(--brand-orange)/60'
                       }`}
                     >
                       <span>{label}</span>

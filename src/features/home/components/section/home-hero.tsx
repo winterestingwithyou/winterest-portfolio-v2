@@ -77,7 +77,7 @@ export function HomeHero({
           >
             <Link
               to="/about"
-              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-bold text-white no-underline shadow-[0_18px_48px_var(--brand-glow)] transition hover:-translate-y-0.5"
+              className="inline-flex min-h-11 items-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-bold text-white no-underline transition hover:-translate-y-0.5 hover:brightness-105"
             >
               {copy.hero.aboutMe}
               <ArrowRight aria-hidden="true" className="size-4" />
@@ -121,7 +121,7 @@ export function HomeHero({
                 </button>
 
                 {cvNotice ? (
-                  <div className="absolute left-0 top-full z-20 mt-2.5 w-max max-w-xs rounded-xl border border-orange-300/30 bg-(--brand-dark) px-3.5 py-2.5 text-xs font-semibold text-[#fff7ec] shadow-xl backdrop-blur-md animate-in fade-in slide-in-from-top-1">
+                  <div className="absolute left-0 top-full z-20 mt-2.5 w-max max-w-xs rounded-xl border border-(--brand-line) bg-(--brand-dark) px-3.5 py-2.5 text-xs font-semibold text-[#fff7ec] shadow-md animate-in fade-in slide-in-from-top-1">
                     {copy.hero.cvNotAvailable}
                   </div>
                 ) : null}

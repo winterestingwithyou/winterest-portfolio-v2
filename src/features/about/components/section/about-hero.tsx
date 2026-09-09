@@ -54,7 +54,7 @@ export function AboutHero({ hero }: AboutHeroProps) {
               <motion.span
                 key={badge}
                 variants={staggerItemScale}
-                className="inline-flex items-center gap-1.5 rounded-md border border-(--brand-line) bg-(--surface-strong) px-3 py-1.5 text-xs font-semibold text-(--brand-ink) shadow-xs"
+                className="inline-flex items-center gap-1.5 rounded-md border border-(--brand-line) bg-(--surface-strong) px-3 py-1.5 text-xs font-semibold text-(--brand-ink)"
               >
                 <Sparkles className="size-3.5 text-(--brand-orange)" />
                 {badge}

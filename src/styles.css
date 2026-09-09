@@ -218,15 +218,12 @@
     width: 2rem;
     height: 2rem;
     place-items: center;
-    border: 1px solid color-mix(in srgb, white 42%, transparent);
+    border: 1px solid rgba(255, 255, 255, 0.24);
     border-radius: 999px;
     background:
       radial-gradient(circle at 32% 24%, #ffd7a4 0 20%, transparent 22%),
       linear-gradient(145deg, #ff9d3e, var(--brand-orange) 58%, #c7520c);
     color: white;
-    box-shadow:
-      0 10px 24px rgba(244, 129, 32, 0.34),
-      inset 0 1px 0 rgba(255, 255, 255, 0.36);
   }
 
   .brand-spark {
@@ -234,7 +231,6 @@
     right: -0.18rem;
     top: -0.12rem;
     color: #fff6da;
-    filter: drop-shadow(0 2px 5px rgba(116, 49, 4, 0.28));
   }
 
   .nav-link,
@@ -275,7 +271,6 @@
     background: var(--surface-strong);
     color: var(--brand-ink);
     text-decoration: none;
-    box-shadow: 0 10px 28px rgba(42, 26, 10, 0.08);
     transition:
       background-color 180ms ease,
       border-color 180ms ease,
@@ -297,31 +292,22 @@
     gap: 0.38rem;
     border: 1px solid var(--brand-line);
     border-radius: 999px;
-    background:
-      linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--surface-strong) 88%, transparent),
-        color-mix(in srgb, var(--brand-orange-soft) 42%, transparent)
-      ),
-      var(--surface-strong);
+    background: var(--surface-strong);
     padding: 0 0.7rem;
     color: var(--brand-ink);
     font-size: 0.82rem;
     font-weight: 800;
     line-height: 1;
-    box-shadow: 0 10px 28px rgba(42, 26, 10, 0.08);
     transition:
       border-color 180ms ease,
-      box-shadow 180ms ease,
       color 180ms ease,
       transform 180ms ease;
   }
 
   .nav-popover-trigger:hover,
   .nav-popover-trigger[data-state='open'] {
-    border-color: color-mix(in srgb, var(--brand-orange) 70%, white);
+    border-color: var(--brand-orange);
     color: var(--brand-orange-deep);
-    box-shadow: 0 14px 34px var(--brand-glow);
     transform: translateY(-1px);
   }
 
@@ -339,23 +325,11 @@
     width: max-content;
     min-width: 12rem;
     max-width: calc(100vw - 2rem);
-    border-color: color-mix(
-      in srgb,
-      var(--brand-orange) 30%,
-      var(--brand-line)
-    );
-    border-radius: 1rem;
-    background:
-      linear-gradient(
-        145deg,
-        color-mix(in srgb, var(--surface-strong) 94%, transparent),
-        color-mix(in srgb, var(--brand-orange-soft) 32%, transparent)
-      ),
-      var(--surface-strong);
+    border: 1px solid var(--brand-line);
+    border-radius: 0.75rem;
+    background: var(--card);
     padding: 0.45rem;
-    box-shadow:
-      0 20px 60px rgba(42, 26, 10, 0.18),
-      0 0 0 1px color-mix(in srgb, white 28%, transparent) inset;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
   }
 
   .nav-locale-popover {
@@ -440,17 +414,14 @@
   .surface-card {
     border: 1px solid var(--brand-line);
     border-radius: 0.75rem;
-    background: var(--surface);
-    box-shadow: 0 24px 80px rgba(65, 38, 12, 0.08);
-    backdrop-filter: blur(16px);
+    background: var(--card);
   }
 
   .command-strip {
     border: 1px solid var(--brand-line);
     border-radius: 0.75rem;
-    background: color-mix(in srgb, var(--brand-dark) 92%, transparent);
+    background: var(--brand-dark);
     color: #fff7ec;
-    box-shadow: 0 24px 80px var(--brand-glow);
   }
 
   .signal-preview {
@@ -459,19 +430,8 @@
     overflow: hidden;
     border: 1px solid var(--brand-line);
     border-radius: 0.75rem;
-    background:
-      radial-gradient(
-        circle at 76% 16%,
-        color-mix(in srgb, var(--brand-orange) 26%, transparent),
-        transparent 28%
-      ),
-      linear-gradient(
-        145deg,
-        color-mix(in srgb, var(--brand-dark) 92%, transparent),
-        color-mix(in srgb, var(--brand-dark) 70%, var(--brand-orange) 30%)
-      );
+    background: var(--brand-dark);
     color: #fff7ec;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
 
   .signal-preview--compact {
@@ -587,11 +547,7 @@
     background:
       linear-gradient(rgba(255, 183, 106, 0.08) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255, 183, 106, 0.08) 1px, transparent 1px),
-      linear-gradient(
-        145deg,
-        color-mix(in srgb, var(--brand-dark) 90%, transparent),
-        color-mix(in srgb, #1d2524 78%, var(--brand-orange) 22%)
-      );
+      var(--brand-dark);
     background-size:
       18px 18px,
       18px 18px,
@@ -603,16 +559,9 @@
     gap: 1.25rem;
     border: 1px solid var(--brand-line);
     border-radius: 0.75rem;
-    background:
-      radial-gradient(
-        circle at 88% 8%,
-        color-mix(in srgb, var(--brand-orange) 28%, transparent),
-        transparent 28%
-      ),
-      color-mix(in srgb, var(--brand-dark) 94%, transparent);
+    background: var(--brand-dark);
     padding: clamp(1.25rem, 4vw, 1.75rem);
     color: #fff7ec;
-    box-shadow: 0 24px 80px var(--brand-glow);
   }
 
   .contact-signal__status {

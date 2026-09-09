@@ -26,15 +26,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <article
-      className={`group relative flex size-full flex-col justify-between overflow-hidden transition-all duration-300 ${
+      className={`group relative flex size-full flex-col justify-between overflow-hidden rounded-2xl border bg-card transition-all duration-200 ${
         project.featured
-          ? 'rounded-2xl border border-(--brand-orange)/40 bg-linear-to-br from-(--surface-card) via-(--surface-card) to-(--brand-orange-soft)/30 shadow-[0_10px_25px_-5px_var(--brand-orange-soft)] hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-[0_20px_35px_-5px_var(--brand-orange-soft)]'
-          : 'rounded-2xl border border-(--brand-line) bg-(--surface-card) hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-[0_20px_35px_-5px_var(--brand-orange-soft)]'
+          ? 'border-(--brand-orange)/40 hover:-translate-y-0.5 hover:border-(--brand-orange)'
+          : 'border-(--brand-line) hover:-translate-y-0.5 hover:border-(--brand-orange)'
       }`}
     >
-      {/* Background ambient glow effect on hover */}
-      <div className="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full bg-(--brand-orange)/10 blur-2xl transition duration-500 group-hover:scale-150 group-hover:bg-(--brand-orange)/20" />
-
       <div>
         {/* Cover Image or Fallback Header */}
         <div className="relative aspect-video w-full overflow-hidden border-b border-(--brand-line) bg-(--surface-strong)">
@@ -46,10 +43,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
               loading="lazy"
             />
           ) : (
-            <div className="relative flex size-full flex-col items-center justify-center overflow-hidden bg-linear-to-br from-(--brand-orange-soft)/30 via-(--surface-strong) to-(--surface-card) p-6 text-center">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--brand-orange-soft)_0%,transparent_70%)] opacity-30" />
-
-              <div className="relative z-10 mb-2.5 grid size-12 place-items-center rounded-2xl border border-(--brand-line) bg-(--surface-card) text-(--brand-orange-deep) shadow-md transition-transform duration-300 group-hover:scale-110 group-hover:border-(--brand-orange)">
+            <div className="relative flex size-full flex-col items-center justify-center overflow-hidden bg-(--surface-strong) p-6 text-center">
+              <div className="relative z-10 mb-2.5 grid size-12 place-items-center rounded-xl border border-(--brand-line) bg-card text-(--brand-orange-deep) transition-transform duration-300 group-hover:scale-110 group-hover:border-(--brand-orange)">
                 <Layers className="size-6 text-(--brand-orange-deep)" />
               </div>
               <span className="relative z-10 font-mono text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
@@ -61,12 +56,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {/* Badges Overlay */}
           <div className="pointer-events-none absolute top-3 left-3 right-3 flex items-center justify-between gap-2">
             {project.featured ? (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-orange-deep)/30 bg-(--brand-orange-soft) px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep) shadow-xs backdrop-blur-md">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-orange-deep)/30 bg-(--brand-orange-soft) px-3 py-1 font-mono text-xs font-bold uppercase tracking-wider text-(--brand-orange-deep)">
                 <Sparkles className="size-3.5 fill-(--brand-orange-deep) text-(--brand-orange-deep)" />
                 Featured
               </span>
             ) : project.coverImage ? (
-              <span className="rounded-full border border-white/20 bg-black/60 px-3 py-1 font-mono text-xs font-semibold text-white backdrop-blur-md">
+              <span className="rounded-full border border-white/20 bg-black/75 px-3 py-1 font-mono text-xs font-semibold text-white">
                 {project.category}
               </span>
             ) : (
@@ -74,12 +69,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
             )}
 
             {project.status === 'in_progress' ? (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 px-2.5 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 shadow-xs backdrop-blur-md">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-500/30 bg-sky-500/10 px-2.5 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">
                 <span className="size-1.5 rounded-full bg-sky-500 animate-pulse" />
                 In Progress
               </span>
             ) : (
-              <span className="inline-flex items-center gap-1 rounded-full border border-(--brand-line) bg-(--surface-card)/90 px-2.5 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-(--brand-muted) shadow-xs backdrop-blur-md">
+              <span className="inline-flex items-center gap-1 rounded-full border border-(--brand-line) bg-card/95 px-2.5 py-0.5 font-mono text-xs font-semibold uppercase tracking-wider text-(--brand-muted)">
                 {project.status}
               </span>
             )}
@@ -132,7 +127,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Card Footer / Actions */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-(--brand-line) bg-(--surface-strong)/80 p-4 backdrop-blur-xs">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-(--brand-line) bg-(--surface-strong) p-4">
         <div className="flex flex-wrap items-center gap-2">
           {/* Live Production URL */}
           {hasProductionUrl ? (
@@ -141,7 +136,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noreferrer"
               title="Visit Live Site"
-              className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--surface-card) px-3 py-1.5 text-xs font-semibold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep) hover:shadow-xs"
+              className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-card px-3 py-1.5 text-xs font-semibold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
             >
               <Globe className="size-3.5 text-(--brand-orange-deep)" />
               Live Site
@@ -155,7 +150,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noreferrer"
               title="View Demo"
-              className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--surface-card) px-3 py-1.5 text-xs font-semibold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep) hover:shadow-xs"
+              className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-card px-3 py-1.5 text-xs font-semibold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
             >
               <ExternalLink className="size-3.5" />
               Demo
@@ -169,7 +164,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               target="_blank"
               rel="noreferrer"
               title="View GitHub Repository"
-              className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--surface-card) px-3 py-1.5 text-xs font-semibold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep) hover:shadow-xs"
+              className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-card px-3 py-1.5 text-xs font-semibold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
             >
               <Github className="size-3.5" />
               Repository

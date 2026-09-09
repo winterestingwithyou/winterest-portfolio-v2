@@ -240,7 +240,6 @@ export default function GooeyNav({
                     className={cn(
                       'pointer-events-none absolute inset-0 rounded-full z-1',
                       'bg-[radial-gradient(circle_at_32%_20%,#ffd7a4_0_15%,transparent_22%),linear-gradient(135deg,#ff9d3e,var(--brand-orange)_60%,#c7520c)]',
-                      'shadow-[0_10px_26px_rgba(244,129,32,0.36),inset_0_1px_0_rgba(255,255,255,0.4)]',
                       'border border-[color-mix(in_srgb,white_34%,transparent)]',
                     )}
                     transition={{

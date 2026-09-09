@@ -92,14 +92,14 @@ export function GlassShardCard({ character, index }: GlassShardCardProps) {
               points={shard.svgPoints}
               fill="none"
               stroke="rgba(255,255,255,0.7)"
-              strokeWidth="2.5"
-              className="transition-all duration-300 group-hover:stroke-(--brand-orange) drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]"
+              strokeWidth="2"
+              className="transition-all duration-300 group-hover:stroke-(--brand-orange)"
             />
           </svg>
 
           {/* Shard Label Floating Name */}
           <div className="pointer-events-none absolute inset-x-0 -bottom-3 z-20 flex justify-center">
-            <span className="rounded-full bg-(--surface-strong) px-3 py-1 text-xs font-black tracking-wide text-(--brand-ink) border border-(--brand-line) shadow-xl group-hover:border-(--brand-orange) group-hover:text-(--brand-orange-deep) group-hover:scale-105 transition-all">
+            <span className="rounded-full bg-(--surface-strong) px-3 py-1 text-xs font-black tracking-wide text-(--brand-ink) border border-(--brand-line) group-hover:border-(--brand-orange) group-hover:text-(--brand-orange-deep) group-hover:scale-105 transition-all">
               {character.name}
             </span>
           </div>
@@ -109,7 +109,7 @@ export function GlassShardCard({ character, index }: GlassShardCardProps) {
       <PopoverContent
         side="top"
         sideOffset={16}
-        className="w-72 sm:w-80 rounded-2xl border-(--brand-orange)/40 bg-(--surface-strong)/95 backdrop-blur-md p-4 shadow-2xl space-y-3"
+        className="w-72 sm:w-80 rounded-2xl border border-(--brand-line) bg-card p-4 shadow-md space-y-3"
       >
         <div className="flex items-center gap-3">
           <img

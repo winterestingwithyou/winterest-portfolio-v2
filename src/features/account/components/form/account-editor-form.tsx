@@ -166,11 +166,10 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
   return (
     <div className="mx-auto max-w-4xl space-y-6 pb-12">
       {/* Top Profile Summary Card */}
-      <Card className="relative overflow-hidden border-(--brand-line) bg-card p-6 shadow-sm">
-        <div className="absolute right-0 top-0 -mr-16 -mt-16 size-48 rounded-full bg-(--brand-orange)/5 blur-3xl" />
+      <Card className="relative overflow-hidden border-(--brand-line) bg-card p-6 shadow-xs">
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl border border-(--brand-line) bg-linear-to-br from-(--brand-orange-soft) to-orange-100 text-2xl font-extrabold text-(--brand-orange-deep) shadow-[0_4px_16px_var(--brand-orange-soft)] dark:to-orange-950/40">
+            <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl border border-(--brand-line) bg-(--brand-orange-soft) text-2xl font-extrabold text-(--brand-orange-deep)">
               {userInitial}
             </div>
             <div className="flex flex-col gap-1">
@@ -373,7 +372,7 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
                 <Button
                   type="submit"
                   disabled={isSavingProfile}
-                  className="gap-2 bg-(--brand-orange) font-semibold text-white shadow-[0_2px_8px_var(--brand-orange-soft)] hover:bg-(--brand-orange-deep)"
+                  className="gap-2 bg-(--brand-orange) font-semibold text-white shadow-xs hover:bg-(--brand-orange-deep)"
                 >
                   <Save className="size-4" />
                   {isSavingProfile
@@ -577,7 +576,7 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
                 <Button
                   type="submit"
                   disabled={isChangingPassword}
-                  className="gap-2 bg-(--brand-orange) font-semibold text-white shadow-[0_2px_8px_var(--brand-orange-soft)] hover:bg-(--brand-orange-deep)"
+                  className="gap-2 bg-(--brand-orange) font-semibold text-white shadow-xs hover:bg-(--brand-orange-deep)"
                 >
                   <KeyRound className="size-4" />
                   {isChangingPassword

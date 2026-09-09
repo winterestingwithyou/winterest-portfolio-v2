@@ -47,7 +47,7 @@ export function TechMarqueeSection({
             {ultimateTechs.map((tech) => (
               <div
                 key={tech.id}
-                className="group relative flex w-44 shrink-0 flex-col items-center justify-center gap-3 rounded-2xl border border-(--brand-line)/60 bg-(--surface-strong)/60 p-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:bg-(--surface-strong) hover:shadow-xl sm:w-52"
+                className="group relative flex w-44 shrink-0 flex-col items-center justify-center gap-3 rounded-2xl border border-(--brand-line) bg-card p-5 text-center transition-all duration-200 hover:-translate-y-0.5 hover:border-(--brand-orange) sm:w-52"
               >
                 <div className="flex items-center justify-center p-1 transition-transform duration-300 group-hover:scale-110">
                   <TechIcon

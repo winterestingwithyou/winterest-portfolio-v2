@@ -172,7 +172,7 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
                     alt={beyond.gaming.growtopia.name}
                     referrerPolicy="no-referrer"
                     loading="lazy"
-                    className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover shadow-xs"
+                    className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover"
                   />
                   <div className="space-y-2">
                     <div className="flex flex-wrap items-center gap-2">
@@ -208,7 +208,7 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
                       alt={beyond.gaming.genshin.name}
                       referrerPolicy="no-referrer"
                       loading="lazy"
-                      className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover shadow-xs"
+                      className="size-14 sm:size-16 shrink-0 rounded-2xl border border-(--brand-line) bg-(--surface-strong) object-cover"
                     />
                     <div>
                       <div className="flex flex-wrap items-center gap-2">
@@ -443,18 +443,12 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
                   <motion.div
                     key={group.name}
                     variants={staggerItem}
-                    className={cn(
-                      'group relative overflow-hidden rounded-3xl border border-(--brand-line) bg-(--surface-strong)/90 backdrop-blur-md p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1 hover:border-(--brand-orange) hover:shadow-xl flex flex-col justify-between bg-linear-to-br',
-                      group.color,
-                    )}
+                    className="group relative overflow-hidden rounded-2xl border border-(--brand-line) bg-card p-5 sm:p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-(--brand-orange) flex flex-col justify-between"
                   >
-                    {/* Ambient background glow blur */}
-                    <div className="pointer-events-none absolute -right-10 -top-10 size-36 rounded-full bg-(--brand-orange)/10 blur-3xl group-hover:bg-(--brand-orange)/20 transition-all duration-500" />
-
                     {/* Top Header: Official Logo + Group Name + Bias Badge */}
                     <div className="relative z-10 flex items-center justify-between gap-3 border-b border-(--brand-line)/60 pb-4 mb-4">
                       <div className="flex items-center gap-3 min-w-0">
-                        <div className="size-11 sm:size-12 shrink-0 rounded-2xl border border-(--brand-line) bg-white/90 overflow-hidden shadow-xs">
+                        <div className="size-11 sm:size-12 shrink-0 rounded-2xl border border-(--brand-line) bg-white/90 overflow-hidden">
                           <img
                             src={group.logoUrl}
                             alt={`${group.name} official logo`}
@@ -474,7 +468,7 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
                       </div>
 
                       {/* Bias Pill Badge */}
-                      <div className="inline-flex items-center gap-1.5 rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-black text-(--brand-orange-deep) border border-(--brand-orange)/30 shadow-xs shrink-0">
+                      <div className="inline-flex items-center gap-1.5 rounded-full bg-(--brand-orange-soft) px-3 py-1 text-xs font-black text-(--brand-orange-deep) border border-(--brand-orange)/30 shrink-0">
                         <Sparkles className="size-3.5 text-(--brand-orange)" />
                         <span>
                           {beyond.kpop.biasLabel}:{' '}
@@ -488,7 +482,7 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
                     {/* Main Body: Bias Showcase on Left + Vinyl Track Player on Right */}
                     <div className="relative z-10 grid grid-cols-[105px_1fr] sm:grid-cols-[120px_1fr] gap-4 items-center">
                       {/* Left: Bias Portrait with Glass Frame */}
-                      <div className="group/bias relative aspect-3/4 w-full rounded-2xl overflow-hidden border-2 border-(--brand-line) bg-black/40 shadow-md group-hover:border-(--brand-orange) transition-colors">
+                      <div className="group/bias relative aspect-3/4 w-full rounded-2xl overflow-hidden border-2 border-(--brand-line) bg-black/40 group-hover:border-(--brand-orange) transition-colors">
                         <img
                           src={group.biasImage}
                           alt={`${group.bias} (${group.name})`}
@@ -507,11 +501,11 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
                       {/* Right: Vinyl Player & Spotify Action */}
                       <div className="space-y-3 min-w-0">
                         {/* Vinyl Album Player */}
-                        <div className="flex items-center gap-3 rounded-2xl border border-(--brand-line) bg-(--site-bg)/90 backdrop-blur-md p-2.5 sm:p-3 shadow-xs">
+                        <div className="flex items-center gap-3 rounded-2xl border border-(--brand-line) bg-(--surface-strong) p-2.5 sm:p-3">
                           {/* Album Cover with Spinning Vinyl Disk peeking out */}
                           <div className="relative size-12 sm:size-14 shrink-0">
                             {/* Vinyl Disk peeking out */}
-                            <div className="absolute top-0 right-0 size-12 sm:size-14 rounded-full bg-black border-2 border-neutral-800 shadow-md flex items-center justify-center translate-x-2.5 group-hover:translate-x-3.5 transition-transform duration-300 animate-spin [animation-duration:8s]">
+                            <div className="absolute top-0 right-0 size-12 sm:size-14 rounded-full bg-black border-2 border-neutral-800 flex items-center justify-center translate-x-2.5 group-hover:translate-x-3.5 transition-transform duration-300 animate-spin [animation-duration:8s]">
                               <div className="size-4 sm:size-5 rounded-full border border-neutral-700 bg-neutral-900 flex items-center justify-center">
                                 <div className="size-1.5 sm:size-2 rounded-full bg-(--brand-orange)" />
                               </div>

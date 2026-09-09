@@ -69,10 +69,10 @@ export function DrivesSection({ drives }: DrivesSectionProps) {
         {/* Card 2: Mindset, Refactoring & Forecasting */}
         <motion.div
           variants={staggerItem}
-          className="surface-card flex flex-col justify-between p-6 sm:p-8 space-y-6 bg-linear-to-br from-(--surface-strong) to-(--brand-orange-soft)/30"
+          className="surface-card flex flex-col justify-between p-6 sm:p-8 space-y-6"
         >
           <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 rounded-full bg-(--brand-orange) px-3 py-1 text-xs font-bold text-white shadow-xs">
+            <div className="inline-flex items-center gap-2 rounded-full bg-(--brand-orange) px-3 py-1 text-xs font-bold text-white">
               <Flame className="size-3.5" />
               <span>{drives.mindsetLabel}</span>
             </div>

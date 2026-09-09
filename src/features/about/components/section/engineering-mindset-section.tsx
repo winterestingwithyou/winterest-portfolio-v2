@@ -132,7 +132,7 @@ export function EngineeringMindsetSection({
                       },
                     }}
                     style={{ transformOrigin: 'top' }}
-                    className="h-full w-full bg-linear-to-b from-(--brand-orange) via-(--brand-orange) to-(--brand-orange-deep) opacity-85 shadow-[0_0_8px_var(--brand-orange)]"
+                    className="h-full w-full bg-linear-to-b from-(--brand-orange) via-(--brand-orange) to-(--brand-orange-deep)"
                   />
                 </div>
               )}

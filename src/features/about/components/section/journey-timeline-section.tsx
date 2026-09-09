@@ -33,7 +33,7 @@ export function JourneyTimelineSection({
           title: step.year,
           tagline: step.tagline,
           content: (
-            <div className="surface-card p-5 sm:p-6 transition-all hover:border-(--brand-orange) hover:shadow-[0_12px_32px_var(--brand-glow)]">
+            <div className="surface-card p-5 sm:p-6 transition-all hover:border-(--brand-orange)">
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-(--brand-line) pb-3 mb-3">
                 <span className="text-sm font-black tracking-wider text-(--brand-orange-deep) uppercase md:hidden">
                   {step.year}

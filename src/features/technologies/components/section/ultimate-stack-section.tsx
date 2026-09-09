@@ -32,14 +32,12 @@ export function UltimateStackSection({
           variants={fadeUp}
           className="flex flex-col items-center justify-center text-center"
         >
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-orange)/40 bg-(--brand-orange-soft) px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep) shadow-[0_0_20px_var(--brand-orange-soft)]">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-(--brand-orange)/40 bg-(--brand-orange-soft) px-4 py-1 text-xs font-extrabold uppercase tracking-wider text-(--brand-orange-deep)">
             <Zap className="size-3.5 fill-(--brand-orange-deep)" />
             {copy.ultimateEyebrow}
           </span>
           <h2 className="mt-3 text-3xl font-black tracking-tight text-(--brand-ink) sm:text-4xl md:text-5xl">
-            <span className="bg-linear-to-r from-(--brand-orange) via-(--brand-ink) to-(--brand-orange-deep) bg-clip-text text-transparent">
-              {copy.ultimateTitle}
-            </span>
+            {copy.ultimateTitle}
           </h2>
           <p className="mt-2 max-w-xl text-sm font-medium text-(--brand-muted)">
             {copy.ultimateDescription}
@@ -59,10 +57,10 @@ export function UltimateStackSection({
           {ultimateTechs.map((tech) => (
             <div
               key={tech.id}
-              className="group relative flex w-52 shrink-0 flex-col items-center justify-center gap-4 rounded-3xl border border-(--brand-orange)/40 bg-linear-to-b from-(--surface-strong) to-(--brand-orange-soft)/30 p-7 text-center shadow-lg transition-all duration-300 hover:-translate-y-1.5 hover:border-(--brand-orange) hover:bg-(--surface-strong) hover:shadow-[0_20px_35px_var(--brand-orange-soft)] sm:w-60"
+              className="group relative flex w-52 shrink-0 flex-col items-center justify-center gap-4 rounded-2xl border border-(--brand-orange)/40 bg-card p-6 text-center transition-all duration-200 hover:-translate-y-0.5 hover:border-(--brand-orange) sm:w-60"
             >
-              {/* Subtle Ultimate Glow Badge */}
-              <div className="absolute top-3 right-3 rounded-full bg-(--brand-orange) p-1 text-white opacity-80 shadow-md transition group-hover:scale-110 group-hover:opacity-100">
+              {/* Ultimate Badge */}
+              <div className="absolute top-3 right-3 rounded-full bg-(--brand-orange) p-1 text-white opacity-90 transition group-hover:scale-105">
                 <Zap className="size-3 fill-white" />
               </div>
 
@@ -72,7 +70,7 @@ export function UltimateStackSection({
                   src={tech.icon}
                   alt={tech.name}
                   color={tech.color}
-                  className="size-16 sm:size-20 object-contain drop-shadow-md"
+                  className="size-16 sm:size-20 object-contain"
                 />
               </div>
 

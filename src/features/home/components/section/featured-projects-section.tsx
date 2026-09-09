@@ -67,7 +67,7 @@ export function FeaturedProjectsSection({
         <motion.div variants={fadeUp} className="mt-10 flex justify-center">
           <Link
             to="/projects"
-            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-(--brand-line) bg-(--surface-card) px-6 text-sm font-bold text-(--brand-ink) no-underline shadow-xs transition duration-300 hover:-translate-y-0.5 hover:border-(--brand-orange) hover:text-(--brand-orange-deep) hover:shadow-[0_8px_20px_var(--brand-orange-soft)]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-(--brand-line) bg-card px-6 text-sm font-bold text-(--brand-ink) no-underline transition duration-200 hover:-translate-y-0.5 hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
           >
             {copy.featured.viewProjects}
             <ArrowRight aria-hidden="true" className="size-4" />

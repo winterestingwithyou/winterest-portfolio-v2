@@ -9,7 +9,7 @@ type LoginHeroPanelProps = {
 export function LoginHeroPanel({ copy }: LoginHeroPanelProps) {
   return (
     <div className="grid gap-3 sm:gap-4">
-      <div className="inline-flex w-fit items-center gap-2 rounded-full border border-[color-mix(in_srgb,var(--brand-orange)_38%,transparent)] bg-[color-mix(in_srgb,var(--surface-strong)_72%,transparent)] py-1 pr-3 pl-1 text-xs font-black text-(--brand-ink) shadow-[0_18px_44px_var(--brand-glow)] sm:text-sm">
+      <div className="inline-flex w-fit items-center gap-2 rounded-full border border-(--brand-line) bg-card py-1 pr-3 pl-1 text-xs font-black text-(--brand-ink) sm:text-sm">
         <span className="brand-mark">
           <Cloud aria-hidden="true" className="size-4" />
           <Sparkles aria-hidden="true" className="brand-spark size-3" />

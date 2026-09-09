@@ -42,10 +42,10 @@ export function SetupRequiredScreen({ status }: { status: SystemStatus }) {
   }
 
   return (
-    <div className="relative min-h-screen bg-[radial-gradient(circle_at_12%_14%,color-mix(in_srgb,var(--brand-orange)_24%,transparent),transparent_28rem),radial-gradient(circle_at_86%_78%,color-mix(in_srgb,var(--brand-orange-deep)_20%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-cream)_92%,white),color-mix(in_srgb,var(--brand-orange-soft)_42%,var(--brand-cream)))] text-(--brand-ink) dark:bg-[radial-gradient(circle_at_12%_14%,color-mix(in_srgb,var(--brand-orange)_22%,transparent),transparent_28rem),radial-gradient(circle_at_84%_76%,color-mix(in_srgb,var(--brand-orange-deep)_28%,transparent),transparent_24rem),linear-gradient(145deg,color-mix(in_srgb,var(--brand-dark)_96%,black),color-mix(in_srgb,#24170d_72%,var(--brand-dark)))]">
+    <div className="relative min-h-screen bg-background text-(--brand-ink)">
       {/* Top Header */}
       <header className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-4 sm:px-6 sm:py-6">
-        <div className="inline-flex items-center gap-2 rounded-full border border-[color-mix(in_srgb,var(--brand-orange)_38%,transparent)] bg-[color-mix(in_srgb,var(--surface-strong)_72%,transparent)] py-1 pr-3.5 pl-1.5 text-sm font-black text-(--brand-ink) shadow-[0_18px_44px_var(--brand-glow)]">
+        <div className="inline-flex items-center gap-2 rounded-full border border-(--brand-line) bg-card py-1 pr-3.5 pl-1.5 text-sm font-black text-(--brand-ink)">
           <span className="brand-mark flex size-7 items-center justify-center rounded-full bg-(--brand-orange) text-white">
             <Cloud aria-hidden="true" className="size-4" />
           </span>
@@ -88,7 +88,7 @@ export function SetupRequiredScreen({ status }: { status: SystemStatus }) {
         </div>
 
         {/* Command Card */}
-        <div className="mt-8 overflow-hidden rounded-2xl border border-(--brand-line) bg-[color-mix(in_srgb,var(--surface-strong)_90%,transparent)] shadow-2xl backdrop-blur-md">
+        <div className="mt-8 overflow-hidden rounded-2xl border border-(--brand-line) bg-card shadow-sm">
           <div className="border-b border-(--brand-line) px-5 py-4 sm:px-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -187,7 +187,7 @@ export function SetupRequiredScreen({ status }: { status: SystemStatus }) {
                 type="button"
                 onClick={handleRefresh}
                 disabled={isRefreshing}
-                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-linear-to-r from-(--brand-orange) to-(--brand-orange-deep) px-8 text-sm font-black text-white shadow-[0_18px_44px_var(--brand-glow)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_54px_var(--brand-glow)] disabled:opacity-60"
+                className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-8 text-sm font-black text-white transition hover:-translate-y-0.5 hover:bg-(--brand-orange-deep) disabled:opacity-60"
               >
                 <RefreshCw
                   className={cn('size-4', isRefreshing && 'animate-spin')}
