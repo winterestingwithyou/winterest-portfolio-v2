@@ -1,7 +1,7 @@
 # RFC: Media Deletion Synchronization & Anti-Orphan Architecture
 
 - **Feature ID**: `fix-media-deletion-sync`
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Authors**: Winterest | M. Adam Yudistira
 - **Date**: 2026-09-09
 - **Target Routes**:

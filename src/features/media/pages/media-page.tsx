@@ -84,10 +84,13 @@ export function MediaPage() {
     }
   }
 
-  const confirmDelete = async () => {
+  const confirmDelete = async (options?: { cascade?: boolean }) => {
     if (!deletingMedia) return
     try {
-      await deleteMutation.mutateAsync(deletingMedia.id)
+      await deleteMutation.mutateAsync({
+        id: deletingMedia.id,
+        cascade: options?.cascade ?? false,
+      })
       setDeletingMedia(null)
     } catch (err) {
       console.error('Failed to delete media:', err)

@@ -2,6 +2,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import type { MediaRecord } from '#/features/media/queries'
 import { mediaQueryKeys } from '#/features/media/query-options'
+import { projectQueryKeys } from '#/features/projects/query-options'
+import { settingsQueryKeys } from '#/features/settings/query-options'
+import { techQueryKeys } from '#/features/technologies/query-options'
 import { api } from '#/lib/api-client'
 
 export { mediaQueryKeys }
@@ -9,6 +12,11 @@ export { mediaQueryKeys }
 export type UploadMediaPayload = {
   file: File
   alt?: string
+}
+
+export type DeleteMediaPayload = {
+  id: string
+  cascade?: boolean
 }
 
 export function useUploadMedia() {
@@ -43,15 +51,31 @@ export function useDeleteMedia() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async (id: string): Promise<boolean> => {
-      const res = await api<{ success?: boolean }>(`/api/media/${id}`, {
-        method: 'DELETE',
-      })
+    mutationFn: async (
+      payload: string | DeleteMediaPayload,
+    ): Promise<{ success: boolean; clearedReferences: number }> => {
+      const id = typeof payload === 'string' ? payload : payload.id
+      const cascade =
+        typeof payload === 'string' ? false : (payload.cascade ?? false)
 
-      return res.success ?? true
+      const res = await api<{ success?: boolean; clearedReferences?: number }>(
+        `/api/media/${id}`,
+        {
+          method: 'DELETE',
+          query: cascade ? { cascade: 'true' } : undefined,
+        },
+      )
+
+      return {
+        success: res.success ?? true,
+        clearedReferences: res.clearedReferences ?? 0,
+      }
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: mediaQueryKeys.all })
+      void queryClient.invalidateQueries({ queryKey: settingsQueryKeys.all })
+      void queryClient.invalidateQueries({ queryKey: projectQueryKeys.all })
+      void queryClient.invalidateQueries({ queryKey: techQueryKeys.all })
     },
   })
 }
