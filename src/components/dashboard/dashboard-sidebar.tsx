@@ -109,6 +109,13 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
     },
   ]
 
+  const isOwner = user?.role === 'owner'
+
+  const filteredSystemNav = systemNav.filter((item) => {
+    if (item.to === '/dashboard/users' && !isOwner) return false
+    return true
+  })
+
   const isLinkActive = (to: string, exact: boolean) => {
     if (exact) {
       return pathname === to || pathname === `${to}/`
@@ -182,11 +189,11 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
 
         <SidebarGroup>
           <SidebarGroupLabel className="text-[0.65rem] font-bold uppercase tracking-wider text-sidebar-foreground/60">
-            Sistem
+            {copy.shell.systemGroup}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {systemNav.map((item) => {
+              {filteredSystemNav.map((item) => {
                 const Icon = item.icon
                 const active = isLinkActive(item.to, item.exact)
 

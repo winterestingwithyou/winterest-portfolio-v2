@@ -13,6 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '#/components/ui/alert-dialog'
+import { Button } from '#/components/ui/button'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { DashboardProjectsTable } from '#/features/projects/components/table/dashboard-projects-table'
@@ -134,13 +135,22 @@ export function DashboardProjectsPage() {
 
       <section className="surface-card overflow-hidden">
         {projects.length === 0 ? (
-          <div className="p-6">
-            <h2 className="text-xl font-semibold text-(--brand-ink)">
+          <div className="flex flex-col items-center justify-center p-8 sm:p-12 text-center">
+            <h2 className="text-xl font-bold text-(--brand-ink)">
               {copy.projects.emptyTitle}
             </h2>
-            <p className="mt-2 max-w-2xl text-sm leading-7 text-(--brand-muted)">
+            <p className="mt-2 max-w-md text-sm leading-relaxed text-(--brand-muted)">
               {copy.projects.emptyDescription}
             </p>
+            <Button
+              asChild
+              className="mt-6 rounded-full bg-(--brand-orange) px-5 py-2 font-bold text-white hover:bg-(--brand-orange-deep) transition"
+            >
+              <Link to="/dashboard/projects/new">
+                <Plus className="mr-2 size-4" />
+                {copy.projects.createFirst}
+              </Link>
+            </Button>
           </div>
         ) : (
           <DashboardProjectsTable

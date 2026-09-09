@@ -68,7 +68,7 @@ export function AboutHero({ hero }: AboutHeroProps) {
           initial="hidden"
           animate="visible"
           variants={scaleIn}
-          className="surface-card relative overflow-hidden p-6 sm:p-8 border-l-4 border-l-(--brand-orange)"
+          className="surface-card relative overflow-hidden p-6 sm:p-8"
         >
           <div className="absolute right-4 top-4 opacity-10 text-(--brand-orange)">
             <Terminal className="size-28" />

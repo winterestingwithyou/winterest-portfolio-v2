@@ -8,7 +8,7 @@
 | **Dashboard Routes** | [`/dashboard`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/dashboard/index.tsx) (Overview) |
 | **Layout Shell**     | [`src/routes/dashboard.tsx`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/dashboard.tsx)    |
 | **RBAC Permissions** | Authenticated (`editor`, `admin`, `owner`)                                                                    |
-| **Last Updated**     | 2026-09-06                                                                                                    |
+| **Last Updated**     | 2026-09-09                                                                                                    |
 
 ---
 
@@ -69,16 +69,17 @@ src/routes/dashboard.tsx (Dashboard Layout Shell)
 
 1. **Dashboard Entry Gate**: Visiting `/dashboard/*` without an active session immediately redirects to `/login?redirectTo=...`.
 2. **Sidebar Menu Trimming**:
-   - `editor`: Access to Overview, Projects, Stack, Media.
+   - `editor`: Access to Overview, Projects, Stack, Media, Social, Account.
    - `admin`: Above + Settings.
-   - `owner`: Above + User Management.
+   - `owner`: Above + User Management (`/dashboard/users`).
+3. **Route Guard**: Direct access to `/dashboard/users/*` by non-owner roles is trapped in `beforeLoad` and redirected safely to `/dashboard`.
 
 ---
 
 ## 5. Acceptance Criteria & DoD Checklist
 
-- [ ] Unauthenticated requests to `/dashboard` are redirected to `/login`.
-- [ ] Summary cards calculate accurate project counts (total, published, draft, featured).
-- [ ] Sidebar navigation adapts dynamically based on whether user is editor, admin, or owner.
-- [ ] Clicking a recent project opens its corresponding edit form.
-- [ ] TypeScript check passes: `bun run check`.
+- [x] Unauthenticated requests to `/dashboard` are redirected to `/login`.
+- [x] Summary cards calculate accurate project counts (total, published, draft, featured).
+- [x] Sidebar navigation adapts dynamically based on whether user is editor, admin, or owner.
+- [x] Clicking a recent project opens its corresponding edit form.
+- [x] TypeScript check passes: `bun run check`.

@@ -5,6 +5,7 @@ export const dashboardCopy = {
     shell: {
       eyebrow: 'Winterest CMS',
       backToSite: 'Back to site',
+      systemGroup: 'System',
       nav: {
         overview: 'Overview',
         projects: 'Projects',
@@ -96,6 +97,7 @@ export const dashboardCopy = {
       description:
         'Manage the work shown in the portfolio: project details, highlights, and publishing status.',
       new: 'New project',
+      createFirst: 'Create first project',
       project: 'Project',
       projectsLabel: 'projects',
       loading: 'Loading projects...',
@@ -690,6 +692,7 @@ export const dashboardCopy = {
     shell: {
       eyebrow: 'CMS Winterest',
       backToSite: 'Kembali ke situs',
+      systemGroup: 'Sistem',
       nav: {
         overview: 'Ringkasan',
         projects: 'Project',
@@ -781,6 +784,7 @@ export const dashboardCopy = {
       description:
         'Kelola karya yang tampil di portfolio: detail project, highlight, dan status publish.',
       new: 'Project baru',
+      createFirst: 'Buat project pertama',
       project: 'Project',
       projectsLabel: 'project',
       loading: 'Memuat project...',

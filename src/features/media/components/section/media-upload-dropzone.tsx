@@ -6,6 +6,7 @@ import {
   Plus,
   UploadCloud,
 } from 'lucide-react'
+import { motion } from 'motion/react'
 import * as React from 'react'
 
 import { Button } from '#/components/ui/button'
@@ -88,7 +89,13 @@ export function MediaUploadDropzone({
           {isUploading ? (
             <Loader2 className="size-7 animate-spin" />
           ) : isDragging ? (
-            <UploadCloud className="size-7 animate-bounce" />
+            <motion.div
+              animate={{ scale: 1.1, y: -3 }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              className="flex items-center justify-center"
+            >
+              <UploadCloud className="size-7" />
+            </motion.div>
           ) : (
             <HardDrive className="size-7" />
           )}
