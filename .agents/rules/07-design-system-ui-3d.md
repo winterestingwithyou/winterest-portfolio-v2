@@ -20,7 +20,7 @@ brand.cream        Warm off-white for light mode background
 brand.dark         Near-black for dark mode background
 brand.gray         Neutral dark gray for panels and cards
 brand.border       Subtle border color
-brand.glow         Orange ambient glow effect
+brand.glow         (Deprecated/Restricted) Minimal subtle glow only for focused active inputs, not card decoration
 ```
 
 ---
@@ -31,6 +31,33 @@ Prefer Tailwind CSS v4 simplified variable syntax over legacy bracket syntax:
 
 - **Use**: `text-(--brand-ink)`, `bg-(--brand-orange-soft)`, `border-(--brand-line)`, `shadow-(--brand-orange-soft)`
 - **Avoid legacy**: `text-[var(--brand-ink)]`, `bg-[var(--brand-orange-soft)]`, `border-[var(--brand-line)]`, `shadow-[var(--brand-orange-soft)]`
+
+---
+
+## Flat Precision Architecture (Cloudflare + Bun Standard)
+
+Following the `/impeccable` design standards (`craft-floor.md` & `quieter.md`) and the minimalist, high-speed engineering identities of **Cloudflare** and **Bun**:
+
+### 1. Ban Excessive Glow Halos & Decorative Blur Orbs
+
+- **No Colored Halos**: Do **NOT** use zero-offset or oversized colored glow shadows (e.g. `shadow-[0_18px_48px_var(--brand-glow)]`, `shadow-[0_10px_25px_-5px_var(--brand-orange-soft)]`, `shadow-[0_16px_44px_var(--brand-glow)]`).
+- **No Decorative Blur Spheres**: Do **NOT** add floating colored blur orbs behind cards (e.g. `<div className="... size-40 rounded-full bg-(--brand-orange)/10 blur-2xl ... />`). Per `/impeccable`: _"A zero-offset colored halo is decoration."_ Depth must be structural, not fuzzy ambient lighting.
+
+### 2. Flat Solid Surfaces over Multi-Stop Gradients
+
+- **Solid Surfaces**: Use clean, flat solid surface panels (`bg-card`, `bg-(--surface-strong)`, `bg-surface`) with high contrast against the background grid.
+- **No Card Gradient Washes**: Avoid multi-stop diagonal gradients on cards (e.g. `bg-linear-to-br from-(--surface-card) via-(--surface-card) to-(--brand-orange-soft)/30`). Gradients degrade text legibility and evoke dated template aesthetics.
+- **Linear Grid Technical Backdrop**: The only allowed gradient pattern is the subtle technical network grid on `body` (`36px x 36px` hairline grid) reflecting Cloudflare's network topology.
+
+### 3. Hairline Border-Driven Depth
+
+- Depth and elevation must be achieved through **hairline 1px borders** (`border border-(--brand-line)`), subtle surface contrast, and minimal neutral elevation (`shadow-xs` / `shadow-sm`), rather than heavy drop shadows.
+- On hover, provide crisp, immediate feedback via border color illumination (`hover:border-(--brand-orange)`) or subtle -1px translateY, not massive blurred shadow blooms.
+
+### 4. Purposeful Single-Accent Orange (`#f48120`)
+
+- Use Cloudflare orange strictly as a sharp, deliberate accent: active navigation pills, primary CTA buttons, focus rings (`outline-ring`), and interactive hover highlights.
+- Do not smear orange into background washes, card fills, or ambient neon lighting.
 
 ---
 

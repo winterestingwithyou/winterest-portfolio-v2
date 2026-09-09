@@ -73,7 +73,7 @@ bun run db:studio:remote
 - **HTTP Client & Server State**: Mandatory `ofetch` via `api` from `#/lib/api-client` (no native `fetch`). Components **MUST NEVER** invoke `api()` directly; all queries must use `queryOptions` in `src/features/<feature>/query-options.ts` (consumed via `loader` & `useSuspenseQuery` / `useQuery`) and mutations must use custom hooks in `src/features/<feature>/hooks.ts`.
 - **Database**: Drizzle ORM + Cloudflare D1. [src/db/schema.ts](file:///d:/winterest-project/winterest-portfolio-v2/src/db/schema.ts) is the Single Source of Truth. Always update `drizzle/scripts/reset.sql` when modifying schemas.
 - **Auth & RBAC**: Better Auth with secure HTTP-only cookies and PBKDF2 Web Crypto password hashing. Roles: `owner`, `admin`, `editor`.
-- **CSS Syntax**: Tailwind CSS v4 variable syntax: `text-(--brand-ink)`, `bg-(--brand-orange-soft)`, `border-(--brand-line)`.
+- **CSS Syntax & Design**: Tailwind CSS v4 variable syntax: `text-(--brand-ink)`, `bg-(--brand-orange-soft)`, `border-(--brand-line)`. Follow **Flat Precision Architecture** (Cloudflare + Bun): ban oversized glow halos, decorative blur spheres, and heavy card gradients; use hairline 1px borders and flat solid surfaces.
 - **Copywriting & Data**: Feature-scoped `copy.ts` for localized UI strings (`en`/`id`) and `data.ts` strictly for static structured datasets. Global layout copy in `src/features/portfolio/copy.ts`.
 - **File Naming**: Strict `kebab-case` for all project files and directories.
 - **Spec-Driven Development**: Maintain living specs in `specs/` (`specs/system/`, `specs/features/`, `specs/changes/`). Verify contracts against specifications before implementing non-trivial changes.
