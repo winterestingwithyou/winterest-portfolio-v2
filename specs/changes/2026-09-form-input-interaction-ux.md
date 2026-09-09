@@ -2,7 +2,7 @@
 
 - **Feature ID**: `fix-form-input-interaction-ux`
 - **Date**: 2026-09-09
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - `/projects/`
   - `/contact`
@@ -141,11 +141,11 @@ Perbaikan ini berfokus pada lapisan UX frontend dan penanganan validasi klien; *
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] Mengetik kata dengan spasi (misal `"fullstack web developer"`) pada galeri proyek berjalan mulus tanpa terpotong.
-- [ ] Upload gambar yang gagal (misal file melebihi 10MB) menampilkan pesan error yang jelas dan terbaca.
-- [ ] Mengetik cepat pada modal media picker hanya mengirim 1 request HTTP setelah pengguna berhenti mengetik selama 350ms.
-- [ ] Tombol submit pada login dan form kontak tidak dapat diklik sebelum token Turnstile terisi.
-- [ ] Mengubah teks pada form edit proyek lalu mengklik link menu sidebar memunculkan dialog konfirmasi pembatalan.
-- [ ] Validasi form kontak menampilkan teks Bahasa Inggris ketika bahasa yang aktif adalah English (`en`).
-- [ ] Seluruh unit test terkait form & validasi lulus (`bun run test`).
-- [ ] Typecheck lulus (`bun run check`).
+- [x] Mengetik kata dengan spasi (misal `"fullstack web developer"`) pada galeri proyek berjalan mulus tanpa terpotong.
+- [x] Upload gambar yang gagal (misal file melebihi 10MB) menampilkan pesan error yang jelas dan terbaca.
+- [x] Mengetik cepat pada modal media picker hanya mengirim 1 request HTTP setelah pengguna berhenti mengetik selama 350ms.
+- [x] Tombol submit pada login dan form kontak tidak dapat diklik sebelum token Turnstile terisi.
+- [x] Mengubah teks pada form edit proyek lalu mengklik link menu sidebar memunculkan dialog konfirmasi pembatalan.
+- [x] Validasi form kontak menampilkan teks Bahasa Inggris ketika bahasa yang aktif adalah English (`en`).
+- [x] Seluruh unit test terkait form & validasi lulus (`bun run test`).
+- [x] Typecheck lulus (`bun run check`).

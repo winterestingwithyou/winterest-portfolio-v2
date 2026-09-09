@@ -1,5 +1,12 @@
 import { getLocale } from '#/paraglide/runtime'
 
+export type ContactValidationCopy = {
+  nameRequired: string
+  emailInvalid: string
+  messageMinLength: string
+  turnstileRequired: string
+}
+
 export const contactCopy = {
   en: {
     meta: {
@@ -35,11 +42,18 @@ export const contactCopy = {
       messagePlaceholder: 'Write your message here...',
       send: 'Send Message',
       sending: 'Sending...',
+      verifyingSecurity: 'Verifying security...',
       sendSuccessTitle: 'Message sent!',
       sendSuccessSubtitle:
         'Thank you for reaching out! Your message has been delivered to my inbox.',
       sendAnother: 'Send Another Message',
       sendErrorTitle: 'Failed to send message',
+      validation: {
+        nameRequired: 'Name is required.',
+        emailInvalid: 'Please enter a valid email address.',
+        messageMinLength: 'Message must be at least 10 characters.',
+        turnstileRequired: 'Please complete the security check.',
+      },
     },
   },
   id: {
@@ -76,11 +90,18 @@ export const contactCopy = {
       messagePlaceholder: 'Tuliskan pesan Anda di sini...',
       send: 'Kirim Pesan',
       sending: 'Mengirim...',
+      verifyingSecurity: 'Memverifikasi keamanan...',
       sendSuccessTitle: 'Pesan terkirim!',
       sendSuccessSubtitle:
         'Terima kasih telah menghubungi! Pesan Anda telah berhasil terkirim.',
       sendAnother: 'Kirim Pesan Lain',
       sendErrorTitle: 'Gagal mengirim pesan',
+      validation: {
+        nameRequired: 'Nama wajib diisi.',
+        emailInvalid: 'Format email tidak valid.',
+        messageMinLength: 'Pesan minimal 10 karakter.',
+        turnstileRequired: 'Verifikasi keamanan wajib diselesaikan.',
+      },
     },
   },
 } as const

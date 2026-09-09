@@ -1,5 +1,6 @@
 import * as React from 'react'
 import {
+  AlertCircle,
   ExternalLink,
   FolderOpen,
   Image as ImageIcon,
@@ -14,7 +15,7 @@ import { Button } from '#/components/ui/button'
 import { Input } from '#/components/ui/input'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { useUploadMedia } from '#/features/media/hooks'
-import { getBaseUrl } from '#/lib/api-client'
+import { getApiErrorMessage, getBaseUrl } from '#/lib/api-client'
 import { MediaPickerDialog } from './media-picker-dialog'
 
 export type ImageUploaderProps = {
@@ -37,6 +38,7 @@ export function ImageUploader({
   const [isManualUrl, setIsManualUrl] = React.useState(false)
   const [manualUrlInput, setManualUrlInput] = React.useState('')
   const [isDragging, setIsDragging] = React.useState(false)
+  const [uploadError, setUploadError] = React.useState<string | null>(null)
   const fileInputRef = React.useRef<HTMLInputElement>(null)
 
   const uploadMutation = useUploadMedia()
@@ -89,6 +91,7 @@ export function ImageUploader({
   }
 
   const processFileUpload = async (file: File) => {
+    setUploadError(null)
     try {
       const uploaded = await uploadMutation.mutateAsync({ file })
       const baseUrl = getBaseUrl() as string
@@ -97,11 +100,19 @@ export function ImageUploader({
         : `${baseUrl}${uploaded.url.startsWith('/') ? '' : '/'}${uploaded.url}`
       onChange(fullUrl)
     } catch (err) {
+      const message = getApiErrorMessage(err, copy.media.uploadError)
+      setUploadError(message)
       console.error('File upload failed:', err)
     }
   }
 
+  const handleRemove = () => {
+    setUploadError(null)
+    onChange(null)
+  }
+
   const handleManualApply = () => {
+    setUploadError(null)
     if (manualUrlInput.trim()) {
       onChange(manualUrlInput.trim())
     } else {
@@ -184,7 +195,7 @@ export function ImageUploader({
                 variant="outline"
                 size="sm"
                 className="bg-white/90 text-rose-600 hover:bg-white hover:text-rose-700 gap-1.5"
-                onClick={() => onChange(null)}
+                onClick={handleRemove}
               >
                 <Trash2 className="size-4" />
                 {copy.media.removeImage}
@@ -232,7 +243,7 @@ export function ImageUploader({
               <span className="hidden sm:inline text-(--brand-line)">•</span>
               <button
                 type="button"
-                onClick={() => onChange(null)}
+                onClick={handleRemove}
                 className="inline-flex min-h-[36px] sm:min-h-8 items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold text-rose-500 hover:bg-rose-500/10 whitespace-nowrap transition"
               >
                 <Trash2 className="size-3.5" />
@@ -312,20 +323,32 @@ export function ImageUploader({
               <span className="truncate">{copy.media.selectFromLibrary}</span>
             </Button>
           </div>
-
-          {uploadMutation.isError ? (
-            <p className="mt-3 text-xs font-semibold text-rose-500">
-              {uploadMutation.error.message || copy.media.uploadError}
-            </p>
-          ) : null}
         </div>
       )}
+
+      {/* Upload Error Alert Banner */}
+      {uploadError || uploadMutation.isError ? (
+        <div
+          role="alert"
+          className="flex w-full items-center gap-2.5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-3 text-left text-xs font-medium text-rose-600 dark:text-rose-400 shadow-2xs"
+        >
+          <AlertCircle className="size-4 shrink-0" />
+          <span className="flex-1 break-words">
+            {uploadError ||
+              uploadMutation.error?.message ||
+              copy.media.uploadError}
+          </span>
+        </div>
+      ) : null}
 
       {/* Media Picker Modal */}
       <MediaPickerDialog
         open={pickerOpen}
         onOpenChange={setPickerOpen}
-        onSelect={(media) => onChange(media.url)}
+        onSelect={(media) => {
+          setUploadError(null)
+          onChange(media.url)
+        }}
         currentUrl={value}
         accept="image"
       />
