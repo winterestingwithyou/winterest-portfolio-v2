@@ -234,6 +234,46 @@ describe('media deletion synchronization', () => {
       expect(contentRef?.id).toBe('proj_beta:en')
       expect(contentRef?.label).toContain('Project Content: Project Beta (EN)')
     })
+
+    it('handles long filenames without SQLite pattern complexity error', async () => {
+      const longKey =
+        'projects/1788338226515-cffa1489-screenshot-2026-09-01-at-14-56-46-roadmap-yudisium-wisuda-fasilkom-unsri.png'
+      const longMedia: MediaRecord = {
+        id: 'med_long_1',
+        filename: 'screenshot.png',
+        url: `http://localhost:3000/api/media/file/${longKey}`,
+        mimeType: 'image/png',
+        size: 500000,
+        width: null,
+        height: null,
+        alt: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+
+      await db.insert(schema.siteSettings).values({
+        key: 'heroVisualUrl',
+        value: `https://winterest.dev/api/media/file/${longKey}`,
+      })
+
+      await db.insert(schema.projects).values({
+        id: 'proj_long',
+        slug: 'long-proj',
+        title: 'Long Project',
+        summary: 'Long summary',
+        coverImage: `/api/media/file/${longKey}`,
+      })
+
+      const usage = await getMediaUsage(db, longMedia)
+      expect(usage.inUse).toBe(true)
+      expect(usage.totalReferences).toBe(2)
+
+      const cleared = await cascadeNullifyMediaReferences(db, longMedia)
+      expect(cleared).toBe(2)
+
+      const usageAfter = await getMediaUsage(db, longMedia)
+      expect(usageAfter.inUse).toBe(false)
+    })
   })
 
   describe('cascadeNullifyMediaReferences', () => {

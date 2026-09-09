@@ -40,7 +40,11 @@ export function MediaDeleteDialog({
   onClose,
   onConfirm,
 }: MediaDeleteDialogProps) {
-  const { data: detailData, isLoading: isCheckingUsage } = useQuery({
+  const {
+    data: detailData,
+    isLoading: isCheckingUsage,
+    isError,
+  } = useQuery({
     ...mediaQueryOptions.detail(deletingMedia?.id ?? ''),
     enabled: Boolean(deletingMedia),
   })
@@ -88,8 +92,16 @@ export function MediaDeleteDialog({
 
         {isCheckingUsage ? (
           <div className="my-2 flex items-center justify-center gap-2 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3 text-xs text-(--brand-muted)">
-            <Loader2 className="size-3.5 animate-spin" />
+            <Loader2
+              className="size-4 shrink-0 animate-spin text-(--brand-orange)"
+              style={{ transformOrigin: 'center' }}
+            />
             <span>{copy.media.checkingUsage}</span>
+          </div>
+        ) : isError ? (
+          <div className="my-2 flex items-center gap-2 rounded-xl border border-rose-500/20 bg-rose-500/10 p-3 text-xs text-rose-600 dark:text-rose-400">
+            <AlertCircle className="size-4 shrink-0" />
+            <span>{copy.common.loadError}</span>
           </div>
         ) : isInUse ? (
           <div className="my-2 space-y-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5 text-xs">
@@ -143,7 +155,7 @@ export function MediaDeleteDialog({
           </AlertDialogCancel>
           <AlertDialogAction
             variant="destructive"
-            disabled={isDeleting || isCheckingUsage}
+            disabled={isDeleting || isCheckingUsage || isError}
             onClick={(e) => {
               e.preventDefault()
               void onConfirm({ cascade: isInUse })
@@ -151,7 +163,10 @@ export function MediaDeleteDialog({
             className="gap-1.5 bg-rose-600 text-white hover:bg-rose-700"
           >
             {isDeleting ? (
-              <Loader2 className="size-4 animate-spin" />
+              <Loader2
+                className="size-4 shrink-0 animate-spin"
+                style={{ transformOrigin: 'center' }}
+              />
             ) : (
               <Trash2 className="size-4" />
             )}
