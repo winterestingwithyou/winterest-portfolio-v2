@@ -15,7 +15,7 @@ This repository is `winterest-portfolio-v2`, the **primary personal portfolio pl
 - **GitHub Username**: `winterestingwithyou`
 - **Internal Repo Name**: `winterest-portfolio-v2` (internal repository name only)
 - **Design Theme**: `Cloudflare + Bun`
-- **Main Color Direction**: orange, white, black/dark gray, warm neutrals
+- **Main Color Direction**: Cloudflare orange (#f48120), crisp pure white (#ffffff), deep technical dark gray (#0f0f10 / #161618), neutral hairline borders
 - **Tone**: playful, clean, technical, personal, polished
 
 ---

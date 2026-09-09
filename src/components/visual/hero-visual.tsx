@@ -113,7 +113,7 @@ export function HeroVisual({ className }: { className?: string } = {}) {
                 },
               }}
               whileHover={{ scale: 1.06, x: 2 }}
-              className="flex items-center gap-2.5 rounded-full border border-(--brand-line) bg-(--brand-dark) px-3 py-2 text-[#fff7ec] transition-colors hover:border-(--brand-orange) max-sm:px-2.5 max-sm:py-1.5"
+              className="flex items-center gap-2.5 rounded-full border border-(--brand-line) bg-(--brand-dark) px-3 py-2 text-zinc-100 transition-colors hover:border-(--brand-orange) max-sm:px-2.5 max-sm:py-1.5"
             >
               <Icon className="size-4 shrink-0 text-orange-400 max-sm:size-3.5" />
               <span className="text-xs font-extrabold leading-none tracking-wide max-sm:text-[11px]">
@@ -137,7 +137,7 @@ export function HeroVisual({ className }: { className?: string } = {}) {
         }}
         initial="hidden"
         animate="visible"
-        className="absolute right-4 bottom-4 z-10 w-[min(17rem,calc(100%-2rem))] rounded-xl border border-(--brand-line) bg-(--brand-dark) p-3.5 sm:p-4 text-[#fff7ec] max-sm:right-3 max-sm:bottom-3 max-sm:w-[calc(100%-1.5rem)]"
+        className="absolute right-4 bottom-4 z-10 w-[min(17rem,calc(100%-2rem))] rounded-xl border border-(--brand-line) bg-(--brand-dark) p-3.5 sm:p-4 text-zinc-100 max-sm:right-3 max-sm:bottom-3 max-sm:w-[calc(100%-1.5rem)]"
         aria-hidden="true"
       >
         <div className="mb-2.5 sm:mb-3 flex items-center gap-1.5">
@@ -177,7 +177,7 @@ export function HeroVisual({ className }: { className?: string } = {}) {
         initial="hidden"
         animate="visible"
         whileHover={{ scale: 1.05 }}
-        className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--brand-dark) px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-xs font-extrabold text-[#fff7ec] max-sm:top-3 max-sm:right-3"
+        className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--brand-dark) px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-xs font-extrabold text-zinc-100 max-sm:top-3 max-sm:right-3"
         aria-hidden="true"
       >
         <Code2 className="size-3.5 sm:size-4 text-orange-400" />

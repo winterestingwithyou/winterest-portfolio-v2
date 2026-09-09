@@ -7,19 +7,19 @@ trigger: always_on
 ## Aesthetic Direction
 
 - **Theme**: Cloudflare + Bun Developer Persona
-- **Color Direction**: Curated Cloudflare orange, crisp white, deep dark/black base, warm neutral borders.
+- **Color Direction**: Curated Cloudflare orange (#f48120), crisp pure white (#ffffff), deep technical dark gray (#0f0f10 / #161618), neutral hairline borders.
 - **Tone**: Fast, technical, clean, playful, and responsive with full light and dark mode compatibility.
 
 ### Suggested Color Tokens
 
 ```txt
-brand.orange       Cloudflare-like vibrant orange
-brand.orangeSoft   Soft orange tint for badges and highlights
-brand.orangeDeep   Deep burnt orange for gradients and borders
-brand.cream        Warm off-white for light mode background
-brand.dark         Near-black for dark mode background
-brand.gray         Neutral dark gray for panels and cards
-brand.border       Subtle border color
+brand.orange       Cloudflare vibrant orange (#f48120)
+brand.orangeSoft   Crisp subtle orange tint for badges and highlights
+brand.orangeDeep   Deep burnt orange for accents
+brand.cream        Crisp neutral light gray/white surface (#ffffff / #f4f4f5)
+brand.dark         Deep technical obsidian black for dark mode background (#0f0f10 / #0a0a0c)
+brand.gray         Neutral solid dark gray for panels and cards (#161618)
+brand.border       Crisp neutral hairline border (rgba(0,0,0,0.09) / rgba(255,255,255,0.1))
 brand.glow         (Deprecated/Restricted) Minimal subtle glow only for focused active inputs, not card decoration
 ```
 
