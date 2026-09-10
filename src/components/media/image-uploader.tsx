@@ -335,8 +335,12 @@ export function ImageUploader({
           <AlertCircle className="size-4 shrink-0" />
           <span className="flex-1 break-words">
             {uploadError ||
-              uploadMutation.error?.message ||
-              copy.media.uploadError}
+              (uploadMutation.error
+                ? getApiErrorMessage(
+                    uploadMutation.error,
+                    copy.media.uploadError,
+                  )
+                : copy.media.uploadError)}
           </span>
         </div>
       ) : null}

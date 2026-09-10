@@ -11,31 +11,46 @@ import * as React from 'react'
 
 import { Button } from '#/components/ui/button'
 import type { getDashboardCopy } from '#/features/dashboard/copy'
+import { getApiErrorMessage } from '#/lib/api-client'
 
-type MediaUploadDropzoneProps = {
+export type MediaUploadDropzoneProps = {
   copy: ReturnType<typeof getDashboardCopy>['media']
   isUploading: boolean
-  isError: boolean
-  isSuccess: boolean
-  errorMessage?: string
+  isError?: boolean
+  isSuccess?: boolean
+  errorMessage?: string | null
+  error?: unknown
   onUpload: (file: File) => Promise<void>
 }
 
 export function MediaUploadDropzone({
   copy,
   isUploading,
-  isError,
-  isSuccess,
+  isError = false,
+  isSuccess = false,
   errorMessage,
+  error,
   onUpload,
 }: MediaUploadDropzoneProps) {
   const [isDragging, setIsDragging] = React.useState(false)
+  const [uploadError, setUploadError] = React.useState<string | null>(null)
   const fileInputRef = React.useRef<HTMLInputElement>(null)
+
+  const processUpload = async (file: File) => {
+    setUploadError(null)
+    try {
+      await onUpload(file)
+    } catch (err) {
+      const message = getApiErrorMessage(err, copy.uploadError)
+      setUploadError(message)
+      console.error('Media upload failed:', err)
+    }
+  }
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (file) {
-      await onUpload(file)
+      await processUpload(file)
     }
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
@@ -61,9 +76,24 @@ export function MediaUploadDropzone({
 
     const files = e.dataTransfer.files
     if (files.length > 0) {
-      await onUpload(files[0])
+      await processUpload(files[0])
     }
   }
+
+  const resolvedErrorMessage =
+    uploadError ||
+    (error ? getApiErrorMessage(error, copy.uploadError) : null) ||
+    (errorMessage
+      ? getApiErrorMessage(new Error(errorMessage), copy.uploadError)
+      : null) ||
+    copy.uploadError
+
+  const hasError = Boolean(
+    uploadError ||
+      isError ||
+      error ||
+      (errorMessage && !isSuccess),
+  )
 
   return (
     <section
@@ -125,17 +155,25 @@ export function MediaUploadDropzone({
           </Button>
         </div>
 
-        {isError ? (
-          <div className="mt-4 flex items-center gap-2 rounded-xl border border-rose-500/30 bg-rose-500/10 px-4 py-2 text-xs font-semibold text-rose-600">
-            <AlertCircle className="size-4" />
-            {errorMessage || copy.uploadError}
+        {hasError ? (
+          <div
+            role="alert"
+            className="mt-4 flex w-full max-w-md items-center gap-2.5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-3 text-left text-xs font-medium text-rose-600 dark:text-rose-400 shadow-2xs"
+          >
+            <AlertCircle className="size-4 shrink-0" />
+            <span className="flex-1 break-words">
+              {resolvedErrorMessage}
+            </span>
           </div>
         ) : null}
 
-        {isSuccess ? (
-          <div className="mt-4 flex items-center gap-2 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-semibold text-emerald-600">
-            <Check className="size-4" />
-            {copy.uploadSuccess}
+        {isSuccess && !hasError ? (
+          <div
+            role="status"
+            className="mt-4 flex w-full max-w-md items-center gap-2.5 rounded-xl border border-emerald-500/25 bg-emerald-500/10 p-3 text-left text-xs font-medium text-emerald-600 dark:text-emerald-400 shadow-2xs"
+          >
+            <Check className="size-4 shrink-0" />
+            <span className="flex-1 break-words">{copy.uploadSuccess}</span>
           </div>
         ) : null}
       </div>

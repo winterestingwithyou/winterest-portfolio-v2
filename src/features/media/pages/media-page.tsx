@@ -11,6 +11,7 @@ import { MediaUploadDropzone } from '#/features/media/components/section/media-u
 import { useDeleteMedia, useUploadMedia } from '#/features/media/hooks'
 import type { MediaRecord } from '#/features/media/queries'
 import { mediaQueryOptions } from '#/features/media/query-options'
+import { getApiErrorMessage } from '#/lib/api-client'
 
 export function MediaPage() {
   const copy = getDashboardCopy()
@@ -24,6 +25,7 @@ export function MediaPage() {
   const [deletingMedia, setDeletingMedia] = React.useState<MediaRecord | null>(
     null,
   )
+  const [uploadError, setUploadError] = React.useState<string | null>(null)
 
   const {
     data: mediaResponse,
@@ -77,9 +79,12 @@ export function MediaPage() {
   }
 
   const handleUpload = async (file: File) => {
+    setUploadError(null)
     try {
       await uploadMutation.mutateAsync({ file })
     } catch (err) {
+      const message = getApiErrorMessage(err, copy.media.uploadError)
+      setUploadError(message)
       console.error('Media upload failed:', err)
     }
   }
@@ -106,9 +111,18 @@ export function MediaPage() {
         <MediaUploadDropzone
           copy={copy.media}
           isUploading={uploadMutation.isPending}
-          isError={uploadMutation.isError}
-          isSuccess={uploadMutation.isSuccess}
-          errorMessage={uploadMutation.error?.message}
+          isError={Boolean(uploadError) || uploadMutation.isError}
+          isSuccess={uploadMutation.isSuccess && !uploadError}
+          error={uploadMutation.error}
+          errorMessage={
+            uploadError ||
+            (uploadMutation.error
+              ? getApiErrorMessage(
+                  uploadMutation.error,
+                  copy.media.uploadError,
+                )
+              : undefined)
+          }
           onUpload={handleUpload}
         />
 
