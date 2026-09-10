@@ -723,7 +723,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                             }}
                             className={`inline-flex items-center gap-1.5 cursor-pointer rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                               isSelected
-                                ? 'bg-(--brand-orange) text-white shadow-xs'
+                                ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
                                 : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-muted) hover:border-(--brand-orange) hover:text-(--brand-ink)'
                             }`}
                           >

@@ -321,7 +321,7 @@ export function TechnologyEditorForm({
                             className={cn(
                               'rounded-md px-2.5 py-0.5 transition cursor-pointer',
                               iconSource === 'simpleicons'
-                                ? 'bg-(--brand-orange) text-white shadow-xs'
+                                ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
                                 : 'text-(--brand-muted) hover:text-(--brand-ink)',
                             )}
                           >
@@ -333,7 +333,7 @@ export function TechnologyEditorForm({
                             className={cn(
                               'rounded-md px-2.5 py-0.5 transition cursor-pointer',
                               iconSource === 'custom'
-                                ? 'bg-(--brand-orange) text-white shadow-xs'
+                                ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
                                 : 'text-(--brand-muted) hover:text-(--brand-ink)',
                             )}
                           >
@@ -491,7 +491,7 @@ export function TechnologyEditorForm({
                   >
                     <div className="flex items-center gap-3">
                       <div className="grid size-9 place-items-center rounded-lg bg-(--brand-orange) text-white shadow-sm">
-                        <Zap className="size-4 fill-white" />
+                        <Zap className="size-4 fill-white text-white" />
                       </div>
                       <FieldContent>
                         <FieldLabel
@@ -581,7 +581,7 @@ export function TechnologyEditorForm({
                             className={cn(
                               'inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all cursor-pointer select-none',
                               isSelected
-                                ? 'bg-(--brand-orange) text-white shadow-xs'
+                                ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
                                 : 'border border-(--brand-line) bg-card text-(--brand-muted) hover:border-(--brand-orange)/60 hover:text-(--brand-ink)',
                             )}
                           >

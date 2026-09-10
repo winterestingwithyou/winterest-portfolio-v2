@@ -48,45 +48,62 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
       {/* Subtabs Navigation */}
       <motion.div
         variants={fadeUp}
+        role="tablist"
+        aria-label="Beyond the Code categories"
         className="flex flex-wrap gap-2 border-b border-(--brand-line) pb-4"
       >
         <button
           type="button"
+          role="tab"
+          id="beyond-tab-gaming"
+          aria-selected={activeBeyondTab === 'gaming'}
+          aria-controls="beyond-panel-gaming"
+          tabIndex={activeBeyondTab === 'gaming' ? 0 : -1}
           onClick={() => setActiveBeyondTab('gaming')}
           className={cn(
             'inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all cursor-pointer',
             activeBeyondTab === 'gaming'
-              ? 'bg-(--brand-orange) text-white shadow-xs'
+              ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
               : 'bg-(--surface-strong) text-(--brand-muted) hover:text-(--brand-ink)',
           )}
         >
-          <Gamepad2 className="size-4" />
+          <Gamepad2 className="size-4" aria-hidden="true" />
           <span>{beyond.gaming.title}</span>
         </button>
         <button
           type="button"
+          role="tab"
+          id="beyond-tab-anime"
+          aria-selected={activeBeyondTab === 'anime'}
+          aria-controls="beyond-panel-anime"
+          tabIndex={activeBeyondTab === 'anime' ? 0 : -1}
           onClick={() => setActiveBeyondTab('anime')}
           className={cn(
             'inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all cursor-pointer',
             activeBeyondTab === 'anime'
-              ? 'bg-(--brand-orange) text-white shadow-xs'
+              ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
               : 'bg-(--surface-strong) text-(--brand-muted) hover:text-(--brand-ink)',
           )}
         >
-          <Tv className="size-4" />
+          <Tv className="size-4" aria-hidden="true" />
           <span>{beyond.anime.title}</span>
         </button>
         <button
           type="button"
+          role="tab"
+          id="beyond-tab-kpop"
+          aria-selected={activeBeyondTab === 'kpop'}
+          aria-controls="beyond-panel-kpop"
+          tabIndex={activeBeyondTab === 'kpop' ? 0 : -1}
           onClick={() => setActiveBeyondTab('kpop')}
           className={cn(
             'inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold transition-all cursor-pointer',
             activeBeyondTab === 'kpop'
-              ? 'bg-(--brand-orange) text-white shadow-xs'
+              ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
               : 'bg-(--surface-strong) text-(--brand-muted) hover:text-(--brand-ink)',
           )}
         >
-          <Music className="size-4" />
+          <Music className="size-4" aria-hidden="true" />
           <span>{beyond.kpop.title}</span>
         </button>
       </motion.div>
@@ -98,11 +115,15 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
           {activeBeyondTab === 'gaming' && (
             <motion.div
               key="gaming"
+              role="tabpanel"
+              id="beyond-panel-gaming"
+              aria-labelledby="beyond-tab-gaming"
+              tabIndex={0}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.3 }}
-              className="space-y-6"
+              className="space-y-6 outline-none"
             >
               {/* 1. Mobile Legends Row */}
               <div className="surface-card p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6 transition-all hover:border-(--brand-orange)">
@@ -359,11 +380,15 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
           {activeBeyondTab === 'anime' && (
             <motion.div
               key="anime"
+              role="tabpanel"
+              id="beyond-panel-anime"
+              aria-labelledby="beyond-tab-anime"
+              tabIndex={0}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.3 }}
-              className="surface-card p-6 sm:p-8 transition-all hover:border-(--brand-orange)"
+              className="surface-card p-6 sm:p-8 transition-all hover:border-(--brand-orange) outline-none"
             >
               <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
                 <div className="space-y-6">
@@ -405,7 +430,7 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
                     <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
 
                     <div className="absolute inset-x-0 bottom-0 p-5 text-white space-y-1">
-                      <span className="inline-block rounded-full bg-(--brand-orange) px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-widest text-white shadow-xs">
+                      <span className="inline-block rounded-full bg-(--brand-orange) px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white shadow-xs">
                         {beyond.anime.charLabel}
                       </span>
                       <h4 className="text-2xl font-black tracking-tight text-white drop-shadow-md">
@@ -422,11 +447,15 @@ export function BeyondTheCodeSection({ beyond }: BeyondTheCodeSectionProps) {
           {activeBeyondTab === 'kpop' && (
             <motion.div
               key="kpop"
+              role="tabpanel"
+              id="beyond-panel-kpop"
+              aria-labelledby="beyond-tab-kpop"
+              tabIndex={0}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -14 }}
               transition={{ duration: 0.3 }}
-              className="space-y-6"
+              className="space-y-6 outline-none"
             >
               <p className="text-sm leading-relaxed text-(--brand-muted) max-w-2xl">
                 {beyond.kpop.summary}

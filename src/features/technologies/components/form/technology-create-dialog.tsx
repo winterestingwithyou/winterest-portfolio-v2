@@ -284,7 +284,7 @@ export function TechnologyCreateDialog({
                             onClick={() => handleSourceChange('simpleicons')}
                             className={`cursor-pointer rounded-md px-2.5 py-1 text-xs font-semibold transition ${
                               iconSource === 'simpleicons'
-                                ? 'bg-(--brand-orange) text-white shadow-xs'
+                                ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
                                 : 'text-(--brand-muted) hover:text-(--brand-ink)'
                             }`}
                           >
@@ -295,7 +295,7 @@ export function TechnologyCreateDialog({
                             onClick={() => handleSourceChange('custom')}
                             className={`cursor-pointer rounded-md px-2.5 py-1 text-xs font-semibold transition ${
                               iconSource === 'custom'
-                                ? 'bg-(--brand-orange) text-white shadow-xs'
+                                ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
                                 : 'text-(--brand-muted) hover:text-(--brand-ink)'
                             }`}
                           >
@@ -485,7 +485,7 @@ export function TechnologyCreateDialog({
                               }}
                               className={`inline-flex items-center gap-1.5 cursor-pointer rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                                 isSelected
-                                  ? 'bg-(--brand-orange) text-white shadow-xs'
+                                  ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
                                   : 'border border-(--brand-line) bg-background text-(--brand-muted) hover:border-(--brand-orange) hover:text-(--brand-ink)'
                               }`}
                             >

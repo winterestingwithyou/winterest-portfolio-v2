@@ -89,10 +89,7 @@ export function MediaUploadDropzone({
     copy.uploadError
 
   const hasError = Boolean(
-    uploadError ||
-      isError ||
-      error ||
-      (errorMessage && !isSuccess),
+    uploadError || isError || error || (errorMessage && !isSuccess),
   )
 
   return (
@@ -148,7 +145,7 @@ export function MediaUploadDropzone({
             type="button"
             disabled={isUploading}
             onClick={() => fileInputRef.current?.click()}
-            className="gap-2 bg-(--brand-orange) text-white shadow-md hover:bg-(--brand-orange-deep)"
+            className="gap-2 bg-(--brand-orange) text-white font-bold shadow-md hover:bg-(--brand-orange-deep)"
           >
             <Plus className="size-4 stroke-[2.5]" />
             {copy.browseFiles}
@@ -161,9 +158,7 @@ export function MediaUploadDropzone({
             className="mt-4 flex w-full max-w-md items-center gap-2.5 rounded-xl border border-rose-500/25 bg-rose-500/10 p-3 text-left text-xs font-medium text-rose-600 dark:text-rose-400 shadow-2xs"
           >
             <AlertCircle className="size-4 shrink-0" />
-            <span className="flex-1 break-words">
-              {resolvedErrorMessage}
-            </span>
+            <span className="flex-1 break-words">{resolvedErrorMessage}</span>
           </div>
         ) : null}
 

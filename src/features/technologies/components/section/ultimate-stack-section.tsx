@@ -61,7 +61,7 @@ export function UltimateStackSection({
             >
               {/* Ultimate Badge */}
               <div className="absolute top-3 right-3 rounded-full bg-(--brand-orange) p-1 text-white opacity-90 transition group-hover:scale-105">
-                <Zap className="size-3 fill-white" />
+                <Zap className="size-3 fill-white text-white" />
               </div>
 
               {/* Prominent Centerpiece Icon */}
@@ -84,10 +84,14 @@ export function UltimateStackSection({
                     href={tech.url}
                     target="_blank"
                     rel="noreferrer"
+                    aria-label={`Visit official website of ${tech.name} (opens in a new tab)`}
                     title={`Visit ${tech.name}`}
-                    className="text-(--brand-muted) opacity-0 transition hover:text-(--brand-orange-deep) group-hover:opacity-100"
+                    className="inline-flex min-h-11 min-w-11 items-center justify-center -m-3 p-3 rounded-full text-(--brand-muted) opacity-65 transition hover:opacity-100 hover:text-(--brand-orange-deep) focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-(--brand-orange)"
                   >
-                    <ExternalLink className="size-4" />
+                    <ExternalLink className="size-4" aria-hidden="true" />
+                    <span className="sr-only">
+                      Visit official website of {tech.name} (opens in a new tab)
+                    </span>
                   </a>
                 ) : null}
               </div>

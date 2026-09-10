@@ -92,7 +92,7 @@ export function MediaGallerySection({
           onClick={() => onTabChange('all')}
           className={`inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold whitespace-nowrap transition ${
             activeTab === 'all'
-              ? 'bg-(--brand-orange) text-white shadow-xs'
+              ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
               : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'
           }`}
         >
@@ -103,7 +103,7 @@ export function MediaGallerySection({
           onClick={() => onTabChange('image')}
           className={`inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold whitespace-nowrap transition ${
             activeTab === 'image'
-              ? 'bg-(--brand-orange) text-white shadow-xs'
+              ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
               : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'
           }`}
         >
@@ -114,7 +114,7 @@ export function MediaGallerySection({
           onClick={() => onTabChange('document')}
           className={`inline-flex min-h-9 shrink-0 items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold whitespace-nowrap transition ${
             activeTab === 'document'
-              ? 'bg-(--brand-orange) text-white shadow-xs'
+              ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
               : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'
           }`}
         >

@@ -372,7 +372,7 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
                 <Button
                   type="submit"
                   disabled={isSavingProfile}
-                  className="gap-2 bg-(--brand-orange) font-semibold text-white shadow-xs hover:bg-(--brand-orange-deep)"
+                  className="gap-2 bg-(--brand-orange) font-bold text-white shadow-xs hover:bg-(--brand-orange-deep)"
                 >
                   <Save className="size-4" />
                   {isSavingProfile
@@ -576,7 +576,7 @@ export function AccountEditorForm({ profile }: AccountEditorFormProps) {
                 <Button
                   type="submit"
                   disabled={isChangingPassword}
-                  className="gap-2 bg-(--brand-orange) font-semibold text-white shadow-xs hover:bg-(--brand-orange-deep)"
+                  className="gap-2 bg-(--brand-orange) font-bold text-white shadow-xs hover:bg-(--brand-orange-deep)"
                 >
                   <KeyRound className="size-4" />
                   {isChangingPassword

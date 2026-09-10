@@ -70,7 +70,7 @@ export function HeroVisual({ className }: { className?: string } = {}) {
       animate="visible"
       variants={scaleIn}
       className={cn(
-        'relative isolate m-0 w-full min-h-[min(34rem,78vw)] overflow-hidden rounded-2xl border border-(--brand-line) bg-card max-sm:min-h-136',
+        'relative isolate m-0 w-full min-h-[310px] sm:min-h-[min(34rem,78vw)] overflow-hidden rounded-2xl border border-(--brand-line) bg-card shadow-sm',
         className,
       )}
       aria-labelledby="hero-visual-title"
@@ -82,8 +82,10 @@ export function HeroVisual({ className }: { className?: string } = {}) {
           width={1536}
           height={1024}
           fetchPriority="high"
-          className="size-full object-cover object-[50%_46%] saturate-[1.02] contrast-[1.01] md:scale-[1.03] md:animate-[hero-visual-float_8s_ease-in-out_infinite]"
+          className="size-full object-cover object-[50%_32%] sm:object-[50%_46%] saturate-[1.02] contrast-[1.01] md:scale-[1.03] md:animate-[hero-visual-float_8s_ease-in-out_infinite]"
         />
+        {/* Subtle vignette gradient at bottom to ground the HUD card */}
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-linear-to-t from-black/55 via-black/20 to-transparent pointer-events-none" />
       </div>
 
       <figcaption className="sr-only" id="hero-visual-title">
@@ -95,7 +97,7 @@ export function HeroVisual({ className }: { className?: string } = {}) {
         variants={staggerContainer(0.12, 0.25)}
         initial="hidden"
         animate="visible"
-        className="absolute top-4 left-4 z-10 flex flex-col gap-2 max-sm:top-3 max-sm:left-3"
+        className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 flex flex-col gap-1.5 sm:gap-2"
         aria-hidden="true"
       >
         {techItems.map((item) => {
@@ -113,10 +115,10 @@ export function HeroVisual({ className }: { className?: string } = {}) {
                 },
               }}
               whileHover={{ scale: 1.06, x: 2 }}
-              className="flex items-center gap-2.5 rounded-full border border-(--brand-line) bg-(--brand-dark) px-3 py-2 text-zinc-100 transition-colors hover:border-(--brand-orange) max-sm:px-2.5 max-sm:py-1.5"
+              className="flex items-center gap-2 sm:gap-2.5 rounded-full border border-white/10 bg-(--brand-dark)/90 backdrop-blur-md px-2.5 py-1 sm:px-3 sm:py-2 text-zinc-100 shadow-md transition-colors hover:border-(--brand-orange)"
             >
-              <Icon className="size-4 shrink-0 text-orange-400 max-sm:size-3.5" />
-              <span className="text-xs font-extrabold leading-none tracking-wide max-sm:text-[11px]">
+              <Icon className="size-3.5 sm:size-4 shrink-0 text-orange-400" />
+              <span className="text-[11px] sm:text-xs font-extrabold leading-none tracking-wide">
                 {item.name}
               </span>
             </motion.div>
@@ -137,29 +139,29 @@ export function HeroVisual({ className }: { className?: string } = {}) {
         }}
         initial="hidden"
         animate="visible"
-        className="absolute right-4 bottom-4 z-10 w-[min(17rem,calc(100%-2rem))] rounded-xl border border-(--brand-line) bg-(--brand-dark) p-3.5 sm:p-4 text-zinc-100 max-sm:right-3 max-sm:bottom-3 max-sm:w-[calc(100%-1.5rem)]"
+        className="absolute right-3 bottom-3 sm:right-4 sm:bottom-4 z-10 w-[min(17rem,calc(100%-1.5rem))] rounded-xl border border-white/10 bg-(--brand-dark)/90 backdrop-blur-md p-3 sm:p-4 text-zinc-100 shadow-xl"
         aria-hidden="true"
       >
-        <div className="mb-2.5 sm:mb-3 flex items-center gap-1.5">
+        <div className="mb-2 sm:mb-3 flex items-center gap-1.5">
           <span className="size-2 rounded-full bg-[#ff5f56]" />
           <span className="size-2 rounded-full bg-[#ffbd2e]" />
           <span className="size-2 rounded-full bg-[#27c93f]" />
-          <span className="ml-2 font-mono text-[0.65rem] text-orange-100">
+          <span className="ml-1.5 font-mono text-[0.62rem] sm:text-[0.65rem] text-orange-200/90 font-medium">
             winterest/dev
           </span>
         </div>
-        <div className="grid gap-1.5 font-mono text-[0.72rem] leading-5 text-orange-50">
+        <div className="grid gap-1 sm:gap-1.5 font-mono text-[0.68rem] sm:text-[0.72rem] leading-4 sm:leading-5 text-orange-50/90">
           <span>
-            <span className="text-orange-300">realname</span>:{' '}
+            <span className="text-orange-400 font-medium">realname</span>:{' '}
             {siteProfile.fullName}
           </span>
           <span>
-            <span className="text-orange-300">nickname</span>:{' '}
+            <span className="text-orange-400 font-medium">nickname</span>:{' '}
             {siteProfile.name}
           </span>
           <span>
-            <span className="text-orange-300">stack</span>: Bun, TypeScript,
-            Cloudflare
+            <span className="text-orange-400 font-medium">stack</span>: Bun,
+            TypeScript, Cloudflare
           </span>
         </div>
       </motion.div>
@@ -177,10 +179,10 @@ export function HeroVisual({ className }: { className?: string } = {}) {
         initial="hidden"
         animate="visible"
         whileHover={{ scale: 1.05 }}
-        className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-(--brand-line) bg-(--brand-dark) px-3 py-1.5 sm:px-3.5 sm:py-2 text-[11px] sm:text-xs font-extrabold text-zinc-100 max-sm:top-3 max-sm:right-3"
+        className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-(--brand-dark)/90 backdrop-blur-md px-2.5 py-1 sm:px-3.5 sm:py-2 text-[10.5px] sm:text-xs font-extrabold text-zinc-100 shadow-md"
         aria-hidden="true"
       >
-        <Code2 className="size-3.5 sm:size-4 text-orange-400" />
+        <Code2 className="size-3 sm:size-4 text-orange-400" />
         Junior Developer
       </motion.div>
     </motion.figure>

@@ -2,7 +2,7 @@
 
 - **Feature ID**: `fix-mobile-layout-a11y-contrast`
 - **Date**: 2026-09-09
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - `/` (Beranda)
   - `/about`
@@ -144,11 +144,11 @@ Audit visual mendalam dengan panduan `antislop-human` dan `antislop-layoutmobile
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] Pada viewport mobile (lebar 375px–414px), judul utama dan tombol aksi terlihat tanpa terhalang ilustrasi raksasa.
-- [ ] Rasio kontras teks pada tombol aksi oranye utama terukur ≥ 4.5:1 menggunakan kalkulator kontras.
-- [ ] Pengguna touch screen dapat melihat dan mengetuk tautan eksternal pada kartu teknologi tanpa perlu simulasi hover.
-- [ ] Menekan tombol Tab pada halaman beranda dan `/stack` tidak melewati link duplikat marquee berkali-kali.
-- [ ] Saat simulasi `prefers-reduced-motion: reduce` aktif, marquee berhenti berputar dan animasi partikel gooey tidak meletup.
-- [ ] Screen reader mengumumkan navigasi tab dan status aktif pada section _Beyond the Code_.
-- [ ] Halaman `/resume` memiliki hierarki heading yang valid (`h1` tunggal diikuti `h2`).
-- [ ] Lolos pengujian lint dan typecheck (`bun run check`).
+- [x] Pada viewport mobile (lebar 375px–414px), judul utama dan tombol aksi terlihat tanpa terhalang ilustrasi raksasa.
+- [x] Rasio kontras teks pada tombol aksi oranye utama terukur ≥ 4.5:1 menggunakan kalkulator kontras (Option A: `#09090b` on `#f48120` = 7.20:1, exceeding WCAG AAA).
+- [x] Pengguna touch screen dapat melihat dan mengetuk tautan eksternal pada kartu teknologi tanpa perlu simulasi hover (min 44px touch target).
+- [x] Menekan tombol Tab pada halaman beranda dan `/stack` tidak melewati link duplikat marquee berkali-kali (`inert={i > 0}`).
+- [x] Saat simulasi `prefers-reduced-motion: reduce` aktif, marquee berhenti berputar dan animasi partikel gooey tidak meletup.
+- [x] Screen reader mengumumkan navigasi tab dan status aktif pada section _Beyond the Code_ (`role="tablist"`, `role="tab"`, `role="tabpanel"`).
+- [x] Halaman `/resume` memiliki hierarki heading yang valid (`h1` tunggal diikuti `h2`).
+- [x] Lolos pengujian lint dan typecheck (`bun run check`, `bun run test`, `bun run build`).

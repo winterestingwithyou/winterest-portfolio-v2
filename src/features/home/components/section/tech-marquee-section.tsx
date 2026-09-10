@@ -66,10 +66,15 @@ export function TechMarqueeSection({
                       href={tech.url}
                       target="_blank"
                       rel="noreferrer"
+                      aria-label={`Visit official website of ${tech.name} (opens in a new tab)`}
                       title={`Visit ${tech.name}`}
-                      className="text-(--brand-muted) opacity-0 transition hover:text-(--brand-orange-deep) group-hover:opacity-100"
+                      className="inline-flex min-h-11 min-w-11 items-center justify-center -m-3 p-3 rounded-full text-(--brand-muted) opacity-65 transition hover:opacity-100 hover:text-(--brand-orange-deep) focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-(--brand-orange)"
                     >
-                      <ExternalLink className="size-3.5" />
+                      <ExternalLink className="size-3.5" aria-hidden="true" />
+                      <span className="sr-only">
+                        Visit official website of {tech.name} (opens in a new
+                        tab)
+                      </span>
                     </a>
                   ) : null}
                 </div>

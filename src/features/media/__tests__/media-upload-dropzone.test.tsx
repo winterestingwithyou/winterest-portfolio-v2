@@ -1,4 +1,10 @@
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react'
 import { FetchError } from 'ofetch'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
@@ -97,7 +103,9 @@ describe('MediaUploadDropzone', () => {
       />,
     )
 
-    const input = container.querySelector('input[type="file"]') as HTMLInputElement
+    const input = container.querySelector(
+      'input[type="file"]',
+    ) as HTMLInputElement
     expect(input).toBeDefined()
 
     const file = new File(['dummy'], 'test.txt', { type: 'text/plain' })
