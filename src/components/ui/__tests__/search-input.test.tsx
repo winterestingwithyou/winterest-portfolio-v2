@@ -71,11 +71,7 @@ describe('SearchInput', () => {
   it('does not swallow typed characters when parent has not yet received the debounced value', () => {
     const handleChange = vi.fn()
     render(
-      <SearchInput
-        placeholder="Search..."
-        value=""
-        onChange={handleChange}
-      />,
+      <SearchInput placeholder="Search..." value="" onChange={handleChange} />,
     )
 
     const input = screen.getByPlaceholderText('Search...')

@@ -189,7 +189,7 @@ function RootErrorComponent({ error, reset }: ErrorComponentProps) {
               reset()
               void router.invalidate()
             }}
-            className="inline-flex min-h-10 cursor-pointer items-center rounded-xl bg-(--brand-orange) px-4 text-sm font-semibold text-white transition hover:opacity-90"
+            className="inline-flex min-h-10 cursor-pointer items-center rounded-xl bg-(--brand-orange) px-4 text-sm font-bold text-white transition hover:opacity-90"
           >
             {isId ? 'Coba Lagi' : 'Try Again'}
           </button>

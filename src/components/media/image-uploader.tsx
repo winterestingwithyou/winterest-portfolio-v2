@@ -160,7 +160,7 @@ export function ImageUploader({
             type="button"
             size="sm"
             onClick={handleManualApply}
-            className="shrink-0 whitespace-nowrap bg-(--brand-orange) text-white hover:bg-(--brand-orange-deep)"
+            className="shrink-0 whitespace-nowrap bg-(--brand-orange) text-white font-bold hover:bg-(--brand-orange-deep)"
           >
             Apply
           </Button>

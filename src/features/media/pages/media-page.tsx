@@ -117,10 +117,7 @@ export function MediaPage() {
           errorMessage={
             uploadError ||
             (uploadMutation.error
-              ? getApiErrorMessage(
-                  uploadMutation.error,
-                  copy.media.uploadError,
-                )
+              ? getApiErrorMessage(uploadMutation.error, copy.media.uploadError)
               : undefined)
           }
           onUpload={handleUpload}

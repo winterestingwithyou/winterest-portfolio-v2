@@ -106,7 +106,7 @@ export function SetupRequiredScreen({ status }: { status: SystemStatus }) {
                   className={cn(
                     'rounded-md px-2.5 py-1 transition',
                     activeTab === 'local'
-                      ? 'bg-(--brand-orange) text-white shadow-xs'
+                      ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
                       : 'text-(--brand-muted) hover:text-(--brand-ink)',
                   )}
                 >
@@ -118,7 +118,7 @@ export function SetupRequiredScreen({ status }: { status: SystemStatus }) {
                   className={cn(
                     'rounded-md px-2.5 py-1 transition',
                     activeTab === 'remote'
-                      ? 'bg-(--brand-orange) text-white shadow-xs'
+                      ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
                       : 'text-(--brand-muted) hover:text-(--brand-ink)',
                   )}
                 >

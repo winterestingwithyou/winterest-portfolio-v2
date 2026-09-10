@@ -30,8 +30,9 @@ export function ResumePage({
       <Container>
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <SectionHeader
+            asHeading="h1"
             eyebrow={copy.resume.eyebrow}
-            title={siteProfile.name}
+            title={`${siteProfile.name} — Resume`}
             description={copy.resume.description}
           />
           <div className="mb-8 shrink-0 print:hidden">
@@ -54,9 +55,9 @@ export function ResumePage({
         <div className="surface-card p-6 print:border print:bg-white print:shadow-none sm:p-8">
           <section className="grid gap-6 border-b border-(--brand-line) pb-8 md:grid-cols-[1fr_auto] md:items-start">
             <div>
-              <h1 className="text-3xl font-semibold text-(--brand-ink)">
+              <h2 className="text-3xl font-semibold text-(--brand-ink)">
                 {siteProfile.name}
-              </h1>
+              </h2>
               <p className="mt-2 text-sm font-semibold text-(--brand-orange-deep)">
                 {siteProfile.handle} | {siteProfile.domain}
               </p>

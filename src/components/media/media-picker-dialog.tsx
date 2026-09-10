@@ -289,7 +289,7 @@ export function MediaPickerDialog({
             type="button"
             disabled={!selectedId}
             onClick={handleConfirm}
-            className="w-full sm:w-auto gap-2 bg-(--brand-orange) text-white hover:bg-(--brand-orange-deep)"
+            className="w-full sm:w-auto gap-2 bg-(--brand-orange) text-white font-bold hover:bg-(--brand-orange-deep)"
           >
             {accept === 'document'
               ? copy.media.useSelectedFile

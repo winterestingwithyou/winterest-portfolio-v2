@@ -48,7 +48,7 @@ export function MarkdownTextarea({
             className={cn(
               'inline-flex cursor-pointer items-center gap-1.5 rounded-md px-3 py-1 text-xs font-semibold transition',
               activeTab === 'write'
-                ? 'bg-(--brand-orange) text-white shadow-xs'
+                ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
                 : 'text-(--brand-muted) hover:text-(--brand-ink)',
             )}
           >
@@ -61,7 +61,7 @@ export function MarkdownTextarea({
             className={cn(
               'inline-flex cursor-pointer items-center gap-1.5 rounded-md px-3 py-1 text-xs font-semibold transition',
               activeTab === 'preview'
-                ? 'bg-(--brand-orange) text-white shadow-xs'
+                ? 'bg-(--brand-orange) text-white font-bold shadow-xs'
                 : 'text-(--brand-muted) hover:text-(--brand-ink)',
             )}
           >
