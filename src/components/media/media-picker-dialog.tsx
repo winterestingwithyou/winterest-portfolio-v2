@@ -5,7 +5,6 @@ import {
   Image as ImageIcon,
   Loader2,
   Plus,
-  Search,
   UploadCloud,
 } from 'lucide-react'
 
@@ -20,7 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '#/components/ui/dialog'
-import { Input } from '#/components/ui/input'
+import { SearchInput } from '#/components/ui/search-input'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { useUploadMedia } from '#/features/media/hooks'
 import { mediaQueryOptions } from '#/features/media/query-options'
@@ -70,11 +69,13 @@ export function MediaPickerDialog({
     return mediaList
   }, [mediaList, accept])
 
-  // Reset selected when dialog opens
+  // Reset selected when dialog opens and clear search on close
   React.useEffect(() => {
     if (open) {
       const match = filteredMediaList.find((m) => m.url === currentUrl)
       setSelectedId(match ? match.id : null)
+    } else {
+      setSearch('')
     }
   }, [open, currentUrl, filteredMediaList])
 
@@ -126,16 +127,12 @@ export function MediaPickerDialog({
 
         {/* Action Header: Search + Upload Quick Button */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 pt-2">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-(--brand-muted)" />
-            <Input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder={copy.media.searchPlaceholder}
-              className="pl-9"
-            />
-          </div>
+          <SearchInput
+            value={search}
+            onChange={setSearch}
+            placeholder={copy.media.searchPlaceholder}
+            className="flex-1"
+          />
 
           <input
             ref={fileInputRef}

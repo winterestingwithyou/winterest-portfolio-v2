@@ -1,5 +1,6 @@
 import { useForm } from '@tanstack/react-form'
-import { Link } from '@tanstack/react-router'
+import { Link, useBlocker } from '@tanstack/react-router'
+import { useStore } from '@tanstack/react-store'
 import {
   AlertCircle,
   CheckCircle2,
@@ -17,6 +18,8 @@ import {
   Trash2,
 } from 'lucide-react'
 import { useState } from 'react'
+
+import { UnsavedChangesDialog } from '#/components/dashboard/unsaved-changes-dialog'
 
 import { ImageUploader } from '#/components/media/image-uploader'
 import { MediaPickerDialog } from '#/components/media/media-picker-dialog'
@@ -87,11 +90,20 @@ export function SettingsEditorForm({
       setSuccessMessage(null)
       try {
         await updateMutation.mutateAsync(value)
+        form.reset(value)
         setSuccessMessage(settingsCopy.feedback.updated)
       } catch (err) {
         console.error(err)
       }
     },
+  })
+
+  const isDirty = useStore(form.store, (state) => state.isDirty)
+
+  const blocker = useBlocker({
+    shouldBlockFn: () => isDirty,
+    withResolver: true,
+    enableBeforeUnload: () => isDirty,
   })
 
   const tabs: Array<{ id: SettingsTab; label: string; icon: typeof Globe }> = [
@@ -954,6 +966,7 @@ export function SettingsEditorForm({
           </div>
         )}
       </form>
+      <UnsavedChangesDialog blocker={blocker} />
     </div>
   )
 }

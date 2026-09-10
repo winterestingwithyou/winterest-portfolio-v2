@@ -30,6 +30,7 @@ export type AuthCopy = {
   submit: {
     signin: string
     pending: string
+    verifyingSecurity: string
   }
   errors: {
     signin: string
@@ -70,6 +71,7 @@ export const authCopy: Record<'en' | 'id', AuthCopy> = {
     submit: {
       signin: 'Sign in',
       pending: 'Signing in...',
+      verifyingSecurity: 'Verifying security...',
     },
     errors: {
       signin: 'Invalid email or password. Please check your credentials.',
@@ -108,6 +110,7 @@ export const authCopy: Record<'en' | 'id', AuthCopy> = {
     submit: {
       signin: 'Masuk',
       pending: 'Memproses...',
+      verifyingSecurity: 'Memverifikasi keamanan...',
     },
     errors: {
       signin: 'Email atau kata sandi salah. Silakan periksa kembali.',

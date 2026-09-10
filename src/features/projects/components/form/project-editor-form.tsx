@@ -1,6 +1,7 @@
 import { useForm } from '@tanstack/react-form'
 import { useQuery } from '@tanstack/react-query'
-import { Link, useNavigate } from '@tanstack/react-router'
+import { Link, useNavigate, useBlocker } from '@tanstack/react-router'
+import { useStore } from '@tanstack/react-store'
 import {
   AlertCircle,
   ArrowLeft,
@@ -10,7 +11,9 @@ import {
   Save,
   Trash2,
 } from 'lucide-react'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+
+import { UnsavedChangesDialog } from '#/components/dashboard/unsaved-changes-dialog'
 
 import {
   AlertDialog,
@@ -169,6 +172,8 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
     { value: 'private' as const, label: formCopy.visibilityPrivate },
   ]
 
+  const isSubmittingSuccessRef = useRef(false)
+
   const form = useForm({
     defaultValues: {
       slug: project?.slug ?? '',
@@ -226,6 +231,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
             ? copy.common.draftCreated
             : copy.common.changesSaved,
         )
+        isSubmittingSuccessRef.current = true
         await navigate({ to: '/dashboard/projects' })
       } catch (caught) {
         setError(getApiErrorMessage(caught, copy.projects.saveError))
@@ -233,6 +239,14 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         setIsPending(false)
       }
     },
+  })
+
+  const isDirty = useStore(form.store, (state) => state.isDirty)
+
+  const blocker = useBlocker({
+    shouldBlockFn: () => isDirty && !isSubmittingSuccessRef.current,
+    withResolver: true,
+    enableBeforeUnload: () => isDirty && !isSubmittingSuccessRef.current,
   })
 
   async function handleDelete() {
@@ -247,6 +261,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
     try {
       await deleteMutation.mutateAsync(project.id)
       setIsDeleteDialogOpen(false)
+      isSubmittingSuccessRef.current = true
       await navigate({ to: '/dashboard/projects' })
     } catch (caught) {
       setError(getApiErrorMessage(caught, copy.projects.deleteSaveError))
@@ -977,6 +992,8 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         onOpenChange={setIsTechDialogOpen}
         onSuccess={handleTechnologyCreated}
       />
+
+      <UnsavedChangesDialog blocker={blocker} />
     </>
   )
 }

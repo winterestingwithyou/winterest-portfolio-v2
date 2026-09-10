@@ -67,11 +67,10 @@ export function ProjectsListPage({ projects }: ProjectsListPageProps) {
   }, [filteredProjects, page])
 
   const handleSearchChange = (val: string) => {
-    const trimmed = val.trim()
     void navigate({
       search: (prev) => ({
         ...prev,
-        q: trimmed ? trimmed : undefined,
+        q: val || undefined,
         page: undefined, // reset page to 1
       }),
       replace: true,

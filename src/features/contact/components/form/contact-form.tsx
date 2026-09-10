@@ -24,7 +24,7 @@ import type { TurnstileRef } from '#/components/ui/turnstile'
 import { TurnstileWidget } from '#/components/ui/turnstile'
 import type { getContactCopy } from '#/features/contact/copy'
 import { useSubmitContact } from '#/features/contact/hooks'
-import { contactSchema } from '#/features/contact/validation'
+import { createContactSchema } from '#/features/contact/validation'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { scaleIn } from '#/lib/motion'
 
@@ -49,7 +49,7 @@ export function ContactForm({ copy }: ContactFormProps) {
       turnstileToken: '',
     },
     validators: {
-      onSubmit: contactSchema,
+      onSubmit: createContactSchema(copy.validation),
     },
     onSubmit: async ({ value }) => {
       setStatus('loading')
@@ -308,23 +308,48 @@ export function ContactForm({ copy }: ContactFormProps) {
               />
             </div>
 
-            <Button
-              type="submit"
-              disabled={status === 'loading'}
-              className="inline-flex min-h-10.5 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-black text-white transition hover:-translate-y-px hover:bg-(--brand-orange-deep) disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:min-h-11.5"
-            >
-              {status === 'loading' ? (
-                <>
-                  <Loader2 aria-hidden="true" className="size-4 animate-spin" />
-                  <span>{copy.sending}</span>
-                </>
-              ) : (
-                <>
-                  <Send aria-hidden="true" className="size-4" />
-                  <span>{copy.send}</span>
-                </>
-              )}
-            </Button>
+            <form.Subscribe
+              selector={(state) => [
+                state.canSubmit,
+                state.values.turnstileToken,
+              ]}
+              children={([canSubmit, turnstileToken]) => {
+                const isPending = status === 'loading'
+                const isReady =
+                  canSubmit && Boolean(turnstileToken) && !isPending
+
+                return (
+                  <Button
+                    type="submit"
+                    disabled={!isReady}
+                    className="inline-flex min-h-10.5 w-full items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-5 text-sm font-black text-white transition hover:-translate-y-px hover:bg-(--brand-orange-deep) disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:min-h-11.5"
+                  >
+                    {isPending ? (
+                      <>
+                        <Loader2
+                          aria-hidden="true"
+                          className="size-4 animate-spin"
+                        />
+                        <span>{copy.sending}</span>
+                      </>
+                    ) : !turnstileToken && canSubmit ? (
+                      <>
+                        <Loader2
+                          aria-hidden="true"
+                          className="size-4 animate-spin"
+                        />
+                        <span>{copy.verifyingSecurity}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send aria-hidden="true" className="size-4" />
+                        <span>{copy.send}</span>
+                      </>
+                    )}
+                  </Button>
+                )
+              }}
+            />
           </form>
         )}
       </AnimatePresence>
