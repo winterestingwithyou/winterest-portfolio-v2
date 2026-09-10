@@ -77,3 +77,6 @@ bun run db:studio:remote
 - **Copywriting & Data**: Feature-scoped `copy.ts` for localized UI strings (`en`/`id`) and `data.ts` strictly for static structured datasets. Global layout copy in `src/features/portfolio/copy.ts`.
 - **File Naming**: Strict `kebab-case` for all project files and directories.
 - **Spec-Driven Development**: Maintain living specs in `specs/` (`specs/system/`, `specs/features/`, `specs/changes/`). Verify contracts against specifications before implementing non-trivial changes.
+- **Knowledge Graph & Exploration (Graphify)**: Mandatory first step for exploring codebase, dependencies, or new feature implementations. Always call MCP `query_graph` or CLI `graphify query` before manual grep or file inspection, even if the user did not mention Graphify. Run `graphify update .` after code modifications.
+
+

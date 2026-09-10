@@ -72,13 +72,15 @@ Every feature spec (`specs/features/<feature>.spec.md`) must follow this standar
 
 When developing new capabilities or refactoring existing ones:
 
-1. **Draft Spec**: Create proposal in `specs/changes/YYYY-MM-[feature].md`.
-2. **Lock Contracts**: Finalize D1 schema, Zod validation, and API signatures before writing UI code.
-3. **Implementation**: Implement code across `src/db/schema.ts`, `validation.ts`, `queries.ts`, `query-options.ts`, and components.
-4. **Verification**: Verify against the spec checklist and run all quality gates (`bun run check`, `bun run test`, `bun run build`).
-5. **Merge & Sync**:
+1. **Map with Graphify (Mandatory Zero-Prompt Step)**: Before writing any plan or code, query the knowledge graph (`query_graph` or `graphify query "<feature-or-module>"`) to map existing nodes, caller relationships, affected components, and routes. Do not rely on manual brute-force grep.
+2. **Draft Spec**: Create proposal in `specs/changes/YYYY-MM-[feature].md`.
+3. **Lock Contracts**: Finalize D1 schema, Zod validation, and API signatures before writing UI code.
+4. **Implementation**: Implement code across `src/db/schema.ts`, `validation.ts`, `queries.ts`, `query-options.ts`, and components.
+5. **Verification**: Verify against the spec checklist and run all quality gates (`bun run check`, `bun run test`, `bun run build`).
+6. **Merge & Sync**:
    - Consolidate the change spec into the living spec (`specs/features/<feature>.spec.md`).
    - Synchronize the knowledge graph with `graphify update .`.
+
 
 ---
 

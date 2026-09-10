@@ -79,6 +79,7 @@ When working in this repository:
 - Explain tradeoffs briefly and clearly.
 - Keep the codebase Cloudflare-compatible and maintainable for long-term solo development.
 - Prioritize public portfolio quality first, then CMS dashboard, then auth/RBAC, then 3D polish.
+- Always begin exploration or feature investigation by querying Graphify (`query_graph` via MCP or `graphify query` via CLI) first, without waiting for the user to prompt for it.
 
 ---
 
@@ -94,6 +95,8 @@ A task or feature is complete when:
 6. Works seamlessly across Light and Dark mode.
 7. No secrets, credentials, or administrative data are leaked.
 8. Relevant test cases pass if applicable (`bun run test`).
+9. Knowledge graph is kept in sync with code changes via `graphify update .`.
+
 
 For major tasks, report:
 
