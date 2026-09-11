@@ -70,7 +70,7 @@ export function StackCategoriesSection({
 
               <Marquee
                 pauseOnHover
-                reverse={index % 2 === 1}
+                reverse={index % 2 === 0}
                 className="py-4 [--duration:35s]"
                 repeat={6}
               >
