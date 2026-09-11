@@ -9,7 +9,7 @@ import { getLocale } from '#/paraglide/runtime'
 export const Route = createFileRoute('/projects/$slug')({
   loader: ({ params }) =>
     getPublishedProject({ data: { slug: params.slug, locale: getLocale() } }),
-  head: ({ matches, loaderData }) => {
+  head: ({ matches, loaderData, params }) => {
     const copy = getProjectsCopy()
     const project = loaderData
     return createRouteMeta({
@@ -18,6 +18,9 @@ export const Route = createFileRoute('/projects/$slug')({
       description:
         project?.summary ?? project?.description ?? copy.meta.description,
       ogImage: project?.coverImage,
+      ogType: 'article',
+      canonicalUrl: `/projects/${params.slug}`,
+      ogImageAlt: project?.title ?? 'Project cover',
     })
   },
   component: ProjectDetailRouteComponent,

@@ -23,6 +23,7 @@ export const Route = createFileRoute('/resume')({
       matches,
       title: copy.resume.meta.title,
       description: copy.resume.meta.description,
+      canonicalUrl: '/resume',
     })
   },
   component: ResumeRouteComponent,

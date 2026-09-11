@@ -2,7 +2,7 @@
 
 - **Feature ID**: `fix-og-image-facebook-debugger`
 - **Date**: 2026-09-11
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - `src/routes/__root.tsx`
   - `src/routes/projects/$slug.tsx`
@@ -138,11 +138,12 @@ Menyelaraskan head deklarasi di `__root.tsx` agar menyertakan `og:image:width`, 
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] File `public/og-default.png` dibuat dengan rasio standar 1200x630 dan estetika brand Cloudflare + Bun.
-- [ ] `toAbsoluteUrl()` helper diuji menangani URL relatif, URL absolut, protocol https, dan domain fallback.
-- [ ] `createRouteMeta()` menginjeksi `og:image:width: 1200`, `og:image:height: 630`, `og:image:secure_url`, `og:image:type`, `og:image:alt`, serta `og:type` dan `og:url`.
-- [ ] Unit tests di `src/lib/__tests__/metadata.test.ts` diperbarui dan seluruhnya lulus (`bun test src/lib/__tests__/metadata.test.ts`).
-- [ ] Typecheck lulus tanpa error (`bun run check`).
-- [ ] Linter & formatter bersih (`bun run lint`, `bun run format`).
-- [ ] Production build berhasil (`bun run build`).
-- [ ] Knowledge graph diperbarui (`graphify update .`).
+- [x] File `public/og-default.png` dibuat dengan rasio standar 1200x630 dan estetika brand Cloudflare + Bun.
+- [x] `toAbsoluteUrl()` helper diuji menangani URL relatif, URL absolut, protocol https, dan domain fallback.
+- [x] `createRouteMeta()` menginjeksi `og:image:width: 1200`, `og:image:height: 630`, `og:image:secure_url`, `og:image:type`, `og:image:alt`, serta `og:type` dan `og:url`.
+- [x] Unit tests di `src/lib/__tests__/metadata.test.ts` diperbarui dan seluruhnya lulus (`bun test src/lib/__tests__/metadata.test.ts`).
+- [x] Typecheck lulus tanpa error (`bun run check`).
+- [x] Linter & formatter bersih (`bun run lint`, `bun run format`).
+- [x] Production build berhasil (`bun run build`).
+- [x] Knowledge graph diperbarui (`graphify update .`).
+

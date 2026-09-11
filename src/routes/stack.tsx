@@ -13,6 +13,7 @@ export const Route = createFileRoute('/stack')({
       matches,
       title: copy.meta.title,
       description: copy.meta.description,
+      canonicalUrl: '/stack',
     })
   },
   component: StackRouteComponent,
