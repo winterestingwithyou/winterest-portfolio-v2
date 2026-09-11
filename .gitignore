@@ -23,3 +23,6 @@ graphify-out/
 # Playwright CLI output (may contain credentials)
 .playwright-cli/
 scratch/
+
+# Local utility scripts
+local-scripts/
