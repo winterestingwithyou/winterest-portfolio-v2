@@ -1,6 +1,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { Link, useRouterState } from '@tanstack/react-router'
-import { Cloud, Github, LayoutDashboard, Mail, Sparkles } from 'lucide-react'
+import {
+  Cloud,
+  ChevronRight,
+  Github,
+  LayoutDashboard,
+  Mail,
+  Sparkles,
+} from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 import { getPortfolioCopy } from '#/features/portfolio/copy'
@@ -32,6 +39,7 @@ export default function Header() {
   const githubLink = socialLinks.find((l) => l.platform === 'github')
   const githubUrl = githubLink?.url || ''
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [hasSession, setHasSession] = useState(false)
   const pathname = useRouterState({
     select: (state) => state.location.pathname,
   })
@@ -50,6 +58,20 @@ export default function Header() {
 
   useEffect(() => {
     setMobileNavOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    let isMounted = true
+
+    void authClient.getSession().then((result) => {
+      if (isMounted) {
+        setHasSession(Boolean(result.data?.user))
+      }
+    })
+
+    return () => {
+      isMounted = false
+    }
   }, [pathname])
 
   useEffect(() => {
@@ -142,7 +164,7 @@ export default function Header() {
             <span className="sr-only">Contact Winterest</span>
             <Mail aria-hidden="true" className="size-4" />
           </Link>
-          <DashboardLink />
+          <DashboardLink hasSession={hasSession} />
           <ParaglideLocaleSwitcher />
           <ThemeToggle />
 
@@ -211,6 +233,38 @@ export default function Header() {
               : 'border-transparent py-0',
           )}
         >
+          {hasSession && (
+            <Link
+              to="/dashboard"
+              tabIndex={mobileNavOpen ? 0 : -1}
+              onClick={() => setMobileNavOpen(false)}
+              className={cn(
+                'group mb-2 flex items-center justify-between gap-3 rounded-xl',
+                'border border-[color-mix(in_srgb,var(--brand-orange)_40%,var(--brand-line))]',
+                'bg-[color-mix(in_srgb,var(--brand-orange-soft)_22%,var(--surface-strong))] p-3.5',
+                'transition-all duration-180 hover:border-(--brand-orange) hover:bg-[color-mix(in_srgb,var(--brand-orange-soft)_36%,var(--surface-strong))]',
+              )}
+            >
+              <div className="flex items-center gap-3">
+                <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-(--brand-orange) text-white shadow-xs">
+                  <LayoutDashboard aria-hidden="true" className="size-4.5" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-(--brand-ink) group-hover:text-(--brand-orange-deep)">
+                    {copy.nav.dashboard}
+                  </div>
+                  <div className="text-xs text-(--brand-muted)">
+                    {copy.nav.dashboardDesc}
+                  </div>
+                </div>
+              </div>
+              <ChevronRight
+                aria-hidden="true"
+                className="size-4 text-(--brand-muted) transition-transform group-hover:translate-x-0.5 group-hover:text-(--brand-orange)"
+              />
+            </Link>
+          )}
+
           {navItems.map((item) => {
             const isActive =
               item.href === '/'
@@ -269,29 +323,16 @@ export default function Header() {
   )
 }
 
-function DashboardLink() {
-  const [hasSession, setHasSession] = useState(false)
-
-  useEffect(() => {
-    let isMounted = true
-
-    void authClient.getSession().then((result) => {
-      if (isMounted) {
-        setHasSession(Boolean(result.data?.user))
-      }
-    })
-
-    return () => {
-      isMounted = false
-    }
-  }, [])
-
+function DashboardLink({ hasSession }: { hasSession: boolean }) {
   if (!hasSession) {
     return null
   }
 
   return (
-    <Link to="/dashboard" className={iconLinkClasses}>
+    <Link
+      to="/dashboard"
+      className={cn(iconLinkClasses, 'hidden md:inline-grid')}
+    >
       <span className="sr-only">Dashboard</span>
       <LayoutDashboard aria-hidden="true" className="size-4" />
     </Link>

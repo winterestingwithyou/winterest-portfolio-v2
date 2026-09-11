@@ -8,6 +8,8 @@ export const portfolioCopy = {
       projects: 'Projects',
       stack: 'Stack',
       contact: 'Contact',
+      dashboard: 'Dashboard CMS',
+      dashboardDesc: 'Access content management panel',
     },
     footer: {
       eyebrow: 'Winterest Portfolio',
@@ -83,6 +85,8 @@ export const portfolioCopy = {
       projects: 'Project',
       stack: 'Stack',
       contact: 'Kontak',
+      dashboard: 'Dashboard CMS',
+      dashboardDesc: 'Akses panel manajemen konten',
     },
     footer: {
       eyebrow: 'Winterest Portfolio',
