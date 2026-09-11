@@ -1,8 +1,10 @@
+import { useEffect, useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { ExternalLink, MapPin, MessageSquare } from 'lucide-react'
+import { Check, Copy, ExternalLink, Mail, MapPin, MessageSquare } from 'lucide-react'
 import { motion } from 'motion/react'
 
 import type { getContactCopy } from '#/features/contact/copy'
+import { settingsQueryOptions } from '#/features/settings/query-options'
 import { socialQueryOptions } from '#/features/social/query-options'
 import { platformMetaMap } from '#/features/social/types'
 import { staggerContainer, staggerItem } from '#/lib/motion'
@@ -12,13 +14,113 @@ type ContactChannelsProps = {
 }
 
 export function ContactChannels({ copy }: ContactChannelsProps) {
+  const { data: settings } = useQuery(settingsQueryOptions.get())
   const { data: socialLinks = [] } = useQuery(socialQueryOptions.publicList())
+
+  const [copied, setCopied] = useState(false)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+
+  const publicEmail = settings?.publicEmail.trim()
+
+  const handleCopyEmail = async () => {
+    if (!publicEmail) return
+    try {
+      await navigator.clipboard.writeText(publicEmail)
+      setCopied(true)
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      timeoutRef.current = setTimeout(() => {
+        setCopied(false)
+      }, 2000)
+    } catch {
+      // Graceful fallback for environments with restricted clipboard access
+    }
+  }
 
   return (
     <motion.div
       variants={staggerContainer(0.08, 0.1)}
       className="grid w-full min-w-0 max-w-full gap-5"
     >
+      {/* Dedicated Public Email Card (Strict: only rendered when publicEmail is non-empty) */}
+      {publicEmail ? (
+        <motion.div
+          variants={staggerItem}
+          className="surface-card w-full min-w-0 max-w-full overflow-hidden p-4 sm:p-6 md:p-7"
+        >
+          <div className="flex items-center gap-3 border-b border-(--brand-line) pb-4">
+            <div className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl bg-(--brand-orange-soft) text-(--brand-orange-deep)">
+              <Mail aria-hidden="true" className="size-5" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <h2 className="truncate text-lg font-bold text-(--brand-ink)">
+                {copy.emailTitle}
+              </h2>
+              <p className="truncate text-xs text-(--brand-muted)">
+                {copy.emailSubtitle}
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-4 rounded-xl border border-(--brand-line) bg-(--surface-strong) p-3.5 sm:p-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0 flex-1">
+                <span className="text-[11px] font-semibold uppercase tracking-wider text-(--brand-muted)">
+                  Direct Email
+                </span>
+                <p className="mt-0.5 break-all font-mono text-sm font-bold text-(--brand-ink) sm:text-base">
+                  {publicEmail}
+                </p>
+              </div>
+              <div className="flex w-full shrink-0 items-center gap-2 sm:w-auto">
+                <a
+                  href={`mailto:${publicEmail}`}
+                  className="inline-flex min-h-9 flex-1 items-center justify-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) no-underline transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft) sm:flex-initial"
+                >
+                  <Mail
+                    aria-hidden="true"
+                    className="size-3.5 text-(--brand-muted)"
+                  />
+                  <span>{copy.sendEmail}</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="inline-flex min-h-9 flex-1 items-center justify-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface) px-3 text-xs font-bold text-(--brand-ink) transition hover:border-(--brand-orange) hover:bg-(--brand-orange-soft) sm:flex-initial"
+                >
+                  {copied ? (
+                    <>
+                      <Check
+                        aria-hidden="true"
+                        className="size-3.5 text-emerald-500"
+                      />
+                      <span className="text-emerald-600 dark:text-emerald-400">
+                        {copy.copiedEmail}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy
+                        aria-hidden="true"
+                        className="size-3.5 text-(--brand-muted)"
+                      />
+                      <span>{copy.copyEmail}</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      ) : null}
+
       <motion.div
         variants={staggerItem}
         className="surface-card w-full min-w-0 max-w-full overflow-hidden p-4 sm:p-6 md:p-7"
