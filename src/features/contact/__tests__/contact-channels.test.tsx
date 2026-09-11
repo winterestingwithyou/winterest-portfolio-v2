@@ -40,36 +40,32 @@ describe('ContactChannels - Dedicated Public Email Card', () => {
     vi.useRealTimers()
   })
 
-  it('renders Dedicated Email Card when publicEmail is configured', () => {
+  it('renders direct email in status pill card when publicEmail is configured', () => {
     const copy = contactCopy.en.direct
     render(<ContactChannels copy={copy} />)
 
-    expect(screen.getByText(copy.emailTitle)).toBeDefined()
-    expect(screen.getByText(copy.emailSubtitle)).toBeDefined()
     expect(screen.getByText('contact@example.com')).toBeDefined()
 
     const mailtoLink = screen.getByRole('link', { name: new RegExp(copy.sendEmail, 'i') })
     expect(mailtoLink.getAttribute('href')).toBe('mailto:contact@example.com')
   })
 
-  it('does NOT render Dedicated Email Card when publicEmail is empty or whitespace (Strict Invariant)', () => {
+  it('does NOT render direct email section when publicEmail is empty or whitespace (Strict Invariant)', () => {
     mockSettings = { publicEmail: '   ' }
     const copy = contactCopy.en.direct
     render(<ContactChannels copy={copy} />)
 
-    expect(screen.queryByText(copy.emailTitle)).toBeNull()
-    expect(screen.queryByText(copy.emailSubtitle)).toBeNull()
-    expect(screen.queryByText('Direct Email')).toBeNull()
+    expect(screen.queryByText('contact@example.com')).toBeNull()
     expect(screen.queryByRole('link', { name: new RegExp(copy.sendEmail, 'i') })).toBeNull()
   })
 
-  it('does NOT render Dedicated Email Card when publicEmail is null or undefined (Strict Invariant)', () => {
+  it('does NOT render direct email section when publicEmail is null or undefined (Strict Invariant)', () => {
     mockSettings = { publicEmail: '' }
     const copy = contactCopy.en.direct
     render(<ContactChannels copy={copy} />)
 
-    expect(screen.queryByText(copy.emailTitle)).toBeNull()
-    expect(screen.queryByText('Direct Email')).toBeNull()
+    expect(screen.queryByText('contact@example.com')).toBeNull()
+    expect(screen.queryByRole('link', { name: new RegExp(copy.sendEmail, 'i') })).toBeNull()
   })
 
   it('copies email to clipboard and displays copied feedback for 2000ms', async () => {
@@ -106,8 +102,6 @@ describe('ContactChannels - Dedicated Public Email Card', () => {
     const idCopy = contactCopy.id.direct
     render(<ContactChannels copy={idCopy} />)
 
-    expect(screen.getByText(idCopy.emailTitle)).toBeDefined()
-    expect(screen.getByText(idCopy.emailSubtitle)).toBeDefined()
     expect(screen.getByRole('link', { name: new RegExp(idCopy.sendEmail, 'i') })).toBeDefined()
     expect(screen.getByRole('button', { name: new RegExp(idCopy.copyEmail, 'i') })).toBeDefined()
   })
