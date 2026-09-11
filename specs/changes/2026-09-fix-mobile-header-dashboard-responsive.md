@@ -2,7 +2,7 @@
 
 - **Feature ID**: `fix-mobile-header-dashboard-responsive`
 - **Date**: 2026-09-11
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - Global Header (`src/components/header.tsx`) across all public pages
 - **Target Modules**:
@@ -141,13 +141,13 @@ Tambahkan token berikut di `portfolioCopy`:
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] Ikon `DashboardLink` di topbar header tersembunyi pada viewport mobile dan tablet (`hidden md:inline-grid`).
-- [ ] Pada viewport desktop (`>= 768px`), ikon `DashboardLink` tetap tampil normal di samping switcher bahasa dan tema ketika sesi aktif.
-- [ ] Di dalam mobile drawer (`mobileNavOpen`), kartu `Dashboard CMS` tampil di posisi paling atas dengan gaya visual Cloudflare orange saat sesi aktif.
-- [ ] Ketika belum login (`hasSession === false`), TIDAK ADA tombol login atau link ke `/login` baik di topbar maupun di dalam drawer.
-- [ ] Copywriting bilingual di `src/features/portfolio/copy.ts` terdaftar dengan benar untuk `en` dan `id`.
-- [ ] Verifikasi responsivitas pada viewport smartphone (360px, 390px, 412px) memastikan header tidak mengalami horizontal scroll / overflow.
-- [ ] Typecheck lulus tanpa error (`bun run check`).
-- [ ] Linter & formatter bersih (`bun run lint`, `bun run format`).
-- [ ] Production build berhasil (`bun run build`).
-- [ ] Knowledge graph diperbarui (`graphify update .`).
+- [x] Ikon `DashboardLink` di topbar header tersembunyi pada viewport mobile dan tablet (`hidden md:inline-grid`).
+- [x] Pada viewport desktop (`>= 768px`), ikon `DashboardLink` tetap tampil normal di samping switcher bahasa dan tema ketika sesi aktif.
+- [x] Di dalam mobile drawer (`mobileNavOpen`), kartu `Dashboard CMS` tampil di posisi paling atas dengan gaya visual Cloudflare orange saat sesi aktif.
+- [x] Ketika belum login (`hasSession === false`), TIDAK ADA tombol login atau link ke `/login` baik di topbar maupun di dalam drawer.
+- [x] Copywriting bilingual di `src/features/portfolio/copy.ts` terdaftar dengan benar untuk `en` dan `id`.
+- [x] Verifikasi responsivitas pada viewport smartphone (360px, 390px, 412px) memastikan header tidak mengalami horizontal scroll / overflow.
+- [x] Typecheck lulus tanpa error (`bun run check`).
+- [x] Linter & formatter bersih (`bun run lint`, `bun run format`).
+- [x] Production build berhasil (`bun run build`).
+- [x] Knowledge graph diperbarui (`graphify update .`).
