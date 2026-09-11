@@ -2,6 +2,7 @@ import type { AnyRouteMatch } from '@tanstack/router-core'
 
 import type { SiteSettingsInput } from '#/features/settings/types'
 import { defaultSiteSettings } from '#/features/settings/types'
+import { getAppBaseUrl } from '#/lib/api-client'
 import { getLocale } from '#/paraglide/runtime'
 
 export const DEFAULT_OG_IMAGE_PATH = '/og-default.png'
@@ -87,8 +88,8 @@ export interface CreateRouteMetaResult {
 }
 
 /**
- * Normalizes a relative or absolute path into a fully-qualified absolute URL (https://...).
- * Uses VITE_PUBLIC_APP_URL / PUBLIC_APP_URL when present, falling back to 'https://winterest.tech'.
+ * Normalizes a relative or absolute path into a fully-qualified absolute URL.
+ * Resolves base URL dynamically via getAppBaseUrl() from api-client without any hardcoded domain fallback.
  */
 export function toAbsoluteUrl(pathOrUrl?: string | null): string {
   if (!pathOrUrl || !pathOrUrl.trim()) return ''
@@ -96,17 +97,9 @@ export function toAbsoluteUrl(pathOrUrl?: string | null): string {
   if (/^https?:\/\//i.test(trimmed)) return trimmed
   if (trimmed.startsWith('//')) return `https:${trimmed}`
 
-  const baseUrl = (
-    (typeof process !== 'undefined' &&
-      (process.env.VITE_PUBLIC_APP_URL || process.env.PUBLIC_APP_URL)) ||
-    (typeof import.meta !== 'undefined' &&
-      ((import.meta as any).env?.VITE_PUBLIC_APP_URL ||
-        (import.meta as any).env?.PUBLIC_APP_URL)) ||
-    'https://winterest.tech'
-  ).replace(/\/+$/, '')
-
+  const baseUrl = getAppBaseUrl()
   const cleanPath = trimmed.startsWith('/') ? trimmed : `/${trimmed}`
-  return `${baseUrl}${cleanPath}`
+  return baseUrl ? `${baseUrl}${cleanPath}` : cleanPath
 }
 
 /**

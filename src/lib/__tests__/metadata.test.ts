@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 
 import { defaultSiteSettings } from '#/features/settings/types'
 import {
@@ -130,14 +130,32 @@ describe('toAbsoluteUrl', () => {
     )
   })
 
-  it('resolves relative paths against default base URL', () => {
-    expect(toAbsoluteUrl('/og-default.png')).toBe(
-      'https://winterest.tech/og-default.png',
-    )
-    expect(toAbsoluteUrl('projects/slug')).toBe(
-      'https://winterest.tech/projects/slug',
-    )
-    expect(toAbsoluteUrl('/')).toBe('https://winterest.tech/')
+  it('resolves relative paths against configured base URL without hardcoded fallback', () => {
+    const orig = process.env.PUBLIC_APP_URL
+    try {
+      process.env.PUBLIC_APP_URL = 'https://winterest.tech'
+      expect(toAbsoluteUrl('/og-default.png')).toBe(
+        'https://winterest.tech/og-default.png',
+      )
+      expect(toAbsoluteUrl('projects/slug')).toBe(
+        'https://winterest.tech/projects/slug',
+      )
+      expect(toAbsoluteUrl('/')).toBe('https://winterest.tech/')
+    } finally {
+      process.env.PUBLIC_APP_URL = orig
+    }
+  })
+
+  it('resolves relative paths with custom PUBLIC_APP_URL', () => {
+    const origPublic = process.env.PUBLIC_APP_URL
+    try {
+      process.env.PUBLIC_APP_URL = 'https://staging.winterest.tech'
+      expect(toAbsoluteUrl('/og-default.png')).toBe(
+        'https://staging.winterest.tech/og-default.png',
+      )
+    } finally {
+      process.env.PUBLIC_APP_URL = origPublic
+    }
   })
 })
 
@@ -177,6 +195,16 @@ describe('inferImageMimeType', () => {
 })
 
 describe('createRouteMeta', () => {
+  const originalEnv = process.env.PUBLIC_APP_URL
+
+  beforeEach(() => {
+    process.env.PUBLIC_APP_URL = 'https://winterest.tech'
+  })
+
+  afterEach(() => {
+    process.env.PUBLIC_APP_URL = originalEnv
+  })
+
   it('renders homepage title directly without template formatting when isHome is true', () => {
     const mockMatches = [
       {
