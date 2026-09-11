@@ -11,6 +11,7 @@ export const Route = createFileRoute('/about')({
       matches,
       title: copy.meta.title,
       description: copy.meta.description,
+      canonicalUrl: '/about',
     })
   },
   component: AboutPage,

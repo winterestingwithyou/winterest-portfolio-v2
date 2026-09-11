@@ -18,6 +18,13 @@ import { useQuery } from '@tanstack/react-query'
 import type { QueryClient } from '@tanstack/react-query'
 import { AlertCircle, AlertTriangle } from 'lucide-react'
 
+import {
+  DEFAULT_OG_IMAGE_HEIGHT,
+  DEFAULT_OG_IMAGE_PATH,
+  DEFAULT_OG_IMAGE_WIDTH,
+  inferImageMimeType,
+  toAbsoluteUrl,
+} from '#/lib/metadata'
 import { SetupRequiredScreen } from '#/components/system/setup-required'
 import { settingsQueryOptions } from '#/features/settings/query-options'
 import { getPublicSiteSettings } from '#/features/settings/server-functions'
@@ -70,7 +77,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       ? settings?.ogDescriptionId || settings?.ogDescriptionEn || description
       : settings?.ogDescriptionEn || description
 
-    const ogImage = settings?.ogImageUrl || ''
+    const rawImage = settings?.ogImageUrl || DEFAULT_OG_IMAGE_PATH
+    const absoluteOgImage = toAbsoluteUrl(rawImage)
+    const secureOgImage = absoluteOgImage.replace(/^http:\/\//i, 'https://')
+    const ogImageType = inferImageMimeType(absoluteOgImage)
     const favicon = settings?.faviconUrl || '/favicon.ico'
 
     return {
@@ -109,17 +119,37 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
           property: 'og:type',
           content: 'website',
         },
-        ...(ogImage
+        ...(absoluteOgImage
           ? [
               {
                 property: 'og:image',
-                content: ogImage,
+                content: absoluteOgImage,
+              },
+              {
+                property: 'og:image:secure_url',
+                content: secureOgImage,
+              },
+              {
+                property: 'og:image:width',
+                content: String(DEFAULT_OG_IMAGE_WIDTH),
+              },
+              {
+                property: 'og:image:height',
+                content: String(DEFAULT_OG_IMAGE_HEIGHT),
+              },
+              {
+                property: 'og:image:type',
+                content: ogImageType,
+              },
+              {
+                property: 'og:image:alt',
+                content: rawTitle,
               },
             ]
           : []),
         {
           name: 'twitter:card',
-          content: ogImage ? 'summary_large_image' : 'summary',
+          content: absoluteOgImage ? 'summary_large_image' : 'summary',
         },
         {
           name: 'twitter:title',
@@ -133,11 +163,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
               },
             ]
           : []),
-        ...(ogImage
+        ...(absoluteOgImage
           ? [
               {
                 name: 'twitter:image',
-                content: ogImage,
+                content: absoluteOgImage,
               },
             ]
           : []),
