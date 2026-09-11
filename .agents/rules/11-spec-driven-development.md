@@ -37,7 +37,9 @@ specs/
     home.spec.md             # Landing page sections, hero, featured projects, tech marquee
     about.spec.md            # Journey, content-collections (jobs, education), timeline
   changes/                   # RFCs & proposals for upcoming features before implementation
-    YYYY-MM-[proposal-name].md
+    YYYY-MM-[proposal-name].md # Active proposals (Draft, In Progress)
+    implemented/             # Completed proposals merged into living specs
+      YYYY-MM-[proposal-name].md
 ```
 
 ---
@@ -77,8 +79,9 @@ When developing new capabilities or refactoring existing ones:
 3. **Lock Contracts**: Finalize D1 schema, Zod validation, and API signatures before writing UI code.
 4. **Implementation**: Implement code across `src/db/schema.ts`, `validation.ts`, `queries.ts`, `query-options.ts`, and components.
 5. **Verification**: Verify against the spec checklist and run all quality gates (`bun run check`, `bun run test`, `bun run build`).
-6. **Merge & Sync**:
-   - Consolidate the change spec into the living spec (`specs/features/<feature>.spec.md`).
+6. **Merge, Archive & Sync**:
+   - Consolidate the change spec into the living spec (`specs/features/<feature>.spec.md` or `specs/system/<system>.spec.md`).
+   - Mark RFC status as `Implemented` and move the file into `specs/changes/implemented/` to keep `specs/changes/` root clean with only active/in-progress proposals.
    - Synchronize the knowledge graph with `graphify update .`.
 
 ---

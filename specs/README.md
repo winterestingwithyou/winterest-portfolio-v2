@@ -30,7 +30,9 @@ specs/
 │   ├── portfolio.spec.md      # Global layout shell, resume, dynamic sitemap XML
 │   └── system.spec.md         # System setup status query, setup-required UI screens
 └── changes/                   # Proposed specifications & RFCs before implementation
-    └── 2026-09-search-filter-pagination.md # Search, Filter & Pagination across public & dashboard (Implemented)
+    ├── implemented/           # Completed RFCs merged into living specs
+    │   └── 2026-09-search-filter-pagination.md
+    └── YYYY-MM-[proposal-name].md # Active proposals (Draft, In Progress)
 ```
 
 ---
@@ -64,4 +66,4 @@ specs/
 
 1. **Before modifying or creating features**: Consult the relevant spec in `specs/system/` or `specs/features/`.
 2. **For new non-trivial features**: Create an RFC in `specs/changes/YYYY-MM-[proposal-name].md` defining the 8 mandatory sections. Lock the contracts before writing UI code.
-3. **After implementation**: Update the living spec (`specs/features/` or `specs/system/`), execute verification checks (`bun run check`, `bun run test`, `bun run build`), and synchronize the knowledge graph (`graphify update .`).
+3. **After implementation**: Update the living spec (`specs/features/` or `specs/system/`), move the completed RFC into `specs/changes/implemented/`, execute verification checks (`bun run check`, `bun run test`, `bun run build`), and synchronize the knowledge graph (`graphify update .`).
