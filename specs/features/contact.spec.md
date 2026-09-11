@@ -8,16 +8,17 @@
 | **Public Routes**    | [`/contact`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/contact.tsx)             |
 | **Server Endpoints** | [`POST /api/contact`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/api/contact.ts) |
 | **RBAC Access**      | Public                                                                                               |
-| **Last Updated**     | 2026-09-06                                                                                           |
+| **Last Updated**     | 2026-09-11                                                                                           |
 
 ---
 
 ## 1. Overview & Capabilities
 
-The Contact feature provides a direct, spam-resilient communication channel between visitors and Winterest. It combines an accessible interactive form with Cloudflare Turnstile bot verification and transactional email dispatch powered by Resend.
+The Contact feature provides a direct, spam-resilient communication channel between visitors and Winterest. It combines an accessible interactive form with Cloudflare Turnstile bot verification, transactional email dispatch powered by Resend, and prominent direct contact channels including a configurable Dedicated Public Email Card.
 
 ### Capabilities
 
+- **Dedicated Public Email Card**: Configurable direct email channel loaded from Site Settings with one-click `mailto:` launcher and animated copy-to-clipboard feedback.
 - **Turnstile Bot Verification**: Enforces anti-bot verification via invisible/managed challenges before allowing message dispatch.
 - **Transactional Email Dispatch**: Formats and delivers incoming inquiries via Resend API to Winterest's primary inbox.
 - **HTML Sanitization**: Strict character escaping (`escapeHtml()`) across name, email, subject, and message fields to prevent HTML injection in email clients.
@@ -62,7 +63,12 @@ The Contact feature provides a direct, spam-resilient communication channel betw
 
 ```txt
 src/routes/contact.tsx -> ContactPage
-├── DirectChannelsPanel (Direct email, social links, location indicator)
+├── ContactChannels
+│   ├── Dedicated Email Card (Optional: rendered only when publicEmail is configured)
+│   │   ├── Action: Send Email (mailto: link)
+│   │   └── Action: Copy Email (clipboard copy with 2s visual confirmation)
+│   ├── Social Channels Card (Directory of public social profiles)
+│   └── Status & Location Pill Card
 └── ContactForm (TanStack Form)
     ├── Field: Name (Input)
     ├── Field: Email (Input)
@@ -79,14 +85,19 @@ src/routes/contact.tsx -> ContactPage
 1. **Mandatory Bot Check**: Requests lacking a valid Turnstile token are rejected before initializing the Resend client, saving API quota and preventing mail bombing.
 2. **XSS Protection in Email**: All user inputs are sanitized through `escapeHtml()` prior to embedding in the outbound HTML template.
 3. **Turnstile Single-Use Token**: Token resets immediately on submission failure or completion via `turnstileRef.current?.reset()`.
+4. **Empty Email Invariant**: If `publicEmail` is null, undefined, empty string, or whitespace-only, the Dedicated Email Card is completely omitted without rendering placeholders, fallback dummy emails, or empty containers.
 
 ---
 
 ## 5. Acceptance Criteria & DoD Checklist
 
-- [ ] Form validates required name, valid email, and minimum message length.
-- [ ] Turnstile challenge renders and issues token on human verification.
-- [ ] Submitting valid message dispatches email via Resend and shows success state.
-- [ ] Submitting invalid token or bypassing Turnstile returns 403 Forbidden.
-- [ ] Contact validation schemas pass Vitest suite ([`src/features/contact/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/contact/__tests__/validation.test.ts)).
-- [ ] TypeScript check passes: `bun run check`.
+- [x] Form validates required name, valid email, and minimum message length.
+- [x] Turnstile challenge renders and issues token on human verification.
+- [x] Submitting valid message dispatches email via Resend and shows success state.
+- [x] Submitting invalid token or bypassing Turnstile returns 403 Forbidden.
+- [x] Dedicated Email Card displays in `ContactChannels` when `publicEmail` is configured.
+- [x] Empty email invariant verified (card is omitted if `publicEmail` is unset or empty).
+- [x] "Send Email" launches `mailto:` and "Copy Email" copies to clipboard with 2s confirmation feedback.
+- [x] ContactChannels unit tests pass Vitest suite ([`src/features/contact/__tests__/contact-channels.test.tsx`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/contact/__tests__/contact-channels.test.tsx)).
+- [x] Contact validation schemas pass Vitest suite ([`src/features/contact/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/contact/__tests__/validation.test.ts)).
+- [x] TypeScript check passes: `bun run typecheck`.

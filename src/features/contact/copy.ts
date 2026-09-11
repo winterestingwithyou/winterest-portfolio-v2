@@ -23,6 +23,8 @@ export const contactCopy = {
     direct: {
       title: 'Direct Channels',
       subtitle: 'Social media & public profiles.',
+      emailTitle: 'Email Address',
+      emailSubtitle: 'Official direct correspondence.',
       copyEmail: 'Copy email',
       copiedEmail: 'Copied!',
       sendEmail: 'Send email',
@@ -71,6 +73,8 @@ export const contactCopy = {
     direct: {
       title: 'Kontak Langsung',
       subtitle: 'Media sosial & profil publik.',
+      emailTitle: 'Alamat Email',
+      emailSubtitle: 'Komunikasi resmi & korespondensi langsung.',
       copyEmail: 'Salin email',
       copiedEmail: 'Tersalin!',
       sendEmail: 'Kirim email',
