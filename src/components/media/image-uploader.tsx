@@ -14,6 +14,7 @@ import { motion } from 'motion/react'
 import { Button } from '#/components/ui/button'
 import { Input } from '#/components/ui/input'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getMediaCopy } from '#/features/media/copy'
 import { useUploadMedia } from '#/features/media/hooks'
 import { getApiErrorMessage, getBaseUrl } from '#/lib/api-client'
 import { MediaPickerDialog } from './media-picker-dialog'
@@ -33,7 +34,8 @@ export function ImageUploader({
   description,
   aspectRatio = 'video',
 }: ImageUploaderProps) {
-  const copy = getDashboardCopy()
+  const commonCopy = getDashboardCopy().common
+  const mediaCopy = getMediaCopy()
   const [pickerOpen, setPickerOpen] = React.useState(false)
   const [isManualUrl, setIsManualUrl] = React.useState(false)
   const [manualUrlInput, setManualUrlInput] = React.useState('')
@@ -100,7 +102,7 @@ export function ImageUploader({
         : `${baseUrl}${uploaded.url.startsWith('/') ? '' : '/'}${uploaded.url}`
       onChange(fullUrl)
     } catch (err) {
-      const message = getApiErrorMessage(err, copy.media.uploadError)
+      const message = getApiErrorMessage(err, mediaCopy.uploadError)
       setUploadError(message)
       console.error('File upload failed:', err)
     }
@@ -141,7 +143,7 @@ export function ImageUploader({
             className="inline-flex shrink-0 items-center gap-1.5 text-xs text-(--brand-muted) hover:text-(--brand-orange-deep) transition focus:outline-hidden"
           >
             <LinkIcon className="size-3.5" />
-            {isManualUrl ? copy.media.directUpload : copy.media.orPasteUrl}
+            {isManualUrl ? mediaCopy.directUpload : mediaCopy.orPasteUrl}
           </button>
         </div>
       ) : null}
@@ -188,7 +190,7 @@ export function ImageUploader({
                 onClick={() => setPickerOpen(true)}
               >
                 <FolderOpen className="size-4" />
-                {copy.media.changeImage}
+                {mediaCopy.changeImage}
               </Button>
               <Button
                 type="button"
@@ -198,7 +200,7 @@ export function ImageUploader({
                 onClick={handleRemove}
               >
                 <Trash2 className="size-4" />
-                {copy.media.removeImage}
+                {mediaCopy.removeImage}
               </Button>
               <a
                 href={displayUrl}
@@ -238,7 +240,7 @@ export function ImageUploader({
                 className="inline-flex min-h-[36px] sm:min-h-8 items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold text-(--brand-orange-deep) hover:bg-(--brand-orange-soft) whitespace-nowrap transition"
               >
                 <FolderOpen className="size-3.5" />
-                {copy.media.selectFromLibrary}
+                {mediaCopy.selectFromLibrary}
               </button>
               <span className="hidden sm:inline text-(--brand-line)">•</span>
               <button
@@ -247,7 +249,7 @@ export function ImageUploader({
                 className="inline-flex min-h-[36px] sm:min-h-8 items-center gap-1.5 rounded-lg px-2.5 py-1 text-xs font-semibold text-rose-500 hover:bg-rose-500/10 whitespace-nowrap transition"
               >
                 <Trash2 className="size-3.5" />
-                {copy.common.delete}
+                {commonCopy.delete}
               </button>
             </div>
           </div>
@@ -289,14 +291,14 @@ export function ImageUploader({
 
           <h4 className="text-sm font-semibold text-(--brand-ink)">
             {uploadMutation.isPending
-              ? copy.media.uploading
+              ? mediaCopy.uploading
               : isDragging
-                ? copy.media.dropToUpload
-                : copy.media.uploadTitle}
+                ? mediaCopy.dropToUpload
+                : mediaCopy.uploadTitle}
           </h4>
 
           <p className="mt-1 max-w-sm text-xs leading-relaxed text-(--brand-muted)">
-            {description || copy.media.uploadDesc}
+            {description || mediaCopy.uploadDesc}
           </p>
 
           <div className="mt-4 flex flex-col sm:flex-row w-full max-w-full items-center justify-center gap-2">
@@ -309,7 +311,7 @@ export function ImageUploader({
               className="w-full sm:w-auto min-h-10 max-w-full justify-center gap-2 border-(--brand-line) shadow-xs shrink sm:shrink-0 text-xs sm:text-sm"
             >
               <UploadCloud className="size-4 shrink-0" />
-              <span className="truncate">{copy.media.browseFiles}</span>
+              <span className="truncate">{mediaCopy.browseFiles}</span>
             </Button>
 
             <Button
@@ -320,7 +322,7 @@ export function ImageUploader({
               className="w-full sm:w-auto min-h-10 max-w-full justify-center gap-2 border-(--brand-line) text-(--brand-orange-deep) shadow-xs shrink sm:shrink-0 text-xs sm:text-sm"
             >
               <FolderOpen className="size-4 shrink-0" />
-              <span className="truncate">{copy.media.selectFromLibrary}</span>
+              <span className="truncate">{mediaCopy.selectFromLibrary}</span>
             </Button>
           </div>
         </div>
@@ -338,9 +340,9 @@ export function ImageUploader({
               (uploadMutation.error
                 ? getApiErrorMessage(
                     uploadMutation.error,
-                    copy.media.uploadError,
+                    mediaCopy.uploadError,
                   )
-                : copy.media.uploadError)}
+                : mediaCopy.uploadError)}
           </span>
         </div>
       ) : null}

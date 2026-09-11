@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { canManageSettings } from '#/features/auth/roles'
 import { getDashboardSession } from '#/features/auth/server-functions'
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getSettingsCopy } from '#/features/settings/copy'
 import { SettingsPage } from '#/features/settings/pages/settings-page'
 import { settingsQueryOptions } from '#/features/settings/query-options'
 import { sessionQueryOptions } from '#/features/users/query-options'
@@ -24,11 +24,11 @@ export const Route = createFileRoute('/dashboard/settings')({
     ])
   },
   head: ({ matches }) => {
-    const copy = getDashboardCopy()
+    const copy = getSettingsCopy()
     return createRouteMeta({
       matches,
-      title: `${copy.settings.title} · Dashboard`,
-      description: copy.settings.description,
+      title: `${copy.title} · Dashboard`,
+      description: copy.description,
     })
   },
   component: SettingsPage,

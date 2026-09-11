@@ -2,6 +2,7 @@ import { Link } from '@tanstack/react-router'
 
 import type { getDashboardCopy } from '#/features/dashboard/copy'
 import type { getDashboardSummary } from '#/features/dashboard/loaders'
+import { getProjectsCopy } from '#/features/projects/copy'
 
 import { cn } from '#/lib/utils'
 
@@ -16,6 +17,8 @@ export function RecentActivitySection({
   copy,
   recentProjects,
 }: RecentActivitySectionProps) {
+  const projectsCopy = getProjectsCopy().dashboard
+
   return (
     <section className="surface-card mt-6 overflow-hidden">
       <div className="border-b border-(--brand-line) p-5">
@@ -29,7 +32,7 @@ export function RecentActivitySection({
       <div className="grid gap-0 divide-y divide-(--brand-line)">
         {recentProjects.length === 0 ? (
           <div className="p-5 text-sm leading-7 text-(--brand-muted)">
-            {copy.projects.emptyDescription}
+            {projectsCopy.emptyDescription}
           </div>
         ) : null}
         {recentProjects.map((project) => (
@@ -56,12 +59,12 @@ export function RecentActivitySection({
               )}
             >
               {project.status === 'in_progress'
-                ? copy.projects.table.statusInProgress
+                ? projectsCopy.table.statusInProgress
                 : project.status === 'published'
-                  ? copy.projects.table.statusPublished
+                  ? projectsCopy.table.statusPublished
                   : project.status === 'draft'
-                    ? copy.projects.table.statusDraft
-                    : copy.projects.table.statusArchived}
+                    ? projectsCopy.table.statusDraft
+                    : projectsCopy.table.statusArchived}
             </span>
           </Link>
         ))}

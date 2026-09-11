@@ -35,8 +35,8 @@ import {
   FieldLabel,
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
-import type { UserRole } from '#/db/schema'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getUsersCopy } from '#/features/users/copy'
 import {
   useCreateUser,
   useDeleteUser,
@@ -44,6 +44,7 @@ import {
   useUpdateUser,
 } from '#/features/users/hooks'
 import type { UserRecord } from '#/features/users/queries'
+import type { UserRole } from '#/db/schema'
 
 type UserEditorFormProps = {
   mode: 'create' | 'edit'
@@ -57,8 +58,8 @@ export function UserEditorForm({
   currentUserId,
 }: UserEditorFormProps) {
   const navigate = useNavigate()
-  const copy = getDashboardCopy()
-  const userCopy = copy.users
+  const commonCopy = getDashboardCopy().common
+  const userCopy = getUsersCopy()
 
   const [showPassword, setShowPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
@@ -83,6 +84,12 @@ export function UserEditorForm({
       ?.message ?? null
   const deleteError = deleteMutation.error?.message ?? null
   const resetError = resetPasswordMutation.error?.message ?? null
+
+  const roleLabels: Record<UserRole, string> = {
+    owner: userCopy.roles.owner,
+    admin: userCopy.roles.admin,
+    editor: userCopy.roles.editor,
+  }
 
   const roleDescriptions: Record<UserRole, string> = {
     owner: userCopy.roles.ownerDesc,
@@ -211,7 +218,7 @@ export function UserEditorForm({
         >
           <Link to="/dashboard/users">
             <ArrowLeft className="size-4" />
-            {copy.common.back}
+            {commonCopy.back}
           </Link>
         </Button>
 
@@ -228,7 +235,7 @@ export function UserEditorForm({
             >
               <Trash2 className="size-4" />
               {isDeleting
-                ? copy.common.delete + '...'
+                ? commonCopy.delete + '...'
                 : userCopy.form.deleteUser}
             </Button>
 
@@ -247,7 +254,7 @@ export function UserEditorForm({
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel disabled={isDeleting}>
-                    {copy.common.cancel}
+                    {commonCopy.cancel}
                   </AlertDialogCancel>
                   <AlertDialogAction
                     variant="destructive"
@@ -257,7 +264,7 @@ export function UserEditorForm({
                       void handleDelete()
                     }}
                   >
-                    {isDeleting ? copy.common.saving : userCopy.form.deleteUser}
+                    {isDeleting ? commonCopy.saving : userCopy.form.deleteUser}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -471,7 +478,7 @@ export function UserEditorForm({
                             >
                               <div className="flex w-full items-center justify-between">
                                 <span className="text-xs font-extrabold uppercase tracking-wide text-(--brand-ink)">
-                                  {userCopy.roles[r]}
+                                  {roleLabels[r]}
                                 </span>
                                 {isSelected && (
                                   <span className="size-2 rounded-full bg-(--brand-orange)" />
@@ -501,7 +508,7 @@ export function UserEditorForm({
           >
             <Save className="size-4" />
             {isSaving
-              ? copy.common.saving
+              ? commonCopy.saving
               : mode === 'create'
                 ? userCopy.form.createUser
                 : userCopy.form.saveChanges}

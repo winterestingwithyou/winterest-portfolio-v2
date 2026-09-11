@@ -146,4 +146,3 @@ Menyelaraskan head deklarasi di `__root.tsx` agar menyertakan `og:image:width`, 
 - [x] Linter & formatter bersih (`bun run lint`, `bun run format`).
 - [x] Production build berhasil (`bun run build`).
 - [x] Knowledge graph diperbarui (`graphify update .`).
-

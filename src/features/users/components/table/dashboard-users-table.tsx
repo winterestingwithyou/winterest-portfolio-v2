@@ -13,12 +13,14 @@ import {
   TableHeader,
   TableRow,
 } from '#/components/ui/table'
-import type { getDashboardCopy } from '#/features/dashboard/copy'
+import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getUsersCopy } from '#/features/users/copy'
 import { getUserColumns } from '#/features/users/components/table/dashboard-users-table-columns'
 import type { UserWithSessionCount } from '#/features/users/components/table/dashboard-users-table-features'
 
 type DashboardUsersTableProps = {
-  copy: ReturnType<typeof getDashboardCopy>
+  copy?: ReturnType<typeof getUsersCopy>
+  commonCopy?: ReturnType<typeof getDashboardCopy>['common']
   users: UserWithSessionCount[]
   currentUserId?: string
   isDeletingId: string | null
@@ -26,21 +28,26 @@ type DashboardUsersTableProps = {
 }
 
 export function DashboardUsersTable({
-  copy,
+  copy: customCopy,
+  commonCopy: customCommonCopy,
   users,
   currentUserId,
   isDeletingId,
   onDeleteUser,
 }: DashboardUsersTableProps) {
+  const userCopy = customCopy ?? getUsersCopy()
+  const commonCopy = customCommonCopy ?? getDashboardCopy().common
+
   const columns = useMemo(
     () =>
       getUserColumns({
-        copy,
+        copy: userCopy,
+        commonCopy,
         currentUserId,
         isDeletingId,
         onDeleteUser,
       }),
-    [copy, currentUserId, isDeletingId, onDeleteUser],
+    [userCopy, commonCopy, currentUserId, isDeletingId, onDeleteUser],
   )
 
   const table = useReactTable({

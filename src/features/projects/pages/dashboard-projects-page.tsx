@@ -16,6 +16,7 @@ import {
 import { Button } from '#/components/ui/button'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getProjectsCopy } from '#/features/projects/copy'
 import { DashboardProjectsTable } from '#/features/projects/components/table/dashboard-projects-table'
 import type { ProjectRow } from '#/features/projects/components/table/dashboard-projects-table-features'
 import { useDeleteProject } from '#/features/projects/hooks'
@@ -23,7 +24,8 @@ import { projectQueryOptions } from '#/features/projects/query-options'
 import { getApiErrorMessage } from '#/lib/api-client'
 
 export function DashboardProjectsPage() {
-  const copy = getDashboardCopy()
+  const common = getDashboardCopy().common
+  const copy = getProjectsCopy().dashboard
   const searchParams = useSearch({ from: '/dashboard/projects/' })
   const navigate = useNavigate({ from: '/dashboard/projects/' })
 
@@ -93,7 +95,7 @@ export function DashboardProjectsPage() {
       await deleteMutation.mutateAsync(projectToDelete.id)
       setProjectToDelete(null)
     } catch (caught) {
-      setError(getApiErrorMessage(caught, copy.projects.deleteError))
+      setError(getApiErrorMessage(caught, copy.deleteError))
     } finally {
       setIsDeleting(false)
     }
@@ -101,8 +103,8 @@ export function DashboardProjectsPage() {
 
   return (
     <DashboardShell
-      title={copy.projects.title}
-      description={copy.projects.description}
+      title={copy.title}
+      description={copy.description}
       actions={
         <>
           <button
@@ -115,14 +117,14 @@ export function DashboardProjectsPage() {
               aria-hidden="true"
               className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
             />
-            {copy.common.refresh}
+            {common.refresh}
           </button>
           <Link
             to="/dashboard/projects/new"
             className="inline-flex min-h-10 shrink-0 items-center justify-center gap-2 rounded-full bg-(--brand-orange) px-4 text-sm font-bold whitespace-nowrap text-white no-underline transition hover:-translate-y-0.5"
           >
             <Plus aria-hidden="true" className="size-4" />
-            {copy.projects.new}
+            {copy.new}
           </Link>
         </>
       }
@@ -137,10 +139,10 @@ export function DashboardProjectsPage() {
         {projects.length === 0 ? (
           <div className="flex flex-col items-center justify-center p-8 sm:p-12 text-center">
             <h2 className="text-xl font-bold text-(--brand-ink)">
-              {copy.projects.emptyTitle}
+              {copy.emptyTitle}
             </h2>
             <p className="mt-2 max-w-md text-sm leading-relaxed text-(--brand-muted)">
-              {copy.projects.emptyDescription}
+              {copy.emptyDescription}
             </p>
             <Button
               asChild
@@ -148,13 +150,14 @@ export function DashboardProjectsPage() {
             >
               <Link to="/dashboard/projects/new">
                 <Plus className="mr-2 size-4" />
-                {copy.projects.createFirst}
+                {copy.createFirst}
               </Link>
             </Button>
           </div>
         ) : (
           <DashboardProjectsTable
             copy={copy}
+            commonCopy={common}
             projects={projects}
             onDeleteProject={handleDelete}
             search={search}
@@ -174,16 +177,14 @@ export function DashboardProjectsPage() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{copy.projects.deleteTitle}</AlertDialogTitle>
+            <AlertDialogTitle>{copy.deleteTitle}</AlertDialogTitle>
             <AlertDialogDescription>
-              {projectToDelete
-                ? copy.projects.deleteConfirm(projectToDelete.title)
-                : ''}
+              {projectToDelete ? copy.deleteConfirm(projectToDelete.title) : ''}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isDeleting}>
-              {copy.common.cancel}
+              {common.cancel}
             </AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
@@ -193,7 +194,7 @@ export function DashboardProjectsPage() {
                 void confirmDeleteProject()
               }}
             >
-              {isDeleting ? copy.common.saving : copy.common.delete}
+              {isDeleting ? common.saving : common.delete}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

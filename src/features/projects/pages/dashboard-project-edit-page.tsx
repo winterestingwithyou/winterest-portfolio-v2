@@ -4,6 +4,7 @@ import { RefreshCw } from 'lucide-react'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { ProjectEditorForm } from '#/features/projects/components/form/project-editor-form'
+import { getProjectsCopy } from '#/features/projects/copy'
 import { projectQueryOptions } from '#/features/projects/query-options'
 
 type DashboardProjectEditPageProps = {
@@ -13,7 +14,8 @@ type DashboardProjectEditPageProps = {
 export function DashboardProjectEditPage({
   id,
 }: DashboardProjectEditPageProps) {
-  const copy = getDashboardCopy()
+  const commonCopy = getDashboardCopy().common
+  const projectsCopy = getProjectsCopy().dashboard
   const {
     data: project,
     refetch,
@@ -23,7 +25,7 @@ export function DashboardProjectEditPage({
   return (
     <DashboardShell
       title={project.title}
-      description={copy.projects.editDescription}
+      description={projectsCopy.editDescription}
       actions={
         <button
           type="button"
@@ -35,7 +37,7 @@ export function DashboardProjectEditPage({
             aria-hidden="true"
             className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
           />
-          {copy.common.refresh}
+          {commonCopy.refresh}
         </button>
       }
     >

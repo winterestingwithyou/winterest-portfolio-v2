@@ -4,26 +4,30 @@ import { Edit3, Loader2, Trash2 } from 'lucide-react'
 
 import { Badge } from '#/components/ui/badge'
 import { Button } from '#/components/ui/button'
-import type { getDashboardCopy } from '#/features/dashboard/copy'
+import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getUsersCopy } from '#/features/users/copy'
 import type { UserWithSessionCount } from '#/features/users/components/table/dashboard-users-table-features'
 import { getRoleBadges } from '#/features/users/components/table/dashboard-users-table-features'
 
 const columnHelper = createColumnHelper<UserWithSessionCount>()
 
 type CreateUserColumnsOptions = {
-  copy: ReturnType<typeof getDashboardCopy>
+  copy?: ReturnType<typeof getUsersCopy>
+  commonCopy?: ReturnType<typeof getDashboardCopy>['common']
   currentUserId?: string
   isDeletingId: string | null
   onDeleteUser: (user: UserWithSessionCount) => Promise<void>
 }
 
 export function getUserColumns({
-  copy,
+  copy: customCopy,
+  commonCopy: customCommonCopy,
   currentUserId,
   isDeletingId,
   onDeleteUser,
 }: CreateUserColumnsOptions) {
-  const userCopy = copy.users
+  const userCopy = customCopy ?? getUsersCopy()
+  const commonCopy = customCommonCopy ?? getDashboardCopy().common
   const roleBadges = getRoleBadges(userCopy)
 
   return [
@@ -129,7 +133,7 @@ export function getUserColumns({
             >
               <Link to="/dashboard/users/$id" params={{ id: row.id }}>
                 <Edit3 className="size-3.5" />
-                {copy.common.edit}
+                {commonCopy.edit}
               </Link>
             </Button>
 
@@ -146,7 +150,7 @@ export function getUserColumns({
                 ) : (
                   <Trash2 className="size-3.5" />
                 )}
-                {copy.common.delete}
+                {commonCopy.delete}
               </Button>
             )}
           </div>

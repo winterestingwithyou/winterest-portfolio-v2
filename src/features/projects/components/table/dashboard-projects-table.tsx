@@ -25,11 +25,14 @@ import {
   TableRow,
 } from '#/components/ui/table'
 import type { getDashboardCopy } from '#/features/dashboard/copy'
+import { getDashboardCopy as getDefaultDashboardCopy } from '#/features/dashboard/copy'
+import type { getProjectsCopy } from '#/features/projects/copy'
 import { getProjectColumns } from '#/features/projects/components/table/dashboard-projects-table-columns'
 import type { ProjectRow } from '#/features/projects/components/table/dashboard-projects-table-features'
 
 type DashboardProjectsTableProps = {
-  copy: ReturnType<typeof getDashboardCopy>
+  copy: ReturnType<typeof getProjectsCopy>['dashboard']
+  commonCopy?: ReturnType<typeof getDashboardCopy>['common']
   projects: ProjectRow[]
   onDeleteProject: (project: ProjectRow) => Promise<void>
   search?: string
@@ -43,6 +46,7 @@ type DashboardProjectsTableProps = {
 
 export function DashboardProjectsTable({
   copy,
+  commonCopy,
   projects,
   onDeleteProject,
   search = '',
@@ -53,6 +57,7 @@ export function DashboardProjectsTable({
   onPageChange,
   pageSize = 10,
 }: DashboardProjectsTableProps) {
+  const common = commonCopy ?? getDefaultDashboardCopy().common
   const [internalSearch, setInternalSearch] = useState(search)
   const [internalStatus, setInternalStatus] = useState(statusFilter)
   const [internalPage, setInternalPage] = useState(page)
@@ -100,8 +105,8 @@ export function DashboardProjectsTable({
   }
 
   const columns = useMemo(
-    () => getProjectColumns({ copy, onDeleteProject }),
-    [copy, onDeleteProject],
+    () => getProjectColumns({ copy, commonCopy: common, onDeleteProject }),
+    [copy, common, onDeleteProject],
   )
 
   // Filtered dataset according to search and status
@@ -145,7 +150,7 @@ export function DashboardProjectsTable({
           <SearchInput
             value={activeSearch}
             onChange={handleSearch}
-            placeholder={copy.projects.searchPlaceholder}
+            placeholder={copy.searchPlaceholder}
             className="w-full"
           />
         </div>
@@ -153,13 +158,17 @@ export function DashboardProjectsTable({
         <div className="flex items-center gap-2">
           <Select value={activeStatus} onValueChange={handleStatus}>
             <SelectTrigger className="w-40 border-(--brand-line) bg-(--surface-card)">
-              <SelectValue placeholder="All Status" />
+              <SelectValue placeholder={copy.table.allStatus} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Status</SelectItem>
-              <SelectItem value="published">Published</SelectItem>
-              <SelectItem value="in_progress">In Progress</SelectItem>
-              <SelectItem value="draft">Draft</SelectItem>
+              <SelectItem value="all">{copy.table.allStatus}</SelectItem>
+              <SelectItem value="published">
+                {copy.table.statusPublished}
+              </SelectItem>
+              <SelectItem value="in_progress">
+                {copy.table.statusInProgress}
+              </SelectItem>
+              <SelectItem value="draft">{copy.table.statusDraft}</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -200,13 +209,13 @@ export function DashboardProjectsTable({
                     </div>
                     <p className="text-sm font-semibold text-(--brand-ink)">
                       {activeSearch || activeStatus !== 'all'
-                        ? copy.projects.noMatchingProjects
-                        : copy.projects.emptyTitle}
+                        ? copy.noMatchingProjects
+                        : copy.emptyTitle}
                     </p>
                     <p className="mt-1 max-w-xs text-xs text-(--brand-muted)">
                       {activeSearch || activeStatus !== 'all'
-                        ? copy.common.noResultsFilterDescription
-                        : copy.projects.emptyDescription}
+                        ? common.noResultsFilterDescription
+                        : copy.emptyDescription}
                     </p>
                     {activeSearch || activeStatus !== 'all' ? (
                       <button
@@ -218,7 +227,7 @@ export function DashboardProjectsTable({
                         className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-(--brand-orange-soft) px-3 py-1.5 text-xs font-semibold text-(--brand-orange-deep) transition hover:bg-(--brand-orange) hover:text-white cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-(--brand-orange)"
                       >
                         <RotateCcw className="size-3" />
-                        {copy.common.resetFilters}
+                        {common.resetFilters}
                       </button>
                     ) : null}
                   </div>
@@ -254,7 +263,7 @@ export function DashboardProjectsTable({
           pageSize={pageSize}
           showItemCount
           onPageChange={handlePage}
-          itemLabel={copy.projects.projectsLabel}
+          itemLabel={copy.projectsLabel}
         />
       </div>
     </div>

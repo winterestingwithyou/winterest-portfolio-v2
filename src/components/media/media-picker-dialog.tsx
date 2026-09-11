@@ -21,6 +21,7 @@ import {
 } from '#/components/ui/dialog'
 import { SearchInput } from '#/components/ui/search-input'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getMediaCopy } from '#/features/media/copy'
 import { useUploadMedia } from '#/features/media/hooks'
 import { mediaQueryOptions } from '#/features/media/query-options'
 import type { MediaRecord } from '#/features/media/queries'
@@ -41,7 +42,8 @@ export function MediaPickerDialog({
   currentUrl,
   accept = 'all',
 }: MediaPickerDialogProps) {
-  const copy = getDashboardCopy()
+  const commonCopy = getDashboardCopy().common
+  const mediaCopy = getMediaCopy()
   const [search, setSearch] = React.useState('')
   const [selectedId, setSelectedId] = React.useState<string | null>(null)
   const fileInputRef = React.useRef<HTMLInputElement>(null)
@@ -121,8 +123,8 @@ export function MediaPickerDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-h-[90vh] sm:max-w-3xl flex flex-col p-4 sm:p-6 overflow-hidden">
         <DialogHeader>
-          <DialogTitle>{copy.media.selectFromLibrary}</DialogTitle>
-          <DialogDescription>{copy.media.description}</DialogDescription>
+          <DialogTitle>{mediaCopy.selectFromLibrary}</DialogTitle>
+          <DialogDescription>{mediaCopy.description}</DialogDescription>
         </DialogHeader>
 
         {/* Action Header: Search + Upload Quick Button */}
@@ -130,7 +132,7 @@ export function MediaPickerDialog({
           <SearchInput
             value={search}
             onChange={setSearch}
-            placeholder={copy.media.searchPlaceholder}
+            placeholder={mediaCopy.searchPlaceholder}
             className="flex-1"
           />
 
@@ -161,14 +163,14 @@ export function MediaPickerDialog({
               <Plus className="size-4" />
             )}
             {accept === 'document'
-              ? copy.media.uploadDocButton
-              : copy.media.directUpload}
+              ? mediaCopy.uploadDocButton
+              : mediaCopy.directUpload}
           </Button>
         </div>
 
         {uploadMutation.isError ? (
           <p className="text-xs font-semibold text-rose-500">
-            {uploadMutation.error.message || copy.media.uploadError}
+            {uploadMutation.error.message || mediaCopy.uploadError}
           </p>
         ) : null}
 
@@ -189,11 +191,11 @@ export function MediaPickerDialog({
               </div>
               <p className="text-sm font-semibold text-(--brand-ink)">
                 {accept === 'document'
-                  ? copy.media.noDocumentsFound
-                  : copy.media.noImagesFound}
+                  ? mediaCopy.noDocumentsFound
+                  : mediaCopy.noImagesFound}
               </p>
               <p className="text-xs text-(--brand-muted) mt-1">
-                {copy.media.emptyDescription}
+                {mediaCopy.emptyDescription}
               </p>
               <Button
                 type="button"
@@ -204,8 +206,8 @@ export function MediaPickerDialog({
               >
                 <UploadCloud className="size-4" />
                 {accept === 'document'
-                  ? copy.media.uploadDocButton
-                  : copy.media.directUpload}
+                  ? mediaCopy.uploadDocButton
+                  : mediaCopy.directUpload}
               </Button>
             </div>
           ) : (
@@ -283,7 +285,7 @@ export function MediaPickerDialog({
             onClick={() => onOpenChange(false)}
             className="w-full sm:w-auto"
           >
-            {copy.common.back}
+            {commonCopy.back}
           </Button>
           <Button
             type="button"
@@ -292,8 +294,8 @@ export function MediaPickerDialog({
             className="w-full sm:w-auto gap-2 bg-(--brand-orange) text-white font-bold hover:bg-(--brand-orange-deep)"
           >
             {accept === 'document'
-              ? copy.media.useSelectedFile
-              : copy.media.useSelectedImage}
+              ? mediaCopy.useSelectedFile
+              : mediaCopy.useSelectedImage}
           </Button>
         </DialogFooter>
       </DialogContent>

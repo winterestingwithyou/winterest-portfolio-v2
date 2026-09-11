@@ -25,13 +25,14 @@ import {
   techQueryOptions,
 } from '#/features/technologies/query-options'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getTechnologiesCopy } from '#/features/technologies/copy'
 import { getApiErrorMessage } from '#/lib/api-client'
 
 type ActiveTab = 'technologies' | 'categories'
 
 export function DashboardStackPage() {
-  const copy = getDashboardCopy()
-  const stackCopy = copy.stack
+  const commonCopy = getDashboardCopy().common
+  const stackCopy = getTechnologiesCopy().dashboard
   const search = useSearch({ from: '/dashboard/stack/' })
   const navigate = useNavigate({ from: '/dashboard/stack/' })
   const activeTab: ActiveTab =
@@ -173,7 +174,7 @@ export function DashboardStackPage() {
             <RefreshCw
               className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
             />
-            {copy.common.refresh}
+            {commonCopy.refresh}
           </button>
           {activeTab === 'technologies' ? (
             <Link
@@ -272,7 +273,7 @@ export function DashboardStackPage() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isDeleting}>
-              {copy.common.cancel}
+              {commonCopy.cancel}
             </AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
@@ -282,7 +283,7 @@ export function DashboardStackPage() {
                 void confirmDeleteCategory()
               }}
             >
-              {isDeleting ? copy.common.saving : copy.common.delete}
+              {isDeleting ? commonCopy.saving : commonCopy.delete}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -304,7 +305,7 @@ export function DashboardStackPage() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isDeleting}>
-              {copy.common.cancel}
+              {commonCopy.cancel}
             </AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
@@ -314,7 +315,7 @@ export function DashboardStackPage() {
                 void confirmDeleteTech()
               }}
             >
-              {isDeleting ? copy.common.saving : copy.common.delete}
+              {isDeleting ? commonCopy.saving : commonCopy.delete}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

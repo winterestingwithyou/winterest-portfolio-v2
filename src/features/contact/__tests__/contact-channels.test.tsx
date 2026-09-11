@@ -6,7 +6,9 @@ import { contactCopy, getContactCopy } from '../copy'
 
 import type * as TanstackReactQuery from '@tanstack/react-query'
 
-let mockSettings: { publicEmail: string } = { publicEmail: 'contact@example.com' }
+let mockSettings: { publicEmail: string } = {
+  publicEmail: 'contact@example.com',
+}
 let mockSocialLinks: Array<{
   id: string
   platform: 'github' | 'linkedin'
@@ -46,7 +48,9 @@ describe('ContactChannels - Dedicated Public Email Card', () => {
 
     expect(screen.getByText('contact@example.com')).toBeDefined()
 
-    const mailtoLink = screen.getByRole('link', { name: new RegExp(copy.sendEmail, 'i') })
+    const mailtoLink = screen.getByRole('link', {
+      name: new RegExp(copy.sendEmail, 'i'),
+    })
     expect(mailtoLink.getAttribute('href')).toBe('mailto:contact@example.com')
   })
 
@@ -56,7 +60,9 @@ describe('ContactChannels - Dedicated Public Email Card', () => {
     render(<ContactChannels copy={copy} />)
 
     expect(screen.queryByText('contact@example.com')).toBeNull()
-    expect(screen.queryByRole('link', { name: new RegExp(copy.sendEmail, 'i') })).toBeNull()
+    expect(
+      screen.queryByRole('link', { name: new RegExp(copy.sendEmail, 'i') }),
+    ).toBeNull()
   })
 
   it('does NOT render direct email section when publicEmail is null or undefined (Strict Invariant)', () => {
@@ -65,7 +71,9 @@ describe('ContactChannels - Dedicated Public Email Card', () => {
     render(<ContactChannels copy={copy} />)
 
     expect(screen.queryByText('contact@example.com')).toBeNull()
-    expect(screen.queryByRole('link', { name: new RegExp(copy.sendEmail, 'i') })).toBeNull()
+    expect(
+      screen.queryByRole('link', { name: new RegExp(copy.sendEmail, 'i') }),
+    ).toBeNull()
   })
 
   it('copies email to clipboard and displays copied feedback for 2000ms', async () => {
@@ -80,7 +88,9 @@ describe('ContactChannels - Dedicated Public Email Card', () => {
     const copy = contactCopy.en.direct
     render(<ContactChannels copy={copy} />)
 
-    const copyButton = screen.getByRole('button', { name: new RegExp(copy.copyEmail, 'i') })
+    const copyButton = screen.getByRole('button', {
+      name: new RegExp(copy.copyEmail, 'i'),
+    })
     expect(copyButton).toBeDefined()
 
     await act(async () => {
@@ -102,8 +112,12 @@ describe('ContactChannels - Dedicated Public Email Card', () => {
     const idCopy = contactCopy.id.direct
     render(<ContactChannels copy={idCopy} />)
 
-    expect(screen.getByRole('link', { name: new RegExp(idCopy.sendEmail, 'i') })).toBeDefined()
-    expect(screen.getByRole('button', { name: new RegExp(idCopy.copyEmail, 'i') })).toBeDefined()
+    expect(
+      screen.getByRole('link', { name: new RegExp(idCopy.sendEmail, 'i') }),
+    ).toBeDefined()
+    expect(
+      screen.getByRole('button', { name: new RegExp(idCopy.copyEmail, 'i') }),
+    ).toBeDefined()
   })
 
   it('provides complete bilingual copy tokens in getContactCopy', () => {
@@ -115,8 +129,12 @@ describe('ContactChannels - Dedicated Public Email Card', () => {
     expect(currentCopy.direct.copiedEmail).toBeTruthy()
 
     expect(contactCopy.en.direct.emailTitle).toBe('Email Address')
-    expect(contactCopy.en.direct.emailSubtitle).toBe('Official direct correspondence.')
+    expect(contactCopy.en.direct.emailSubtitle).toBe(
+      'Official direct correspondence.',
+    )
     expect(contactCopy.id.direct.emailTitle).toBe('Alamat Email')
-    expect(contactCopy.id.direct.emailSubtitle).toBe('Komunikasi resmi & korespondensi langsung.')
+    expect(contactCopy.id.direct.emailSubtitle).toBe(
+      'Komunikasi resmi & korespondensi langsung.',
+    )
   })
 })

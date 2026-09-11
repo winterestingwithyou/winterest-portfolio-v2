@@ -18,6 +18,7 @@ import { Button } from '#/components/ui/button'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { DashboardUsersMetrics } from '#/features/users/components/section/dashboard-users-metrics'
 import { DashboardUsersTable } from '#/features/users/components/table/dashboard-users-table'
+import { getUsersCopy } from '#/features/users/copy'
 import { useDeleteUser } from '#/features/users/hooks'
 import type { UserWithSessionCount } from '#/features/users/queries'
 import {
@@ -26,8 +27,8 @@ import {
 } from '#/features/users/query-options'
 
 export function DashboardUsersPage() {
-  const copy = getDashboardCopy()
-  const userCopy = copy.users
+  const commonCopy = getDashboardCopy().common
+  const userCopy = getUsersCopy()
 
   const {
     data: users,
@@ -94,7 +95,7 @@ export function DashboardUsersPage() {
             <RefreshCw
               className={`size-3.5 ${isFetching ? 'animate-spin' : ''}`}
             />
-            {copy.common.refresh}
+            {commonCopy.refresh}
           </Button>
 
           <Button
@@ -130,7 +131,8 @@ export function DashboardUsersPage() {
             </div>
           ) : (
             <DashboardUsersTable
-              copy={copy}
+              copy={userCopy}
+              commonCopy={commonCopy}
               users={users}
               currentUserId={currentUser?.id}
               isDeletingId={isDeletingId ?? null}
@@ -162,7 +164,7 @@ export function DashboardUsersPage() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isDeleting}>
-              {copy.common.cancel}
+              {commonCopy.cancel}
             </AlertDialogCancel>
             <AlertDialogAction
               variant="destructive"
@@ -172,7 +174,7 @@ export function DashboardUsersPage() {
                 void confirmDeleteUser()
               }}
             >
-              {isDeleting ? copy.common.saving : userCopy.form.deleteUser}
+              {isDeleting ? commonCopy.saving : userCopy.form.deleteUser}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -185,7 +187,7 @@ export function DashboardUsersPage() {
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>{copy.common.notice}</AlertDialogTitle>
+            <AlertDialogTitle>{commonCopy.notice}</AlertDialogTitle>
             <AlertDialogDescription>{warningNotice}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

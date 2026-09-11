@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { Check, Copy, ExternalLink, Mail, MapPin, MessageSquare } from 'lucide-react'
+import {
+  Check,
+  Copy,
+  ExternalLink,
+  Mail,
+  MapPin,
+  MessageSquare,
+} from 'lucide-react'
 import { motion } from 'motion/react'
 
 import type { getContactCopy } from '#/features/contact/copy'

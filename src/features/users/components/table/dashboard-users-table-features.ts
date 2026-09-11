@@ -1,13 +1,13 @@
 import { Shield, ShieldAlert, ShieldCheck } from 'lucide-react'
 
 import type { UserRole } from '#/db/schema'
-import type { getDashboardCopy } from '#/features/dashboard/copy'
+import type { getUsersCopy } from '#/features/users/copy'
 import type { UserWithSessionCount } from '#/features/users/queries'
 
 export type { UserWithSessionCount }
 
 export function getRoleBadges(
-  copy: ReturnType<typeof getDashboardCopy>['users'],
+  copy: ReturnType<typeof getUsersCopy>,
 ): Record<UserRole, { label: string; className: string; icon: typeof Shield }> {
   return {
     owner: {

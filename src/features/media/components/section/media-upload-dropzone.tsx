@@ -10,11 +10,11 @@ import { motion } from 'motion/react'
 import * as React from 'react'
 
 import { Button } from '#/components/ui/button'
-import type { getDashboardCopy } from '#/features/dashboard/copy'
+import type { getMediaCopy } from '#/features/media/copy'
 import { getApiErrorMessage } from '#/lib/api-client'
 
 export type MediaUploadDropzoneProps = {
-  copy: ReturnType<typeof getDashboardCopy>['media']
+  copy: ReturnType<typeof getMediaCopy>
   isUploading: boolean
   isError?: boolean
   isSuccess?: boolean

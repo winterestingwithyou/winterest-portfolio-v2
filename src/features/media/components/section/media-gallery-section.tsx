@@ -12,7 +12,8 @@ import * as React from 'react'
 import { Button } from '#/components/ui/button'
 import { DataPagination } from '#/components/ui/data-pagination'
 import { SearchInput } from '#/components/ui/search-input'
-import type { getDashboardCopy } from '#/features/dashboard/copy'
+import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getMediaCopy } from '#/features/media/copy'
 import type { MediaPaginationMeta, MediaRecord } from '#/features/media/queries'
 import { getBaseUrl } from '#/lib/api-client'
 import { formatBytes, formatDate } from '#/lib/utils'
@@ -20,7 +21,8 @@ import { formatBytes, formatDate } from '#/lib/utils'
 export type AssetFilter = 'all' | 'image' | 'document'
 
 type MediaGallerySectionProps = {
-  copy: ReturnType<typeof getDashboardCopy>
+  copy?: ReturnType<typeof getMediaCopy>
+  commonCopy?: ReturnType<typeof getDashboardCopy>['common']
   mediaList: MediaRecord[]
   pagination: MediaPaginationMeta
   isLoading: boolean
@@ -34,7 +36,8 @@ type MediaGallerySectionProps = {
 }
 
 export function MediaGallerySection({
-  copy,
+  copy: customCopy,
+  commonCopy: customCommonCopy,
   mediaList,
   pagination,
   isLoading,
@@ -46,6 +49,8 @@ export function MediaGallerySection({
   onPageChange,
   onDeleteSelect,
 }: MediaGallerySectionProps) {
+  const mediaCopy = customCopy ?? getMediaCopy()
+  const commonCopy = customCommonCopy ?? getDashboardCopy().common
   const [copiedId, setCopiedId] = React.useState<string | null>(null)
 
   const handleCopyUrl = async (item: MediaRecord) => {
@@ -67,7 +72,7 @@ export function MediaGallerySection({
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2">
           <h3 className="text-lg font-bold text-(--brand-ink)">
-            {copy.media.title}
+            {mediaCopy.title}
           </h3>
           <span className="rounded-full border border-(--brand-line) bg-(--surface-strong) px-2.5 py-0.5 font-mono text-xs font-semibold text-(--brand-muted)">
             {pagination.total}
@@ -79,7 +84,7 @@ export function MediaGallerySection({
           <SearchInput
             value={search}
             onChange={onSearchChange}
-            placeholder={copy.media.searchPlaceholder}
+            placeholder={mediaCopy.searchPlaceholder}
             className="w-full"
           />
         </div>
@@ -96,7 +101,7 @@ export function MediaGallerySection({
               : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'
           }`}
         >
-          {copy.media.tabAll}
+          {mediaCopy.tabAll}
         </button>
         <button
           type="button"
@@ -107,7 +112,7 @@ export function MediaGallerySection({
               : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'
           }`}
         >
-          {copy.media.tabImages}
+          {mediaCopy.tabImages}
         </button>
         <button
           type="button"
@@ -118,7 +123,7 @@ export function MediaGallerySection({
               : 'border border-(--brand-line) bg-(--surface-card) text-(--brand-ink) hover:border-(--brand-orange)/50'
           }`}
         >
-          {copy.media.tabDocuments}
+          {mediaCopy.tabDocuments}
         </button>
       </div>
 
@@ -128,7 +133,7 @@ export function MediaGallerySection({
           <p className="text-sm font-semibold">
             {loadError instanceof Error
               ? loadError.message
-              : copy.common.loadError}
+              : commonCopy.loadError}
           </p>
         </div>
       ) : null}
@@ -157,15 +162,15 @@ export function MediaGallerySection({
           </div>
           <h4 className="text-base font-bold text-(--brand-ink)">
             {search.trim()
-              ? copy.media.noImagesFound
+              ? mediaCopy.noImagesFound
               : activeTab === 'document'
-                ? copy.media.noDocumentsFound
-                : copy.media.emptyTitle}
+                ? mediaCopy.noDocumentsFound
+                : mediaCopy.emptyTitle}
           </h4>
           <p className="mt-1 max-w-sm text-sm text-(--brand-muted)">
             {search.trim() || activeTab !== 'all'
-              ? copy.media.noMatchingDescription
-              : copy.media.emptyDescription}
+              ? mediaCopy.noMatchingDescription
+              : mediaCopy.emptyDescription}
           </p>
           {search.trim() || activeTab !== 'all' ? (
             <button
@@ -177,7 +182,7 @@ export function MediaGallerySection({
               className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-(--brand-orange-soft) px-4 py-2 text-xs font-semibold text-(--brand-orange-deep) transition hover:bg-(--brand-orange) hover:text-white cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-(--brand-orange)"
             >
               <RotateCcw className="size-3.5" />
-              {copy.media.resetFilters}
+              {mediaCopy.resetFilters}
             </button>
           ) : null}
         </div>
@@ -241,20 +246,20 @@ export function MediaGallerySection({
                           size="sm"
                           onClick={() => void handleCopyUrl(item)}
                           className="h-8 gap-1.5 px-2 text-xs font-medium text-(--brand-muted) transition hover:text-(--brand-ink)"
-                          title={copy.media.copyUrl}
+                          title={mediaCopy.copyUrl}
                         >
                           {isCopied ? (
                             <>
                               <Check className="size-3.5 text-emerald-500" />
                               <span className="text-emerald-600 dark:text-emerald-400 font-semibold text-[11px]">
-                                {copy.media.copied}
+                                {mediaCopy.copied}
                               </span>
                             </>
                           ) : (
                             <>
                               <Copy className="size-3.5" />
                               <span className="text-[11px]">
-                                {copy.media.copyUrl}
+                                {mediaCopy.copyUrl}
                               </span>
                             </>
                           )}
@@ -265,7 +270,7 @@ export function MediaGallerySection({
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex size-8 items-center justify-center rounded-md text-(--brand-muted) transition hover:bg-(--surface-strong) hover:text-(--brand-ink)"
-                          title={copy.media.preview}
+                          title={mediaCopy.preview}
                         >
                           <ExternalLink className="size-3.5" />
                         </a>
@@ -277,7 +282,7 @@ export function MediaGallerySection({
                         size="sm"
                         onClick={() => onDeleteSelect(item)}
                         className="size-8 p-0 text-(--brand-muted) transition hover:bg-rose-500/10 hover:text-rose-600"
-                        title={copy.common.delete}
+                        title={commonCopy.delete}
                       >
                         <Trash2 className="size-3.5" />
                       </Button>
@@ -295,7 +300,7 @@ export function MediaGallerySection({
             pageSize={pagination.limit}
             showItemCount
             onPageChange={onPageChange}
-            itemLabel={copy.media.assetsLabel}
+            itemLabel={mediaCopy.assetsLabel}
             className="pt-4"
           />
         </>
