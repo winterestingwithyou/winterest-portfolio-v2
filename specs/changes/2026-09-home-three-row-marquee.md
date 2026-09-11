@@ -2,7 +2,7 @@
 
 - **Feature ID**: `feat-home-three-row-marquee`
 - **Date**: 2026-09-11
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - `/` (Homepage — `TechMarqueeSection`)
 - **Target Modules**:
@@ -145,13 +145,13 @@ Komponen bersifat murni presentasional publik tanpa melibatkan data sensitif, se
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] Seksi `TechMarqueeSection` di Homepage menampilkan 3 baris marquee secara bertingkat.
-- [ ] Baris 1 bergerak ke arah normal, Baris 2 bergerak ke arah sebaliknya (`reverse`), dan Baris 3 bergerak ke arah normal.
-- [ ] Ketiga baris memiliki durasi kecepatan yang sedikit berbeda untuk efek parallax (32s, 42s, 36s).
-- [ ] Algoritma `partitionMarqueeItems` membagi item dengan seimbang dan menangani kondisi dataset kecil (< 6 item) dengan aman.
-- [ ] Hover pada masing-masing baris menghentikan animasi (_pause on hover_) secara independen.
-- [ ] Tampilan responsif di mobile dan desktop dengan vertical gap yang proporsional (`gap-3 sm:gap-4`).
-- [ ] Typecheck lulus tanpa error (`bun run check`).
-- [ ] Linter & formatter bersih (`bun run lint`, `bun run format`).
-- [ ] Production build berhasil (`bun run build`).
-- [ ] Knowledge graph diperbarui (`graphify update .`).
+- [x] Seksi `TechMarqueeSection` di Homepage menampilkan 3 baris marquee secara bertingkat.
+- [x] Baris 1 bergerak ke arah normal, Baris 2 bergerak ke arah sebaliknya (`reverse`), dan Baris 3 bergerak ke arah normal.
+- [x] Ketiga baris memiliki durasi kecepatan yang sedikit berbeda untuk efek parallax (32s, 42s, 36s).
+- [x] Algoritma `partitionMarqueeItems` membagi item dengan seimbang dan menangani kondisi dataset kecil (< 6 item) dengan aman.
+- [x] Hover pada masing-masing baris menghentikan animasi (_pause on hover_) secara independen.
+- [x] Tampilan responsif di mobile dan desktop dengan vertical gap yang proporsional (`gap-3 sm:gap-4`).
+- [x] Typecheck lulus tanpa error (`bun run check`).
+- [x] Linter & formatter bersih (`bun run lint`, `bun run format`).
+- [x] Production build berhasil (`bun run build`).
+- [x] Knowledge graph diperbarui (`graphify update .`).

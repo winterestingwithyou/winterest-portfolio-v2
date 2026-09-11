@@ -1,9 +1,9 @@
-import { ExternalLink, Zap } from 'lucide-react'
+import { Zap } from 'lucide-react'
 import { motion } from 'motion/react'
 
 import { Container } from '#/components/marketing/section'
 import { Marquee } from '#/components/ui/marquee'
-import { TechIcon } from '#/components/ui/tech-icon'
+import { TechMarqueeCard } from '#/features/technologies/components/tech-marquee-card'
 import type { getTechnologiesCopy } from '#/features/technologies/copy'
 import type { getPublicStackData } from '#/features/technologies/public-loaders'
 import { defaultViewport, fadeIn, fadeUp, scaleIn } from '#/lib/motion'
@@ -55,47 +55,14 @@ export function UltimateStackSection({
 
         <Marquee pauseOnHover className="py-6 [--duration:30s]" repeat={6}>
           {ultimateTechs.map((tech) => (
-            <div
+            <TechMarqueeCard
               key={tech.id}
-              className="group relative flex w-52 shrink-0 flex-col items-center justify-center gap-4 rounded-2xl border border-(--brand-orange)/40 bg-card p-6 text-center transition-all duration-200 hover:-translate-y-0.5 hover:border-(--brand-orange) sm:w-60"
-            >
-              {/* Ultimate Badge */}
-              <div className="absolute top-3 right-3 rounded-full bg-(--brand-orange) p-1 text-white opacity-90 transition group-hover:scale-105">
-                <Zap className="size-3 fill-white text-white" />
-              </div>
-
-              {/* Prominent Centerpiece Icon */}
-              <div className="flex items-center justify-center p-2 transition-transform duration-300 group-hover:scale-110">
-                <TechIcon
-                  src={tech.icon}
-                  alt={tech.name}
-                  color={tech.color}
-                  className="size-16 sm:size-20 object-contain"
-                />
-              </div>
-
-              {/* Tech Name & Link */}
-              <div className="flex items-center gap-1.5">
-                <h3 className="text-base font-extrabold text-(--brand-ink) sm:text-lg">
-                  {tech.name}
-                </h3>
-                {tech.url ? (
-                  <a
-                    href={tech.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={`Visit official website of ${tech.name} (opens in a new tab)`}
-                    title={`Visit ${tech.name}`}
-                    className="inline-flex min-h-11 min-w-11 items-center justify-center -m-3 p-3 rounded-full text-(--brand-muted) opacity-65 transition hover:opacity-100 hover:text-(--brand-orange-deep) focus-visible:opacity-100 focus-visible:ring-2 focus-visible:ring-(--brand-orange)"
-                  >
-                    <ExternalLink className="size-4" aria-hidden="true" />
-                    <span className="sr-only">
-                      Visit official website of {tech.name} (opens in a new tab)
-                    </span>
-                  </a>
-                ) : null}
-              </div>
-            </div>
+              name={tech.name}
+              icon={tech.icon}
+              color={tech.color}
+              url={tech.url}
+              variant="ultimate"
+            />
           ))}
         </Marquee>
       </motion.div>
