@@ -11,6 +11,7 @@ export const Route = createFileRoute('/contact')({
       matches,
       title: copy.meta.title,
       description: copy.meta.description,
+      canonicalUrl: '/contact',
     })
   },
   component: ContactPage,

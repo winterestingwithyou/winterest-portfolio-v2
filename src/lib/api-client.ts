@@ -9,11 +9,28 @@ export type ApiResponse<T = unknown> = {
 }
 
 /**
+ * Synchronously resolves the application base URL without a trailing slash.
+ * Resolves from PUBLIC_APP_URL / VITE_PUBLIC_APP_URL or window.location.origin on client,
+ * without any hardcoded domain fallback.
+ */
+export function getAppBaseUrl(): string {
+  const rawUrl =
+    (typeof process !== 'undefined' &&
+      (process.env.PUBLIC_APP_URL || process.env.VITE_PUBLIC_APP_URL)) ||
+    (typeof import.meta !== 'undefined' &&
+      (import.meta.env.PUBLIC_APP_URL || import.meta.env.VITE_PUBLIC_APP_URL)) ||
+    (typeof window !== 'undefined' ? window.location.origin : '') ||
+    ''
+
+  return rawUrl.replace(/\/+$/, '')
+}
+
+/**
  * Resolves the application base URL without a trailing slash.
  *
  * Isomorphic behavior:
- * - Server (SSR): Resolves `PUBLIC_APP_URL` strictly from Cloudflare Workers runtime (`cloudflare:workers`).
- *   Throws an explicit error if missing.
+ * - Server (SSR): Resolves `PUBLIC_APP_URL` strictly from Cloudflare Workers runtime (`cloudflare:workers`),
+ *   falling back to process.env. Throws an explicit error if missing.
  * - Client (Browser): Resolves `VITE_PUBLIC_APP_URL` with fallback to `window.location.origin`.
  *
  * Usage:
@@ -42,10 +59,7 @@ export const getBaseUrl = createIsomorphicFn()
     return appUrl.replace(/\/+$/, '')
   })
   .client(() => {
-    const url =
-      import.meta.env.VITE_PUBLIC_APP_URL ||
-      (typeof window !== 'undefined' ? window.location.origin : '')
-    return url.replace(/\/+$/, '')
+    return getAppBaseUrl()
   })
 
 const getServerCookie = createIsomorphicFn()

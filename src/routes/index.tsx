@@ -18,7 +18,8 @@ export const Route = createFileRoute('/')({
 
     return { projects, ultimateTechs, settings }
   },
-  head: ({ matches }) => createRouteMeta({ matches, isHome: true }),
+  head: ({ matches }) =>
+    createRouteMeta({ matches, isHome: true, canonicalUrl: '/' }),
   component: HomeRouteComponent,
 })
 
