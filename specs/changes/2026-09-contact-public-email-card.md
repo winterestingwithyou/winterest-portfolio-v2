@@ -2,7 +2,7 @@
 
 - **Feature ID**: `feat-contact-public-email-card`
 - **Date**: 2026-09-11
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - `/contact` (`src/routes/contact.tsx`)
 - **Target Modules**:
@@ -128,13 +128,13 @@ Menambahkan token pendukung pada object `contactCopy.direct`:
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] Route loader di `src/routes/contact.tsx` melakukan prefetch `settingsQueryOptions.get()`.
-- [ ] Komponen Dedicated Email Card tampil di `ContactChannels` ketika `publicEmail` memiliki nilai valid.
-- [ ] Tombol "Kirim Email" membuka link `mailto:` dengan alamat email yang sesuai.
-- [ ] Tombol "Salin Email" berhasil menyalin alamat email ke clipboard dan menampilkan umpan balik visual "Tersalin!" / "Copied!" selama 2 detik.
-- [ ] **Strict Invariant**: Ketika `publicEmail` kosong di Site Settings, tidak ada elemen kartu email yang muncul di halaman kontak.
-- [ ] Copywriting bilingual di `src/features/contact/copy.ts` terisi lengkap dan akurat.
-- [ ] Typecheck lulus tanpa error (`bun run check`).
-- [ ] Linter & formatter bersih (`bun run lint`, `bun run format`).
-- [ ] Production build berhasil (`bun run build`).
-- [ ] Knowledge graph diperbarui (`graphify update .`).
+- [x] Route loader di `src/routes/contact.tsx` melakukan prefetch `settingsQueryOptions.get()`.
+- [x] Komponen Dedicated Email Card tampil di `ContactChannels` ketika `publicEmail` memiliki nilai valid.
+- [x] Tombol "Kirim Email" membuka link `mailto:` dengan alamat email yang sesuai.
+- [x] Tombol "Salin Email" berhasil menyalin alamat email ke clipboard dan menampilkan umpan balik visual "Tersalin!" / "Copied!" selama 2 detik.
+- [x] **Strict Invariant**: Ketika `publicEmail` kosong di Site Settings, tidak ada elemen kartu email yang muncul di halaman kontak.
+- [x] Copywriting bilingual di `src/features/contact/copy.ts` terisi lengkap dan akurat.
+- [x] Typecheck lulus tanpa error (`bun run check` / `bun run typecheck`).
+- [x] Linter & formatter bersih (`bun run lint`, `bun run format`).
+- [x] Production build berhasil (`bun run build`).
+- [x] Knowledge graph diperbarui (`graphify update .`).
