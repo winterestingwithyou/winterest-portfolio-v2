@@ -97,7 +97,6 @@ A task or feature is complete when:
 8. Relevant test cases pass if applicable (`bun run test`).
 9. Knowledge graph is kept in sync with code changes via `graphify update .`.
 
-
 For major tasks, report:
 
 - What changed

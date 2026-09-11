@@ -81,7 +81,6 @@ When developing new capabilities or refactoring existing ones:
    - Consolidate the change spec into the living spec (`specs/features/<feature>.spec.md`).
    - Synchronize the knowledge graph with `graphify update .`.
 
-
 ---
 
 ## Reverse-Spec & Maintenance Guidelines
