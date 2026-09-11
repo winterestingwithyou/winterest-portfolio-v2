@@ -8,7 +8,7 @@
 | **Public Routes**    | [`/stack`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/stack.tsx)                          |
 | **Dashboard Routes** | `/dashboard/stack`, `/dashboard/stack/categories/*`, `/dashboard/stack/technologies/*`                        |
 | **RBAC Permissions** | Public (Read), Editor/Admin/Owner (Full Management)                                                           |
-| **Last Updated**     | 2026-09-07                                                                                                    |
+| **Last Updated**     | 2026-09-11                                                                                                    |
 
 ---
 
@@ -24,6 +24,7 @@ The Technologies feature manages Winterest's developer toolkit, categorized stac
 - **Dual Dashboard Management**: `/dashboard/stack` provides separate tabbed TanStack Tables for Technologies and Categories, with inline creation dialogs and full CRUD forms.
 - **Table Search & Filter**: Instant client-side search across technology names, slugs, and documentation URLs, with category filter dropdown on the Technologies table.
 - **Table Pagination**: Client-side TanStack Table pagination (10 rows per page) integrated with Shadcn `DataPagination` and URL search parameters (`q`, `category`, `page`, `tab`).
+- **Auto Default Sort Order**: Creating a category via dedicated page (`/dashboard/stack/categories/new`) or quick modal dialog (`CategoryCreateDialog`) automatically computes and pre-fills `sortOrder` with `max(sortOrder) + 1` (or 1 if empty/non-positive), eliminating manual sequence counting while preserving user overrides.
 
 ---
 
@@ -123,5 +124,7 @@ src/routes/dashboard/stack/index.tsx (validateSearch: { tab?, q?, category?, pag
 - [x] Technologies table supports debounced search and category filtering with URL sync.
 - [x] Categories table supports debounced search with URL sync.
 - [x] Technologies and Categories tables paginate smoothly at 10 items per page with `DataPagination`.
+- [x] Next category sort order automatically defaults to sequential `max(sortOrder) + 1` with full unit test coverage ([`sort-order.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/technologies/__tests__/sort-order.test.ts)).
+- [x] Route `/dashboard/stack/categories/new` prefetches category list in loader.
 - [x] Validation schemas pass Vitest suite ([`src/features/technologies/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/technologies/__tests__/validation.test.ts)).
 - [x] TypeScript check passes: `bun run check`.
