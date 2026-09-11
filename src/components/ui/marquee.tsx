@@ -33,6 +33,11 @@ interface MarqueeProps extends ComponentPropsWithoutRef<'div'> {
    * @default 6
    */
   repeat?: number
+  /**
+   * Animation duration in seconds
+   * @default 30
+   */
+  duration?: number
 }
 
 export function Marquee({
@@ -42,6 +47,7 @@ export function Marquee({
   children,
   vertical = false,
   repeat = 6,
+  duration = 30,
   ...props
 }: MarqueeProps) {
   const [isHovered, setIsHovered] = useState(false)
@@ -81,13 +87,13 @@ export function Marquee({
             x: {
               repeat: Infinity,
               repeatType: 'loop',
-              duration: 30,
+              duration,
               ease: 'linear',
             },
             y: {
               repeat: Infinity,
               repeatType: 'loop',
-              duration: 30,
+              duration,
               ease: 'linear',
             },
           }}

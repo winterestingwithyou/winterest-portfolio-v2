@@ -2,7 +2,7 @@
 
 - **Feature ID**: `fix-marquee-card-uniform-height`
 - **Date**: 2026-09-11
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - `/` (Homepage — `TechMarqueeSection`)
   - `/stack` (Tech Stack Page — `UltimateStackSection` & `StackCategoriesSection`)
@@ -138,11 +138,11 @@ Komponen bersifat murni presentasional publik tanpa melibatkan data sensitif, se
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] Komponen baru `TechMarqueeCard` dibuat di `src/features/technologies/components/tech-marquee-card.tsx` dengan varian `default` dan `ultimate`.
-- [ ] Tinggi seluruh kartu marquee di Homepage seragam sempurna (tinggi kartu "Cloudflare Workers" setara dengan "Drizzle ORM", "TypeScript", dll.).
-- [ ] Slot judul memiliki ketinggian yang konsisten dengan teks 1 baris maupun 2 baris terpusat secara vertikal.
-- [ ] Komponen kartu di `TechMarqueeSection`, `UltimateStackSection`, dan `StackCategoriesSection` berhasil direfaktor menggunakan `TechMarqueeCard`.
-- [ ] Typecheck lulus tanpa error (`bun run check`).
-- [ ] Linter & formatter bersih (`bun run lint`, `bun run format`).
-- [ ] Production build berhasil (`bun run build`).
-- [ ] Knowledge graph diperbarui (`graphify update .`).
+- [x] Komponen baru `TechMarqueeCard` dibuat di `src/features/technologies/components/tech-marquee-card.tsx` dengan varian `default` dan `ultimate`.
+- [x] Tinggi seluruh kartu marquee di Homepage seragam sempurna (tinggi kartu "Cloudflare Workers" setara dengan "Drizzle ORM", "TypeScript", dll.).
+- [x] Slot judul memiliki ketinggian yang konsisten dengan teks 1 baris maupun 2 baris terpusat secara vertikal.
+- [x] Komponen kartu di `TechMarqueeSection`, `UltimateStackSection`, dan `StackCategoriesSection` berhasil direfaktor menggunakan `TechMarqueeCard`.
+- [x] Typecheck lulus tanpa error (`bun run check`).
+- [x] Linter & formatter bersih (`bun run lint`, `bun run format`).
+- [x] Production build berhasil (`bun run build`).
+- [x] Knowledge graph diperbarui (`graphify update .`).
