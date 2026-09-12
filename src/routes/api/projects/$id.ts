@@ -37,6 +37,31 @@ export const Route = createFileRoute('/api/projects/$id')({
           return handleApiError(error, 'Failed to fetch project.')
         }
       },
+      PUT: async ({ request, params }) => {
+        try {
+          const user = await requireDashboardUser(request)
+
+          if (user instanceof Response) {
+            return user
+          }
+
+          const payload = await request.json()
+          const input = projectInputSchema.parse(payload)
+          const db = getDb(env.DB)
+          const project = await updateProject(db, params.id, input)
+
+          if (!project) {
+            return Response.json(
+              { error: 'Project not found.' },
+              { status: 404 },
+            )
+          }
+
+          return Response.json({ data: project })
+        } catch (error) {
+          return handleApiError(error, 'Failed to update project.')
+        }
+      },
       PATCH: async ({ request, params }) => {
         try {
           const user = await requireDashboardUser(request)
