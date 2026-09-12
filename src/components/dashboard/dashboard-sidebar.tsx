@@ -1,6 +1,8 @@
 import { Link, useLocation } from '@tanstack/react-router'
 import {
+  ChevronDown,
   FolderKanban,
+  Globe,
   Home,
   Image,
   Layers,
@@ -16,6 +18,11 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from '#/components/ui/avatar'
 import { Button } from '#/components/ui/button'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '#/components/ui/collapsible'
 import {
   Popover,
   PopoverContent,
@@ -33,6 +40,9 @@ import {
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   SidebarRail,
   SidebarSeparator,
 } from '#/components/ui/sidebar'
@@ -159,6 +169,8 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
     return pathname.startsWith(to)
   }
 
+  const isPagesActive = pathname.startsWith('/dashboard/pages')
+
   return (
     <Sidebar
       collapsible="icon"
@@ -195,64 +207,102 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {mainNav.map((item) => {
-                const Icon = item.icon
-                const active = isLinkActive(item.to, item.exact)
+              {/* Overview */}
+              <SidebarMenuItem key="/dashboard">
+                <SidebarMenuButton
+                  asChild
+                  isActive={isLinkActive('/dashboard', true)}
+                  tooltip={copy.shell.nav.overview}
+                  className={
+                    isLinkActive('/dashboard', true)
+                      ? 'bg-sidebar-accent font-bold text-sidebar-accent-foreground shadow-xs'
+                      : 'text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground'
+                  }
+                >
+                  <Link to="/dashboard">
+                    <LayoutDashboard className="size-4" />
+                    <span>{copy.shell.nav.overview}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
 
-                return (
-                  <SidebarMenuItem key={item.to}>
+              {/* Collapsible Public Pages Menu */}
+              <Collapsible
+                asChild
+                defaultOpen={true}
+                className="group/collapsible"
+              >
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
                     <SidebarMenuButton
-                      asChild
-                      isActive={active}
-                      tooltip={item.label}
+                      tooltip={copy.shell.pagesGroup}
+                      isActive={isPagesActive}
                       className={
-                        active
-                          ? 'bg-sidebar-accent font-bold text-sidebar-accent-foreground shadow-xs'
+                        isPagesActive
+                          ? 'font-bold text-sidebar-accent-foreground'
                           : 'text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground'
                       }
                     >
-                      <Link to={item.to}>
-                        <Icon className="size-4" />
-                        <span>{item.label}</span>
-                      </Link>
+                      <Globe className="size-4 text-(--brand-orange)" />
+                      <span>{copy.shell.pagesGroup}</span>
+                      <ChevronDown className="ml-auto size-4 transition-transform duration-200 group-data-[state=closed]/collapsible:-rotate-90 group-data-[state=open]/collapsible:rotate-0" />
                     </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )
-              })}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {pagesNav.map((item) => {
+                        const active = isLinkActive(item.to, item.exact)
 
-        <SidebarGroup>
-          <SidebarGroupLabel className="text-[0.65rem] font-bold uppercase tracking-wider text-sidebar-foreground/60">
-            {copy.shell.pagesGroup}
-          </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {pagesNav.map((item) => {
-                const Icon = item.icon
-                const active = isLinkActive(item.to, item.exact)
+                        return (
+                          <SidebarMenuSubItem key={item.to}>
+                            <SidebarMenuSubButton
+                              asChild
+                              isActive={active}
+                              className={
+                                active
+                                  ? 'font-bold text-(--brand-orange)'
+                                  : 'text-sidebar-foreground/80 hover:text-sidebar-foreground'
+                              }
+                            >
+                              <Link to={item.to}>
+                                <span>{item.label}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        )
+                      })}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
 
-                return (
-                  <SidebarMenuItem key={item.to}>
-                    <SidebarMenuButton
-                      asChild
-                      isActive={active}
-                      tooltip={item.label}
-                      className={
-                        active
-                          ? 'bg-sidebar-accent font-bold text-sidebar-accent-foreground shadow-xs'
-                          : 'text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground'
-                      }
-                    >
-                      <Link to={item.to}>
-                        <Icon className="size-4" />
-                        <span>{item.label}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )
-              })}
+              {/* Other CMS collections: Projects, Stack, Media, Social */}
+              {mainNav
+                .filter((item) => item.to !== '/dashboard')
+                .map((item) => {
+                  const Icon = item.icon
+                  const active = isLinkActive(item.to, item.exact)
+
+                  return (
+                    <SidebarMenuItem key={item.to}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={active}
+                        tooltip={item.label}
+                        className={
+                          active
+                            ? 'bg-sidebar-accent font-bold text-sidebar-accent-foreground shadow-xs'
+                            : 'text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground'
+                        }
+                      >
+                        <Link to={item.to}>
+                          <Icon className="size-4" />
+                          <span>{item.label}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  )
+                })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
