@@ -1,8 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
-import { ProjectsListPage } from '#/features/projects/pages/projects-list-page'
+import { getPublicPageContent } from '#/features/portfolio/public-loaders'
+import type { ProjectsPageConfig } from '#/features/portfolio/page-content-schemas'
 import { getProjectsCopy } from '#/features/projects/copy'
+import { ProjectsListPage } from '#/features/projects/pages/projects-list-page'
 import { getPublishedProjects } from '#/features/projects/public-loaders'
 import { createRouteMeta } from '#/lib/metadata'
 import { getLocale } from '#/paraglide/runtime'
@@ -18,13 +20,32 @@ export type PublicProjectsSearch = z.infer<typeof publicProjectsSearchSchema>
 export const Route = createFileRoute('/projects/')({
   validateSearch: (search): PublicProjectsSearch =>
     publicProjectsSearchSchema.parse(search),
-  loader: () => getPublishedProjects({ data: { locale: getLocale() } }),
-  head: ({ matches }) => {
+  loader: async () => {
+    const locale = getLocale()
+    const [projects, pageContent] = await Promise.all([
+      getPublishedProjects({ data: { locale } }),
+      getPublicPageContent({
+        data: { page: 'projects' },
+      }) as Promise<ProjectsPageConfig>,
+    ])
+    return { projects, pageContent }
+  },
+  head: ({ matches, loaderData }) => {
     const copy = getProjectsCopy()
+    const locale = getLocale() === 'id' ? 'id' : 'en'
+    const dynamicTitle =
+      locale === 'en'
+        ? loaderData?.pageContent.titleEn
+        : loaderData?.pageContent.titleId
+    const dynamicDesc =
+      locale === 'en'
+        ? loaderData?.pageContent.descriptionEn
+        : loaderData?.pageContent.descriptionId
+
     return createRouteMeta({
       matches,
-      title: copy.meta.title,
-      description: copy.meta.description,
+      title: dynamicTitle || copy.meta.title,
+      description: dynamicDesc || copy.meta.description,
       canonicalUrl: '/projects',
     })
   },
@@ -32,6 +53,6 @@ export const Route = createFileRoute('/projects/')({
 })
 
 function ProjectsRouteComponent() {
-  const projects = Route.useLoaderData()
-  return <ProjectsListPage projects={projects} />
+  const { projects, pageContent } = Route.useLoaderData()
+  return <ProjectsListPage projects={projects} pageContent={pageContent} />
 }

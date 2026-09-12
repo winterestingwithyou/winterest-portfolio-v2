@@ -6,6 +6,7 @@ import {
   Layers,
   LayoutDashboard,
   LogOut,
+  Mail,
   Settings,
   Share2,
   Sparkles,
@@ -90,6 +91,33 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
     },
   ]
 
+  const pagesNav = [
+    {
+      to: '/dashboard/pages/home',
+      label: copy.shell.navPages.home,
+      icon: Home,
+      exact: true,
+    },
+    {
+      to: '/dashboard/pages/projects',
+      label: copy.shell.navPages.projects,
+      icon: FolderKanban,
+      exact: true,
+    },
+    {
+      to: '/dashboard/pages/stack',
+      label: copy.shell.navPages.stack,
+      icon: Layers,
+      exact: true,
+    },
+    {
+      to: '/dashboard/pages/contact',
+      label: copy.shell.navPages.contact,
+      icon: Mail,
+      exact: true,
+    },
+  ]
+
   const systemNav = [
     {
       to: '/dashboard/users',
@@ -168,6 +196,40 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
           <SidebarGroupContent>
             <SidebarMenu>
               {mainNav.map((item) => {
+                const Icon = item.icon
+                const active = isLinkActive(item.to, item.exact)
+
+                return (
+                  <SidebarMenuItem key={item.to}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={active}
+                      tooltip={item.label}
+                      className={
+                        active
+                          ? 'bg-sidebar-accent font-bold text-sidebar-accent-foreground shadow-xs'
+                          : 'text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground'
+                      }
+                    >
+                      <Link to={item.to}>
+                        <Icon className="size-4" />
+                        <span>{item.label}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                )
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-[0.65rem] font-bold uppercase tracking-wider text-sidebar-foreground/60">
+            {copy.shell.pagesGroup}
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {pagesNav.map((item) => {
                 const Icon = item.icon
                 const active = isLinkActive(item.to, item.exact)
 

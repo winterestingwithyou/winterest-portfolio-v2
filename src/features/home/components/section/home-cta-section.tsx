@@ -3,14 +3,24 @@ import { Mail, Terminal } from 'lucide-react'
 import { motion } from 'motion/react'
 
 import { Container } from '#/components/marketing/section'
-import type { getHomeCopy } from '#/features/home/copy'
 import { defaultViewport, fadeIn, scaleIn } from '#/lib/motion'
 
 type HomeCtaSectionProps = {
-  copy: ReturnType<typeof getHomeCopy>
+  copy: {
+    cta: {
+      title: string
+      contact: string
+    }
+  }
+  command?: string
+  buttonText?: string
 }
 
-export function HomeCtaSection({ copy }: HomeCtaSectionProps) {
+export function HomeCtaSection({
+  copy,
+  command,
+  buttonText,
+}: HomeCtaSectionProps) {
   return (
     <motion.section
       initial="hidden"
@@ -27,7 +37,7 @@ export function HomeCtaSection({ copy }: HomeCtaSectionProps) {
           <div>
             <p className="m-0 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-wide text-orange-200">
               <Terminal aria-hidden="true" className="size-4" />
-              bun run build
+              {command || 'bun run build'}
             </p>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">
               {copy.cta.title}
@@ -38,7 +48,7 @@ export function HomeCtaSection({ copy }: HomeCtaSectionProps) {
             className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-bold text-(--brand-dark) no-underline transition hover:-translate-y-0.5"
           >
             <Mail aria-hidden="true" className="size-4" />
-            {copy.cta.contact}
+            {buttonText || copy.cta.contact}
           </Link>
         </motion.div>
       </Container>

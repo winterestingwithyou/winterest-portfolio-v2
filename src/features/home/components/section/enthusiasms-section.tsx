@@ -1,40 +1,32 @@
-import {
-  Cloud,
-  Layers,
-  Layout,
-  Network,
-  Server,
-  ShieldCheck,
-  Smartphone,
-  Terminal,
-  Workflow,
-} from 'lucide-react'
+import * as LucideIcons from 'lucide-react'
 import { motion } from 'motion/react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
-import type { getHomeCopy } from '#/features/home/copy'
 import { defaultViewport, fadeUp } from '#/lib/motion'
 
-const ENTHUSIASM_ICONS = {
-  Terminal,
-  Layout,
-  Server,
-  Layers,
-  Workflow,
-  Cloud,
-  Network,
-  ShieldCheck,
-  Smartphone,
-} as const
+type EnthusiasmItemDisplay = {
+  iconName: string
+  title: string
+  description: string
+}
 
 type EnthusiasmsSectionProps = {
-  copy: ReturnType<typeof getHomeCopy>
-  enthusiasms?: ReturnType<typeof getHomeCopy>['enthusiasms']['items']
+  copy: {
+    enthusiasms: {
+      eyebrow: string
+      title: string
+      description: string
+      items: readonly { title: string; iconName: string; description: string }[]
+    }
+  }
+  enthusiasms?: EnthusiasmItemDisplay[]
+  showDescription?: boolean
 }
 
 export function EnthusiasmsSection({
   copy,
   enthusiasms,
+  showDescription = true,
 }: EnthusiasmsSectionProps) {
   const items = enthusiasms ?? copy.enthusiasms.items
 
@@ -50,13 +42,21 @@ export function EnthusiasmsSection({
           <SectionHeader
             eyebrow={copy.enthusiasms.eyebrow}
             title={copy.enthusiasms.title}
-            description={copy.enthusiasms.description}
+            description={
+              showDescription ? copy.enthusiasms.description : undefined
+            }
           />
         </motion.div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item) => {
-            const Icon = ENTHUSIASM_ICONS[item.iconName]
+            const IconComponent =
+              (
+                LucideIcons as unknown as Record<
+                  string,
+                  React.ComponentType<{ className?: string }> | undefined
+                >
+              )[item.iconName] || LucideIcons.Terminal
 
             return (
               <motion.article
@@ -73,7 +73,7 @@ export function EnthusiasmsSection({
               >
                 <div>
                   <div className="mb-4 inline-flex size-12 items-center justify-center rounded-xl border border-(--brand-line) bg-(--brand-orange-soft) text-(--brand-orange-deep) transition duration-300 group-hover:scale-110 group-hover:border-(--brand-orange) group-hover:bg-(--brand-orange) group-hover:text-white">
-                    <Icon aria-hidden="true" className="size-6" />
+                    <IconComponent aria-hidden="true" className="size-6" />
                   </div>
 
                   <h3 className="text-xl font-bold text-(--brand-ink) transition group-hover:text-(--brand-orange-deep)">

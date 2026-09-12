@@ -22,14 +22,37 @@ import { Input } from '#/components/ui/input'
 import { Textarea } from '#/components/ui/textarea'
 import type { TurnstileRef } from '#/components/ui/turnstile'
 import { TurnstileWidget } from '#/components/ui/turnstile'
-import type { getContactCopy } from '#/features/contact/copy'
 import { useSubmitContact } from '#/features/contact/hooks'
 import { createContactSchema } from '#/features/contact/validation'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { scaleIn } from '#/lib/motion'
 
 type ContactFormProps = {
-  copy: ReturnType<typeof getContactCopy>['form']
+  copy: {
+    title: string
+    subtitle: string
+    name: string
+    namePlaceholder: string
+    email: string
+    emailPlaceholder: string
+    subject: string
+    subjectPlaceholder: string
+    message: string
+    messagePlaceholder: string
+    send: string
+    sending: string
+    verifyingSecurity: string
+    sendSuccessTitle: string
+    sendSuccessSubtitle: string
+    sendAnother: string
+    sendErrorTitle: string
+    validation: {
+      nameRequired: string
+      emailInvalid: string
+      messageMinLength: string
+      turnstileRequired: string
+    }
+  }
 }
 
 export function ContactForm({ copy }: ContactFormProps) {

@@ -4,7 +4,6 @@ import { motion } from 'motion/react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { ProjectCard } from '#/components/portfolio/project-card'
-import type { getHomeCopy } from '#/features/home/copy'
 import type { getPublishedProjects } from '#/features/projects/public-loaders'
 import {
   defaultViewport,
@@ -15,13 +14,24 @@ import {
 } from '#/lib/motion'
 
 type FeaturedProjectsSectionProps = {
-  copy: ReturnType<typeof getHomeCopy>
+  copy: {
+    featured: {
+      eyebrow: string
+      title: string
+      description: string
+      emptyTitle: string
+      emptyDescription: string
+      viewProjects: string
+    }
+  }
   projects: Awaited<ReturnType<typeof getPublishedProjects>>
+  showDescription?: boolean
 }
 
 export function FeaturedProjectsSection({
   copy,
   projects,
+  showDescription = true,
 }: FeaturedProjectsSectionProps) {
   const featuredOnly = projects.filter((project) => project.featured)
   const highlightedProjects =
@@ -40,7 +50,9 @@ export function FeaturedProjectsSection({
           <SectionHeader
             eyebrow={copy.featured.eyebrow}
             title={copy.featured.title}
-            description={copy.featured.description}
+            description={
+              showDescription ? copy.featured.description : undefined
+            }
           />
         </motion.div>
         <motion.div
