@@ -1,10 +1,10 @@
 import { Shield, ShieldAlert, ShieldCheck, Users } from 'lucide-react'
 import type { ReactNode } from 'react'
 
-import type { getDashboardCopy } from '#/features/dashboard/copy'
+import type { getUsersCopy } from '#/features/users/copy'
 
 type DashboardUsersMetricsProps = {
-  copy: ReturnType<typeof getDashboardCopy>['users']
+  copy: ReturnType<typeof getUsersCopy>
   totalUsers: number
   ownerCount: number
   adminCount: number

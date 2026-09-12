@@ -8,14 +8,14 @@ import {
 import { FetchError } from 'ofetch'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getMediaCopy } from '#/features/media/copy'
 import { MediaUploadDropzone } from '../components/section/media-upload-dropzone'
 
 afterEach(() => {
   cleanup()
 })
 
-const mockCopy = getDashboardCopy().media
+const mockCopy = getMediaCopy()
 
 describe('MediaUploadDropzone', () => {
   it('renders default dropzone state without error or success banner', () => {

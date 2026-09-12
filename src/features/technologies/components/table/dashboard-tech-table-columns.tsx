@@ -3,13 +3,13 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { Edit3, ExternalLink, Trash2, Zap } from 'lucide-react'
 
 import { TechIcon } from '#/components/ui/tech-icon'
-import type { getDashboardCopy } from '#/features/dashboard/copy'
+import type { getTechnologiesCopy } from '#/features/technologies/copy'
 import type { TechnologyWithCategories } from '#/features/technologies/components/table/dashboard-tech-table-features'
 
 const columnHelper = createColumnHelper<TechnologyWithCategories>()
 
 type CreateTechColumnsOptions = {
-  copy: ReturnType<typeof getDashboardCopy>
+  copy: ReturnType<typeof getTechnologiesCopy>['dashboard']
   categoryMap: Map<string, string>
   onDeleteTech: (id: string, name: string) => Promise<void>
 }
@@ -19,7 +19,7 @@ export function getTechColumns({
   categoryMap,
   onDeleteTech,
 }: CreateTechColumnsOptions) {
-  const tableCopy = copy.stack.techTable
+  const tableCopy = copy.techTable
 
   return [
     columnHelper.display({

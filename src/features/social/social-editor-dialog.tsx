@@ -28,7 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '#/components/ui/select'
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getSocialCopy } from '#/features/social/copy'
 
 import { useCreateSocialLink, useUpdateSocialLink } from './hooks'
 import type { SocialLink, SocialPlatform } from './types'
@@ -47,8 +47,7 @@ export function SocialEditorDialog({
   socialLink,
   existingPlatforms,
 }: SocialEditorDialogProps) {
-  const copy = getDashboardCopy()
-  const socialCopy = copy.social
+  const socialCopy = getSocialCopy()
   const isEditing = Boolean(socialLink)
 
   const [formError, setFormError] = useState<string | null>(null)
@@ -159,7 +158,9 @@ export function SocialEditorDialog({
                           id="platform-select"
                           className="h-10 w-full rounded-lg border-(--brand-line) bg-(--surface) text-sm text-(--brand-ink)"
                         >
-                          <SelectValue placeholder="Pilih platform" />
+                          <SelectValue
+                            placeholder={socialCopy.dialog.selectPlatform}
+                          />
                         </SelectTrigger>
                         <SelectContent
                           position="popper"
@@ -177,7 +178,7 @@ export function SocialEditorDialog({
                                 <span>{meta.name}</span>
                                 {isTaken && (
                                   <span className="text-xs text-muted-foreground italic">
-                                    (Sudah ditambahkan)
+                                    ({socialCopy.dialog.alreadyAdded})
                                   </span>
                                 )}
                               </SelectItem>

@@ -2,13 +2,13 @@ import { Link } from '@tanstack/react-router'
 import { createColumnHelper } from '@tanstack/react-table'
 import { Edit3, Trash2 } from 'lucide-react'
 
-import type { getDashboardCopy } from '#/features/dashboard/copy'
+import type { getTechnologiesCopy } from '#/features/technologies/copy'
 import type { CategoryRecord } from '#/features/technologies/components/table/dashboard-categories-table-features'
 
 const columnHelper = createColumnHelper<CategoryRecord>()
 
 type CreateCategoryColumnsOptions = {
-  copy: ReturnType<typeof getDashboardCopy>
+  copy: ReturnType<typeof getTechnologiesCopy>['dashboard']
   onDeleteCategory: (id: string, name: string) => Promise<void>
 }
 
@@ -16,7 +16,7 @@ export function getCategoryColumns({
   copy,
   onDeleteCategory,
 }: CreateCategoryColumnsOptions) {
-  const tableCopy = copy.stack.categoriesTable
+  const tableCopy = copy.categoriesTable
 
   return [
     columnHelper.accessor('sortOrder', {

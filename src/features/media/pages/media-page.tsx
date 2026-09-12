@@ -4,6 +4,7 @@ import * as React from 'react'
 
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getMediaCopy } from '#/features/media/copy'
 import { MediaDeleteDialog } from '#/features/media/components/media-delete-dialog'
 import { MediaGallerySection } from '#/features/media/components/section/media-gallery-section'
 import type { AssetFilter } from '#/features/media/components/section/media-gallery-section'
@@ -14,7 +15,8 @@ import { mediaQueryOptions } from '#/features/media/query-options'
 import { getApiErrorMessage } from '#/lib/api-client'
 
 export function MediaPage() {
-  const copy = getDashboardCopy()
+  const commonCopy = getDashboardCopy().common
+  const mediaCopy = getMediaCopy()
   const searchParams = useSearch({ from: '/dashboard/media' })
   const navigate = useNavigate({ from: '/dashboard/media' })
 
@@ -83,7 +85,7 @@ export function MediaPage() {
     try {
       await uploadMutation.mutateAsync({ file })
     } catch (err) {
-      const message = getApiErrorMessage(err, copy.media.uploadError)
+      const message = getApiErrorMessage(err, mediaCopy.uploadError)
       setUploadError(message)
       console.error('Media upload failed:', err)
     }
@@ -103,13 +105,10 @@ export function MediaPage() {
   }
 
   return (
-    <DashboardShell
-      title={copy.media.title}
-      description={copy.media.description}
-    >
+    <DashboardShell title={mediaCopy.title} description={mediaCopy.description}>
       <div className="space-y-8">
         <MediaUploadDropzone
-          copy={copy.media}
+          copy={mediaCopy}
           isUploading={uploadMutation.isPending}
           isError={Boolean(uploadError) || uploadMutation.isError}
           isSuccess={uploadMutation.isSuccess && !uploadError}
@@ -117,14 +116,15 @@ export function MediaPage() {
           errorMessage={
             uploadError ||
             (uploadMutation.error
-              ? getApiErrorMessage(uploadMutation.error, copy.media.uploadError)
+              ? getApiErrorMessage(uploadMutation.error, mediaCopy.uploadError)
               : undefined)
           }
           onUpload={handleUpload}
         />
 
         <MediaGallerySection
-          copy={copy}
+          copy={mediaCopy}
+          commonCopy={commonCopy}
           mediaList={mediaResponse.data}
           pagination={mediaResponse.pagination}
           isLoading={isLoading}
@@ -139,7 +139,8 @@ export function MediaPage() {
       </div>
 
       <MediaDeleteDialog
-        copy={copy}
+        copy={mediaCopy}
+        commonCopy={commonCopy}
         deletingMedia={deletingMedia}
         isDeleting={deleteMutation.isPending}
         onClose={() => setDeletingMedia(null)}

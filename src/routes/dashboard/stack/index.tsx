@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getTechnologiesCopy } from '#/features/technologies/copy'
 import { DashboardStackPage } from '#/features/technologies/pages/dashboard-stack-page'
 import {
   categoryQueryOptions,
@@ -33,11 +33,11 @@ export const Route = createFileRoute('/dashboard/stack/')({
     ])
   },
   head: ({ matches }) => {
-    const copy = getDashboardCopy()
+    const copy = getTechnologiesCopy().dashboard
     return createRouteMeta({
       matches,
-      title: `${copy.stack.title} · Dashboard`,
-      description: copy.stack.description,
+      title: `${copy.title} · Dashboard`,
+      description: copy.description,
     })
   },
   component: DashboardStackPage,

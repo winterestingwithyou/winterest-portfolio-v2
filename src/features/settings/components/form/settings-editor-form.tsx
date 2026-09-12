@@ -34,7 +34,7 @@ import {
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
 import { Textarea } from '#/components/ui/textarea'
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getSettingsCopy } from '#/features/settings/copy'
 
 import { getBaseUrl } from '#/lib/api-client'
 import { useUpdateSiteSettings } from '#/features/settings/hooks'
@@ -53,8 +53,7 @@ export function SettingsEditorForm({
   initialData,
   canEdit,
 }: SettingsEditorFormProps) {
-  const copy = getDashboardCopy()
-  const settingsCopy = copy.settings
+  const settingsCopy = getSettingsCopy()
 
   const [activeTab, setActiveTab] = useState<SettingsTab>('general')
   const [metaLangTab, setMetaLangTab] = useState<'en' | 'id'>('en')
@@ -369,7 +368,7 @@ export function SettingsEditorForm({
                                 className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface-strong) px-2.5 text-xs font-semibold text-(--brand-ink) transition hover:border-(--brand-orange)"
                               >
                                 <ExternalLink className="size-3 text-(--brand-orange)" />
-                                {copy.media.preview}
+                                {settingsCopy.form.preview}
                               </a>
                               <Button
                                 type="button"
@@ -478,7 +477,7 @@ export function SettingsEditorForm({
                                 className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-(--brand-line) bg-(--surface-strong) px-2.5 text-xs font-semibold text-(--brand-ink) transition hover:border-(--brand-orange)"
                               >
                                 <ExternalLink className="size-3 text-(--brand-orange)" />
-                                {copy.media.preview}
+                                {settingsCopy.form.preview}
                               </a>
                               <Button
                                 type="button"

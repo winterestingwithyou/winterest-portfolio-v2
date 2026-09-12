@@ -20,13 +20,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '#/components/ui/alert-dialog'
-import type { getDashboardCopy } from '#/features/dashboard/copy'
+import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getMediaCopy } from '#/features/media/copy'
 import type { MediaRecord } from '#/features/media/queries'
 import { mediaQueryOptions } from '#/features/media/query-options'
 import { formatBytes } from '#/lib/utils'
 
 type MediaDeleteDialogProps = {
-  copy: ReturnType<typeof getDashboardCopy>
+  copy?: ReturnType<typeof getMediaCopy>
+  commonCopy?: ReturnType<typeof getDashboardCopy>['common']
   deletingMedia: MediaRecord | null
   isDeleting: boolean
   onClose: () => void
@@ -34,12 +36,15 @@ type MediaDeleteDialogProps = {
 }
 
 export function MediaDeleteDialog({
-  copy,
+  copy: customCopy,
+  commonCopy: customCommonCopy,
   deletingMedia,
   isDeleting,
   onClose,
   onConfirm,
 }: MediaDeleteDialogProps) {
+  const mediaCopy = customCopy ?? getMediaCopy()
+  const commonCopy = customCommonCopy ?? getDashboardCopy().common
   const {
     data: detailData,
     isLoading: isCheckingUsage,
@@ -62,10 +67,10 @@ export function MediaDeleteDialog({
         <AlertDialogHeader>
           <AlertDialogTitle className="flex items-center gap-2 text-rose-600">
             <AlertCircle className="size-5" />
-            {copy.common.delete}
+            {commonCopy.delete}
           </AlertDialogTitle>
           <AlertDialogDescription className="pt-2">
-            {copy.media.deleteConfirm}
+            {mediaCopy.deleteConfirm}
           </AlertDialogDescription>
         </AlertDialogHeader>
 
@@ -96,22 +101,20 @@ export function MediaDeleteDialog({
               className="size-4 shrink-0 animate-spin text-(--brand-orange)"
               style={{ transformOrigin: 'center' }}
             />
-            <span>{copy.media.checkingUsage}</span>
+            <span>{mediaCopy.checkingUsage}</span>
           </div>
         ) : isError ? (
           <div className="my-2 flex items-center gap-2 rounded-xl border border-rose-500/20 bg-rose-500/10 p-3 text-xs text-rose-600 dark:text-rose-400">
             <AlertCircle className="size-4 shrink-0" />
-            <span>{copy.common.loadError}</span>
+            <span>{commonCopy.loadError}</span>
           </div>
         ) : isInUse ? (
           <div className="my-2 space-y-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5 text-xs">
             <div className="flex items-center gap-2 font-semibold text-amber-700 dark:text-amber-400">
               <AlertTriangle className="size-4 shrink-0" />
-              <span>{copy.media.usageWarningTitle}</span>
+              <span>{mediaCopy.usageWarningTitle}</span>
             </div>
-            <p className="text-(--brand-muted)">
-              {copy.media.usageWarningDesc}
-            </p>
+            <p className="text-(--brand-muted)">{mediaCopy.usageWarningDesc}</p>
             <div className="max-h-36 space-y-1.5 overflow-y-auto pr-1">
               {references.map((ref) => (
                 <div
@@ -144,14 +147,14 @@ export function MediaDeleteDialog({
               ))}
             </div>
             <p className="text-[11px] leading-relaxed text-amber-800 dark:text-amber-300/90">
-              {copy.media.usageAutoCleanNotice}
+              {mediaCopy.usageAutoCleanNotice}
             </p>
           </div>
         ) : null}
 
         <AlertDialogFooter className="gap-2">
           <AlertDialogCancel disabled={isDeleting} onClick={onClose}>
-            {copy.common.back}
+            {commonCopy.back}
           </AlertDialogCancel>
           <AlertDialogAction
             variant="destructive"
@@ -171,10 +174,10 @@ export function MediaDeleteDialog({
               <Trash2 className="size-4" />
             )}
             {isInUse
-              ? copy.media.confirmDeleteAndClean(
+              ? mediaCopy.confirmDeleteAndClean(
                   usage?.totalReferences ?? references.length,
                 )
-              : copy.common.delete}
+              : commonCopy.delete}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

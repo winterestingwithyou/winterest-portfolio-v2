@@ -3,21 +3,26 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { Edit3, Sparkles, Trash2 } from 'lucide-react'
 
 import type { getDashboardCopy } from '#/features/dashboard/copy'
+import { getDashboardCopy as getDefaultDashboardCopy } from '#/features/dashboard/copy'
+import type { getProjectsCopy } from '#/features/projects/copy'
 import { formatLocales } from '#/features/projects/components/table/dashboard-projects-table-features'
 import type { ProjectRow } from '#/features/projects/components/table/dashboard-projects-table-features'
 
 const columnHelper = createColumnHelper<ProjectRow>()
 
 type CreateProjectColumnsOptions = {
-  copy: ReturnType<typeof getDashboardCopy>
+  copy: ReturnType<typeof getProjectsCopy>['dashboard']
+  commonCopy?: ReturnType<typeof getDashboardCopy>['common']
   onDeleteProject: (project: ProjectRow) => Promise<void>
 }
 
 export function getProjectColumns({
   copy,
+  commonCopy,
   onDeleteProject,
 }: CreateProjectColumnsOptions) {
-  const tableCopy = copy.projects.table
+  const tableCopy = copy.table
+  const common = commonCopy ?? getDefaultDashboardCopy().common
 
   return [
     columnHelper.accessor('title', {
@@ -25,12 +30,23 @@ export function getProjectColumns({
       cell: (info) => {
         const project = info.row.original
         return (
-          <div className="min-w-70 max-w-md space-y-1.5">
-            <p className="font-semibold text-(--brand-ink)">{project.title}</p>
-            <p className="text-xs leading-relaxed text-(--brand-muted)">
+          <div className="min-w-64 max-w-sm sm:max-w-md space-y-1.5 overflow-hidden">
+            <p
+              className="truncate font-semibold text-(--brand-ink)"
+              title={project.title}
+            >
+              {project.title}
+            </p>
+            <p
+              className="line-clamp-2 break-words whitespace-normal text-xs leading-relaxed text-(--brand-muted)"
+              title={project.summary}
+            >
               {project.summary}
             </p>
-            <p className="font-mono text-xs text-(--brand-muted)">
+            <p
+              className="truncate font-mono text-xs text-(--brand-muted)"
+              title={`/projects/${project.slug}`}
+            >
               /projects/{project.slug}
             </p>
           </div>
@@ -95,10 +111,10 @@ export function getProjectColumns({
               to="/dashboard/projects/$id"
               params={{ id: project.id }}
               className="inline-grid size-9 place-items-center rounded-lg border border-(--brand-line) bg-surface-strong text-(--brand-ink) transition hover:border-(--brand-orange) hover:text-(--brand-orange-deep)"
-              title={`${copy.common.edit} ${project.title}`}
+              title={`${common.edit} ${project.title}`}
             >
               <span className="sr-only">
-                {copy.common.edit} {project.title}
+                {common.edit} {project.title}
               </span>
               <Edit3 aria-hidden="true" className="size-4" />
             </Link>
@@ -106,10 +122,10 @@ export function getProjectColumns({
               type="button"
               onClick={() => void onDeleteProject(project)}
               className="inline-grid size-9 place-items-center rounded-lg border border-red-500/30 bg-red-500/10 text-red-700 transition hover:-translate-y-0.5 dark:text-red-200"
-              title={`${copy.common.delete} ${project.title}`}
+              title={`${common.delete} ${project.title}`}
             >
               <span className="sr-only">
-                {copy.common.delete} {project.title}
+                {common.delete} {project.title}
               </span>
               <Trash2 aria-hidden="true" className="size-4" />
             </button>
@@ -120,7 +136,7 @@ export function getProjectColumns({
   ]
 }
 
-type TableCopy = ReturnType<typeof getDashboardCopy>['projects']['table']
+type TableCopy = ReturnType<typeof getProjectsCopy>['dashboard']['table']
 
 function StatusBadge({
   value,

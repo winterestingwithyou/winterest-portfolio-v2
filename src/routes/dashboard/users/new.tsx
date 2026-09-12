@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { getDashboardSession } from '#/features/auth/server-functions'
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getUsersCopy } from '#/features/users/copy'
 import { DashboardUserNewPage } from '#/features/users/pages/dashboard-user-new-page'
 import { createRouteMeta } from '#/lib/metadata'
 
@@ -15,11 +15,11 @@ export const Route = createFileRoute('/dashboard/users/new')({
     }
   },
   head: ({ matches }) => {
-    const copy = getDashboardCopy()
+    const copy = getUsersCopy()
     return createRouteMeta({
       matches,
-      title: `${copy.users.new} · Dashboard`,
-      description: copy.users.newDescription,
+      title: `${copy.new} · Dashboard`,
+      description: copy.newDescription,
     })
   },
   component: DashboardUserNewPage,

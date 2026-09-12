@@ -5,6 +5,7 @@ import {
   canManageUsers,
   isUserRole,
 } from '#/features/auth/roles'
+import { projectsCopy } from '#/features/projects/copy'
 import { dashboardCopy } from '../copy'
 
 describe('dashboard navigation & polish UX', () => {
@@ -14,8 +15,8 @@ describe('dashboard navigation & polish UX', () => {
   })
 
   it('provides localized createFirst CTA copy in projects for both languages', () => {
-    expect(dashboardCopy.en.projects.createFirst).toBe('Create first project')
-    expect(dashboardCopy.id.projects.createFirst).toBe('Buat project pertama')
+    expect(projectsCopy.en.dashboard.createFirst).toBe('Create first project')
+    expect(projectsCopy.id.dashboard.createFirst).toBe('Buat project pertama')
   })
 
   it('filters system navigation based on RBAC permissions for editor, admin, and owner', () => {

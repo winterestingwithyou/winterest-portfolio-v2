@@ -6,12 +6,13 @@ import { Button } from '#/components/ui/button'
 import { canManageSettings, isUserRole } from '#/features/auth/roles'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { SettingsEditorForm } from '#/features/settings/components/form/settings-editor-form'
+import { getSettingsCopy } from '#/features/settings/copy'
 import { settingsQueryOptions } from '#/features/settings/query-options'
 import { sessionQueryOptions } from '#/features/users/query-options'
 
 export function SettingsPage() {
-  const copy = getDashboardCopy()
-  const settingsCopy = copy.settings
+  const commonCopy = getDashboardCopy().common
+  const settingsCopy = getSettingsCopy()
 
   const { data: currentUser } = useSuspenseQuery(sessionQueryOptions.current())
   const {
@@ -38,7 +39,7 @@ export function SettingsPage() {
           <RefreshCw
             className={`mr-2 size-3.5 ${isFetching ? 'animate-spin' : ''}`}
           />
-          {copy.common.refresh}
+          {commonCopy.refresh}
         </Button>
       }
     >

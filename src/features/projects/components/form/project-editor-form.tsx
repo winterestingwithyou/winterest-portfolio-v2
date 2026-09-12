@@ -48,6 +48,7 @@ import { TechIcon } from '#/components/ui/tech-icon'
 import { MarkdownTextarea } from '#/components/ui/markdown-textarea'
 import { ImageUploader } from '#/components/media/image-uploader'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getProjectsCopy } from '#/features/projects/copy'
 import {
   useCreateProject,
   useDeleteProject,
@@ -145,9 +146,10 @@ function getTranslation(
 }
 
 export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
-  const copy = getDashboardCopy()
+  const commonCopy = getDashboardCopy().common
+  const projectCopy = getProjectsCopy().dashboard
   const locale = getLocale() === 'id' ? 'id' : 'en'
-  const formCopy = copy.projects.form
+  const formCopy = projectCopy.form
   const navigate = useNavigate()
   const [isPending, setIsPending] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
@@ -227,14 +229,12 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         }
 
         setMessage(
-          mode === 'create'
-            ? copy.common.draftCreated
-            : copy.common.changesSaved,
+          mode === 'create' ? commonCopy.draftCreated : commonCopy.changesSaved,
         )
         isSubmittingSuccessRef.current = true
         await navigate({ to: '/dashboard/projects' })
       } catch (caught) {
-        setError(getApiErrorMessage(caught, copy.projects.saveError))
+        setError(getApiErrorMessage(caught, projectCopy.saveError))
       } finally {
         setIsPending(false)
       }
@@ -264,7 +264,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
       isSubmittingSuccessRef.current = true
       await navigate({ to: '/dashboard/projects' })
     } catch (caught) {
-      setError(getApiErrorMessage(caught, copy.projects.deleteSaveError))
+      setError(getApiErrorMessage(caught, projectCopy.deleteSaveError))
       setIsDeleteDialogOpen(false)
     } finally {
       setIsPending(false)
@@ -298,7 +298,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
           >
             <Link to="/dashboard/projects">
               <ArrowLeft className="size-4" />
-              {copy.common.back}
+              {commonCopy.back}
             </Link>
           </Button>
 
@@ -312,7 +312,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               className="gap-2 bg-red-600 font-semibold text-white hover:bg-red-700 disabled:opacity-50"
             >
               <Trash2 className="size-4" />
-              {isPending ? copy.common.delete + '...' : copy.common.delete}
+              {isPending ? commonCopy.delete + '...' : commonCopy.delete}
             </Button>
           )}
         </div>
@@ -672,7 +672,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               children={(field) => (
                 <Field>
                   <div className="flex items-center justify-between gap-2">
-                    <FieldLabel>{copy.projects.technologiesTitle}</FieldLabel>
+                    <FieldLabel>{projectCopy.technologiesTitle}</FieldLabel>
                     <Button
                       type="button"
                       variant="outline"
@@ -681,13 +681,13 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                       className="h-7 cursor-pointer gap-1.5 rounded-full border border-(--brand-line) bg-card px-3 text-xs font-semibold text-(--brand-orange-deep) shadow-2xs transition-all hover:border-(--brand-orange) hover:bg-(--brand-orange-soft)/20 hover:text-(--brand-orange)"
                     >
                       <Plus className="size-3.5 text-(--brand-orange)" />
-                      {copy.projects.addTechnologyBtn}
+                      {projectCopy.addTechnologyBtn}
                     </Button>
                   </div>
                   {availableTechnologies.length === 0 ? (
                     <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-(--brand-line) bg-(--brand-orange-soft)/5 p-6 text-center">
                       <p className="mb-3 text-xs text-(--brand-muted)">
-                        {copy.projects.noTechnologies}
+                        {projectCopy.noTechnologies}
                       </p>
                       <Button
                         type="button"
@@ -696,7 +696,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                         className="h-9 cursor-pointer gap-1.5 rounded-full bg-(--brand-orange) px-4 text-xs font-bold text-white shadow-xs transition hover:bg-(--brand-orange-deep)"
                       >
                         <Plus className="size-4" />
-                        {copy.projects.addTechnologyEmpty}
+                        {projectCopy.addTechnologyEmpty}
                       </Button>
                     </div>
                   ) : (
@@ -918,7 +918,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 className="w-full sm:w-auto min-h-11 sm:min-h-9 gap-2 rounded-xl sm:rounded-full bg-red-600 font-bold text-white hover:bg-red-700 disabled:opacity-50"
               >
                 <Trash2 className="size-4" />
-                {isPending ? copy.common.saving : copy.common.delete}
+                {isPending ? commonCopy.saving : commonCopy.delete}
               </Button>
 
               <AlertDialog
@@ -928,10 +928,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                 <AlertDialogContent>
                   <AlertDialogHeader>
                     <AlertDialogTitle>
-                      {copy.projects.deleteTitle}
+                      {projectCopy.deleteTitle}
                     </AlertDialogTitle>
                     <AlertDialogDescription>
-                      {copy.projects.deleteConfirm(
+                      {projectCopy.deleteConfirm(
                         project.translations?.en?.title ||
                           project.translations?.id?.title ||
                           project.slug ||
@@ -941,7 +941,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel disabled={isPending}>
-                      {copy.common.cancel}
+                      {commonCopy.cancel}
                     </AlertDialogCancel>
                     <AlertDialogAction
                       variant="destructive"
@@ -951,7 +951,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                         void handleDelete()
                       }}
                     >
-                      {isPending ? copy.common.saving : copy.common.delete}
+                      {isPending ? commonCopy.saving : commonCopy.delete}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
@@ -968,7 +968,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
               asChild
               className="w-full sm:w-auto min-h-11 sm:min-h-9 order-2 sm:order-1 rounded-xl sm:rounded-full border-(--brand-line) font-bold text-(--brand-ink) hover:bg-surface-soft"
             >
-              <Link to="/dashboard/projects">{copy.common.back}</Link>
+              <Link to="/dashboard/projects">{commonCopy.back}</Link>
             </Button>
 
             <Button
@@ -978,10 +978,10 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
             >
               <Save className="size-4" />
               {isPending
-                ? copy.common.saving
+                ? commonCopy.saving
                 : mode === 'create'
-                  ? copy.common.createDraft
-                  : copy.common.saveChanges}
+                  ? commonCopy.createDraft
+                  : commonCopy.saveChanges}
             </Button>
           </div>
         </div>

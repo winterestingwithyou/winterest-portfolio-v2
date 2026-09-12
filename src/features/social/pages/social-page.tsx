@@ -6,13 +6,14 @@ import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { Button } from '#/components/ui/button'
 import { canManageContent, isUserRole } from '#/features/auth/roles'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getSocialCopy } from '#/features/social/copy'
 import { socialQueryOptions } from '#/features/social/query-options'
 import { SocialList } from '#/features/social/social-list'
 import { sessionQueryOptions } from '#/features/users/query-options'
 
 export function SocialPage() {
-  const copy = getDashboardCopy()
-  const socialCopy = copy.social
+  const commonCopy = getDashboardCopy().common
+  const socialCopy = getSocialCopy()
 
   const [createDialogOpen, setCreateDialogOpen] = useState(false)
 
@@ -42,7 +43,7 @@ export function SocialPage() {
             <RefreshCw
               className={`mr-2 size-3.5 ${isFetching ? 'animate-spin' : ''}`}
             />
-            {copy.common.refresh}
+            {commonCopy.refresh}
           </Button>
 
           {canEdit && (

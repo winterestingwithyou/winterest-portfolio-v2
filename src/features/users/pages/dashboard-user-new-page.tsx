@@ -1,10 +1,9 @@
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
-import { getDashboardCopy } from '#/features/dashboard/copy'
 import { UserEditorForm } from '#/features/users/components/form/user-editor-form'
+import { getUsersCopy } from '#/features/users/copy'
 
 export function DashboardUserNewPage() {
-  const copy = getDashboardCopy()
-  const userCopy = copy.users
+  const userCopy = getUsersCopy()
 
   return (
     <DashboardShell

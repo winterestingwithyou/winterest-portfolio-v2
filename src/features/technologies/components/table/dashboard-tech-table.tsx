@@ -26,6 +26,7 @@ import {
   TableRow,
 } from '#/components/ui/table'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getTechnologiesCopy } from '#/features/technologies/copy'
 import { getTechColumns } from '#/features/technologies/components/table/dashboard-tech-table-columns'
 import type {
   CategoryRecord,
@@ -60,8 +61,9 @@ export function DashboardTechTable({
   onPageChange,
   pageSize = 10,
 }: DashboardTechTableProps) {
-  const copy = getDashboardCopy()
-  const tableCopy = copy.stack.techTable
+  const copy = getTechnologiesCopy().dashboard
+  const common = getDashboardCopy().common
+  const tableCopy = copy.techTable
   const categoryMap = useMemo(() => getCategoryMap(categories), [categories])
 
   const [internalSearch, setInternalSearch] = useState(search)
@@ -177,7 +179,7 @@ export function DashboardTechTable({
           <SearchInput
             value={activeSearch}
             onChange={handleSearch}
-            placeholder="Search technologies..."
+            placeholder={tableCopy.searchPlaceholder}
             className="w-full"
           />
         </div>
@@ -185,10 +187,10 @@ export function DashboardTechTable({
         <div className="flex items-center gap-2">
           <Select value={activeCategory} onValueChange={handleCategory}>
             <SelectTrigger className="w-48 border-(--brand-line) bg-(--surface-card)">
-              <SelectValue placeholder="All Categories" />
+              <SelectValue placeholder={tableCopy.allCategories} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">All Categories</SelectItem>
+              <SelectItem value="all">{tableCopy.allCategories}</SelectItem>
               {categories.map((cat) => (
                 <SelectItem key={cat.id} value={cat.id}>
                   {cat.name}
@@ -231,13 +233,13 @@ export function DashboardTechTable({
                     </div>
                     <p className="text-sm font-semibold text-(--brand-ink)">
                       {activeSearch || activeCategory !== 'all'
-                        ? copy.stack.noMatchingTech
-                        : copy.stack.techTable.empty}
+                        ? copy.noMatchingTech
+                        : tableCopy.empty}
                     </p>
                     <p className="mt-1 max-w-xs text-xs text-(--brand-muted)">
                       {activeSearch || activeCategory !== 'all'
-                        ? copy.common.noResultsFilterDescription
-                        : copy.stack.techTable.empty}
+                        ? common.noResultsFilterDescription
+                        : tableCopy.empty}
                     </p>
                     {activeSearch || activeCategory !== 'all' ? (
                       <button
@@ -249,7 +251,7 @@ export function DashboardTechTable({
                         className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-(--brand-orange-soft) px-3 py-1.5 text-xs font-semibold text-(--brand-orange-deep) transition hover:bg-(--brand-orange) hover:text-white cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-(--brand-orange)"
                       >
                         <RotateCcw className="size-3" />
-                        {copy.common.resetFilters}
+                        {common.resetFilters}
                       </button>
                     ) : null}
                   </div>
@@ -282,7 +284,7 @@ export function DashboardTechTable({
           pageSize={pageSize}
           showItemCount
           onPageChange={handlePage}
-          itemLabel={copy.stack.technologiesLabel}
+          itemLabel={copy.technologiesLabel}
         />
       </div>
     </div>

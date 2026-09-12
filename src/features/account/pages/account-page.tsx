@@ -4,12 +4,13 @@ import { RefreshCw } from 'lucide-react'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { Button } from '#/components/ui/button'
 import { AccountEditorForm } from '#/features/account/components/form/account-editor-form'
+import { getAccountCopy } from '#/features/account/copy'
 import { accountQueryOptions } from '#/features/account/query-options'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 
 export function AccountPage() {
-  const copy = getDashboardCopy()
-  const accountCopy = copy.account
+  const commonCopy = getDashboardCopy().common
+  const accountCopy = getAccountCopy()
 
   const {
     data: profile,
@@ -32,7 +33,7 @@ export function AccountPage() {
           <RefreshCw
             className={`mr-2 size-3.5 ${isFetching ? 'animate-spin' : ''}`}
           />
-          {copy.common.refresh}
+          {commonCopy.refresh}
         </Button>
       }
     >
