@@ -19,6 +19,7 @@ import {
   TableRow,
 } from '#/components/ui/table'
 import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getTechnologiesCopy } from '#/features/technologies/copy'
 import { getCategoryColumns } from '#/features/technologies/components/table/dashboard-categories-table-columns'
 import type { CategoryRecord } from '#/features/technologies/components/table/dashboard-categories-table-features'
 
@@ -43,8 +44,9 @@ export function DashboardCategoriesTable({
   onPageChange,
   pageSize = 10,
 }: DashboardCategoriesTableProps) {
-  const copy = getDashboardCopy()
-  const tableCopy = copy.stack.categoriesTable
+  const copy = getTechnologiesCopy().dashboard
+  const common = getDashboardCopy().common
+  const tableCopy = copy.categoriesTable
 
   const [internalSearch, setInternalSearch] = useState(search)
   const [internalPage, setInternalPage] = useState(page)
@@ -136,7 +138,7 @@ export function DashboardCategoriesTable({
           <SearchInput
             value={activeSearch}
             onChange={handleSearch}
-            placeholder="Search categories..."
+            placeholder={tableCopy.searchPlaceholder}
             className="w-full"
           />
         </div>
@@ -174,13 +176,13 @@ export function DashboardCategoriesTable({
                     </div>
                     <p className="text-sm font-semibold text-(--brand-ink)">
                       {activeSearch
-                        ? copy.stack.noMatchingCategories
-                        : copy.stack.categoriesTable.empty}
+                        ? copy.noMatchingCategories
+                        : tableCopy.empty}
                     </p>
                     <p className="mt-1 max-w-xs text-xs text-(--brand-muted)">
                       {activeSearch
-                        ? copy.common.noResultsFilterDescription
-                        : copy.stack.categoriesTable.empty}
+                        ? common.noResultsFilterDescription
+                        : tableCopy.empty}
                     </p>
                     {activeSearch ? (
                       <button
@@ -189,7 +191,7 @@ export function DashboardCategoriesTable({
                         className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-(--brand-orange-soft) px-3 py-1.5 text-xs font-semibold text-(--brand-orange-deep) transition hover:bg-(--brand-orange) hover:text-white cursor-pointer focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-(--brand-orange)"
                       >
                         <RotateCcw className="size-3" />
-                        {copy.common.resetFilters}
+                        {common.resetFilters}
                       </button>
                     ) : null}
                   </div>
@@ -222,7 +224,7 @@ export function DashboardCategoriesTable({
           pageSize={pageSize}
           showItemCount
           onPageChange={handlePage}
-          itemLabel={copy.stack.categoriesLabel}
+          itemLabel={copy.categoriesLabel}
         />
       </div>
     </div>

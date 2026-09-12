@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getSocialCopy } from '#/features/social/copy'
 import { SocialPage } from '#/features/social/pages/social-page'
 import { socialQueryOptions } from '#/features/social/query-options'
 import { sessionQueryOptions } from '#/features/users/query-options'
@@ -14,11 +14,11 @@ export const Route = createFileRoute('/dashboard/social/')({
     ])
   },
   head: ({ matches }) => {
-    const copy = getDashboardCopy()
+    const copy = getSocialCopy()
     return createRouteMeta({
       matches,
-      title: `${copy.social.title} · Dashboard`,
-      description: copy.social.description,
+      title: `${copy.title} · Dashboard`,
+      description: copy.description,
     })
   },
   component: SocialPage,

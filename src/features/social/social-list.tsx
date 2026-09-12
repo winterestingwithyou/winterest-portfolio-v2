@@ -21,7 +21,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '#/components/ui/dialog'
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getSocialCopy } from '#/features/social/copy'
 
 import { useDeleteSocialLink, useUpdateSocialLink } from './hooks'
 import { SocialEditorDialog } from './social-editor-dialog'
@@ -41,8 +41,7 @@ export function SocialList({
   createDialogOpen = false,
   onCreateDialogOpenChange,
 }: SocialListProps) {
-  const copy = getDashboardCopy()
-  const socialCopy = copy.social
+  const socialCopy = getSocialCopy()
 
   const [editLink, setEditLink] = useState<SocialLink | null>(null)
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false)

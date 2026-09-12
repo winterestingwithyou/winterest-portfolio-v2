@@ -37,7 +37,8 @@ import {
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
 import type { UserRole } from '#/db/schema'
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getAccountCopy } from '#/features/account/copy'
+import { getUsersCopy } from '#/features/users/copy'
 
 import {
   useChangeAccountPassword,
@@ -56,9 +57,8 @@ type AccountEditorFormProps = {
 }
 
 export function AccountEditorForm({ profile }: AccountEditorFormProps) {
-  const copy = getDashboardCopy()
-  const accountCopy = copy.account
-  const userCopy = copy.users
+  const accountCopy = getAccountCopy()
+  const userCopy = getUsersCopy()
 
   const [activeTab, setActiveTab] = useState<AccountTab>('profile')
   const [profileSuccess, setProfileSuccess] = useState<string | null>(null)

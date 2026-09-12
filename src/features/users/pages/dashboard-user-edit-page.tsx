@@ -5,6 +5,7 @@ import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { Button } from '#/components/ui/button'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { UserEditorForm } from '#/features/users/components/form/user-editor-form'
+import { getUsersCopy } from '#/features/users/copy'
 import {
   sessionQueryOptions,
   userQueryOptions,
@@ -15,8 +16,8 @@ type DashboardUserEditPageProps = {
 }
 
 export function DashboardUserEditPage({ id }: DashboardUserEditPageProps) {
-  const copy = getDashboardCopy()
-  const userCopy = copy.users
+  const commonCopy = getDashboardCopy().common
+  const userCopy = getUsersCopy()
 
   const {
     data: targetUser,
@@ -41,7 +42,7 @@ export function DashboardUserEditPage({ id }: DashboardUserEditPageProps) {
           <RefreshCw
             className={`size-3.5 ${isFetching ? 'animate-spin' : ''}`}
           />
-          {copy.common.refresh}
+          {commonCopy.refresh}
         </Button>
       }
     >

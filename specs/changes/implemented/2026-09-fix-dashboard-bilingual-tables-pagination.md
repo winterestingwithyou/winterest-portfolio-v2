@@ -2,7 +2,7 @@
 
 - **Feature ID**: `fix-dashboard-bilingual-tables-pagination`
 - **Date**: `2026-09-11`
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - `/dashboard/projects`
   - `/dashboard/stack`
@@ -263,14 +263,14 @@ function PaginationNext({
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] `PaginationPrevious` and `PaginationNext` in `pagination.tsx` accept and render `children`.
-- [ ] In Indonesian mode (`id`), pagination buttons display `Sebelumnya` and `Berikutnya`.
-- [ ] In English mode (`en`), pagination buttons display `Previous` and `Next`.
-- [ ] Projects table status filter renders localized labels (`Semua Status`, `Dipublikasikan`, `Sedang Dikerjakan`, `Draft` in ID).
-- [ ] Technologies table renders localized search placeholder and `Semua Kategori` in ID.
-- [ ] Categories table renders localized search placeholder in ID.
-- [ ] Social Link editor dialog renders localized platform placeholder (`Select platform` in EN, `Pilih platform` in ID).
-- [ ] Social Link editor dialog renders localized "Already added" badge in platform dropdown (`(Already added)` in EN, `(Sudah ditambahkan)` in ID).
-- [ ] TypeScript checks pass cleanly (`bun run check`).
-- [ ] Linter passes cleanly (`bun run lint`).
-- [ ] Production build succeeds (`bun run build`).
+- [x] `PaginationPrevious` and `PaginationNext` in `pagination.tsx` accept and render `children`.
+- [x] In Indonesian mode (`id`), pagination buttons display `Sebelumnya` and `Berikutnya`.
+- [x] In English mode (`en`), pagination buttons display `Previous` and `Next`.
+- [x] Projects table status filter renders localized labels (`Semua Status`, `Dipublikasikan`, `Sedang Dikerjakan`, `Draft` in ID).
+- [x] Technologies table renders localized search placeholder and `Semua Kategori` in ID.
+- [x] Categories table renders localized search placeholder in ID.
+- [x] Social Link editor dialog renders localized platform placeholder (`Select platform` in EN, `Pilih platform` in ID).
+- [x] Social Link editor dialog renders localized "Already added" badge in platform dropdown (`(Already added)` in EN, `(Sudah ditambahkan)` in ID).
+- [x] TypeScript checks pass cleanly (`bun run check`).
+- [x] Linter passes cleanly (`bun run lint`).
+- [x] Production build succeeds (`bun run build`).

@@ -22,7 +22,7 @@ import {
   FieldLabel,
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getTechnologiesCopy } from '#/features/technologies/copy'
 import {
   useCreateCategory,
   useDeleteCategory,
@@ -43,8 +43,8 @@ export function CategoryEditorForm({
   mode,
   initialData,
 }: CategoryEditorFormProps) {
-  const copy = getDashboardCopy()
-  const formCopy = copy.stack.categoryForm
+  const dashboardCopy = getTechnologiesCopy().dashboard
+  const formCopy = dashboardCopy.categoryForm
   const locale = getLocale() === 'id' ? 'id' : 'en'
   const navigate = useNavigate()
   const [isSaving, setIsSaving] = useState(false)
@@ -132,7 +132,7 @@ export function CategoryEditorForm({
           className="inline-flex items-center gap-2 text-sm font-bold text-(--brand-orange-deep) no-underline hover:-translate-x-0.5 transition"
         >
           <ArrowLeft aria-hidden="true" className="size-4" />
-          {copy.stack.actions.backToStack}
+          {dashboardCopy.actions.backToStack}
         </Link>
       </div>
 

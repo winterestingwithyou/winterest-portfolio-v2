@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getProjectsCopy } from '#/features/projects/copy'
 import { DashboardProjectsPage } from '#/features/projects/pages/dashboard-projects-page'
 import { projectQueryOptions } from '#/features/projects/query-options'
 import { createRouteMeta } from '#/lib/metadata'
@@ -17,11 +17,11 @@ export const Route = createFileRoute('/dashboard/projects/')({
   loader: ({ context: { queryClient } }) =>
     queryClient.ensureQueryData(projectQueryOptions.list()),
   head: ({ matches }) => {
-    const copy = getDashboardCopy()
+    const copy = getProjectsCopy().dashboard
     return createRouteMeta({
       matches,
-      title: `${copy.projects.title} · Dashboard`,
-      description: copy.projects.description,
+      title: `${copy.title} · Dashboard`,
+      description: copy.description,
     })
   },
   component: DashboardProjectsPage,

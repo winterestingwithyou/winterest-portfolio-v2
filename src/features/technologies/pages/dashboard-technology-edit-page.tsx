@@ -4,6 +4,7 @@ import { RefreshCw } from 'lucide-react'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { TechnologyEditorForm } from '#/features/technologies/components/form/technology-editor-form'
+import { getTechnologiesCopy } from '#/features/technologies/copy'
 import { techQueryOptions } from '#/features/technologies/query-options'
 
 type DashboardTechnologyEditPageProps = {
@@ -13,7 +14,8 @@ type DashboardTechnologyEditPageProps = {
 export function DashboardTechnologyEditPage({
   id,
 }: DashboardTechnologyEditPageProps) {
-  const copy = getDashboardCopy()
+  const commonCopy = getDashboardCopy().common
+  const copy = getTechnologiesCopy().dashboard
   const {
     data: tech,
     refetch,
@@ -22,8 +24,8 @@ export function DashboardTechnologyEditPage({
 
   return (
     <DashboardShell
-      title={`${copy.stack.editTechnology}: ${tech.name}`}
-      description={copy.stack.editTechnologyDesc}
+      title={`${copy.editTechnology}: ${tech.name}`}
+      description={copy.editTechnologyDesc}
       actions={
         <button
           type="button"
@@ -35,7 +37,7 @@ export function DashboardTechnologyEditPage({
             aria-hidden="true"
             className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
           />
-          {copy.common.refresh}
+          {commonCopy.refresh}
         </button>
       }
     >

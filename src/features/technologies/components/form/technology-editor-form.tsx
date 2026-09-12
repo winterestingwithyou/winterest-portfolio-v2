@@ -27,7 +27,7 @@ import {
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
 import { TechIcon } from '#/components/ui/tech-icon'
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getTechnologiesCopy } from '#/features/technologies/copy'
 import {
   useCreateTechnology,
   useDeleteTechnology,
@@ -71,8 +71,8 @@ export function TechnologyEditorForm({
   mode,
   initialData,
 }: TechnologyEditorFormProps) {
-  const copy = getDashboardCopy()
-  const formCopy = copy.stack.techForm
+  const dashboardCopy = getTechnologiesCopy().dashboard
+  const formCopy = dashboardCopy.techForm
   const locale = getLocale() === 'id' ? 'id' : 'en'
   const navigate = useNavigate()
   const { data: categories = [], isLoading: isLoadingCategories } = useQuery(
@@ -211,7 +211,7 @@ export function TechnologyEditorForm({
             className="inline-flex items-center gap-2 text-sm font-bold text-(--brand-orange-deep) no-underline hover:-translate-x-0.5 transition"
           >
             <ArrowLeft aria-hidden="true" className="size-4" />
-            {copy.stack.actions.backToStack}
+            {dashboardCopy.actions.backToStack}
           </Link>
         </div>
 

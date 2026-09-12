@@ -2,7 +2,7 @@
 
 - **Feature ID**: `arch-dashboard-copy-colocation`
 - **Date**: 2026-09-11
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - All Dashboard Routes (`/dashboard/*`)
 - **Target Modules**:
@@ -175,8 +175,8 @@ Perubahan ini murni berupa refaktor teks statis dan tidak mengubah logika valida
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] `src/features/dashboard/copy.ts` berhasil dipangkas hingga hanya memuat `shell`, `overview`, dan `common` (~150 baris).
-- [ ] Teks dashboard dipindahkan ke fitur domain masing-masing:
+- [x] `src/features/dashboard/copy.ts` berhasil dipangkas hingga hanya memuat `shell`, `overview`, dan `common` (~150 baris).
+- [x] Teks dashboard dipindahkan ke fitur domain masing-masing:
   - `src/features/projects/copy.ts`
   - `src/features/technologies/copy.ts`
   - `src/features/settings/copy.ts`
@@ -184,10 +184,10 @@ Perubahan ini murni berupa refaktor teks statis dan tidak mengubah logika valida
   - `src/features/users/copy.ts`
   - `src/features/media/copy.ts`
   - `src/features/social/copy.ts`
-- [ ] Seluruh komponen dashboard terkait berhasil diperbarui impor copy-nya ke modul fiturnya sendiri.
-- [ ] Aturan proyek di `.agents/rules/09-copywriting-data-standards.md` dan `.agents/rules/01-identity-branding-copy.md` diperbarui.
-- [ ] Typecheck lulus 100% tanpa error (`bun run check`).
-- [ ] Seluruh pengujian unit berjalan sukses (`bun run test`).
-- [ ] Linter & formatter bersih (`bun run lint`, `bun run format`).
-- [ ] Production build berhasil (`bun run build`).
-- [ ] Knowledge graph diperbarui (`graphify update .`).
+- [x] Seluruh komponen dashboard terkait berhasil diperbarui impor copy-nya ke modul fiturnya sendiri.
+- [x] Aturan proyek di `.agents/rules/09-copywriting-data-standards.md` dan `.agents/rules/01-identity-branding-copy.md` diperbarui.
+- [x] Typecheck lulus 100% tanpa error (`bun run check`).
+- [x] Seluruh pengujian unit berjalan sukses (`bun run test`).
+- [x] Linter & formatter bersih (`bun run lint`, `bun run format`).
+- [x] Production build berhasil (`bun run build`).
+- [x] Knowledge graph diperbarui (`graphify update .`).

@@ -18,7 +18,8 @@ export function getAppBaseUrl(): string {
     (typeof process !== 'undefined' &&
       (process.env.PUBLIC_APP_URL || process.env.VITE_PUBLIC_APP_URL)) ||
     (typeof import.meta !== 'undefined' &&
-      (import.meta.env.PUBLIC_APP_URL || import.meta.env.VITE_PUBLIC_APP_URL)) ||
+      (import.meta.env.PUBLIC_APP_URL ||
+        import.meta.env.VITE_PUBLIC_APP_URL)) ||
     (typeof window !== 'undefined' ? window.location.origin : '') ||
     ''
 

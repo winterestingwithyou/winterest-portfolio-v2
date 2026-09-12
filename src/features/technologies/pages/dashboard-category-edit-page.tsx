@@ -4,6 +4,7 @@ import { RefreshCw } from 'lucide-react'
 import { DashboardShell } from '#/components/dashboard/dashboard-shell'
 import { getDashboardCopy } from '#/features/dashboard/copy'
 import { CategoryEditorForm } from '#/features/technologies/components/form/category-editor-form'
+import { getTechnologiesCopy } from '#/features/technologies/copy'
 import { categoryQueryOptions } from '#/features/technologies/query-options'
 
 type DashboardCategoryEditPageProps = {
@@ -13,7 +14,8 @@ type DashboardCategoryEditPageProps = {
 export function DashboardCategoryEditPage({
   id,
 }: DashboardCategoryEditPageProps) {
-  const copy = getDashboardCopy()
+  const commonCopy = getDashboardCopy().common
+  const copy = getTechnologiesCopy().dashboard
   const {
     data: category,
     refetch,
@@ -22,8 +24,8 @@ export function DashboardCategoryEditPage({
 
   return (
     <DashboardShell
-      title={`${copy.stack.editCategory}: ${category.name}`}
-      description={copy.stack.editCategoryDesc}
+      title={`${copy.editCategory}: ${category.name}`}
+      description={copy.editCategoryDesc}
       actions={
         <button
           type="button"
@@ -35,7 +37,7 @@ export function DashboardCategoryEditPage({
             aria-hidden="true"
             className={`size-4 ${isFetching ? 'animate-spin' : ''}`}
           />
-          {copy.common.refresh}
+          {commonCopy.refresh}
         </button>
       }
     >

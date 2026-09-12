@@ -21,7 +21,7 @@ import {
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
 import { TechIcon } from '#/components/ui/tech-icon'
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getTechnologiesCopy } from '#/features/technologies/copy'
 import { useCreateTechnology } from '#/features/technologies/hooks'
 import type { TechnologyWithCategories } from '#/features/technologies/queries'
 import { categoryQueryOptions } from '#/features/technologies/query-options'
@@ -43,8 +43,7 @@ export function TechnologyCreateDialog({
   onOpenChange,
   onSuccess,
 }: TechnologyCreateDialogProps) {
-  const copy = getDashboardCopy()
-  const techFormCopy = copy.stack.techForm
+  const techFormCopy = getTechnologiesCopy().dashboard.techForm
   const locale = getLocale() === 'id' ? 'id' : 'en'
 
   const [iconSource, setIconSource] = useState<'simpleicons' | 'custom'>(

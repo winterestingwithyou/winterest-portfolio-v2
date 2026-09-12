@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
 
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getMediaCopy } from '#/features/media/copy'
 import { MediaPage } from '#/features/media/pages/media-page'
 import { mediaQueryOptions } from '#/features/media/query-options'
 import { createRouteMeta } from '#/lib/metadata'
@@ -28,11 +28,11 @@ export const Route = createFileRoute('/dashboard/media')({
       }),
     ),
   head: ({ matches }) => {
-    const copy = getDashboardCopy()
+    const copy = getMediaCopy()
     return createRouteMeta({
       matches,
-      title: `${copy.media.title} · Dashboard`,
-      description: copy.media.description,
+      title: `${copy.title} · Dashboard`,
+      description: copy.description,
     })
   },
   component: MediaPage,

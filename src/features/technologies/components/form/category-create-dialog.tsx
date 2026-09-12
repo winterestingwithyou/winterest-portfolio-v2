@@ -19,7 +19,7 @@ import {
   FieldLabel,
 } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
-import { getDashboardCopy } from '#/features/dashboard/copy'
+import { getTechnologiesCopy } from '#/features/technologies/copy'
 import { useCreateCategory } from '#/features/technologies/hooks'
 import type { CategoryRecord } from '#/features/technologies/queries'
 import { getCategoryFormSchema } from '#/features/technologies/validation'
@@ -40,9 +40,9 @@ export function CategoryCreateDialog({
   defaultSortOrder = 0,
   onSuccess,
 }: CategoryCreateDialogProps) {
-  const copy = getDashboardCopy()
-  const techFormCopy = copy.stack.techForm
-  const categoryFormCopy = copy.stack.categoryForm
+  const stackCopy = getTechnologiesCopy().dashboard
+  const techFormCopy = stackCopy.techForm
+  const categoryFormCopy = stackCopy.categoryForm
   const locale = getLocale() === 'id' ? 'id' : 'en'
 
   const [isSaving, setIsSaving] = useState(false)
