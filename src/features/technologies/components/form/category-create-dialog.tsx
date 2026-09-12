@@ -1,6 +1,6 @@
 import { useForm } from '@tanstack/react-form'
 import { AlertCircle, FolderPlus, Loader2, Plus } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button } from '#/components/ui/button'
 import {
@@ -37,7 +37,7 @@ type CategoryCreateDialogProps = {
 export function CategoryCreateDialog({
   open,
   onOpenChange,
-  defaultSortOrder = 0,
+  defaultSortOrder = 1,
   onSuccess,
 }: CategoryCreateDialogProps) {
   const stackCopy = getTechnologiesCopy().dashboard
@@ -89,6 +89,12 @@ export function CategoryCreateDialog({
     }
     onOpenChange(nextOpen)
   }
+
+  useEffect(() => {
+    if (open) {
+      form.setFieldValue('sortOrder', defaultSortOrder)
+    }
+  }, [open, defaultSortOrder, form])
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>

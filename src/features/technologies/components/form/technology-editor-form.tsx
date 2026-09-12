@@ -38,6 +38,7 @@ import type {
   CategoryRecord,
   TechnologyWithCategories,
 } from '#/features/technologies/queries'
+import { getNextCategorySortOrder } from '#/features/technologies/utils'
 import { CategoryCreateDialog } from './category-create-dialog'
 import { getApiErrorMessage } from '#/lib/api-client'
 import { cn, slugify } from '#/lib/utils'
@@ -670,7 +671,7 @@ export function TechnologyEditorForm({
       <CategoryCreateDialog
         open={isCategoryDialogOpen}
         onOpenChange={setIsCategoryDialogOpen}
-        defaultSortOrder={categories.length}
+        defaultSortOrder={getNextCategorySortOrder(categories)}
         onSuccess={handleCategoryCreated}
       />
     </>

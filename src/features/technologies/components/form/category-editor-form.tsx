@@ -37,11 +37,13 @@ import { getCategoryFormSchema } from '#/features/technologies/validation'
 type CategoryEditorFormProps = {
   mode: 'create' | 'edit'
   initialData?: CategoryRecord | null
+  defaultSortOrder?: number
 }
 
 export function CategoryEditorForm({
   mode,
   initialData,
+  defaultSortOrder = 1,
 }: CategoryEditorFormProps) {
   const dashboardCopy = getTechnologiesCopy().dashboard
   const formCopy = dashboardCopy.categoryForm
@@ -60,7 +62,7 @@ export function CategoryEditorForm({
     defaultValues: {
       name: initialData?.name ?? '',
       slug: initialData?.slug ?? '',
-      sortOrder: initialData?.sortOrder ?? 0,
+      sortOrder: initialData?.sortOrder ?? defaultSortOrder,
     },
     validators: {
       onSubmit: getCategoryFormSchema(locale),

@@ -2,7 +2,7 @@
 
 - **Feature ID**: `feat-category-auto-sort-order`
 - **Date**: `2026-09-11`
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - `/dashboard/stack/categories/new`
 - **Target Modules**:
@@ -83,7 +83,7 @@ src/
           technology-editor-form.tsx       # Harmonize CategoryCreateDialog defaultSortOrder
       pages/
         dashboard-category-new-page.tsx    # useSuspenseQuery + getNextCategorySortOrder
-      utils.ts (or features.ts)            # getNextCategorySortOrder helper
+      utils.ts                             # getNextCategorySortOrder helper
       __tests__/
         sort-order.test.ts                 # Unit tests for sort order calculations
 ```
@@ -94,7 +94,7 @@ src/
 
 ```ts
 export function getNextCategorySortOrder(
-  categories: readonly { sortOrder?: number | null }[],
+  categories?: readonly { sortOrder?: number | null }[] | null,
 ): number {
   if (!categories || categories.length === 0) {
     return 1
@@ -188,14 +188,14 @@ export function CategoryEditorForm({
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] `getNextCategorySortOrder` helper implemented with 100% test coverage for:
+- [x] `getNextCategorySortOrder` helper implemented with 100% test coverage for:
   - Empty list -> returns `1`
   - Normal sequential list `[1, 2, 3]` -> returns `4`
   - Gapped list `[1, 5, 2]` -> returns `6`
   - Zero/negative orders `[-2, 0]` -> returns `1`
-- [ ] Route `/dashboard/stack/categories/new` prefetches category list in `loader`.
-- [ ] Navigating to `/dashboard/stack/categories/new` displays the input `Urutan Tampil` pre-filled with the next sequential sort order.
-- [ ] `CategoryCreateDialog` in `technology-editor-form.tsx` also utilizes `getNextCategorySortOrder` for unified behavior.
-- [ ] TypeScript checks pass cleanly (`bun run check`).
-- [ ] Vitest tests pass cleanly (`bun run test`).
-- [ ] Production build succeeds (`bun run build`).
+- [x] Route `/dashboard/stack/categories/new` prefetches category list in `loader`.
+- [x] Navigating to `/dashboard/stack/categories/new` displays the input `Urutan Tampil` pre-filled with the next sequential sort order.
+- [x] `CategoryCreateDialog` in `technology-editor-form.tsx` also utilizes `getNextCategorySortOrder` for unified behavior.
+- [x] TypeScript checks pass cleanly (`bun run check`).
+- [x] Vitest tests pass cleanly (`bun run test`).
+- [x] Production build succeeds (`bun run build`).
