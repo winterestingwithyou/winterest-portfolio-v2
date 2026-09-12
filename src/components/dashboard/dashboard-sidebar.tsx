@@ -200,7 +200,7 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
 
       <SidebarSeparator />
 
-      <SidebarContent className="px-2 py-1">
+      <SidebarContent className="px-2 py-1 no-scrollbar">
         <SidebarGroup>
           <SidebarGroupLabel className="text-[0.65rem] font-bold uppercase tracking-wider text-sidebar-foreground/60">
             {copy.shell.eyebrow}
