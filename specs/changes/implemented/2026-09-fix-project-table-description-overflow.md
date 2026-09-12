@@ -2,7 +2,7 @@
 
 - **Feature ID**: `fix-project-table-description-overflow`
 - **Date**: `2026-09-11`
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**: `/dashboard/projects`
 - **Target Modules**: `src/features/projects/components/table/`
 

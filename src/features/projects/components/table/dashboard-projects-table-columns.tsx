@@ -30,12 +30,23 @@ export function getProjectColumns({
       cell: (info) => {
         const project = info.row.original
         return (
-          <div className="min-w-70 max-w-md space-y-1.5">
-            <p className="font-semibold text-(--brand-ink)">{project.title}</p>
-            <p className="text-xs leading-relaxed text-(--brand-muted)">
+          <div className="min-w-64 max-w-sm sm:max-w-md space-y-1.5 overflow-hidden">
+            <p
+              className="truncate font-semibold text-(--brand-ink)"
+              title={project.title}
+            >
+              {project.title}
+            </p>
+            <p
+              className="line-clamp-2 break-words whitespace-normal text-xs leading-relaxed text-(--brand-muted)"
+              title={project.summary}
+            >
               {project.summary}
             </p>
-            <p className="font-mono text-xs text-(--brand-muted)">
+            <p
+              className="truncate font-mono text-xs text-(--brand-muted)"
+              title={`/projects/${project.slug}`}
+            >
               /projects/{project.slug}
             </p>
           </div>

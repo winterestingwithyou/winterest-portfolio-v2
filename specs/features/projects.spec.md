@@ -8,7 +8,7 @@
 | **Public Routes**    | [`/projects`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/projects/index.tsx), [`/projects/$slug`](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/projects/$slug.tsx) |
 | **Dashboard Routes** | `/dashboard/projects`, `/dashboard/projects/new`, `/dashboard/projects/$id`                                                                                                                              |
 | **RBAC Permissions** | Public (Read Published), Editor/Admin/Owner (Full Management)                                                                                                                                            |
-| **Last Updated**     | 2026-09-07                                                                                                                                                                                               |
+| **Last Updated**     | 2026-09-11                                                                                                                                                                                               |
 
 ---
 
@@ -23,7 +23,7 @@ The Projects feature manages the portfolio's showcase projects and technical cas
 - **Status & Visibility Lifecycle**: Supports `draft`, `in_progress`, `published`, and `archived` states, as well as `public` and `private` visibility flags.
 - **Featured Pinning**: Ability to pin high-impact projects to the homepage hero section.
 - **Live Showcase & Filter**: Filter projects on `/projects` by stack tags, categories (pill tabs), and debounced search, paginated at 9 projects per page with URL sync (`?q=...&category=...&page=...`).
-- **Dashboard Table Management**: TanStack Table on `/dashboard/projects` with client-side debounced search, status filter dropdown, row count indicators, and 10-row pagination synced to URL.
+- **Dashboard Table Management**: TanStack Table on `/dashboard/projects` with client-side debounced search, status filter dropdown, row count indicators, and 10-row pagination synced to URL. The primary "Project" column enforces defensive overflow constraints: summary is clamped to 2 lines (`line-clamp-2 break-words whitespace-normal`), title and slug are single-line truncated (`truncate`), and all three expose the full string via native `title` tooltip. Cell container bounds are `min-w-64 max-w-sm sm:max-w-md overflow-hidden` to prevent horizontal bleed into adjacent columns.
 - **Deep Slug Case Study**: `/projects/$slug` renders project overview, architecture diagram, challenges, live demo, and source code links.
 
 ---
@@ -110,5 +110,8 @@ src/routes/dashboard/projects/$id.tsx   -> DashboardProjectEditPage -> ProjectEd
 - [x] Deleting project removes row and refreshes dashboard table.
 - [x] Dashboard projects table supports debounced search, status filter, and 10-row DataPagination.
 - [x] Viewport scroll position is preserved without jumping to top when filtering or searching (`resetScroll: false`).
+- [x] Primary "Project" column renders summary with `line-clamp-2 break-words whitespace-normal`; title and slug with `truncate`; all with native `title` tooltip; cell container bounded with `overflow-hidden` to prevent horizontal bleed.
 - [x] Validation schema passes Vitest suite ([`src/features/projects/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/projects/__tests__/validation.test.ts)).
+- [x] Table column cell unit tests pass ([`src/features/projects/__tests__/dashboard-projects-table-columns.test.tsx`](file:///d:/winterest-project/2nd-wpv2/src/features/projects/__tests__/dashboard-projects-table-columns.test.tsx)).
 - [x] TypeScript check passes: `bun run typecheck`.
+
