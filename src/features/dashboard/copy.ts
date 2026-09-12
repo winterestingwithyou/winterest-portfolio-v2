@@ -6,6 +6,13 @@ export const dashboardCopy = {
       eyebrow: 'Winterest CMS',
       backToSite: 'Back to site',
       systemGroup: 'System',
+      pagesGroup: 'Public Pages',
+      navPages: {
+        home: 'Home',
+        projects: 'Projects',
+        stack: 'Tech Stack',
+        contact: 'Contact',
+      },
       nav: {
         overview: 'Overview',
         projects: 'Projects',
@@ -20,8 +27,11 @@ export const dashboardCopy = {
       logout: 'Log out',
       breadcrumbs: {
         dashboard: 'Dashboard',
+        pages: 'Pages',
+        home: 'Home',
         projects: 'Projects',
         stack: 'Tech Stack',
+        contact: 'Contact',
         technologies: 'Technologies',
         categories: 'Categories',
         media: 'Media',
@@ -103,6 +113,13 @@ export const dashboardCopy = {
       eyebrow: 'CMS Winterest',
       backToSite: 'Kembali ke situs',
       systemGroup: 'Sistem',
+      pagesGroup: 'Halaman Publik',
+      navPages: {
+        home: 'Beranda',
+        projects: 'Project',
+        stack: 'Tech Stack',
+        contact: 'Kontak',
+      },
       nav: {
         overview: 'Ringkasan',
         projects: 'Project',
@@ -117,8 +134,11 @@ export const dashboardCopy = {
       logout: 'Keluar',
       breadcrumbs: {
         dashboard: 'Dashboard',
+        pages: 'Halaman',
+        home: 'Beranda',
         projects: 'Project',
         stack: 'Tech Stack',
+        contact: 'Kontak',
         technologies: 'Teknologi',
         categories: 'Kategori',
         media: 'Media',

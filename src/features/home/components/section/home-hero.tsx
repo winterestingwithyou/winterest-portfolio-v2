@@ -5,7 +5,6 @@ import { useState } from 'react'
 
 import { Container } from '#/components/marketing/section'
 import { HeroVisual } from '#/components/visual/hero-visual'
-import type { getHomeCopy } from '#/features/home/copy'
 import { portfolioStats as defaultPortfolioStats } from '#/features/portfolio/data'
 import type { SiteSettingsInput } from '#/features/settings/types'
 import { resolveActiveCv } from '#/features/settings/types'
@@ -14,9 +13,23 @@ import { cn } from '#/lib/utils'
 import { getLocale } from '#/paraglide/runtime'
 
 type HomeHeroProps = {
-  copy: ReturnType<typeof getHomeCopy>
+  copy: {
+    hero: {
+      eyebrow: string
+      title: string
+      intro: string
+      introSuffix: string
+      aboutMe: string
+      downloadCv: string
+      cvNotAvailable: string
+      viewProjects?: string
+    }
+  }
   githubUrl: string
-  portfolioStats?: typeof defaultPortfolioStats
+  portfolioStats?:
+    | readonly { label: string; value: string }[]
+    | { label: string; value: string }[]
+  showStats?: boolean
   settings?: SiteSettingsInput | null
 }
 
@@ -24,6 +37,7 @@ export function HomeHero({
   copy,
   githubUrl,
   portfolioStats = defaultPortfolioStats,
+  showStats = true,
   settings,
 }: HomeHeroProps) {
   const [cvNotice, setCvNotice] = useState(false)
@@ -126,28 +140,30 @@ export function HomeHero({
             )}
           </motion.div>
 
-          <motion.div
-            variants={staggerContainer(0.07, 0.35)}
-            className="mt-8 grid grid-cols-2 gap-2.5 sm:mt-10 sm:grid-cols-3 sm:gap-3"
-          >
-            {portfolioStats.map((stat, idx) => (
-              <motion.div
-                key={stat.label}
-                variants={staggerItemScale}
-                className={cn(
-                  'surface-card p-3.5 sm:p-4',
-                  idx === 2 ? 'col-span-2 sm:col-span-1' : '',
-                )}
-              >
-                <p className="m-0 text-[11px] font-semibold uppercase tracking-wide text-(--brand-muted) sm:text-xs">
-                  {stat.label}
-                </p>
-                <p className="mt-1.5 text-base font-semibold text-(--brand-ink) sm:mt-2 sm:text-lg">
-                  {stat.value}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
+          {showStats && portfolioStats.length > 0 ? (
+            <motion.div
+              variants={staggerContainer(0.07, 0.35)}
+              className="mt-8 grid grid-cols-2 gap-2.5 sm:mt-10 sm:grid-cols-3 sm:gap-3"
+            >
+              {portfolioStats.map((stat, idx) => (
+                <motion.div
+                  key={stat.label}
+                  variants={staggerItemScale}
+                  className={cn(
+                    'surface-card p-3.5 sm:p-4',
+                    idx === 2 ? 'col-span-2 sm:col-span-1' : '',
+                  )}
+                >
+                  <p className="m-0 text-[11px] font-semibold uppercase tracking-wide text-(--brand-muted) sm:text-xs">
+                    {stat.label}
+                  </p>
+                  <p className="mt-1.5 text-base font-semibold text-(--brand-ink) sm:mt-2 sm:text-lg">
+                    {stat.value}
+                  </p>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : null}
         </motion.div>
 
         {/* Visual rendered first on mobile, right column on desktop */}

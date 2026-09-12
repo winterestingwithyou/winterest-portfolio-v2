@@ -17,7 +17,10 @@ const baseProject: ProjectRow = {
 
 function makeContainer(project: ProjectRow) {
   return (
-    <div data-testid="cell" className="min-w-64 max-w-sm sm:max-w-md space-y-1.5 overflow-hidden">
+    <div
+      data-testid="cell"
+      className="min-w-64 max-w-sm sm:max-w-md space-y-1.5 overflow-hidden"
+    >
       <p
         className="truncate font-semibold text-(--brand-ink)"
         title={project.title}

@@ -399,3 +399,92 @@ export const socialLinks = sqliteTable(
     index('social_links_sort_order_idx').on(table.sortOrder),
   ],
 )
+
+export const pageContent = sqliteTable('page_content', {
+  page: text('page').primaryKey(),
+  dataJson: text('data_json').notNull().default('{}'),
+  ...timestamps,
+})
+
+export const homeConfig = sqliteTable('home_config', {
+  id: text('id').primaryKey().default('default'),
+  heroEyebrowEn: text('hero_eyebrow_en').notNull().default(''),
+  heroEyebrowId: text('hero_eyebrow_id').notNull().default(''),
+  heroTitleEn: text('hero_title_en').notNull().default(''),
+  heroTitleId: text('hero_title_id').notNull().default(''),
+  heroIntroEn: text('hero_intro_en').notNull().default(''),
+  heroIntroId: text('hero_intro_id').notNull().default(''),
+  heroIntroSuffixEn: text('hero_intro_suffix_en').notNull().default(''),
+  heroIntroSuffixId: text('hero_intro_suffix_id').notNull().default(''),
+
+  showStats: integer('show_stats', { mode: 'boolean' }).notNull().default(true),
+  statsJson: text('stats_json').notNull().default('[]'),
+
+  featuredEyebrowEn: text('featured_eyebrow_en').notNull().default(''),
+  featuredEyebrowId: text('featured_eyebrow_id').notNull().default(''),
+  featuredTitleEn: text('featured_title_en').notNull().default(''),
+  featuredTitleId: text('featured_title_id').notNull().default(''),
+  featuredDescriptionEn: text('featured_description_en').notNull().default(''),
+  featuredDescriptionId: text('featured_description_id').notNull().default(''),
+  showFeaturedDescription: integer('show_featured_description', {
+    mode: 'boolean',
+  })
+    .notNull()
+    .default(true),
+
+  enthusiasmsEyebrowEn: text('enthusiasms_eyebrow_en').notNull().default(''),
+  enthusiasmsEyebrowId: text('enthusiasms_eyebrow_id').notNull().default(''),
+  enthusiasmsTitleEn: text('enthusiasms_title_en').notNull().default(''),
+  enthusiasmsTitleId: text('enthusiasms_title_id').notNull().default(''),
+  enthusiasmsDescriptionEn: text('enthusiasms_description_en')
+    .notNull()
+    .default(''),
+  enthusiasmsDescriptionId: text('enthusiasms_description_id')
+    .notNull()
+    .default(''),
+  showEnthusiasmsDescription: integer('show_enthusiasms_description', {
+    mode: 'boolean',
+  })
+    .notNull()
+    .default(true),
+
+  marqueeEyebrowEn: text('marquee_eyebrow_en').notNull().default(''),
+  marqueeEyebrowId: text('marquee_eyebrow_id').notNull().default(''),
+  marqueeTitleEn: text('marquee_title_en').notNull().default(''),
+  marqueeTitleId: text('marquee_title_id').notNull().default(''),
+  marqueeDescriptionEn: text('marquee_description_en').notNull().default(''),
+  marqueeDescriptionId: text('marquee_description_id').notNull().default(''),
+  showMarqueeDescription: integer('show_marquee_description', {
+    mode: 'boolean',
+  })
+    .notNull()
+    .default(true),
+
+  ctaCommand: text('cta_command').notNull().default('bun run build'),
+  ctaTitleEn: text('cta_title_en').notNull().default(''),
+  ctaTitleId: text('cta_title_id').notNull().default(''),
+  ctaButtonTextEn: text('cta_button_text_en').notNull().default(''),
+  ctaButtonTextId: text('cta_button_text_id').notNull().default(''),
+  ...timestamps,
+})
+
+export const homeEnthusiasms = sqliteTable(
+  'home_enthusiasms',
+  {
+    id: text('id').primaryKey(),
+    icon: text('icon').notNull().default('Terminal'),
+    titleEn: text('title_en').notNull(),
+    titleId: text('title_id').notNull(),
+    descriptionEn: text('description_en').notNull(),
+    descriptionId: text('description_id').notNull(),
+    isEnabled: integer('is_enabled', { mode: 'boolean' })
+      .notNull()
+      .default(true),
+    sortOrder: integer('sort_order').notNull().default(0),
+    ...timestamps,
+  },
+  (table) => [
+    index('home_enthusiasms_is_enabled_idx').on(table.isEnabled),
+    index('home_enthusiasms_sort_order_idx').on(table.sortOrder),
+  ],
+)

@@ -6,6 +6,9 @@ DROP TABLE IF EXISTS `project_translations`;
 DROP TABLE IF EXISTS `technology_categories`;
 
 -- Content & Master Tables
+DROP TABLE IF EXISTS `home_enthusiasms`;
+DROP TABLE IF EXISTS `home_config`;
+DROP TABLE IF EXISTS `page_content`;
 DROP TABLE IF EXISTS `projects`;
 DROP TABLE IF EXISTS `technologies`;
 DROP TABLE IF EXISTS `categories`;
