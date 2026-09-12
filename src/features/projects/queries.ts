@@ -1,4 +1,4 @@
-import { and, desc, eq, inArray, or } from 'drizzle-orm'
+import { and, count, desc, eq, inArray, ne, or } from 'drizzle-orm'
 
 import type { Database } from '#/db'
 import {
@@ -11,6 +11,10 @@ import {
 import type { ContentLocale } from '#/db/schema'
 
 import type { ProjectInput } from './validation'
+
+export const MAX_FEATURED_PROJECTS = 4
+export const FEATURED_PROJECTS_QUOTA_ERROR =
+  'Maximum of 4 featured projects allowed. Please unfeature another project first.'
 
 export type ProjectRecord = typeof projects.$inferSelect
 export type ProjectTranslationRecord = typeof projectTranslations.$inferSelect
@@ -314,7 +318,34 @@ export async function getDashboardProjectByIdOrSlug(
   )
 }
 
+export async function countFeaturedProjects(
+  db: Database,
+  excludeProjectId?: string,
+): Promise<number> {
+  const query = excludeProjectId
+    ? db
+        .select({ count: count() })
+        .from(projects)
+        .where(
+          and(eq(projects.featured, true), ne(projects.id, excludeProjectId)),
+        )
+    : db
+        .select({ count: count() })
+        .from(projects)
+        .where(eq(projects.featured, true))
+
+  const result = await query.get()
+  return result?.count ?? 0
+}
+
 export async function createProject(db: Database, input: ProjectInput) {
+  if (input.featured) {
+    const currentCount = await countFeaturedProjects(db)
+    if (currentCount >= MAX_FEATURED_PROJECTS) {
+      throw new Error(FEATURED_PROJECTS_QUOTA_ERROR)
+    }
+  }
+
   const now = new Date()
   const id = crypto.randomUUID()
   const publishedAt = input.publishedAt
@@ -368,6 +399,13 @@ export async function updateProject(
   const existing = await getProjectByIdOrSlug(db, idOrSlug)
   if (!existing) {
     return null
+  }
+
+  if (input.featured && !existing.featured) {
+    const currentCount = await countFeaturedProjects(db, existing.id)
+    if (currentCount >= MAX_FEATURED_PROJECTS) {
+      throw new Error(FEATURED_PROJECTS_QUOTA_ERROR)
+    }
   }
 
   const now = new Date()

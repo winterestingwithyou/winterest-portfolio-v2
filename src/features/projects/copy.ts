@@ -69,6 +69,8 @@ export const projectsCopy = {
       deleteTitle: 'Delete Project',
       deleteConfirm: (title: string) =>
         `Are you sure you want to delete project "${title}"? This action cannot be undone.`,
+      quotaExceededError:
+        'Maximum of 4 featured projects allowed. Please unfeature another project first.',
       newTitle: 'New project',
       newDescription:
         'Create a draft project and refine it before it appears on the public site.',
@@ -121,6 +123,10 @@ export const projectsCopy = {
         featuredTitle: 'Featured Project',
         featuredDesc:
           'Display in the featured projects showcase on the homepage.',
+        featuredQuotaFull: 'Quota full (4/4)',
+        featuredQuotaCount: (count: number) => `(${count}/4 featured)`,
+        featuredQuotaFullWarning:
+          'Maximum of 4 featured projects reached (4/4). Unfeature another project before setting this project as featured.',
         contentHeading: (lang: string) => `Content (${lang})`,
         contentDesc: (lang: string) =>
           `Title, category, summary, and description in ${lang}.`,
@@ -158,6 +164,9 @@ export const projectsCopy = {
         statusArchived: 'Archived',
         featuredBadge: 'Featured',
         standardBadge: 'Standard',
+        quotaFull: 'Full',
+        featuredQuota: (count: number, max: number) => `Featured (${count}/${max})`,
+        featuredQuotaFull: (max: number) => `Featured (${max}/${max} Full)`,
         visibilityPublic: 'Public',
         visibilityPrivate: 'Private',
       },
@@ -233,7 +242,9 @@ export const projectsCopy = {
       deleteSaveError: 'Gagal menghapus project.',
       deleteTitle: 'Hapus Project',
       deleteConfirm: (title: string) =>
-        `Apakah Anda yakin ingin menghapus project "${title}"? Tindakan ini tidak dapat dibatalkan.`,
+        `Apakah kamu yakin ingin menghapus project "${title}"? Tindakan ini tidak dapat dibatalkan.`,
+      quotaExceededError:
+        'Maksimal 4 proyek unggulan diperbolehkan. Nonaktifkan status unggulan pada proyek lain terlebih dahulu.',
       newTitle: 'Project baru',
       newDescription:
         'Buat draft project dan poles sebelum tampil di situs publik.',
@@ -286,6 +297,10 @@ export const projectsCopy = {
         featuredTitle: 'Project Unggulan',
         featuredDesc:
           'Tampilkan di deretan project unggulan (Featured Projects) pada homepage.',
+        featuredQuotaFull: 'Kuota penuh (4/4)',
+        featuredQuotaCount: (count: number) => `(${count}/4 unggulan)`,
+        featuredQuotaFullWarning:
+          'Batas 4 proyek unggulan tercapai (4/4). Nonaktifkan status unggulan pada proyek lain untuk mengaktifkannya di sini.',
         contentHeading: (lang: string) => `Konten (${lang})`,
         contentDesc: (lang: string) =>
           `Informasi judul, kategori, ringkasan, dan deskripsi dalam bahasa ${lang}.`,
@@ -324,6 +339,9 @@ export const projectsCopy = {
         statusArchived: 'Diarsipkan',
         featuredBadge: 'Unggulan',
         standardBadge: 'Standar',
+        quotaFull: 'Penuh',
+        featuredQuota: (count: number, max: number) => `Unggulan (${count}/${max})`,
+        featuredQuotaFull: (max: number) => `Unggulan (${max}/${max} Penuh)`,
         visibilityPublic: 'Publik',
         visibilityPrivate: 'Privat',
       },

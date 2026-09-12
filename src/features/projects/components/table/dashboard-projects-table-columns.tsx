@@ -14,12 +14,14 @@ type CreateProjectColumnsOptions = {
   copy: ReturnType<typeof getProjectsCopy>['dashboard']
   commonCopy?: ReturnType<typeof getDashboardCopy>['common']
   onDeleteProject: (project: ProjectRow) => Promise<void>
+  featuredCount?: number
 }
 
 export function getProjectColumns({
   copy,
   commonCopy,
   onDeleteProject,
+  featuredCount,
 }: CreateProjectColumnsOptions) {
   const tableCopy = copy.table
   const common = commonCopy ?? getDefaultDashboardCopy().common
@@ -60,7 +62,22 @@ export function getProjectColumns({
       ),
     }),
     columnHelper.accessor('featured', {
-      header: tableCopy.featured,
+      header: () => (
+        <div className="flex items-center gap-1.5">
+          <span>{tableCopy.featured}</span>
+          {typeof featuredCount === 'number' && (
+            <span
+              className={`inline-flex items-center rounded-full px-1.5 py-0.5 font-mono text-[10px] font-bold ${
+                featuredCount >= 4
+                  ? 'border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400'
+                  : 'border border-(--brand-line) bg-surface text-(--brand-muted)'
+              }`}
+            >
+              {featuredCount}/4
+            </span>
+          )}
+        </div>
+      ),
       cell: (info) => (
         <FeaturedBadge value={info.getValue()} tableCopy={tableCopy} />
       ),

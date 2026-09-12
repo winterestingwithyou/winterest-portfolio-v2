@@ -2,7 +2,7 @@
 
 - **Feature ID**: `feat-limit-featured-projects-quota`
 - **Date**: 2026-09-11
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - `/dashboard/projects`
   - `/dashboard/projects/new`
@@ -30,7 +30,7 @@ Halaman utama (Homepage) portofolio dirancang untuk menampilkan maksimal **4 Fea
 
 ### Objectives
 
-1. **Strict Server-Side Enforcement (Limit 4)**: Menolak mutasi pembuatan (`POST /api/projects`) atau pembaruan (`PUT /api/projects/:id`) dengan HTTP 400 Bad Request jika proyek hendak ditandai `featured = true` sementara kuota 4 proyek unggulan telah penuh.
+1. **Strict Server-Side Enforcement (Limit 4)**: Menolak mutasi pembuatan (`POST /api/projects`) atau pembaruan (`PUT` / `PATCH /api/projects/:id`) dengan HTTP 400 Bad Request jika proyek hendak ditandai `featured = true` sementara kuota 4 proyek unggulan telah penuh.
 2. **Proactive Form UI Guard**: Pada formulir editor proyek (`project-editor-form.tsx`), jika kuota 4/4 telah tercapai dan proyek yang sedang diedit belum berstatus _featured_, nonaktifkan checkbox toggle (`disabled={true}`) disertai badge status kuota (`4/4 Penuh`) dan panduan cara mengosongkan slot.
 3. **Table Quota Badge**: Menampilkan indikator kuota terpakai (misal `Unggulan (3/4)` atau `Unggulan (4/4 Penuh)`) pada filter tab dan header tabel proyek dasbor.
 4. **Bilingual Copywriting**: Menyediakan pesan kesalahan validasi dan teks panduan kuota dalam bahasa Inggris dan Indonesia di `src/features/projects/copy.ts`.
@@ -57,16 +57,15 @@ SELECT COUNT(*) as total FROM projects WHERE featured = 1 AND id != ?;
 
 ### 1. Endpoint Validations
 
-| Endpoint            | Method | Role    | Payload Constraint | Error Response (Jika Kuota Penuh)                                                              |
-| :------------------ | :----- | :------ | :----------------- | :--------------------------------------------------------------------------------------------- |
-| `/api/projects`     | `POST` | Editor+ | `featured: true`   | `HTTP 400` — "Maximum of 4 featured projects allowed. Please unfeature another project first." |
-| `/api/projects/:id` | `PUT`  | Editor+ | `featured: true`   | `HTTP 400` — "Maximum of 4 featured projects allowed. Please unfeature another project first." |
+| Endpoint            | Method          | Role    | Payload Constraint | Error Response (Jika Kuota Penuh)                                                              |
+| :------------------ | :-------------- | :------ | :----------------- | :--------------------------------------------------------------------------------------------- |
+| `/api/projects`     | `POST`          | Editor+ | `featured: true`   | `HTTP 400` — "Maximum of 4 featured projects allowed. Please unfeature another project first." |
+| `/api/projects/:id` | `PUT` / `PATCH` | Editor+ | `featured: true`   | `HTTP 400` — "Maximum of 4 featured projects allowed. Please unfeature another project first." |
 
 ### 2. Error Shape
 
 ```json
 {
-  "success": false,
   "error": "Maximum of 4 featured projects allowed. Please unfeature another project first."
 }
 ```
@@ -81,6 +80,8 @@ Menambahkan helper fungsi penghitungan dan validasi batas sebelum operasi insert
 
 ```ts
 export const MAX_FEATURED_PROJECTS = 4
+export const FEATURED_PROJECTS_QUOTA_ERROR =
+  'Maximum of 4 featured projects allowed. Please unfeature another project first.'
 
 export async function countFeaturedProjects(
   db: Database,
@@ -109,9 +110,7 @@ Di dalam `createProject`:
 if (input.featured) {
   const currentCount = await countFeaturedProjects(db)
   if (currentCount >= MAX_FEATURED_PROJECTS) {
-    throw new Error(
-      'Maximum of 4 featured projects allowed. Please unfeature another project first.',
-    )
+    throw new Error(FEATURED_PROJECTS_QUOTA_ERROR)
   }
 }
 ```
@@ -122,9 +121,7 @@ Di dalam `updateProject`:
 if (input.featured && !existing.featured) {
   const currentCount = await countFeaturedProjects(db, existing.id)
   if (currentCount >= MAX_FEATURED_PROJECTS) {
-    throw new Error(
-      'Maximum of 4 featured projects allowed. Please unfeature another project first.',
-    )
+    throw new Error(FEATURED_PROJECTS_QUOTA_ERROR)
   }
 }
 ```
@@ -169,13 +166,13 @@ if (input.featured && !existing.featured) {
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] Backend API (`POST /api/projects` & `PUT /api/projects/:id`) mengembalikan HTTP 400 jika mencoba mengaktifkan `featured = true` saat kuota 4/4 penuh.
-- [ ] Formulir `project-editor-form.tsx` men-disable checkbox `featured` ketika kuota 4/4 telah terisi oleh proyek lain.
-- [ ] Pesan informatif dan badge kuota `(X/4)` tampil di form editor proyek dan filter tabel dasbor.
-- [ ] Proyek yang sudah featured tetap bisa disimpan saat mengedit atribut lainnya tanpa terkena error kuota.
-- [ ] Menghilangkan status featured dari proyek berhasil membebaskan slot kuota kembali menjadi `< 4`.
-- [ ] Unit tests di `src/features/projects/__tests__/` ditambahkan untuk memvalidasi batasan kuota 4.
-- [ ] Typecheck lulus tanpa error (`bun run check`).
-- [ ] Linter & formatter bersih (`bun run lint`, `bun run format`).
-- [ ] Production build berhasil (`bun run build`).
-- [ ] Knowledge graph diperbarui (`graphify update .`).
+- [x] Backend API (`POST /api/projects` & `PUT/PATCH /api/projects/:id`) mengembalikan HTTP 400 jika mencoba mengaktifkan `featured = true` saat kuota 4/4 penuh.
+- [x] Formulir `project-editor-form.tsx` men-disable checkbox `featured` ketika kuota 4/4 telah terisi oleh proyek lain.
+- [x] Pesan informatif dan badge kuota `(X/4)` tampil di form editor proyek dan filter tabel dasbor.
+- [x] Proyek yang sudah featured tetap bisa disimpan saat mengedit atribut lainnya tanpa terkena error kuota.
+- [x] Menghilangkan status featured dari proyek berhasil membebaskan slot kuota kembali menjadi `< 4`.
+- [x] Unit tests di `src/features/projects/__tests__/quota.test.ts` ditambahkan untuk memvalidasi batasan kuota 4.
+- [x] Typecheck lulus tanpa error (`bun run check`).
+- [x] Linter & formatter bersih (`bun run lint`).
+- [x] Production build berhasil (`bun run build`).
+- [x] Knowledge graph diperbarui (`graphify update .`).

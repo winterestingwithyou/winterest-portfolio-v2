@@ -107,12 +107,13 @@ export function handleApiError(
       return Response.json({ error: error.message }, { status: 404 })
     }
 
-    // Client/input constraint errors (e.g., 'already registered', 'Cannot...', 'Unauthorized')
+    // Client/input constraint errors (e.g., 'already registered', 'Cannot...', 'Unauthorized', quota limits)
     if (
       error.message.includes('already registered') ||
       error.message.includes('Cannot') ||
       error.message.includes('Current password') ||
-      error.message.includes('No credential')
+      error.message.includes('No credential') ||
+      error.message.includes('Maximum of')
     ) {
       return Response.json({ error: error.message }, { status: 400 })
     }
