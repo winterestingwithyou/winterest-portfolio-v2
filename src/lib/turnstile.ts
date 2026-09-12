@@ -28,7 +28,7 @@ interface CloudflareTurnstileApiResponse {
   cdata?: string
 }
 
-const DEFAULT_DEV_SECRET = '1x00000000000000000000000000000000UNASSIGNED'
+const DEFAULT_DEV_SECRET = '1x0000000000000000000000000000000AA'
 const SITEVERIFY_URL =
   'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 
