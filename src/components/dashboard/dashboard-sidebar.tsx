@@ -239,11 +239,11 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
                       isActive={isPagesActive}
                       className={
                         isPagesActive
-                          ? 'font-bold text-sidebar-accent-foreground'
+                          ? 'bg-sidebar-accent font-bold text-sidebar-accent-foreground shadow-xs'
                           : 'text-sidebar-foreground/80 hover:bg-sidebar-accent/60 hover:text-sidebar-accent-foreground'
                       }
                     >
-                      <Globe className="size-4 text-(--brand-orange)" />
+                      <Globe className="size-4" />
                       <span>{copy.shell.pagesGroup}</span>
                       <ChevronDown className="ml-auto size-4 transition-transform duration-200 group-data-[state=closed]/collapsible:-rotate-90 group-data-[state=open]/collapsible:rotate-0" />
                     </SidebarMenuButton>
