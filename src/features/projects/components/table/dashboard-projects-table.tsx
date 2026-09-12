@@ -104,16 +104,32 @@ export function DashboardProjectsTable({
     }
   }
 
+  const featuredCount = useMemo(
+    () => projects.filter((p) => p.featured).length,
+    [projects],
+  )
+
   const columns = useMemo(
-    () => getProjectColumns({ copy, commonCopy: common, onDeleteProject }),
-    [copy, common, onDeleteProject],
+    () =>
+      getProjectColumns({
+        copy,
+        commonCopy: common,
+        onDeleteProject,
+        featuredCount,
+      }),
+    [copy, common, onDeleteProject, featuredCount],
   )
 
   // Filtered dataset according to search and status
   const filteredData = useMemo(() => {
     const q = activeSearch.toLowerCase().trim()
     return projects.filter((p) => {
-      const matchStatus = activeStatus === 'all' || p.status === activeStatus
+      const matchStatus =
+        activeStatus === 'all'
+          ? true
+          : activeStatus === 'featured'
+            ? p.featured
+            : p.status === activeStatus
       if (!matchStatus) return false
 
       if (!q) return true
@@ -157,11 +173,16 @@ export function DashboardProjectsTable({
 
         <div className="flex items-center gap-2">
           <Select value={activeStatus} onValueChange={handleStatus}>
-            <SelectTrigger className="w-40 border-(--brand-line) bg-(--surface-card)">
+            <SelectTrigger className="w-48 border-(--brand-line) bg-(--surface-card)">
               <SelectValue placeholder={copy.table.allStatus} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">{copy.table.allStatus}</SelectItem>
+              <SelectItem value="featured">
+                {featuredCount >= 4
+                  ? copy.table.featuredQuotaFull(4)
+                  : copy.table.featuredQuota(featuredCount, 4)}
+              </SelectItem>
               <SelectItem value="published">
                 {copy.table.statusPublished}
               </SelectItem>

@@ -8,7 +8,9 @@ import { createRouteMeta } from '#/lib/metadata'
 
 const dashboardProjectsSearchSchema = z.object({
   q: z.string().optional(),
-  status: z.enum(['all', 'published', 'in_progress', 'draft']).optional(),
+  status: z
+    .enum(['all', 'published', 'in_progress', 'draft', 'featured'])
+    .optional(),
   page: z.coerce.number().int().min(1).optional(),
 })
 
