@@ -54,6 +54,7 @@ import {
   useDeleteProject,
   useUpdateProject,
 } from '#/features/projects/hooks'
+import { projectQueryOptions } from '#/features/projects/query-options'
 import { getProjectFormSchema } from '#/features/projects/validation'
 import { techQueryOptions } from '#/features/technologies/query-options'
 import { TechnologyCreateDialog } from '#/features/technologies/components/form/technology-create-dialog'
@@ -157,6 +158,12 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const { data: availableTechnologies = [] } = useQuery(techQueryOptions.list())
+  const { data: projectsList = [] } = useQuery(projectQueryOptions.list())
+
+  const otherFeaturedCount = projectsList.filter(
+    (p) => p.featured && p.id !== project?.id,
+  ).length
+  const isQuotaFull = otherFeaturedCount >= 4
 
   const createMutation = useCreateProject()
   const updateMutation = useUpdateProject(project?.id ?? '')
@@ -635,35 +642,64 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
             {/* Featured Toggle */}
             <form.Field
               name="featured"
-              children={(field) => (
-                <div className="rounded-xl border border-(--brand-line) bg-surface-strong p-4">
-                  <Field
-                    orientation="horizontal"
-                    className="justify-between items-center cursor-pointer"
-                  >
-                    <FieldContent>
-                      <FieldLabel
-                        htmlFor={field.name}
-                        className="font-bold text-sm text-(--brand-ink) cursor-pointer"
-                      >
-                        {formCopy.featuredTitle}
-                      </FieldLabel>
-                      <FieldDescription>
-                        {formCopy.featuredDesc}
-                      </FieldDescription>
-                    </FieldContent>
-                    <Checkbox
-                      id={field.name}
-                      name={field.name}
-                      checked={field.state.value}
-                      onCheckedChange={(checked) =>
-                        field.handleChange(Boolean(checked))
-                      }
-                      className="size-5 border-(--brand-line) data-[state=checked]:bg-(--brand-orange) data-[state=checked]:border-(--brand-orange)"
-                    />
-                  </Field>
-                </div>
-              )}
+              children={(field) => {
+                const isChecked = Boolean(field.state.value)
+                const isToggleDisabled =
+                  isPending || (!isChecked && isQuotaFull)
+
+                return (
+                  <div className="rounded-xl border border-(--brand-line) bg-surface-strong p-4">
+                    <Field
+                      orientation="horizontal"
+                      className="justify-between items-center"
+                    >
+                      <FieldContent>
+                        <div className="flex items-center gap-2">
+                          <FieldLabel
+                            htmlFor={field.name}
+                            className={`font-bold text-sm text-(--brand-ink) ${
+                              isToggleDisabled
+                                ? 'cursor-not-allowed opacity-80'
+                                : 'cursor-pointer'
+                            }`}
+                          >
+                            {formCopy.featuredTitle}
+                          </FieldLabel>
+                          {isQuotaFull && !isChecked ? (
+                            <span className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                              {formCopy.featuredQuotaFull}
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center font-mono text-xs text-(--brand-muted)">
+                              {formCopy.featuredQuotaCount(
+                                otherFeaturedCount + (isChecked ? 1 : 0),
+                              )}
+                            </span>
+                          )}
+                        </div>
+                        <FieldDescription>
+                          {formCopy.featuredDesc}
+                        </FieldDescription>
+                        {isQuotaFull && !isChecked && (
+                          <p className="mt-2 text-xs font-medium text-amber-600 dark:text-amber-400">
+                            {formCopy.featuredQuotaFullWarning}
+                          </p>
+                        )}
+                      </FieldContent>
+                      <Checkbox
+                        id={field.name}
+                        name={field.name}
+                        checked={isChecked}
+                        disabled={isToggleDisabled}
+                        onCheckedChange={(checked) =>
+                          field.handleChange(Boolean(checked))
+                        }
+                        className="size-5 border-(--brand-line) data-[state=checked]:bg-(--brand-orange) data-[state=checked]:border-(--brand-orange) disabled:cursor-not-allowed disabled:opacity-50"
+                      />
+                    </Field>
+                  </div>
+                )
+              }}
             />
 
             {/* Technologies Multi-Select */}

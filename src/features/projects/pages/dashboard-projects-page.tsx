@@ -63,7 +63,7 @@ export function DashboardProjectsPage() {
         ...prev,
         status:
           val !== 'all'
-            ? (val as 'published' | 'in_progress' | 'draft')
+            ? (val as 'published' | 'in_progress' | 'draft' | 'featured')
             : undefined,
         page: undefined,
       }),
