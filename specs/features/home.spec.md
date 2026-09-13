@@ -7,19 +7,20 @@
 | **Domain Module** | [`src/features/home/`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/home) |
 | **Public Routes** | [`/` (Homepage)](file:///d:/winterest-project/winterest-portfolio-v2/src/routes/index.tsx)    |
 | **RBAC Access**   | Public                                                                                        |
-| **Last Updated**  | 2026-09-06                                                                                    |
+| **Last Updated**  | 2026-09-13                                                                                    |
 
 ---
 
 ## 1. Overview & Capabilities
 
-The Home feature serves as Winterest's flagship personal portal. Built with a technical, high-polish Cloudflare + Bun aesthetic, it delivers a strong hero statement, featured case studies, focus area cards, an infinite tech stack marquee, and a clear contact conversion CTA.
+The Home feature serves as Winterest's flagship personal portal. Built with a technical, high-polish Cloudflare + Bun aesthetic, it delivers a strong hero statement, latest education credentials, featured case studies, focus area cards, an infinite tech stack marquee, and a clear contact conversion CTA.
 
 ### Capabilities
 
 - **Branded Hero Showcase**: Dynamic greeting, technical profile overview, CV download button linking to localized PDF, and quick navigation anchors.
+- **Latest Education Background**: 3 dedicated precision cards displaying University, GPA, and bilingual Major under the hero CTA, editable via dashboard Tab 1 ("Hero & Education").
 - **Featured Projects Spotlight**: Automatically pulls and renders projects flagged with `featured = true` and `status = 'published'`, with translated titles, summaries, and tech tags.
-- **Engineering Enthusiasms Grid**: 6 modular cards highlighting core engineering disciplines (Software Engineer, Frontend, Backend, Fullstack, DevOps, Cloud).
+- **Engineering Enthusiasms Grid**: Modular cards highlighting core engineering disciplines.
 - **Interactive Tech Stack Marquee**: Continuous dual-direction marquee displaying favorite flagship technologies (`isUltimate = true`) with SimpleIcons/Lucide integration.
 - **Contact CTA Banner**: High-contrast footer conversion section driving visitor engagement to `/contact`.
 
@@ -29,6 +30,8 @@ The Home feature serves as Winterest's flagship personal portal. Built with a te
 
 Consumes data from multiple D1 domain collections via server loaders:
 
+- `home_config`: Single-row configuration storing hero copywriting, closing CTA, and latest education fields (`show_education`, `education_university`, `education_major_en`, `education_major_id`, `education_gpa`).
+- `home_enthusiasms`: Configurable list of focus area cards with custom icons and bilingual descriptions.
 - `projects`: Filters for `featured = true`, `status = 'published'`, and `visibility = 'public'`.
 - `technologies`: Filters for `isUltimate = true` for the marquee section.
 - `site_settings`: Reads `cvEnUrl` and `cvIdUrl` via `resolveActiveCv(locale, settings)`.

@@ -161,6 +161,27 @@ export const projectsCopy = {
         visibilityPublic: 'Public',
         visibilityPrivate: 'Private',
       },
+      pageContent: {
+        title: 'Content Settings: Projects Page',
+        description:
+          'Manage title, subtitle, description, and visibility on the /projects page.',
+        resetConfirm:
+          'Reset form to default copywriting? Unsaved changes will be replaced.',
+        resetSuccess: 'Form has been reset to default. Click save to apply.',
+        saveSuccess: 'Projects page changes saved successfully.',
+        saveError: 'Failed to save changes.',
+        headerTitle: (lang: string) => `Page Header (${lang})`,
+        headerDesc: 'Main text displayed at the top of the project catalog.',
+        eyebrowLabel: (lang: string) => `Eyebrow / Header Category (${lang})`,
+        eyebrowPlaceholder: 'e.g. Projects',
+        titleLabel: (lang: string) => `Main Title (${lang}) *`,
+        titlePlaceholder: 'e.g. Projects',
+        descLabel: (lang: string) => `Description (${lang})`,
+        descPlaceholder: 'Short description of your project catalog...',
+        showDescription: 'Show Page Description',
+        showDescriptionDesc:
+          'Display the header description text on the public projects catalog.',
+      },
     },
   },
   id: {
@@ -326,6 +347,28 @@ export const projectsCopy = {
         standardBadge: 'Standar',
         visibilityPublic: 'Publik',
         visibilityPrivate: 'Privat',
+      },
+      pageContent: {
+        title: 'Pengaturan Konten: Halaman Project',
+        description:
+          'Kelola judul, sub-judul, deskripsi, dan visibilitas pada halaman /projects.',
+        resetConfirm:
+          'Reset form ke default copywriting? Perubahan belum tersimpan akan diganti.',
+        resetSuccess:
+          'Form telah direset ke default. Klik simpan untuk menerapkan.',
+        saveSuccess: 'Perubahan halaman project berhasil disimpan.',
+        saveError: 'Gagal menyimpan perubahan.',
+        headerTitle: (lang: string) => `Header Halaman (${lang})`,
+        headerDesc: 'Teks utama yang tampil di bagian atas katalog project.',
+        eyebrowLabel: (lang: string) => `Eyebrow / Kategori Header (${lang})`,
+        eyebrowPlaceholder: 'mis. Project',
+        titleLabel: (lang: string) => `Judul Utama (${lang}) *`,
+        titlePlaceholder: 'mis. Daftar Project',
+        descLabel: (lang: string) => `Deskripsi (${lang})`,
+        descPlaceholder: 'Deskripsi singkat katalog project Anda...',
+        showDescription: 'Tampilkan Deskripsi Halaman',
+        showDescriptionDesc:
+          'Tampilkan teks paragraf deskripsi di bawah judul utama pada katalog project publik.',
       },
     },
   },

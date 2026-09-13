@@ -2,20 +2,29 @@ import { motion } from 'motion/react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import { Marquee } from '#/components/ui/marquee'
-import type { getHomeCopy } from '#/features/home/copy'
 import { TechMarqueeCard } from '#/features/technologies/components/tech-marquee-card'
 import { partitionMarqueeItems } from '#/features/technologies/partition-marquee'
 import type { getPublicUltimateStack } from '#/features/technologies/public-loaders'
 import { defaultViewport, fadeIn, fadeUp } from '#/lib/motion'
 
 type TechMarqueeSectionProps = {
-  copy: ReturnType<typeof getHomeCopy>
+  copy: {
+    marquee: {
+      eyebrow: string
+      title: string
+      description: string
+      emptyUltimateTitle: string
+      emptyUltimateDescription: string
+    }
+  }
   ultimateTechs: Awaited<ReturnType<typeof getPublicUltimateStack>>
+  showDescription?: boolean
 }
 
 export function TechMarqueeSection({
   copy,
   ultimateTechs,
+  showDescription = true,
 }: TechMarqueeSectionProps) {
   const [row1, row2, row3] = partitionMarqueeItems(ultimateTechs)
 
@@ -32,7 +41,7 @@ export function TechMarqueeSection({
           <SectionHeader
             eyebrow={copy.marquee.eyebrow}
             title={copy.marquee.title}
-            description={copy.marquee.description}
+            description={showDescription ? copy.marquee.description : undefined}
           />
         </motion.div>
       </Container>

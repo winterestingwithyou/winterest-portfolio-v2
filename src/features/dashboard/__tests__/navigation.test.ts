@@ -14,6 +14,19 @@ describe('dashboard navigation & polish UX', () => {
     expect(dashboardCopy.id.shell.systemGroup).toBe('Sistem')
   })
 
+  it('provides localized pagesGroup and navPages in shell copy for both languages', () => {
+    expect(dashboardCopy.en.shell.pagesGroup).toBe('Public Pages')
+    expect(dashboardCopy.id.shell.pagesGroup).toBe('Halaman Publik')
+    expect(dashboardCopy.en.shell.navPages.home).toBe('Home')
+    expect(dashboardCopy.id.shell.navPages.home).toBe('Beranda')
+    expect(dashboardCopy.en.shell.navPages.projects).toBe('Projects')
+    expect(dashboardCopy.id.shell.navPages.projects).toBe('Project')
+    expect(dashboardCopy.en.shell.navPages.stack).toBe('Tech Stack')
+    expect(dashboardCopy.id.shell.navPages.stack).toBe('Tech Stack')
+    expect(dashboardCopy.en.shell.navPages.contact).toBe('Contact')
+    expect(dashboardCopy.id.shell.navPages.contact).toBe('Kontak')
+  })
+
   it('provides localized createFirst CTA copy in projects for both languages', () => {
     expect(projectsCopy.en.dashboard.createFirst).toBe('Create first project')
     expect(projectsCopy.id.dashboard.createFirst).toBe('Buat project pertama')

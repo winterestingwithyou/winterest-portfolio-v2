@@ -4,18 +4,23 @@ import { motion } from 'motion/react'
 import { Container } from '#/components/marketing/section'
 import { Marquee } from '#/components/ui/marquee'
 import { TechMarqueeCard } from '#/features/technologies/components/tech-marquee-card'
-import type { getTechnologiesCopy } from '#/features/technologies/copy'
 import type { getPublicStackData } from '#/features/technologies/public-loaders'
 import { defaultViewport, fadeIn, fadeUp, scaleIn } from '#/lib/motion'
 
 type UltimateStackSectionProps = {
-  copy: ReturnType<typeof getTechnologiesCopy>['ultimate']
+  copy: {
+    ultimateEyebrow: string
+    ultimateTitle: string
+    ultimateDescription: string
+  }
   ultimateTechs: Awaited<ReturnType<typeof getPublicStackData>>['ultimateTechs']
+  showDescription?: boolean
 }
 
 export function UltimateStackSection({
   copy,
   ultimateTechs,
+  showDescription = true,
 }: UltimateStackSectionProps) {
   if (ultimateTechs.length === 0) return null
 
@@ -39,9 +44,11 @@ export function UltimateStackSection({
           <h2 className="mt-3 text-3xl font-black tracking-tight text-(--brand-ink) sm:text-4xl md:text-5xl">
             {copy.ultimateTitle}
           </h2>
-          <p className="mt-2 max-w-xl text-sm font-medium text-(--brand-muted)">
-            {copy.ultimateDescription}
-          </p>
+          {showDescription && copy.ultimateDescription ? (
+            <p className="mt-2 max-w-xl text-sm font-medium text-(--brand-muted)">
+              {copy.ultimateDescription}
+            </p>
+          ) : null}
         </motion.div>
       </Container>
 

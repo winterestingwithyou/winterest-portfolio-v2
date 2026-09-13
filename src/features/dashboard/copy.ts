@@ -6,6 +6,14 @@ export const dashboardCopy = {
       eyebrow: 'Winterest CMS',
       backToSite: 'Back to site',
       systemGroup: 'System',
+      pagesGroup: 'Public Pages',
+      cmsPageEyebrow: 'CMS · Public Pages',
+      navPages: {
+        home: 'Home',
+        projects: 'Projects',
+        stack: 'Tech Stack',
+        contact: 'Contact',
+      },
       nav: {
         overview: 'Overview',
         projects: 'Projects',
@@ -20,8 +28,11 @@ export const dashboardCopy = {
       logout: 'Log out',
       breadcrumbs: {
         dashboard: 'Dashboard',
+        pages: 'Pages',
+        home: 'Home',
         projects: 'Projects',
         stack: 'Tech Stack',
+        contact: 'Contact',
         technologies: 'Technologies',
         categories: 'Categories',
         media: 'Media',
@@ -91,6 +102,8 @@ export const dashboardCopy = {
         'Try adjusting your search or clearing active filters.',
       resetFilter: 'Reset filter',
       resetFilters: 'Reset filters',
+      resetDefault: 'Reset to Default',
+      contentLanguage: 'Content Language:',
       unsavedChangesTitle: 'Unsaved changes',
       unsavedChangesDesc:
         'You have unsaved changes. Are you sure you want to leave? Your changes will be lost.',
@@ -103,6 +116,14 @@ export const dashboardCopy = {
       eyebrow: 'CMS Winterest',
       backToSite: 'Kembali ke situs',
       systemGroup: 'Sistem',
+      pagesGroup: 'Halaman Publik',
+      cmsPageEyebrow: 'CMS · Halaman Publik',
+      navPages: {
+        home: 'Beranda',
+        projects: 'Project',
+        stack: 'Tech Stack',
+        contact: 'Kontak',
+      },
       nav: {
         overview: 'Ringkasan',
         projects: 'Project',
@@ -117,8 +138,11 @@ export const dashboardCopy = {
       logout: 'Keluar',
       breadcrumbs: {
         dashboard: 'Dashboard',
+        pages: 'Halaman',
+        home: 'Beranda',
         projects: 'Project',
         stack: 'Tech Stack',
+        contact: 'Kontak',
         technologies: 'Teknologi',
         categories: 'Kategori',
         media: 'Media',
@@ -188,6 +212,8 @@ export const dashboardCopy = {
         'Coba sesuaikan pencarian atau bersihkan filter yang aktif.',
       resetFilter: 'Reset filter',
       resetFilters: 'Reset filter',
+      resetDefault: 'Reset Default',
+      contentLanguage: 'Bahasa Konten:',
       unsavedChangesTitle: 'Perubahan belum disimpan',
       unsavedChangesDesc:
         'Anda memiliki perubahan yang belum disimpan. Apakah Anda yakin ingin meninggalkan halaman ini? Perubahan Anda akan hilang.',

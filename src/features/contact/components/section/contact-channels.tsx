@@ -10,14 +10,23 @@ import {
 } from 'lucide-react'
 import { motion } from 'motion/react'
 
-import type { getContactCopy } from '#/features/contact/copy'
 import { settingsQueryOptions } from '#/features/settings/query-options'
 import { socialQueryOptions } from '#/features/social/query-options'
 import { platformMetaMap } from '#/features/social/types'
 import { staggerContainer, staggerItem } from '#/lib/motion'
 
 type ContactChannelsProps = {
-  copy: ReturnType<typeof getContactCopy>['direct']
+  copy: {
+    title: string
+    subtitle: string
+    emailTitle: string
+    emailSubtitle: string
+    copyEmail: string
+    copiedEmail: string
+    sendEmail: string
+    status: string
+    location: string
+  }
 }
 
 export function ContactChannels({ copy }: ContactChannelsProps) {

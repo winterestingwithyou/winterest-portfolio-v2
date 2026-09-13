@@ -41,17 +41,26 @@ import { Route as DashboardUsersNewRouteImport } from './routes/dashboard/users/
 import { Route as DashboardUsersIdRouteImport } from './routes/dashboard/users/$id'
 import { Route as DashboardProjectsNewRouteImport } from './routes/dashboard/projects/new'
 import { Route as DashboardProjectsIdRouteImport } from './routes/dashboard/projects/$id'
+import { Route as DashboardPagesStackRouteImport } from './routes/dashboard/pages/stack'
+import { Route as DashboardPagesProjectsRouteImport } from './routes/dashboard/pages/projects'
+import { Route as DashboardPagesHomeRouteImport } from './routes/dashboard/pages/home'
+import { Route as DashboardPagesContactRouteImport } from './routes/dashboard/pages/contact'
 import { Route as ApiUsersResetPasswordRouteImport } from './routes/api/users/reset-password'
 import { Route as ApiSocialIdRouteImport } from './routes/api/social/$id'
 import { Route as ApiProjectsIdRouteImport } from './routes/api/projects/$id'
+import { Route as ApiPagesPageRouteImport } from './routes/api/pages/$page'
 import { Route as ApiMediaIdRouteImport } from './routes/api/media/$id'
+import { Route as ApiHomeConfigRouteImport } from './routes/api/home/config'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiAccountPasswordRouteImport } from './routes/api/account/password'
+import { Route as ApiHomeEnthusiasmsIndexRouteImport } from './routes/api/home/enthusiasms/index'
 import { Route as DashboardStackTechnologiesNewRouteImport } from './routes/dashboard/stack/technologies/new'
 import { Route as DashboardStackTechnologiesIdRouteImport } from './routes/dashboard/stack/technologies/$id'
 import { Route as DashboardStackCategoriesNewRouteImport } from './routes/dashboard/stack/categories/new'
 import { Route as DashboardStackCategoriesIdRouteImport } from './routes/dashboard/stack/categories/$id'
 import { Route as ApiMediaFileSplatRouteImport } from './routes/api/media/file/$'
+import { Route as ApiHomeEnthusiasmsReorderRouteImport } from './routes/api/home/enthusiasms/reorder'
+import { Route as ApiHomeEnthusiasmsIdRouteImport } from './routes/api/home/enthusiasms/$id'
 
 const StackRoute = StackRouteImport.update({
   id: '/stack',
@@ -213,6 +222,26 @@ const DashboardProjectsIdRoute = DashboardProjectsIdRouteImport.update({
   path: '/projects/$id',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardPagesStackRoute = DashboardPagesStackRouteImport.update({
+  id: '/pages/stack',
+  path: '/pages/stack',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardPagesProjectsRoute = DashboardPagesProjectsRouteImport.update({
+  id: '/pages/projects',
+  path: '/pages/projects',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardPagesHomeRoute = DashboardPagesHomeRouteImport.update({
+  id: '/pages/home',
+  path: '/pages/home',
+  getParentRoute: () => DashboardRoute,
+} as any)
+const DashboardPagesContactRoute = DashboardPagesContactRouteImport.update({
+  id: '/pages/contact',
+  path: '/pages/contact',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const ApiUsersResetPasswordRoute = ApiUsersResetPasswordRouteImport.update({
   id: '/api/users/reset-password',
   path: '/api/users/reset-password',
@@ -228,9 +257,19 @@ const ApiProjectsIdRoute = ApiProjectsIdRouteImport.update({
   path: '/api/projects/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPagesPageRoute = ApiPagesPageRouteImport.update({
+  id: '/api/pages/$page',
+  path: '/api/pages/$page',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiMediaIdRoute = ApiMediaIdRouteImport.update({
   id: '/api/media/$id',
   path: '/api/media/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiHomeConfigRoute = ApiHomeConfigRouteImport.update({
+  id: '/api/home/config',
+  path: '/api/home/config',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -241,6 +280,11 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 const ApiAccountPasswordRoute = ApiAccountPasswordRouteImport.update({
   id: '/api/account/password',
   path: '/api/account/password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiHomeEnthusiasmsIndexRoute = ApiHomeEnthusiasmsIndexRouteImport.update({
+  id: '/api/home/enthusiasms/',
+  path: '/api/home/enthusiasms/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardStackTechnologiesNewRoute =
@@ -272,6 +316,17 @@ const ApiMediaFileSplatRoute = ApiMediaFileSplatRouteImport.update({
   path: '/api/media/file/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiHomeEnthusiasmsReorderRoute =
+  ApiHomeEnthusiasmsReorderRouteImport.update({
+    id: '/api/home/enthusiasms/reorder',
+    path: '/api/home/enthusiasms/reorder',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ApiHomeEnthusiasmsIdRoute = ApiHomeEnthusiasmsIdRouteImport.update({
+  id: '/api/home/enthusiasms/$id',
+  path: '/api/home/enthusiasms/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -294,10 +349,16 @@ export interface FileRoutesByFullPath {
   '/projects/': typeof ProjectsIndexRoute
   '/api/account/password': typeof ApiAccountPasswordRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/home/config': typeof ApiHomeConfigRoute
   '/api/media/$id': typeof ApiMediaIdRoute
+  '/api/pages/$page': typeof ApiPagesPageRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
   '/api/social/$id': typeof ApiSocialIdRoute
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
+  '/dashboard/pages/contact': typeof DashboardPagesContactRoute
+  '/dashboard/pages/home': typeof DashboardPagesHomeRoute
+  '/dashboard/pages/projects': typeof DashboardPagesProjectsRoute
+  '/dashboard/pages/stack': typeof DashboardPagesStackRoute
   '/dashboard/projects/$id': typeof DashboardProjectsIdRoute
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/users/$id': typeof DashboardUsersIdRoute
@@ -312,11 +373,14 @@ export interface FileRoutesByFullPath {
   '/dashboard/social/': typeof DashboardSocialIndexRoute
   '/dashboard/stack/': typeof DashboardStackIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
+  '/api/home/enthusiasms/$id': typeof ApiHomeEnthusiasmsIdRoute
+  '/api/home/enthusiasms/reorder': typeof ApiHomeEnthusiasmsReorderRoute
   '/api/media/file/$': typeof ApiMediaFileSplatRoute
   '/dashboard/stack/categories/$id': typeof DashboardStackCategoriesIdRoute
   '/dashboard/stack/categories/new': typeof DashboardStackCategoriesNewRoute
   '/dashboard/stack/technologies/$id': typeof DashboardStackTechnologiesIdRoute
   '/dashboard/stack/technologies/new': typeof DashboardStackTechnologiesNewRoute
+  '/api/home/enthusiasms/': typeof ApiHomeEnthusiasmsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -338,10 +402,16 @@ export interface FileRoutesByTo {
   '/projects': typeof ProjectsIndexRoute
   '/api/account/password': typeof ApiAccountPasswordRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/home/config': typeof ApiHomeConfigRoute
   '/api/media/$id': typeof ApiMediaIdRoute
+  '/api/pages/$page': typeof ApiPagesPageRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
   '/api/social/$id': typeof ApiSocialIdRoute
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
+  '/dashboard/pages/contact': typeof DashboardPagesContactRoute
+  '/dashboard/pages/home': typeof DashboardPagesHomeRoute
+  '/dashboard/pages/projects': typeof DashboardPagesProjectsRoute
+  '/dashboard/pages/stack': typeof DashboardPagesStackRoute
   '/dashboard/projects/$id': typeof DashboardProjectsIdRoute
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/users/$id': typeof DashboardUsersIdRoute
@@ -356,11 +426,14 @@ export interface FileRoutesByTo {
   '/dashboard/social': typeof DashboardSocialIndexRoute
   '/dashboard/stack': typeof DashboardStackIndexRoute
   '/dashboard/users': typeof DashboardUsersIndexRoute
+  '/api/home/enthusiasms/$id': typeof ApiHomeEnthusiasmsIdRoute
+  '/api/home/enthusiasms/reorder': typeof ApiHomeEnthusiasmsReorderRoute
   '/api/media/file/$': typeof ApiMediaFileSplatRoute
   '/dashboard/stack/categories/$id': typeof DashboardStackCategoriesIdRoute
   '/dashboard/stack/categories/new': typeof DashboardStackCategoriesNewRoute
   '/dashboard/stack/technologies/$id': typeof DashboardStackTechnologiesIdRoute
   '/dashboard/stack/technologies/new': typeof DashboardStackTechnologiesNewRoute
+  '/api/home/enthusiasms': typeof ApiHomeEnthusiasmsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -384,10 +457,16 @@ export interface FileRoutesById {
   '/projects/': typeof ProjectsIndexRoute
   '/api/account/password': typeof ApiAccountPasswordRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/home/config': typeof ApiHomeConfigRoute
   '/api/media/$id': typeof ApiMediaIdRoute
+  '/api/pages/$page': typeof ApiPagesPageRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
   '/api/social/$id': typeof ApiSocialIdRoute
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
+  '/dashboard/pages/contact': typeof DashboardPagesContactRoute
+  '/dashboard/pages/home': typeof DashboardPagesHomeRoute
+  '/dashboard/pages/projects': typeof DashboardPagesProjectsRoute
+  '/dashboard/pages/stack': typeof DashboardPagesStackRoute
   '/dashboard/projects/$id': typeof DashboardProjectsIdRoute
   '/dashboard/projects/new': typeof DashboardProjectsNewRoute
   '/dashboard/users/$id': typeof DashboardUsersIdRoute
@@ -402,11 +481,14 @@ export interface FileRoutesById {
   '/dashboard/social/': typeof DashboardSocialIndexRoute
   '/dashboard/stack/': typeof DashboardStackIndexRoute
   '/dashboard/users/': typeof DashboardUsersIndexRoute
+  '/api/home/enthusiasms/$id': typeof ApiHomeEnthusiasmsIdRoute
+  '/api/home/enthusiasms/reorder': typeof ApiHomeEnthusiasmsReorderRoute
   '/api/media/file/$': typeof ApiMediaFileSplatRoute
   '/dashboard/stack/categories/$id': typeof DashboardStackCategoriesIdRoute
   '/dashboard/stack/categories/new': typeof DashboardStackCategoriesNewRoute
   '/dashboard/stack/technologies/$id': typeof DashboardStackTechnologiesIdRoute
   '/dashboard/stack/technologies/new': typeof DashboardStackTechnologiesNewRoute
+  '/api/home/enthusiasms/': typeof ApiHomeEnthusiasmsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -431,10 +513,16 @@ export interface FileRouteTypes {
     | '/projects/'
     | '/api/account/password'
     | '/api/auth/$'
+    | '/api/home/config'
     | '/api/media/$id'
+    | '/api/pages/$page'
     | '/api/projects/$id'
     | '/api/social/$id'
     | '/api/users/reset-password'
+    | '/dashboard/pages/contact'
+    | '/dashboard/pages/home'
+    | '/dashboard/pages/projects'
+    | '/dashboard/pages/stack'
     | '/dashboard/projects/$id'
     | '/dashboard/projects/new'
     | '/dashboard/users/$id'
@@ -449,11 +537,14 @@ export interface FileRouteTypes {
     | '/dashboard/social/'
     | '/dashboard/stack/'
     | '/dashboard/users/'
+    | '/api/home/enthusiasms/$id'
+    | '/api/home/enthusiasms/reorder'
     | '/api/media/file/$'
     | '/dashboard/stack/categories/$id'
     | '/dashboard/stack/categories/new'
     | '/dashboard/stack/technologies/$id'
     | '/dashboard/stack/technologies/new'
+    | '/api/home/enthusiasms/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -475,10 +566,16 @@ export interface FileRouteTypes {
     | '/projects'
     | '/api/account/password'
     | '/api/auth/$'
+    | '/api/home/config'
     | '/api/media/$id'
+    | '/api/pages/$page'
     | '/api/projects/$id'
     | '/api/social/$id'
     | '/api/users/reset-password'
+    | '/dashboard/pages/contact'
+    | '/dashboard/pages/home'
+    | '/dashboard/pages/projects'
+    | '/dashboard/pages/stack'
     | '/dashboard/projects/$id'
     | '/dashboard/projects/new'
     | '/dashboard/users/$id'
@@ -493,11 +590,14 @@ export interface FileRouteTypes {
     | '/dashboard/social'
     | '/dashboard/stack'
     | '/dashboard/users'
+    | '/api/home/enthusiasms/$id'
+    | '/api/home/enthusiasms/reorder'
     | '/api/media/file/$'
     | '/dashboard/stack/categories/$id'
     | '/dashboard/stack/categories/new'
     | '/dashboard/stack/technologies/$id'
     | '/dashboard/stack/technologies/new'
+    | '/api/home/enthusiasms'
   id:
     | '__root__'
     | '/'
@@ -520,10 +620,16 @@ export interface FileRouteTypes {
     | '/projects/'
     | '/api/account/password'
     | '/api/auth/$'
+    | '/api/home/config'
     | '/api/media/$id'
+    | '/api/pages/$page'
     | '/api/projects/$id'
     | '/api/social/$id'
     | '/api/users/reset-password'
+    | '/dashboard/pages/contact'
+    | '/dashboard/pages/home'
+    | '/dashboard/pages/projects'
+    | '/dashboard/pages/stack'
     | '/dashboard/projects/$id'
     | '/dashboard/projects/new'
     | '/dashboard/users/$id'
@@ -538,11 +644,14 @@ export interface FileRouteTypes {
     | '/dashboard/social/'
     | '/dashboard/stack/'
     | '/dashboard/users/'
+    | '/api/home/enthusiasms/$id'
+    | '/api/home/enthusiasms/reorder'
     | '/api/media/file/$'
     | '/dashboard/stack/categories/$id'
     | '/dashboard/stack/categories/new'
     | '/dashboard/stack/technologies/$id'
     | '/dashboard/stack/technologies/new'
+    | '/api/home/enthusiasms/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -563,7 +672,9 @@ export interface RootRouteChildren {
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiAccountPasswordRoute: typeof ApiAccountPasswordRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiHomeConfigRoute: typeof ApiHomeConfigRoute
   ApiMediaIdRoute: typeof ApiMediaIdRoute
+  ApiPagesPageRoute: typeof ApiPagesPageRoute
   ApiProjectsIdRoute: typeof ApiProjectsIdRoute
   ApiSocialIdRoute: typeof ApiSocialIdRoute
   ApiUsersResetPasswordRoute: typeof ApiUsersResetPasswordRoute
@@ -572,7 +683,10 @@ export interface RootRouteChildren {
   ApiProjectsIndexRoute: typeof ApiProjectsIndexRoute
   ApiSocialIndexRoute: typeof ApiSocialIndexRoute
   ApiUsersIndexRoute: typeof ApiUsersIndexRoute
+  ApiHomeEnthusiasmsIdRoute: typeof ApiHomeEnthusiasmsIdRoute
+  ApiHomeEnthusiasmsReorderRoute: typeof ApiHomeEnthusiasmsReorderRoute
   ApiMediaFileSplatRoute: typeof ApiMediaFileSplatRoute
+  ApiHomeEnthusiasmsIndexRoute: typeof ApiHomeEnthusiasmsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -801,6 +915,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardProjectsIdRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/pages/stack': {
+      id: '/dashboard/pages/stack'
+      path: '/pages/stack'
+      fullPath: '/dashboard/pages/stack'
+      preLoaderRoute: typeof DashboardPagesStackRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/pages/projects': {
+      id: '/dashboard/pages/projects'
+      path: '/pages/projects'
+      fullPath: '/dashboard/pages/projects'
+      preLoaderRoute: typeof DashboardPagesProjectsRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/pages/home': {
+      id: '/dashboard/pages/home'
+      path: '/pages/home'
+      fullPath: '/dashboard/pages/home'
+      preLoaderRoute: typeof DashboardPagesHomeRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/pages/contact': {
+      id: '/dashboard/pages/contact'
+      path: '/pages/contact'
+      fullPath: '/dashboard/pages/contact'
+      preLoaderRoute: typeof DashboardPagesContactRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/api/users/reset-password': {
       id: '/api/users/reset-password'
       path: '/api/users/reset-password'
@@ -822,11 +964,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiProjectsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/pages/$page': {
+      id: '/api/pages/$page'
+      path: '/api/pages/$page'
+      fullPath: '/api/pages/$page'
+      preLoaderRoute: typeof ApiPagesPageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/media/$id': {
       id: '/api/media/$id'
       path: '/api/media/$id'
       fullPath: '/api/media/$id'
       preLoaderRoute: typeof ApiMediaIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/home/config': {
+      id: '/api/home/config'
+      path: '/api/home/config'
+      fullPath: '/api/home/config'
+      preLoaderRoute: typeof ApiHomeConfigRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -841,6 +997,13 @@ declare module '@tanstack/react-router' {
       path: '/api/account/password'
       fullPath: '/api/account/password'
       preLoaderRoute: typeof ApiAccountPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/home/enthusiasms/': {
+      id: '/api/home/enthusiasms/'
+      path: '/api/home/enthusiasms'
+      fullPath: '/api/home/enthusiasms/'
+      preLoaderRoute: typeof ApiHomeEnthusiasmsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard/stack/technologies/new': {
@@ -878,6 +1041,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiMediaFileSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/home/enthusiasms/reorder': {
+      id: '/api/home/enthusiasms/reorder'
+      path: '/api/home/enthusiasms/reorder'
+      fullPath: '/api/home/enthusiasms/reorder'
+      preLoaderRoute: typeof ApiHomeEnthusiasmsReorderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/home/enthusiasms/$id': {
+      id: '/api/home/enthusiasms/$id'
+      path: '/api/home/enthusiasms/$id'
+      fullPath: '/api/home/enthusiasms/$id'
+      preLoaderRoute: typeof ApiHomeEnthusiasmsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -885,6 +1062,10 @@ interface DashboardRouteChildren {
   DashboardMediaRoute: typeof DashboardMediaRoute
   DashboardSettingsRoute: typeof DashboardSettingsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardPagesContactRoute: typeof DashboardPagesContactRoute
+  DashboardPagesHomeRoute: typeof DashboardPagesHomeRoute
+  DashboardPagesProjectsRoute: typeof DashboardPagesProjectsRoute
+  DashboardPagesStackRoute: typeof DashboardPagesStackRoute
   DashboardProjectsIdRoute: typeof DashboardProjectsIdRoute
   DashboardProjectsNewRoute: typeof DashboardProjectsNewRoute
   DashboardUsersIdRoute: typeof DashboardUsersIdRoute
@@ -904,6 +1085,10 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardMediaRoute: DashboardMediaRoute,
   DashboardSettingsRoute: DashboardSettingsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardPagesContactRoute: DashboardPagesContactRoute,
+  DashboardPagesHomeRoute: DashboardPagesHomeRoute,
+  DashboardPagesProjectsRoute: DashboardPagesProjectsRoute,
+  DashboardPagesStackRoute: DashboardPagesStackRoute,
   DashboardProjectsIdRoute: DashboardProjectsIdRoute,
   DashboardProjectsNewRoute: DashboardProjectsNewRoute,
   DashboardUsersIdRoute: DashboardUsersIdRoute,
@@ -941,7 +1126,9 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiAccountPasswordRoute: ApiAccountPasswordRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiHomeConfigRoute: ApiHomeConfigRoute,
   ApiMediaIdRoute: ApiMediaIdRoute,
+  ApiPagesPageRoute: ApiPagesPageRoute,
   ApiProjectsIdRoute: ApiProjectsIdRoute,
   ApiSocialIdRoute: ApiSocialIdRoute,
   ApiUsersResetPasswordRoute: ApiUsersResetPasswordRoute,
@@ -950,7 +1137,10 @@ const rootRouteChildren: RootRouteChildren = {
   ApiProjectsIndexRoute: ApiProjectsIndexRoute,
   ApiSocialIndexRoute: ApiSocialIndexRoute,
   ApiUsersIndexRoute: ApiUsersIndexRoute,
+  ApiHomeEnthusiasmsIdRoute: ApiHomeEnthusiasmsIdRoute,
+  ApiHomeEnthusiasmsReorderRoute: ApiHomeEnthusiasmsReorderRoute,
   ApiMediaFileSplatRoute: ApiMediaFileSplatRoute,
+  ApiHomeEnthusiasmsIndexRoute: ApiHomeEnthusiasmsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

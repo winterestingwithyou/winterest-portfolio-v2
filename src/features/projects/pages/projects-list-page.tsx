@@ -7,18 +7,38 @@ import { Container, SectionHeader } from '#/components/marketing/section'
 import { ProjectCard } from '#/components/portfolio/project-card'
 import { DataPagination } from '#/components/ui/data-pagination'
 import { SearchInput } from '#/components/ui/search-input'
+import type { ProjectsPageConfig } from '#/features/portfolio/page-content-schemas'
 import { getProjectsCopy } from '#/features/projects/copy'
 import type { getPublishedProjects } from '#/features/projects/public-loaders'
 import { fadeIn, fadeUp, staggerContainer, staggerItem } from '#/lib/motion'
+import { getLocale } from '#/paraglide/runtime'
 
 type ProjectsListPageProps = {
   projects: Awaited<ReturnType<typeof getPublishedProjects>>
+  pageContent?: ProjectsPageConfig
 }
 
 const PAGE_SIZE = 9
 
-export function ProjectsListPage({ projects }: ProjectsListPageProps) {
+export function ProjectsListPage({
+  projects,
+  pageContent,
+}: ProjectsListPageProps) {
   const copy = getProjectsCopy()
+  const locale = getLocale() === 'id' ? 'id' : 'en'
+
+  const resolvedEyebrow =
+    (locale === 'en' ? pageContent?.eyebrowEn : pageContent?.eyebrowId) ||
+    copy.list.eyebrow
+  const resolvedTitle =
+    (locale === 'en' ? pageContent?.titleEn : pageContent?.titleId) ||
+    copy.list.title
+  const resolvedDescription =
+    pageContent?.showDescription !== false
+      ? (locale === 'en'
+          ? pageContent?.descriptionEn
+          : pageContent?.descriptionId) || copy.list.description
+      : undefined
   const searchParams = useSearch({ from: '/projects/' })
   const navigate = useNavigate({ from: '/projects/' })
 
@@ -116,9 +136,9 @@ export function ProjectsListPage({ projects }: ProjectsListPageProps) {
         <motion.div initial="hidden" animate="visible" variants={fadeIn}>
           <motion.div variants={fadeUp}>
             <SectionHeader
-              eyebrow={copy.list.eyebrow}
-              title={copy.list.title}
-              description={copy.list.description}
+              eyebrow={resolvedEyebrow}
+              title={resolvedTitle}
+              description={resolvedDescription}
             />
           </motion.div>
 

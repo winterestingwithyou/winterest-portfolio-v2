@@ -114,4 +114,3 @@ src/routes/dashboard/projects/$id.tsx   -> DashboardProjectEditPage -> ProjectEd
 - [x] Validation schema passes Vitest suite ([`src/features/projects/__tests__/validation.test.ts`](file:///d:/winterest-project/winterest-portfolio-v2/src/features/projects/__tests__/validation.test.ts)).
 - [x] Table column cell unit tests pass ([`src/features/projects/__tests__/dashboard-projects-table-columns.test.tsx`](file:///d:/winterest-project/2nd-wpv2/src/features/projects/__tests__/dashboard-projects-table-columns.test.tsx)).
 - [x] TypeScript check passes: `bun run typecheck`.
-

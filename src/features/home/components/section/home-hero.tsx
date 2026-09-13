@@ -5,30 +5,60 @@ import { useState } from 'react'
 
 import { Container } from '#/components/marketing/section'
 import { HeroVisual } from '#/components/visual/hero-visual'
-import type { getHomeCopy } from '#/features/home/copy'
-import { portfolioStats as defaultPortfolioStats } from '#/features/portfolio/data'
 import type { SiteSettingsInput } from '#/features/settings/types'
 import { resolveActiveCv } from '#/features/settings/types'
 import { fadeUp, staggerContainer, staggerItemScale } from '#/lib/motion'
-import { cn } from '#/lib/utils'
 import { getLocale } from '#/paraglide/runtime'
 
+export type HomeHeroEducation = {
+  show?: boolean
+  university?: string
+  gpa?: string
+  major?: string
+}
+
 type HomeHeroProps = {
-  copy: ReturnType<typeof getHomeCopy>
+  copy: {
+    hero: {
+      eyebrow: string
+      title: string
+      intro: string
+      introSuffix: string
+      aboutMe: string
+      downloadCv: string
+      cvNotAvailable: string
+      viewProjects?: string
+      education?: {
+        university: string
+        gpa: string
+        major: string
+      }
+    }
+  }
   githubUrl: string
-  portfolioStats?: typeof defaultPortfolioStats
+  education?: HomeHeroEducation
   settings?: SiteSettingsInput | null
 }
 
 export function HomeHero({
   copy,
   githubUrl,
-  portfolioStats = defaultPortfolioStats,
+  education,
   settings,
 }: HomeHeroProps) {
   const [cvNotice, setCvNotice] = useState(false)
   const locale = getLocale()
   const activeCvUrl = resolveActiveCv(locale, settings)
+
+  const showEducation = education?.show ?? true
+  const university = education?.university || 'Universitas Sriwijaya'
+  const gpa = education?.gpa || '3.98'
+  const major = education?.major || 'Information Management'
+  const educationLabels = copy.hero.education ?? {
+    university: 'University',
+    gpa: 'GPA',
+    major: 'Major',
+  }
 
   const handleDownloadCv = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -126,28 +156,48 @@ export function HomeHero({
             )}
           </motion.div>
 
-          <motion.div
-            variants={staggerContainer(0.07, 0.35)}
-            className="mt-8 grid grid-cols-2 gap-2.5 sm:mt-10 sm:grid-cols-3 sm:gap-3"
-          >
-            {portfolioStats.map((stat, idx) => (
+          {showEducation ? (
+            <motion.div
+              variants={staggerContainer(0.07, 0.35)}
+              className="mt-8 grid grid-cols-2 gap-2.5 sm:mt-10 sm:grid-cols-3 sm:gap-3"
+            >
               <motion.div
-                key={stat.label}
                 variants={staggerItemScale}
-                className={cn(
-                  'surface-card p-3.5 sm:p-4',
-                  idx === 2 ? 'col-span-2 sm:col-span-1' : '',
-                )}
+                className="surface-card p-3.5 sm:p-4"
               >
                 <p className="m-0 text-[11px] font-semibold uppercase tracking-wide text-(--brand-muted) sm:text-xs">
-                  {stat.label}
+                  {educationLabels.university}
                 </p>
                 <p className="mt-1.5 text-base font-semibold text-(--brand-ink) sm:mt-2 sm:text-lg">
-                  {stat.value}
+                  {university}
                 </p>
               </motion.div>
-            ))}
-          </motion.div>
+
+              <motion.div
+                variants={staggerItemScale}
+                className="surface-card p-3.5 sm:p-4"
+              >
+                <p className="m-0 text-[11px] font-semibold uppercase tracking-wide text-(--brand-muted) sm:text-xs">
+                  {educationLabels.gpa}
+                </p>
+                <p className="mt-1.5 text-base font-semibold text-(--brand-ink) sm:mt-2 sm:text-lg">
+                  {gpa}
+                </p>
+              </motion.div>
+
+              <motion.div
+                variants={staggerItemScale}
+                className="surface-card p-3.5 sm:p-4 col-span-2 sm:col-span-1"
+              >
+                <p className="m-0 text-[11px] font-semibold uppercase tracking-wide text-(--brand-muted) sm:text-xs">
+                  {educationLabels.major}
+                </p>
+                <p className="mt-1.5 text-base font-semibold text-(--brand-ink) sm:mt-2 sm:text-lg">
+                  {major}
+                </p>
+              </motion.div>
+            </motion.div>
+          ) : null}
         </motion.div>
 
         {/* Visual rendered first on mobile, right column on desktop */}
