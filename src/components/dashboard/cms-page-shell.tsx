@@ -183,7 +183,9 @@ export function CmsPageShell({
       {header}
       {subHeaderToolbar}
       {statusBanner}
-      <div className="w-full min-w-0 max-w-full pb-6">{children}</div>
+      <div className="flex flex-col gap-6 w-full min-w-0 max-w-full pb-6">
+        {children}
+      </div>
       {stickyBottomBar}
     </div>
   )
