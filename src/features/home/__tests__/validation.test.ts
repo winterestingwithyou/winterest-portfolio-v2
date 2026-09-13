@@ -5,57 +5,39 @@ import {
   getDefaultHomeConfig,
   homeConfigSchema,
   reorderEnthusiasmsSchema,
-  statItemSchema,
 } from '../validation'
 
 describe('home validation schemas', () => {
   describe('homeConfigSchema & getDefaultHomeConfig', () => {
-    it('validates default home configuration', () => {
+    it('validates default home configuration with latest education', () => {
       const defaultConfig = getDefaultHomeConfig()
       const parsed = homeConfigSchema.parse(defaultConfig)
 
       expect(parsed.heroTitleEn).toBeTruthy()
       expect(parsed.heroTitleId).toBeTruthy()
       expect(parsed.ctaCommand).toBe('bun run build')
-      expect(parsed.showStats).toBe(true)
-      expect(parsed.stats.length).toBeLessThanOrEqual(4)
+      expect(parsed.showEducation).toBe(true)
+      expect(parsed.educationUniversity).toBe('Universitas Sriwijaya')
+      expect(parsed.educationGpa).toBe('3.98')
+      expect(parsed.educationMajorEn).toBe('Information Management')
+      expect(parsed.educationMajorId).toBe('Manajemen Informatika')
     })
 
-    it('rejects stats array with more than 4 items', () => {
-      const invalid = {
+    it('accepts custom education values and toggles', () => {
+      const custom = {
         ...getDefaultHomeConfig(),
-        stats: [
-          { labelEn: '1', labelId: '1', value: '1' },
-          { labelEn: '2', labelId: '2', value: '2' },
-          { labelEn: '3', labelId: '3', value: '3' },
-          { labelEn: '4', labelId: '4', value: '4' },
-          { labelEn: '5', labelId: '5', value: '5' },
-        ],
+        showEducation: false,
+        educationUniversity: 'MIT',
+        educationMajorEn: 'Computer Science',
+        educationMajorId: 'Ilmu Komputer',
+        educationGpa: '4.00',
       }
-      expect(() => homeConfigSchema.parse(invalid)).toThrow(
-        'Maximum 4 stats items permitted',
-      )
-    })
-  })
-
-  describe('statItemSchema', () => {
-    it('accepts valid stat item', () => {
-      const valid = {
-        labelEn: 'Years Experience',
-        labelId: 'Tahun Pengalaman',
-        value: '3+',
-      }
-      expect(statItemSchema.parse(valid)).toEqual(valid)
-    })
-
-    it('rejects empty values', () => {
-      expect(() =>
-        statItemSchema.parse({
-          labelEn: '',
-          labelId: 'Tahun',
-          value: '3+',
-        }),
-      ).toThrow()
+      const parsed = homeConfigSchema.parse(custom)
+      expect(parsed.showEducation).toBe(false)
+      expect(parsed.educationUniversity).toBe('MIT')
+      expect(parsed.educationMajorEn).toBe('Computer Science')
+      expect(parsed.educationMajorId).toBe('Ilmu Komputer')
+      expect(parsed.educationGpa).toBe('4.00')
     })
   })
 

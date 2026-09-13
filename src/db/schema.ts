@@ -417,8 +417,20 @@ export const homeConfig = sqliteTable('home_config', {
   heroIntroSuffixEn: text('hero_intro_suffix_en').notNull().default(''),
   heroIntroSuffixId: text('hero_intro_suffix_id').notNull().default(''),
 
-  showStats: integer('show_stats', { mode: 'boolean' }).notNull().default(true),
-  statsJson: text('stats_json').notNull().default('[]'),
+  // Latest Education
+  showEducation: integer('show_education', { mode: 'boolean' })
+    .notNull()
+    .default(true),
+  educationUniversity: text('education_university')
+    .notNull()
+    .default('Universitas Sriwijaya'),
+  educationMajorEn: text('education_major_en')
+    .notNull()
+    .default('Information Management'),
+  educationMajorId: text('education_major_id')
+    .notNull()
+    .default('Manajemen Informatika'),
+  educationGpa: text('education_gpa').notNull().default('3.98'),
 
   featuredEyebrowEn: text('featured_eyebrow_en').notNull().default(''),
   featuredEyebrowId: text('featured_eyebrow_id').notNull().default(''),

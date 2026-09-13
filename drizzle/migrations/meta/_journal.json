@@ -50,6 +50,13 @@
       "when": 1789196140691,
       "tag": "0006_add_public_and_home_page_cms",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1789291541346,
+      "tag": "0007_refactor_home_hero_education_cms",
+      "breakpoints": true
     }
   ]
 }

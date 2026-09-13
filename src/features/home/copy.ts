@@ -12,6 +12,11 @@ export const homeCopy = {
       cvNotAvailable: 'CV is not available at the moment.',
       aboutMe: 'About Me',
       viewProjects: 'See my other works',
+      education: {
+        university: 'University',
+        gpa: 'GPA',
+        major: 'Major',
+      },
     },
     featured: {
       eyebrow: 'FEATURED PROJECTS',
@@ -103,7 +108,7 @@ export const homeCopy = {
     dashboard: {
       title: 'Content Settings: Home',
       description:
-        'Manage hero text, metric cards, focus areas, project sections, marquee, and closing CTA.',
+        'Manage hero introduction, latest education, focus areas, project sections, marquee, and closing CTA.',
       saveConfig: 'Save Configuration',
       resetConfirm:
         'Reset all text to default copywriting? Unsaved changes will be replaced.',
@@ -112,9 +117,35 @@ export const homeCopy = {
       saveSuccess: 'Home configuration saved successfully.',
       saveError: 'Failed to save configuration.',
       tabs: {
-        heroStats: 'Hero & Metrics',
+        heroEducation: 'Hero & Education',
         enthusiasms: 'Focus Areas',
         sectionsCta: 'Sections & CTA',
+      },
+      heroIntroSection: {
+        cardTitle: (loc: string) => `Hero Introduction (${loc})`,
+        cardDesc:
+          'Main text first seen by visitors at the very top of the homepage.',
+        eyebrowLabel: (loc: string) => `Eyebrow (${loc})`,
+        eyebrowPlaceholder: 'e.g. M. Adam Yudistira — Winterest',
+        titleLabel: (loc: string) => `Main Title (${loc}) *`,
+        titlePlaceholder: 'e.g. Fresh Graduate of Computer Science...',
+        introLabel: (loc: string) => `Opening Paragraph (${loc})`,
+        introPlaceholder: "e.g. Hello, I'm Adam. Also known as Winterest...",
+        introSuffixLabel: (loc: string) => `Opening Closing Text (${loc})`,
+        introSuffixPlaceholder: 'e.g. Everything about me is here!',
+      },
+      education: {
+        cardTitle: 'Latest Education',
+        cardDesc: 'Academic background displayed below the hero CTA button.',
+        showEducation: 'Show Education Section',
+        showEducationDesc:
+          'Toggle visibility of the 3 education cards on the public homepage.',
+        universityLabel: 'University / Institution',
+        universityPlaceholder: 'e.g. Universitas Sriwijaya',
+        majorLabel: (loc: string) => `Major / Field of Study (${loc})`,
+        majorPlaceholder: 'e.g. Information Management',
+        gpaLabel: 'GPA',
+        gpaPlaceholder: 'e.g. 3.98',
       },
     },
   },
@@ -129,6 +160,11 @@ export const homeCopy = {
       cvNotAvailable: 'CV belum tersedia untuk saat ini.',
       aboutMe: 'Tentang Saya',
       viewProjects: 'Lihat Projekku lainnya',
+      education: {
+        university: 'Universitas',
+        gpa: 'IPK',
+        major: 'Program Studi',
+      },
     },
     featured: {
       eyebrow: 'PROJECT PILIHAN',
@@ -220,7 +256,7 @@ export const homeCopy = {
     dashboard: {
       title: 'Pengaturan Konten: Beranda (Home)',
       description:
-        'Kelola teks hero, kartu metrik, fokus keahlian, seksi project dan marquee, serta CTA penutup.',
+        'Kelola teks hero, pendidikan terakhir, fokus keahlian, seksi project dan marquee, serta CTA penutup.',
       saveConfig: 'Simpan Konfigurasi',
       resetConfirm:
         'Reset semua teks ke default copywriting? Perubahan belum tersimpan akan diganti.',
@@ -229,9 +265,38 @@ export const homeCopy = {
       saveSuccess: 'Konfigurasi beranda berhasil disimpan.',
       saveError: 'Gagal menyimpan konfigurasi.',
       tabs: {
-        heroStats: 'Hero dan Metrik',
+        heroEducation: 'Hero & Pendidikan',
         enthusiasms: 'Bidang Minat',
         sectionsCta: 'Seksi dan CTA',
+      },
+      heroIntroSection: {
+        cardTitle: (loc: string) => `Pengenalan Hero (${loc})`,
+        cardDesc:
+          'Teks utama yang pertama kali dilihat pengunjung di bagian paling atas beranda.',
+        eyebrowLabel: (loc: string) => `Eyebrow (${loc})`,
+        eyebrowPlaceholder: 'mis. M. Adam Yudistira — Winterest',
+        titleLabel: (loc: string) => `Judul Utama (${loc}) *`,
+        titlePlaceholder:
+          'mis. Fresh Graduate Ilmu Komputer Universitas Sriwijaya.',
+        introLabel: (loc: string) => `Paragraf Pembuka (${loc})`,
+        introPlaceholder:
+          'mis. Halo, aku Adam. Juga biasa dipanggil Winterest...',
+        introSuffixLabel: (loc: string) => `Teks Penutup Pembuka (${loc})`,
+        introSuffixPlaceholder: 'mis. Semua tentangku ada disini!',
+      },
+      education: {
+        cardTitle: 'Pendidikan Terakhir',
+        cardDesc:
+          'Latar belakang akademik yang ditampilkan di bawah tombol CTA hero.',
+        showEducation: 'Tampilkan Bagian Pendidikan',
+        showEducationDesc:
+          'Atur visibilitas 3 kartu pendidikan pada beranda publik.',
+        universityLabel: 'Universitas / Institusi',
+        universityPlaceholder: 'mis. Universitas Sriwijaya',
+        majorLabel: (loc: string) => `Program Studi / Jurusan (${loc})`,
+        majorPlaceholder: 'mis. Manajemen Informatika',
+        gpaLabel: 'IPK',
+        gpaPlaceholder: 'mis. 3.98',
       },
     },
   },

@@ -10,7 +10,6 @@ import type {
   EnthusiasmRecord,
   HomeConfigInput,
 } from '#/features/home/validation'
-import { portfolioStats as defaultPortfolioStats } from '#/features/portfolio/data'
 import type { getPublishedProjects } from '#/features/projects/public-loaders'
 import type { SiteSettingsInput } from '#/features/settings/types'
 import { socialQueryOptions } from '#/features/social/query-options'
@@ -57,13 +56,16 @@ export function HomePage({
         : homeConfig?.heroIntroSuffixId) || copy.hero.introSuffix,
   }
 
-  const resolvedStats =
-    homeConfig?.stats && homeConfig.stats.length > 0
-      ? homeConfig.stats.map((s) => ({
-          label: locale === 'en' ? s.labelEn : s.labelId,
-          value: s.value,
-        }))
-      : defaultPortfolioStats
+  const education = {
+    show: homeConfig?.showEducation !== false,
+    university: homeConfig?.educationUniversity || 'Universitas Sriwijaya',
+    gpa: homeConfig?.educationGpa || '3.98',
+    major:
+      (locale === 'en'
+        ? homeConfig?.educationMajorEn
+        : homeConfig?.educationMajorId) ||
+      (locale === 'en' ? 'Information Management' : 'Manajemen Informatika'),
+  }
 
   // 2. Dynamic Featured Projects section copy
   const featuredCopy = {
@@ -144,8 +146,7 @@ export function HomePage({
       <HomeHero
         copy={{ ...copy, hero: heroCopy }}
         githubUrl={githubUrl}
-        portfolioStats={resolvedStats}
-        showStats={homeConfig?.showStats !== false}
+        education={education}
         settings={settings}
       />
       <FeaturedProjectsSection

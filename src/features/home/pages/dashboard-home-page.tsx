@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Home, Layers, Sparkles, User } from 'lucide-react'
+import { GraduationCap, Home, Layers, Sparkles } from 'lucide-react'
 
 import { CmsPageShell } from '#/components/dashboard/cms-page-shell'
-import { HomeHeroStatsForm } from '#/features/home/components/form/home-hero-stats-form'
+import { HomeHeroEducationForm } from '#/features/home/components/form/home-hero-education-form'
 import { HomeSectionsCtaForm } from '#/features/home/components/form/home-sections-cta-form'
 import { HomeEnthusiasmsManager } from '#/features/home/components/section/home-enthusiasms-manager'
 import { getHomeCopy } from '#/features/home/copy'
@@ -26,8 +26,8 @@ export function DashboardHomePage({
   const copy = homeCopy.dashboard
 
   const [activeTab, setActiveTab] = useState<
-    'hero-stats' | 'enthusiasms' | 'sections-cta'
-  >('hero-stats')
+    'hero-education' | 'enthusiasms' | 'sections-cta'
+  >('hero-education')
   const [locale, setLocale] = useState<'en' | 'id'>('en')
   const [formData, setFormData] = useState<HomeConfigInput>(initialConfig)
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
@@ -78,15 +78,15 @@ export function DashboardHomePage({
       <div className="flex items-center gap-1 overflow-x-auto border-b border-(--brand-line) no-scrollbar scroll-smooth w-full min-w-0 max-w-full">
         <button
           type="button"
-          onClick={() => setActiveTab('hero-stats')}
+          onClick={() => setActiveTab('hero-education')}
           className={`flex min-h-[44px] shrink-0 items-center gap-2 border-b-2 px-6 py-3 text-sm font-bold whitespace-nowrap transition-colors cursor-pointer ${
-            activeTab === 'hero-stats'
+            activeTab === 'hero-education'
               ? 'border-(--brand-orange) text-(--brand-orange-deep) dark:text-(--brand-orange)'
               : 'border-transparent text-(--brand-muted) hover:text-(--brand-ink)'
           }`}
         >
-          <User className="size-4" />
-          <span>{copy.tabs.heroStats}</span>
+          <GraduationCap className="size-4" />
+          <span>{copy.tabs.heroEducation}</span>
         </button>
         <button
           type="button"
@@ -117,8 +117,8 @@ export function DashboardHomePage({
       </div>
 
       <div className="w-full min-w-0 max-w-full">
-        {activeTab === 'hero-stats' && (
-          <HomeHeroStatsForm
+        {activeTab === 'hero-education' && (
+          <HomeHeroEducationForm
             locale={locale}
             formData={formData}
             onChange={setFormData}

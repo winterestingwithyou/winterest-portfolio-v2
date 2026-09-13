@@ -2,7 +2,7 @@
 
 - **Feature ID**: `feat-home-cms`
 - **Date**: `2026-09-11`
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - Public: `/` (Homepage)
   - Dashboard: `/dashboard/home` (Home Content Management)
@@ -327,16 +327,16 @@ This guarantees zero downtime or broken layouts during zero-migration periods or
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] D1 schemas `homeConfig` and `homeEnthusiasms` added to `src/db/schema.ts` and `drizzle/scripts/reset.sql`.
-- [ ] Drizzle migration generated (`bun run db:generate`).
-- [ ] API routes `/api/home/config` and `/api/home/enthusiasms/*` validate input with Zod and persist changes.
-- [ ] Dashboard route `/dashboard/home` rendered with 3 modular tabs:
-  - [ ] Tab 1: Hero & Stats form with 1–4 stats repeater.
-  - [ ] Tab 2: Enthusiasms section header + CRUD list with visual Lucide icon picker.
-  - [ ] Tab 3: Section headers for Featured, Marquee, CTA with description toggles.
-- [ ] Language switcher pill (`EN` / `ID`) toggles active form input values smoothly.
-- [ ] Public landing page (`/`) reflects updated texts, toggles, and enthusiasms across both languages.
-- [ ] Fallback contract verified: Homepage functions perfectly even when database tables are empty.
-- [ ] All TypeScript checks pass cleanly (`bun run check`).
-- [ ] Linting and formatting pass cleanly (`bun run lint`).
-- [ ] Production build succeeds (`bun run build`).
+- [x] D1 schemas `homeConfig` and `homeEnthusiasms` added to `src/db/schema.ts` and `drizzle/scripts/reset.sql`.
+- [x] Drizzle migration generated (`bun run db:generate`).
+- [x] API routes `/api/home/config` and `/api/home/enthusiasms/*` validate input with Zod and persist changes.
+- [x] Dashboard route `/dashboard/home` rendered with 3 modular tabs:
+  - [x] Tab 1: Hero & Stats form with 1–4 stats repeater.
+  - [x] Tab 2: Enthusiasms section header + CRUD list with visual Lucide icon picker.
+  - [x] Tab 3: Section headers for Featured, Marquee, CTA with description toggles.
+- [x] Language switcher pill (`EN` / `ID`) toggles active form input values smoothly.
+- [x] Public landing page (`/`) reflects updated texts, toggles, and enthusiasms across both languages.
+- [x] Fallback contract verified: Homepage functions perfectly even when database tables are empty.
+- [x] All TypeScript checks pass cleanly (`bun run check`).
+- [x] Linting and formatting pass cleanly (`bun run lint`).
+- [x] Production build succeeds (`bun run build`).

@@ -8,7 +8,6 @@ import type {
   EnthusiasmItemInput,
   EnthusiasmRecord,
   HomeConfigInput,
-  StatItem,
 } from './validation'
 
 export async function getHomeConfig(db: Database): Promise<HomeConfigInput> {
@@ -25,15 +24,6 @@ export async function getHomeConfig(db: Database): Promise<HomeConfigInput> {
       return defaultData
     }
 
-    let stats: StatItem[] = defaultData.stats
-    if (record.statsJson) {
-      try {
-        stats = JSON.parse(record.statsJson) as StatItem[]
-      } catch {
-        stats = defaultData.stats
-      }
-    }
-
     return {
       heroEyebrowEn: record.heroEyebrowEn || defaultData.heroEyebrowEn,
       heroEyebrowId: record.heroEyebrowId || defaultData.heroEyebrowId,
@@ -46,8 +36,12 @@ export async function getHomeConfig(db: Database): Promise<HomeConfigInput> {
       heroIntroSuffixId:
         record.heroIntroSuffixId || defaultData.heroIntroSuffixId,
 
-      showStats: record.showStats,
-      stats,
+      showEducation: record.showEducation,
+      educationUniversity:
+        record.educationUniversity || defaultData.educationUniversity,
+      educationMajorEn: record.educationMajorEn || defaultData.educationMajorEn,
+      educationMajorId: record.educationMajorId || defaultData.educationMajorId,
+      educationGpa: record.educationGpa || defaultData.educationGpa,
 
       featuredEyebrowEn:
         record.featuredEyebrowEn || defaultData.featuredEyebrowEn,
@@ -107,7 +101,6 @@ export async function updateHomeConfig(
   input: HomeConfigInput,
 ): Promise<HomeConfigInput> {
   const now = new Date()
-  const statsJson = JSON.stringify(input.stats)
 
   const existing = await db
     .select({ id: homeConfig.id })
@@ -125,8 +118,11 @@ export async function updateHomeConfig(
     heroIntroSuffixEn: input.heroIntroSuffixEn.trim(),
     heroIntroSuffixId: input.heroIntroSuffixId.trim(),
 
-    showStats: input.showStats,
-    statsJson,
+    showEducation: input.showEducation,
+    educationUniversity: input.educationUniversity.trim(),
+    educationMajorEn: input.educationMajorEn.trim(),
+    educationMajorId: input.educationMajorId.trim(),
+    educationGpa: input.educationGpa.trim(),
 
     featuredEyebrowEn: input.featuredEyebrowEn.trim(),
     featuredEyebrowId: input.featuredEyebrowId.trim(),

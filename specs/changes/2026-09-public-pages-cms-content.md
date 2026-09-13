@@ -2,7 +2,7 @@
 
 - **Feature ID**: `feat-public-pages-cms`
 - **Date**: `2026-09-11`
-- **Status**: `Draft`
+- **Status**: `Implemented`
 - **Target Routes**:
   - Public:
     - `/projects` (Filterable Projects Showcase)
@@ -282,17 +282,17 @@ Add a new group using existing shadcn sidebar primitives (`SidebarGroup`, `Sideb
 
 ## 7. Acceptance Criteria & Verification Checklist
 
-- [ ] D1 table `page_content` declared in `src/db/schema.ts` and `drizzle/scripts/reset.sql`.
-- [ ] Drizzle migration generated (`bun run db:generate`).
-- [ ] API route `/api/pages/$page.ts` supports `GET` (public) and `PUT` (editor+) with Zod validation.
-- [ ] Dashboard sidebar includes the "Halaman Publik (Pages)" group with Home, Projects, Stack, and Contact navigation items.
-- [ ] Dashboard pages created:
-  - [ ] `/dashboard/pages/projects`: Eyebrow, Title, Description, and `showDescription` toggle.
-  - [ ] `/dashboard/pages/stack`: Main header and Ultimate stack section header with description toggles.
-  - [ ] `/dashboard/pages/contact`: Main header, direct channels card labels, and contact form title/subtitle.
-- [ ] Each form includes an inline language switcher (`EN` / `ID`) and a working "Reset ke Default" button.
-- [ ] Public routes (`/projects`, `/stack`, `/contact`) immediately reflect CMS updates across both languages.
-- [ ] Fallback resilience confirmed: App works seamlessly when database table is empty.
-- [ ] TypeScript checks pass cleanly (`bun run check`).
-- [ ] Linter passes cleanly (`bun run lint`).
-- [ ] Production build succeeds (`bun run build`).
+- [x] D1 table `page_content` declared in `src/db/schema.ts` and `drizzle/scripts/reset.sql`.
+- [x] Drizzle migration generated (`bun run db:generate`).
+- [x] API route `/api/pages/$page.ts` supports `GET` (public) and `PUT` (editor+) with Zod validation.
+- [x] Dashboard sidebar includes the "Halaman Publik (Pages)" group with Home, Projects, Stack, and Contact navigation items.
+- [x] Dashboard pages created:
+  - [x] `/dashboard/pages/projects`: Eyebrow, Title, Description, and `showDescription` toggle.
+  - [x] `/dashboard/pages/stack`: Main header and Ultimate stack section header with description toggles.
+  - [x] `/dashboard/pages/contact`: Main header, direct channels card labels, and contact form title/subtitle.
+- [x] Each form includes an inline language switcher (`EN` / `ID`) and a working "Reset ke Default" button.
+- [x] Public routes (`/projects`, `/stack`, `/contact`) immediately reflect CMS updates across both languages.
+- [x] Fallback resilience confirmed: App works seamlessly when database table is empty.
+- [x] TypeScript checks pass cleanly (`bun run check`).
+- [x] Linter passes cleanly (`bun run lint`).
+- [x] Production build succeeds (`bun run build`).

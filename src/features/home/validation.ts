@@ -1,15 +1,8 @@
 import { z } from 'zod'
 
 import { homeCopy } from '#/features/home/copy'
-import { portfolioStats } from '#/features/portfolio/data'
 
-export const statItemSchema = z.object({
-  labelEn: z.string().min(1, 'Label EN is required'),
-  labelId: z.string().min(1, 'Label ID is required'),
-  value: z.string().min(1, 'Value is required'),
-})
-export type StatItem = z.infer<typeof statItemSchema>
-
+// Latest Education
 export const homeConfigSchema = z.object({
   heroEyebrowEn: z.string().default(''),
   heroEyebrowId: z.string().default(''),
@@ -20,11 +13,23 @@ export const homeConfigSchema = z.object({
   heroIntroSuffixEn: z.string().default(''),
   heroIntroSuffixId: z.string().default(''),
 
-  showStats: z.boolean().default(true),
-  stats: z
-    .array(statItemSchema)
-    .max(4, 'Maximum 4 stats items permitted')
-    .default([]),
+  showEducation: z.boolean().default(true),
+  educationUniversity: z
+    .string()
+    .trim()
+    .min(1, 'University name is required')
+    .default('Universitas Sriwijaya'),
+  educationMajorEn: z
+    .string()
+    .trim()
+    .min(1, 'Major (EN) is required')
+    .default('Information Management'),
+  educationMajorId: z
+    .string()
+    .trim()
+    .min(1, 'Major (ID) is required')
+    .default('Manajemen Informatika'),
+  educationGpa: z.string().trim().min(1, 'GPA is required').default('3.98'),
 
   featuredEyebrowEn: z.string().default(''),
   featuredEyebrowId: z.string().default(''),
@@ -103,12 +108,11 @@ export function getDefaultHomeConfig(): HomeConfigInput {
     heroIntroSuffixEn: homeCopy.en.hero.introSuffix,
     heroIntroSuffixId: homeCopy.id.hero.introSuffix,
 
-    showStats: true,
-    stats: portfolioStats.map((s) => ({
-      labelEn: s.label,
-      labelId: s.label,
-      value: s.value,
-    })),
+    showEducation: true,
+    educationUniversity: 'Universitas Sriwijaya',
+    educationMajorEn: 'Information Management',
+    educationMajorId: 'Manajemen Informatika',
+    educationGpa: '3.98',
 
     featuredEyebrowEn: homeCopy.en.featured.eyebrow,
     featuredEyebrowId: homeCopy.id.featured.eyebrow,
