@@ -16,7 +16,7 @@
 
 ## 1. Overview & Problem Statement
 
-In the initial implementation of the Home CMS ([`specs/changes/2026-09-home-cms-content-management.md`](file:///d:/winterest-project/winterest-portfolio-v2/specs/changes/2026-09-home-cms-content-management.md)), the 3 cards below the hero CTA (University, GPA, and Major) were modeled as an arbitrary array of metric cards (`stats: StatItem[]` serialized into a JSON string `statsJson` with an add/remove repeater capped at 4 items).
+In the initial implementation of the Home CMS ([`specs/changes/implemented/home-cms-content-management-09-2026.md`](file:///d:/winterest-project/winterest-portfolio-v2/specs/changes/implemented/home-cms-content-management-09-2026.md)), the 3 cards below the hero CTA (University, GPA, and Major) were modeled as an arbitrary array of metric cards (`stats: StatItem[]` serialized into a JSON string `statsJson` with an add/remove repeater capped at 4 items).
 
 However, these 3 data points specifically represent **Latest Education** (`Pendidikan Terakhir`), not generic site statistics. Modeling them as a free-form array with JSON stringification creates unnecessary complexity, risks runtime JSON parse issues, lacks field-specific validation, and does not provide an intuitive CMS form UX for academic credentials.
 

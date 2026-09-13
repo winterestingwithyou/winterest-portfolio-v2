@@ -139,7 +139,7 @@ Komponen bersifat murni presentasional publik tanpa melibatkan data sensitif, se
 1. **Empty Data (`ultimateTechs.length === 0`)**: Tetap menampilkan empty state yang sudah ada (`emptyUltimateTitle` / `emptyUltimateDescription`).
 2. **Small Dataset (1 - 5 items)**: Circular rotation memastikan ketiga baris tetap bergerak mulus tanpa baris kosong. Nilai `repeat={5}` menjamin tidak ada celah kosong pada layar lebar (ultrawide / 4K).
 3. **Motion Sensitivity (`prefers-reduced-motion`)**: Tetap dihormati oleh Framer Motion / Motion One secara otomatis.
-4. **Card Height Uniformity**: Mengintegrasikan `TechMarqueeCard` dari spesifikasi `2026-09-fix-marquee-card-uniform-height.md` sehingga ketiga baris memiliki ketinggian kartu yang presisi dan rapi.
+4. **Card Height Uniformity**: Mengintegrasikan `TechMarqueeCard` dari spesifikasi `fix-marquee-card-uniform-height-09-2026.md` sehingga ketiga baris memiliki ketinggian kartu yang presisi dan rapi.
 
 ---
 

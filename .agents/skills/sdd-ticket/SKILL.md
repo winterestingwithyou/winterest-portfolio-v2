@@ -5,7 +5,7 @@ description: >-
   change spec, or feature request in specs/changes/ (e.g. "buat ticket", "add ticket",
   "bikin proposal fitur", "buat RFC"). It conducts an interactive interview, validates
   technical contracts (D1, R2, Zod, API, RBAC, Turnstile), and scaffolds a standardized
-  spec file in specs/changes/YYYY-MM-[slug].md.
+  spec file in specs/changes/[slug]-MM-YYYY.md.
 ---
 
 # SDD Ticket & Proposal Generator (`sdd-ticket`)
@@ -41,7 +41,7 @@ Before writing the file, briefly clarify key technical details if not provided b
 
 ### Step 3: Scaffold File in `specs/changes/`
 
-1. Determine file path using current date: `specs/changes/YYYY-MM-[slug].md` (e.g. `specs/changes/2026-09-blog-engine.md`).
+1. Determine file path using current date: `specs/changes/[slug]-MM-YYYY.md` (e.g. `specs/changes/blog-engine-09-2026.md`).
 2. Populate the file using the standard 8-section template located in [`./resources/ticket-template.md`](./resources/ticket-template.md):
    - **Section 1: Metadata & Status** (`Status: Draft`)
    - **Section 2: Overview & Problem Statement**
@@ -58,5 +58,5 @@ Before writing the file, briefly clarify key technical details if not provided b
    ```bash
    bun run format
    ```
-2. Present the user with a clickable link to the created ticket (e.g. `[2026-09-blog-engine.md](file:///d:/winterest-project/winterest-portfolio-v2/specs/changes/2026-09-blog-engine.md)`).
+2. Present the user with a clickable link to the created ticket (e.g. `[blog-engine-09-2026.md](file:///d:/winterest-project/winterest-portfolio-v2/specs/changes/blog-engine-09-2026.md)`).
 3. Outline next actionable steps (e.g. reviewing open questions, locking contracts before implementation).
