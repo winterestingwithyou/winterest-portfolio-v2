@@ -91,70 +91,35 @@ export function CmsPageShell({
   const displayResetLabel = resetLabel ?? common.resetDefault
 
   const header = (
-    <header className="flex flex-col gap-5 rounded-xl border border-sidebar-border bg-sidebar p-5 shadow-xs sm:flex-row sm:items-center sm:justify-between w-full min-w-0 max-w-full">
-      {/* Left: Eyebrow + Title + Description */}
-      <div className="min-w-0 flex-1 space-y-1.5">
-        <div className="flex items-center gap-2 text-xs font-semibold text-(--brand-orange)">
-          <span className="flex size-5 shrink-0 items-center justify-center rounded-md bg-(--brand-orange-soft) text-(--brand-orange) [&>svg]:size-3.5">
-            {icon}
-          </span>
-          <span className="tracking-wider uppercase text-[11px] font-bold">
-            {displayEyebrow}
-          </span>
-        </div>
+    <header className="flex flex-col gap-3 rounded-xl border border-sidebar-border bg-sidebar p-5 shadow-xs w-full min-w-0 max-w-full">
+      <div className="flex items-center gap-2 text-xs font-semibold text-(--brand-orange)">
+        <span className="flex size-5 shrink-0 items-center justify-center rounded-md bg-(--brand-orange-soft) text-(--brand-orange) [&>svg]:size-3.5">
+          {icon}
+        </span>
+        <span className="tracking-wider uppercase text-[11px] font-bold">
+          {displayEyebrow}
+        </span>
+      </div>
+      <div className="space-y-1">
         <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-(--brand-ink) break-words">
           {title}
         </h1>
         {description && (
-          <p className="max-w-2xl text-xs sm:text-sm leading-relaxed text-(--brand-muted) break-words">
+          <p className="max-w-3xl text-xs sm:text-sm leading-relaxed text-(--brand-muted) break-words">
             {description}
           </p>
         )}
       </div>
-
-      {/* Right: Balanced Two-Row Control Cluster */}
-      <div className="flex flex-col items-start sm:items-end gap-2.5 shrink-0">
-        <div className="flex items-center gap-2">
-          <span className="text-[11px] font-medium text-(--brand-muted) hidden md:inline">
-            {common.contentLanguage}
-          </span>
-          <LanguageSwitcherPill
-            activeLocale={locale}
-            onChange={onLocaleChange}
-          />
-        </div>
-
-        <div className="flex flex-wrap items-center gap-2">
-          {onReset && (
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={onReset}
-              className="flex items-center gap-1.5 text-xs text-(--brand-muted) hover:text-(--brand-ink) cursor-pointer"
-            >
-              <RotateCcw className="size-3.5" aria-hidden="true" />
-              {displayResetLabel}
-            </Button>
-          )}
-
-          <Button
-            type={asForm && onSubmit ? 'submit' : 'button'}
-            size="sm"
-            disabled={isSaving}
-            onClick={!asForm || !onSubmit ? onSave : undefined}
-            className="flex items-center gap-1.5 bg-(--brand-orange) font-bold text-white hover:brightness-105 disabled:opacity-60 cursor-pointer shadow-xs"
-          >
-            {isSaving ? (
-              <Loader2 className="size-3.5 animate-spin" aria-hidden="true" />
-            ) : (
-              <Save className="size-3.5" aria-hidden="true" />
-            )}
-            {isSaving ? displaySavingLabel : displaySaveLabel}
-          </Button>
-        </div>
-      </div>
     </header>
+  )
+
+  const subHeaderToolbar = (
+    <div className="flex items-center justify-end gap-2.5 w-full min-w-0">
+      <span className="text-xs font-medium text-(--brand-muted)">
+        {common.contentLanguage}
+      </span>
+      <LanguageSwitcherPill activeLocale={locale} onChange={onLocaleChange} />
+    </div>
   )
 
   const statusBanner = statusMessage && (
@@ -176,13 +141,50 @@ export function CmsPageShell({
     </div>
   )
 
+  const stickyBottomBar = (
+    <div className="sticky bottom-0 z-20 -mx-4 md:-mx-6 -mb-4 md:-mb-6 flex items-center justify-end gap-2.5 border-t border-sidebar-border bg-sidebar/95 px-4 py-3.5 backdrop-blur-sm md:px-6 shadow-xs">
+      {onReset && (
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={onReset}
+          className="flex items-center gap-1.5 text-xs text-(--brand-muted) hover:text-(--brand-ink) cursor-pointer"
+        >
+          <RotateCcw className="size-3.5" aria-hidden="true" />
+          {displayResetLabel}
+        </Button>
+      )}
+
+      <Button
+        type={asForm && onSubmit ? 'submit' : 'button'}
+        size="sm"
+        disabled={isSaving}
+        onClick={!asForm || !onSubmit ? onSave : undefined}
+        className="flex items-center gap-1.5 bg-(--brand-orange) font-bold text-white hover:brightness-105 disabled:opacity-60 cursor-pointer shadow-xs"
+      >
+        {isSaving ? (
+          <Loader2 className="size-3.5 animate-spin" aria-hidden="true" />
+        ) : (
+          <Save className="size-3.5" aria-hidden="true" />
+        )}
+        {isSaving ? displaySavingLabel : displaySaveLabel}
+      </Button>
+    </div>
+  )
+
   const inner = (
     <div
-      className={cn('flex flex-col gap-6 w-full min-w-0 max-w-full', className)}
+      className={cn(
+        'flex flex-col gap-6 w-full min-w-0 max-w-full relative',
+        className,
+      )}
     >
       {header}
+      {subHeaderToolbar}
       {statusBanner}
-      <div className="w-full min-w-0 max-w-full">{children}</div>
+      <div className="w-full min-w-0 max-w-full pb-6">{children}</div>
+      {stickyBottomBar}
     </div>
   )
 
