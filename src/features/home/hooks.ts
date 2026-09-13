@@ -71,7 +71,51 @@ export function useUpdateEnthusiasm() {
       )
       return res.data
     },
-    onSuccess: () => {
+    onMutate: async ({ id, input }) => {
+      await queryClient.cancelQueries({ queryKey: homeQueryKeys.enthusiasms() })
+
+      const previousDashboard = queryClient.getQueryData<EnthusiasmRecord[]>(
+        homeQueryKeys.enthusiasmsList(true),
+      )
+      const previousPublic = queryClient.getQueryData<EnthusiasmRecord[]>(
+        homeQueryKeys.enthusiasmsList(undefined),
+      )
+
+      if (previousDashboard) {
+        queryClient.setQueryData<EnthusiasmRecord[]>(
+          homeQueryKeys.enthusiasmsList(true),
+          previousDashboard.map((item) =>
+            item.id === id ? { ...item, ...input } : item,
+          ),
+        )
+      }
+
+      if (previousPublic) {
+        queryClient.setQueryData<EnthusiasmRecord[]>(
+          homeQueryKeys.enthusiasmsList(undefined),
+          previousPublic.map((item) =>
+            item.id === id ? { ...item, ...input } : item,
+          ),
+        )
+      }
+
+      return { previousDashboard, previousPublic }
+    },
+    onError: (_err, _variables, context) => {
+      if (context?.previousDashboard) {
+        queryClient.setQueryData(
+          homeQueryKeys.enthusiasmsList(true),
+          context.previousDashboard,
+        )
+      }
+      if (context?.previousPublic) {
+        queryClient.setQueryData(
+          homeQueryKeys.enthusiasmsList(undefined),
+          context.previousPublic,
+        )
+      }
+    },
+    onSettled: () => {
       void queryClient.invalidateQueries({
         queryKey: homeQueryKeys.enthusiasms(),
       })
@@ -88,7 +132,31 @@ export function useDeleteEnthusiasm() {
         method: 'DELETE',
       })
     },
-    onSuccess: () => {
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: homeQueryKeys.enthusiasms() })
+
+      const previousDashboard = queryClient.getQueryData<EnthusiasmRecord[]>(
+        homeQueryKeys.enthusiasmsList(true),
+      )
+
+      if (previousDashboard) {
+        queryClient.setQueryData<EnthusiasmRecord[]>(
+          homeQueryKeys.enthusiasmsList(true),
+          previousDashboard.filter((item) => item.id !== id),
+        )
+      }
+
+      return { previousDashboard }
+    },
+    onError: (_err, _variables, context) => {
+      if (context?.previousDashboard) {
+        queryClient.setQueryData(
+          homeQueryKeys.enthusiasmsList(true),
+          context.previousDashboard,
+        )
+      }
+    },
+    onSettled: () => {
       void queryClient.invalidateQueries({
         queryKey: homeQueryKeys.enthusiasms(),
       })
@@ -106,7 +174,38 @@ export function useReorderEnthusiasms() {
         body: payload,
       })
     },
-    onSuccess: () => {
+    onMutate: async (payload) => {
+      await queryClient.cancelQueries({ queryKey: homeQueryKeys.enthusiasms() })
+
+      const previousDashboard = queryClient.getQueryData<EnthusiasmRecord[]>(
+        homeQueryKeys.enthusiasmsList(true),
+      )
+
+      if (previousDashboard) {
+        const orderMap = new Map(payload.items.map((i) => [i.id, i.sortOrder]))
+        const reordered = [...previousDashboard]
+          .map((item) => ({
+            ...item,
+            sortOrder: orderMap.has(item.id)
+              ? (orderMap.get(item.id) ?? item.sortOrder)
+              : item.sortOrder,
+          }))
+          .sort((a, b) => a.sortOrder - b.sortOrder)
+
+        queryClient.setQueryData(homeQueryKeys.enthusiasmsList(true), reordered)
+      }
+
+      return { previousDashboard }
+    },
+    onError: (_err, _variables, context) => {
+      if (context?.previousDashboard) {
+        queryClient.setQueryData(
+          homeQueryKeys.enthusiasmsList(true),
+          context.previousDashboard,
+        )
+      }
+    },
+    onSettled: () => {
       void queryClient.invalidateQueries({
         queryKey: homeQueryKeys.enthusiasms(),
       })

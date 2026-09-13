@@ -4,6 +4,7 @@ import type { Database } from './index'
 import {
   categories,
   contentLocales,
+  homeEnthusiasms,
   projectTechnologies,
   projects,
   projectTranslations,
@@ -13,12 +14,14 @@ import {
 } from './schema'
 import {
   categorySeeds,
+  enthusiasmSeeds,
   projectSeeds,
   socialLinkSeeds,
   technologySeeds,
 } from './seed-data'
 import type {
   CategorySeed,
+  EnthusiasmSeed,
   PortfolioProjectSeed,
   SocialLinkSeed,
   TechnologySeed,
@@ -41,6 +44,10 @@ export async function seedPortfolioData(db: Database) {
 
   for (const social of socialLinkSeeds) {
     await upsertSocialLink(db, social, now)
+  }
+
+  for (const enthusiasm of enthusiasmSeeds) {
+    await upsertEnthusiasm(db, enthusiasm, now)
   }
 }
 
@@ -248,6 +255,36 @@ async function upsertSocialLink(db: Database, seed: SocialLinkSeed, now: Date) {
         url: seed.url,
         isEnabled: seed.isEnabled ?? true,
         sortOrder: seed.sortOrder ?? 0,
+        updatedAt: now,
+      },
+    })
+    .run()
+}
+
+async function upsertEnthusiasm(db: Database, seed: EnthusiasmSeed, now: Date) {
+  await db
+    .insert(homeEnthusiasms)
+    .values({
+      id: seed.id,
+      icon: seed.icon,
+      titleEn: seed.titleEn,
+      titleId: seed.titleId,
+      descriptionEn: seed.descriptionEn,
+      descriptionId: seed.descriptionId,
+      isEnabled: seed.isEnabled,
+      sortOrder: seed.sortOrder,
+      updatedAt: now,
+    })
+    .onConflictDoUpdate({
+      target: homeEnthusiasms.id,
+      set: {
+        icon: seed.icon,
+        titleEn: seed.titleEn,
+        titleId: seed.titleId,
+        descriptionEn: seed.descriptionEn,
+        descriptionId: seed.descriptionId,
+        isEnabled: seed.isEnabled,
+        sortOrder: seed.sortOrder,
         updatedAt: now,
       },
     })

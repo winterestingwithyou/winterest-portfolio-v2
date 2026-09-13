@@ -2,7 +2,6 @@ import { asc, eq } from 'drizzle-orm'
 
 import type { Database } from '#/db'
 import { homeConfig, homeEnthusiasms } from '#/db/schema'
-import { homeCopy } from '#/features/home/copy'
 import { getDefaultHomeConfig } from './validation'
 import type {
   EnthusiasmItemInput,
@@ -169,25 +168,6 @@ export async function updateHomeConfig(
   return getHomeConfig(db)
 }
 
-export function getDefaultEnthusiasms(): EnthusiasmRecord[] {
-  const enItems = homeCopy.en.enthusiasms.items
-  const idItems = homeCopy.id.enthusiasms.items
-  const now = new Date()
-
-  return enItems.map((item, index) => ({
-    id: `default-${index + 1}`,
-    icon: item.iconName,
-    titleEn: item.title,
-    titleId: idItems[index]?.title ?? item.title,
-    descriptionEn: item.description,
-    descriptionId: idItems[index]?.description ?? item.description,
-    isEnabled: true,
-    sortOrder: index,
-    createdAt: now,
-    updatedAt: now,
-  }))
-}
-
 export async function getHomeEnthusiasms(
   db: Database,
   options?: { onlyEnabled?: boolean },
@@ -200,10 +180,6 @@ export async function getHomeEnthusiasms(
           .where(eq(homeEnthusiasms.isEnabled, true))
           .orderBy(asc(homeEnthusiasms.sortOrder))
       : await query.orderBy(asc(homeEnthusiasms.sortOrder))
-
-    if (records.length === 0) {
-      return getDefaultEnthusiasms()
-    }
 
     return records.map((r) => ({
       id: r.id,
@@ -224,7 +200,7 @@ export async function getHomeEnthusiasms(
     if (!isMissingTable) {
       console.error('Failed to read home_enthusiasms table:', error)
     }
-    return getDefaultEnthusiasms()
+    return []
   }
 }
 

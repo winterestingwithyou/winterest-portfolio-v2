@@ -28,7 +28,8 @@ export function EnthusiasmsSection({
   enthusiasms,
   showDescription = true,
 }: EnthusiasmsSectionProps) {
-  const items = enthusiasms ?? copy.enthusiasms.items
+  const items =
+    enthusiasms && enthusiasms.length > 0 ? enthusiasms : copy.enthusiasms.items
 
   return (
     <section className="px-4 py-14">

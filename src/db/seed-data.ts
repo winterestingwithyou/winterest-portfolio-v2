@@ -291,3 +291,125 @@ export const socialLinkSeeds: SocialLinkSeed[] = [
     sortOrder: 4,
   },
 ]
+
+export type EnthusiasmSeed = {
+  id: string
+  icon: string
+  titleEn: string
+  titleId: string
+  descriptionEn: string
+  descriptionId: string
+  isEnabled: boolean
+  sortOrder: number
+}
+
+export const enthusiasmSeeds: EnthusiasmSeed[] = [
+  {
+    id: 'enthusiasm-software-engineer',
+    icon: 'Terminal',
+    titleEn: 'Software Engineer',
+    titleId: 'Software Engineer',
+    descriptionEn:
+      'Applying clean code principles, data structures, and systematic problem solving in modern software engineering.',
+    descriptionId:
+      'Menerapkan prinsip clean code, struktur data, dan pemecahan masalah sistematis dalam rekayasa perangkat lunak modern.',
+    isEnabled: true,
+    sortOrder: 1,
+  },
+  {
+    id: 'enthusiasm-frontend-dev',
+    icon: 'Layout',
+    titleEn: 'Frontend Dev',
+    titleId: 'Frontend Dev',
+    descriptionEn:
+      'Crafting responsive, accessible, micro-animation rich user interfaces with intuitive UX.',
+    descriptionId:
+      'Membangun antarmuka web interaktif yang responsif, estetis, dan kaya akan micro-animation dengan UX intuitif.',
+    isEnabled: true,
+    sortOrder: 2,
+  },
+  {
+    id: 'enthusiasm-backend-dev',
+    icon: 'Server',
+    titleEn: 'Backend Dev',
+    titleId: 'Backend Dev',
+    descriptionEn:
+      'Building fast REST/GraphQL APIs, robust server architectures, and high-performance database flows.',
+    descriptionId:
+      'Merancang API cepat, arsitektur server yang andal, dan pengelolaan basis data berkinerja tinggi.',
+    isEnabled: true,
+    sortOrder: 3,
+  },
+  {
+    id: 'enthusiasm-fullstack-dev',
+    icon: 'Layers',
+    titleEn: 'Fullstack Dev',
+    titleId: 'Fullstack Dev',
+    descriptionEn:
+      'Seamlessly connecting frontend user experiences with edge-ready server logic using modern web stacks.',
+    descriptionId:
+      'Mengintegrasikan pengalaman antarmuka pengguna dengan logic server edge-ready secara terpadu.',
+    isEnabled: true,
+    sortOrder: 4,
+  },
+  {
+    id: 'enthusiasm-devops',
+    icon: 'Workflow',
+    titleEn: 'DevOps',
+    titleId: 'DevOps',
+    descriptionEn:
+      'Automating CI/CD pipelines, streamlined deployments, and continuous integration workflows.',
+    descriptionId:
+      'Mengelola otomatisasi CI/CD, alur deployment cepat, dan pipeline integrasi berkelanjutan.',
+    isEnabled: true,
+    sortOrder: 5,
+  },
+  {
+    id: 'enthusiasm-cloud-computing',
+    icon: 'Cloud',
+    titleEn: 'Cloud Computing',
+    titleId: 'Cloud Computing',
+    descriptionEn:
+      'Leveraging edge runtime platforms, serverless infrastructure, and Cloudflare-native solutions.',
+    descriptionId:
+      'Memanfaatkan teknologi edge network, infrastruktur serverless, serta ekosistem Cloudflare modern.',
+    isEnabled: true,
+    sortOrder: 6,
+  },
+  {
+    id: 'enthusiasm-system-design',
+    icon: 'Network',
+    titleEn: 'System Design',
+    titleId: 'System Design',
+    descriptionEn:
+      'Architecting scalable, fault-tolerant, and well-structured distributed web systems.',
+    descriptionId:
+      'Merancang arsitektur terdistribusi yang terukur (scalable), aman, dan bermutasi rendah.',
+    isEnabled: true,
+    sortOrder: 7,
+  },
+  {
+    id: 'enthusiasm-qa-engineering',
+    icon: 'ShieldCheck',
+    titleEn: 'QA Engineering',
+    titleId: 'QA Engineering',
+    descriptionEn:
+      'Ensuring software quality and reliability through automated testing, linting, and strict type safety.',
+    descriptionId:
+      'Memastikan keandalan perangkat lunak melalui otomatisasi pengujian, linting, dan type safety ketat.',
+    isEnabled: true,
+    sortOrder: 8,
+  },
+  {
+    id: 'enthusiasm-mobile-dev',
+    icon: 'Smartphone',
+    titleEn: 'Mobile Dev',
+    titleId: 'Mobile Dev',
+    descriptionEn:
+      'Developing responsive, performant, and user-friendly mobile application experiences.',
+    descriptionId:
+      'Mengembangkan aplikasi seluler yang cepat, responsif, dan memberikan pengalaman pengguna yang mulus.',
+    isEnabled: true,
+    sortOrder: 9,
+  },
+]

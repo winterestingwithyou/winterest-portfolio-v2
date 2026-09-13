@@ -2,6 +2,16 @@ import { useState } from 'react'
 import * as LucideIcons from 'lucide-react'
 import { ArrowDown, ArrowUp, Edit2, Plus, Terminal, Trash2 } from 'lucide-react'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '#/components/ui/alert-dialog'
 import { Button } from '#/components/ui/button'
 import {
   Card,
@@ -42,6 +52,10 @@ export function HomeEnthusiasmsManager({
 }: HomeEnthusiasmsManagerProps) {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [editingItem, setEditingItem] = useState<EnthusiasmRecord | null>(null)
+  const [deletingItem, setDeletingItem] = useState<{
+    id: string
+    title: string
+  } | null>(null)
 
   const createMutation = useCreateEnthusiasm()
   const updateMutation = useUpdateEnthusiasm()
@@ -80,13 +94,7 @@ export function HomeEnthusiasmsManager({
   }
 
   const handleDelete = (id: string, title: string) => {
-    if (
-      window.confirm(
-        `Hapus fokus area "${title}"? Tindakan tidak bisa dibatalkan.`,
-      )
-    ) {
-      deleteMutation.mutate(id)
-    }
+    setDeletingItem({ id, title })
   }
 
   const handleToggleEnabled = (id: string, isEnabled: boolean) => {
@@ -362,6 +370,40 @@ export function HomeEnthusiasmsManager({
         onSave={handleSaveItem}
         isPending={createMutation.isPending || updateMutation.isPending}
       />
+
+      <AlertDialog
+        open={Boolean(deletingItem)}
+        onOpenChange={(open) => !open && setDeletingItem(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Hapus Fokus Area</AlertDialogTitle>
+            <AlertDialogDescription>
+              Apakah Anda yakin ingin menghapus fokus area "
+              {deletingItem?.title}"? Tindakan ini tidak dapat dibatalkan.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleteMutation.isPending}>
+              Batal
+            </AlertDialogCancel>
+            <AlertDialogAction
+              variant="destructive"
+              disabled={deleteMutation.isPending}
+              onClick={(e) => {
+                e.preventDefault()
+                if (deletingItem) {
+                  deleteMutation.mutate(deletingItem.id, {
+                    onSettled: () => setDeletingItem(null),
+                  })
+                }
+              }}
+            >
+              {deleteMutation.isPending ? 'Menghapus...' : 'Hapus'}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   )
 }

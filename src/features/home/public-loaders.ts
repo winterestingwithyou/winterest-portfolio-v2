@@ -1,6 +1,5 @@
 import { createServerFn } from '@tanstack/react-start'
 
-import { getDefaultEnthusiasms } from './queries'
 import { getDefaultHomeConfig } from './validation'
 import type { EnthusiasmRecord, HomeConfigInput } from './validation'
 
@@ -29,7 +28,7 @@ export const getPublicHomeContent = createServerFn({
     console.error('[getPublicHomeContent Error]:', error)
     return {
       config: getDefaultHomeConfig(),
-      enthusiasms: getDefaultEnthusiasms(),
+      enthusiasms: [],
     }
   }
 })

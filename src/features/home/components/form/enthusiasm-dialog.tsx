@@ -92,7 +92,7 @@ export function EnthusiasmDialog({
       <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="max-w-xl p-6">
           <DialogHeader className="pb-2">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between pr-10">
               <DialogTitle className="text-lg font-bold text-(--brand-ink)">
                 {item ? 'Edit Fokus Area' : 'Tambah Fokus Area Baru'}
               </DialogTitle>
