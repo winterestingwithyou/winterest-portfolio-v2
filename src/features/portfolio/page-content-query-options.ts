@@ -1,7 +1,7 @@
 import { queryOptions } from '@tanstack/react-query'
 
-import { api } from '#/lib/api-client'
-import type { PublicPageKey } from './page-content-schemas'
+import type { PublicPageConfig, PublicPageKey } from './page-content-schemas'
+import { getPublicPageContent } from './public-loaders'
 
 export const pageContentQueryKeys = {
   all: ['page-content'] as const,
@@ -11,12 +11,14 @@ export const pageContentQueryKeys = {
 }
 
 export const pageContentQueryOptions = {
-  get: <T>(page: PublicPageKey) =>
+  get: <T extends PublicPageConfig = PublicPageConfig>(page: PublicPageKey) =>
     queryOptions({
       queryKey: pageContentQueryKeys.detail(page),
       queryFn: async (): Promise<T> => {
-        const res = await api<{ data: T }>(`/api/pages/${page}`)
-        return res.data
+        const content = await getPublicPageContent({
+          data: { page },
+        })
+        return content as T
       },
     }),
 }

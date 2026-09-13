@@ -1,6 +1,9 @@
 import { queryOptions } from '@tanstack/react-query'
 
-import { api } from '#/lib/api-client'
+import {
+  getHomeConfigServerFn,
+  getHomeEnthusiasmsServerFn,
+} from './server-functions'
 import type { EnthusiasmRecord, HomeConfigInput } from './validation'
 
 export const homeQueryKeys = {
@@ -16,8 +19,7 @@ export const homeQueryOptions = {
     queryOptions({
       queryKey: homeQueryKeys.config(),
       queryFn: async (): Promise<HomeConfigInput> => {
-        const res = await api<{ data: HomeConfigInput }>('/api/home/config')
-        return res.data
+        return await getHomeConfigServerFn()
       },
     }),
 
@@ -25,13 +27,9 @@ export const homeQueryOptions = {
     queryOptions({
       queryKey: homeQueryKeys.enthusiasmsList(all),
       queryFn: async (): Promise<EnthusiasmRecord[]> => {
-        const res = await api<{ data: EnthusiasmRecord[] }>(
-          '/api/home/enthusiasms',
-          {
-            query: all ? { all: 'true' } : undefined,
-          },
-        )
-        return res.data
+        return await getHomeEnthusiasmsServerFn({
+          data: { all },
+        })
       },
     }),
 }
