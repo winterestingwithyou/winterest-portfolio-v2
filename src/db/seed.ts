@@ -27,28 +27,75 @@ import type {
   TechnologySeed,
 } from './seed-data'
 
-export async function seedPortfolioData(db: Database) {
+import type { SeedCollection } from './seed-helpers'
+import { ALL_SEED_COLLECTIONS } from './seed-helpers'
+
+export type { SeedCollection }
+
+export type SeedOptions = {
+  collections?: SeedCollection[]
+}
+
+export type SeedResult = {
+  categories: number
+  technologies: number
+  projects: number
+  socialLinks: number
+  homeEnthusiasms: number
+}
+
+export async function seedPortfolioData(
+  db: Database,
+  options?: SeedOptions,
+): Promise<SeedResult> {
   const now = new Date()
-
-  for (const category of categorySeeds) {
-    await upsertCategory(db, category, now)
+  const targetCollections = new Set(
+    options?.collections ?? ALL_SEED_COLLECTIONS,
+  )
+  const result: SeedResult = {
+    categories: 0,
+    technologies: 0,
+    projects: 0,
+    socialLinks: 0,
+    homeEnthusiasms: 0,
   }
 
-  for (const technology of technologySeeds) {
-    await upsertTechnology(db, technology, now)
+  if (targetCollections.has('categories')) {
+    for (const category of categorySeeds) {
+      await upsertCategory(db, category, now)
+      result.categories++
+    }
   }
 
-  for (const project of projectSeeds) {
-    await upsertProject(db, project, now)
+  if (targetCollections.has('technologies')) {
+    for (const technology of technologySeeds) {
+      await upsertTechnology(db, technology, now)
+      result.technologies++
+    }
   }
 
-  for (const social of socialLinkSeeds) {
-    await upsertSocialLink(db, social, now)
+  if (targetCollections.has('projects')) {
+    for (const project of projectSeeds) {
+      await upsertProject(db, project, now)
+      result.projects++
+    }
   }
 
-  for (const enthusiasm of enthusiasmSeeds) {
-    await upsertEnthusiasm(db, enthusiasm, now)
+  if (targetCollections.has('socialLinks')) {
+    for (const social of socialLinkSeeds) {
+      await upsertSocialLink(db, social, now)
+      result.socialLinks++
+    }
   }
+
+  if (targetCollections.has('homeEnthusiasms')) {
+    for (const enthusiasm of enthusiasmSeeds) {
+      await upsertEnthusiasm(db, enthusiasm, now)
+      result.homeEnthusiasms++
+    }
+  }
+
+  return result
 }
 
 async function upsertCategory(db: Database, seed: CategorySeed, now: Date) {
