@@ -96,12 +96,9 @@ export const contactCopy = {
       formSubtitlePlaceholder:
         'e.g. Fill out the form to compose a direct message.',
       sendBtnLabel: (lang: string) => `Submit Button Text (${lang})`,
-      visibilityTitle: '4. Page Visibility',
-      visibilityDesc:
-        'Control whether the contact page is visible to the public.',
-      enablePage: 'Enable Contact Page',
-      enablePageDesc:
-        'If disabled, visitors will see a 404 or maintenance notice.',
+      showDescription: 'Show Page Description',
+      showDescriptionDesc:
+        'Display the header description text on the public contact page.',
     },
   },
   id: {
@@ -190,11 +187,9 @@ export const contactCopy = {
       formSubtitlePlaceholder:
         'mis. Isi formulir di bawah untuk membuat pesan langsung.',
       sendBtnLabel: (lang: string) => `Teks Tombol Kirim (${lang})`,
-      visibilityTitle: '4. Visibilitas Halaman',
-      visibilityDesc: 'Atur apakah halaman kontak dapat diakses oleh publik.',
-      enablePage: 'Aktifkan Halaman Kontak',
-      enablePageDesc:
-        'Jika dimatikan, pengunjung akan melihat halaman 404 atau pesan pemeliharaan.',
+      showDescription: 'Tampilkan Deskripsi Halaman',
+      showDescriptionDesc:
+        'Tampilkan teks paragraf deskripsi di bawah judul utama pada halaman kontak publik.',
     },
   },
 } as const

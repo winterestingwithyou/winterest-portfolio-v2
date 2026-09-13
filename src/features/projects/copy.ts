@@ -178,12 +178,9 @@ export const projectsCopy = {
         titlePlaceholder: 'e.g. Projects',
         descLabel: (lang: string) => `Description (${lang})`,
         descPlaceholder: 'Short description of your project catalog...',
-        visibilityTitle: 'Page Visibility',
-        visibilityDesc:
-          'Control whether the project catalog is visible to the public.',
-        enablePage: 'Enable Projects Page',
-        enablePageDesc:
-          'If disabled, visitors will see a 404 or maintenance notice.',
+        showDescription: 'Show Page Description',
+        showDescriptionDesc:
+          'Display the header description text on the public projects catalog.',
       },
     },
   },
@@ -369,12 +366,9 @@ export const projectsCopy = {
         titlePlaceholder: 'mis. Daftar Project',
         descLabel: (lang: string) => `Deskripsi (${lang})`,
         descPlaceholder: 'Deskripsi singkat katalog project Anda...',
-        visibilityTitle: 'Visibilitas Halaman',
-        visibilityDesc:
-          'Atur apakah katalog project dapat diakses oleh publik.',
-        enablePage: 'Aktifkan Halaman Project',
-        enablePageDesc:
-          'Jika dimatikan, pengunjung akan melihat halaman 404 atau pesan pemeliharaan.',
+        showDescription: 'Tampilkan Deskripsi Halaman',
+        showDescriptionDesc:
+          'Tampilkan teks paragraf deskripsi di bawah judul utama pada katalog project publik.',
       },
     },
   },

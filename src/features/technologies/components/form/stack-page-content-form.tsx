@@ -152,10 +152,10 @@ export function StackPageContentForm({
           <div className="flex items-center justify-between border-t border-(--brand-line) pt-4">
             <div className="flex flex-col gap-0.5">
               <span className="text-xs font-bold text-(--brand-ink)">
-                {copy.enablePage}
+                {copy.showDescription}
               </span>
               <span className="text-[11px] text-(--brand-muted)">
-                {copy.enablePageDesc}
+                {copy.showDescriptionDesc}
               </span>
             </div>
             <Switch

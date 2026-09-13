@@ -184,12 +184,9 @@ export const technologiesCopy = {
         ultimateDescLabel: (lang: string) => `Section Description (${lang})`,
         ultimateDescPlaceholder:
           'Explain why these technologies are in your preferred stack...',
-        visibilityTitle: '3. Page Visibility',
-        visibilityDesc:
-          'Control whether the tech stack page is visible to the public.',
-        enablePage: 'Enable Tech Stack Page',
-        enablePageDesc:
-          'If disabled, visitors will see a 404 or maintenance notice.',
+        showDescription: 'Show Page Description',
+        showDescriptionDesc:
+          'Display the header description text on the public tech stack page.',
         showUltimateDescTitle: 'Show Ultimate Section Description',
         showUltimateDescSubtitle:
           'Display description text above architecture nodes.',
@@ -384,12 +381,9 @@ export const technologiesCopy = {
         ultimateDescLabel: (lang: string) => `Deskripsi Seksi (${lang})`,
         ultimateDescPlaceholder:
           'Jelaskan mengapa teknologi ini menjadi pilihan utama Anda...',
-        visibilityTitle: '3. Visibilitas Halaman',
-        visibilityDesc:
-          'Atur apakah halaman tech stack dapat diakses oleh publik.',
-        enablePage: 'Aktifkan Halaman Tech Stack',
-        enablePageDesc:
-          'Jika dimatikan, pengunjung akan melihat halaman 404 atau pesan pemeliharaan.',
+        showDescription: 'Tampilkan Deskripsi Halaman',
+        showDescriptionDesc:
+          'Tampilkan teks paragraf deskripsi di bawah judul utama pada halaman tech stack publik.',
         showUltimateDescTitle: 'Tampilkan Deskripsi Seksi Ultimate',
         showUltimateDescSubtitle:
           'Tampilkan teks deskripsi di atas daftar node arsitektur.',
