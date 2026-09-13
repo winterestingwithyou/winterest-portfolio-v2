@@ -100,6 +100,23 @@ export const homeCopy = {
         'Open to collaborations, side projects, and good conversations about coding stuff.',
       contact: 'Contact me',
     },
+    dashboard: {
+      title: 'Content Settings: Home',
+      description:
+        'Manage hero text, metric cards, focus areas, project sections, marquee, and closing CTA.',
+      saveConfig: 'Save Configuration',
+      resetConfirm:
+        'Reset all text to default copywriting? Unsaved changes will be replaced.',
+      resetSuccess:
+        'Configuration has been reset to default. Click "Save Configuration" to apply.',
+      saveSuccess: 'Home configuration saved successfully.',
+      saveError: 'Failed to save configuration.',
+      tabs: {
+        heroStats: 'Hero & Metrics',
+        enthusiasms: 'Focus Areas',
+        sectionsCta: 'Sections & CTA',
+      },
+    },
   },
   id: {
     hero: {
@@ -199,6 +216,23 @@ export const homeCopy = {
       title:
         'Terbuka untuk kolaborasi, side project, dan ngobrol tentang ngoding.',
       contact: 'Hubungi saya',
+    },
+    dashboard: {
+      title: 'Pengaturan Konten: Beranda (Home)',
+      description:
+        'Kelola teks hero, kartu metrik, fokus keahlian, seksi project dan marquee, serta CTA penutup.',
+      saveConfig: 'Simpan Konfigurasi',
+      resetConfirm:
+        'Reset semua teks ke default copywriting? Perubahan belum tersimpan akan diganti.',
+      resetSuccess:
+        'Konfigurasi telah direset ke default. Klik "Simpan Konfigurasi" untuk menerapkan.',
+      saveSuccess: 'Konfigurasi beranda berhasil disimpan.',
+      saveError: 'Gagal menyimpan konfigurasi.',
+      tabs: {
+        heroStats: 'Hero dan Metrik',
+        enthusiasms: 'Bidang Minat',
+        sectionsCta: 'Seksi dan CTA',
+      },
     },
   },
 } as const

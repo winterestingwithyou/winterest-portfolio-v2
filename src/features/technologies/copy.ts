@@ -155,6 +155,45 @@ export const technologiesCopy = {
         deleteConfirm: (name: string) =>
           `Are you sure you want to delete technology "${name}"?`,
       },
+      pageContent: {
+        title: 'Content Settings: Tech Stack Page',
+        description:
+          'Manage title, description, and visibility on the /stack page and Ultimate Tech Stack.',
+        resetConfirm:
+          'Reset form to default copywriting? Unsaved changes will be replaced.',
+        resetSuccess: 'Form has been reset to default. Click save to apply.',
+        saveSuccess: 'Tech stack page changes saved successfully.',
+        saveError: 'Failed to save changes.',
+        mainHeaderTitle: (lang: string) =>
+          `1. Main Stack Page Header (${lang})`,
+        mainHeaderDesc: 'Introductory text at the very top of the /stack page.',
+        eyebrowLabel: (lang: string) => `Eyebrow (${lang})`,
+        eyebrowPlaceholder: 'e.g. Stack',
+        titleLabel: (lang: string) => `Main Title (${lang}) *`,
+        titlePlaceholder: 'e.g. Tech Stack that I use',
+        descLabel: (lang: string) => `Description (${lang})`,
+        descPlaceholder: 'Explain the tools and technologies you use...',
+        ultimateHeaderTitle: (lang: string) =>
+          `2. Ultimate Tech Stack Section (${lang})`,
+        ultimateHeaderDesc:
+          'Heading and description for the Ultimate Tech Stack marquee section.',
+        ultimateEyebrowLabel: (lang: string) => `Eyebrow (${lang})`,
+        ultimateEyebrowPlaceholder: 'e.g. Ultimate Tech Stack',
+        ultimateTitleLabel: (lang: string) => `Section Title (${lang}) *`,
+        ultimateTitlePlaceholder: 'e.g. Core Architecture & Preferred Stack',
+        ultimateDescLabel: (lang: string) => `Section Description (${lang})`,
+        ultimateDescPlaceholder:
+          'Explain why these technologies are in your preferred stack...',
+        visibilityTitle: '3. Page Visibility',
+        visibilityDesc:
+          'Control whether the tech stack page is visible to the public.',
+        enablePage: 'Enable Tech Stack Page',
+        enablePageDesc:
+          'If disabled, visitors will see a 404 or maintenance notice.',
+        showUltimateDescTitle: 'Show Ultimate Section Description',
+        showUltimateDescSubtitle:
+          'Display description text above architecture nodes.',
+      },
     },
   },
   id: {
@@ -314,6 +353,46 @@ export const technologiesCopy = {
         deleteError: 'Gagal menghapus teknologi.',
         deleteConfirm: (name: string) =>
           `Apakah Anda yakin ingin menghapus teknologi "${name}"?`,
+      },
+      pageContent: {
+        title: 'Pengaturan Konten: Halaman Tech Stack',
+        description:
+          'Kelola judul, deskripsi, dan visibilitas pada halaman /stack dan Ultimate Tech Stack.',
+        resetConfirm:
+          'Reset form ke default copywriting? Perubahan belum tersimpan akan diganti.',
+        resetSuccess:
+          'Form telah direset ke default. Klik simpan untuk menerapkan.',
+        saveSuccess: 'Perubahan halaman tech stack berhasil disimpan.',
+        saveError: 'Gagal menyimpan perubahan.',
+        mainHeaderTitle: (lang: string) =>
+          `1. Header Utama Halaman Stack (${lang})`,
+        mainHeaderDesc: 'Teks pengantar di bagian paling atas halaman /stack.',
+        eyebrowLabel: (lang: string) => `Eyebrow (${lang})`,
+        eyebrowPlaceholder: 'mis. Stack',
+        titleLabel: (lang: string) => `Judul Utama (${lang}) *`,
+        titlePlaceholder: 'mis. Tech Stack yang kupakai',
+        descLabel: (lang: string) => `Deskripsi (${lang})`,
+        descPlaceholder: 'Jelaskan alat dan teknologi yang Anda gunakan...',
+        ultimateHeaderTitle: (lang: string) =>
+          `2. Seksi Ultimate Tech Stack (${lang})`,
+        ultimateHeaderDesc:
+          'Judul dan deskripsi untuk seksi marquee Ultimate Tech Stack.',
+        ultimateEyebrowLabel: (lang: string) => `Eyebrow (${lang})`,
+        ultimateEyebrowPlaceholder: 'mis. Ultimate Tech Stack',
+        ultimateTitleLabel: (lang: string) => `Judul Seksi (${lang}) *`,
+        ultimateTitlePlaceholder: 'mis. Arsitektur Utama & Stack Pilihan',
+        ultimateDescLabel: (lang: string) => `Deskripsi Seksi (${lang})`,
+        ultimateDescPlaceholder:
+          'Jelaskan mengapa teknologi ini menjadi pilihan utama Anda...',
+        visibilityTitle: '3. Visibilitas Halaman',
+        visibilityDesc:
+          'Atur apakah halaman tech stack dapat diakses oleh publik.',
+        enablePage: 'Aktifkan Halaman Tech Stack',
+        enablePageDesc:
+          'Jika dimatikan, pengunjung akan melihat halaman 404 atau pesan pemeliharaan.',
+        showUltimateDescTitle: 'Tampilkan Deskripsi Seksi Ultimate',
+        showUltimateDescSubtitle:
+          'Tampilkan teks deskripsi di atas daftar node arsitektur.',
       },
     },
   },

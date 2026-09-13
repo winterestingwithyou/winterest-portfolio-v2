@@ -1,20 +1,19 @@
 import { useState } from 'react'
-import { Mail, RotateCcw, Save } from 'lucide-react'
+import { Mail } from 'lucide-react'
 
-import { Button } from '#/components/ui/button'
+import { CmsPageShell } from '#/components/dashboard/cms-page-shell'
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '#/components/ui/card'
 import { Field, FieldGroup, FieldLabel } from '#/components/ui/field'
 import { Input } from '#/components/ui/input'
-import { LanguageSwitcherPill } from '#/components/ui/language-switcher-pill'
 import { Switch } from '#/components/ui/switch'
 import { Textarea } from '#/components/ui/textarea'
+import { getContactCopy } from '#/features/contact/copy'
 import { useUpdatePageContent } from '#/features/portfolio/page-content-hooks'
 import { getDefaultContactPageConfig } from '#/features/portfolio/page-content-schemas'
 import type { ContactPageConfig } from '#/features/portfolio/page-content-schemas'
@@ -26,22 +25,21 @@ type ContactPageContentFormProps = {
 export function ContactPageContentForm({
   initialData,
 }: ContactPageContentFormProps) {
+  const contactCopy = getContactCopy()
+  const copy = contactCopy.dashboard
+
   const [locale, setLocale] = useState<'en' | 'id'>('en')
   const [formData, setFormData] = useState<ContactPageConfig>(initialData)
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
+  const [isError, setIsError] = useState(false)
 
   const mutation = useUpdatePageContent<ContactPageConfig>('contact')
 
   const handleResetToDefault = () => {
-    if (
-      window.confirm(
-        'Reset form ke default copywriting? Perubahan belum tersimpan akan diganti.',
-      )
-    ) {
+    if (window.confirm(copy.resetConfirm)) {
       setFormData(getDefaultContactPageConfig())
-      setStatusMessage(
-        'Form telah direset ke default. Klik simpan untuk menerapkan.',
-      )
+      setIsError(false)
+      setStatusMessage(copy.resetSuccess)
     }
   }
 
@@ -51,62 +49,47 @@ export function ContactPageContentForm({
 
     mutation.mutate(formData, {
       onSuccess: () => {
-        setStatusMessage('Perubahan halaman kontak berhasil disimpan.')
+        setIsError(false)
+        setStatusMessage(copy.saveSuccess)
         setTimeout(() => setStatusMessage(null), 4000)
       },
       onError: (err) => {
-        setStatusMessage(
-          err instanceof Error ? err.message : 'Gagal menyimpan perubahan.',
-        )
+        setIsError(true)
+        setStatusMessage(err instanceof Error ? err.message : copy.saveError)
       },
     })
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6 max-w-4xl">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-(--brand-ink) tracking-tight flex items-center gap-2.5">
-            <Mail className="size-6 text-(--brand-orange)" />
-            Pengaturan Konten: Halaman Kontak
-          </h1>
-          <p className="text-sm text-(--brand-muted) mt-1">
-            Kelola teks header, label kartu kontak langsung, dan judul formulir
-            pesan pada /contact.
-          </p>
-        </div>
-        <div className="flex items-center gap-3 shrink-0">
-          <LanguageSwitcherPill activeLocale={locale} onChange={setLocale} />
-        </div>
-      </div>
-
-      {statusMessage && (
-        <div
-          className={`p-3.5 text-xs font-semibold rounded-lg border ${
-            mutation.isError
-              ? 'border-red-500/30 bg-red-50 text-red-700 dark:bg-red-950/30 dark:text-red-400'
-              : 'border-green-500/30 bg-green-50 text-green-800 dark:bg-green-950/30 dark:text-green-300'
-          }`}
-        >
-          {statusMessage}
-        </div>
-      )}
-
+    <CmsPageShell
+      icon={<Mail className="size-5" />}
+      title={copy.title}
+      description={copy.description}
+      locale={locale}
+      onLocaleChange={setLocale}
+      onReset={handleResetToDefault}
+      isSaving={mutation.isPending}
+      asForm
+      onSubmit={handleSubmit}
+      statusMessage={
+        statusMessage ? { text: statusMessage, isError } : undefined
+      }
+    >
       {/* Bagian 1: Header Halaman */}
       <Card className="border-(--brand-line) bg-card">
         <CardHeader>
           <CardTitle className="text-base font-bold text-(--brand-ink)">
-            1. Header Halaman Kontak ({locale.toUpperCase()})
+            {copy.headerTitle(locale.toUpperCase())}
           </CardTitle>
           <CardDescription className="text-xs text-(--brand-muted)">
-            Teks utama di bagian paling atas halaman /contact.
+            {copy.headerDesc}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-5">
           <FieldGroup className="flex flex-col gap-4">
             <Field>
               <FieldLabel htmlFor="contact-eyebrow">
-                Eyebrow ({locale.toUpperCase()})
+                {copy.eyebrowLabel(locale.toUpperCase())}
               </FieldLabel>
               <Input
                 id="contact-eyebrow"
@@ -120,13 +103,13 @@ export function ContactPageContentForm({
                       e.target.value,
                   }))
                 }
-                placeholder={locale === 'en' ? 'e.g. Contact' : 'mis. Kontak'}
+                placeholder={copy.eyebrowPlaceholder}
               />
             </Field>
 
             <Field>
               <FieldLabel htmlFor="contact-title">
-                Judul Utama ({locale.toUpperCase()}) *
+                {copy.titleLabel(locale.toUpperCase())}
               </FieldLabel>
               <Input
                 id="contact-title"
@@ -138,17 +121,13 @@ export function ContactPageContentForm({
                     [locale === 'en' ? 'titleEn' : 'titleId']: e.target.value,
                   }))
                 }
-                placeholder={
-                  locale === 'en'
-                    ? "e.g. Let's connect."
-                    : 'mis. Mari terhubung.'
-                }
+                placeholder={copy.titlePlaceholder}
               />
             </Field>
 
             <Field>
               <FieldLabel htmlFor="contact-description">
-                Deskripsi ({locale.toUpperCase()})
+                {copy.descLabel(locale.toUpperCase())}
               </FieldLabel>
               <Textarea
                 id="contact-description"
@@ -165,11 +144,7 @@ export function ContactPageContentForm({
                       e.target.value,
                   }))
                 }
-                placeholder={
-                  locale === 'en'
-                    ? 'Have a project idea, question, or opportunity?...'
-                    : 'Punya ide proyek, pertanyaan, atau peluang kerja sama?...'
-                }
+                placeholder={copy.descPlaceholder}
               />
             </Field>
           </FieldGroup>
@@ -177,10 +152,10 @@ export function ContactPageContentForm({
           <div className="flex items-center justify-between border-t border-(--brand-line) pt-4">
             <div className="flex flex-col gap-0.5">
               <span className="text-xs font-bold text-(--brand-ink)">
-                Tampilkan Deskripsi Header
+                {copy.enablePage}
               </span>
               <span className="text-[11px] text-(--brand-muted)">
-                Sembunyikan deskripsi untuk tampilan yang lebih minimalis.
+                {copy.enablePageDesc}
               </span>
             </div>
             <Switch
@@ -197,18 +172,17 @@ export function ContactPageContentForm({
       <Card className="border-(--brand-line) bg-card">
         <CardHeader>
           <CardTitle className="text-base font-bold text-(--brand-ink)">
-            2. Kartu Kontak Langsung ({locale.toUpperCase()})
+            {copy.channelsTitle(locale.toUpperCase())}
           </CardTitle>
           <CardDescription className="text-xs text-(--brand-muted)">
-            Label status, lokasi, dan sub-judul pada kartu kanal komunikasi
-            langsung.
+            {copy.channelsDesc}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <FieldGroup className="grid gap-4 sm:grid-cols-2">
             <Field>
               <FieldLabel htmlFor="direct-title">
-                Judul Kartu ({locale.toUpperCase()})
+                {copy.channelsCardTitle(locale.toUpperCase())}
               </FieldLabel>
               <Input
                 id="direct-title"
@@ -224,13 +198,13 @@ export function ContactPageContentForm({
                       e.target.value,
                   }))
                 }
-                placeholder="mis. Direct Channels"
+                placeholder={copy.channelsCardTitlePlaceholder}
               />
             </Field>
 
             <Field>
               <FieldLabel htmlFor="direct-subtitle">
-                Sub-judul Kartu ({locale.toUpperCase()})
+                {copy.channelsCardSubtitle(locale.toUpperCase())}
               </FieldLabel>
               <Input
                 id="direct-subtitle"
@@ -246,13 +220,13 @@ export function ContactPageContentForm({
                       e.target.value,
                   }))
                 }
-                placeholder="mis. Social media & public profiles."
+                placeholder={copy.channelsCardSubtitlePlaceholder}
               />
             </Field>
 
             <Field>
               <FieldLabel htmlFor="direct-status">
-                Status Ketersediaan ({locale.toUpperCase()})
+                {copy.statusPillLabel(locale.toUpperCase())}
               </FieldLabel>
               <Input
                 id="direct-status"
@@ -268,13 +242,13 @@ export function ContactPageContentForm({
                       e.target.value,
                   }))
                 }
-                placeholder="mis. Open for new projects & opportunities"
+                placeholder={copy.statusPillPlaceholder}
               />
             </Field>
 
             <Field>
               <FieldLabel htmlFor="direct-location">
-                Zona Waktu / Lokasi ({locale.toUpperCase()})
+                {copy.locationLabel(locale.toUpperCase())}
               </FieldLabel>
               <Input
                 id="direct-location"
@@ -290,7 +264,7 @@ export function ContactPageContentForm({
                       e.target.value,
                   }))
                 }
-                placeholder="mis. Indonesia (UTC+7)"
+                placeholder={copy.locationPlaceholder}
               />
             </Field>
           </FieldGroup>
@@ -301,17 +275,17 @@ export function ContactPageContentForm({
       <Card className="border-(--brand-line) bg-card">
         <CardHeader>
           <CardTitle className="text-base font-bold text-(--brand-ink)">
-            3. Kartu Formulir Kirim Pesan ({locale.toUpperCase()})
+            {copy.formTitle(locale.toUpperCase())}
           </CardTitle>
           <CardDescription className="text-xs text-(--brand-muted)">
-            Judul dan instruksi pembuka di atas formulir pesan pengunjung.
+            {copy.formDesc}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <FieldGroup className="grid gap-4 sm:grid-cols-2">
             <Field>
               <FieldLabel htmlFor="form-title">
-                Judul Formulir ({locale.toUpperCase()})
+                {copy.formHeading(locale.toUpperCase())}
               </FieldLabel>
               <Input
                 id="form-title"
@@ -325,13 +299,13 @@ export function ContactPageContentForm({
                       e.target.value,
                   }))
                 }
-                placeholder="mis. Send a Message"
+                placeholder={copy.formHeadingPlaceholder}
               />
             </Field>
 
             <Field>
               <FieldLabel htmlFor="form-subtitle">
-                Sub-judul Formulir ({locale.toUpperCase()})
+                {copy.formSubtitle(locale.toUpperCase())}
               </FieldLabel>
               <Input
                 id="form-subtitle"
@@ -347,33 +321,12 @@ export function ContactPageContentForm({
                       e.target.value,
                   }))
                 }
-                placeholder="mis. Fill out the form to compose a direct message."
+                placeholder={copy.formSubtitlePlaceholder}
               />
             </Field>
           </FieldGroup>
         </CardContent>
-        <CardFooter className="flex items-center justify-between border-t border-(--brand-line) bg-surface-soft/40 px-6 py-3">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={handleResetToDefault}
-            className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"
-          >
-            <RotateCcw className="size-3.5" />
-            Reset ke Default
-          </Button>
-          <Button
-            type="submit"
-            size="sm"
-            disabled={mutation.isPending}
-            className="flex items-center gap-1.5 bg-(--brand-orange) font-bold text-white hover:brightness-105"
-          >
-            <Save className="size-3.5" />
-            {mutation.isPending ? 'Menyimpan...' : 'Simpan Perubahan'}
-          </Button>
-        </CardFooter>
       </Card>
-    </form>
+    </CmsPageShell>
   )
 }

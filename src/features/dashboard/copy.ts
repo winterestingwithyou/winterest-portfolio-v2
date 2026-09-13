@@ -7,6 +7,7 @@ export const dashboardCopy = {
       backToSite: 'Back to site',
       systemGroup: 'System',
       pagesGroup: 'Public Pages',
+      cmsPageEyebrow: 'CMS · Public Pages',
       navPages: {
         home: 'Home',
         projects: 'Projects',
@@ -101,6 +102,8 @@ export const dashboardCopy = {
         'Try adjusting your search or clearing active filters.',
       resetFilter: 'Reset filter',
       resetFilters: 'Reset filters',
+      resetDefault: 'Reset to Default',
+      contentLanguage: 'Content Language:',
       unsavedChangesTitle: 'Unsaved changes',
       unsavedChangesDesc:
         'You have unsaved changes. Are you sure you want to leave? Your changes will be lost.',
@@ -114,6 +117,7 @@ export const dashboardCopy = {
       backToSite: 'Kembali ke situs',
       systemGroup: 'Sistem',
       pagesGroup: 'Halaman Publik',
+      cmsPageEyebrow: 'CMS · Halaman Publik',
       navPages: {
         home: 'Beranda',
         projects: 'Project',
@@ -208,6 +212,8 @@ export const dashboardCopy = {
         'Coba sesuaikan pencarian atau bersihkan filter yang aktif.',
       resetFilter: 'Reset filter',
       resetFilters: 'Reset filter',
+      resetDefault: 'Reset Default',
+      contentLanguage: 'Bahasa Konten:',
       unsavedChangesTitle: 'Perubahan belum disimpan',
       unsavedChangesDesc:
         'Anda memiliki perubahan yang belum disimpan. Apakah Anda yakin ingin meninggalkan halaman ini? Perubahan Anda akan hilang.',
