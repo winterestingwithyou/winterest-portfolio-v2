@@ -28,6 +28,14 @@ Cloudflare Workers runs in an edge V8 isolate with CPU-time limits:
 
 ---
 
+## Media Asset Handling
+
+- During the current early stage, use cover image URLs and static local images under `public/`.
+- For user uploads, use Cloudflare R2 and store the object key and public URL in the database with manually supplied alt text.
+- Validate uploaded file types and sizes, and avoid storing unoptimized large originals.
+
+---
+
 ## Database Rules (Drizzle ORM & Cloudflare D1)
 
 - **Explicit Schema**: Maintain all table schemas and relations in `src/db/schema.ts`.

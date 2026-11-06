@@ -1,6 +1,6 @@
 # Winterest project rules for Zed
 
-`AGENTS.md` is the repository source of truth. This file adapts its guidance for Zed; it does not replace it. Before changing code, read `AGENTS.md` and the applicable detailed rules below. `.agents/rules/` remains the canonical source for those detailed rules; open the relevant files because Zed does not load them automatically.
+`AGENTS.md` is the repository source of truth. This file adapts its guidance for Zed; it does not replace it. Before changing code, read `AGENTS.md` and the applicable detailed rules below. `.agents/rules/` remains the canonical source for technical and workflow rules; `DESIGN.md` is the visual source of truth.
 
 ## Always follow
 
@@ -14,18 +14,20 @@
 
 Read every matching rule file before making changes; read multiple files when a task spans areas.
 
-| When working on... | Read |
-| --- | --- |
-| Project identity, public brand, UI copy tone, SEO, sitemap, or public-facing content | `.agents/rules/01-identity-branding-copy.md` |
-| Package commands, agent behavior, verification, or Definition of Done | `.agents/rules/02-agent-commands-behavior.md` |
-| Routes, route files, page responsibilities, or sitemap route registration | `.agents/rules/03-routing-conventions-pages.md` |
-| Server/API input validation, HTTP requests, `ofetch`, TanStack Query, forms, or mutations | `.agents/rules/04-server-api-ofetch.md` |
-| Cloudflare Workers runtime, D1, Drizzle schema/migrations, R2, or `reset.sql` | `.agents/rules/05-database-cloudflare.md` |
-| Better Auth, sessions, password handling, RBAC, secrets, or security | `.agents/rules/06-auth-security-rbac.md` |
-| Visual design, design tokens, Tailwind, UI components, animation, accessibility, or 3D | `.agents/rules/07-design-system-ui-3d.md` |
-| Feature structure, file/folder naming, components, or module boundaries | `.agents/rules/08-feature-architecture-structure.md` |
-| Localized copy, `copy.ts`, static data, or CMS fallback content | `.agents/rules/09-copywriting-data-standards.md` |
-| TypeScript/React conventions, state, tests, Git, or code quality | `.agents/rules/10-code-quality-testing.md` |
+| When working on...                                                                        | Read                                                                                                                                            |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Project identity, public brand, UI copy tone, SEO, sitemap, or public-facing content      | `.agents/rules/01-identity-branding-copy.md`                                                                                                    |
+| Package commands, agent behavior, verification, or Definition of Done                     | `.agents/rules/02-agent-commands-behavior.md`                                                                                                   |
+| Routes, route files, page responsibilities, or sitemap route registration                 | `.agents/rules/03-routing-conventions-pages.md`                                                                                                 |
+| Server/API input validation, HTTP requests, `ofetch`, TanStack Query, forms, or mutations | `.agents/rules/04-server-api-ofetch.md`                                                                                                         |
+| Cloudflare Workers runtime, D1, Drizzle schema/migrations, R2, or `reset.sql`             | `.agents/rules/05-database-cloudflare.md`                                                                                                       |
+| Better Auth, sessions, password handling, RBAC, secrets, or security                      | `.agents/rules/06-auth-security-rbac.md`                                                                                                        |
+| Visual direction, design tokens, typography, color, surfaces, or component styling        | `DESIGN.md`                                                                                                                                     |
+| Accessibility, responsive behavior, reduced motion, or UI quality                         | `.agents/rules/10-code-quality-testing.md`                                                                                                      |
+| UI architecture, component placement, or media/3D implementation                          | `.agents/rules/08-feature-architecture-structure.md`, `.agents/rules/05-database-cloudflare.md`, and `.agents/rules/10-code-quality-testing.md` |
+| Feature structure, file/folder naming, components, or module boundaries                   | `.agents/rules/08-feature-architecture-structure.md`                                                                                            |
+| Localized copy, `copy.ts`, static data, or CMS fallback content                           | `.agents/rules/09-copywriting-data-standards.md`                                                                                                |
+| TypeScript/React conventions, state, tests, Git, or code quality                          | `.agents/rules/10-code-quality-testing.md`                                                                                                      |
 
 | Codebase or architecture exploration, graph queries, or graph maintenance | `.agents/rules/graphify.md` |
 

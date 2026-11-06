@@ -13,14 +13,11 @@ This repository is `winterest-portfolio-v2`, the **primary personal portfolio pl
 - This project is **NOT** a secondary or companion portfolio. This is the **MAIN PRIMARY PORTFOLIO** designed to completely replace all previous portfolios.
 - Treat it as the flagship personal developer platform and CMS dashboard for Winterest.
 
-### Desired Atmosphere & Identity
+### Brand & Repository Identity
 
 - **Public Brand / Nickname**: `Winterest`
 - **GitHub Username**: `winterestingwithyou`
 - **Internal Repo Name**: `winterest-portfolio-v2` (internal repository and documentation name only)
-- **Design Theme**: `Cloudflare + Bun`
-- **Main Color Palette**: Cloudflare orange (#f48120), crisp pure white (#ffffff), deep technical dark gray (#0f0f10 / #161618), neutral hairline borders
-- **Tone & Persona**: playful, clean, technical, personal, polished, confident
 
 ---
 

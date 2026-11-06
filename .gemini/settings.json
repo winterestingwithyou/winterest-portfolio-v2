@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "BeforeTool": [
+      {
+        "matcher": "^run_shell_command$",
+        "hooks": [
+          {
+            "name": "impeccable-session",
+            "type": "command",
+            "command": "bun .impeccable/hook.ts",
+            "timeout": 5000
+          }
+        ]
+      }
+    ],
+    "AfterAgent": [
+      {
+        "hooks": [
+          {
+            "name": "impeccable-completion",
+            "type": "command",
+            "command": "bun .impeccable/hook.ts",
+            "timeout": 30000
+          }
+        ]
+      }
+    ]
+  }
+}

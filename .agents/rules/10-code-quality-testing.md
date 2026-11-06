@@ -58,7 +58,6 @@ trigger: always_on
 
 ## Things to Avoid
 
-- Do **NOT** keep the default resume template as the final design.
 - Do **NOT** over-engineer RBAC too early.
 - Do **NOT** build heavy 3D before core portfolio and CMS pages work reliably.
 - Do **NOT** add unnecessary dependencies for tiny UI effects.
@@ -69,9 +68,21 @@ trigger: always_on
 - Do **NOT** break dark mode compatibility.
 - Do **NOT** ignore responsive mobile layouts.
 - Do **NOT** use unsafe markdown rendering (`dangerouslySetInnerHTML` without sanitization).
-- Do **NOT** create exact copies of copyrighted characters.
-- Do **NOT** make the dashboard overly animated or distracting.
 - Do **NOT** create monolithic copy files (e.g. dumping all pages' copy into a single file).
 - Do **NOT** put UI copy in random subdirectories (e.g. avoid `src/features/auth/content/auth-copy.ts`; use `src/features/auth/copy.ts`).
 - Do **NOT** scatter test files directly in feature root directories; always place unit/component tests in their dedicated `__tests__/` subfolder.
 - Do **NOT** import `cloudflare:workers` directly in test files to mutate env bindings; use `src/test/cloudflare-workers-mock.ts` instead.
+
+## Accessibility and UI Resilience
+
+- Use semantic HTML and the correct element for each interaction, such as buttons for actions and links for navigation.
+- Keep all interactions keyboard-operable with a clearly visible focus indicator.
+- Maintain readable color contrast in both light and dark themes.
+- Give informative images meaningful alt text and mark decorative images appropriately.
+- Provide clear form labels and accessible inline validation messages.
+- Respect `prefers-reduced-motion` for transitions and animations.
+
+## Visual Asset Performance
+
+- Defer heavy 3D work until the core portfolio and CMS are reliable.
+- Make 3D content optional, load it lazily, and provide a lightweight static fallback for mobile and lower-powered devices.

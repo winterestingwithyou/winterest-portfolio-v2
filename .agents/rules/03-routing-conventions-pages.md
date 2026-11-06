@@ -40,11 +40,11 @@ The project uses TanStack Router file-based routing with strict folder-based org
 ```txt
 src/routes/
   __root.tsx
-  index.tsx            # Homepage: Hero section, tech highlights, featured projects, contact CTA
+  index.tsx            # Homepage: Personal intro, tech highlights, featured projects, contact information
   about.tsx            # Personal story, developer journey, principles, workflow
   contact.tsx          # Contact form, direct channels, social links
   login.tsx            # Auth login portal for dashboard access
-  resume.tsx           # Printable, clean, professional resume
+  resume.tsx           # Printable resume content
   sitemap[.]xml.ts     # Dynamic sitemap XML for public routes & live projects
   stack.tsx            # Tech stack catalog, categorized tools, rationale
   projects/
@@ -91,18 +91,12 @@ src/routes/
 
 ## Public Page Responsibilities
 
-- **`/` (Homepage)**: Strong hero section, short personal intro, featured projects, tech stack highlights, contact CTA, subtle character/mascot visual, Cloudflare+Bun atmosphere.
+- **`/` (Homepage)**: Personal intro, featured projects, tech stack highlights, and a contact action.
 - **`/about`**: Personal developer journey, academic/project background, areas of interest, timeline, core principles, tools and workflow.
 - **`/projects`**: Project index with filters by stack, category, and status; featured projects; project cards linking to GitHub, demo, and details.
 - **`/projects/$slug`**: Project detail view covering problem, goal, role, stack, architecture, screenshots, key features, challenges, results, and live links.
 - **`/stack`**: Interactive tech stack catalog with favorite tools, categorization, usage notes, and rationale.
 - **`/contact`**: Direct communication channels, contact form, GitHub, LinkedIn, social links.
-- **`/resume`**: Clean, printable resume format suitable for professional review.
+- **`/resume`**: Printable resume content suitable for professional review.
 
 ---
-
-## CMS Dashboard Direction
-
-- Clean, usable admin layout with sidebar navigation and topbar user menu.
-- Prioritize clear tables, list views, and intuitive create/edit forms over visual gimmicks.
-- Distinct draft/published status badges and action toolbars.

@@ -8,7 +8,6 @@ trigger: always_on
 
 The repository was initialized from a TanStack Start template/resume example.
 
-- Replace starter resume design with custom portfolio platform design.
 - Remove starter/demo specific logic once replacement pages exist.
 - Prefer gradual, modular refactors over giant breaking rewrites.
 
@@ -85,7 +84,7 @@ The repository was initialized from a TanStack Start template/resume example.
   - Main table component: `src/features/<feature>/components/table/<comp-name>-table.tsx` (e.g. `dashboard-projects-table.tsx`).
   - Column definitions: `src/features/<feature>/components/table/<comp-name>-table-columns.tsx` (e.g. `dashboard-projects-table-columns.tsx`).
   - Table features / state / helpers: `src/features/<feature>/components/table/<comp-name>-table-features.ts` (e.g. `dashboard-projects-table-features.ts`).
-- **Atomic/Sub-Components**: Other small supporting components can reside directly under `src/features/<feature>/components/<comp-name>.tsx` (e.g. `src/features/about/components/glass-shard-card.tsx`).
+- **Atomic/Sub-Components**: Other small supporting components can reside directly under `src/features/<feature>/components/<comp-name>.tsx` (e.g. `<feature>-summary.tsx`).
 
 ---
 

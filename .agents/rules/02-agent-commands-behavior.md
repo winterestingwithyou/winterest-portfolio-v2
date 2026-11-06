@@ -78,7 +78,7 @@ When working in this repository:
 - Ask questions only when ambiguity would cause major rework.
 - Explain tradeoffs briefly and clearly.
 - Keep the codebase Cloudflare-compatible and maintainable for long-term solo development.
-- Prioritize public portfolio quality first, then CMS dashboard, then auth/RBAC, then 3D polish.
+- Prioritize public portfolio quality first, then CMS dashboard, then auth/RBAC.
 - Always begin exploration or feature investigation by querying Graphify (`query_graph` via MCP or `graphify query` via CLI) first, without waiting for the user to prompt for it.
 
 ---

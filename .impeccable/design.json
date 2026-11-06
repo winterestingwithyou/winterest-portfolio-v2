@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-06T15:34:12Z",
+  "title": "Design System: Winterest",
+  "extensions": {
+    "shadows": [
+      {
+        "name": "popover-context",
+        "value": "0 4px 16px rgba(0, 0, 0, 0.08)",
+        "purpose": "Separate the public navigation popover from the page without adding ambient elevation to other surfaces."
+      }
+    ],
+    "motion": [
+      {
+        "name": "navigation-feedback",
+        "value": "180ms ease",
+        "purpose": "Provide immediate color and subtle position feedback on public navigation links."
+      },
+      {
+        "name": "hero-visual-float",
+        "value": "8s ease-in-out infinite",
+        "purpose": "Give the original mascot image a slow idle movement while respecting reduced-motion preferences."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Default action button with bold text and orange emphasis.",
+      "html": "<button class=\"ds-button-primary\">Save changes</button>",
+      "css": ".ds-button-primary { min-height: 36px; padding: 8px 16px; border: 0; border-radius: 8px; background: var(--primary); color: var(--primary-foreground); font: 700 14px/20px Inter, ui-sans-serif, system-ui, sans-serif; transition: background-color 150ms ease; } .ds-button-primary:hover { background: color-mix(in srgb, var(--primary) 90%, transparent); } .ds-button-primary:focus-visible { outline: 3px solid color-mix(in srgb, var(--ring) 50%, transparent); outline-offset: 2px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Compact, theme-aware text field with a clear focus state.",
+      "html": "<input class=\"ds-input\" aria-label=\"Project name\" placeholder=\"Project name\" />",
+      "css": ".ds-input { width: 100%; min-width: 0; height: 36px; padding: 4px 12px; border: 1px solid var(--input); border-radius: 8px; background: transparent; color: var(--foreground); font: 400 14px/20px Inter, ui-sans-serif, system-ui, sans-serif; } .ds-input::placeholder { color: var(--muted-foreground); } .ds-input:focus-visible { border-color: var(--ring); outline: 3px solid color-mix(in srgb, var(--ring) 50%, transparent); outline-offset: 1px; } .ds-input:disabled { cursor: not-allowed; opacity: 0.5; }"
+    },
+    {
+      "name": "Content Card",
+      "kind": "card",
+      "refersTo": "card-light",
+      "description": "Flat solid content surface with a restrained border and elevation.",
+      "html": "<section class=\"ds-card\"><h2>Projects</h2><p>Selected work and details.</p></section>",
+      "css": ".ds-card { display: flex; flex-direction: column; gap: 24px; padding: 24px 24px; border: 1px solid var(--border); border-radius: 14px; background: var(--card); color: var(--card-foreground); } .ds-card h2, .ds-card p { margin: 0; }"
+    },
+    {
+      "name": "Public Navigation Link",
+      "kind": "nav",
+      "refersTo": "navigation-link-active",
+      "description": "Pill-shaped page link with a restrained active surface and hover lift.",
+      "html": "<a class=\"ds-nav-link\" href=\"/projects\" aria-current=\"page\">Projects</a>",
+      "css": ".ds-nav-link { display: inline-flex; min-height: 36px; align-items: center; padding: 7.2px 12px; border-radius: 999px; color: var(--muted-foreground); text-decoration: none; transition: background-color 180ms ease, color 180ms ease, transform 180ms ease; } .ds-nav-link:hover, .ds-nav-link[aria-current=page] { background: var(--brand-orange-soft); color: var(--brand-ink); } .ds-nav-link:hover { transform: translateY(-1px); } .ds-nav-link:focus-visible { outline: 3px solid color-mix(in srgb, var(--ring) 68%, white); outline-offset: 3px; }"
+    },
+    {
+      "name": "Primary Badge",
+      "kind": "chip",
+      "refersTo": "badge-primary",
+      "description": "Compact status or category label using the semantic primary color.",
+      "html": "<span class=\"ds-badge-primary\">Published</span>",
+      "css": ".ds-badge-primary { display: inline-flex; width: fit-content; align-items: center; padding: 2px 8px; border: 1px solid transparent; border-radius: 8px; background: var(--primary); color: var(--primary-foreground); font: 500 12px/16px Inter, ui-sans-serif, system-ui, sans-serif; white-space: nowrap; }"
+    },
+    {
+      "name": "Portfolio Hero Visual",
+      "kind": "custom",
+      "refersTo": "hero-visual",
+      "description": "Original mascot image with dark information overlays, kept as the public portfolio's focal visual.",
+      "html": "<figure class=\"ds-hero-visual\"><img src=\"/assets/characters/winterest.png\" alt=\"Original Winterest developer mascot with orange cloud accents and floating code panels.\"><figcaption class=\"ds-hero-panel\">Bun · TypeScript · Cloudflare</figcaption></figure>",
+      "css": ".ds-hero-visual { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 4 / 3; border: 1px solid var(--border); border-radius: 16px; background: var(--card); } .ds-hero-visual img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 32%; animation: ds-hero-float 8s ease-in-out infinite; } .ds-hero-visual::after { position: absolute; inset: auto 0 0; height: 28%; background: linear-gradient(to top, rgb(0 0 0 / 0.55), transparent); content: ''; pointer-events: none; } .ds-hero-panel { position: absolute; right: 12px; bottom: 12px; z-index: 1; padding: 12px; border: 1px solid rgb(255 255 255 / 0.1); border-radius: 12px; background: color-mix(in srgb, var(--brand-dark) 90%, transparent); color: #f4f4f5; font: 700 12px/16px Inter, ui-sans-serif, system-ui, sans-serif; backdrop-filter: blur(12px); } @keyframes ds-hero-float { 0%, 100% { transform: scale(1.03) translateY(0); } 50% { transform: scale(1.055) translateY(-7px); } } @media (prefers-reduced-motion: reduce) { .ds-hero-visual img { animation: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Cloudflare + Bun, in Flat Precision.",
+    "overview": "Winterest’s visual identity pairs a direct, technical personality with a playful personal edge. Cloudflare and Bun are the inspiration, not templates to copy. Flat Precision keeps ordinary surfaces solid, separated by clear contrast and crisp borders; Winterest Orange is the deliberate signal for primary actions and active states. The 36px background grid supplies a restrained technical texture. A few existing focal treatments are intentionally localized: the sticky header and brand lockup use translucency and gradient highlights, while the hero visual uses dark overlay panels and soft motion around the original Winterest mascot. These are exceptions, not a pattern to spread across cards. The public portfolio and private CMS share the same palette and typography across light and dark themes. Dashboard views stay task-first, favoring the existing sidebar and topbar structure, legible tables and lists, clear status badges, and direct editing forms over decorative treatment.",
+    "keyCharacteristics": [
+      "Cloudflare + Bun technical character, without copying either product’s interface.",
+      "Flat, solid surfaces with border-led separation and restrained elevation.",
+      "A single orange signal against light or dark neutral foundations.",
+      "Consistent typography and components across the public portfolio and CMS.",
+      "Localized focal treatments around the header, brand mark, and hero image."
+    ],
+    "rules": [
+      {
+        "name": "The Orange Signal Rule",
+        "body": "Use Winterest Orange for actions and interaction state, not as a broad decorative wash.",
+        "section": "colors"
+      },
+      {
+        "name": "The Flat Surface Rule",
+        "body": "Prefer solid surfaces and clear boundaries. Use elevation only when a component needs to separate from surrounding content.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep surfaces flat and solid, using hairline borders and contrast to establish structure.",
+      "Do reserve orange emphasis for real actions, focus, and active states.",
+      "Do keep the existing grid as a restrained background texture.",
+      "Do make light and dark themes feel like the same system with theme-appropriate neutrals.",
+      "Do keep CMS motion restrained and prioritize scanability in tables, lists, and forms.",
+      "Do keep the original Winterest mascot as a supporting image around the real work.",
+      "Do keep blur, transparency, and gradient highlights limited to the existing header and hero focal treatments."
+    ],
+    "donts": [
+      "Don't add oversized glow halos, decorative blur spheres, or heavy gradient washes to cards.",
+      "Don't spread the background grid across every card and panel.",
+      "Don't let decorative effects compete with portfolio content or dashboard tasks.",
+      "Don't treat a generic resume template as the finished visual presentation.",
+      "Don't copy Cloudflare, Bun, or copyrighted character designs directly.",
+      "Don't use heavy parallax, scroll-jacking, or motion that delays content or harms readability.",
+      "Don't generalize the About page's third-party character gallery into new pages or components."
+    ]
+  }
+}
