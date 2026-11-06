@@ -51,6 +51,8 @@ export const mediaReferenceTypeSchema = z.enum([
   'site_settings',
   'project_cover',
   'project_gallery_image',
+  'certificate_cover',
+  'certificate_pdf',
   'project_content',
   'technology_icon',
 ])

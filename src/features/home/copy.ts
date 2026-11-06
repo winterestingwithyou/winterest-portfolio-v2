@@ -29,6 +29,18 @@ export const homeCopy = {
         'I am still preparing the project stories for this page. Check back soon for more detailed work notes.',
       viewProjects: 'See my other works',
     },
+    certificates: {
+      title: 'Certificates',
+      viewAll: 'View all certificates',
+      issued: 'Issued',
+      openPdf: 'Open PDF',
+      verify: 'Verify',
+      expired: 'Expired',
+      position: (current: number, total: number) =>
+        `Certificate ${current} of ${total}`,
+      coverAlt: (title: string, issuer: string) =>
+        `${title}, issued by ${issuer}`,
+    },
     enthusiasms: {
       eyebrow: 'PASSION & FOCUS AREAS',
       title: "What I'm Enthusiastic About",
@@ -176,6 +188,18 @@ export const homeCopy = {
       emptyDescription:
         'Aku masih menyiapkan cerita project untuk halaman ini. Nanti akan ada catatan kerja yang lebih lengkap di sini.',
       viewProjects: 'Lihat Projekku lainnya',
+    },
+    certificates: {
+      title: 'Sertifikat',
+      viewAll: 'Lihat semua sertifikat',
+      issued: 'Diterbitkan',
+      openPdf: 'Buka PDF',
+      verify: 'Verifikasi',
+      expired: 'Kedaluwarsa',
+      position: (current: number, total: number) =>
+        `Sertifikat ${current} dari ${total}`,
+      coverAlt: (title: string, issuer: string) =>
+        `${title}, diterbitkan oleh ${issuer}`,
     },
     enthusiasms: {
       eyebrow: 'BIDANG MINAT & ANTUSIASME',

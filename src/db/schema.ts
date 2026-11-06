@@ -22,6 +22,9 @@ export type ContentVisibility = (typeof contentVisibilities)[number]
 export const contentLocales = ['en', 'id'] as const
 export type ContentLocale = (typeof contentLocales)[number]
 
+export const certificateStatuses = ['draft', 'published'] as const
+export type CertificateStatus = (typeof certificateStatuses)[number]
+
 export const userRoles = ['owner', 'admin', 'editor'] as const
 export type UserRole = (typeof userRoles)[number]
 
@@ -227,6 +230,31 @@ export const projectGalleryImages = sqliteTable(
       table.projectId,
       table.sortOrder,
     ),
+  ],
+)
+
+export const certificates = sqliteTable(
+  'certificates',
+  {
+    id: text('id').primaryKey(),
+    title: text('title').notNull(),
+    issuer: text('issuer').notNull(),
+    credentialId: text('credential_id'),
+    descriptionEn: text('description_en'),
+    descriptionId: text('description_id'),
+    coverImageUrl: text('cover_image_url'),
+    pdfUrl: text('pdf_url'),
+    verificationUrl: text('verification_url'),
+    status: text('status', { enum: certificateStatuses })
+      .notNull()
+      .default('draft'),
+    issuedAt: integer('issued_at', { mode: 'timestamp' }).notNull(),
+    expiresAt: integer('expires_at', { mode: 'timestamp' }),
+    ...timestamps,
+  },
+  (table) => [
+    index('certificates_status_idx').on(table.status),
+    index('certificates_issued_at_idx').on(table.issuedAt),
   ],
 )
 

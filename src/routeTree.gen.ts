@@ -19,6 +19,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as CertificatesIndexRouteImport } from './routes/certificates/index'
 import { Route as ProjectsSlugRouteImport } from './routes/projects/$slug'
 import { Route as DashboardSettingsRouteImport } from './routes/dashboard/settings'
 import { Route as DashboardMediaRouteImport } from './routes/dashboard/media'
@@ -31,11 +32,13 @@ import { Route as DashboardUsersIndexRouteImport } from './routes/dashboard/user
 import { Route as DashboardStackIndexRouteImport } from './routes/dashboard/stack/index'
 import { Route as DashboardSocialIndexRouteImport } from './routes/dashboard/social/index'
 import { Route as DashboardProjectsIndexRouteImport } from './routes/dashboard/projects/index'
+import { Route as DashboardCertificatesIndexRouteImport } from './routes/dashboard/certificates/index'
 import { Route as DashboardAccountIndexRouteImport } from './routes/dashboard/account/index'
 import { Route as ApiUsersIndexRouteImport } from './routes/api/users/index'
 import { Route as ApiSocialIndexRouteImport } from './routes/api/social/index'
 import { Route as ApiProjectsIndexRouteImport } from './routes/api/projects/index'
 import { Route as ApiMediaIndexRouteImport } from './routes/api/media/index'
+import { Route as ApiCertificatesIndexRouteImport } from './routes/api/certificates/index'
 import { Route as ApiAccountIndexRouteImport } from './routes/api/account/index'
 import { Route as DashboardUsersNewRouteImport } from './routes/dashboard/users/new'
 import { Route as DashboardUsersIdRouteImport } from './routes/dashboard/users/$id'
@@ -45,12 +48,15 @@ import { Route as DashboardPagesStackRouteImport } from './routes/dashboard/page
 import { Route as DashboardPagesProjectsRouteImport } from './routes/dashboard/pages/projects'
 import { Route as DashboardPagesHomeRouteImport } from './routes/dashboard/pages/home'
 import { Route as DashboardPagesContactRouteImport } from './routes/dashboard/pages/contact'
+import { Route as DashboardCertificatesNewRouteImport } from './routes/dashboard/certificates/new'
+import { Route as DashboardCertificatesIdRouteImport } from './routes/dashboard/certificates/$id'
 import { Route as ApiUsersResetPasswordRouteImport } from './routes/api/users/reset-password'
 import { Route as ApiSocialIdRouteImport } from './routes/api/social/$id'
 import { Route as ApiProjectsIdRouteImport } from './routes/api/projects/$id'
 import { Route as ApiPagesPageRouteImport } from './routes/api/pages/$page'
 import { Route as ApiMediaIdRouteImport } from './routes/api/media/$id'
 import { Route as ApiHomeConfigRouteImport } from './routes/api/home/config'
+import { Route as ApiCertificatesIdRouteImport } from './routes/api/certificates/$id'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ApiAccountPasswordRouteImport } from './routes/api/account/password'
 import { Route as ApiHomeEnthusiasmsIndexRouteImport } from './routes/api/home/enthusiasms/index'
@@ -112,6 +118,11 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const CertificatesIndexRoute = CertificatesIndexRouteImport.update({
+  id: '/certificates/',
+  path: '/certificates/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjectsSlugRoute = ProjectsSlugRouteImport.update({
   id: '/projects/$slug',
   path: '/projects/$slug',
@@ -172,6 +183,12 @@ const DashboardProjectsIndexRoute = DashboardProjectsIndexRouteImport.update({
   path: '/projects/',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardCertificatesIndexRoute =
+  DashboardCertificatesIndexRouteImport.update({
+    id: '/certificates/',
+    path: '/certificates/',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardAccountIndexRoute = DashboardAccountIndexRouteImport.update({
   id: '/account/',
   path: '/account/',
@@ -195,6 +212,11 @@ const ApiProjectsIndexRoute = ApiProjectsIndexRouteImport.update({
 const ApiMediaIndexRoute = ApiMediaIndexRouteImport.update({
   id: '/api/media/',
   path: '/api/media/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCertificatesIndexRoute = ApiCertificatesIndexRouteImport.update({
+  id: '/api/certificates/',
+  path: '/api/certificates/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAccountIndexRoute = ApiAccountIndexRouteImport.update({
@@ -242,6 +264,17 @@ const DashboardPagesContactRoute = DashboardPagesContactRouteImport.update({
   path: '/pages/contact',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardCertificatesNewRoute =
+  DashboardCertificatesNewRouteImport.update({
+    id: '/certificates/new',
+    path: '/certificates/new',
+    getParentRoute: () => DashboardRoute,
+  } as any)
+const DashboardCertificatesIdRoute = DashboardCertificatesIdRouteImport.update({
+  id: '/certificates/$id',
+  path: '/certificates/$id',
+  getParentRoute: () => DashboardRoute,
+} as any)
 const ApiUsersResetPasswordRoute = ApiUsersResetPasswordRouteImport.update({
   id: '/api/users/reset-password',
   path: '/api/users/reset-password',
@@ -270,6 +303,11 @@ const ApiMediaIdRoute = ApiMediaIdRouteImport.update({
 const ApiHomeConfigRoute = ApiHomeConfigRouteImport.update({
   id: '/api/home/config',
   path: '/api/home/config',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiCertificatesIdRoute = ApiCertificatesIdRouteImport.update({
+  id: '/api/certificates/$id',
+  path: '/api/certificates/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
@@ -345,16 +383,20 @@ export interface FileRoutesByFullPath {
   '/dashboard/media': typeof DashboardMediaRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/certificates/': typeof CertificatesIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/api/account/password': typeof ApiAccountPasswordRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/certificates/$id': typeof ApiCertificatesIdRoute
   '/api/home/config': typeof ApiHomeConfigRoute
   '/api/media/$id': typeof ApiMediaIdRoute
   '/api/pages/$page': typeof ApiPagesPageRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
   '/api/social/$id': typeof ApiSocialIdRoute
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
+  '/dashboard/certificates/$id': typeof DashboardCertificatesIdRoute
+  '/dashboard/certificates/new': typeof DashboardCertificatesNewRoute
   '/dashboard/pages/contact': typeof DashboardPagesContactRoute
   '/dashboard/pages/home': typeof DashboardPagesHomeRoute
   '/dashboard/pages/projects': typeof DashboardPagesProjectsRoute
@@ -364,11 +406,13 @@ export interface FileRoutesByFullPath {
   '/dashboard/users/$id': typeof DashboardUsersIdRoute
   '/dashboard/users/new': typeof DashboardUsersNewRoute
   '/api/account/': typeof ApiAccountIndexRoute
+  '/api/certificates/': typeof ApiCertificatesIndexRoute
   '/api/media/': typeof ApiMediaIndexRoute
   '/api/projects/': typeof ApiProjectsIndexRoute
   '/api/social/': typeof ApiSocialIndexRoute
   '/api/users/': typeof ApiUsersIndexRoute
   '/dashboard/account/': typeof DashboardAccountIndexRoute
+  '/dashboard/certificates/': typeof DashboardCertificatesIndexRoute
   '/dashboard/projects/': typeof DashboardProjectsIndexRoute
   '/dashboard/social/': typeof DashboardSocialIndexRoute
   '/dashboard/stack/': typeof DashboardStackIndexRoute
@@ -398,16 +442,20 @@ export interface FileRoutesByTo {
   '/dashboard/media': typeof DashboardMediaRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/certificates': typeof CertificatesIndexRoute
   '/dashboard': typeof DashboardIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/api/account/password': typeof ApiAccountPasswordRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/certificates/$id': typeof ApiCertificatesIdRoute
   '/api/home/config': typeof ApiHomeConfigRoute
   '/api/media/$id': typeof ApiMediaIdRoute
   '/api/pages/$page': typeof ApiPagesPageRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
   '/api/social/$id': typeof ApiSocialIdRoute
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
+  '/dashboard/certificates/$id': typeof DashboardCertificatesIdRoute
+  '/dashboard/certificates/new': typeof DashboardCertificatesNewRoute
   '/dashboard/pages/contact': typeof DashboardPagesContactRoute
   '/dashboard/pages/home': typeof DashboardPagesHomeRoute
   '/dashboard/pages/projects': typeof DashboardPagesProjectsRoute
@@ -417,11 +465,13 @@ export interface FileRoutesByTo {
   '/dashboard/users/$id': typeof DashboardUsersIdRoute
   '/dashboard/users/new': typeof DashboardUsersNewRoute
   '/api/account': typeof ApiAccountIndexRoute
+  '/api/certificates': typeof ApiCertificatesIndexRoute
   '/api/media': typeof ApiMediaIndexRoute
   '/api/projects': typeof ApiProjectsIndexRoute
   '/api/social': typeof ApiSocialIndexRoute
   '/api/users': typeof ApiUsersIndexRoute
   '/dashboard/account': typeof DashboardAccountIndexRoute
+  '/dashboard/certificates': typeof DashboardCertificatesIndexRoute
   '/dashboard/projects': typeof DashboardProjectsIndexRoute
   '/dashboard/social': typeof DashboardSocialIndexRoute
   '/dashboard/stack': typeof DashboardStackIndexRoute
@@ -453,16 +503,20 @@ export interface FileRoutesById {
   '/dashboard/media': typeof DashboardMediaRoute
   '/dashboard/settings': typeof DashboardSettingsRoute
   '/projects/$slug': typeof ProjectsSlugRoute
+  '/certificates/': typeof CertificatesIndexRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/api/account/password': typeof ApiAccountPasswordRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/api/certificates/$id': typeof ApiCertificatesIdRoute
   '/api/home/config': typeof ApiHomeConfigRoute
   '/api/media/$id': typeof ApiMediaIdRoute
   '/api/pages/$page': typeof ApiPagesPageRoute
   '/api/projects/$id': typeof ApiProjectsIdRoute
   '/api/social/$id': typeof ApiSocialIdRoute
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
+  '/dashboard/certificates/$id': typeof DashboardCertificatesIdRoute
+  '/dashboard/certificates/new': typeof DashboardCertificatesNewRoute
   '/dashboard/pages/contact': typeof DashboardPagesContactRoute
   '/dashboard/pages/home': typeof DashboardPagesHomeRoute
   '/dashboard/pages/projects': typeof DashboardPagesProjectsRoute
@@ -472,11 +526,13 @@ export interface FileRoutesById {
   '/dashboard/users/$id': typeof DashboardUsersIdRoute
   '/dashboard/users/new': typeof DashboardUsersNewRoute
   '/api/account/': typeof ApiAccountIndexRoute
+  '/api/certificates/': typeof ApiCertificatesIndexRoute
   '/api/media/': typeof ApiMediaIndexRoute
   '/api/projects/': typeof ApiProjectsIndexRoute
   '/api/social/': typeof ApiSocialIndexRoute
   '/api/users/': typeof ApiUsersIndexRoute
   '/dashboard/account/': typeof DashboardAccountIndexRoute
+  '/dashboard/certificates/': typeof DashboardCertificatesIndexRoute
   '/dashboard/projects/': typeof DashboardProjectsIndexRoute
   '/dashboard/social/': typeof DashboardSocialIndexRoute
   '/dashboard/stack/': typeof DashboardStackIndexRoute
@@ -509,16 +565,20 @@ export interface FileRouteTypes {
     | '/dashboard/media'
     | '/dashboard/settings'
     | '/projects/$slug'
+    | '/certificates/'
     | '/dashboard/'
     | '/projects/'
     | '/api/account/password'
     | '/api/auth/$'
+    | '/api/certificates/$id'
     | '/api/home/config'
     | '/api/media/$id'
     | '/api/pages/$page'
     | '/api/projects/$id'
     | '/api/social/$id'
     | '/api/users/reset-password'
+    | '/dashboard/certificates/$id'
+    | '/dashboard/certificates/new'
     | '/dashboard/pages/contact'
     | '/dashboard/pages/home'
     | '/dashboard/pages/projects'
@@ -528,11 +588,13 @@ export interface FileRouteTypes {
     | '/dashboard/users/$id'
     | '/dashboard/users/new'
     | '/api/account/'
+    | '/api/certificates/'
     | '/api/media/'
     | '/api/projects/'
     | '/api/social/'
     | '/api/users/'
     | '/dashboard/account/'
+    | '/dashboard/certificates/'
     | '/dashboard/projects/'
     | '/dashboard/social/'
     | '/dashboard/stack/'
@@ -562,16 +624,20 @@ export interface FileRouteTypes {
     | '/dashboard/media'
     | '/dashboard/settings'
     | '/projects/$slug'
+    | '/certificates'
     | '/dashboard'
     | '/projects'
     | '/api/account/password'
     | '/api/auth/$'
+    | '/api/certificates/$id'
     | '/api/home/config'
     | '/api/media/$id'
     | '/api/pages/$page'
     | '/api/projects/$id'
     | '/api/social/$id'
     | '/api/users/reset-password'
+    | '/dashboard/certificates/$id'
+    | '/dashboard/certificates/new'
     | '/dashboard/pages/contact'
     | '/dashboard/pages/home'
     | '/dashboard/pages/projects'
@@ -581,11 +647,13 @@ export interface FileRouteTypes {
     | '/dashboard/users/$id'
     | '/dashboard/users/new'
     | '/api/account'
+    | '/api/certificates'
     | '/api/media'
     | '/api/projects'
     | '/api/social'
     | '/api/users'
     | '/dashboard/account'
+    | '/dashboard/certificates'
     | '/dashboard/projects'
     | '/dashboard/social'
     | '/dashboard/stack'
@@ -616,16 +684,20 @@ export interface FileRouteTypes {
     | '/dashboard/media'
     | '/dashboard/settings'
     | '/projects/$slug'
+    | '/certificates/'
     | '/dashboard/'
     | '/projects/'
     | '/api/account/password'
     | '/api/auth/$'
+    | '/api/certificates/$id'
     | '/api/home/config'
     | '/api/media/$id'
     | '/api/pages/$page'
     | '/api/projects/$id'
     | '/api/social/$id'
     | '/api/users/reset-password'
+    | '/dashboard/certificates/$id'
+    | '/dashboard/certificates/new'
     | '/dashboard/pages/contact'
     | '/dashboard/pages/home'
     | '/dashboard/pages/projects'
@@ -635,11 +707,13 @@ export interface FileRouteTypes {
     | '/dashboard/users/$id'
     | '/dashboard/users/new'
     | '/api/account/'
+    | '/api/certificates/'
     | '/api/media/'
     | '/api/projects/'
     | '/api/social/'
     | '/api/users/'
     | '/dashboard/account/'
+    | '/dashboard/certificates/'
     | '/dashboard/projects/'
     | '/dashboard/social/'
     | '/dashboard/stack/'
@@ -669,9 +743,11 @@ export interface RootRouteChildren {
   ApiStackRoute: typeof ApiStackRoute
   ApiTechnologiesRoute: typeof ApiTechnologiesRoute
   ProjectsSlugRoute: typeof ProjectsSlugRoute
+  CertificatesIndexRoute: typeof CertificatesIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiAccountPasswordRoute: typeof ApiAccountPasswordRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
+  ApiCertificatesIdRoute: typeof ApiCertificatesIdRoute
   ApiHomeConfigRoute: typeof ApiHomeConfigRoute
   ApiMediaIdRoute: typeof ApiMediaIdRoute
   ApiPagesPageRoute: typeof ApiPagesPageRoute
@@ -679,6 +755,7 @@ export interface RootRouteChildren {
   ApiSocialIdRoute: typeof ApiSocialIdRoute
   ApiUsersResetPasswordRoute: typeof ApiUsersResetPasswordRoute
   ApiAccountIndexRoute: typeof ApiAccountIndexRoute
+  ApiCertificatesIndexRoute: typeof ApiCertificatesIndexRoute
   ApiMediaIndexRoute: typeof ApiMediaIndexRoute
   ApiProjectsIndexRoute: typeof ApiProjectsIndexRoute
   ApiSocialIndexRoute: typeof ApiSocialIndexRoute
@@ -760,6 +837,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/dashboard/'
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRoute
+    }
+    '/certificates/': {
+      id: '/certificates/'
+      path: '/certificates'
+      fullPath: '/certificates/'
+      preLoaderRoute: typeof CertificatesIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/projects/$slug': {
       id: '/projects/$slug'
@@ -845,6 +929,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardProjectsIndexRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/certificates/': {
+      id: '/dashboard/certificates/'
+      path: '/certificates'
+      fullPath: '/dashboard/certificates/'
+      preLoaderRoute: typeof DashboardCertificatesIndexRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/account/': {
       id: '/dashboard/account/'
       path: '/account'
@@ -878,6 +969,13 @@ declare module '@tanstack/react-router' {
       path: '/api/media'
       fullPath: '/api/media/'
       preLoaderRoute: typeof ApiMediaIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/certificates/': {
+      id: '/api/certificates/'
+      path: '/api/certificates'
+      fullPath: '/api/certificates/'
+      preLoaderRoute: typeof ApiCertificatesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/account/': {
@@ -943,6 +1041,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardPagesContactRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/certificates/new': {
+      id: '/dashboard/certificates/new'
+      path: '/certificates/new'
+      fullPath: '/dashboard/certificates/new'
+      preLoaderRoute: typeof DashboardCertificatesNewRouteImport
+      parentRoute: typeof DashboardRoute
+    }
+    '/dashboard/certificates/$id': {
+      id: '/dashboard/certificates/$id'
+      path: '/certificates/$id'
+      fullPath: '/dashboard/certificates/$id'
+      preLoaderRoute: typeof DashboardCertificatesIdRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/api/users/reset-password': {
       id: '/api/users/reset-password'
       path: '/api/users/reset-password'
@@ -983,6 +1095,13 @@ declare module '@tanstack/react-router' {
       path: '/api/home/config'
       fullPath: '/api/home/config'
       preLoaderRoute: typeof ApiHomeConfigRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/certificates/$id': {
+      id: '/api/certificates/$id'
+      path: '/api/certificates/$id'
+      fullPath: '/api/certificates/$id'
+      preLoaderRoute: typeof ApiCertificatesIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
@@ -1062,6 +1181,8 @@ interface DashboardRouteChildren {
   DashboardMediaRoute: typeof DashboardMediaRoute
   DashboardSettingsRoute: typeof DashboardSettingsRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
+  DashboardCertificatesIdRoute: typeof DashboardCertificatesIdRoute
+  DashboardCertificatesNewRoute: typeof DashboardCertificatesNewRoute
   DashboardPagesContactRoute: typeof DashboardPagesContactRoute
   DashboardPagesHomeRoute: typeof DashboardPagesHomeRoute
   DashboardPagesProjectsRoute: typeof DashboardPagesProjectsRoute
@@ -1071,6 +1192,7 @@ interface DashboardRouteChildren {
   DashboardUsersIdRoute: typeof DashboardUsersIdRoute
   DashboardUsersNewRoute: typeof DashboardUsersNewRoute
   DashboardAccountIndexRoute: typeof DashboardAccountIndexRoute
+  DashboardCertificatesIndexRoute: typeof DashboardCertificatesIndexRoute
   DashboardProjectsIndexRoute: typeof DashboardProjectsIndexRoute
   DashboardSocialIndexRoute: typeof DashboardSocialIndexRoute
   DashboardStackIndexRoute: typeof DashboardStackIndexRoute
@@ -1085,6 +1207,8 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardMediaRoute: DashboardMediaRoute,
   DashboardSettingsRoute: DashboardSettingsRoute,
   DashboardIndexRoute: DashboardIndexRoute,
+  DashboardCertificatesIdRoute: DashboardCertificatesIdRoute,
+  DashboardCertificatesNewRoute: DashboardCertificatesNewRoute,
   DashboardPagesContactRoute: DashboardPagesContactRoute,
   DashboardPagesHomeRoute: DashboardPagesHomeRoute,
   DashboardPagesProjectsRoute: DashboardPagesProjectsRoute,
@@ -1094,6 +1218,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardUsersIdRoute: DashboardUsersIdRoute,
   DashboardUsersNewRoute: DashboardUsersNewRoute,
   DashboardAccountIndexRoute: DashboardAccountIndexRoute,
+  DashboardCertificatesIndexRoute: DashboardCertificatesIndexRoute,
   DashboardProjectsIndexRoute: DashboardProjectsIndexRoute,
   DashboardSocialIndexRoute: DashboardSocialIndexRoute,
   DashboardStackIndexRoute: DashboardStackIndexRoute,
@@ -1123,9 +1248,11 @@ const rootRouteChildren: RootRouteChildren = {
   ApiStackRoute: ApiStackRoute,
   ApiTechnologiesRoute: ApiTechnologiesRoute,
   ProjectsSlugRoute: ProjectsSlugRoute,
+  CertificatesIndexRoute: CertificatesIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiAccountPasswordRoute: ApiAccountPasswordRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
+  ApiCertificatesIdRoute: ApiCertificatesIdRoute,
   ApiHomeConfigRoute: ApiHomeConfigRoute,
   ApiMediaIdRoute: ApiMediaIdRoute,
   ApiPagesPageRoute: ApiPagesPageRoute,
@@ -1133,6 +1260,7 @@ const rootRouteChildren: RootRouteChildren = {
   ApiSocialIdRoute: ApiSocialIdRoute,
   ApiUsersResetPasswordRoute: ApiUsersResetPasswordRoute,
   ApiAccountIndexRoute: ApiAccountIndexRoute,
+  ApiCertificatesIndexRoute: ApiCertificatesIndexRoute,
   ApiMediaIndexRoute: ApiMediaIndexRoute,
   ApiProjectsIndexRoute: ApiProjectsIndexRoute,
   ApiSocialIndexRoute: ApiSocialIndexRoute,

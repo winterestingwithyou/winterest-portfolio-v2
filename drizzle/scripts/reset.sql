@@ -4,6 +4,7 @@ PRAGMA foreign_keys = OFF;
 DROP TABLE IF EXISTS `project_technologies`;
 DROP TABLE IF EXISTS `project_gallery_images`;
 DROP TABLE IF EXISTS `project_translations`;
+DROP TABLE IF EXISTS `certificates`;
 DROP TABLE IF EXISTS `technology_categories`;
 
 -- Content & Master Tables

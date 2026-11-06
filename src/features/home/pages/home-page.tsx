@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
+import { CertificateCarouselSection } from '#/features/home/components/section/certificate-carousel-section'
 import { EnthusiasmsSection } from '#/features/home/components/section/enthusiasms-section'
 import { FeaturedProjectsSection } from '#/features/home/components/section/featured-projects-section'
 import { HomeCtaSection } from '#/features/home/components/section/home-cta-section'
@@ -11,6 +12,7 @@ import type {
   HomeConfigInput,
 } from '#/features/home/validation'
 import type { getPublishedProjects } from '#/features/projects/public-loaders'
+import type { CertificateRecord } from '#/features/certificates/queries'
 import type { SiteSettingsInput } from '#/features/settings/types'
 import { socialQueryOptions } from '#/features/social/query-options'
 import type { getPublicUltimateStack } from '#/features/technologies/public-loaders'
@@ -18,6 +20,7 @@ import { getLocale } from '#/paraglide/runtime'
 
 type HomePageProps = {
   projects: Awaited<ReturnType<typeof getPublishedProjects>>
+  certificates: CertificateRecord[]
   ultimateTechs: Awaited<ReturnType<typeof getPublicUltimateStack>>
   settings?: SiteSettingsInput
   homeConfig?: HomeConfigInput
@@ -26,6 +29,7 @@ type HomePageProps = {
 
 export function HomePage({
   projects,
+  certificates,
   ultimateTechs,
   settings,
   homeConfig,
@@ -153,6 +157,11 @@ export function HomePage({
         copy={{ ...copy, featured: featuredCopy }}
         projects={projects}
         showDescription={homeConfig?.showFeaturedDescription !== false}
+      />
+      <CertificateCarouselSection
+        certificates={certificates}
+        copy={copy.certificates}
+        locale={locale}
       />
       <EnthusiasmsSection
         copy={{ ...copy, enthusiasms: enthusiasmsCopy }}

@@ -64,6 +64,13 @@
       "when": 1793990070358,
       "tag": "0008_add_project_gallery_images_and_cover_alt",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1794000749625,
+      "tag": "0009_add_certificates",
+      "breakpoints": true
     }
   ]
 }
