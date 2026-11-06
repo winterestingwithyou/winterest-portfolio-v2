@@ -1,3 +1,4 @@
+import type { BatchItem } from 'drizzle-orm/batch'
 import {
   and,
   count,
@@ -13,6 +14,7 @@ import {
 import type { Database } from '#/db'
 import {
   media,
+  projectGalleryImages,
   projectTranslations,
   projects,
   siteSettings,
@@ -181,6 +183,112 @@ export function matchesMediaUrl(
   return false
 }
 
+function removeMarkdownMediaReference(
+  description: string,
+  mediaUrl: string,
+  r2Key: string | null,
+) {
+  let changed = false
+  const referenceLabels = new Set<string>()
+  const cleanedDescription = description
+    .replace(
+      /^\s*\[([^\]]+)\]:\s*(<[^>]+>|[^\s]+).*$/gm,
+      (match, label: string, destination: string) => {
+        const url = destination.startsWith('<')
+          ? destination.slice(1, -1)
+          : destination
+        if (!matchesMediaUrl(url, mediaUrl, r2Key)) return match
+
+        changed = true
+        referenceLabels.add(label.trim().toLowerCase())
+        return ''
+      },
+    )
+    .replace(
+      /!\[([^\]]*)\]\[([^\]]*)\]/g,
+      (match, alt: string, reference: string) => {
+        const label = (reference || alt).trim().toLowerCase()
+        if (!referenceLabels.has(label)) return match
+
+        changed = true
+        return ''
+      },
+    )
+    .replace(/!\[([^\]]+)\](?!\()/g, (match, alt: string) => {
+      if (!referenceLabels.has(alt.trim().toLowerCase())) return match
+
+      changed = true
+      return ''
+    })
+    .replace(
+      /\[([^\]]+)\]\[([^\]]*)\]/g,
+      (match, label: string, reference: string) => {
+        if (!referenceLabels.has((reference || label).trim().toLowerCase())) {
+          return match
+        }
+
+        changed = true
+        return label
+      },
+    )
+    .replace(/\[([^\]]+)\](?!\()/g, (match, label: string) => {
+      if (!referenceLabels.has(label.trim().toLowerCase())) return match
+
+      changed = true
+      return label
+    })
+    .replace(
+      /(!?)\[([^\]]*)\]\(\s*(<[^>]+>|[^)\s]+)(?:\s+[^)]*)?\)/g,
+      (match, imageMarker: string, label: string, destination: string) => {
+        const url = destination.startsWith('<')
+          ? destination.slice(1, -1)
+          : destination
+        if (!matchesMediaUrl(url, mediaUrl, r2Key)) return match
+
+        changed = true
+        return imageMarker ? '' : label
+      },
+    )
+    .replace(/<(img|source)\b[^>]*>/gi, (imageTag) => {
+      const source = imageTag.match(
+        /\bsrc\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i,
+      )
+      const url = source?.[1] ?? source?.[2] ?? source?.[3]
+      if (matchesMediaUrl(url, mediaUrl, r2Key)) {
+        changed = true
+        return ''
+      }
+
+      const srcset = imageTag.match(
+        /\bsrcset\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i,
+      )
+      const value = srcset?.[1] ?? srcset?.[2] ?? srcset?.[3]
+      if (!value) return imageTag
+
+      const remainingSources = value
+        .split(',')
+        .map((candidate) => candidate.trim())
+        .filter((candidate) => {
+          const sourceUrl = candidate.split(/\s+/, 1)[0]
+          if (!matchesMediaUrl(sourceUrl, mediaUrl, r2Key)) return true
+          changed = true
+          return false
+        })
+
+      if (remainingSources.length === value.split(',').filter(Boolean).length) {
+        return imageTag
+      }
+      if (remainingSources.length === 0) return ''
+
+      return imageTag.replace(
+        /\bsrcset\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/i,
+        `srcset="${remainingSources.join(', ')}"`,
+      )
+    })
+
+  return { description: cleanedDescription, changed }
+}
+
 export const MONITORED_SETTINGS_KEYS = [
   'faviconUrl',
   'ogImageUrl',
@@ -273,7 +381,30 @@ export async function getMediaUsage(
     }
   }
 
-  // 3. Technologies Custom Icon Check
+  // Project Gallery Image Check
+  const galleryImages = await db
+    .select({
+      id: projectGalleryImages.id,
+      title: projects.title,
+      url: projectGalleryImages.url,
+    })
+    .from(projectGalleryImages)
+    .innerJoin(projects, eq(projectGalleryImages.projectId, projects.id))
+    .all()
+
+  for (const image of galleryImages) {
+    if (matchesMediaUrl(image.url, mediaRecord.url, r2Key)) {
+      references.push({
+        entityType: 'project_gallery_image',
+        field: 'galleryImages',
+        id: image.id,
+        label: `Project: ${image.title}`,
+        details: 'Gambar galeri detail proyek',
+      })
+    }
+  }
+
+  // Technologies Custom Icon Check
   const techsWithIcon = await db
     .select({
       id: technologies.id,
@@ -338,7 +469,8 @@ export async function cascadeNullifyMediaReferences(
   db: Database,
   mediaRecord: MediaRecord,
 ): Promise<number> {
-  let clearedCount = 0
+  const writes: BatchItem<'sqlite'>[] = []
+  const now = new Date()
   const r2Key = extractR2Key(mediaRecord.url)
 
   // 1. Clear Site Settings
@@ -355,12 +487,12 @@ export async function cascadeNullifyMediaReferences(
 
   for (const setting of allMonitoredSettings) {
     if (matchesMediaUrl(setting.value, mediaRecord.url, r2Key)) {
-      await db
-        .update(siteSettings)
-        .set({ value: '', updatedAt: new Date() })
-        .where(eq(siteSettings.key, setting.key))
-        .run()
-      clearedCount++
+      writes.push(
+        db
+          .update(siteSettings)
+          .set({ value: '', updatedAt: now })
+          .where(eq(siteSettings.key, setting.key)),
+      )
     }
   }
 
@@ -376,16 +508,65 @@ export async function cascadeNullifyMediaReferences(
 
   for (const proj of projectsWithCover) {
     if (matchesMediaUrl(proj.coverImage, mediaRecord.url, r2Key)) {
-      await db
-        .update(projects)
-        .set({ coverImage: null, updatedAt: new Date() })
-        .where(eq(projects.id, proj.id))
-        .run()
-      clearedCount++
+      writes.push(
+        db
+          .update(projects)
+          .set({ coverImage: null, updatedAt: now })
+          .where(eq(projects.id, proj.id)),
+      )
     }
   }
 
-  // 3. Clear Technologies Custom Icon
+  // Clear Project Gallery Images
+  const galleryImages = await db
+    .select({ id: projectGalleryImages.id, url: projectGalleryImages.url })
+    .from(projectGalleryImages)
+    .all()
+
+  for (const image of galleryImages) {
+    if (matchesMediaUrl(image.url, mediaRecord.url, r2Key)) {
+      writes.push(
+        db
+          .delete(projectGalleryImages)
+          .where(eq(projectGalleryImages.id, image.id)),
+      )
+    }
+  }
+
+  const translationsWithDesc = await db
+    .select({
+      projectId: projectTranslations.projectId,
+      locale: projectTranslations.locale,
+      description: projectTranslations.description,
+    })
+    .from(projectTranslations)
+    .where(isNotNull(projectTranslations.description))
+    .all()
+
+  for (const translation of translationsWithDesc) {
+    if (!translation.description) continue
+
+    const cleaned = removeMarkdownMediaReference(
+      translation.description,
+      mediaRecord.url,
+      r2Key,
+    )
+    if (!cleaned.changed) continue
+
+    writes.push(
+      db
+        .update(projectTranslations)
+        .set({ description: cleaned.description, updatedAt: now })
+        .where(
+          and(
+            eq(projectTranslations.projectId, translation.projectId),
+            eq(projectTranslations.locale, translation.locale),
+          ),
+        ),
+    )
+  }
+
+  // Clear Technologies Custom Icon
   const techsWithIcon = await db
     .select({
       id: technologies.id,
@@ -397,14 +578,18 @@ export async function cascadeNullifyMediaReferences(
 
   for (const tech of techsWithIcon) {
     if (matchesMediaUrl(tech.icon, mediaRecord.url, r2Key)) {
-      await db
-        .update(technologies)
-        .set({ icon: null, updatedAt: new Date() })
-        .where(eq(technologies.id, tech.id))
-        .run()
-      clearedCount++
+      writes.push(
+        db
+          .update(technologies)
+          .set({ icon: null, updatedAt: now })
+          .where(eq(technologies.id, tech.id)),
+      )
     }
   }
 
-  return clearedCount
+  if (writes.length > 0) {
+    await db.batch(writes as [BatchItem<'sqlite'>, ...BatchItem<'sqlite'>[]])
+  }
+
+  return writes.length
 }

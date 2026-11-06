@@ -47,6 +47,17 @@ export const projectsCopy = {
       result: 'Result',
       descriptionHeading: 'Project Description',
       noDescription: 'No full description available for this project yet.',
+      gallery: {
+        label: 'Project images',
+        empty: 'No project images available',
+        previous: 'Previous image',
+        next: 'Next image',
+        play: 'Play slideshow',
+        pause: 'Pause slideshow',
+        position: (current: number, total: number) =>
+          `Image ${current} of ${total}`,
+        goTo: (position: number) => `Show image ${position}`,
+      },
     },
     dashboard: {
       title: 'Projects',
@@ -105,6 +116,23 @@ export const projectsCopy = {
         coverImage: 'Cover Image',
         coverImageDesc:
           'Recommended aspect ratio: 16:9 or 21:9 (min. 1200x675px).',
+        coverImageAltEn: 'Cover image alternative text (English)',
+        coverImageAltId: 'Cover image alternative text (Indonesian)',
+        coverImageAltHelp:
+          'Describe the cover image for visitors using a screen reader.',
+        galleryTitle: 'Project Gallery Images',
+        galleryImageLabel: (position: number) => `Image ${position}`,
+        galleryDescription:
+          'Add and order the images shown on the project detail page.',
+        galleryEmpty: 'No additional project images yet.',
+        addGalleryImage: 'Add image',
+        removeGalleryImage: 'Remove image',
+        moveGalleryImageUp: 'Move image up',
+        moveGalleryImageDown: 'Move image down',
+        galleryAltEn: 'Alternative text (English)',
+        galleryAltId: 'Alternative text (Indonesian)',
+        galleryImageAltHelp:
+          'Describe what this image shows. Both languages are required before public display.',
         repoUrl: 'Repository URL',
         repoUrlPlaceholder: 'https://github.com/...',
         demoUrl: 'Demo URL',
@@ -165,7 +193,8 @@ export const projectsCopy = {
         featuredBadge: 'Featured',
         standardBadge: 'Standard',
         quotaFull: 'Full',
-        featuredQuota: (count: number, max: number) => `Featured (${count}/${max})`,
+        featuredQuota: (count: number, max: number) =>
+          `Featured (${count}/${max})`,
         featuredQuotaFull: (max: number) => `Featured (${max}/${max} Full)`,
         visibilityPublic: 'Public',
         visibilityPrivate: 'Private',
@@ -241,6 +270,17 @@ export const projectsCopy = {
       result: 'Hasil',
       descriptionHeading: 'Deskripsi Project',
       noDescription: 'Belum ada deskripsi lengkap untuk project ini.',
+      gallery: {
+        label: 'Gambar proyek',
+        empty: 'Belum ada gambar proyek',
+        previous: 'Gambar sebelumnya',
+        next: 'Gambar berikutnya',
+        play: 'Putar slideshow',
+        pause: 'Jeda slideshow',
+        position: (current: number, total: number) =>
+          `Gambar ${current} dari ${total}`,
+        goTo: (position: number) => `Tampilkan gambar ${position}`,
+      },
     },
     dashboard: {
       title: 'Project',
@@ -300,6 +340,23 @@ export const projectsCopy = {
         coverImage: 'Gambar Cover',
         coverImageDesc:
           'Rasio aspek yang disarankan: 16:9 atau 21:9 (min. 1200x675px).',
+        coverImageAltEn: 'Teks alternatif gambar cover (English)',
+        coverImageAltId: 'Teks alternatif gambar cover (Indonesia)',
+        coverImageAltHelp:
+          'Jelaskan gambar cover untuk pengunjung yang menggunakan pembaca layar.',
+        galleryTitle: 'Gambar Galeri Project',
+        galleryImageLabel: (position: number) => `Gambar ${position}`,
+        galleryDescription:
+          'Tambahkan dan urutkan gambar yang tampil di halaman detail project.',
+        galleryEmpty: 'Belum ada gambar tambahan untuk project ini.',
+        addGalleryImage: 'Tambah gambar',
+        removeGalleryImage: 'Hapus gambar',
+        moveGalleryImageUp: 'Pindahkan gambar ke atas',
+        moveGalleryImageDown: 'Pindahkan gambar ke bawah',
+        galleryAltEn: 'Teks alternatif (English)',
+        galleryAltId: 'Teks alternatif (Indonesia)',
+        galleryImageAltHelp:
+          'Jelaskan isi gambar ini. Kedua bahasa wajib diisi sebelum ditampilkan ke publik.',
         repoUrl: 'URL Repository',
         repoUrlPlaceholder: 'https://github.com/...',
         demoUrl: 'URL Demo',
@@ -361,7 +418,8 @@ export const projectsCopy = {
         featuredBadge: 'Unggulan',
         standardBadge: 'Standar',
         quotaFull: 'Penuh',
-        featuredQuota: (count: number, max: number) => `Unggulan (${count}/${max})`,
+        featuredQuota: (count: number, max: number) =>
+          `Unggulan (${count}/${max})`,
         featuredQuotaFull: (max: number) => `Unggulan (${max}/${max} Penuh)`,
         visibilityPublic: 'Publik',
         visibilityPrivate: 'Privat',

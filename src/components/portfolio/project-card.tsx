@@ -38,7 +38,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           {project.coverImage ? (
             <img
               src={project.coverImage}
-              alt={project.title}
+              alt={project.coverImageAlt}
               className="size-full object-cover transition duration-500 group-hover:scale-105"
               loading="lazy"
             />

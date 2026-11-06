@@ -50,6 +50,7 @@ export const mediaQuerySchema = z.object({
 export const mediaReferenceTypeSchema = z.enum([
   'site_settings',
   'project_cover',
+  'project_gallery_image',
   'project_content',
   'technology_icon',
 ])

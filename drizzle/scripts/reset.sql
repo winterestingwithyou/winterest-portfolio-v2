@@ -2,6 +2,7 @@ PRAGMA foreign_keys = OFF;
 
 -- Junction & Child Tables
 DROP TABLE IF EXISTS `project_technologies`;
+DROP TABLE IF EXISTS `project_gallery_images`;
 DROP TABLE IF EXISTS `project_translations`;
 DROP TABLE IF EXISTS `technology_categories`;
 

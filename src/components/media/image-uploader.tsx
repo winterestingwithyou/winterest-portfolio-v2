@@ -23,6 +23,7 @@ export type ImageUploaderProps = {
   value?: string | null
   onChange: (url: string | null) => void
   label?: string
+  previewAlt?: string
   description?: string
   aspectRatio?: 'video' | 'wide' | 'square'
 }
@@ -31,6 +32,7 @@ export function ImageUploader({
   value,
   onChange,
   label,
+  previewAlt,
   description,
   aspectRatio = 'video',
 }: ImageUploaderProps) {
@@ -177,7 +179,7 @@ export function ImageUploader({
           >
             <img
               src={displayUrl}
-              alt="Project Cover"
+              alt={previewAlt ?? label ?? 'Selected image preview'}
               className="size-full object-cover"
             />
             {/* Overlay action bar on hover (desktop only) */}
@@ -217,7 +219,7 @@ export function ImageUploader({
           <div className="flex w-full min-w-0 max-w-full flex-col gap-2.5 p-3 sm:flex-row sm:items-center sm:justify-between border-t border-(--brand-line) bg-(--surface-strong)/50 text-xs text-(--brand-muted)">
             <div className="flex w-full min-w-0 items-center justify-between sm:justify-start gap-2">
               <span
-                className="block min-w-0 flex-1 truncate font-mono text-[11px]"
+                className="block min-w-0 flex-1 truncate font-mono text-xs"
                 title={displayUrl}
               >
                 {displayUrl}

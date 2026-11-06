@@ -70,9 +70,22 @@ function createTestDatabase(): Database {
       summary TEXT NOT NULL,
       description TEXT,
       category TEXT NOT NULL DEFAULT 'Project',
+      cover_image_alt TEXT NOT NULL DEFAULT '',
       created_at INTEGER NOT NULL DEFAULT (unixepoch()),
       updated_at INTEGER NOT NULL DEFAULT (unixepoch()),
       PRIMARY KEY (project_id, locale)
+    );
+
+    CREATE TABLE project_gallery_images (
+      id TEXT PRIMARY KEY,
+      project_id TEXT NOT NULL,
+      url TEXT NOT NULL,
+      alt_en TEXT NOT NULL DEFAULT '',
+      alt_id TEXT NOT NULL DEFAULT '',
+      sort_order INTEGER NOT NULL DEFAULT 0,
+      created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+      updated_at INTEGER NOT NULL DEFAULT (unixepoch()),
+      UNIQUE (project_id, url)
     );
 
     CREATE TABLE technologies (
@@ -88,7 +101,11 @@ function createTestDatabase(): Database {
     );
   `)
 
-  return drizzleBetterSqlite(sqlite, { schema }) as unknown as Database
+  const database = drizzleBetterSqlite(sqlite, { schema })
+  return Object.assign(database, {
+    batch: (queries: readonly { run: () => unknown }[]) =>
+      sqlite.transaction(() => queries.map((query) => query.run()))(),
+  }) as unknown as Database
 }
 
 describe('media deletion synchronization', () => {
@@ -169,6 +186,34 @@ describe('media deletion synchronization', () => {
       expect(settingRefs).toHaveLength(2)
       expect(settingRefs.map((r) => r.field)).toContain('heroVisualUrl')
       expect(settingRefs.map((r) => r.field)).toContain('faviconUrl')
+    })
+
+    it('detects gallery usage and removes it during cascade deletion', async () => {
+      await db.insert(schema.projects).values({
+        id: 'proj_gallery',
+        slug: 'project-gallery',
+        title: 'Project Gallery',
+        summary: 'A summary',
+      })
+      await db.insert(schema.projectGalleryImages).values({
+        id: 'gallery-image-1',
+        projectId: 'proj_gallery',
+        url: 'https://winterest.dev/api/media/file/hero-banner.webp',
+        altEn: 'Interface preview',
+        altId: 'Pratinjau antarmuka',
+      })
+
+      const usage = await getMediaUsage(db, testMedia)
+      expect(usage.inUse).toBe(true)
+      expect(usage.references).toContainEqual(
+        expect.objectContaining({
+          entityType: 'project_gallery_image',
+          id: 'gallery-image-1',
+        }),
+      )
+
+      expect(await cascadeNullifyMediaReferences(db, testMedia)).toBe(1)
+      expect(await db.query.projectGalleryImages.findMany()).toHaveLength(0)
     })
 
     it('detects usage in projects coverImage', async () => {
@@ -290,6 +335,62 @@ describe('media deletion synchronization', () => {
       updatedAt: new Date(),
     }
 
+    it('removes project Markdown image references during cascade deletion', async () => {
+      await db.insert(schema.projects).values({
+        id: 'proj_markdown',
+        slug: 'project-markdown',
+        title: 'Project Markdown',
+        summary: 'Markdown summary',
+      })
+      await db.insert(schema.projectTranslations).values({
+        projectId: 'proj_markdown',
+        locale: 'en',
+        title: 'Project Markdown',
+        summary: 'Markdown summary',
+        description:
+          '# Overview\n\n![Screenshot](/api/media/file/shared-asset.png)\n\n![Reference screenshot][asset]\n\n[asset]: /api/media/file/shared-asset.png\n\nKeep this text.',
+      })
+
+      const clearedCount = await cascadeNullifyMediaReferences(db, testMedia)
+      const translation = await db.query.projectTranslations.findFirst({
+        where: (row, { eq }) => eq(row.projectId, 'proj_markdown'),
+      })
+
+      expect(clearedCount).toBe(1)
+      expect(translation?.description).not.toContain(
+        '/api/media/file/shared-asset.png',
+      )
+      expect(translation?.description).toContain('Keep this text.')
+    })
+
+    it('removes deleted media candidates from project HTML srcset attributes', async () => {
+      await db.insert(schema.projects).values({
+        id: 'proj_srcset',
+        slug: 'project-srcset',
+        title: 'Project Srcset',
+        summary: 'Srcset summary',
+      })
+      await db.insert(schema.projectTranslations).values({
+        projectId: 'proj_srcset',
+        locale: 'en',
+        title: 'Project Srcset',
+        summary: 'Srcset summary',
+        description:
+          '<picture><source srcset="/api/media/file/shared-asset.png 1x, /assets/other.png 2x"><img src="/assets/fallback.png" alt="Screenshot"></picture>',
+      })
+
+      const clearedCount = await cascadeNullifyMediaReferences(db, testMedia)
+      const translation = await db.query.projectTranslations.findFirst({
+        where: (row, { eq }) => eq(row.projectId, 'proj_srcset'),
+      })
+
+      expect(clearedCount).toBe(1)
+      expect(translation?.description).not.toContain(
+        '/api/media/file/shared-asset.png',
+      )
+      expect(translation?.description).toContain('/assets/other.png 2x')
+    })
+
     it('nullifies references across site_settings, projects, and technologies', async () => {
       // Setup referencing records
       await db.insert(schema.siteSettings).values({
@@ -368,6 +469,9 @@ describe('media deletion synchronization', () => {
       ).toBe(true)
       expect(
         mediaReferenceTypeSchema.safeParse('technology_icon').success,
+      ).toBe(true)
+      expect(
+        mediaReferenceTypeSchema.safeParse('project_gallery_image').success,
       ).toBe(true)
       expect(mediaReferenceTypeSchema.safeParse('unknown_entity').success).toBe(
         false,

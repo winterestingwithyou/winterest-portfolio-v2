@@ -26,7 +26,7 @@ bun run paraglide:compile
 bun run format
 bun run check
 bun run deploy
-bun run db:generate
+bun run db:generate --name <descriptive_snake_case_name>
 bun run db:migrate
 bun run db:push
 bun run db:pull
@@ -56,19 +56,26 @@ bun run db:studio:remote
 
 ---
 
+## Agent Validation Workflow
+
+Use a staged validation sequence to catch issues before spending time on full checks:
+
+1. During implementation, run `bun run validate` and the narrowest relevant test command.
+2. Review the diff against the accepted requirements; resolve review findings before moving on.
+3. Run `bun run test` and `bun run build` once at the end only when CI is unavailable or the user explicitly requests local full checks. When an active PR CI provides these gates, rely on CI instead of repeating them locally.
+
+Husky runs `lint-staged` before commits, applying ESLint autofix and Prettier to staged files. Agents must not run `bun run check` as a routine validation step; it checks formatting across the whole repository and duplicates the staged-file formatting hook.
+
 ## Allowed Agent Verification Commands
 
-Before considering a task done, run the relevant checks when appropriate:
+Run the relevant checks from the validation workflow above:
 
-- `bun run check` (Prettier formatting check)
-- `bun run typecheck` (TypeScript typechecking)
-- `bun run lint` (ESLint static analysis)
 - `bun run validate` (Turbo-cached lint and typecheck)
-- `bun run test` (Vitest test suite)
-- `bun run build` (Production client and worker bundle build)
-- `bun run preview` (Vite / TanStack Start local preview)
+- The narrowest relevant test command; `bun run test` for the full Vitest suite when required by the workflow
+- `bun run build` (Production client and worker bundle build, when required by the workflow)
+- `bun run preview` (Vite / TanStack Start local preview, only when specifically needed and permitted)
 - `bun run cf-typegen` (Cloudflare Workers bindings and type generation)
-- `bun run db:generate` (Only for intentional Drizzle schema file updates)
+- `bun run db:generate --name <descriptive_snake_case_name>` (Only for intentional Drizzle schema file updates; `--name` is required)
 
 ---
 
@@ -94,7 +101,7 @@ A task or feature is complete when:
 
 1. The requested functionality works correctly.
 2. TypeScript checks pass (`bun run typecheck` or `bun run validate`).
-3. Linting and formatting are clean (`bun run lint` and `bun run check`).
+3. Linting passes; Husky formats staged files with ESLint autofix and Prettier before commit.
 4. Production build succeeds without errors (`bun run build`).
 5. Layout is responsive on both mobile and desktop.
 6. Works seamlessly across Light and Dark mode.

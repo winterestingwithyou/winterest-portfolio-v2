@@ -156,7 +156,7 @@ bun run db:seed:remote      # Seed remote Cloudflare D1 database
 # Drizzle Kit & Studio
 bun run db:studio:local     # Open Drizzle Studio connected to local Miniflare D1
 bun run db:studio:remote    # Open Drizzle Studio connected to remote Cloudflare D1
-bun run db:generate         # Generate new SQL migration file from src/db/schema.ts
+bun run db:generate --name add_project_gallery_images_and_cover_alt  # Name is required
 ```
 
 > **Note on `reset.sql` Maintenance**: Whenever new tables are added or modified in `src/db/schema.ts`, `drizzle/scripts/reset.sql` must be updated with corresponding `DROP TABLE IF EXISTS` statements.

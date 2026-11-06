@@ -1,4 +1,5 @@
 import BetterSqliteDatabase from 'better-sqlite3'
+
 import { drizzle as drizzleBetterSqlite } from 'drizzle-orm/better-sqlite3'
 import { beforeEach, describe, expect, it } from 'vitest'
 
@@ -47,9 +48,22 @@ function createTestDatabase(): Database {
       summary TEXT NOT NULL,
       description TEXT,
       category TEXT NOT NULL DEFAULT 'Project',
+      cover_image_alt TEXT NOT NULL DEFAULT '',
       created_at INTEGER NOT NULL DEFAULT (unixepoch()),
       updated_at INTEGER NOT NULL DEFAULT (unixepoch()),
       PRIMARY KEY (project_id, locale)
+    );
+
+    CREATE TABLE project_gallery_images (
+      id TEXT PRIMARY KEY,
+      project_id TEXT NOT NULL,
+      url TEXT NOT NULL,
+      alt_en TEXT NOT NULL DEFAULT '',
+      alt_id TEXT NOT NULL DEFAULT '',
+      sort_order INTEGER NOT NULL DEFAULT 0,
+      created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+      updated_at INTEGER NOT NULL DEFAULT (unixepoch()),
+      UNIQUE (project_id, url)
     );
 
     CREATE TABLE project_technologies (
@@ -59,7 +73,11 @@ function createTestDatabase(): Database {
     );
   `)
 
-  return drizzleBetterSqlite(sqlite, { schema }) as unknown as Database
+  const database = drizzleBetterSqlite(sqlite, { schema })
+  return Object.assign(database, {
+    batch: (queries: readonly { run: () => unknown }[]) =>
+      sqlite.transaction(() => queries.map((query) => query.run()))(),
+  }) as unknown as Database
 }
 
 function makeProjectInput(
@@ -74,16 +92,19 @@ function makeProjectInput(
     repoVisibility: 'public',
     featured,
     technologyIds: [],
+    galleryImages: [],
     translations: {
       en: {
         title: `Title ${slug}`,
         summary: `Summary ${slug}`,
         category: 'App',
+        coverImageAlt: '',
       },
       id: {
         title: `Judul ${slug}`,
         summary: `Ringkasan ${slug}`,
         category: 'Aplikasi',
+        coverImageAlt: '',
       },
     },
     ...overrides,
@@ -187,11 +208,13 @@ describe('Featured Projects Quota (Max 4)', () => {
               title: 'Updated English Title',
               summary: 'Updated Summary',
               category: 'Updated Category',
+              coverImageAlt: '',
             },
             id: {
               title: 'Judul Diperbarui',
               summary: 'Ringkasan Diperbarui',
               category: 'Kategori Diperbarui',
+              coverImageAlt: '',
             },
           },
         }),

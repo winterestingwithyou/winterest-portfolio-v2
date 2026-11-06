@@ -39,7 +39,7 @@ Cloudflare Workers runs in an edge V8 isolate with CPU-time limits:
 ## Database Rules (Drizzle ORM & Cloudflare D1)
 
 - **Explicit Schema**: Maintain all table schemas and relations in `src/db/schema.ts`.
-- **Migrations**: Use Drizzle migrations for schema modifications.
+- **Migrations**: Use Drizzle migrations for schema modifications. Always generate migrations with an explicit descriptive name using `bun run db:generate --name <descriptive_snake_case_name>`; never run generation without `--name`.
 - **Runtime Safety**: Do **NOT** use `better-sqlite3` in Cloudflare runtime paths.
 - **Indexes**: Add indexes for frequently queried columns (`slug`, `status`, `userId`, etc.).
 - **Avoid N+1**: Join related tables or fetch in batches.

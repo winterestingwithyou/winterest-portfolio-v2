@@ -4,7 +4,9 @@ import { Link, useNavigate, useBlocker } from '@tanstack/react-router'
 import { useStore } from '@tanstack/react-store'
 import {
   AlertCircle,
+  ArrowDown,
   ArrowLeft,
+  ArrowUp,
   CheckCircle2,
   Globe,
   Plus,
@@ -58,6 +60,7 @@ import { projectQueryOptions } from '#/features/projects/query-options'
 import { getProjectFormSchema } from '#/features/projects/validation'
 import { techQueryOptions } from '#/features/technologies/query-options'
 import { TechnologyCreateDialog } from '#/features/technologies/components/form/technology-create-dialog'
+import type { ProjectGalleryImageValue } from '#/features/projects/queries'
 import type { TechnologyWithCategories } from '#/features/technologies/queries'
 import type { ContentStatus } from '#/db/schema'
 import { getApiErrorMessage } from '#/lib/api-client'
@@ -75,6 +78,7 @@ type ProjectFormInitial = {
   featured?: boolean | null
   category?: string | null
   coverImage?: string | null
+  galleryImages?: ProjectGalleryImageValue[]
   repoUrl?: string | null
   demoUrl?: string | null
   productionUrl?: string | null
@@ -92,6 +96,7 @@ type ProjectTranslationInitial = {
   summary?: string | null
   description?: string | null
   category?: string | null
+  coverImageAlt?: string | null
 }
 
 type ProjectTranslationFormValue = {
@@ -99,6 +104,7 @@ type ProjectTranslationFormValue = {
   summary: string
   description: string
   category: string
+  coverImageAlt: string
 }
 
 type ProjectEditorFormProps = {
@@ -143,6 +149,7 @@ function getTranslation(
     category:
       translation?.category ??
       (locale === 'en' ? (project?.category ?? 'Project') : 'Project'),
+    coverImageAlt: translation?.coverImageAlt ?? '',
   }
 }
 
@@ -191,6 +198,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
       repoVisibility: project?.repoVisibility ?? 'public',
       featured: Boolean(project?.featured),
       coverImage: project?.coverImage ?? '',
+      galleryImages: project?.galleryImages ?? [],
       repoUrl: project?.repoUrl ?? '',
       demoUrl: project?.demoUrl ?? '',
       productionUrl: project?.productionUrl ?? '',
@@ -218,6 +226,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
         repoVisibility: value.repoVisibility,
         featured: value.featured,
         coverImage: value.coverImage.trim() || undefined,
+        galleryImages: value.galleryImages,
         repoUrl: value.repoUrl.trim() || undefined,
         demoUrl: value.demoUrl.trim() || undefined,
         productionUrl: value.productionUrl.trim() || undefined,
@@ -493,25 +502,248 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                   const isInvalid =
                     field.state.meta.isTouched && !field.state.meta.isValid
                   return (
-                    <Field
-                      data-invalid={isInvalid}
-                      className="w-full min-w-0 max-w-full"
-                    >
-                      <ImageUploader
-                        value={field.state.value}
-                        onChange={(url) => field.handleChange(url ?? '')}
-                        label={formCopy.coverImage}
-                        description={formCopy.coverImageDesc}
-                        aspectRatio="wide"
-                      />
-                      {isInvalid && (
-                        <FieldError errors={field.state.meta.errors} />
-                      )}
-                    </Field>
+                    <>
+                      <Field
+                        data-invalid={isInvalid}
+                        className="w-full min-w-0 max-w-full"
+                      >
+                        <ImageUploader
+                          value={field.state.value}
+                          onChange={(url) => field.handleChange(url ?? '')}
+                          label={formCopy.coverImage}
+                          description={formCopy.coverImageDesc}
+                          aspectRatio="wide"
+                        />
+                        {isInvalid && (
+                          <FieldError errors={field.state.meta.errors} />
+                        )}
+                      </Field>
+                      {field.state.value.trim() ? (
+                        <FieldGroup className="mt-5">
+                          <div className="grid gap-5 sm:grid-cols-2">
+                            {localeOptions.map(({ value: altLocale }) => (
+                              <form.Field
+                                key={altLocale}
+                                name={`translations.${altLocale}.coverImageAlt`}
+                                children={(altField) => {
+                                  const altIsInvalid =
+                                    altField.state.meta.isTouched &&
+                                    !altField.state.meta.isValid
+                                  return (
+                                    <Field data-invalid={altIsInvalid}>
+                                      <FieldLabel htmlFor={altField.name}>
+                                        {altLocale === 'en'
+                                          ? formCopy.coverImageAltEn
+                                          : formCopy.coverImageAltId}
+                                      </FieldLabel>
+                                      <Input
+                                        id={altField.name}
+                                        name={altField.name}
+                                        value={altField.state.value}
+                                        onBlur={altField.handleBlur}
+                                        onChange={(event) =>
+                                          altField.handleChange(
+                                            event.target.value,
+                                          )
+                                        }
+                                        aria-invalid={altIsInvalid}
+                                      />
+                                      {altIsInvalid ? (
+                                        <FieldError
+                                          errors={altField.state.meta.errors}
+                                        />
+                                      ) : null}
+                                    </Field>
+                                  )
+                                }}
+                              />
+                            ))}
+                          </div>
+                          <FieldDescription>
+                            {formCopy.coverImageAltHelp}
+                          </FieldDescription>
+                        </FieldGroup>
+                      ) : null}
+                    </>
                   )
                 }}
               />
             </div>
+
+            <form.Field
+              name="galleryImages"
+              children={(field) => (
+                <section className="surface-card flex flex-col gap-5 p-4 sm:p-6">
+                  <div className="flex flex-wrap items-start justify-between gap-4 border-b border-(--brand-line) pb-4">
+                    <div>
+                      <h2 className="text-lg font-bold text-(--brand-ink)">
+                        {formCopy.galleryTitle}
+                      </h2>
+                      <p className="mt-1 text-sm text-(--brand-muted)">
+                        {formCopy.galleryDescription}
+                      </p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() =>
+                        field.handleChange([
+                          ...field.state.value,
+                          { url: '', alt: { en: '', id: '' } },
+                        ])
+                      }
+                    >
+                      <Plus data-icon="inline-start" />
+                      {formCopy.addGalleryImage}
+                    </Button>
+                  </div>
+
+                  {field.state.value.length === 0 ? (
+                    <p className="text-sm text-(--brand-muted)">
+                      {formCopy.galleryEmpty}
+                    </p>
+                  ) : (
+                    <FieldGroup>
+                      {field.state.value.map((image, index) => (
+                        <div
+                          key={`${image.url}-${index}`}
+                          className="flex flex-col gap-4 rounded-xl border border-(--brand-line) p-4"
+                        >
+                          <div className="flex flex-wrap items-center justify-between gap-3">
+                            <h3 className="font-semibold text-(--brand-ink)">
+                              {formCopy.galleryImageLabel(index + 1)}
+                            </h3>
+                            <div className="flex items-center gap-2">
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="icon-sm"
+                                aria-label={formCopy.moveGalleryImageUp}
+                                disabled={index === 0}
+                                onClick={() => {
+                                  const images = [...field.state.value]
+                                  const currentImage = images[index]
+                                  images[index] = images[index - 1]
+                                  images[index - 1] = currentImage
+                                  field.handleChange(images)
+                                }}
+                              >
+                                <ArrowUp data-icon="inline-start" />
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="icon-sm"
+                                aria-label={formCopy.moveGalleryImageDown}
+                                disabled={
+                                  index === field.state.value.length - 1
+                                }
+                                onClick={() => {
+                                  const images = [...field.state.value]
+                                  const currentImage = images[index]
+                                  images[index] = images[index + 1]
+                                  images[index + 1] = currentImage
+                                  field.handleChange(images)
+                                }}
+                              >
+                                <ArrowDown data-icon="inline-start" />
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon-sm"
+                                aria-label={formCopy.removeGalleryImage}
+                                onClick={() =>
+                                  field.handleChange(
+                                    field.state.value.filter(
+                                      (_, currentIndex) =>
+                                        currentIndex !== index,
+                                    ),
+                                  )
+                                }
+                              >
+                                <Trash2 data-icon="inline-start" />
+                              </Button>
+                            </div>
+                          </div>
+
+                          <form.Field
+                            name={`galleryImages[${index}].url`}
+                            children={(imageField) => (
+                              <Field>
+                                <ImageUploader
+                                  value={imageField.state.value}
+                                  onChange={(url) =>
+                                    imageField.handleChange(url ?? '')
+                                  }
+                                  label={formCopy.galleryImageLabel(index + 1)}
+                                  previewAlt={formCopy.galleryImageLabel(
+                                    index + 1,
+                                  )}
+                                  description={formCopy.galleryImageAltHelp}
+                                  aspectRatio="wide"
+                                />
+                                {imageField.state.meta.errors.length > 0 ? (
+                                  <FieldError
+                                    errors={imageField.state.meta.errors}
+                                  />
+                                ) : null}
+                              </Field>
+                            )}
+                          />
+
+                          <div className="grid gap-4 sm:grid-cols-2">
+                            {localeOptions.map(({ value: altLocale }) => (
+                              <form.Field
+                                key={altLocale}
+                                name={`galleryImages[${index}].alt.${altLocale}`}
+                                children={(altField) => {
+                                  const isInvalid =
+                                    altField.state.meta.isTouched &&
+                                    !altField.state.meta.isValid
+                                  return (
+                                    <Field data-invalid={isInvalid}>
+                                      <FieldLabel htmlFor={altField.name}>
+                                        {altLocale === 'en'
+                                          ? formCopy.galleryAltEn
+                                          : formCopy.galleryAltId}
+                                      </FieldLabel>
+                                      <Input
+                                        id={altField.name}
+                                        name={altField.name}
+                                        value={altField.state.value}
+                                        onBlur={altField.handleBlur}
+                                        onChange={(event) =>
+                                          altField.handleChange(
+                                            event.target.value,
+                                          )
+                                        }
+                                        placeholder={
+                                          formCopy.galleryImageAltHelp
+                                        }
+                                        aria-invalid={isInvalid}
+                                      />
+                                      {isInvalid ? (
+                                        <FieldError
+                                          errors={altField.state.meta.errors}
+                                        />
+                                      ) : null}
+                                    </Field>
+                                  )
+                                }}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </FieldGroup>
+                  )}
+                  {field.state.meta.errors.length > 0 ? (
+                    <FieldError errors={field.state.meta.errors} />
+                  ) : null}
+                </section>
+              )}
+            />
 
             {/* URLs Grid */}
             <div className="grid w-full min-w-0 max-w-full gap-6 md:grid-cols-3">
@@ -666,7 +898,7 @@ export function ProjectEditorForm({ mode, project }: ProjectEditorFormProps) {
                             {formCopy.featuredTitle}
                           </FieldLabel>
                           {isQuotaFull && !isChecked ? (
-                            <span className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[11px] font-semibold text-amber-600 dark:text-amber-400">
+                            <span className="inline-flex items-center rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
                               {formCopy.featuredQuotaFull}
                             </span>
                           ) : (

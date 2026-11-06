@@ -193,6 +193,7 @@ export const projectTranslations = sqliteTable(
     summary: text('summary').notNull(),
     description: text('description'),
     category: text('category').notNull().default('Project'),
+    coverImageAlt: text('cover_image_alt').notNull().default(''),
     ...timestamps,
   },
   (table) => [
@@ -201,6 +202,31 @@ export const projectTranslations = sqliteTable(
       name: 'project_translations_pk',
     }),
     index('project_translations_locale_idx').on(table.locale),
+  ],
+)
+
+export const projectGalleryImages = sqliteTable(
+  'project_gallery_images',
+  {
+    id: text('id').primaryKey(),
+    projectId: text('project_id')
+      .notNull()
+      .references(() => projects.id, { onDelete: 'cascade' }),
+    url: text('url').notNull(),
+    altEn: text('alt_en').notNull().default(''),
+    altId: text('alt_id').notNull().default(''),
+    sortOrder: integer('sort_order').notNull().default(0),
+    ...timestamps,
+  },
+  (table) => [
+    uniqueIndex('project_gallery_images_project_url_unique').on(
+      table.projectId,
+      table.url,
+    ),
+    index('project_gallery_images_project_order_idx').on(
+      table.projectId,
+      table.sortOrder,
+    ),
   ],
 )
 
@@ -301,6 +327,7 @@ export const projectTechnologies = sqliteTable(
 export const projectsRelations = relations(projects, ({ many }) => ({
   projectTechnologies: many(projectTechnologies),
   translations: many(projectTranslations),
+  galleryImages: many(projectGalleryImages),
 }))
 
 export const projectTranslationsRelations = relations(
@@ -308,6 +335,16 @@ export const projectTranslationsRelations = relations(
   ({ one }) => ({
     project: one(projects, {
       fields: [projectTranslations.projectId],
+      references: [projects.id],
+    }),
+  }),
+)
+
+export const projectGalleryImagesRelations = relations(
+  projectGalleryImages,
+  ({ one }) => ({
+    project: one(projects, {
+      fields: [projectGalleryImages.projectId],
       references: [projects.id],
     }),
   }),

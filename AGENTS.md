@@ -68,11 +68,12 @@ bun run db:studio:remote
 - **Package Manager**: Bun only.
 - **Routing**: Strict folder-based routing. No flat dot route files.
 - **HTTP Client & Server State**: Mandatory `ofetch` via `api` from `#/lib/api-client` (no native `fetch`). Components **MUST NEVER** invoke `api()` directly; all queries must use `queryOptions` in `src/features/<feature>/query-options.ts` (consumed via `loader` & `useSuspenseQuery` / `useQuery`) and mutations must use custom hooks in `src/features/<feature>/hooks.ts`.
-- **Database**: Drizzle ORM + Cloudflare D1. [src/db/schema.ts](file:///d:/winterest-project/winterest-portfolio-v2/src/db/schema.ts) is the Single Source of Truth. Always update `drizzle/scripts/reset.sql` when modifying schemas.
+- **Database**: Drizzle ORM + Cloudflare D1. [src/db/schema.ts](file:///d:/winterest-project/winterest-portfolio-v2/src/db/schema.ts) is the Single Source of Truth. Always update `drizzle/scripts/reset.sql` when modifying schemas, and give every generated migration an explicit `--name` as required in [`.agents/rules/05-database-cloudflare.md`](.agents/rules/05-database-cloudflare.md).
 - **Auth & RBAC**: Better Auth with secure HTTP-only cookies and PBKDF2 Web Crypto password hashing. Roles: `owner`, `admin`, `editor`.
 - **Styling**: Use Tailwind CSS v4 variable syntax such as `text-(--brand-ink)`, `bg-(--brand-orange-soft)`, and `border-(--brand-line)`. Follow [`DESIGN.md`](DESIGN.md) for visual direction, color, typography, surfaces, and component styling.
 - **Copywriting & Data**: Feature-scoped `copy.ts` for localized UI strings (`en`/`id`) and `data.ts` strictly for static structured datasets. Global layout copy in `src/features/portfolio/copy.ts`.
 - **File Naming**: Strict `kebab-case` for all project files and directories.
+- **Agent Validation**: Follow the staged validation workflow in [`.agents/rules/02-agent-commands-behavior.md`](.agents/rules/02-agent-commands-behavior.md); Husky formats staged files, so agents skip `bun run check` during routine validation.
 - **Engineering Workflow**: Use the Matt Pocock engineering skills for planning, ticket breakdown, triage, and implementation. Publish change specs and tickets to GitHub Issues; keep durable feature and system requirements in `docs/features/` and `docs/system/`. See `docs/agents/issue-tracker.md` and `docs/agents/domain.md`.
 - **Knowledge Graph & Exploration (Graphify)**: Mandatory first step for exploring codebase, dependencies, or new feature implementations. Always call MCP `query_graph` or CLI `graphify query` before manual grep or file inspection, even if the user did not mention Graphify. Run `graphify update .` after code modifications.
 

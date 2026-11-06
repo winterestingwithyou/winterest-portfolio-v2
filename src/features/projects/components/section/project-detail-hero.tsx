@@ -1,5 +1,7 @@
 import { CheckCircle2, ExternalLink, Github, Globe } from 'lucide-react'
 
+import { ProjectGalleryCarousel } from '#/features/projects/components/section/project-gallery-carousel'
+import { getProjectsCopy } from '#/features/projects/copy'
 import type { getPublishedProject } from '#/features/projects/public-loaders'
 
 type ProjectDetailHeroProps = {
@@ -7,6 +9,7 @@ type ProjectDetailHeroProps = {
 }
 
 export function ProjectDetailHero({ project }: ProjectDetailHeroProps) {
+  const galleryCopy = getProjectsCopy().detail.gallery
   const isPublicRepo =
     project.repoVisibility === 'public' && Boolean(project.repoUrl)
 
@@ -79,16 +82,11 @@ export function ProjectDetailHero({ project }: ProjectDetailHeroProps) {
         </div>
       </div>
 
-      {/* Cover Image Banner (if available) */}
-      {project.coverImage ? (
-        <div className="mt-8 aspect-21/9 w-full overflow-hidden rounded-2xl border border-(--brand-line) shadow-md">
-          <img
-            src={project.coverImage}
-            alt={project.title}
-            className="size-full object-cover"
-          />
-        </div>
-      ) : null}
+      <ProjectGalleryCarousel
+        images={project.galleryImages}
+        labels={galleryCopy}
+        fallbackLabel={project.category}
+      />
     </>
   )
 }

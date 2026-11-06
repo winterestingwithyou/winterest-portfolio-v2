@@ -1,9 +1,11 @@
-import { and, count, desc, eq, inArray, ne, or } from 'drizzle-orm'
+import { and, asc, count, desc, eq, inArray, ne, or } from 'drizzle-orm'
+import type { BatchItem } from 'drizzle-orm/batch'
 
 import type { Database } from '#/db'
 import {
   contentLocales,
   projects,
+  projectGalleryImages,
   projectTechnologies,
   projectTranslations,
   technologies,
@@ -18,18 +20,26 @@ export const FEATURED_PROJECTS_QUOTA_ERROR =
 
 export type ProjectRecord = typeof projects.$inferSelect
 export type ProjectTranslationRecord = typeof projectTranslations.$inferSelect
+export type ProjectGalleryImageRecord = typeof projectGalleryImages.$inferSelect
 
 export type ProjectTranslationValue = {
   title: string
   summary: string
   description?: string | null
   category: string
+  coverImageAlt: string
+}
+
+export type ProjectGalleryImageValue = {
+  url: string
+  alt: Record<ContentLocale, string>
 }
 
 export type DashboardProjectRecord = ProjectRecord & {
   translations: Record<ContentLocale, ProjectTranslationValue>
   availableLocales: ContentLocale[]
   technologyIds: string[]
+  galleryImages: ProjectGalleryImageValue[]
 }
 
 export type PublicProjectTechnology = {
@@ -37,6 +47,11 @@ export type PublicProjectTechnology = {
   name: string
   icon?: string | null
   color?: string | null
+}
+
+export type PublicProjectImage = {
+  url: string
+  alt: string
 }
 
 export type PublicProjectRecord = {
@@ -49,6 +64,7 @@ export type PublicProjectRecord = {
   category: string
   featured: boolean
   coverImage?: string | null
+  coverImageAlt: string
   repoUrl?: string | null
   repoVisibility: string
   demoUrl?: string | null
@@ -75,6 +91,7 @@ export function toPublicProjectRecord(
     category: translation.category,
     featured: record.featured,
     coverImage: record.coverImage,
+    coverImageAlt: translation.coverImageAlt || translation.title,
     repoUrl: record.repoUrl,
     repoVisibility: record.repoVisibility,
     demoUrl: record.demoUrl,
@@ -101,7 +118,6 @@ export async function listProjects(db: Database) {
     db,
     records.map((record) => record.id),
   )
-
   return records.map((record) =>
     toDashboardProjectRecord(
       record,
@@ -185,12 +201,35 @@ export async function getPublishedPublicProjectBySlug(
     return null
   }
 
-  const technologyMap = await listProjectTechnologies(db, [project.id])
-  return toPublicProjectRecord(
-    project,
-    translation,
-    technologyMap.get(project.id),
-  )
+  const [technologyMap, galleryImagesMap] = await Promise.all([
+    listProjectTechnologies(db, [project.id]),
+    listProjectGalleryImages(db, [project.id]),
+  ])
+  const galleryImages: PublicProjectImage[] = []
+
+  if (project.coverImage) {
+    // TODO: Remove this fallback in the next version after every existing image has localized alt text.
+    galleryImages.push({
+      url: project.coverImage,
+      alt: translation.coverImageAlt || translation.title,
+    })
+  }
+
+  for (const image of galleryImagesMap.get(project.id) ?? []) {
+    galleryImages.push({
+      url: image.url,
+      alt: image.alt[locale],
+    })
+  }
+
+  return {
+    ...toPublicProjectRecord(
+      project,
+      translation,
+      technologyMap.get(project.id),
+    ),
+    galleryImages,
+  }
 }
 
 async function getPublishedProjectBySlug(db: Database, slug: string) {
@@ -309,12 +348,16 @@ export async function getDashboardProjectByIdOrSlug(
   }
 
   const translations = await listProjectTranslations(db, [project.id])
-  const technologyIdsMap = await listProjectTechnologyIds(db, [project.id])
+  const [technologyIdsMap, galleryImagesMap] = await Promise.all([
+    listProjectTechnologyIds(db, [project.id]),
+    listProjectGalleryImages(db, [project.id]),
+  ])
 
   return toDashboardProjectRecord(
     project,
     translations.get(project.id),
     technologyIdsMap.get(project.id) ?? [],
+    galleryImagesMap.get(project.id) ?? [],
   )
 }
 
@@ -355,33 +398,35 @@ export async function createProject(db: Database, input: ProjectInput) {
       : null
   const english = input.translations.en
 
-  await db
-    .insert(projects)
-    .values({
-      id,
-      slug: input.slug,
-      title: english.title,
-      summary: english.summary,
-      description: english.description,
-      status: input.status,
-      visibility: input.visibility,
-      repoVisibility: input.repoVisibility,
-      featured: input.featured,
-      category: english.category,
-      coverImage: input.coverImage,
-      repoUrl: input.repoUrl,
-      demoUrl: input.demoUrl,
-      productionUrl: input.productionUrl,
-      startedAt: input.startedAt ?? null,
-      completedAt: input.completedAt ?? null,
-      publishedAt,
-      createdAt: now,
-      updatedAt: now,
-    })
-    .run()
+  const projectInsert = db.insert(projects).values({
+    id,
+    slug: input.slug,
+    title: english.title,
+    summary: english.summary,
+    description: english.description,
+    status: input.status,
+    visibility: input.visibility,
+    repoVisibility: input.repoVisibility,
+    featured: input.featured,
+    category: english.category,
+    coverImage: input.coverImage,
+    repoUrl: input.repoUrl,
+    demoUrl: input.demoUrl,
+    productionUrl: input.productionUrl,
+    startedAt: input.startedAt ?? null,
+    completedAt: input.completedAt ?? null,
+    publishedAt,
+    createdAt: now,
+    updatedAt: now,
+  })
 
-  await upsertProjectTranslations(db, id, input.translations, now)
-  await updateProjectTechnologies(db, id, input.technologyIds)
+  const writes: BatchItem<'sqlite'>[] = [
+    projectInsert,
+    ...upsertProjectTranslations(db, id, input.translations, now),
+    ...updateProjectTechnologies(db, id, input.technologyIds),
+    ...updateProjectGalleryImages(db, id, input.galleryImages, now),
+  ]
+  await db.batch(writes as [BatchItem<'sqlite'>, ...BatchItem<'sqlite'>[]])
 
   const project = await getDashboardProjectByIdOrSlug(db, id)
   if (!project) {
@@ -418,7 +463,7 @@ export async function updateProject(
         ? existing.publishedAt
         : null
 
-  await db
+  const projectUpdate = db
     .update(projects)
     .set({
       slug: input.slug,
@@ -440,35 +485,103 @@ export async function updateProject(
       updatedAt: now,
     })
     .where(eq(projects.id, existing.id))
-    .run()
 
-  await upsertProjectTranslations(db, existing.id, input.translations, now)
-  await updateProjectTechnologies(db, existing.id, input.technologyIds)
+  const writes: BatchItem<'sqlite'>[] = [
+    projectUpdate,
+    ...upsertProjectTranslations(db, existing.id, input.translations, now),
+    ...updateProjectTechnologies(db, existing.id, input.technologyIds),
+    ...updateProjectGalleryImages(db, existing.id, input.galleryImages, now),
+  ]
+  await db.batch(writes as [BatchItem<'sqlite'>, ...BatchItem<'sqlite'>[]])
 
   return getDashboardProjectByIdOrSlug(db, existing.id)
 }
 
-async function updateProjectTechnologies(
+async function listProjectGalleryImages(
+  db: Database,
+  projectIds: readonly string[],
+) {
+  if (projectIds.length === 0) {
+    return new Map<string, ProjectGalleryImageValue[]>()
+  }
+
+  const rows = await db
+    .select()
+    .from(projectGalleryImages)
+    .where(inArray(projectGalleryImages.projectId, [...projectIds]))
+    .orderBy(
+      asc(projectGalleryImages.sortOrder),
+      asc(projectGalleryImages.createdAt),
+      asc(projectGalleryImages.id),
+    )
+    .all()
+
+  return rows.reduce((map, row) => {
+    const existing = map.get(row.projectId) ?? []
+    existing.push({
+      url: row.url,
+      alt: { en: row.altEn, id: row.altId },
+    })
+    map.set(row.projectId, existing)
+    return map
+  }, new Map<string, ProjectGalleryImageValue[]>())
+}
+
+function updateProjectGalleryImages(
+  db: Database,
+  projectId: string,
+  images: ProjectInput['galleryImages'],
+  now: Date,
+): BatchItem<'sqlite'>[] {
+  const writes: BatchItem<'sqlite'>[] = [
+    db
+      .delete(projectGalleryImages)
+      .where(eq(projectGalleryImages.projectId, projectId)),
+  ]
+
+  if (images.length > 0) {
+    writes.push(
+      db.insert(projectGalleryImages).values(
+        images.map((image, sortOrder) => ({
+          id: crypto.randomUUID(),
+          projectId,
+          url: image.url,
+          altEn: image.alt.en,
+          altId: image.alt.id,
+          sortOrder,
+          createdAt: now,
+          updatedAt: now,
+        })),
+      ),
+    )
+  }
+
+  return writes
+}
+
+function updateProjectTechnologies(
   db: Database,
   projectId: string,
   technologyIds: readonly string[],
-) {
-  await db
-    .delete(projectTechnologies)
-    .where(eq(projectTechnologies.projectId, projectId))
-    .run()
+): BatchItem<'sqlite'>[] {
+  const writes: BatchItem<'sqlite'>[] = [
+    db
+      .delete(projectTechnologies)
+      .where(eq(projectTechnologies.projectId, projectId)),
+  ]
 
   if (technologyIds.length > 0) {
-    await db
-      .insert(projectTechnologies)
-      .values(
+    writes.push(
+      db.insert(projectTechnologies).values(
         technologyIds.map((technologyId) => ({
           projectId,
           technologyId,
         })),
-      )
-      .run()
+      ),
+    )
   }
+
+  return writes
 }
 
 export async function deleteProject(db: Database, idOrSlug: string) {
@@ -496,6 +609,7 @@ function toDashboardProjectRecord(
   record: ProjectRecord,
   translations: readonly ProjectTranslationRecord[] = [],
   technologyIds: readonly string[] = [],
+  galleryImages: readonly ProjectGalleryImageValue[] = [],
 ): DashboardProjectRecord {
   const translationMap = new Map(
     translations.map((translation) => [translation.locale, translation]),
@@ -504,6 +618,7 @@ function toDashboardProjectRecord(
   return {
     ...record,
     technologyIds: [...technologyIds],
+    galleryImages: [...galleryImages],
     translations: Object.fromEntries(
       contentLocales.map((locale) => {
         const translation = translationMap.get(locale)
@@ -514,6 +629,7 @@ function toDashboardProjectRecord(
             summary: translation?.summary ?? '',
             description: translation?.description ?? '',
             category: translation?.category ?? 'Project',
+            coverImageAlt: translation?.coverImageAlt ?? '',
           },
         ]
       }),
@@ -522,15 +638,15 @@ function toDashboardProjectRecord(
   }
 }
 
-async function upsertProjectTranslations(
+function upsertProjectTranslations(
   db: Database,
   projectId: string,
   translations: ProjectInput['translations'],
   now: Date,
-) {
-  for (const locale of contentLocales) {
+): BatchItem<'sqlite'>[] {
+  return contentLocales.map((locale) => {
     const translation = translations[locale]
-    await db
+    return db
       .insert(projectTranslations)
       .values({
         projectId,
@@ -539,6 +655,7 @@ async function upsertProjectTranslations(
         summary: translation.summary,
         description: translation.description,
         category: translation.category,
+        coverImageAlt: translation.coverImageAlt,
         createdAt: now,
         updatedAt: now,
       })
@@ -549,9 +666,9 @@ async function upsertProjectTranslations(
           summary: translation.summary,
           description: translation.description,
           category: translation.category,
+          coverImageAlt: translation.coverImageAlt,
           updatedAt: now,
         },
       })
-      .run()
-  }
+  })
 }
