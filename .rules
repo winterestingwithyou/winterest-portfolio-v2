@@ -1,0 +1,32 @@
+# Winterest project rules for Zed
+
+`AGENTS.md` is the repository source of truth. This file adapts its guidance for Zed; it does not replace it. Before changing code, read `AGENTS.md` and the applicable detailed rules below. `.agents/rules/` remains the canonical source for those detailed rules; open the relevant files because Zed does not load them automatically.
+
+## Always follow
+
+- Use Bun by default. Do not use npm or pnpm unless the user explicitly asks.
+- Keep the app compatible with Cloudflare Workers and follow the existing TanStack Start, Tailwind, Radix/shadcn-style, Drizzle, Better Auth, and Cloudflare direction.
+- Do not run development servers or database migration/push/pull/studio commands unless the user explicitly asks in the same turn.
+- For codebase, architecture, dependency, or feature investigation, consult Graphify first as described in `.agents/rules/graphify.md`. After changing code, follow that file's graph update instruction.
+- Keep changes focused. Preserve existing user work and use the repository's verification guidance in `.agents/rules/02-agent-commands-behavior.md` and `.agents/rules/10-code-quality-testing.md`.
+
+## Load detailed rules by task
+
+Read every matching rule file before making changes; read multiple files when a task spans areas.
+
+| When working on... | Read |
+| --- | --- |
+| Project identity, public brand, UI copy tone, SEO, sitemap, or public-facing content | `.agents/rules/01-identity-branding-copy.md` |
+| Package commands, agent behavior, verification, or Definition of Done | `.agents/rules/02-agent-commands-behavior.md` |
+| Routes, route files, page responsibilities, or sitemap route registration | `.agents/rules/03-routing-conventions-pages.md` |
+| Server/API input validation, HTTP requests, `ofetch`, TanStack Query, forms, or mutations | `.agents/rules/04-server-api-ofetch.md` |
+| Cloudflare Workers runtime, D1, Drizzle schema/migrations, R2, or `reset.sql` | `.agents/rules/05-database-cloudflare.md` |
+| Better Auth, sessions, password handling, RBAC, secrets, or security | `.agents/rules/06-auth-security-rbac.md` |
+| Visual design, design tokens, Tailwind, UI components, animation, accessibility, or 3D | `.agents/rules/07-design-system-ui-3d.md` |
+| Feature structure, file/folder naming, components, or module boundaries | `.agents/rules/08-feature-architecture-structure.md` |
+| Localized copy, `copy.ts`, static data, or CMS fallback content | `.agents/rules/09-copywriting-data-standards.md` |
+| TypeScript/React conventions, state, tests, Git, or code quality | `.agents/rules/10-code-quality-testing.md` |
+| A non-trivial feature, refactor, schema/API/workflow change, or specification | `.agents/rules/11-spec-driven-development.md` |
+| Codebase or architecture exploration, graph queries, or graph maintenance | `.agents/rules/graphify.md` |
+
+If a task does not fit a category clearly, inspect the relevant rule files before proceeding. Keep the detailed rules in their source files rather than copying them into this always-loaded file.
