@@ -42,11 +42,11 @@ editor  - create, edit, and update content & media
 - `editor` can manage content (create/update projects, media) but cannot change security or user settings.
 - Public routes must only show published content; draft/private content requires dashboard authorization.
 
-### First-User Bootstrap:
+### Owner Provisioning:
 
-- Initial registration is open only when zero users exist in the database.
-- The first registered user is automatically assigned the `owner` role.
-- Once an owner exists, open registration is disabled.
+- Public self-registration is always disabled, including before an owner exists.
+- Provision the initial owner through the trusted out-of-band CLI workflow.
+- After initial provisioning, the owner creates and manages collaborator accounts through the dashboard.
 
 ---
 

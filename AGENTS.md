@@ -42,8 +42,7 @@ Guidelines are modularly organized in [`.agents/rules/`](file:///d:/winterest-pr
 8. **[08-feature-architecture-structure.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/08-feature-architecture-structure.md)**: Feature-based kebab-case architecture, directory layout, section/form/table component conventions.
 9. **[09-copywriting-data-standards.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/09-copywriting-data-standards.md)**: Feature-scoped `copy.ts` vs static `data.ts`, i18n helpers, global layout copy, and future CMS fallback contract.
 10. **[10-code-quality-testing.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/10-code-quality-testing.md)**: TypeScript & Clean React, state management, Vitest testing, Git standards, and things to avoid.
-11. **[11-spec-driven-development.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/11-spec-driven-development.md)**: Spec directory structure, technical contracts, SDD lifecycle, and living documentation maintenance.
-12. **[graphify.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/graphify.md)**: Knowledge graph query and update rules.
+11. **[graphify.md](file:///d:/winterest-project/winterest-portfolio-v2/.agents/rules/graphify.md)**: Knowledge graph query and update rules.
 
 ---
 
@@ -76,5 +75,19 @@ bun run db:studio:remote
 - **CSS Syntax & Design**: Tailwind CSS v4 variable syntax: `text-(--brand-ink)`, `bg-(--brand-orange-soft)`, `border-(--brand-line)`. Follow **Flat Precision Architecture** (Cloudflare + Bun): ban oversized glow halos, decorative blur spheres, and heavy card gradients; use hairline 1px borders and flat solid surfaces.
 - **Copywriting & Data**: Feature-scoped `copy.ts` for localized UI strings (`en`/`id`) and `data.ts` strictly for static structured datasets. Global layout copy in `src/features/portfolio/copy.ts`.
 - **File Naming**: Strict `kebab-case` for all project files and directories.
-- **Spec-Driven Development**: Maintain living specs in `specs/` (`specs/system/`, `specs/features/`, active `specs/changes/`, and completed `specs/changes/implemented/`). Verify contracts against specifications before implementing non-trivial changes.
+- **Engineering Workflow**: Use the Matt Pocock engineering skills for planning, ticket breakdown, triage, and implementation. Publish change specs and tickets to GitHub Issues; keep durable feature and system requirements in `docs/features/` and `docs/system/`. See `docs/agents/issue-tracker.md` and `docs/agents/domain.md`.
 - **Knowledge Graph & Exploration (Graphify)**: Mandatory first step for exploring codebase, dependencies, or new feature implementations. Always call MCP `query_graph` or CLI `graphify query` before manual grep or file inspection, even if the user did not mention Graphify. Run `graphify update .` after code modifications.
+
+## Agent skills
+
+### Issue tracker
+
+Issues are tracked in GitHub Issues. Use `gh` for issue operations. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Use the default labels `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, and `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+This is a single-context repo. Read relevant docs in `docs/features/` and `docs/system/`, plus the root `GLOSSARY.md` and relevant ADRs in `docs/adr/` when they exist. See `docs/agents/domain.md`.

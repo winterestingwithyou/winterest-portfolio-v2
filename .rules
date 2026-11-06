@@ -26,7 +26,11 @@ Read every matching rule file before making changes; read multiple files when a 
 | Feature structure, file/folder naming, components, or module boundaries | `.agents/rules/08-feature-architecture-structure.md` |
 | Localized copy, `copy.ts`, static data, or CMS fallback content | `.agents/rules/09-copywriting-data-standards.md` |
 | TypeScript/React conventions, state, tests, Git, or code quality | `.agents/rules/10-code-quality-testing.md` |
-| A non-trivial feature, refactor, schema/API/workflow change, or specification | `.agents/rules/11-spec-driven-development.md` |
+
 | Codebase or architecture exploration, graph queries, or graph maintenance | `.agents/rules/graphify.md` |
+
+## Engineering workflow
+
+Use the Matt Pocock engineering skills for planning, ticket breakdown, triage, and implementation: `/to-spec`, `/to-tickets`, `/triage`, `/implement`, or `/implement-spec` as appropriate. Publish change specs and tickets to GitHub Issues. Read `docs/agents/issue-tracker.md` and `docs/agents/triage-labels.md` before issue operations, and consult relevant durable domain docs in `docs/features/` and `docs/system/`.
 
 If a task does not fit a category clearly, inspect the relevant rule files before proceeding. Keep the detailed rules in their source files rather than copying them into this always-loaded file.
