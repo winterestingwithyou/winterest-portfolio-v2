@@ -24,6 +24,8 @@
     "allowJs": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
+    "incremental": true,
+    "tsBuildInfoFile": ".cache/tsconfig.tsbuildinfo",
 
     /* Linting */
     "skipLibCheck": true,

@@ -1,6 +1,7 @@
 {
   "name": "winterest-portfolio-v2",
   "private": true,
+  "packageManager": "bun@1.4.2",
   "type": "module",
   "imports": {
     "#/*": "./src/*"
@@ -8,13 +9,15 @@
   "scripts": {
     "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
+    "paraglide:compile": "paraglide-js compile --project ./project.inlang --outdir ./src/paraglide --strategy cookie baseLocale",
     "build": "vite build",
     "preview": "bun run build && vite preview",
-    "test": "vitest run --config vitest.config.ts",
-    "lint": "eslint",
-    "format": "prettier --write . && eslint --fix",
+    "test": "bun run paraglide:compile && vitest run --config vitest.config.ts",
+    "lint": "eslint --cache --cache-location .cache/eslint/",
+    "format": "prettier --write . && eslint --fix --cache --cache-location .cache/eslint/",
     "check": "prettier --check .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "bun run paraglide:compile && tsc --noEmit",
+    "validate": "turbo run lint typecheck",
     "deploy": "bun run build && wrangler deploy",
     "db:generate": "drizzle-kit generate",
     "db:seed": "bun run db:seed:local",
@@ -35,7 +38,8 @@
     "db:pull": "drizzle-kit pull",
     "db:studio:local": "drizzle-kit studio --config=drizzle.local.config.ts",
     "db:studio:remote": "drizzle-kit studio --config=drizzle.remote.config.ts",
-    "cf-typegen": "wrangler types"
+    "cf-typegen": "wrangler types",
+    "prepare": "husky"
   },
   "dependencies": {
     "@clack/prompts": "^1.7.0",
@@ -114,9 +118,12 @@
     "@vitejs/plugin-react": "^6.0.1",
     "dotenv": "^17.3.1",
     "eslint": "^9.20.0",
+    "husky": "^9.1.7",
     "jsdom": "^28.1.0",
+    "lint-staged": "^17.6.0",
     "prettier": "^3.8.1",
     "tsx": "^4.21.0",
+    "turbo": "^2.11.10",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
     "vitest": "^4.1.5",

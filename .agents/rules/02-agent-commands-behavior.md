@@ -20,6 +20,9 @@ bun run build
 bun run preview
 bun run test
 bun run lint
+bun run typecheck
+bun run validate
+bun run paraglide:compile
 bun run format
 bun run check
 bun run deploy
@@ -57,8 +60,10 @@ bun run db:studio:remote
 
 Before considering a task done, run the relevant checks when appropriate:
 
-- `bun run check` (TypeScript typechecking across project)
+- `bun run check` (Prettier formatting check)
+- `bun run typecheck` (TypeScript typechecking)
 - `bun run lint` (ESLint static analysis)
+- `bun run validate` (Turbo-cached lint and typecheck)
 - `bun run test` (Vitest test suite)
 - `bun run build` (Production client and worker bundle build)
 - `bun run preview` (Vite / TanStack Start local preview)
@@ -88,8 +93,8 @@ When working in this repository:
 A task or feature is complete when:
 
 1. The requested functionality works correctly.
-2. All TypeScript checks pass (`bun run check`).
-3. Linting and formatting are clean (`bun run lint`).
+2. TypeScript checks pass (`bun run typecheck` or `bun run validate`).
+3. Linting and formatting are clean (`bun run lint` and `bun run check`).
 4. Production build succeeds without errors (`bun run build`).
 5. Layout is responsive on both mobile and desktop.
 6. Works seamlessly across Light and Dark mode.

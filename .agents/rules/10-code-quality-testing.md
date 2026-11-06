@@ -40,7 +40,7 @@ trigger: always_on
 - **Integration & E2E Testing (Repository Root)**:
   - If multi-feature integration tests (e.g. Miniflare D1 worker runtime queries) or end-to-end tests (e.g. Playwright browser flows) are added, they must reside at the repository root in `tests/integration/` or `tests/e2e/`, never inside `src/features/`.
 - **Cloudflare Workers Mocking in Tests**: When testing code that depends on Cloudflare Workers environment variables or bindings (`env`), always import the mock directly from `src/test/cloudflare-workers-mock.ts` (e.g. `import { env as mockEnv } from '#/test/cloudflare-workers-mock'`). Avoid importing `'cloudflare:workers'` directly in test files to mutate env bindings, because the TypeScript compiler (`tsc`) checks the rigid `Env` interface from `worker-configuration.d.ts` rather than the test mock, leading to typing conflicts.
-- Run `bun run typecheck`, `bun run lint`, and `bun run test` before finalizing tasks.
+- Use `bun run validate` for local lint and typecheck checks, and run the narrowest relevant tests for the change. When an active pull request CI provides the full test and build gate, rely on it for those full checks; otherwise run `bun run test` and `bun run build` locally. See [`docs/system/development-workflow.md`](../../docs/system/development-workflow.md).
 
 ---
 

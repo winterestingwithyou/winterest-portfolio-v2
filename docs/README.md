@@ -27,3 +27,4 @@ Proposed changes and implementation tickets are tracked in GitHub Issues. See [`
 - [Internationalization and copy](system/i18n-copy.md)
 - [Media storage](system/media-storage.md)
 - [Setup guard](system/setup-guard.md)
+- [Development workflow](system/development-workflow.md)

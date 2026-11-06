@@ -6,4 +6,5 @@ dist
 src/paraglide
 worker-configuration.d.ts
 graphify-out
+.impeccable
 

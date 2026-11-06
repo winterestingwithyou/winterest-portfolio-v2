@@ -124,9 +124,11 @@ The application includes an automated **Two-Stage Setup Guard** in the web app:
 
 ```bash
 bun run dev             # Start dev server
-bun run typecheck       # TypeScript typecheck (tsc --noEmit)
+bun run paraglide:compile # Generate Paraglide message modules
+bun run typecheck       # Compile translations and run the TypeScript check
 bun run lint            # ESLint check
-bun run test            # Run Vitest test suite
+bun run validate        # Cached ESLint + TypeScript validation through Turbo
+bun run test            # Compile translations and run the Vitest suite
 bun run build           # Build production Cloudflare Worker bundle
 bun run preview         # Preview production build locally
 bun run check           # Prettier formatting check

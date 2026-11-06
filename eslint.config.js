@@ -9,6 +9,7 @@ export default [
       'prettier.config.js',
       'dist/**',
       '.content-collections/**',
+      '.impeccable/**',
       'src/paraglide/**',
       'worker-configuration.d.ts',
       'graphify-out/**',
