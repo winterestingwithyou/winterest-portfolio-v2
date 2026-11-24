@@ -1,7 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { CertificateRecord } from '#/features/certificates/queries'
-import { certificateQueryKeys } from '#/features/certificates/query-options'
+import {
+  certificateQueryKeys,
+  hydrateCertificate,
+} from '#/features/certificates/query-options'
+import type { SerializedCertificateRecord } from '#/features/certificates/query-options'
 import type { CertificateInput } from '#/features/certificates/validation'
 import { api } from '#/lib/api-client'
 
@@ -10,12 +13,12 @@ export function useCreateCertificate() {
 
   return useMutation({
     mutationFn: async (input: CertificateInput) => {
-      const response = await api<{ data?: CertificateRecord }>(
+      const response = await api<{ data?: SerializedCertificateRecord }>(
         '/api/certificates',
         { method: 'POST', body: input },
       )
       if (!response.data) throw new Error('Certificate was not created.')
-      return response.data
+      return hydrateCertificate(response.data)
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: certificateQueryKeys.all }),
@@ -27,12 +30,12 @@ export function useUpdateCertificate(id: string) {
 
   return useMutation({
     mutationFn: async (input: CertificateInput) => {
-      const response = await api<{ data?: CertificateRecord }>(
+      const response = await api<{ data?: SerializedCertificateRecord }>(
         `/api/certificates/${id}`,
         { method: 'PATCH', body: input },
       )
       if (!response.data) throw new Error('Certificate was not updated.')
-      return response.data
+      return hydrateCertificate(response.data)
     },
     onSuccess: () =>
       queryClient.invalidateQueries({ queryKey: certificateQueryKeys.all }),
