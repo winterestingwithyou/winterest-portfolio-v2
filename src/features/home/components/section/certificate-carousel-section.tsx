@@ -39,12 +39,22 @@ export function CertificateCarouselSection({
   locale,
 }: CertificateCarouselSectionProps) {
   const [api, setApi] = useState<UseEmblaCarouselType[1]>()
-  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [selectedSnap, setSelectedSnap] = useState(0)
+  const [isDesktop, setIsDesktop] = useState(false)
+  const selectedIndex = selectedSnap % certificates.length
   const intlLocale = locale === 'id' ? 'id-ID' : 'en-US'
 
   const updateSelectedIndex = useCallback(() => {
-    setSelectedIndex(api?.selectedScrollSnap() ?? 0)
+    setSelectedSnap(api?.selectedScrollSnap() ?? 0)
   }, [api])
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(min-width: 64rem)')
+    const updateDesktopState = () => setIsDesktop(mediaQuery.matches)
+    updateDesktopState()
+    mediaQuery.addEventListener('change', updateDesktopState)
+    return () => mediaQuery.removeEventListener('change', updateDesktopState)
+  }, [])
 
   useEffect(() => {
     if (!api) return
@@ -75,11 +85,13 @@ export function CertificateCarouselSection({
 
       {certificates.length === 1 ? (
         <Container>
-          <CertificateSlide
-            certificate={certificates[0]}
-            copy={copy}
-            locale={intlLocale}
-          />
+          <div className="mx-auto w-[min(88vw,35rem)]">
+            <CertificateSlide
+              certificate={certificates[0]}
+              copy={copy}
+              locale={intlLocale}
+            />
+          </div>
         </Container>
       ) : (
         <>
@@ -92,24 +104,37 @@ export function CertificateCarouselSection({
               aria-label={copy.title}
             >
               <CarouselContent className="items-stretch py-2">
-                {certificates.map((certificate, index) => (
-                  <CarouselItem
-                    key={certificate.id}
-                    className="basis-[min(88vw,35rem)] pl-3 sm:pl-5"
-                  >
-                    <div
-                      className={`h-full transition-transform duration-300 motion-reduce:transition-none ${
-                        index === selectedIndex ? 'scale-100' : 'scale-[0.94]'
-                      }`}
-                    >
-                      <CertificateSlide
-                        certificate={certificate}
-                        copy={copy}
-                        locale={intlLocale}
-                      />
-                    </div>
-                  </CarouselItem>
-                ))}
+                {Array.from(
+                  { length: isDesktop ? 3 : 1 },
+                  (_, setIndex) => setIndex,
+                ).flatMap((setIndex) =>
+                  certificates.map((certificate, index) => {
+                    const isDuplicate = setIndex > 0
+                    const slideIndex = setIndex * certificates.length + index
+                    return (
+                      <CarouselItem
+                        key={`${certificate.id}-${setIndex}`}
+                        aria-hidden={isDuplicate}
+                        inert={isDuplicate}
+                        className="basis-[min(88vw,35rem)] pl-3 sm:pl-5"
+                      >
+                        <div
+                          className={`h-full transition-transform duration-300 motion-reduce:transition-none ${
+                            slideIndex === selectedSnap
+                              ? 'scale-100'
+                              : 'scale-[0.94]'
+                          }`}
+                        >
+                          <CertificateSlide
+                            certificate={certificate}
+                            copy={copy}
+                            locale={intlLocale}
+                          />
+                        </div>
+                      </CarouselItem>
+                    )
+                  }),
+                )}
               </CarouselContent>
             </Carousel>
           </div>

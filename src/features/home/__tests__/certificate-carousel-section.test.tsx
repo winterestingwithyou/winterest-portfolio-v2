@@ -23,6 +23,22 @@ const copy = {
   coverAlt: (title: string, issuer: string) => `${title}, issued by ${issuer}`,
 }
 
+function mockMatchMedia(isDesktop: boolean) {
+  Object.defineProperty(window, 'matchMedia', {
+    configurable: true,
+    value: vi.fn().mockImplementation((media: string) => ({
+      matches: isDesktop && media === '(min-width: 64rem)',
+      media,
+      onchange: null,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  })
+}
+
 function makeCertificate(id: string): CertificateRecord {
   return {
     id,
@@ -56,19 +72,7 @@ describe('CertificateCarouselSection', () => {
     }
     vi.stubGlobal('IntersectionObserver', Observer)
     vi.stubGlobal('ResizeObserver', Observer)
-    Object.defineProperty(window, 'matchMedia', {
-      configurable: true,
-      value: vi.fn().mockImplementation((media: string) => ({
-        matches: false,
-        media,
-        onchange: null,
-        addEventListener: vi.fn(),
-        removeEventListener: vi.fn(),
-        addListener: vi.fn(),
-        removeListener: vi.fn(),
-        dispatchEvent: vi.fn(),
-      })),
-    })
+    mockMatchMedia(false)
   })
 
   it('renders no section when there are no published certificates', () => {
@@ -88,19 +92,33 @@ describe('CertificateCarouselSection', () => {
       />,
     )
 
-    expect(screen.getByRole('article')).toBeTruthy()
+    const article = screen.getByRole('article')
+    expect(article).toBeTruthy()
+    expect(article.parentElement?.className).toContain('w-[min(88vw,35rem)]')
     expect(screen.queryByRole('region', { name: 'Certificates' })).toBeNull()
     expect(screen.queryByRole('button')).toBeNull()
   })
 
-  it('uses a looping keyboard-focusable carousel without arrow buttons or autoplay controls', () => {
+  it('does not include desktop loop copies in the mobile carousel', () => {
     render(
       <CertificateCarouselSection
-        certificates={[
-          makeCertificate('one'),
-          makeCertificate('two'),
-          makeCertificate('three'),
-        ]}
+        certificates={[makeCertificate('one'), makeCertificate('two')]}
+        copy={copy}
+        locale="en"
+      />,
+    )
+
+    const carousel = screen.getByRole('region', { name: 'Certificates' })
+    expect(
+      carousel.querySelectorAll('[data-slot="carousel-item"]'),
+    ).toHaveLength(2)
+  })
+
+  it('adds desktop wraparound slides without exposing duplicates to accessibility navigation', () => {
+    mockMatchMedia(true)
+    const { container } = render(
+      <CertificateCarouselSection
+        certificates={[makeCertificate('one'), makeCertificate('two')]}
         copy={copy}
         locale="en"
       />,
@@ -108,8 +126,15 @@ describe('CertificateCarouselSection', () => {
 
     const carousel = screen.getByRole('region', { name: 'Certificates' })
     expect(carousel.getAttribute('tabindex')).toBe('0')
-    expect(screen.getAllByRole('article')).toHaveLength(3)
-    expect(screen.getByText('Certificate 1 of 3')).toBeTruthy()
+    expect(screen.getAllByRole('article')).toHaveLength(2)
+    expect(
+      carousel.querySelectorAll('[data-slot="carousel-item"]'),
+    ).toHaveLength(6)
+    expect(
+      container.querySelectorAll('[aria-hidden="true"][inert]'),
+    ).toHaveLength(4)
+
+    expect(screen.getByText('Certificate 1 of 2')).toBeTruthy()
     expect(
       screen.queryByRole('button', { name: /previous|next|play|pause/i }),
     ).toBeNull()
