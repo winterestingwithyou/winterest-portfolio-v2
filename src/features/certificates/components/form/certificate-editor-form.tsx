@@ -141,7 +141,7 @@ export function CertificateEditorForm({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="max-w-3xl">
+      <form onSubmit={handleSubmit} className="w-full">
         <FieldGroup className="gap-5">
           <form.Field name="title">
             {(field) => {
