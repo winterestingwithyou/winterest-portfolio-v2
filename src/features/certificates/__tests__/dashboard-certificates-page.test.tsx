@@ -11,7 +11,16 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { CertificateRecord } from '../queries'
 import { DashboardCertificatesPage } from '../pages/dashboard-certificates-page'
 
-const { mutateAsync } = vi.hoisted(() => ({ mutateAsync: vi.fn() }))
+const { mutateAsync, navigate, searchState } = vi.hoisted(() => ({
+  mutateAsync: vi.fn(),
+  navigate: vi.fn(),
+  searchState: {
+    q: undefined as string | undefined,
+    status: undefined as 'all' | 'draft' | 'published' | undefined,
+    issuer: undefined as string | undefined,
+    page: undefined as number | undefined,
+  },
+}))
 
 vi.mock('@tanstack/react-query', () => ({
   queryOptions: (options: unknown) => options,
@@ -28,7 +37,11 @@ vi.mock('@tanstack/react-router', () => ({
       {children}
     </a>
   ),
+  useNavigate: () => navigate,
+  useSearch: () => searchState,
 }))
+
+vi.mock('#/paraglide/runtime', () => ({ getLocale: () => 'en' }))
 
 vi.mock('#/components/dashboard/dashboard-shell', () => ({
   DashboardShell: ({ children }: { children: ReactNode }) => (
@@ -60,9 +73,46 @@ const certificate: CertificateRecord = {
 describe('DashboardCertificatesPage', () => {
   beforeEach(() => {
     mutateAsync.mockResolvedValue(undefined)
+    navigate.mockClear()
+    searchState.q = undefined
+    searchState.status = undefined
+    searchState.issuer = undefined
+    searchState.page = undefined
   })
 
   afterEach(cleanup)
+
+  it('debounces search into URL state and retains active filters', async () => {
+    searchState.q = 'previous query'
+    searchState.status = 'draft'
+    searchState.issuer = 'Certificate issuer'
+    searchState.page = 3
+
+    render(<DashboardCertificatesPage />)
+    fireEvent.change(
+      screen.getByPlaceholderText(
+        'Search by title, issuer, credential ID, or description',
+      ),
+      { target: { value: 'new query' } },
+    )
+
+    await waitFor(() => expect(navigate).toHaveBeenCalledOnce())
+    const navigation = navigate.mock.calls[0][0]
+    expect(navigation.replace).toBe(true)
+    expect(
+      navigation.search({
+        q: 'previous query',
+        status: 'draft',
+        issuer: 'Certificate issuer',
+        page: 3,
+      }),
+    ).toEqual({
+      q: 'new query',
+      status: 'draft',
+      issuer: 'Certificate issuer',
+      page: undefined,
+    })
+  })
 
   it('requires confirmation before deleting a certificate', async () => {
     render(<DashboardCertificatesPage />)

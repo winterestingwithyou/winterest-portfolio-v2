@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate, useSearch } from '@tanstack/react-router'
 import { Plus, RefreshCw } from 'lucide-react'
 import { useState } from 'react'
 
@@ -28,6 +28,12 @@ import { getLocale } from '#/paraglide/runtime'
 export function DashboardCertificatesPage() {
   const copy = getCertificateCopy().dashboard
   const common = getDashboardCopy().common
+  const searchParams = useSearch({ from: '/dashboard/certificates/' })
+  const navigate = useNavigate({ from: '/dashboard/certificates/' })
+  const search = searchParams.q ?? ''
+  const statusFilter = searchParams.status ?? 'all'
+  const issuerFilter = searchParams.issuer ?? 'all'
+  const page = searchParams.page ?? 1
   const deleteMutation = useDeleteCertificate()
   const [certificateToDelete, setCertificateToDelete] =
     useState<CertificateRecord | null>(null)
@@ -38,6 +44,67 @@ export function DashboardCertificatesPage() {
     isFetching,
   } = useSuspenseQuery(certificateQueryOptions.list())
   const locale = getLocale() === 'id' ? 'id-ID' : 'en-US'
+
+  const handleSearchChange = (value: string) => {
+    void navigate({
+      search: (previous) => ({
+        ...previous,
+        q: value.trim() || undefined,
+        page: undefined,
+      }),
+      replace: true,
+      resetScroll: false,
+    })
+  }
+
+  const handleStatusFilterChange = (value: string) => {
+    void navigate({
+      search: (previous) => ({
+        ...previous,
+        status: value === 'draft' || value === 'published' ? value : undefined,
+        page: undefined,
+      }),
+      replace: true,
+      resetScroll: false,
+    })
+  }
+
+  const handleIssuerFilterChange = (value: string) => {
+    void navigate({
+      search: (previous) => ({
+        ...previous,
+        issuer: value === 'all' ? undefined : value,
+        page: undefined,
+      }),
+      replace: true,
+      resetScroll: false,
+    })
+  }
+
+  const handlePageChange = (value: number) => {
+    void navigate({
+      search: (previous) => ({
+        ...previous,
+        page: value > 1 ? value : undefined,
+      }),
+      replace: true,
+      resetScroll: false,
+    })
+  }
+
+  const handleResetFilters = () => {
+    void navigate({
+      search: (previous) => ({
+        ...previous,
+        q: undefined,
+        status: undefined,
+        issuer: undefined,
+        page: undefined,
+      }),
+      replace: true,
+      resetScroll: false,
+    })
+  }
 
   const confirmDeleteCertificate = async () => {
     if (!certificateToDelete) return
@@ -107,6 +174,15 @@ export function DashboardCertificatesPage() {
             commonCopy={common}
             locale={locale}
             onDeleteCertificate={setCertificateToDelete}
+            search={search}
+            onSearchChange={handleSearchChange}
+            statusFilter={statusFilter}
+            onStatusFilterChange={handleStatusFilterChange}
+            issuerFilter={issuerFilter}
+            onIssuerFilterChange={handleIssuerFilterChange}
+            page={page}
+            onPageChange={handlePageChange}
+            onResetFilters={handleResetFilters}
           />
         </section>
       )}
