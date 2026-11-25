@@ -107,7 +107,7 @@ A task or feature is complete when:
 6. Works seamlessly across Light and Dark mode.
 7. No secrets, credentials, or administrative data are leaked.
 8. Relevant test cases pass if applicable (`bun run test`).
-9. Knowledge graph is kept in sync with code changes via `graphify update .`.
+9. Graphify post-commit and post-checkout hooks keep the code graph in sync; see [`.agents/rules/graphify.md`](graphify.md) for manual refresh cases.
 
 For major tasks, report:
 
