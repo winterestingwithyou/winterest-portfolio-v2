@@ -3,6 +3,7 @@ import { eq } from 'drizzle-orm'
 import type { Database } from '#/db'
 import { pageContent } from '#/db/schema'
 import {
+  getDefaultCertificatesPageConfig,
   getDefaultContactPageConfig,
   getDefaultProjectsPageConfig,
   getDefaultStackPageConfig,
@@ -21,6 +22,8 @@ export async function getPageContent<T>(
         return getDefaultStackPageConfig()
       case 'contact':
         return getDefaultContactPageConfig()
+      case 'certificates':
+        return getDefaultCertificatesPageConfig()
     }
   }
 

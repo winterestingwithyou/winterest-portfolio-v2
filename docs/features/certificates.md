@@ -13,7 +13,8 @@ Certificates records credentials owned by Winterest and presents them to public 
 - A cover image, a PDF certificate document, and an issuer verification URL are optional, but each certificate must have either a PDF document or a verification URL.
 - Covers and PDFs are selected from the Media Library. PDFs open directly in the browser. Media file type and size limits follow the Media Library requirements.
 - Media assets referenced by certificates cannot be deleted through normal deletion. Confirmed cascade deletion removes their certificate references before deleting the assets.
-- The public `/certificates` page lists every published certificate in descending issue-date order, with a stable tie-breaker. It has no filters and no per-certificate detail route.
+- The public `/certificates` page lists published certificates in descending issue-date order, with a stable tie-breaker. Search matches certificate title, issuer, and English or Indonesian description; URL search parameters preserve the query (`q`) and page (`page`). It shows ten rows per page and has no per-certificate detail route.
+- The Certificates page CMS manages separate localized eyebrow, title, and description content for the `/certificates` page header and homepage Certificates section. Each description can be hidden independently; page heading content is also used for page metadata.
 - Certificate cards show the title, issuer, issue date, optional cover, and any applicable actions: open the PDF or visit the issuer verification URL. External links open in a new tab.
 - Expired certificates remain visible with an expired status; expiration does not remove them from the public list or homepage selection.
 - Public navigation labels are localized as `Certificates` / `Sertifikat`. Register the static `/certificates` page in the sitemap.

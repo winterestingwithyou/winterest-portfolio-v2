@@ -6,11 +6,13 @@ import { FeaturedProjectsSection } from '#/features/home/components/section/feat
 import { HomeCtaSection } from '#/features/home/components/section/home-cta-section'
 import { HomeHero } from '#/features/home/components/section/home-hero'
 import { TechMarqueeSection } from '#/features/home/components/section/tech-marquee-section'
+import { getCertificateCopy } from '#/features/certificates/copy'
 import { getHomeCopy } from '#/features/home/copy'
 import type {
   EnthusiasmRecord,
   HomeConfigInput,
 } from '#/features/home/validation'
+import type { CertificatesPageConfig } from '#/features/portfolio/page-content-schemas'
 import type { getPublishedProjects } from '#/features/projects/public-loaders'
 import type { CertificateRecord } from '#/features/certificates/queries'
 import type { SiteSettingsInput } from '#/features/settings/types'
@@ -24,6 +26,7 @@ type HomePageProps = {
   ultimateTechs: Awaited<ReturnType<typeof getPublicUltimateStack>>
   settings?: SiteSettingsInput
   homeConfig?: HomeConfigInput
+  certificatesPageContent?: CertificatesPageConfig
   enthusiasms?: EnthusiasmRecord[]
 }
 
@@ -33,6 +36,7 @@ export function HomePage({
   ultimateTechs,
   settings,
   homeConfig,
+  certificatesPageContent,
   enthusiasms,
 }: HomePageProps) {
   const copy = getHomeCopy()
@@ -139,6 +143,27 @@ export function HomePage({
       (locale === 'en' ? homeConfig?.ctaTitleEn : homeConfig?.ctaTitleId) ||
       copy.cta.title,
   }
+  const certificateHeaderCopy = getCertificateCopy().home
+  const certificatesCopy = {
+    ...copy.certificates,
+    eyebrow:
+      (locale === 'en'
+        ? certificatesPageContent?.homeEyebrowEn
+        : certificatesPageContent?.homeEyebrowId) ||
+      certificateHeaderCopy.eyebrow,
+    title:
+      (locale === 'en'
+        ? certificatesPageContent?.homeTitleEn
+        : certificatesPageContent?.homeTitleId) || copy.certificates.title,
+    description:
+      certificatesPageContent?.showHomeDescription !== false
+        ? (locale === 'en'
+            ? certificatesPageContent?.homeDescriptionEn
+            : certificatesPageContent?.homeDescriptionId) ||
+          certificateHeaderCopy.description
+        : undefined,
+  }
+
   const ctaCommand = homeConfig?.ctaCommand || 'bun run build'
   const ctaButtonText =
     (locale === 'en'
@@ -160,7 +185,7 @@ export function HomePage({
       />
       <CertificateCarouselSection
         certificates={certificates}
-        copy={copy.certificates}
+        copy={certificatesCopy}
         locale={locale}
       />
       <EnthusiasmsSection

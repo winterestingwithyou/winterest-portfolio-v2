@@ -12,7 +12,9 @@ vi.mock('@tanstack/react-router', () => ({
 }))
 
 const copy = {
+  eyebrow: 'LEARNING & CREDENTIALS',
   title: 'Certificates',
+  description: 'A selection of certificates and credentials I have earned.',
   viewAll: 'View all certificates',
   issued: 'Issued',
   openPdf: 'Open PDF',
@@ -94,6 +96,12 @@ describe('CertificateCarouselSection', () => {
 
     const article = screen.getByRole('article')
     expect(article).toBeTruthy()
+    expect(screen.getByText('LEARNING & CREDENTIALS')).toBeTruthy()
+    expect(
+      screen.getByText(
+        'A selection of certificates and credentials I have earned.',
+      ),
+    ).toBeTruthy()
     expect(article.parentElement?.className).toContain('w-[min(88vw,35rem)]')
     expect(screen.queryByRole('region', { name: 'Certificates' })).toBeNull()
     expect(screen.queryByRole('button')).toBeNull()

@@ -122,6 +122,12 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
       exact: true,
     },
     {
+      to: '/dashboard/pages/certificates',
+      label: copy.shell.navPages.certificates,
+      icon: BadgeCheck,
+      exact: true,
+    },
+    {
       to: '/dashboard/pages/stack',
       label: copy.shell.navPages.stack,
       icon: Layers,

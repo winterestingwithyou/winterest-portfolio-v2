@@ -48,6 +48,7 @@ import { Route as DashboardPagesStackRouteImport } from './routes/dashboard/page
 import { Route as DashboardPagesProjectsRouteImport } from './routes/dashboard/pages/projects'
 import { Route as DashboardPagesHomeRouteImport } from './routes/dashboard/pages/home'
 import { Route as DashboardPagesContactRouteImport } from './routes/dashboard/pages/contact'
+import { Route as DashboardPagesCertificatesRouteImport } from './routes/dashboard/pages/certificates'
 import { Route as DashboardCertificatesNewRouteImport } from './routes/dashboard/certificates/new'
 import { Route as DashboardCertificatesIdRouteImport } from './routes/dashboard/certificates/$id'
 import { Route as ApiUsersResetPasswordRouteImport } from './routes/api/users/reset-password'
@@ -264,6 +265,12 @@ const DashboardPagesContactRoute = DashboardPagesContactRouteImport.update({
   path: '/pages/contact',
   getParentRoute: () => DashboardRoute,
 } as any)
+const DashboardPagesCertificatesRoute =
+  DashboardPagesCertificatesRouteImport.update({
+    id: '/pages/certificates',
+    path: '/pages/certificates',
+    getParentRoute: () => DashboardRoute,
+  } as any)
 const DashboardCertificatesNewRoute =
   DashboardCertificatesNewRouteImport.update({
     id: '/certificates/new',
@@ -397,6 +404,7 @@ export interface FileRoutesByFullPath {
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
   '/dashboard/certificates/$id': typeof DashboardCertificatesIdRoute
   '/dashboard/certificates/new': typeof DashboardCertificatesNewRoute
+  '/dashboard/pages/certificates': typeof DashboardPagesCertificatesRoute
   '/dashboard/pages/contact': typeof DashboardPagesContactRoute
   '/dashboard/pages/home': typeof DashboardPagesHomeRoute
   '/dashboard/pages/projects': typeof DashboardPagesProjectsRoute
@@ -456,6 +464,7 @@ export interface FileRoutesByTo {
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
   '/dashboard/certificates/$id': typeof DashboardCertificatesIdRoute
   '/dashboard/certificates/new': typeof DashboardCertificatesNewRoute
+  '/dashboard/pages/certificates': typeof DashboardPagesCertificatesRoute
   '/dashboard/pages/contact': typeof DashboardPagesContactRoute
   '/dashboard/pages/home': typeof DashboardPagesHomeRoute
   '/dashboard/pages/projects': typeof DashboardPagesProjectsRoute
@@ -517,6 +526,7 @@ export interface FileRoutesById {
   '/api/users/reset-password': typeof ApiUsersResetPasswordRoute
   '/dashboard/certificates/$id': typeof DashboardCertificatesIdRoute
   '/dashboard/certificates/new': typeof DashboardCertificatesNewRoute
+  '/dashboard/pages/certificates': typeof DashboardPagesCertificatesRoute
   '/dashboard/pages/contact': typeof DashboardPagesContactRoute
   '/dashboard/pages/home': typeof DashboardPagesHomeRoute
   '/dashboard/pages/projects': typeof DashboardPagesProjectsRoute
@@ -579,6 +589,7 @@ export interface FileRouteTypes {
     | '/api/users/reset-password'
     | '/dashboard/certificates/$id'
     | '/dashboard/certificates/new'
+    | '/dashboard/pages/certificates'
     | '/dashboard/pages/contact'
     | '/dashboard/pages/home'
     | '/dashboard/pages/projects'
@@ -638,6 +649,7 @@ export interface FileRouteTypes {
     | '/api/users/reset-password'
     | '/dashboard/certificates/$id'
     | '/dashboard/certificates/new'
+    | '/dashboard/pages/certificates'
     | '/dashboard/pages/contact'
     | '/dashboard/pages/home'
     | '/dashboard/pages/projects'
@@ -698,6 +710,7 @@ export interface FileRouteTypes {
     | '/api/users/reset-password'
     | '/dashboard/certificates/$id'
     | '/dashboard/certificates/new'
+    | '/dashboard/pages/certificates'
     | '/dashboard/pages/contact'
     | '/dashboard/pages/home'
     | '/dashboard/pages/projects'
@@ -1041,6 +1054,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardPagesContactRouteImport
       parentRoute: typeof DashboardRoute
     }
+    '/dashboard/pages/certificates': {
+      id: '/dashboard/pages/certificates'
+      path: '/pages/certificates'
+      fullPath: '/dashboard/pages/certificates'
+      preLoaderRoute: typeof DashboardPagesCertificatesRouteImport
+      parentRoute: typeof DashboardRoute
+    }
     '/dashboard/certificates/new': {
       id: '/dashboard/certificates/new'
       path: '/certificates/new'
@@ -1183,6 +1203,7 @@ interface DashboardRouteChildren {
   DashboardIndexRoute: typeof DashboardIndexRoute
   DashboardCertificatesIdRoute: typeof DashboardCertificatesIdRoute
   DashboardCertificatesNewRoute: typeof DashboardCertificatesNewRoute
+  DashboardPagesCertificatesRoute: typeof DashboardPagesCertificatesRoute
   DashboardPagesContactRoute: typeof DashboardPagesContactRoute
   DashboardPagesHomeRoute: typeof DashboardPagesHomeRoute
   DashboardPagesProjectsRoute: typeof DashboardPagesProjectsRoute
@@ -1209,6 +1230,7 @@ const DashboardRouteChildren: DashboardRouteChildren = {
   DashboardIndexRoute: DashboardIndexRoute,
   DashboardCertificatesIdRoute: DashboardCertificatesIdRoute,
   DashboardCertificatesNewRoute: DashboardCertificatesNewRoute,
+  DashboardPagesCertificatesRoute: DashboardPagesCertificatesRoute,
   DashboardPagesContactRoute: DashboardPagesContactRoute,
   DashboardPagesHomeRoute: DashboardPagesHomeRoute,
   DashboardPagesProjectsRoute: DashboardPagesProjectsRoute,

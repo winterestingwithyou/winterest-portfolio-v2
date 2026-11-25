@@ -21,7 +21,9 @@ function formatIssueDate(date: Date, locale: string) {
 type CertificateCarouselSectionProps = {
   certificates: CertificateRecord[]
   copy: {
+    eyebrow?: string
     title: string
+    description?: string
     viewAll: string
     issued: string
     openPdf: string
@@ -73,7 +75,11 @@ export function CertificateCarouselSection({
     <section className="py-12 sm:py-16">
       <Container>
         <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-          <SectionHeader title={copy.title} />
+          <SectionHeader
+            eyebrow={copy.eyebrow}
+            title={copy.title}
+            description={copy.description}
+          />
           <Link
             to="/certificates"
             className="mb-8 inline-flex min-h-11 items-center text-sm font-semibold text-(--brand-orange-deep) underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--brand-orange)"

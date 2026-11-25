@@ -2,6 +2,8 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { HomePage } from '#/features/home/pages/home-page'
 import { getPublicHomeContent } from '#/features/home/public-loaders'
+import { getPublicPageContent } from '#/features/portfolio/public-loaders'
+import type { CertificatesPageConfig } from '#/features/portfolio/page-content-schemas'
 import { getPublicCertificates } from '#/features/certificates/public-loaders'
 import { getPublishedProjects } from '#/features/projects/public-loaders'
 import { getPublicSiteSettings } from '#/features/settings/server-functions'
@@ -12,16 +14,32 @@ import { getLocale } from '#/paraglide/runtime'
 export const Route = createFileRoute('/')({
   loader: async () => {
     const locale = getLocale()
-    const [projects, certificates, ultimateTechs, settings, homeData] =
-      await Promise.all([
-        getPublishedProjects({ data: { locale } }),
-        getPublicCertificates({ data: { limit: 5 } }),
-        getPublicUltimateStack(),
-        getPublicSiteSettings(),
-        getPublicHomeContent(),
-      ])
+    const [
+      projects,
+      certificates,
+      ultimateTechs,
+      settings,
+      homeData,
+      certificatesPageContent,
+    ] = await Promise.all([
+      getPublishedProjects({ data: { locale } }),
+      getPublicCertificates({ data: { limit: 5 } }),
+      getPublicUltimateStack(),
+      getPublicSiteSettings(),
+      getPublicHomeContent(),
+      getPublicPageContent({
+        data: { page: 'certificates' },
+      }) as Promise<CertificatesPageConfig>,
+    ])
 
-    return { projects, certificates, ultimateTechs, settings, homeData }
+    return {
+      projects,
+      certificates,
+      ultimateTechs,
+      settings,
+      homeData,
+      certificatesPageContent,
+    }
   },
   head: ({ matches }) =>
     createRouteMeta({ matches, isHome: true, canonicalUrl: '/' }),
@@ -29,8 +47,14 @@ export const Route = createFileRoute('/')({
 })
 
 function HomeRouteComponent() {
-  const { projects, certificates, ultimateTechs, settings, homeData } =
-    Route.useLoaderData()
+  const {
+    projects,
+    certificates,
+    ultimateTechs,
+    settings,
+    homeData,
+    certificatesPageContent,
+  } = Route.useLoaderData()
   return (
     <HomePage
       projects={projects}
@@ -38,6 +62,7 @@ function HomeRouteComponent() {
       ultimateTechs={ultimateTechs}
       settings={settings}
       homeConfig={homeData.config}
+      certificatesPageContent={certificatesPageContent}
       enthusiasms={homeData.enthusiasms}
     />
   )
