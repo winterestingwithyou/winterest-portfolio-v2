@@ -94,4 +94,47 @@ describe('CertificatesListPage', () => {
     expect(screen.getAllByRole('heading', { level: 2 })).toHaveLength(3)
     expect(screen.queryByText('Certificate 4')).toBeNull()
   })
+
+  it('renders solid responsive panels with optional covers and ordered actions', () => {
+    render(
+      <CertificatesListPage
+        certificates={[
+          makeCertificate(1, {
+            title: 'Cloudflare Workers',
+            issuer: 'Cloudflare',
+            credentialId: 'worker-123',
+            descriptionEn: 'Edge runtime credential.',
+            coverImageUrl: '/certificate-cover.webp',
+            pdfUrl: '/certificate.pdf',
+          }),
+          makeCertificate(2, {
+            title: 'No-cover certificate',
+            verificationUrl: 'https://issuer.example.test/verify/2',
+          }),
+        ]}
+        pageContent={getDefaultCertificatesPageConfig()}
+      />,
+    )
+
+    const items = screen.getAllByRole('listitem')
+    expect(items).toHaveLength(2)
+    expect(items[0].className).toContain('border-(--brand-line)')
+    expect(items[0].className).toContain(
+      'lg:grid-cols-[minmax(9rem,13rem)_minmax(0,1fr)_12rem]',
+    )
+    expect(items[1].className).toContain('lg:grid-cols-[minmax(0,1fr)_12rem]')
+    expect(screen.getAllByRole('img')).toHaveLength(1)
+    expect(screen.getByText('worker-123')).toBeTruthy()
+    expect(screen.getByText('Edge runtime credential.')).toBeTruthy()
+
+    const pdfLink = screen.getByRole('link', { name: 'Open certificate PDF' })
+    const verifyLinks = screen.getAllByRole('link', {
+      name: 'Verify with issuer',
+    })
+    expect(pdfLink.getAttribute('href')).toBe('/certificate.pdf')
+    expect(pdfLink.className).toContain('border')
+    expect(verifyLinks[1].getAttribute('href')).toBe(
+      'https://issuer.example.test/verify/2',
+    )
+  })
 })

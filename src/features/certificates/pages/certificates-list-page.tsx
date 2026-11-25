@@ -148,7 +148,7 @@ export function CertificatesListPage({
               </div>
             ) : (
               <>
-                <ul className="divide-y divide-(--brand-line) border-y border-(--brand-line)">
+                <ul className="space-y-4">
                   {paginatedCertificates.map((certificate) => {
                     const isExpired =
                       certificate.expiresAt &&
@@ -157,15 +157,16 @@ export function CertificatesListPage({
                       locale === 'id'
                         ? certificate.descriptionId
                         : certificate.descriptionEn
+                    const hasCover = Boolean(certificate.coverImageUrl)
 
                     return (
                       <li
                         key={certificate.id}
-                        className={
-                          certificate.coverImageUrl
-                            ? 'grid gap-5 py-6 sm:grid-cols-[minmax(9rem,13rem)_1fr] sm:gap-8'
-                            : 'py-6'
-                        }
+                        className={`grid gap-5 rounded-xl border border-(--brand-line) bg-card p-4 sm:p-5 ${
+                          hasCover
+                            ? 'sm:grid-cols-[minmax(9rem,13rem)_minmax(0,1fr)] lg:grid-cols-[minmax(9rem,13rem)_minmax(0,1fr)_12rem]'
+                            : 'lg:grid-cols-[minmax(0,1fr)_12rem]'
+                        }`}
                       >
                         {certificate.coverImageUrl ? (
                           <img
@@ -222,28 +223,34 @@ export function CertificatesListPage({
                               {description}
                             </p>
                           ) : null}
-                          <div className="mt-5 flex flex-wrap gap-3">
-                            {certificate.pdfUrl ? (
-                              <a
-                                href={certificate.pdfUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="inline-flex min-h-11 items-center rounded-md border border-(--brand-line) px-4 text-sm font-semibold text-(--brand-ink) underline-offset-4 hover:border-(--brand-orange) hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--brand-orange)"
-                              >
-                                {copy.openPdf}
-                              </a>
-                            ) : null}
-                            {certificate.verificationUrl ? (
-                              <a
-                                href={certificate.verificationUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="inline-flex min-h-11 items-center rounded-md px-2 text-sm font-semibold text-(--brand-orange-deep) underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--brand-orange)"
-                              >
-                                {copy.verify}
-                              </a>
-                            ) : null}
-                          </div>
+                        </div>
+                        <div
+                          className={`flex flex-wrap items-start gap-3 ${
+                            hasCover
+                              ? 'sm:col-span-2 lg:col-span-1 lg:flex-col lg:items-stretch'
+                              : 'lg:flex-col lg:items-stretch'
+                          }`}
+                        >
+                          {certificate.pdfUrl ? (
+                            <a
+                              href={certificate.pdfUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex min-h-11 items-center justify-center rounded-md border border-(--brand-line) px-4 text-center text-sm font-semibold text-(--brand-ink) underline-offset-4 hover:border-(--brand-orange) hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--brand-orange)"
+                            >
+                              {copy.openPdf}
+                            </a>
+                          ) : null}
+                          {certificate.verificationUrl ? (
+                            <a
+                              href={certificate.verificationUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex min-h-11 items-center justify-center rounded-md px-2 text-center text-sm font-semibold text-(--brand-orange-deep) underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--brand-orange)"
+                            >
+                              {copy.verify}
+                            </a>
+                          ) : null}
                         </div>
                       </li>
                     )
