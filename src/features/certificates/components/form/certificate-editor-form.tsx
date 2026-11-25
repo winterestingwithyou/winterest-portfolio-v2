@@ -1,5 +1,6 @@
 import { useForm } from '@tanstack/react-form'
 import { useNavigate } from '@tanstack/react-router'
+import { Check } from 'lucide-react'
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 
@@ -33,6 +34,7 @@ import {
   SelectValue,
 } from '#/components/ui/select'
 import { Textarea } from '#/components/ui/textarea'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '#/components/ui/tabs'
 import { getCertificateCopy } from '#/features/certificates/copy'
 import {
   useCreateCertificate,
@@ -49,6 +51,8 @@ import { getApiErrorMessage } from '#/lib/api-client'
 function toDateInput(date: Date | null | undefined) {
   return date?.toISOString().slice(0, 10) ?? ''
 }
+
+type CertificateArtifactTab = 'pdf' | 'verification'
 
 type CertificateFormState = {
   title: string
@@ -92,6 +96,14 @@ export function CertificateEditorForm({
 
   const navigate = useNavigate()
   const [error, setError] = useState<string | null>(null)
+  const [activeArtifactTab, setActiveArtifactTab] =
+    useState<CertificateArtifactTab>(() =>
+      certificate?.pdfUrl
+        ? 'pdf'
+        : certificate?.verificationUrl
+          ? 'verification'
+          : 'pdf',
+    )
   const [picker, setPicker] = useState<'cover' | 'pdf' | null>(null)
   const [confirmDelete, setConfirmDelete] = useState(false)
   const createMutation = useCreateCertificate()
@@ -122,10 +134,16 @@ export function CertificateEditorForm({
     },
   })
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     event.stopPropagation()
-    void form.handleSubmit()
+    await form.handleSubmit()
+
+    if (form.getFieldMeta('pdfUrl')?.errors.length) {
+      setActiveArtifactTab('pdf')
+    } else if (form.getFieldMeta('verificationUrl')?.errors.length) {
+      setActiveArtifactTab('verification')
+    }
   }
 
   const handleDelete = async () => {
@@ -142,7 +160,7 @@ export function CertificateEditorForm({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full">
+      <form onSubmit={handleSubmit} className="w-full" noValidate>
         <FieldGroup className="gap-5">
           <form.Field name="title">
             {(field) => {
@@ -350,78 +368,145 @@ export function CertificateEditorForm({
               </Field>
             )}
           </form.Field>
-          <form.Field name="pdfUrl">
-            {(field) => (
-              <Field data-invalid={!field.state.meta.isValid}>
-                <p className="text-sm font-medium">
-                  {formCopy.pdf} ({formCopy.optional})
-                </p>
-                <FieldDescription>{formCopy.mediaRequired}</FieldDescription>
-                <div className="flex flex-wrap items-center gap-3">
-                  {field.state.value ? (
-                    <a
-                      href={field.state.value}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="max-w-full break-all text-sm font-medium text-(--brand-orange-deep) underline underline-offset-4"
-                    >
-                      {field.state.value}
-                    </a>
-                  ) : null}
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="min-h-11"
-                    onClick={() => setPicker('pdf')}
+          <div className="space-y-2">
+            <FieldDescription id="certificate-artifact-requirement">
+              {formCopy.artifactRequirement}
+            </FieldDescription>
+            <Tabs
+              value={activeArtifactTab}
+              onValueChange={(value) =>
+                setActiveArtifactTab(value as CertificateArtifactTab)
+              }
+              aria-describedby="certificate-artifact-requirement"
+              className="w-full"
+            >
+              <form.Subscribe
+                selector={(state) => [
+                  Boolean(state.values.pdfUrl),
+                  Boolean(state.values.verificationUrl),
+                ]}
+              >
+                {([hasPdf, hasVerification]) => (
+                  <TabsList
+                    aria-label={formCopy.artifactTabsLabel}
+                    className="inline-flex h-auto w-fit max-w-full flex-nowrap justify-start rounded-lg border border-(--brand-line) bg-surface p-0.5 shadow-xs"
                   >
-                    {field.state.value
-                      ? formCopy.choosePdf
-                      : formCopy.selectPdf}
-                  </Button>
-                  {field.state.value ? (
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      className="min-h-11"
-                      onClick={() => field.handleChange('')}
+                    <TabsTrigger
+                      value="pdf"
+                      className="group min-h-11 min-w-0 gap-1.5 whitespace-nowrap rounded-md px-3 py-1 text-xs font-semibold transition sm:min-h-8 data-[state=active]:bg-(--brand-orange) data-[state=active]:font-bold data-[state=active]:text-white data-[state=active]:shadow-xs"
+                      aria-label={`${formCopy.pdf}, ${hasPdf ? formCopy.provided : formCopy.notProvided}`}
                     >
-                      {formCopy.removePdf}
-                    </Button>
-                  ) : null}
-                </div>
-                {field.state.meta.errors.length > 0 ? (
-                  <FieldError errors={field.state.meta.errors} />
-                ) : null}
-              </Field>
-            )}
-          </form.Field>
-          <form.Field name="verificationUrl">
-            {(field) => {
-              const invalid = !field.state.meta.isValid
-              return (
-                <Field data-invalid={invalid}>
-                  <FieldLabel htmlFor={field.name}>
-                    {formCopy.verificationUrl} ({formCopy.optional})
-                  </FieldLabel>
-                  <Input
-                    id={field.name}
-                    name={field.name}
-                    type="url"
-                    inputMode="url"
-                    placeholder="https://"
-                    value={field.state.value}
-                    onBlur={field.handleBlur}
-                    onChange={(event) => field.handleChange(event.target.value)}
-                    aria-invalid={invalid}
-                    className="min-h-11"
-                  />
-                  {invalid ? (
-                    <FieldError errors={field.state.meta.errors} />
-                  ) : null}
-                </Field>
-              )
-            }}
-          </form.Field>
+                      <span>{formCopy.pdf}</span>
+                      {hasPdf ? (
+                        <Check
+                          aria-hidden="true"
+                          className="size-4 shrink-0 text-(--brand-orange-deep) group-data-[state=active]:text-white"
+                        />
+                      ) : null}
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value="verification"
+                      className="group min-h-11 min-w-0 gap-1.5 whitespace-nowrap rounded-md px-3 py-1 text-xs font-semibold transition sm:min-h-8 data-[state=active]:bg-(--brand-orange) data-[state=active]:font-bold data-[state=active]:text-white data-[state=active]:shadow-xs"
+                      aria-label={`${formCopy.verificationUrl}, ${hasVerification ? formCopy.provided : formCopy.notProvided}`}
+                    >
+                      <span>{formCopy.verificationUrl}</span>
+                      {hasVerification ? (
+                        <Check
+                          aria-hidden="true"
+                          className="size-4 shrink-0 text-(--brand-orange-deep) group-data-[state=active]:text-white"
+                        />
+                      ) : null}
+                    </TabsTrigger>
+                  </TabsList>
+                )}
+              </form.Subscribe>
+              <TabsContent
+                value="pdf"
+                forceMount
+                className="data-[state=inactive]:hidden"
+              >
+                <form.Field name="pdfUrl">
+                  {(field) => (
+                    <Field data-invalid={!field.state.meta.isValid}>
+                      <p className="text-sm font-medium">
+                        {formCopy.pdf} ({formCopy.optional})
+                      </p>
+                      <div className="flex flex-wrap items-center gap-3">
+                        {field.state.value ? (
+                          <a
+                            href={field.state.value}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="max-w-full break-all text-sm font-medium text-(--brand-orange-deep) underline underline-offset-4"
+                          >
+                            {field.state.value}
+                          </a>
+                        ) : null}
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="min-h-11"
+                          onClick={() => setPicker('pdf')}
+                        >
+                          {field.state.value
+                            ? formCopy.choosePdf
+                            : formCopy.selectPdf}
+                        </Button>
+                        {field.state.value ? (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            className="min-h-11"
+                            onClick={() => field.handleChange('')}
+                          >
+                            {formCopy.removePdf}
+                          </Button>
+                        ) : null}
+                      </div>
+                      {field.state.meta.errors.length > 0 ? (
+                        <FieldError errors={field.state.meta.errors} />
+                      ) : null}
+                    </Field>
+                  )}
+                </form.Field>
+              </TabsContent>
+              <TabsContent
+                value="verification"
+                forceMount
+                className="data-[state=inactive]:hidden"
+              >
+                <form.Field name="verificationUrl">
+                  {(field) => {
+                    const invalid = !field.state.meta.isValid
+                    return (
+                      <Field data-invalid={invalid}>
+                        <FieldLabel htmlFor={field.name}>
+                          {formCopy.verificationUrl} ({formCopy.optional})
+                        </FieldLabel>
+                        <Input
+                          id={field.name}
+                          name={field.name}
+                          type="url"
+                          inputMode="url"
+                          placeholder="https://"
+                          value={field.state.value}
+                          onBlur={field.handleBlur}
+                          onChange={(event) =>
+                            field.handleChange(event.target.value)
+                          }
+                          aria-invalid={invalid}
+                          className="min-h-11"
+                        />
+                        {invalid ? (
+                          <FieldError errors={field.state.meta.errors} />
+                        ) : null}
+                      </Field>
+                    )
+                  }}
+                </form.Field>
+              </TabsContent>
+            </Tabs>
+          </div>
           <form.Field name="status">
             {(field) => (
               <Field>

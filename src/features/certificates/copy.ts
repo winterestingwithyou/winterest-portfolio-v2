@@ -122,8 +122,7 @@ export const certificatesCopy = {
         choosePdf: 'Choose PDF',
         removeImage: 'Remove image',
         removePdf: 'Remove PDF',
-        mediaRequired:
-          'Add a PDF certificate or a verification URL before saving.',
+
         expiryDateError: 'Expiry date must be after the issue date.',
         save: 'Save certificate',
         saving: 'Saving certificate...',
@@ -132,6 +131,11 @@ export const certificatesCopy = {
         selectPdf: 'Select PDF from Media Library',
         selectImage: 'Select image from Media Library',
         optional: 'Optional',
+        artifactTabsLabel: 'Certificate document or verification link',
+        artifactRequirement:
+          'At least one option is required. You may provide both.',
+        provided: 'Provided',
+        notProvided: 'Not provided',
         validation: {
           required: 'This field is required.',
           titleTooLong: 'Keep the title within 200 characters.',
@@ -256,8 +260,7 @@ export const certificatesCopy = {
         choosePdf: 'Pilih PDF',
         removeImage: 'Hapus gambar',
         removePdf: 'Hapus PDF',
-        mediaRequired:
-          'Tambahkan PDF sertifikat atau URL verifikasi sebelum menyimpan.',
+
         expiryDateError:
           'Tanggal kedaluwarsa harus setelah tanggal diterbitkan.',
         save: 'Simpan sertifikat',
@@ -267,6 +270,11 @@ export const certificatesCopy = {
         selectPdf: 'Pilih PDF dari Media Library',
         selectImage: 'Pilih gambar dari Media Library',
         optional: 'Opsional',
+        artifactTabsLabel: 'Dokumen sertifikat atau tautan verifikasi',
+        artifactRequirement:
+          'Minimal satu opsi wajib diisi. Keduanya boleh diisi.',
+        provided: 'Terisi',
+        notProvided: 'Belum diisi',
         validation: {
           required: 'Kolom ini wajib diisi.',
           titleTooLong: 'Nama sertifikat maksimal 200 karakter.',
