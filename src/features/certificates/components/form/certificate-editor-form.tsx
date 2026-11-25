@@ -14,6 +14,7 @@ import {
   AlertDialogTitle,
 } from '#/components/ui/alert-dialog'
 import { Button } from '#/components/ui/button'
+import { DatePicker } from '#/components/ui/date-picker'
 import {
   Field,
   FieldDescription,
@@ -225,17 +226,13 @@ export function CertificateEditorForm({
                     <FieldLabel htmlFor={field.name}>
                       {formCopy.issuedAt}
                     </FieldLabel>
-                    <Input
+                    <DatePicker
                       id={field.name}
                       name={field.name}
-                      type="date"
                       value={field.state.value}
                       onBlur={field.handleBlur}
-                      onChange={(event) =>
-                        field.handleChange(event.target.value)
-                      }
+                      onChange={(_, isoString) => field.handleChange(isoString)}
                       aria-invalid={invalid}
-                      className="min-h-11"
                     />
                     {invalid ? (
                       <FieldError errors={field.state.meta.errors} />
@@ -252,17 +249,13 @@ export function CertificateEditorForm({
                     <FieldLabel htmlFor={field.name}>
                       {formCopy.expiresAt} ({formCopy.optional})
                     </FieldLabel>
-                    <Input
+                    <DatePicker
                       id={field.name}
                       name={field.name}
-                      type="date"
                       value={field.state.value}
                       onBlur={field.handleBlur}
-                      onChange={(event) =>
-                        field.handleChange(event.target.value)
-                      }
+                      onChange={(_, isoString) => field.handleChange(isoString)}
                       aria-invalid={invalid}
-                      className="min-h-11"
                     />
                     {invalid ? (
                       <FieldError errors={field.state.meta.errors} />

@@ -23,6 +23,8 @@ export type DatePickerProps = {
   id?: string
   name?: string
   className?: string
+  onBlur?: React.FocusEventHandler<HTMLInputElement>
+  'aria-invalid'?: boolean
   locale?: 'en' | 'id'
   startMonth?: Date
   endMonth?: Date
@@ -200,6 +202,8 @@ export function DatePicker({
   id,
   name,
   className,
+  onBlur,
+  'aria-invalid': ariaInvalid,
   locale,
   startMonth,
   endMonth,
@@ -269,7 +273,8 @@ export function DatePicker({
     }
   }
 
-  const handleInputBlur = () => {
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    onBlur?.(event)
     if (inputValue.trim() === '') {
       onChange(undefined, '')
       setInputValue('')
@@ -342,9 +347,11 @@ export function DatePicker({
           placeholder={placeholder || defaultPlaceholder}
           maxLength={10}
           autoComplete="off"
+          aria-invalid={ariaInvalid}
           className={cn(
             'h-11 w-full min-w-0 rounded-xl border border-(--brand-line) bg-surface px-3 font-mono text-sm text-(--brand-ink) placeholder:text-(--brand-muted)/60 outline-none transition',
             'focus:border-(--brand-orange) focus:ring-2 focus:ring-(--brand-orange)/20',
+            'aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40',
             'disabled:pointer-events-none disabled:opacity-50',
             hasValue ? 'pr-16' : 'pr-10',
           )}
