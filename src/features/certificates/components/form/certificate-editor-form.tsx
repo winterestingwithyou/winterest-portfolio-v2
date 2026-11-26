@@ -1,6 +1,13 @@
 import { useForm } from '@tanstack/react-form'
 import { useNavigate } from '@tanstack/react-router'
-import { Check } from 'lucide-react'
+import {
+  Check,
+  ExternalLink,
+  FileText,
+  FolderOpen,
+  ImagePlus,
+  Trash2,
+} from 'lucide-react'
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 
@@ -337,33 +344,55 @@ export function CertificateEditorForm({
                 <p className="text-sm font-medium">
                   {formCopy.coverImage} ({formCopy.optional})
                 </p>
-                <FieldDescription>{formCopy.selectImage}</FieldDescription>
-                <div className="flex flex-wrap items-center gap-3">
-                  {field.state.value ? (
-                    <img
-                      src={field.state.value}
-                      alt=""
-                      className="size-16 rounded-md border border-(--brand-line) object-cover"
-                    />
-                  ) : null}
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="min-h-11"
-                    onClick={() => setPicker('cover')}
-                  >
-                    {formCopy.chooseImage}
-                  </Button>
-                  {field.state.value ? (
+                <div className="flex flex-col gap-3 rounded-lg border border-(--brand-line) bg-surface-strong p-3 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex min-w-0 items-center gap-3">
+                    {field.state.value ? (
+                      <img
+                        src={field.state.value}
+                        alt=""
+                        className="size-14 shrink-0 rounded-md border border-(--brand-line) object-cover sm:size-16"
+                      />
+                    ) : (
+                      <div className="grid size-14 shrink-0 place-items-center rounded-md border border-(--brand-line) bg-(--surface-card) sm:size-16">
+                        <ImagePlus
+                          aria-hidden="true"
+                          className="size-5 text-(--brand-muted)"
+                        />
+                      </div>
+                    )}
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-(--brand-ink)">
+                        {field.state.value
+                          ? formCopy.imageSelected
+                          : formCopy.imageNotSelected}
+                      </p>
+                      <p className="text-xs text-(--brand-muted)">
+                        {formCopy.selectImage}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 sm:shrink-0">
                     <Button
                       type="button"
-                      variant="ghost"
+                      variant="outline"
                       className="min-h-11"
-                      onClick={() => field.handleChange('')}
+                      onClick={() => setPicker('cover')}
                     >
-                      {formCopy.removeImage}
+                      <FolderOpen aria-hidden="true" />
+                      {formCopy.chooseImage}
                     </Button>
-                  ) : null}
+                    {field.state.value ? (
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        className="min-h-11 text-destructive hover:text-destructive"
+                        onClick={() => field.handleChange('')}
+                      >
+                        <Trash2 aria-hidden="true" />
+                        {formCopy.removeImage}
+                      </Button>
+                    ) : null}
+                  </div>
                 </div>
               </Field>
             )}
@@ -431,37 +460,67 @@ export function CertificateEditorForm({
                       <p className="text-sm font-medium">
                         {formCopy.pdf} ({formCopy.optional})
                       </p>
-                      <div className="flex flex-wrap items-center gap-3">
-                        {field.state.value ? (
-                          <a
-                            href={field.state.value}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="max-w-full break-all text-sm font-medium text-(--brand-orange-deep) underline underline-offset-4"
-                          >
-                            {field.state.value}
-                          </a>
-                        ) : null}
-                        <Button
-                          type="button"
-                          variant="outline"
-                          className="min-h-11"
-                          onClick={() => setPicker('pdf')}
-                        >
-                          {field.state.value
-                            ? formCopy.choosePdf
-                            : formCopy.selectPdf}
-                        </Button>
-                        {field.state.value ? (
+                      <div className="flex flex-col gap-3 rounded-lg border border-(--brand-line) bg-surface-strong p-3 sm:flex-row sm:items-center sm:justify-between">
+                        <div className="flex min-w-0 items-center gap-3">
+                          <div className="grid size-14 shrink-0 place-items-center rounded-md border border-(--brand-line) bg-(--surface-card) sm:size-16">
+                            <FileText
+                              aria-hidden="true"
+                              className={
+                                field.state.value
+                                  ? 'size-5 text-(--brand-orange-deep)'
+                                  : 'size-5 text-(--brand-muted)'
+                              }
+                            />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="text-sm font-medium text-(--brand-ink)">
+                              {field.state.value
+                                ? formCopy.pdfSelected
+                                : formCopy.pdfNotSelected}
+                            </p>
+                            <p className="text-xs text-(--brand-muted)">
+                              {formCopy.selectPdf}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-2 sm:shrink-0">
+                          {field.state.value ? (
+                            <Button
+                              asChild
+                              variant="secondary"
+                              className="min-h-11"
+                            >
+                              <a
+                                href={field.state.value}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                <ExternalLink aria-hidden="true" />
+                                {formCopy.viewPdf}
+                              </a>
+                            </Button>
+                          ) : null}
                           <Button
                             type="button"
-                            variant="ghost"
+                            variant="outline"
                             className="min-h-11"
-                            onClick={() => field.handleChange('')}
+                            onClick={() => setPicker('pdf')}
                           >
-                            {formCopy.removePdf}
+                            <FolderOpen aria-hidden="true" />
+                            {formCopy.choosePdf}
                           </Button>
-                        ) : null}
+                          {field.state.value ? (
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              className="min-h-11 text-destructive hover:text-destructive"
+                              onClick={() => field.handleChange('')}
+                            >
+                              <Trash2 aria-hidden="true" />
+                              {formCopy.removePdf}
+                            </Button>
+                          ) : null}
+                        </div>
                       </div>
                       {field.state.meta.errors.length > 0 ? (
                         <FieldError errors={field.state.meta.errors} />

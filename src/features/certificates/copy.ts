@@ -122,6 +122,11 @@ export const certificatesCopy = {
         choosePdf: 'Choose PDF',
         removeImage: 'Remove image',
         removePdf: 'Remove PDF',
+        imageSelected: 'Cover image selected',
+        imageNotSelected: 'No cover image selected',
+        pdfSelected: 'Certificate PDF selected',
+        pdfNotSelected: 'No certificate PDF selected',
+        viewPdf: 'View PDF',
 
         expiryDateError: 'Expiry date must be after the issue date.',
         save: 'Save certificate',
@@ -260,6 +265,11 @@ export const certificatesCopy = {
         choosePdf: 'Pilih PDF',
         removeImage: 'Hapus gambar',
         removePdf: 'Hapus PDF',
+        imageSelected: 'Gambar cover terpilih',
+        imageNotSelected: 'Belum ada gambar cover',
+        pdfSelected: 'PDF sertifikat terpilih',
+        pdfNotSelected: 'Belum ada PDF sertifikat',
+        viewPdf: 'Lihat PDF',
 
         expiryDateError:
           'Tanggal kedaluwarsa harus setelah tanggal diterbitkan.',

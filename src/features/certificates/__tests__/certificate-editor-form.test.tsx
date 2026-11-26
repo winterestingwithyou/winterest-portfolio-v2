@@ -141,6 +141,36 @@ describe('CertificateEditorForm artifact tabs', () => {
     ).toBe('true')
   })
 
+  it('groups media previews and actions without rendering raw URLs', () => {
+    const coverUrl = 'https://example.com/cover.png'
+    const pdfUrl = 'https://example.com/certificate.pdf'
+    const { container } = render(
+      <CertificateEditorForm
+        certificate={{
+          ...certificate,
+          coverImageUrl: coverUrl,
+          pdfUrl,
+        }}
+      />,
+    )
+
+    expect(screen.getByText('Cover image selected')).toBeTruthy()
+    expect(screen.getByText('Certificate PDF selected')).toBeTruthy()
+    expect(container.querySelector(`img[src="${coverUrl}"]`)).toBeTruthy()
+    expect(screen.queryByText(pdfUrl)).toBeNull()
+    expect(
+      screen.getByRole('link', { name: 'View PDF' }).getAttribute('href'),
+    ).toBe(pdfUrl)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Remove image' }))
+    expect(screen.getByText('No cover image selected')).toBeTruthy()
+    expect(container.querySelector(`img[src="${coverUrl}"]`)).toBeNull()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Remove PDF' }))
+    expect(screen.getByText('No certificate PDF selected')).toBeTruthy()
+    expect(screen.queryByRole('link', { name: 'View PDF' })).toBeNull()
+  })
+
   it('switches to the tab containing a validation error on submit', async () => {
     render(<CertificateEditorForm />)
     fireEvent.click(
