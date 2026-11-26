@@ -9,6 +9,7 @@ import {
   updatePageContent,
 } from '#/features/portfolio/page-content-queries'
 import {
+  certificatesPageConfigSchema,
   contactPageConfigSchema,
   projectsPageConfigSchema,
   publicPageKeys,
@@ -59,8 +60,10 @@ export const Route = createFileRoute('/api/pages/$page')({
             validated = projectsPageConfigSchema.parse(payload)
           } else if (page === 'stack') {
             validated = stackPageConfigSchema.parse(payload)
-          } else {
+          } else if (page === 'contact') {
             validated = contactPageConfigSchema.parse(payload)
+          } else {
+            validated = certificatesPageConfigSchema.parse(payload)
           }
 
           const db = getDb(env.DB)

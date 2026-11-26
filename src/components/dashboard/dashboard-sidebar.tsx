@@ -1,5 +1,6 @@
 import { Link, useLocation } from '@tanstack/react-router'
 import {
+  BadgeCheck,
   ChevronDown,
   FolderKanban,
   Globe,
@@ -82,6 +83,12 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
       exact: false,
     },
     {
+      to: '/dashboard/certificates',
+      label: copy.shell.nav.certificates,
+      icon: BadgeCheck,
+      exact: false,
+    },
+    {
       to: '/dashboard/stack',
       label: copy.shell.nav.stack,
       icon: Layers,
@@ -112,6 +119,12 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
       to: '/dashboard/pages/projects',
       label: copy.shell.navPages.projects,
       icon: FolderKanban,
+      exact: true,
+    },
+    {
+      to: '/dashboard/pages/certificates',
+      label: copy.shell.navPages.certificates,
+      icon: BadgeCheck,
       exact: true,
     },
     {

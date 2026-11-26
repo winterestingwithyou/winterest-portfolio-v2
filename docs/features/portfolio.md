@@ -10,4 +10,5 @@ The portfolio provides the public site’s shared navigation and footer, a print
 - The shared footer provides the portfolio’s contact email and enabled social links.
 - The resume presents career history, education, and technical skills, and remains suitable for printing or saving as a PDF.
 - The not-found page explains that a page was not found and offers a way back to the home page.
-- The sitemap includes public pages and published project pages, and excludes login, dashboard, and API pages.
+- Public navigation includes the localized Certificates / Sertifikat link to `/certificates`.
+- The sitemap includes public pages and published project pages, including the static certificates listing, and excludes login, dashboard, and API pages.

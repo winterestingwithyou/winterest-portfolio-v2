@@ -88,6 +88,23 @@ function createTestDatabase(): Database {
       UNIQUE (project_id, url)
     );
 
+    CREATE TABLE certificates (
+      id TEXT PRIMARY KEY,
+      title TEXT NOT NULL,
+      issuer TEXT NOT NULL,
+      credential_id TEXT,
+      description_en TEXT,
+      description_id TEXT,
+      cover_image_url TEXT,
+      pdf_url TEXT,
+      verification_url TEXT,
+      status TEXT NOT NULL DEFAULT 'draft',
+      issued_at INTEGER NOT NULL,
+      expires_at INTEGER,
+      created_at INTEGER NOT NULL DEFAULT (unixepoch()),
+      updated_at INTEGER NOT NULL DEFAULT (unixepoch())
+    );
+
     CREATE TABLE technologies (
       id TEXT PRIMARY KEY,
       name TEXT NOT NULL,
@@ -214,6 +231,67 @@ describe('media deletion synchronization', () => {
 
       expect(await cascadeNullifyMediaReferences(db, testMedia)).toBe(1)
       expect(await db.query.projectGalleryImages.findMany()).toHaveLength(0)
+    })
+
+    it('detects certificate covers and removes them during cascade deletion', async () => {
+      await db.insert(schema.certificates).values({
+        id: 'certificate_cover',
+        title: 'Developer Certificate',
+        issuer: 'Issuer',
+        coverImageUrl: 'https://winterest.dev/api/media/file/hero-banner.webp',
+        pdfUrl: 'https://winterest.dev/api/media/file/certificate.pdf',
+        issuedAt: new Date('2025-01-01T00:00:00.000Z'),
+      })
+
+      const usage = await getMediaUsage(db, testMedia)
+      expect(usage.references).toContainEqual(
+        expect.objectContaining({
+          entityType: 'certificate_cover',
+          field: 'coverImageUrl',
+          id: 'certificate_cover',
+        }),
+      )
+
+      expect(await cascadeNullifyMediaReferences(db, testMedia)).toBe(1)
+      const certificate = await db.query.certificates.findFirst({
+        where: (row, { eq }) => eq(row.id, 'certificate_cover'),
+      })
+      expect(certificate?.coverImageUrl).toBeNull()
+      expect(certificate?.pdfUrl).toBe(
+        'https://winterest.dev/api/media/file/certificate.pdf',
+      )
+    })
+
+    it('detects certificate PDF references', async () => {
+      const documentMedia: MediaRecord = {
+        ...testMedia,
+        url: '/api/media/file/certificate.pdf',
+        mimeType: 'application/pdf',
+      }
+      await db.insert(schema.certificates).values({
+        id: 'certificate_pdf',
+        title: 'Developer Certificate',
+        issuer: 'Issuer',
+        pdfUrl: 'https://winterest.dev/api/media/file/certificate.pdf',
+        status: 'published',
+        issuedAt: new Date('2025-01-01T00:00:00.000Z'),
+      })
+
+      const usage = await getMediaUsage(db, documentMedia)
+      expect(usage.references).toContainEqual(
+        expect.objectContaining({
+          entityType: 'certificate_pdf',
+          field: 'pdfUrl',
+          id: 'certificate_pdf',
+        }),
+      )
+
+      expect(await cascadeNullifyMediaReferences(db, documentMedia)).toBe(1)
+      const certificate = await db.query.certificates.findFirst({
+        where: (row, { eq }) => eq(row.id, 'certificate_pdf'),
+      })
+      expect(certificate?.pdfUrl).toBeNull()
+      expect(certificate?.status).toBe('draft')
     })
 
     it('detects usage in projects coverImage', async () => {
@@ -464,6 +542,12 @@ describe('media deletion synchronization', () => {
       expect(mediaReferenceTypeSchema.safeParse('project_cover').success).toBe(
         true,
       )
+      expect(
+        mediaReferenceTypeSchema.safeParse('certificate_cover').success,
+      ).toBe(true)
+      expect(
+        mediaReferenceTypeSchema.safeParse('certificate_pdf').success,
+      ).toBe(true)
       expect(
         mediaReferenceTypeSchema.safeParse('project_content').success,
       ).toBe(true)

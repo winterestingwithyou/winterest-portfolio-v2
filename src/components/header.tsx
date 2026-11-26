@@ -47,6 +47,7 @@ export default function Header() {
     { href: '/', label: copy.nav.home },
     { href: '/about', label: copy.nav.about },
     { href: '/projects', label: copy.nav.projects },
+    { href: '/certificates', label: copy.nav.certificates },
     { href: '/stack', label: copy.nav.stack },
     { href: '/contact', label: copy.nav.contact },
   ] as const

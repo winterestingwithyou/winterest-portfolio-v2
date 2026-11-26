@@ -50,7 +50,7 @@ graphify hook install
 
 The Graphify CLI installs post-commit and post-checkout hooks and registers the `graphify-out/graph.json` merge rule. The hook scripts and `.gitattributes` are shared in Git. The merge-driver registration and interpreter path are local to each clone, so install the Graphify CLI and rerun `graphify hook install` after cloning or changing its Python environment.
 
-Graphify hooks rebuild code-derived graph data after commits and branch switches. They do not rebuild for documentation or image-only changes; run `graphify update .` when those changes need to be reflected in the graph.
+The post-commit hook incrementally rebuilds changed code-derived graph data in the background; post-checkout rebuilds the code graph after branch switches. For ordinary code edits, let these hooks maintain the graph instead of running `graphify update .` manually. If a code hook is unavailable or fails, run `graphify update .`; check `~/.cache/graphify-rebuild.log` for background-hook errors. Documentation, papers, and images are outside these hooks; invoke `/graphify . --update` when those changes should be reflected in the graph.
 
 ## GitHub Actions
 

@@ -1,10 +1,16 @@
 import { z } from 'zod'
 
 import { contactCopy } from '#/features/contact/copy'
+import { certificatesCopy } from '#/features/certificates/copy'
 import { projectsCopy } from '#/features/projects/copy'
 import { technologiesCopy } from '#/features/technologies/copy'
 
-export const publicPageKeys = ['projects', 'stack', 'contact'] as const
+export const publicPageKeys = [
+  'projects',
+  'stack',
+  'contact',
+  'certificates',
+] as const
 export type PublicPageKey = (typeof publicPageKeys)[number]
 
 // 1. Projects Page Schema
@@ -65,6 +71,27 @@ export const contactPageConfigSchema = z.object({
 })
 export type ContactPageConfig = z.infer<typeof contactPageConfigSchema>
 
+export const certificatesPageConfigSchema = z.object({
+  eyebrowEn: z.string().default(''),
+  eyebrowId: z.string().default(''),
+  titleEn: z.string().min(1, 'Title EN is required'),
+  titleId: z.string().min(1, 'Title ID is required'),
+  descriptionEn: z.string().default(''),
+  descriptionId: z.string().default(''),
+  showDescription: z.boolean().default(true),
+
+  homeEyebrowEn: z.string().default(''),
+  homeEyebrowId: z.string().default(''),
+  homeTitleEn: z.string().min(1, 'Home title EN is required'),
+  homeTitleId: z.string().min(1, 'Home title ID is required'),
+  homeDescriptionEn: z.string().default(''),
+  homeDescriptionId: z.string().default(''),
+  showHomeDescription: z.boolean().default(true),
+})
+export type CertificatesPageConfig = z.infer<
+  typeof certificatesPageConfigSchema
+>
+
 export function getDefaultProjectsPageConfig(): ProjectsPageConfig {
   return {
     eyebrowEn: projectsCopy.en.list.eyebrow,
@@ -94,6 +121,26 @@ export function getDefaultStackPageConfig(): StackPageConfig {
     ultimateDescriptionEn: technologiesCopy.en.ultimate.ultimateDescription,
     ultimateDescriptionId: technologiesCopy.id.ultimate.ultimateDescription,
     showUltimateDescription: true,
+  }
+}
+
+export function getDefaultCertificatesPageConfig(): CertificatesPageConfig {
+  return {
+    eyebrowEn: certificatesCopy.en.public.eyebrow,
+    eyebrowId: certificatesCopy.id.public.eyebrow,
+    titleEn: certificatesCopy.en.public.title,
+    titleId: certificatesCopy.id.public.title,
+    descriptionEn: certificatesCopy.en.public.description,
+    descriptionId: certificatesCopy.id.public.description,
+    showDescription: true,
+
+    homeEyebrowEn: certificatesCopy.en.home.eyebrow,
+    homeEyebrowId: certificatesCopy.id.home.eyebrow,
+    homeTitleEn: certificatesCopy.en.home.title,
+    homeTitleId: certificatesCopy.id.home.title,
+    homeDescriptionEn: certificatesCopy.en.home.description,
+    homeDescriptionId: certificatesCopy.id.home.description,
+    showHomeDescription: true,
   }
 }
 
@@ -127,3 +174,4 @@ export type PublicPageConfig =
   | ProjectsPageConfig
   | StackPageConfig
   | ContactPageConfig
+  | CertificatesPageConfig

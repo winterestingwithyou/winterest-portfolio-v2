@@ -57,13 +57,14 @@ describe('sitemap generator', () => {
   })
 
   describe('generateSitemapXml', () => {
-    it('includes all 6 static public routes with appropriate priorities', () => {
+    it('includes all 7 static public routes with appropriate priorities', () => {
       const xml = generateSitemapXml('https://winterest.tech')
 
-      expect(STATIC_PUBLIC_ROUTES).toHaveLength(6)
+      expect(STATIC_PUBLIC_ROUTES).toHaveLength(7)
 
       expect(xml).toContain('<loc>https://winterest.tech/</loc>')
       expect(xml).toContain('<loc>https://winterest.tech/projects</loc>')
+      expect(xml).toContain('<loc>https://winterest.tech/certificates</loc>')
       expect(xml).toContain('<loc>https://winterest.tech/about</loc>')
       expect(xml).toContain('<loc>https://winterest.tech/stack</loc>')
       expect(xml).toContain('<loc>https://winterest.tech/contact</loc>')

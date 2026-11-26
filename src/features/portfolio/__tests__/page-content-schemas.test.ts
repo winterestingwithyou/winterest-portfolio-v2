@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  certificatesPageConfigSchema,
   contactPageConfigSchema,
+  getDefaultCertificatesPageConfig,
   getDefaultContactPageConfig,
   getDefaultProjectsPageConfig,
   getDefaultStackPageConfig,
@@ -12,7 +14,12 @@ import {
 
 describe('page-content-schemas', () => {
   it('defines valid publicPageKeys', () => {
-    expect(publicPageKeys).toEqual(['projects', 'stack', 'contact'])
+    expect(publicPageKeys).toEqual([
+      'projects',
+      'stack',
+      'contact',
+      'certificates',
+    ])
   })
 
   describe('projectsPageConfigSchema', () => {
@@ -55,6 +62,26 @@ describe('page-content-schemas', () => {
         ultimateTitleId: 'Utama',
       }
       expect(() => stackPageConfigSchema.parse(invalid)).toThrow()
+    })
+  })
+
+  describe('certificatesPageConfigSchema', () => {
+    it('validates default certificate page and homepage content', () => {
+      const parsed = certificatesPageConfigSchema.parse(
+        getDefaultCertificatesPageConfig(),
+      )
+
+      expect(parsed.titleEn).toBeTruthy()
+      expect(parsed.homeTitleId).toBeTruthy()
+      expect(parsed.showDescription).toBe(true)
+      expect(parsed.showHomeDescription).toBe(true)
+    })
+
+    it('requires both localized titles', () => {
+      const defaults = getDefaultCertificatesPageConfig()
+      expect(() =>
+        certificatesPageConfigSchema.parse({ ...defaults, homeTitleEn: '' }),
+      ).toThrow()
     })
   })
 

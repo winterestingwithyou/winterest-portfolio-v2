@@ -29,6 +29,18 @@ export const homeCopy = {
         'I am still preparing the project stories for this page. Check back soon for more detailed work notes.',
       viewProjects: 'See my other works',
     },
+    certificates: {
+      title: 'Certificates',
+      viewAll: 'View all certificates',
+      issued: 'Issued',
+      openPdf: 'Open PDF',
+      verify: 'Verify',
+      expired: 'Expired',
+      position: (current: number, total: number) =>
+        `Certificate ${current} of ${total}`,
+      coverAlt: (title: string, issuer: string) =>
+        `${title}, issued by ${issuer}`,
+    },
     enthusiasms: {
       eyebrow: 'PASSION & FOCUS AREAS',
       title: "What I'm Enthusiastic About",
@@ -108,7 +120,7 @@ export const homeCopy = {
     dashboard: {
       title: 'Content Settings: Home',
       description:
-        'Manage hero introduction, latest education, focus areas, project sections, marquee, and closing CTA.',
+        'Manage the homepage hero, education, focus areas, projects, technology, certificates, and contact CTA.',
       saveConfig: 'Save Configuration',
       resetConfirm:
         'Reset all text to default copywriting? Unsaved changes will be replaced.',
@@ -120,6 +132,7 @@ export const homeCopy = {
         heroEducation: 'Hero & Education',
         enthusiasms: 'Focus Areas',
         sectionsCta: 'Sections & CTA',
+        certificates: 'Certificates',
       },
       heroIntroSection: {
         cardTitle: (loc: string) => `Hero Introduction (${loc})`,
@@ -176,6 +189,18 @@ export const homeCopy = {
       emptyDescription:
         'Aku masih menyiapkan cerita project untuk halaman ini. Nanti akan ada catatan kerja yang lebih lengkap di sini.',
       viewProjects: 'Lihat Projekku lainnya',
+    },
+    certificates: {
+      title: 'Sertifikat',
+      viewAll: 'Lihat semua sertifikat',
+      issued: 'Diterbitkan',
+      openPdf: 'Buka PDF',
+      verify: 'Verifikasi',
+      expired: 'Kedaluwarsa',
+      position: (current: number, total: number) =>
+        `Sertifikat ${current} dari ${total}`,
+      coverAlt: (title: string, issuer: string) =>
+        `${title}, diterbitkan oleh ${issuer}`,
     },
     enthusiasms: {
       eyebrow: 'BIDANG MINAT & ANTUSIASME',
@@ -256,7 +281,7 @@ export const homeCopy = {
     dashboard: {
       title: 'Pengaturan Konten: Beranda (Home)',
       description:
-        'Kelola teks hero, pendidikan terakhir, fokus keahlian, seksi project dan marquee, serta CTA penutup.',
+        'Kelola hero, pendidikan, bidang minat, project, teknologi, sertifikat, dan CTA kontak di beranda.',
       saveConfig: 'Simpan Konfigurasi',
       resetConfirm:
         'Reset semua teks ke default copywriting? Perubahan belum tersimpan akan diganti.',
@@ -268,6 +293,7 @@ export const homeCopy = {
         heroEducation: 'Hero & Pendidikan',
         enthusiasms: 'Bidang Minat',
         sectionsCta: 'Seksi dan CTA',
+        certificates: 'Sertifikat',
       },
       heroIntroSection: {
         cardTitle: (loc: string) => `Pengenalan Hero (${loc})`,

@@ -1,6 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 
 import {
+  getDefaultCertificatesPageConfig,
   getDefaultContactPageConfig,
   getDefaultProjectsPageConfig,
   getDefaultStackPageConfig,
@@ -35,6 +36,8 @@ export const getPublicPageContent = createServerFn({
           return getDefaultStackPageConfig()
         case 'contact':
           return getDefaultContactPageConfig()
+        case 'certificates':
+          return getDefaultCertificatesPageConfig()
       }
     }
   })

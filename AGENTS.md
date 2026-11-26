@@ -75,7 +75,7 @@ bun run db:studio:remote
 - **File Naming**: Strict `kebab-case` for all project files and directories.
 - **Agent Validation**: Follow the staged validation workflow in [`.agents/rules/02-agent-commands-behavior.md`](.agents/rules/02-agent-commands-behavior.md); Husky formats staged files, so agents skip `bun run check` during routine validation.
 - **Engineering Workflow**: Use the Matt Pocock engineering skills for planning, ticket breakdown, triage, and implementation. Publish change specs and tickets to GitHub Issues; keep durable feature and system requirements in `docs/features/` and `docs/system/`. See `docs/agents/issue-tracker.md` and `docs/agents/domain.md`.
-- **Knowledge Graph & Exploration (Graphify)**: Mandatory first step for exploring codebase, dependencies, or new feature implementations. Always call MCP `query_graph` or CLI `graphify query` before manual grep or file inspection, even if the user did not mention Graphify. Run `graphify update .` after code modifications.
+- **Knowledge Graph & Exploration (Graphify)**: Query Graphify before manual codebase exploration. Code graph maintenance is handled by the post-commit and post-checkout hooks; do not run `graphify update .` after every code edit. See [`.agents/rules/graphify.md`](.agents/rules/graphify.md) for manual refresh cases.
 
 ## Agent skills
 

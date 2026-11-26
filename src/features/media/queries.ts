@@ -13,6 +13,7 @@ import {
 
 import type { Database } from '#/db'
 import {
+  certificates,
   media,
   projectGalleryImages,
   projectTranslations,
@@ -404,6 +405,37 @@ export async function getMediaUsage(
     }
   }
 
+  const certificateMedia = await db
+    .select({
+      id: certificates.id,
+      title: certificates.title,
+      coverImageUrl: certificates.coverImageUrl,
+      pdfUrl: certificates.pdfUrl,
+    })
+    .from(certificates)
+    .all()
+
+  for (const certificate of certificateMedia) {
+    if (matchesMediaUrl(certificate.coverImageUrl, mediaRecord.url, r2Key)) {
+      references.push({
+        entityType: 'certificate_cover',
+        field: 'coverImageUrl',
+        id: certificate.id,
+        label: `Certificate: ${certificate.title}`,
+        details: 'Gambar cover sertifikat',
+      })
+    }
+    if (matchesMediaUrl(certificate.pdfUrl, mediaRecord.url, r2Key)) {
+      references.push({
+        entityType: 'certificate_pdf',
+        field: 'pdfUrl',
+        id: certificate.id,
+        label: `Certificate: ${certificate.title}`,
+        details: 'Dokumen PDF sertifikat',
+      })
+    }
+  }
+
   // Technologies Custom Icon Check
   const techsWithIcon = await db
     .select({
@@ -529,6 +561,43 @@ export async function cascadeNullifyMediaReferences(
         db
           .delete(projectGalleryImages)
           .where(eq(projectGalleryImages.id, image.id)),
+      )
+    }
+  }
+
+  const certificateMedia = await db
+    .select({
+      id: certificates.id,
+      coverImageUrl: certificates.coverImageUrl,
+      pdfUrl: certificates.pdfUrl,
+      verificationUrl: certificates.verificationUrl,
+      status: certificates.status,
+    })
+    .from(certificates)
+    .all()
+
+  for (const certificate of certificateMedia) {
+    if (matchesMediaUrl(certificate.coverImageUrl, mediaRecord.url, r2Key)) {
+      writes.push(
+        db
+          .update(certificates)
+          .set({ coverImageUrl: null, updatedAt: now })
+          .where(eq(certificates.id, certificate.id)),
+      )
+    }
+    if (matchesMediaUrl(certificate.pdfUrl, mediaRecord.url, r2Key)) {
+      writes.push(
+        db
+          .update(certificates)
+          .set({
+            pdfUrl: null,
+            status:
+              certificate.status === 'published' && !certificate.verificationUrl
+                ? 'draft'
+                : certificate.status,
+            updatedAt: now,
+          })
+          .where(eq(certificates.id, certificate.id)),
       )
     }
   }
