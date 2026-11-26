@@ -5,6 +5,8 @@ import { canManageContent } from '#/features/auth/roles'
 import { getDashboardSession } from '#/features/auth/server-functions'
 import { DashboardHomePage } from '#/features/home/pages/dashboard-home-page'
 import { homeQueryOptions } from '#/features/home/query-options'
+import { pageContentQueryOptions } from '#/features/portfolio/page-content-query-options'
+import type { CertificatesPageConfig } from '#/features/portfolio/page-content-schemas'
 import { createRouteMeta } from '#/lib/metadata'
 
 export const Route = createFileRoute('/dashboard/pages/home')({
@@ -20,6 +22,9 @@ export const Route = createFileRoute('/dashboard/pages/home')({
     await Promise.all([
       queryClient.ensureQueryData(homeQueryOptions.config()),
       queryClient.ensureQueryData(homeQueryOptions.enthusiasms(true)),
+      queryClient.ensureQueryData(
+        pageContentQueryOptions.get<CertificatesPageConfig>('certificates'),
+      ),
     ])
   },
   head: ({ matches }) => {
@@ -37,11 +42,15 @@ function DashboardHomeRoute() {
   const { data: enthusiasms } = useSuspenseQuery(
     homeQueryOptions.enthusiasms(true),
   )
+  const { data: certificatesPageContent } = useSuspenseQuery(
+    pageContentQueryOptions.get<CertificatesPageConfig>('certificates'),
+  )
 
   return (
     <DashboardHomePage
       initialConfig={initialConfig}
       enthusiasms={enthusiasms}
+      certificatesPageContent={certificatesPageContent}
     />
   )
 }

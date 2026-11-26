@@ -39,7 +39,17 @@ export function CertificatesPageContentForm({
 
   const handleReset = () => {
     if (window.confirm(copy.resetConfirm)) {
-      setFormData(getDefaultCertificatesPageConfig())
+      const defaults = getDefaultCertificatesPageConfig()
+      setFormData((current) => ({
+        ...defaults,
+        homeEyebrowEn: current.homeEyebrowEn,
+        homeEyebrowId: current.homeEyebrowId,
+        homeTitleEn: current.homeTitleEn,
+        homeTitleId: current.homeTitleId,
+        homeDescriptionEn: current.homeDescriptionEn,
+        homeDescriptionId: current.homeDescriptionId,
+        showHomeDescription: current.showHomeDescription,
+      }))
       setIsError(false)
       setStatusMessage(copy.resetSuccess)
     }
@@ -139,74 +149,6 @@ export function CertificatesPageContentForm({
               checked={formData.showDescription}
               onCheckedChange={(checked) =>
                 updateField('showDescription', checked)
-              }
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="border-(--brand-line) bg-card">
-        <CardHeader>
-          <CardTitle className="text-base font-bold text-(--brand-ink)">
-            {copy.homeHeaderTitle}
-          </CardTitle>
-          <CardDescription className="text-xs text-(--brand-muted)">
-            {copy.homeHeaderDescription}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-5">
-          <FieldGroup className="flex flex-col gap-4">
-            <Field>
-              <FieldLabel htmlFor="certificates-home-eyebrow">
-                {copy.eyebrowLabel(locale.toUpperCase())}
-              </FieldLabel>
-              <Input
-                id="certificates-home-eyebrow"
-                value={formData[`homeEyebrow${localeSuffix}`]}
-                onChange={(event) =>
-                  updateField(`homeEyebrow${localeSuffix}`, event.target.value)
-                }
-              />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="certificates-home-title">
-                {copy.titleLabel(locale.toUpperCase())}
-              </FieldLabel>
-              <Input
-                id="certificates-home-title"
-                required
-                value={formData[`homeTitle${localeSuffix}`]}
-                onChange={(event) =>
-                  updateField(`homeTitle${localeSuffix}`, event.target.value)
-                }
-              />
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="certificates-home-description">
-                {copy.descriptionLabel(locale.toUpperCase())}
-              </FieldLabel>
-              <Textarea
-                id="certificates-home-description"
-                rows={3}
-                value={formData[`homeDescription${localeSuffix}`]}
-                onChange={(event) =>
-                  updateField(
-                    `homeDescription${localeSuffix}`,
-                    event.target.value,
-                  )
-                }
-              />
-            </Field>
-          </FieldGroup>
-          <div className="flex items-center justify-between border-t border-(--brand-line) pt-4">
-            <span className="text-xs font-bold text-(--brand-ink)">
-              {copy.showDescription}
-            </span>
-            <Switch
-              aria-label={copy.showDescription}
-              checked={formData.showHomeDescription}
-              onCheckedChange={(checked) =>
-                updateField('showHomeDescription', checked)
               }
             />
           </div>

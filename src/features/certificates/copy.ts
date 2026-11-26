@@ -60,11 +60,17 @@ export const certificatesCopy = {
       description: 'Manage certificates and their public verification links.',
       pageContent: {
         title: 'Certificate page content',
-        description: 'Edit the page and homepage certificate section headings.',
+        description: 'Edit the heading shown on the public certificate page.',
         saveSuccess: 'Certificate page content saved successfully.',
         saveError: 'Failed to save certificate page content.',
         resetConfirm: 'Reset certificate page text to the defaults?',
         resetSuccess: 'Defaults restored. Save to apply these changes.',
+        homeResetConfirm:
+          'Reset the homepage certificates section to defaults?',
+        homeResetSuccess: 'Homepage section defaults restored. Save to apply.',
+        saveHomeContent: 'Save Section',
+        saveHomeSuccess: 'Homepage certificates section saved successfully.',
+        saveHomeError: 'Failed to save the homepage certificates section.',
         pageHeaderTitle: 'Certificates page header',
         pageHeaderDescription:
           'Shown at the top of the public certificate list.',
@@ -205,11 +211,19 @@ export const certificatesCopy = {
       pageContent: {
         title: 'Konten halaman sertifikat',
         description:
-          'Atur header halaman sertifikat dan section sertifikat di beranda.',
+          'Atur judul yang ditampilkan pada halaman sertifikat publik.',
         saveSuccess: 'Konten halaman sertifikat berhasil disimpan.',
         saveError: 'Gagal menyimpan konten halaman sertifikat.',
-        resetConfirm: 'Kembalikan teks sertifikat ke pengaturan bawaan?',
+        resetConfirm:
+          'Kembalikan teks halaman sertifikat ke pengaturan bawaan?',
         resetSuccess: 'Pengaturan bawaan dipulihkan. Simpan untuk menerapkan.',
+        homeResetConfirm:
+          'Kembalikan section sertifikat beranda ke pengaturan bawaan?',
+        homeResetSuccess:
+          'Pengaturan bawaan section beranda dipulihkan. Simpan untuk menerapkan.',
+        saveHomeContent: 'Simpan Seksi',
+        saveHomeSuccess: 'Section sertifikat beranda berhasil disimpan.',
+        saveHomeError: 'Gagal menyimpan section sertifikat beranda.',
         pageHeaderTitle: 'Header halaman sertifikat',
         pageHeaderDescription:
           'Ditampilkan di bagian atas daftar sertifikat publik.',

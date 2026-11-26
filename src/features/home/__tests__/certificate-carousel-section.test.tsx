@@ -6,8 +6,10 @@ import { CertificateCarouselSection } from '../components/section/certificate-ca
 import type { CertificateRecord } from '#/features/certificates/queries'
 
 vi.mock('@tanstack/react-router', () => ({
-  Link: ({ children, ...props }: ComponentProps<'a'>) => (
-    <a {...props}>{children}</a>
+  Link: ({ children, to, ...props }: ComponentProps<'a'> & { to: string }) => (
+    <a href={to} {...props}>
+      {children}
+    </a>
   ),
 }))
 
@@ -103,6 +105,12 @@ describe('CertificateCarouselSection', () => {
       ),
     ).toBeTruthy()
     expect(article.parentElement?.className).toContain('w-[min(88vw,35rem)]')
+    const viewAllLink = screen.getByRole('link', {
+      name: 'View all certificates',
+    })
+    expect(viewAllLink.getAttribute('href')).toBe('/certificates')
+    expect(viewAllLink.className).toContain('rounded-full')
+    expect(viewAllLink.parentElement?.className).toContain('justify-center')
     expect(screen.queryByRole('region', { name: 'Certificates' })).toBeNull()
     expect(screen.queryByRole('button')).toBeNull()
   })

@@ -120,7 +120,7 @@ export const homeCopy = {
     dashboard: {
       title: 'Content Settings: Home',
       description:
-        'Manage hero introduction, latest education, focus areas, project sections, marquee, and closing CTA.',
+        'Manage the homepage hero, education, focus areas, projects, technology, certificates, and contact CTA.',
       saveConfig: 'Save Configuration',
       resetConfirm:
         'Reset all text to default copywriting? Unsaved changes will be replaced.',
@@ -132,6 +132,7 @@ export const homeCopy = {
         heroEducation: 'Hero & Education',
         enthusiasms: 'Focus Areas',
         sectionsCta: 'Sections & CTA',
+        certificates: 'Certificates',
       },
       heroIntroSection: {
         cardTitle: (loc: string) => `Hero Introduction (${loc})`,
@@ -280,7 +281,7 @@ export const homeCopy = {
     dashboard: {
       title: 'Pengaturan Konten: Beranda (Home)',
       description:
-        'Kelola teks hero, pendidikan terakhir, fokus keahlian, seksi project dan marquee, serta CTA penutup.',
+        'Kelola hero, pendidikan, bidang minat, project, teknologi, sertifikat, dan CTA kontak di beranda.',
       saveConfig: 'Simpan Konfigurasi',
       resetConfirm:
         'Reset semua teks ke default copywriting? Perubahan belum tersimpan akan diganti.',
@@ -292,6 +293,7 @@ export const homeCopy = {
         heroEducation: 'Hero & Pendidikan',
         enthusiasms: 'Bidang Minat',
         sectionsCta: 'Seksi dan CTA',
+        certificates: 'Sertifikat',
       },
       heroIntroSection: {
         cardTitle: (loc: string) => `Pengenalan Hero (${loc})`,

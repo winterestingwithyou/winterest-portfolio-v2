@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { UseEmblaCarouselType } from 'embla-carousel-react'
 import { Link } from '@tanstack/react-router'
+import { ArrowRight } from 'lucide-react'
 
 import { Container, SectionHeader } from '#/components/marketing/section'
 import {
@@ -74,19 +75,11 @@ export function CertificateCarouselSection({
   return (
     <section className="py-12 sm:py-16">
       <Container>
-        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-          <SectionHeader
-            eyebrow={copy.eyebrow}
-            title={copy.title}
-            description={copy.description}
-          />
-          <Link
-            to="/certificates"
-            className="mb-8 inline-flex min-h-11 items-center text-sm font-semibold text-(--brand-orange-deep) underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--brand-orange)"
-          >
-            {copy.viewAll}
-          </Link>
-        </div>
+        <SectionHeader
+          eyebrow={copy.eyebrow}
+          title={copy.title}
+          description={copy.description}
+        />
       </Container>
 
       {certificates.length === 1 ? (
@@ -166,6 +159,18 @@ export function CertificateCarouselSection({
           </Container>
         </>
       )}
+
+      <Container>
+        <div className="mt-10 flex justify-center">
+          <Link
+            to="/certificates"
+            className="inline-flex min-h-11 items-center gap-2 rounded-full border border-(--brand-line) bg-card px-6 text-sm font-bold text-(--brand-ink) no-underline transition duration-200 hover:-translate-y-0.5 hover:border-(--brand-orange) hover:text-(--brand-orange-deep) focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--brand-orange)"
+          >
+            {copy.viewAll}
+            <ArrowRight aria-hidden="true" className="size-4" />
+          </Link>
+        </div>
+      </Container>
     </section>
   )
 }
